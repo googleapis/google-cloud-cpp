@@ -29,6 +29,7 @@ storage_autorun_examples = [
     "storage_object_file_transfer_samples.cc",
     "storage_object_hold_samples.cc",
     "storage_object_rewrite_samples.cc",
+    "storage_object_samples.cc",
     "storage_object_versioning_samples.cc",
     "storage_policy_doc_samples.cc",
     "storage_public_object_samples.cc",

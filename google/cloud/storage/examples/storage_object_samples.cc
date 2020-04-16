@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/internal/getenv.h"
 #include <fstream>
-#include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -25,37 +26,10 @@
 #include <thread>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
+namespace gcs = ::google::cloud::storage;
 
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void ListObjects(google::cloud::storage::Client client, int& argc,
-                 char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-objects <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void ListObjects(gcs::Client client, std::vector<std::string> const& argv) {
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
@@ -69,16 +43,11 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list objects] [END storage_list_files]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"list-objects-with-prefix <bucket-name> <prefix>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto bucket_prefix = ConsumeArg(argc, argv);
+void ListObjectsWithPrefix(gcs::Client client,
+                           std::vector<std::string> const& argv) {
   //! [list objects with prefix] [START storage_list_files_with_prefix]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string bucket_prefix) {
@@ -93,15 +62,11 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list objects with prefix] [END storage_list_files_with_prefix]
-  (std::move(client), bucket_name, bucket_prefix);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ListVersionedObjects(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-versioned-objects <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void ListVersionedObjects(gcs::Client client,
+                          std::vector<std::string> const& argv) {
   //! [list versioned objects] [START storage_list_file_archived_generations]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
@@ -117,18 +82,10 @@ void ListVersionedObjects(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list versioned objects] [END storage_list_file_archived_generations]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void InsertObject(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "insert-object <bucket-name> <object-name> <object-contents (string)>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto contents = ConsumeArg(argc, argv);
+void InsertObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [insert object]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -146,19 +103,11 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object]
-  (std::move(client), bucket_name, object_name, contents);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void InsertObjectStrictIdempotency(google::cloud::storage::Client, int& argc,
-                                   char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "insert-object-strict-idempotency <bucket-name> <object-name> "
-        "<object-contents (string)>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto contents = ConsumeArg(argc, argv);
+void InsertObjectStrictIdempotency(gcs::Client,
+                                   std::vector<std::string> const& argv) {
   //! [insert object strict idempotency]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -183,19 +132,11 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object strict idempotency]
-  (bucket_name, object_name, contents);
+  (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void InsertObjectModifiedRetry(google::cloud::storage::Client, int& argc,
-                               char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "insert-object-modified-retry <bucket-name> <object-name> "
-        "<object-contents (string)>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto contents = ConsumeArg(argc, argv);
+void InsertObjectModifiedRetry(gcs::Client,
+                               std::vector<std::string> const& argv) {
   //! [insert object modified retry]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -221,20 +162,11 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object modified retry]
-  (bucket_name, object_name, contents);
+  (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "insert-object-multipart <bucket-name> <object-name>"
-        " <content-type> <object-contents (string)>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto content_type = ConsumeArg(argc, argv);
-  auto contents = ConsumeArg(argc, argv);
+void InsertObjectMultipart(gcs::Client client,
+                           std::vector<std::string> const& argv) {
   //! [insert object multipart]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -259,20 +191,10 @@ void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object multipart]
-  (std::move(client), bucket_name, object_name, content_type, contents);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CopyObject(google::cloud::storage::Client client, int& argc,
-                char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "copy-object <source-bucket-name> <source-object-name>"
-        " <destination-bucket-name> <destination-object-name>"};
-  }
-  auto source_bucket_name = ConsumeArg(argc, argv);
-  auto source_object_name = ConsumeArg(argc, argv);
-  auto destination_bucket_name = ConsumeArg(argc, argv);
-  auto destination_object_name = ConsumeArg(argc, argv);
+void CopyObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [copy object] [START storage_copy_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -294,23 +216,11 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
               << "\n";
   }
   //! [copy object] [END storage_copy_file]
-  (std::move(client), source_bucket_name, source_object_name,
-   destination_bucket_name, destination_object_name);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 6) {
-    throw Usage{
-        "copy-encrypted-object <source-bucket-name> <source-object-name>"
-        " <destination-bucket-name> <destination-object-name>"
-        " <encryption-key-base64>"};
-  }
-  auto source_bucket_name = ConsumeArg(argc, argv);
-  auto source_object_name = ConsumeArg(argc, argv);
-  auto destination_bucket_name = ConsumeArg(argc, argv);
-  auto destination_object_name = ConsumeArg(argc, argv);
-  auto key = ConsumeArg(argc, argv);
+void CopyEncryptedObject(gcs::Client client,
+                         std::vector<std::string> const& argv) {
   //! [copy encrypted object]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -332,17 +242,12 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
               << "\n";
   }
   //! [copy encrypted object]
-  (std::move(client), source_bucket_name, source_object_name,
-   destination_bucket_name, destination_object_name, key);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4));
 }
 
-void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"get-object-metadata <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+void GetObjectMetadata(gcs::Client client,
+                       std::vector<std::string> const& argv) {
   //! [get object metadata] [START storage_get_metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -359,16 +264,10 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
               << *object_metadata << "\n";
   }
   //! [get object metadata] [END storage_get_metadata]
-  (std::move(client), bucket_name, object_name);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ReadObject(google::cloud::storage::Client client, int& argc,
-                char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"read-object <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+void ReadObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [read object] [START storage_download_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -383,18 +282,10 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
     std::cout << "The object has " << count << " lines\n";
   }
   //! [read object] [END storage_download_file]
-  (std::move(client), bucket_name, object_name);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ReadObjectRange(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 5) {
-    throw Usage{"read-object-range <bucket-name> <object-name> <start> <end>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto start = std::stoll(ConsumeArg(argc, argv));
-  auto end = std::stoll(ConsumeArg(argc, argv));
+void ReadObjectRange(gcs::Client client, std::vector<std::string> const& argv) {
   //! [read object range] [START storage_download_byte_range]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -412,16 +303,11 @@ void ReadObjectRange(google::cloud::storage::Client client, int& argc,
     std::cout << "The requested range has " << count << " lines\n";
   }
   //! [read object range] [END storage_download_byte_range]
-  (std::move(client), bucket_name, object_name, start, end);
+  (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)),
+   std::stoll(argv.at(3)));
 }
 
-void DeleteObject(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"delete-object <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+void DeleteObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [delete object] [START storage_delete_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -433,19 +319,10 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
               << "\n";
   }
   //! [delete object] [END storage_delete_file]
-  (std::move(client), bucket_name, object_name);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void WriteObject(google::cloud::storage::Client client, int& argc,
-                 char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "write-object <bucket-name> <object-name> <target-object-line-count>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto desired_line_count = std::stol(ConsumeArg(argc, argv));
-
+void WriteObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [write object] [START storage_stream_file_upload]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -470,17 +347,11 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *metadata << "\n";
   }
   //! [write object] [END storage_stream_file_upload]
-  (std::move(client), bucket_name, object_name, desired_line_count);
+  (std::move(client), argv.at(0), argv.at(1), std::stol(argv.at(2)));
 }
 
-void StartResumableUpload(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"start-resumable-upload <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-
+void StartResumableUpload(gcs::Client client,
+                          std::vector<std::string> const& argv) {
   //! [start resumable upload]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -496,19 +367,11 @@ void StartResumableUpload(google::cloud::storage::Client client, int& argc,
     std::move(stream).Suspend();
   }
   //! [start resumable upload]
-  (std::move(client), bucket_name, object_name);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ResumeResumableUpload(google::cloud::storage::Client client, int& argc,
-                           char** argv) {
-  if (argc != 4) {
-    throw Usage{
-        "resume-resumable-upload <bucket-name> <object-name> <session-id>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto session_id = ConsumeArg(argc, argv);
-
+void ResumeResumableUpload(gcs::Client client,
+                           std::vector<std::string> const& argv) {
   //! [resume resumable upload]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -546,19 +409,11 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               << "\n";
   }
   //! [resume resumable upload]
-  (std::move(client), bucket_name, object_name, session_id);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "update-object-metadata <bucket-name> <object-name> <key> <value>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto key = ConsumeArg(argc, argv);
-  auto value = ConsumeArg(argc, argv);
+void UpdateObjectMetadata(gcs::Client client,
+                          std::vector<std::string> const& argv) {
   //! [update object metadata] [START storage_set_metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -583,17 +438,11 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
               << *updated << "\n";
   }
   //! [update object metadata] [END storage_set_metadata]
-  (std::move(client), bucket_name, object_name, key, value);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
-                               char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"update-object-metadata <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto key = ConsumeArg(argc, argv);
+void PatchObjectDeleteMetadata(gcs::Client client,
+                               std::vector<std::string> const& argv) {
   //! [patch object delete metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -614,18 +463,11 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
               << *updated << "\n";
   }
   //! [patch object delete metadata]
-  (std::move(client), bucket_name, object_name, key);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "update-object-metadata <bucket-name> <object-name> <content-type>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto content_type = ConsumeArg(argc, argv);
+void PatchObjectContentType(gcs::Client client,
+                            std::vector<std::string> const& argv) {
   //! [patch object content type]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -640,13 +482,11 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
               << *updated << "\n";
   }
   //! [patch object content type]
-  (std::move(client), bucket_name, object_name, content_type);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GenerateEncryptionKey(google::cloud::storage::Client, int& argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"generate-encryption-key"};
-  }
+std::string GenerateEncryptionKey(gcs::Client,
+                                  std::vector<std::string> const& /*argv*/) {
   //! [generate encryption key] [START storage_generate_encryption_key]
   // Create a pseudo-random number generator (PRNG), this is included for
   // demonstration purposes only. You should consult your security team about
@@ -685,18 +525,11 @@ void GenerateEncryptionKey(google::cloud::storage::Client, int& argc, char*[]) {
   std::cout << "Base64 encoded key = " << data.key << "\n"
             << "Base64 encoded SHA256 of key = " << data.sha256 << "\n";
   //! [generate encryption key] [END storage_generate_encryption_key]
+  return data.key;
 }
 
-void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "write-encrypted-object <bucket-name> <object-name>"
-        " <base64-encoded-aes256-key>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto base64_aes256_key = ConsumeArg(argc, argv);
+void WriteEncryptedObject(gcs::Client client,
+                          std::vector<std::string> const& argv) {
   //! [insert encrypted object] [START storage_upload_encrypted_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -715,19 +548,11 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert encrypted object] [END storage_upload_encrypted_file]
-  (std::move(client), bucket_name, object_name, base64_aes256_key);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ReadEncryptedObject(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "read-encrypted-object <bucket-name> <object-name>"
-        " <base64-encoded-aes256-key>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto base64_aes256_key = ConsumeArg(argc, argv);
+void ReadEncryptedObject(gcs::Client client,
+                         std::vector<std::string> const& argv) {
   //! [read encrypted object] [START storage_download_encrypted_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -740,22 +565,18 @@ void ReadEncryptedObject(google::cloud::storage::Client client, int& argc,
     std::cout << "The object contents are: " << data << "\n";
   }
   //! [read encrypted object] [END storage_download_encrypted_file]
-  (std::move(client), bucket_name, object_name, base64_aes256_key);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ComposeObject(google::cloud::storage::Client client, int& argc,
-                   char* argv[]) {
-  if (argc < 4) {
-    throw Usage{
-        "compose-object <bucket-name> <destination-object-name>"
-        " <object_1> ..."};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto destination_object_name = ConsumeArg(argc, argv);
-  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
-  while (argc > 1) {
-    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
-  }
+void ComposeObject(gcs::Client client, std::vector<std::string> const& argv) {
+  auto it = argv.cbegin();
+  auto bucket_name = *it++;
+  auto destination_object_name = *it++;
+  std::vector<gcs::ComposeSourceObject> compose_objects;
+  do {
+    compose_objects.push_back({*it++, {}, {}});
+  } while (it != argv.cend());
+
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -778,21 +599,17 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
    std::move(compose_objects));
 }
 
-void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
-                                       int& argc, char* argv[]) {
-  if (argc < 5) {
-    throw Usage{
-        "compose-object-from-encrypted-objects <bucket-name>"
-        " <destination-object-name> <base64-encoded-aes256-key>"
-        " <object_1> ..."};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto destination_object_name = ConsumeArg(argc, argv);
-  auto base64_aes256_key = ConsumeArg(argc, argv);
-  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
-  while (argc > 1) {
-    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
-  }
+void ComposeObjectFromEncryptedObjects(gcs::Client client,
+                                       std::vector<std::string> const& argv) {
+  auto it = argv.cbegin();
+  auto bucket_name = *it++;
+  auto destination_object_name = *it++;
+  auto base64_aes256_key = *it++;
+  std::vector<gcs::ComposeSourceObject> compose_objects;
+  do {
+    compose_objects.push_back({*it++, {}, {}});
+  } while (it != argv.cend());
+
   //! [compose object from encrypted objects]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -816,19 +633,16 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
    std::move(compose_objects));
 }
 
-void ComposeObjectFromMany(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc < 4) {
-    throw Usage{
-        "compose-object-from-many <bucket-name> <destination-object-name>"
-        " <object_1> ..."};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto destination_object_name = ConsumeArg(argc, argv);
-  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
-  while (argc > 1) {
-    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
-  }
+void ComposeObjectFromMany(gcs::Client client,
+                           std::vector<std::string> const& argv) {
+  auto it = argv.cbegin();
+  auto bucket_name = *it++;
+  auto destination_object_name = *it++;
+  std::vector<gcs::ComposeSourceObject> compose_objects;
+  do {
+    compose_objects.push_back({*it++, {}, {}});
+  } while (it != argv.cend());
+
   //! [compose object from many] [START storage_compose_file_from_many]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -856,16 +670,8 @@ void ComposeObjectFromMany(google::cloud::storage::Client client, int& argc,
    std::move(compose_objects));
 }
 
-void ChangeObjectStorageClass(google::cloud::storage::Client client, int& argc,
-                              char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "change-object-storage-class <bucket-name> <object-name> "
-        "<storage-class>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto storage_class = ConsumeArg(argc, argv);
+void ChangeObjectStorageClass(gcs::Client client,
+                              std::vector<std::string> const& argv) {
   //! [change file storage class]
   // [START storage_change_file_storage_class]
   namespace gcs = google::cloud::storage;
@@ -888,21 +694,11 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_change_file_storage_class]
   //! [change file storage class]
-  (std::move(client), bucket_name, object_name, storage_class);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "rotate-encryption-key <bucket-name> <object-name>"
-        " <old-encryption-key> <new-encryption-key>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto old_key_base64 = ConsumeArg(argc, argv);
-  auto new_key_base64 = ConsumeArg(argc, argv);
-
+void RotateEncryptionKey(gcs::Client client,
+                         std::vector<std::string> const& argv) {
   //! [rotate encryption key] [START storage_rotate_encryption_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -923,19 +719,10 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
               << "\nFull Metadata: " << *object_metadata << "\n";
   }
   //! [rotate encryption key] [END storage_rotate_encryption_key]
-  (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void RenameObject(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "rename-object <bucket-name> <old-object-name> <new-object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto old_object_name = ConsumeArg(argc, argv);
-  auto new_object_name = ConsumeArg(argc, argv);
-
+void RenameObject(gcs::Client client, std::vector<std::string> const& argv) {
   //! [rename object] [START storage_move_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -957,84 +744,260 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
               << " in bucket " << bucket_name << "\n";
   }
   //! [rename object] [END storage_move_file]
-  (std::move(client), bucket_name, old_object_name, new_object_name);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::gcs::examples;
+  namespace gcs = ::google::cloud::storage;
+
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
+          .value();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name =
+      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const entity = "user-" + service_account;
+  auto client = gcs::Client::CreateDefaultClient().value();
+  std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
+            << std::endl;
+  auto bucket_metadata = client
+                             .CreateBucketForProject(bucket_name, project_id,
+                                                     gcs::BucketMetadata{})
+                             .value();
+
+  std::string const object_media("a-string-to-serve-as-object-media");
+  auto const object_name = examples::MakeRandomObjectName(generator, "object-");
+
+  std::cout << "\nRunning InsertObject() example [1]" << std::endl;
+  InsertObject(client, {bucket_name, object_name, object_media});
+
+  std::cout << "\nRunning ListObjects() example" << std::endl;
+  ListObjects(client, {bucket_name});
+
+  std::cout << "\nRunning ListVersionedObjects() example" << std::endl;
+  ListVersionedObjects(client, {bucket_name});
+
+  std::cout << "\nRunning InsertObject() examples [with prefix]" << std::endl;
+  auto const bucket_prefix =
+      examples::MakeRandomObjectName(generator, "prefix-");
+  InsertObject(client, {bucket_name, bucket_prefix + "/object-1.txt",
+                        "media-for-object-1"});
+  InsertObject(client, {bucket_name, bucket_prefix + "/object-2.txt",
+                        "media-for-object-2"});
+
+  std::cout << "\nRunning ListObjectsWithPrefix() example" << std::endl;
+  ListObjectsWithPrefix(client, {bucket_name, bucket_prefix});
+
+  std::cout << "\nRunning GetObjectMetadata() example" << std::endl;
+  GetObjectMetadata(client, {bucket_name, object_name});
+
+  std::cout << "\nRunning ChangeObjectStorageClass() example" << std::endl;
+  ChangeObjectStorageClass(client, {bucket_name, object_name, "NEARLINE"});
+
+  std::cout << "\nRunning ReadObject() example" << std::endl;
+  ReadObject(client, {bucket_name, object_name});
+
+  std::cout << "\nRunning WriteObject() example" << std::endl;
+  WriteObject(client, {bucket_name, object_name, "100000"});
+
+  std::cout << "\nRunning ReadObjectRange() example" << std::endl;
+  ReadObjectRange(client, {bucket_name, object_name, "1000", "2000"});
+
+  std::cout << "\nRunning UpdateObjectMetadata() example" << std::endl;
+  UpdateObjectMetadata(client,
+                       {bucket_name, object_name, "test-label", "test-value"});
+
+  std::cout << "\nRunning PatchObjectContentType() example" << std::endl;
+  PatchObjectContentType(client,
+                         {bucket_name, object_name, "application/text"});
+
+  std::cout << "\nRunning PatchObjectDeleteMetadata() example" << std::endl;
+  PatchObjectDeleteMetadata(client, {bucket_name, object_name, "test-label"});
+
+  std::cout << "\nRunning ComposeObject() example" << std::endl;
+  auto const composed_object_name =
+      examples::MakeRandomObjectName(generator, "composed-object-");
+  ComposeObject(client,
+                {bucket_name, composed_object_name, object_name, object_name});
+  DeleteObject(client, {bucket_name, composed_object_name});
+
+  std::cout << "\nRunning ComposeObjectFromMany() example" << std::endl;
+  ComposeObjectFromMany(
+      client, {bucket_name, composed_object_name, object_name, object_name});
+  DeleteObject(client, {bucket_name, composed_object_name});
+
+  std::cout << "\nRunning CopyObject() example" << std::endl;
+  auto const copied_object_name =
+      examples::MakeRandomObjectName(generator, "copied-object-");
+  CopyObject(client,
+             {bucket_name, object_name, bucket_name, copied_object_name});
+  DeleteObject(client, {bucket_name, copied_object_name});
+
+  std::cout << "\nRunning DeleteObject() example [1]" << std::endl;
+  DeleteObject(client, {bucket_name, bucket_prefix + "/object-2.txt"});
+  DeleteObject(client, {bucket_name, bucket_prefix + "/object-1.txt"});
+  DeleteObject(client, {bucket_name, object_name});
+
+  std::cout << "\nRunning InsertObjectMultipart() example" << std::endl;
+  auto const multipart_object_name =
+      examples::MakeRandomObjectName(generator, "multipart-object-");
+  InsertObjectMultipart(
+      client, {bucket_name, multipart_object_name, "text/plain", object_media});
+  DeleteObject(client, {bucket_name, multipart_object_name});
+
+  auto const encrypted_object_name =
+      examples::MakeRandomObjectName(generator, "enc-obj-");
+  auto const encrypted_composed_object_name =
+      examples::MakeRandomObjectName(generator, "composed-enc-obj-");
+  auto const encrypted_copied_object_name =
+      examples::MakeRandomObjectName(generator, "copied-enc-obj-");
+
+  std::cout << "\nRunning GenerateEncryptionKey() example" << std::endl;
+  auto const key = GenerateEncryptionKey(client, {});
+
+  std::cout << "\nRunning WriteEncryptedObject() example" << std::endl;
+  WriteEncryptedObject(client, {bucket_name, encrypted_object_name, key});
+
+  std::cout << "\nRunning ReadEncryptedObject() example [1]" << std::endl;
+  ReadEncryptedObject(client, {bucket_name, encrypted_object_name, key});
+
+  std::cout << "\nRunning ComposeObjectFromEncryptedObjects() example"
+            << std::endl;
+  ComposeObjectFromEncryptedObjects(
+      client, {bucket_name, encrypted_composed_object_name, key,
+               encrypted_object_name, encrypted_object_name});
+
+  std::cout << "\nRunning ReadEncryptedObject() example [2]" << std::endl;
+  ReadEncryptedObject(client,
+                      {bucket_name, encrypted_composed_object_name, key});
+
+  std::cout << "\nRunning CopyEncryptedObject() example" << std::endl;
+  CopyEncryptedObject(client, {bucket_name, encrypted_object_name, bucket_name,
+                               encrypted_copied_object_name, key});
+
+  std::cout << "\nRunning ReadEncryptedObject() example [3]" << std::endl;
+  ReadEncryptedObject(client, {bucket_name, encrypted_copied_object_name, key});
+
+  std::cout << "\nRunning RotateEncryptionKey() example" << std::endl;
+  auto const newkey = GenerateEncryptionKey(client, {});
+  RotateEncryptionKey(client,
+                      {bucket_name, encrypted_object_name, key, newkey});
+
+  std::cout << "\nRunning DeleteObject() examples [2]" << std::endl;
+  DeleteObject(client, {bucket_name, encrypted_copied_object_name});
+  DeleteObject(client, {bucket_name, encrypted_composed_object_name});
+  DeleteObject(client, {bucket_name, encrypted_object_name});
+
+  std::cout << "\nRunning InsertObjectStrictIdempotency() example" << std::endl;
+  auto const object_name_strict =
+      examples::MakeRandomObjectName(generator, "object-strict-");
+  InsertObjectStrictIdempotency(
+      client, {bucket_name, object_name_strict, object_media});
+  DeleteObject(client, {bucket_name, object_name_strict});
+
+  std::cout << "\nRunning InsertObjectModifiedRetry() example" << std::endl;
+  auto const object_name_retry =
+      examples::MakeRandomObjectName(generator, "object-retry-");
+  InsertObjectModifiedRetry(client,
+                            {bucket_name, object_name_retry, object_media});
+  DeleteObject(client, {bucket_name, object_name_retry});
+
+  (void)client.DeleteBucket(bucket_name);
 }
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  // Create a client to communicate with Google Cloud Storage.
-  google::cloud::StatusOr<google::cloud::storage::Client> client =
-      google::cloud::storage::Client::CreateDefaultClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
-
-  using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
-      {"list-objects", ListObjects},
-      {"list-objects-with-prefix", ListObjectsWithPrefix},
-      {"list-versioned-objects", ListVersionedObjects},
-      {"insert-object", InsertObject},
-      {"insert-object-strict-idempotency", InsertObjectStrictIdempotency},
-      {"insert-object-modified-retry", InsertObjectModifiedRetry},
-      {"insert-object-multipart", InsertObjectMultipart},
-      {"copy-object", CopyObject},
-      {"copy-encrypted-object", CopyEncryptedObject},
-      {"get-object-metadata", GetObjectMetadata},
-      {"read-object", ReadObject},
-      {"read-object-range", ReadObjectRange},
-      {"delete-object", DeleteObject},
-      {"write-object", WriteObject},
-      {"start-resumable-upload", StartResumableUpload},
-      {"resume-resumable-upload", ResumeResumableUpload},
-      {"update-object-metadata", UpdateObjectMetadata},
-      {"patch-object-delete-metadata", PatchObjectDeleteMetadata},
-      {"patch-object-content-type", PatchObjectContentType},
-      {"generate-encryption-key", GenerateEncryptionKey},
-      {"write-encrypted-object", WriteEncryptedObject},
-      {"read-encrypted-object", ReadEncryptedObject},
-      {"compose-object", ComposeObject},
-      {"compose-object-from-encrypted-objects",
-       ComposeObjectFromEncryptedObjects},
-      {"compose-object-from-many", ComposeObjectFromMany},
-      {"change-object-storage-class", ChangeObjectStorageClass},
-      {"rotate-encryption-key", RotateEncryptionKey},
-      {"rename-object", RenameObject},
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> arg_names,
+                       examples::ClientCommand const& cmd) {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 0;
-      kv.second(*client, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
-  }
 
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
-
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  it->second(*client, argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  google::cloud::storage::examples::Example example({
+      make_entry("list-objects", {}, ListObjects),
+      make_entry("list-objects-with-prefix", {"<prefix>"},
+                 ListObjectsWithPrefix),
+      make_entry("list-versioned-objects", {}, ListVersionedObjects),
+      make_entry("insert-object",
+                 {"<object-name>", "<object-contents (string)>"}, InsertObject),
+      make_entry("insert-object-strict-idempotency",
+                 {"<object-name>", "<object-contents (string)>"},
+                 InsertObjectStrictIdempotency),
+      make_entry("insert-object-modified-retry",
+                 {"<object-name>", "<object-contents (string)>"},
+                 InsertObjectModifiedRetry),
+      make_entry(
+          "insert-object-multipart",
+          {"<object-name>", "<content-type>", "<object-contents (string)>"},
+          InsertObjectMultipart),
+      examples::CreateCommandEntry(
+          "copy-object",
+          {"<source-bucket-name>", "<source-object-name>",
+           "<destination-bucket-name>", "<destination-object-name>"},
+          CopyObject),
+      examples::CreateCommandEntry(
+          "copy-encrypted-object",
+          {"<source-bucket-name>", "<source-object-name>",
+           "<destination-bucket-name>", "<destination-object-name>",
+           "<encryption-key-base64>"},
+          CopyEncryptedObject),
+      make_entry("get-object-metadata", {"<object-name>"}, GetObjectMetadata),
+      make_entry("read-object", {"<object-name>"}, ReadObject),
+      make_entry("read-object-range", {"<object-name>", "<start>", "<end>"},
+                 ReadObjectRange),
+      make_entry("delete-object", {"<object-name>"}, DeleteObject),
+      make_entry("write-object",
+                 {"<object-name>", "<target-object-line-count>"}, WriteObject),
+      make_entry("start-resumable-upload", {"<object-name>"},
+                 StartResumableUpload),
+      make_entry("resume-resumable-upload", {"<object-name>", "<session-id>"},
+                 ResumeResumableUpload),
+      make_entry("update-object-metadata",
+                 {"<object-name>", "<key>", "<value>"}, UpdateObjectMetadata),
+      make_entry("update-object-metadata", {"<object-name>"},
+                 PatchObjectDeleteMetadata),
+      make_entry("update-object-metadata", {"<object-name>", "<content-type>"},
+                 PatchObjectContentType),
+      examples::CreateCommandEntry("generate-encryption-key", {},
+                                   GenerateEncryptionKey),
+      make_entry("write-encrypted-object",
+                 {"<object-name>", "<base64-encoded-aes256-key>"},
+                 WriteEncryptedObject),
+      make_entry("read-encrypted-object",
+                 {"<object-name>", "<base64-encoded-aes256-key>"},
+                 ReadEncryptedObject),
+      make_entry("compose-object",
+                 {"<destination-object-name>", "<object>", "[object...]"},
+                 ComposeObject),
+      make_entry("compose-object-from-encrypted-objects",
+                 {"<destination-object-name>", "<base64-encoded-aes256-key>",
+                  "<object>", "[object...]"},
+                 ComposeObjectFromEncryptedObjects),
+      make_entry("compose-object-from-many",
+                 {"<destination-object-name>", "<object>", "[object...]"},
+                 ComposeObjectFromMany),
+      make_entry("change-object-storage-class",
+                 {"<object-name>", "<storage-class>"},
+                 ChangeObjectStorageClass),
+      make_entry(
+          "rotate-encryption-key",
+          {"<object-name>", "<old-encryption-key>", "<new-encryption-key>"},
+          RotateEncryptionKey),
+      make_entry("rename-object", {"<old-object-name>", "<new-object-name>"},
+                 RenameObject),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }
