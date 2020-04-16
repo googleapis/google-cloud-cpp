@@ -24,7 +24,6 @@ RUN apt-get update && \
         build-essential \
         ccache \
         clang \
-        clang-format-7 \
         cmake \
         curl \
         ctags \
