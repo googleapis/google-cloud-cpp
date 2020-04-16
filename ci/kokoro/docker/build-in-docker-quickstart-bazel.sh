@@ -59,43 +59,53 @@ if [[ -r "/c/kokoro-run-key.json" ]]; then
   )
 fi
 
-build_service() {
-  local -r service="$1"
+build_quickstart() {
+  local -r library="$1"
 
-  echo "================================================================"
-  log_yellow "building ${service}"
-  ( cd "google/cloud/${service}/quickstart";
-    log_normal "capture bazel version"
-    ${BAZEL_BIN} version
-    log_normal "fetch dependencies for ${service}'s quickstart"
-    "${PROJECT_ROOT}/ci/retry-command.sh" \
-        "${BAZEL_BIN}" fetch -- ...
+  pushd "${PROJECT_ROOT}/google/cloud/${library}/quickstart" >/dev/null
+  trap "popd >/dev/null" RETURN
+  log_normal "capture bazel version"
+  ${BAZEL_BIN} version
+  log_normal "fetch dependencies for ${library}'s quickstart"
+  "${PROJECT_ROOT}/ci/retry-command.sh" \
+      "${BAZEL_BIN}" fetch -- ...
+
+  echo
+  log_yellow "Compiling ${library}'s quickstart"
+  "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
+
+  if [[ -r "/c/kokoro-run-key.json" ]]; then
     echo
-    log_normal "compiling quickstart program for ${service}"
-    "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
-
-    if [[ -r "/c/kokoro-run-key.json" ]]; then
-      log_normal "running quickstart program for ${service}"
-      args=($(quickstart_arguments "${service}"))
-      env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
-          "--spawn_strategy=local" \
-          :quickstart -- "${args[@]}"
-    fi
-  )
+    log_yellow "Running ${library}'s quickstart."
+    args=()
+    while IFS="" read -r line; do
+      args+=("${line}")
+    done < <(quickstart_arguments "${library}")
+    env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
+        "--spawn_strategy=local" \
+        :quickstart -- "${args[@]}"
+  fi
 }
 
 errors=""
-for service in $(quickstart_libraries); do
-  if ! build_service "${service}"; then
-    errors="${errors} ${service}"
+for library in $(quickstart_libraries); do
+  echo
+  echo "================================================================"
+  log_yellow "Building ${library}'s quickstart"
+  if ! build_quickstart "${library}"; then
+    log_red "Building ${library}'s quickstart failed"
+    errors="${errors} ${library}"
+  else
+    log_green "Building ${library}'s quickstart was successful"
   fi
 done
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
-  log_green "Build finished"
+  log_green "All quickstart builds were successful"
 else
   log_red "Build failed for ${errors}"
+  exit 1
 fi
 
 exit 0
