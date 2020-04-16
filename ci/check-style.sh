@@ -24,6 +24,7 @@ fi
 # This script assumes it is running the top-level google-cloud-cpp directory.
 
 readonly BINDIR="$(dirname "$0")"
+source "${BINDIR}/colors.sh"
 
 # Build paths to ignore in find(1) commands by reading .gitignore.
 declare -a ignore=( -path ./.git )
@@ -36,8 +37,11 @@ if [[ -f .gitignore ]]; then
   done < .gitignore
 fi
 
-find google/cloud -name '*.h' -print0 |
-  xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"
+problems=""
+if ! find google/cloud -name '*.h' -print0 |
+       xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
+  problems="${problems} include-guards"
+fi
 
 replace_original_if_changed() {
   if [[ $# != 2 ]]; then
@@ -106,13 +110,15 @@ find google/cloud/storage/testbench \
   xargs -0 python3 -m black
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
-find . \( "${ignore[@]}" \) -prune -o \
-       -iname '*.sh' -exec shellcheck \
+if ! find . \( "${ignore[@]}" \) -prune -o \
+       -type f -name '*.sh' -print0 \
+       | xargs -0 shellcheck \
          --exclude=SC1090 \
          --exclude=SC2034 \
          --exclude=SC2153 \
-         --exclude=SC2181 \
-       '{}' \;
+         --exclude=SC2181; then
+  problems="${problems} shellcheck"
+fi
 
 # Apply transformations to fix whitespace formatting in files not handled by
 # clang-format(1) above.  For now we simply remove trailing blanks.  Note that
@@ -128,10 +134,18 @@ find . \( "${ignore[@]}" \) -prune -o \
   done
 
 # Report any differences created by running the formatting tools. Report any
-# differences created by running the formatting tools. IFF we are running as
-# part of a CI build. Otherwise, a human probably invoked this script in which
-# case we'll just leave the formatted files in their local git repo so they can
-# diff them and commit the correctly formatted files.
-if [[ "${RUNNING_CI}" != "no" ]]; then
-  git diff --ignore-submodules=all --color --exit-code .
+# differences created by running the formatting tools.
+if ! git diff --ignore-submodules=all --color --exit-code .; then
+  problems="${problems} formatting"
+fi
+
+# Exit with an error IFF we are running as part of a CI build. Otherwise, a
+# human probably invoked this script in which case we'll just leave the
+# formatted files in their local git repo so they can diff them and commit the
+# correctly formatted files.
+if [[ -n "${problems}" ]]; then
+  log_red "Detected style problems (${problems:1})"
+  if [[ "${RUNNING_CI}" != "no" ]]; then
+    exit 1
+  fi
 fi
