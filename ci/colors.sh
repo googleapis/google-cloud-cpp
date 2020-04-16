@@ -16,7 +16,7 @@
 # Prefer the log_* functions, such as log_yellow, instead of directly using
 # these variables. The functions don't require the caller to remember to reset
 # the terminal.
-if [ -z "${COLOR_RESET+x}" ]; then
+if [[ -z "${COLOR_RESET+x}" && -n "${TERM:-}" ]]; then
   if type tput >/dev/null 2>&1; then
     readonly COLOR_RED="$(tput setaf 1)"
     readonly COLOR_GREEN="$(tput setaf 2)"
