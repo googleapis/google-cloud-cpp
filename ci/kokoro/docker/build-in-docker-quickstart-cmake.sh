@@ -15,31 +15,47 @@
 
 set -eu
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: $(basename "$0") <project-root>"
+if [[ $# != 2 ]]; then
+  # The arguments are ignored, but required for compatibility with
+  # build-in-docker-cmake.sh
+  echo "Usage: $(basename "$0") <source-directory> <binary-directory>"
   exit 1
 fi
 
-readonly PROJECT_ROOT="$1"
+readonly SOURCE_DIR="$1"
+readonly BINARY_DIR="$2"
 
+# This script is supposed to run inside a Docker container, see
+# ci/kokoro/build.sh for the expected setup.  The /v directory is a volume
+# pointing to a (clean-ish) checkout of google-cloud-cpp:
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="/v"
+fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
+
+# Run the "CMake+vcpkg" cycle inside a Docker image. This script is designed to
+# work in the context created by the ci/Dockerfile.* build scripts.
+
+echo
+log_yellow "compiling quickstart programs"
+echo
 
 echo "================================================================"
 log_yellow "Update or install dependencies."
 
 # Clone and build vcpkg
-vcpkg_dir="cmake-out/vcpkg-quickstart"
+vcpkg_dir="${HOME}/vcpkg-quickstart"
 if [[ -d "${vcpkg_dir}" ]]; then
   git -C "${vcpkg_dir}" pull --quiet
 else
   git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
 fi
 
-if [[ -d "cmake-out/vcpkg-quickstart-cache" && ! -d \
-  "${vcpkg_dir}/installed" ]]; then
-  cp -r "cmake-out/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
+if [[ -d "${HOME}/vcpkg-quickstart-cache" && \
+    ! -d "${vcpkg_dir}/installed" ]]; then
+  cp -r "${HOME}/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
 fi
 
 (
@@ -49,32 +65,27 @@ fi
   ./vcpkg install google-cloud-cpp
 )
 # Use the new installed/ directory to create the cache.
-rm -fr "cmake-out/vcpkg-quickstart-cache"
-cp -r "${vcpkg_dir}/installed" "cmake-out/vcpkg-quickstart-cache"
+rm -fr "${HOME}/vcpkg-quickstart-cache"
+cp -r "${vcpkg_dir}/installed" "${HOME}/vcpkg-quickstart-cache"
 
 run_quickstart="false"
-readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
+readonly CONFIG_DIR="/c"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
-readonly ROOTS_PEM_SOURCE="https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem"
 if [[ -r "${CREDENTIALS_FILE}" ]]; then
-  if [[ -r "${CONFIG_DIR}/roots.pem" ]]; then
-    run_quickstart="true"
-  elif wget -O "${CONFIG_DIR}/roots.pem" -q "${ROOTS_PEM_SOURCE}"; then
-    run_quickstart="true"
-  fi
+  run_quickstart="true"
 fi
 readonly run_quickstart
 
 echo "================================================================"
 cd "${PROJECT_ROOT}"
 cmake_flags=(
-  "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
+  "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
 )
 
 build_quickstart() {
   local -r library="$1"
   local -r source_dir="google/cloud/${library}/quickstart"
-  local -r binary_dir="cmake-out/quickstart-${library}"
+  local -r binary_dir="${BINARY_DIR}/quickstart-${library}"
 
   echo
   log_yellow "Configure CMake for ${library}'s quickstart."
@@ -92,7 +103,6 @@ build_quickstart() {
       args+=("${line}")
     done < <(quickstart_arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
-      "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${binary_dir}/quickstart" "${args[@]}"
   fi
 }
