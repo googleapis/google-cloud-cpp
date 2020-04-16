@@ -34,6 +34,7 @@ https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+* [Google Cloud BigQuery](google/cloud/bigquery/README.md) (experimental)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md)
 * [Google Cloud Spanner](https://github.com/googleapis/google-cloud-cpp-spanner)
   (This currently lives in another repo, but is moving into this repo by June 2020).

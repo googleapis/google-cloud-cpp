@@ -128,6 +128,8 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
 include(CMakeDependentOption)
 
+option(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY "Enable building the BigQuery library."
+       ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
        ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
@@ -151,6 +153,9 @@ add_custom_target(doxygen-docs)
 # Only build the common library if any of the other libraries are enabled.
 if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
     add_subdirectory(google/cloud/storage)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
+    add_subdirectory(google/cloud/bigquery)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
     add_subdirectory(google/cloud/bigtable)

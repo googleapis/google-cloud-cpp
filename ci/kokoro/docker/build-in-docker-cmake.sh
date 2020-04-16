@@ -285,6 +285,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   if comm -23 \
       <(find /var/tmp/staging/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/include/google/cloud ; \
+        echo /var/tmp/staging/include/google/cloud/bigquery ; \
+        echo /var/tmp/staging/include/google/cloud/bigquery/internal ; \
         echo /var/tmp/staging/include/google/cloud/bigtable ; \
         echo /var/tmp/staging/include/google/cloud/bigtable/internal ; \
         echo /var/tmp/staging/include/google/cloud/firestore ; \
