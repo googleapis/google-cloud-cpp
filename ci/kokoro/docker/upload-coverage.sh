@@ -16,7 +16,10 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
@@ -54,8 +57,8 @@ readonly CODECOV_TOKEN
 # - Find out what branches contain that commit.
 # - Exclude "HEAD detached" branches (they are not really branches).
 # - Typically this is the single branch that was checked out by Kokoro.
-VCS_BRANCH_NAME="$(git branch --no-color --contains "$(git rev-parse HEAD)" | \
-    grep -v 'HEAD detached' || exit 0)"
+VCS_BRANCH_NAME="$(git branch --no-color --contains "$(git rev-parse HEAD)" |
+  grep -v 'HEAD detached' || exit 0)"
 VCS_BRANCH_NAME="${VCS_BRANCH_NAME/  /}"
 # When running locally, in a checked out branch, we need more cleanup.
 VCS_BRANCH_NAME="${VCS_BRANCH_NAME/* /}"
@@ -70,29 +73,29 @@ else
 fi
 
 docker_flags+=(
-    # The upload token for codecov.io
-    "--env" "CODECOV_TOKEN=${CODECOV_TOKEN}"
+  # The upload token for codecov.io
+  "--env" "CODECOV_TOKEN=${CODECOV_TOKEN}"
 
-    # Assert to the build
-    "--env" "CI=true"
+  # Assert to the build
+  "--env" "CI=true"
 
-    # Let codecov.io know if this is a pull request and what is the PR number.
-    "--env" "VCS_PULL_REQUEST=${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}"
+  # Let codecov.io know if this is a pull request and what is the PR number.
+  "--env" "VCS_PULL_REQUEST=${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}"
 
-    # Basic information about the commit.
-    "--env" "VCS_COMMIT_ID=${VCS_COMMIT_ID}"
-    "--env" "VCS_BRANCH_NAME=${VCS_BRANCH_NAME}"
+  # Basic information about the commit.
+  "--env" "VCS_COMMIT_ID=${VCS_COMMIT_ID}"
+  "--env" "VCS_BRANCH_NAME=${VCS_BRANCH_NAME}"
 
-    # Let codecov.io know about which build ID this is.
-    "--env" "CI_BUILD_ID=${KOKORO_BUILD_NUMBER:-}"
-    "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
+  # Let codecov.io know about which build ID this is.
+  "--env" "CI_BUILD_ID=${KOKORO_BUILD_NUMBER:-}"
+  "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
 )
 
 echo -n "Uploading code coverage to codecov.io..."
 # Run the upload script from codecov.io within a Docker container. Save the log
 # to a file because it can be very large (multiple MiB in size).
 sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
+  "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
 exit_status=$?
 echo "DONE"
 

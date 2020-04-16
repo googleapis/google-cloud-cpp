@@ -38,7 +38,7 @@ for benchmark in endurance apply_read_latency scan_throughput; do
   if [ $? = 0 ]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET} ${benchmark} benchmark"
   else
-    echo   "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${benchmark} benchmark"
+    echo "${COLOR_RED}[    ERROR ]${COLOR_RESET} ${benchmark} benchmark"
     echo
     echo "================ [begin ${log}] ================"
     cat "${log}"

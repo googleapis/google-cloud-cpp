@@ -14,7 +14,10 @@
 # limitations under the License.
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
@@ -48,18 +51,18 @@ run_example() {
   local program_path=$1
   local example=$2
   shift 2
-  local -a arguments=( "$@" )
+  local -a arguments=("$@")
   local program_name
   program_name="$(basename "${program_path}")"
 
   if [ ! -x "${program_path}" ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " ${program_name} is not compiled"
+      " ${program_name} is not compiled"
     return
   fi
   log="$(mktemp -t "run_example.XXXXXX")"
-  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      " ${program_name} ${example} running"
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+    " ${program_name} ${example} running"
   # We use parameter expansion for ${arguments} because set -u doesn't like
   # empty arrays on older versions of Bash (which some of our builds use). The
   # expression ${parameter+word} will expand word only if parameter is not
@@ -68,12 +71,12 @@ run_example() {
   set +e
   "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >>"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
-    echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        " ${program_name} ${example}"
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+      " ${program_name} ${example}"
   else
     EXIT_STATUS=1
-    echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " ${program_name} ${example}"
+    echo "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+      " ${program_name} ${example}"
     echo
     dump_log "${log}"
     if [ -f "${EMULATOR_LOG}" ]; then
@@ -106,18 +109,18 @@ run_failure_example() {
   local program_path=$1
   local example=$2
   shift 2
-  local -a arguments=( "$@" )
+  local -a arguments=("$@")
   local program_name
   program_name="$(basename "${program_path}")"
 
   if [[ ! -x "${program_path}" ]]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " ${program_name} is not compiled"
+      " ${program_name} is not compiled"
     return
   fi
   log="$(mktemp -t "run_example.XXXXXX")"
-  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      " ${program_name} ${example} running"
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+    " ${program_name} ${example} running"
   # We use parameter expansion for ${arguments} because set -u doesn't like
   # empty arrays on older versions of Bash (which some of our builds use). The
   # expression ${parameter+word} will expand word only if parameter is not
@@ -126,12 +129,12 @@ run_failure_example() {
   set +e
   "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >>"${log}" 2>&1 </dev/null
   if [[ $? != 0 ]]; then
-    echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        " ${program_name} ${example}"
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+      " ${program_name} ${example}"
   else
     EXIT_STATUS=1
-    echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " ${program_name} ${example}"
+    echo "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+      " ${program_name} ${example}"
     echo
     dump_log "${log}"
     if [[ -f "${EMULATOR_LOG}" ]]; then
@@ -166,22 +169,22 @@ run_example_usage() {
 
   if [ ! -x "${program_path}" ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " ${program_name} is not compiled"
+      " ${program_name} is not compiled"
     return
   fi
   log="$(mktemp -t "run_example.XXXXXX")"
-  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-      " ${program_name} running"
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+    " ${program_name} running"
   echo "${program_path}" >"${log}"
   set +e
   ${program_path} >>"${log}" 2>&1 </dev/null
   if [ $? != 0 ] && grep -q 'Usage' "${log}"; then
-    echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        " ${program_name}"
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+      " ${program_name}"
   else
     EXIT_STATUS=1
-    echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
-        " ${program_name}"
+    echo "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+      " ${program_name}"
     echo
     dump_log "${log}"
     if [ -f "${EMULATOR_LOG}" ]; then

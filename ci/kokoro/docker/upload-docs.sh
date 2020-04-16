@@ -16,7 +16,10 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
@@ -53,26 +56,26 @@ readonly GH_TOKEN
 # - Find out what branches contain that commit.
 # - Exclude "HEAD detached" branches (they are not really branches).
 # - Typically this is the single branch that was checked out by Kokoro.
-BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
-    grep -v 'HEAD detached' || exit 0)"
+BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" |
+  grep -v 'HEAD detached' || exit 0)"
 BRANCH="${BRANCH/  /}"
 BRANCH="${BRANCH/* /}"
 BRANCH="${BRANCH/origin\//}"
 readonly BRANCH
 
 case "${BRANCH:-}" in
-  master)
-    subdir="latest"
-    ;;
-  v[0-9]\.*)
-    subdir="${BRANCH/v/}"
-    subdir="${subdir%.x%}"
-    subdir="${subdir}.0"
-    ;;
-  *)
-    echo "Will not upload documents as the branch (${BRANCH}) is not a release branch nor 'master'."
-    #exit 0
-    ;;
+master)
+  subdir="latest"
+  ;;
+v[0-9]\.*)
+  subdir="${BRANCH/v/}"
+  subdir="${subdir%.x%}"
+  subdir="${subdir}.0"
+  ;;
+*)
+  echo "Will not upload documents as the branch (${BRANCH}) is not a release branch nor 'master'."
+  #exit 0
+  ;;
 esac
 
 # Allow the user to override the destination directory.
@@ -102,15 +105,17 @@ fi
 
 # Remove any previous content in the subdirectory used for this release. We will
 # recover any unmodified files in a second.
-(cd cmake-out/github-io-staging ; \
- git rm -qfr --ignore-unmatch \
-   "${subdir}/{bigtable,firestore,storage}")
+(
+  cd cmake-out/github-io-staging
+  git rm -qfr --ignore-unmatch \
+    "${subdir}/{bigtable,firestore,storage}"
+)
 
 # Copy the build results into the gh-pages clone.
 mkdir -p "cmake-out/github-io-staging/${subdir}"
 for lib in bigtable firestore storage; do
   cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
-      "cmake-out/github-io-staging/${subdir}/${lib}"
+    "cmake-out/github-io-staging/${subdir}/${lib}"
 done
 
 cd cmake-out/github-io-staging
@@ -136,5 +141,5 @@ if [[ -z "${GH_TOKEN:-}" ]]; then
   exit 0
 fi
 
-readonly REPO_REF=${REPO_URL/https:\/\/}
+readonly REPO_REF=${REPO_URL/https:\/\//}
 git push https://"${GH_TOKEN}@${REPO_REF}" gh-pages

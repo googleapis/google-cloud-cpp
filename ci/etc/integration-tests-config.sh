@@ -45,7 +45,6 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${GOOG
 
 # Cloud Pub/Sub only needs GOOGLE_CLOUD_PROJECT
 
-
 #
 # TODO(#3523 #3524) - remove these legacy variables
 #

@@ -57,7 +57,10 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 
@@ -103,18 +106,18 @@ if "${has_cache}"; then
   devtools_flags+=("--cache-from=${INSTALL_IMAGE}:latest")
 fi
 
-if [[ "${RUNNING_CI:-}" == "yes" ]] && \
-   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+if [[ "${RUNNING_CI:-}" == "yes" ]] &&
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   devtools_flags+=("--no-cache")
 fi
 
 echo "Running docker build with " "${devtools_flags[@]}"
 if docker build "${devtools_flags[@]}" ci; then
-   update_cache="true"
+  update_cache="true"
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
-   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.

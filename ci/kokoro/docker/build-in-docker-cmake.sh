@@ -42,11 +42,17 @@ echo
 
 echo "================================================================"
 log_yellow "Verify formatting"
-(cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
+(
+  cd "${PROJECT_ROOT}"
+  ./ci/check-style.sh
+)
 
 echo "================================================================"
 log_yellow "Verify markdown"
-(cd "${PROJECT_ROOT}" ; ./ci/check-markdown.sh)
+(
+  cd "${PROJECT_ROOT}"
+  ./ci/check-markdown.sh
+)
 
 if command -v ccache; then
   echo "================================================================"
@@ -63,7 +69,7 @@ CMAKE_COMMAND="cmake"
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
-  cmake_extra_flags+=( "-DBUILD_TESTING=OFF" )
+  cmake_extra_flags+=("-DBUILD_TESTING=OFF")
 fi
 
 if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
@@ -76,21 +82,21 @@ if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
 fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DCMAKE_INSTALL_PREFIX=/var/tmp/staging" )
+  cmake_extra_flags+=("-DCMAKE_INSTALL_PREFIX=/var/tmp/staging")
 fi
 
 if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON" )
+  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON")
 fi
 
 if [[ "${USE_NINJA:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-GNinja" )
+  cmake_extra_flags+=("-GNinja")
 fi
 
 if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on" )
+  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on")
   if [[ "${BRANCH:-}" == "master" ]]; then
-    cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on" )
+    cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on")
   fi
 fi
 
@@ -101,11 +107,11 @@ fi
 # to expand as separate arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
-    -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
-    ${CMAKE_FLAGS:-} \
-    "-H${SOURCE_DIR}" \
-    "-B${BINARY_DIR}"
+  -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+  "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
+  ${CMAKE_FLAGS:-} \
+  "-H${SOURCE_DIR}" \
+  "-B${BINARY_DIR}"
 echo
 log_yellow "Finished CMake config"
 
@@ -125,7 +131,7 @@ readonly TEST_JOB_COUNT
 
 ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
-    ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
+  ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
 fi
 
 if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
@@ -161,7 +167,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       # TODO(#441) - when the emulator crashes the tests can take a long time.
       # The slowest test normally finishes in about 6 seconds, 60 seems safe.
       if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-             "${BINARY_DIR}" "${ctest_args[@]}" --timeout 60; then
+        "${BINARY_DIR}" "${ctest_args[@]}" --timeout 60; then
         success=yes
         break
       fi
@@ -175,7 +181,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     log_yellow "running storage integration tests via CTest [${attempt}]"
     echo
     "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-        "${BINARY_DIR}" "${ctest_args[@]}"
+      "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
   readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
@@ -183,16 +189,18 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
   readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 
-  if [[ # yes: always try to run the integration tests
-        ( ("${RUN_INTEGRATION_TESTS}" == "yes" ) ||
-          # auto: only try to run integration tests if the config files are present
-          ( "${RUN_INTEGRATION_TESTS}" == "auto" &&
-            -r "${INTEGRATION_TESTS_CONFIG}" &&
-            -r "${GOOGLE_APPLICATION_CREDENTIALS}" &&
-            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" &&
-            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ) ) &&
-        # super builds cannot run the integration tests
-        ( "${SOURCE_DIR}" != "super" ) ]]; then
+  if [[ ((\
+    "${RUN_INTEGRATION_TESTS}" == "yes") || (\
+    \
+    "${RUN_INTEGRATION_TESTS}" == "auto" && -r \
+    "${INTEGRATION_TESTS_CONFIG}" && -r \
+    "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r \
+    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}")) && (\
+    \
+    "${SOURCE_DIR}" != "super") ]]; then # yes: always try to run the integration tests
+    # auto: only try to run integration tests if the config files are present
+    # super builds cannot run the integration tests
     echo "================================================================"
     log_yellow "Running the integration tests against production"
 
@@ -232,7 +240,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # create a grpc::Credentials object. Even though the account is deactivated
     # for use by `gcloud` the token remains valid for about 1 hour.
     GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN="$(
-        "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
+      "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token
+    )"
     export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
     readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
 
@@ -246,7 +255,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # that is fine too. As long as we do not repeat all the tests we are
     # winning.
     env -C "${BINARY_DIR}" ctest \
-        -L integration-tests-no-emulator "${ctest_args[@]}"
+      -L integration-tests-no-emulator "${ctest_args[@]}"
 
     echo "================================================================"
     log_yellow "Completed the integration tests against production"
@@ -262,8 +271,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     for subdir in google/cloud/bigtable google/cloud/storage; do
       echo
       log_yellow "Running integration tests for ${subdir}"
-      (cd "${BINARY_DIR}" && \
-          "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
+      (cd "${BINARY_DIR}" &&
+        "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
     done
 
     echo
@@ -283,23 +292,25 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   log_yellow "Verify installed headers created only expected directories."
   if comm -23 \
-      <(find /var/tmp/staging/include/google/cloud -type d | sort) \
-      <(echo /var/tmp/staging/include/google/cloud ; \
-        echo /var/tmp/staging/include/google/cloud/bigquery ; \
-        echo /var/tmp/staging/include/google/cloud/bigquery/internal ; \
-        echo /var/tmp/staging/include/google/cloud/bigtable ; \
-        echo /var/tmp/staging/include/google/cloud/bigtable/internal ; \
-        echo /var/tmp/staging/include/google/cloud/firestore ; \
-        echo /var/tmp/staging/include/google/cloud/storage ; \
-        echo /var/tmp/staging/include/google/cloud/storage/internal ; \
-        echo /var/tmp/staging/include/google/cloud/storage/oauth2 ; \
-        echo /var/tmp/staging/include/google/cloud/storage/testing ; \
-        /bin/true) | grep -q /var/tmp; then
-      log_red "Installed directories do not match expectation."
-      echo "Found:"
-      find /var/tmp/staging/include/google/cloud -type d | sort
-      /bin/false
-   fi
+    <(find /var/tmp/staging/include/google/cloud -type d | sort) \
+    <(
+      echo /var/tmp/staging/include/google/cloud
+      echo /var/tmp/staging/include/google/cloud/bigquery
+      echo /var/tmp/staging/include/google/cloud/bigquery/internal
+      echo /var/tmp/staging/include/google/cloud/bigtable
+      echo /var/tmp/staging/include/google/cloud/bigtable/internal
+      echo /var/tmp/staging/include/google/cloud/firestore
+      echo /var/tmp/staging/include/google/cloud/storage
+      echo /var/tmp/staging/include/google/cloud/storage/internal
+      echo /var/tmp/staging/include/google/cloud/storage/oauth2
+      echo /var/tmp/staging/include/google/cloud/storage/testing
+      /bin/true
+    ) | grep -q /var/tmp; then
+    log_red "Installed directories do not match expectation."
+    echo "Found:"
+    find /var/tmp/staging/include/google/cloud -type d | sort
+    /bin/false
+  fi
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.

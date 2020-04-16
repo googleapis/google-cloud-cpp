@@ -20,7 +20,10 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-BINARY_DIR="$(cd "${1}"; pwd)"
+BINARY_DIR="$(
+  cd "${1}"
+  pwd
+)"
 readonly BINARY_DIR
 shift
 ctest_args=("$@")
@@ -30,7 +33,10 @@ export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/test
 
 CMDDIR="$(dirname "$0")"
 readonly CMDDIR
-PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
+PROJECT_ROOT="$(
+  cd "${CMDDIR}/../../../.."
+  pwd
+)"
 readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
 

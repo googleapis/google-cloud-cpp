@@ -48,7 +48,10 @@ else
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
@@ -100,7 +103,7 @@ log_yellow "getting roots.pem for gRPC."
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
 rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
-    -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
+  -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 
 BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-master}"
 readonly BRANCH
@@ -116,7 +119,7 @@ CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
-      "${CACHE_FOLDER}" "${CACHE_NAME}" || true
+  "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
 echo "================================================================"
 log_yellow "starting build script."
@@ -131,7 +134,7 @@ fi
 
 if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
-      "${CACHE_FOLDER}" "${CACHE_NAME}" || true
+    "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 fi
 
 exit ${exit_status}

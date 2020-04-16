@@ -37,8 +37,8 @@ else
   git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
 fi
 
-if [[ -d "cmake-out/vcpkg-quickstart-cache" && \
-    ! -d "${vcpkg_dir}/installed" ]]; then
+if [[ -d "cmake-out/vcpkg-quickstart-cache" && ! -d \
+  "${vcpkg_dir}/installed" ]]; then
   cp -r "cmake-out/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
 fi
 

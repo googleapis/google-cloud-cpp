@@ -31,8 +31,8 @@ export CC=gcc
 # Running with coverity-scan and ccache seems like a bad idea, disable ccache.
 # Also build in Debug mode because building in Release mode takes too long.
 cmake -H. -B.coverity \
-    -DCMAKE_BUILD_TYPE=Debug \
-    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
 
 # Run coverity scan over our code.
 cov-build --dir cov-int cmake --build .coverity -- -j "$(nproc)"

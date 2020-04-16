@@ -21,7 +21,10 @@ if [[ $# != 3 ]]; then
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/colors.sh"
@@ -39,8 +42,8 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
-   [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
+if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] ||
+  [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   log_normal "Cache not updated as this is a PR build."
   exit 0
@@ -49,7 +52,7 @@ fi
 echo "================================================================"
 log_normal "Preparing cache tarball for ${CACHE_NAME}"
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
-    "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
+  "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
 
 echo "================================================================"
 log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
@@ -63,7 +66,7 @@ cleanup() {
 create_gcloud_config
 activate_service_account_keyfile "${KEYFILE}"
 env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-    gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
+  gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 
 echo "================================================================"
 log_normal "Upload completed"

@@ -21,7 +21,10 @@ if [[ $# != 3 ]]; then
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/colors.sh"
@@ -43,8 +46,8 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
-   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
+if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] &&
+  [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   log_normal "Cache not downloaded as this is not a PR build."
   exit 0
@@ -62,7 +65,7 @@ activate_service_account_keyfile "${KEYFILE}"
 echo "================================================================"
 log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
+  gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:

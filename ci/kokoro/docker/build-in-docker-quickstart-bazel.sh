@@ -49,13 +49,13 @@ log_normal "Using Bazel in ${BAZEL_BIN}"
 run_vars=()
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${BAZEL_CONFIG}" ]]; then
-    bazel_args+=(--config "${BAZEL_CONFIG}")
+  bazel_args+=(--config "${BAZEL_CONFIG}")
 fi
 
 if [[ -r "/c/kokoro-run-key.json" ]]; then
   run_vars+=(
-      "GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
-      "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+    "GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
+    "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
   )
 fi
 
@@ -68,11 +68,11 @@ build_quickstart() {
   ${BAZEL_BIN} version
   log_normal "fetch dependencies for ${library}'s quickstart"
   "${PROJECT_ROOT}/ci/retry-command.sh" \
-      "${BAZEL_BIN}" fetch -- ...
+    "${BAZEL_BIN}" fetch -- ...
 
   echo
   log_yellow "Compiling ${library}'s quickstart"
-  "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
+  "${BAZEL_BIN}" build "${bazel_args[@]}" -- ...
 
   if [[ -r "/c/kokoro-run-key.json" ]]; then
     echo
@@ -82,8 +82,8 @@ build_quickstart() {
       args+=("${line}")
     done < <(quickstart_arguments "${library}")
     env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
-        "--spawn_strategy=local" \
-        :quickstart -- "${args[@]}"
+      "--spawn_strategy=local" \
+      :quickstart -- "${args[@]}"
   fi
 }
 

@@ -61,13 +61,16 @@ function die_with_message() {
 FORCE_FLAG="no"
 while getopts "fh" opt "$@"; do
   case "$opt" in
-    [f])
-      FORCE_FLAG="yes";;
-    [h])
-      echo "${USAGE}"
-      exit 0;;
-    *)
-      die_with_message "${USAGE}";;
+  [f])
+    FORCE_FLAG="yes"
+    ;;
+  [h])
+    echo "${USAGE}"
+    exit 0
+    ;;
+  *)
+    die_with_message "${USAGE}"
+    ;;
   esac
 done
 shift $((OPTIND - 1))
@@ -92,7 +95,11 @@ readonly REPO_DIR="${TMP_DIR}/repo"
 
 function banner() {
   local color
-  color=$(tput bold; tput setaf 4; tput rev)
+  color=$(
+    tput bold
+    tput setaf 4
+    tput rev
+  )
   local reset
   reset=$(tput sgr0)
   echo "${color}$*${reset}"
@@ -120,12 +127,12 @@ function get_release_notes() {
     if grep -q "^## " <<<"${line}"; then
       if grep -q "${tag}" <<<"${line}"; then
         found=true
-        continue  # Skip the heading
+        continue # Skip the heading
       fi
-      $found && break  # Found the following heading; done
+      $found && break # Found the following heading; done
     fi
     $found && notes+=("$line")
-  done < CHANGELOG.md
+  done <CHANGELOG.md
   # The sed here removes leading blank lines
   local clean
   clean="$(printf "%s\n" "${notes[@]}" | sed '/./,$!d')"
@@ -148,7 +155,7 @@ trap exit_handler EXIT
 # we make sure it's installed early on so we don't fail after completing part
 # of the release. We also use 'hub' to do the clone so that the user is asked
 # to authenticate at the beginning of the process rather than at the end.
-if ! command -v hub > /dev/null; then
+if ! command -v hub >/dev/null; then
   die_with_message \
     "Can't find 'hub' command" \
     "Maybe run: sudo apt install hub" \
@@ -178,7 +185,7 @@ declare -r NEW_VERSION
 
 # Avoid handling patch releases for now, because we wouldn't need a new branch
 # for those.
-if ! grep -P "\d+\.\d+\.0" <<<"${NEW_VERSION}" > /dev/null; then
+if ! grep -P "\d+\.\d+\.0" <<<"${NEW_VERSION}" >/dev/null; then
   die_with_message "Sorry, cannot handle patch releases (yet)" "${USAGE}"
 fi
 

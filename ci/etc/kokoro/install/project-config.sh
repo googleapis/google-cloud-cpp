@@ -14,24 +14,25 @@
 # limitations under the License.
 
 declare -A ORIGINAL_COPYRIGHT_YEAR=(
-  [centos-7]=2018
-  [centos-8]=2019
-  [debian-buster]=2019
-  [debian-stretch]=2018
-  [fedora]=2018
-  [opensuse-leap]=2019
-  [opensuse-tumbleweed]=2018
-  [ubuntu-xenial]=2018
-  [ubuntu-bionic]=2018
+  ["centos-7"]=2018
+  ["centos-8"]=2019
+  ["debian-buster"]=2019
+  ["debian-stretch"]=2018
+  ["fedora"]=2018
+  ["opensuse-leap"]=2019
+  ["opensuse-tumbleweed"]=2018
+  ["ubuntu-xenial"]=2018
+  ["ubuntu-bionic"]=2018
 )
 
 declare -a FROZEN_FILES=()
 
-BUILD_AND_TEST_PROJECT_FRAGMENT=$(replace_fragments \
-      "INSTALL_CRC32C_FROM_SOURCE" \
-      "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
-      "INSTALL_GOOGLETEST_FROM_SOURCE" \
-      "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" <<'_EOF_'
+BUILD_AND_TEST_PROJECT_FRAGMENT=$(
+  replace_fragments \
+    "INSTALL_CRC32C_FROM_SOURCE" \
+    "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
+    "INSTALL_GOOGLETEST_FROM_SOURCE" \
+    "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" <<'_EOF_'
 # #### crc32c
 
 # The project depends on the Crc32c library, we need to compile this from

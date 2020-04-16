@@ -21,12 +21,12 @@ fi
 
 if [[ -z "${GCLOUD_ARGS:-}" ]]; then
   readonly GCLOUD_ARGS=(
-      # Do not seek confirmation for any actions, assume the default
-      "--quiet"
+    # Do not seek confirmation for any actions, assume the default
+    "--quiet"
 
-      # Run the command using a custom configuration, this avoids affecting the
-      # user's `default` configuration
-      "--configuration=${GCLOUD_CONFIG}"
+    # Run the command using a custom configuration, this avoids affecting the
+    # user's `default` configuration
+    "--configuration=${GCLOUD_CONFIG}"
   )
 fi
 
@@ -34,7 +34,7 @@ activate_service_account_keyfile() {
   local -r keyfile="$1"
   local -r account="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${keyfile}")"
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account \
-      --key-file "${keyfile}" >/dev/null
+    --key-file "${keyfile}" >/dev/null
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" config set account "${account}"
 }
 
@@ -50,12 +50,12 @@ delete_gcloud_config() {
 
 create_gcloud_config() {
   if ! "${GCLOUD}" --quiet config configurations \
-           describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
+    describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
     echo
     echo "================================================================"
     log_normal "Create the gcloud configuration for the cloud-cpp tests."
     "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
-        create --no-activate "${GCLOUD_CONFIG}" >/dev/null
+      create --no-activate "${GCLOUD_CONFIG}" >/dev/null
   fi
   if [[ -n "${GOOGLE_CLOUD_PROJECT:-}" ]]; then
     "${GCLOUD}" "${GCLOUD_ARGS[@]}" config set project "${GOOGLE_CLOUD_PROJECT}"
@@ -69,11 +69,11 @@ cleanup_hmac_service_account() {
   # are gone (or were never created). The binding is harmless if the account
   # is deleted.
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects remove-iam-policy-binding \
-      "${GOOGLE_CLOUD_PROJECT}" \
-      --member "serviceAccount:${ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null || true
+    "${GOOGLE_CLOUD_PROJECT}" \
+    --member "serviceAccount:${ACCOUNT}" \
+    --role roles/iam.serviceAccountTokenCreator >/dev/null || true
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts delete \
-      "${ACCOUNT}" >/dev/null
+    "${ACCOUNT}" >/dev/null
 }
 
 cleanup_stale_hmac_service_accounts() {
@@ -85,11 +85,11 @@ cleanup_stale_hmac_service_accounts() {
   readonly THRESHOLD
   local email
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts list \
-      --filter="email~^hmac-[0-9]{8}- AND email<hmac-${THRESHOLD}-" \
-      --format='csv(email)[no-heading]' | \
-  while read -r email; do
-    cleanup_hmac_service_account "${email}"
-  done
+    --filter="email~^hmac-[0-9]{8}- AND email<hmac-${THRESHOLD}-" \
+    --format='csv(email)[no-heading]' |
+    while read -r email; do
+      cleanup_hmac_service_account "${email}"
+    done
 }
 
 create_hmac_service_account() {
@@ -98,7 +98,7 @@ create_hmac_service_account() {
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts create "${ACCOUNT}"
   log_normal "Grant service account permissions to create HMAC keys."
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
-      "${GOOGLE_CLOUD_PROJECT}" \
-      --member "serviceAccount:${EMAIL}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null
+    "${GOOGLE_CLOUD_PROJECT}" \
+    --member "serviceAccount:${EMAIL}" \
+    --role roles/iam.serviceAccountTokenCreator >/dev/null
 }

@@ -21,7 +21,7 @@ set -eu
 # Bazel, or the Google Cloud SDK fails. To make the CI build more robust, try
 # again when that happens.
 
-if (( $# < 1 )); then
+if (($# < 1)); then
   echo "Usage: $(basename "$0") program [arguments]"
   exit 1
 fi
@@ -41,10 +41,10 @@ for i in 1 2 3; do
     exit 0
   fi
   # Sleep for a few minutes before trying again.
-  period=$(( (RANDOM % 60) + min_wait ))
+  period=$(((RANDOM % 60) + min_wait))
   echo "${PROGRAM} failed; trying again in ${period} seconds."
   sleep ${period}s
-  min_wait=$(( min_wait * 2 ))
+  min_wait=$((min_wait * 2))
 done
 
 exit 1
