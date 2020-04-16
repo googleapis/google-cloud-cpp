@@ -237,27 +237,6 @@ run_rename_object_example() {
 }
 
 ################################################
-# Run the examples showing how to rewrite objects.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   source_bucket_name: an existing bucket where the source object will be
-#     created.
-#   target_bucket_name: an existing bucket where the target object will be
-#     created.
-# Returns:
-#   None
-################################################
-run_all_object_rewrite_examples() {
-  local source_bucket_name=$1
-  local target_bucket_name=$2
-  shift 2
-
-  run_rename_object_example "${source_bucket_name}"
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -281,7 +260,6 @@ run_all_storage_examples() {
   run_retention_policy_examples
   run_lifecycle_management_examples
   run_resumable_write_object_examples "${BUCKET_NAME}"
-  run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"

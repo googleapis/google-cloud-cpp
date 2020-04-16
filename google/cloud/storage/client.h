@@ -1512,7 +1512,7 @@ class Client {
    * @snippet storage_object_samples.cc rotate encryption key
    *
    * @par Example: using rewrite object to rename an object
-   * @snippet storage_object_samples.cc rename object
+   * @snippet storage_object_rewrite_samples.cc rename object
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> RewriteObjectBlocking(
