@@ -31,9 +31,9 @@ function (bigquery_client_define_samples)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("bigquery_client_integration_samples.bzl"
-                         "bigquery_client_integration_samples")
+                         "bigquery_client_integration_samples" YEAR "2019")
     export_list_to_bazel("bigquery_client_unit_samples.bzl"
-                         "bigquery_client_unit_samples")
+                         "bigquery_client_unit_samples" YEAR "2019")
 
     # Generate a target for each unit test.
     foreach (fname ${bigquery_client_integration_samples}

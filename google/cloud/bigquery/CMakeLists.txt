@@ -126,7 +126,7 @@ add_library(googleapis-c++::bigquery_client ALIAS bigquery_client)
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(bigquery_client)
+create_bazel_config(bigquery_client YEAR "2019")
 
 # Define the tests in a function so we have a new scope for variable names.
 function (bigquery_client_define_tests)
@@ -146,7 +146,7 @@ function (bigquery_client_define_tests)
         bigquery_client_testing
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
                GTest::gmock_main GTest::gmock GTest::gtest)
-    create_bazel_config(bigquery_client_testing)
+    create_bazel_config(bigquery_client_testing YEAR "2019")
     target_include_directories(
         bigquery_client_testing
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -161,7 +161,7 @@ function (bigquery_client_define_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("bigquery_client_unit_tests.bzl"
-                         "bigquery_client_unit_tests")
+                         "bigquery_client_unit_tests" YEAR "2019")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(bigquery-client-tests)
