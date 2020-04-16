@@ -341,9 +341,10 @@ log_yellow "Detected the branch name: ${BRANCH}."
 
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
-# user ID, if known.
-docker_uid="${UID:-0}"
-docker_user="${USER:-root}"
+# user ID.
+docker_uid="$(id -u)"
+docker_gid="$(id -g)"
+docker_user="$(id -un)"
 docker_home_prefix="${PWD}/cmake-out/home"
 if [[ "${docker_uid}" == "0" ]]; then
   # If the UID is 0, then the HOME directory will be set to /root, and we
@@ -452,7 +453,7 @@ docker_flags=(
 
     # Run the docker script and this user id. Because the docker image gets to
     # write in ${PWD} you typically want this to be your user id.
-    "--user" "${docker_uid}"
+    "--user" "${docker_uid}:${docker_gid}"
 
     # Bazel needs this environment variable to work correctly.
     "--env" "USER=${docker_user}"
