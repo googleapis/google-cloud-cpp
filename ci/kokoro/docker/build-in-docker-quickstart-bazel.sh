@@ -76,17 +76,16 @@ build_service() {
 
     if [[ -r "/c/kokoro-run-key.json" ]]; then
       log_normal "running quickstart program for ${service}"
-      # We want the word splitting for $quickstart_args
-      # shellcheck disable=SC2086
+      args=($(quickstart_arguments "${service}"))
       env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
           "--spawn_strategy=local" \
-          :quickstart -- ${quickstart_args["${service}"]}
+          :quickstart -- "${args[@]}"
     fi
   )
 }
 
 errors=""
-for service in "${!quickstart_args[@]}"; do
+for service in $(quickstart_libraries); do
   if ! build_service "${service}"; then
     errors="${errors} ${service}"
   fi

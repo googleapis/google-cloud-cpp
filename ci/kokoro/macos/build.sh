@@ -57,6 +57,10 @@ echo "================================================================"
 log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
 
+echo
+log_yellow "DEBUG DEBUG BASH_VERSION=${BASH_VERSION}"
+log_yellow "DEBUG DEBUG BASH_VERSINFO=" "${BASH_VERSINFO[@]}"
+
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 

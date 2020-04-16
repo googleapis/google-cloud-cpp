@@ -66,7 +66,7 @@ if [[ -x "${BAZEL_BIN}" ]]; then
   maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
   "${BAZEL_BIN}" shutdown
 
-  for library in "${!quickstart_args[@]}"; do
+  for library in $(quickstart_libraries); do
     cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
     maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
     maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
