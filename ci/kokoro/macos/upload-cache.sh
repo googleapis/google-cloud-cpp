@@ -26,6 +26,8 @@ fi
 GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
@@ -48,13 +50,29 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
   exit 0
 fi
 
-readonly CCACHE_DIR="${HOME}/.ccache"
+maybe_dirs=(
+  # This is where ccache stores its files, if present we want to back it up
+  "${HOME}/.ccache"
 
-maybe_dirs=("${CCACHE_DIR}")
+  # The quickstart builds need to preserve the contents of the vcpkg installed/
+  # directory, but we have to separate it from the other files in `vcpkg` or
+  # things like `git clone` do not work as expected.
+  "${PROJECT_ROOT}/cmake-out/upload/vcpkg-installed"
+)
+
 readonly BAZEL_BIN="$HOME/bin/bazel"
 if [[ -x "${BAZEL_BIN}" ]]; then
   maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
   maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
+  "${BAZEL_BIN}" shutdown
+
+  for library in "${!quickstart_args[@]}"; do
+    cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
+    maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
+    maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
+    "${BAZEL_BIN}" shutdown
+  done
+  cd "${PROJECT_ROOT}"
 fi
 
 dirs=()

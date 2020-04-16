@@ -73,6 +73,10 @@ if [[ "${BUILD_NAME}" = "bazel" ]]; then
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   driver_script="ci/kokoro/macos/build-cmake.sh"
   script_flags+=("super" "cmake-out/macos")
+elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
+  driver_script="ci/kokoro/macos/build-quickstart-cmake.sh"
+elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
+  driver_script="ci/kokoro/macos/build-quickstart-bazel.sh"
 else
   log_red "unknown BUILD_NAME (${BUILD_NAME})."
   exit 1
