@@ -20,11 +20,10 @@
 #include <map>
 #include <sstream>
 
-namespace gcs = google::cloud::storage;
-
 namespace {
 
-void ListObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void ListObjectAcl(google::cloud::storage::Client client,
+                   std::vector<std::string> const& argv) {
   //! [list object acl] [START storage_print_file_acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -43,7 +42,8 @@ void ListObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void CreateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void CreateObjectAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [create object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -61,7 +61,8 @@ void CreateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void DeleteObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void DeleteObjectAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [delete object acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -77,7 +78,8 @@ void DeleteObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GetObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void GetObjectAcl(google::cloud::storage::Client client,
+                  std::vector<std::string> const& argv) {
   //! [print file acl for user] [START storage_print_file_acl_for_user]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -95,7 +97,8 @@ void GetObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void UpdateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void UpdateObjectAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [update object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -119,7 +122,8 @@ void UpdateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void PatchObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
+void PatchObjectAcl(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
   //! [patch object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -147,7 +151,7 @@ void PatchObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void PatchObjectAclNoRead(gcs::Client client,
+void PatchObjectAclNoRead(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [patch object acl no-read]
   namespace gcs = google::cloud::storage;
@@ -167,7 +171,8 @@ void PatchObjectAclNoRead(gcs::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void AddObjectOwner(gcs::Client client, std::vector<std::string> const& argv) {
+void AddObjectOwner(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
   //! [add file owner] [START storage_add_file_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -186,7 +191,7 @@ void AddObjectOwner(gcs::Client client, std::vector<std::string> const& argv) {
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void RemoveObjectOwner(gcs::Client client,
+void RemoveObjectOwner(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [remove file owner] [START storage_remove_file_owner]
   namespace gcs = google::cloud::storage;
