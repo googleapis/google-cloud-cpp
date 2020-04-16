@@ -610,93 +610,6 @@ void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
-void GetDefaultEventBasedHold(google::cloud::storage::Client client,
-                              std::vector<std::string> const& argv) {
-  //! [get default event based hold]
-  // [START storage_get_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> bucket_metadata =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
-
-    std::cout << "The default event-based hold for objects in bucket "
-              << bucket_metadata->name() << " is "
-              << (bucket_metadata->default_event_based_hold() ? "enabled"
-                                                              : "disabled")
-              << "\n";
-  }
-  // [END storage_get_default_event_based_hold]
-  //! [get default event based hold]
-  (std::move(client), argv.at(0));
-}
-
-void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
-                                 std::vector<std::string> const& argv) {
-  //! [enable default event based hold]
-  // [START storage_enable_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> original =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    std::cout << "The default event-based hold for objects in bucket "
-              << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
-              << "\n";
-  }
-  // [END storage_enable_default_event_based_hold]
-  //! [enable default event based hold]
-  (std::move(client), argv.at(0));
-}
-
-void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
-                                  std::vector<std::string> const& argv) {
-  //! [disable default event based hold]
-  // [START storage_disable_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> original =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    std::cout << "The default event-based hold for objects in bucket "
-              << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
-              << "\n";
-  }
-  // [END storage_disable_default_event_based_hold]
-  //! [disable default event based hold]
-  (std::move(client), argv.at(0));
-}
-
 void GetRetentionPolicy(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [get retention policy]
@@ -977,11 +890,6 @@ int main(int argc, char* argv[]) {
                  EnableBucketLifecycleManagement),
       make_entry("disable-bucket-lifecycle-management", {},
                  DisableBucketLifecycleManagement),
-      make_entry("get-default-event-based-hold", {}, GetDefaultEventBasedHold),
-      make_entry("enable-default-event-based-hold", {},
-                 EnableDefaultEventBasedHold),
-      make_entry("disable-default-event-based-hold", {},
-                 DisableDefaultEventBasedHold),
       make_entry("get-retention-policy", {}, GetRetentionPolicy),
       make_entry("set-retention-policy", {"<period>"}, SetRetentionPolicy),
       make_entry("remove-retention-policy", {}, RemoveRetentionPolicy),

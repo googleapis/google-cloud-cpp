@@ -25,31 +25,6 @@ fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
-# Run all examples showing how to use default event based holds.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_default_event_based_hold_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-    "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples get-default-event-based-hold \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples enable-default-event-based-hold \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples disable-default-event-based-hold \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-}
-
-################################################
 # Run all examples showing how to use retention policies.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -189,7 +164,6 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_default_event_based_hold_examples
   run_retention_policy_examples
   run_lifecycle_management_examples
   run_resumable_write_object_examples "${BUCKET_NAME}"
