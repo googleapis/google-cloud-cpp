@@ -18,5 +18,4 @@
 
 storage_examples = [
     "storage_bucket_samples.cc",
-    "storage_object_samples.cc",
 ]
