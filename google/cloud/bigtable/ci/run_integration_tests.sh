@@ -23,15 +23,6 @@ source "${BINDIR}/../../../../ci/colors.sh"
 
 readonly BTDIR="google/cloud/bigtable"
 
-if [ -d ${BTDIR}/examples ]; then
-  (cd "${BTDIR}/examples" && "${BINDIR}/../examples/run_examples_emulator.sh")
-else
-  # For some builds (notably those without exceptions) the directory is not
-  # even created, so we have to skip it completely.
-  echo "${COLOR_YELLOW}[ SKIPPED  ]${COLOR_RESET} bigtable examples" \
-    " as the examples are not compiled for this build"
-fi
-
 # To improve coverage (and avoid bitrot), run the Bigtable benchmarks using the
 # embedded server.  The performance in the Travis and AppVeyor CI builds is not
 # consistent enough to use the results, but we want to detect crashes and ensure

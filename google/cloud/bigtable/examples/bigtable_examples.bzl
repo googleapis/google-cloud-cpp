@@ -17,5 +17,15 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_examples = [
+    "bigtable_grpc_credentials.cc",
+    "bigtable_hello_app_profile.cc",
     "bigtable_hello_instance_admin.cc",
+    "bigtable_hello_table_admin.cc",
+    "bigtable_hello_world.cc",
+    "bigtable_instance_admin_snippets.cc",
+    "data_async_snippets.cc",
+    "data_snippets.cc",
+    "instance_admin_async_snippets.cc",
+    "table_admin_async_snippets.cc",
+    "table_admin_snippets.cc",
 ]

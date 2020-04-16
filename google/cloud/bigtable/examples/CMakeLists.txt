@@ -27,10 +27,11 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
-set(bigtable_autorun_examples
+set(bigtable_examples
     # cmake-format: sort
     bigtable_grpc_credentials.cc
     bigtable_hello_app_profile.cc
+    bigtable_hello_instance_admin.cc
     bigtable_hello_table_admin.cc
     bigtable_hello_world.cc
     bigtable_instance_admin_snippets.cc
@@ -40,15 +41,10 @@ set(bigtable_autorun_examples
     table_admin_async_snippets.cc
     table_admin_snippets.cc)
 
-set(bigtable_examples # cmake-format: sort
-                      bigtable_hello_instance_admin.cc)
-
 set(bigtable_examples_unit_tests # cmake-format: sort
                                  bigtable_examples_common_test.cc)
 
 include(CreateBazelConfig)
-export_list_to_bazel("bigtable_autorun_examples.bzl"
-                     "bigtable_autorun_examples")
 export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples")
 export_list_to_bazel("bigtable_examples_unit_tests.bzl"
                      "bigtable_examples_unit_tests")
@@ -79,8 +75,7 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# TODO(#3524) - merge these loops two when `bigtable_examples` is empty.
-foreach (fname ${bigtable_examples} ${bigtable_autorun_examples})
+foreach (fname ${bigtable_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
@@ -97,11 +92,6 @@ foreach (fname ${bigtable_examples} ${bigtable_autorun_examples})
                 bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
-endforeach ()
-
-foreach (fname ${bigtable_autorun_examples})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
