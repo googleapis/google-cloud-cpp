@@ -25,35 +25,6 @@ fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
-# Run all examples showing how to use retention policies.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_retention_policy_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-    "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples get-retention-policy \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples set-retention-policy \
-    "${bucket_name}" 30
-  run_example ./storage_bucket_samples remove-retention-policy \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples set-retention-policy \
-    "${bucket_name}" 30
-  run_example ./storage_bucket_samples lock-retention-policy \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-}
-
-################################################
 # Run all examples showing how to use lifecycle policies.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -99,7 +70,6 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_retention_policy_examples
   run_lifecycle_management_examples
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Google Cloud Storage Examples Finished"

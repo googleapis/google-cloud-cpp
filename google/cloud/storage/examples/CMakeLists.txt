@@ -42,6 +42,7 @@ set(storage_examples
     storage_policy_doc_samples.cc
     storage_public_object_samples.cc
     storage_quickstart.cc
+    storage_retention_policy_samples.cc
     storage_service_account_samples.cc
     storage_signed_url_v2_samples.cc
     storage_signed_url_v4_samples.cc

@@ -823,16 +823,16 @@ class Client {
    * is always required, and it acts as a pre-condition on the operation.
    *
    * @par Example: lock the retention policy
-   * @snippet storage_bucket_samples.cc lock retention policy
+   * @snippet storage_retention_policy_samples.cc lock retention policy
    *
    * @par Example: get the current retention policy
-   * @snippet storage_bucket_samples.cc get retention policy
+   * @snippet storage_retention_policy_samples.cc get retention policy
    *
    * @par Example: set the current retention policy
-   * @snippet storage_bucket_samples.cc set retention policy
+   * @snippet storage_retention_policy_samples.cc set retention policy
    *
    * @par Example: remove the retention policy
-   * @snippet storage_bucket_samples.cc remove retention policy
+   * @snippet storage_retention_policy_samples.cc remove retention policy
    *
    * @see https://cloud.google.com/storage/docs/bucket-lock for a description of
    *     the Bucket Lock feature.
