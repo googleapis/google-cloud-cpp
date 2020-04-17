@@ -19,7 +19,7 @@ add_library(storage_examples_common storage_examples_common.cc
 target_link_libraries(storage_examples_common storage_client
                       google_cloud_cpp_common)
 
-set(storage_autorun_examples
+set(storage_examples
     # cmake-format: sort
     storage_bucket_acl_samples.cc
     storage_bucket_cors_samples.cc
@@ -44,14 +44,11 @@ set(storage_autorun_examples
     storage_signed_url_v4_samples.cc
     storage_website_samples.cc)
 
-set(storage_examples)
-
 set(storage_examples_unit_tests
     # cmake-format: sort
     storage_client_mock_samples.cc storage_examples_common_test.cc)
 
 include(CreateBazelConfig)
-export_list_to_bazel("storage_autorun_examples.bzl" "storage_autorun_examples")
 export_list_to_bazel("storage_examples.bzl" "storage_examples")
 export_list_to_bazel("storage_examples_unit_tests.bzl"
                      "storage_examples_unit_tests")
@@ -82,8 +79,7 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# TODO(#3524) - merge these two loops when `storage_examples` is empty.
-foreach (fname ${storage_examples} ${storage_autorun_examples})
+foreach (fname ${storage_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
@@ -92,11 +88,6 @@ foreach (fname ${storage_examples} ${storage_autorun_examples})
                           google_cloud_cpp_common storage_common_options)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
-endforeach ()
-
-foreach (fname ${storage_autorun_examples})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
