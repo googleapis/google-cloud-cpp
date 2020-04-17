@@ -47,7 +47,10 @@ cc_library(
     deps = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//:spanner_protos",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc",
+        "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
+        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
     ],
 )
 
