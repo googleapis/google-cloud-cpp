@@ -125,6 +125,28 @@ void RewriteObjectResume(google::cloud::storage::Client client,
    argv.at(4));
 }
 
+void RenameObject(google::cloud::storage::Client client,
+                  std::vector<std::string> const& argv) {
+  //! [rename object] [START storage_move_file]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string old_object_name,
+     std::string new_object_name) {
+    StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
+        bucket_name, old_object_name, bucket_name, new_object_name);
+    if (!metadata) throw std::runtime_error(metadata.status().message());
+
+    google::cloud::Status status =
+        client.DeleteObject(bucket_name, old_object_name);
+    if (!status.ok()) throw std::runtime_error(status.message());
+
+    std::cout << "Renamed " << old_object_name << " to " << new_object_name
+              << " in bucket " << bucket_name << "\n";
+  }
+  //! [rename object] [END storage_move_file]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -151,9 +173,23 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
   auto const dst_object_name =
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
+  auto const old_object_name =
+      examples::MakeRandomObjectName(generator, "old-name-") + ".txt";
+  auto const new_object_name =
+      examples::MakeRandomObjectName(generator, "new-name-") + ".txt";
   auto const text = R"""(Some text to insert in the test objects.)""";
 
-  auto src = client.InsertObject(bucket_name, src_object_name, text).value();
+  std::cout << "\nCreating an object to run the RenameObject() example"
+            << std::endl;
+  (void)client.InsertObject(bucket_name, old_object_name, text).value();
+
+  std::cout << "\nRunning the RenameObject() example" << std::endl;
+  RenameObject(client, {bucket_name, old_object_name, new_object_name});
+
+  std::cout << "\nCleanup" << std::endl;
+  (void)client.DeleteObject(bucket_name, new_object_name);
+
+  (void)client.InsertObject(bucket_name, src_object_name, text).value();
 
   std::cout << "\nRunning the RewriteObject() example" << std::endl;
   RewriteObject(client, {bucket_name, src_object_name, destination_bucket_name,
@@ -184,10 +220,10 @@ void RunAll(std::vector<std::string> const& argv) {
     writer.write(line.data(), line.size());
   }
   writer.Close();
-  src = writer.metadata().value();
-  std::cout << "Created an object with size = " << src.size() << "\n";
 
-  std::cout << "\nStarting large object rewrite" << std::endl;
+  auto src = writer.metadata().value();
+  std::cout << "\nStarting large object (" << src.size() << " rewrite"
+            << std::endl;
   auto rewriter = client.RewriteObject(
       bucket_name, src_object_name, destination_bucket_name, dst_object_name,
       gcs::MaxBytesRewrittenPerCall(kRewriteBlock));
@@ -225,6 +261,10 @@ int main(int argc, char* argv[]) {
       make_entry("rewrite-object-non-blocking", {}, RewriteObjectNonBlocking),
       make_entry("rewrite-object-token", {}, RewriteObjectToken),
       make_entry("rewrite-object-resume", {"<token>"}, RewriteObjectResume),
+      examples::CreateCommandEntry(
+          "rename-object",
+          {"<bucket-name>", "<old-object-name>", "<new-object-name>"},
+          RenameObject),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

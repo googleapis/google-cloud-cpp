@@ -728,32 +728,6 @@ void RotateEncryptionKey(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void RenameObject(google::cloud::storage::Client client,
-                  std::vector<std::string> const& argv) {
-  //! [rename object] [START storage_move_file]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string old_object_name,
-     std::string new_object_name) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.RewriteObjectBlocking(bucket_name, old_object_name, bucket_name,
-                                     new_object_name);
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    google::cloud::Status status =
-        client.DeleteObject(bucket_name, old_object_name);
-
-    if (!status.ok()) throw std::runtime_error(status.message());
-    std::cout << "Renamed " << old_object_name << " to " << new_object_name
-              << " in bucket " << bucket_name << "\n";
-  }
-  //! [rename object] [END storage_move_file]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -996,8 +970,6 @@ int main(int argc, char* argv[]) {
           "rotate-encryption-key",
           {"<object-name>", "<old-encryption-key>", "<new-encryption-key>"},
           RotateEncryptionKey),
-      make_entry("rename-object", {"<old-object-name>", "<new-object-name>"},
-                 RenameObject),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
