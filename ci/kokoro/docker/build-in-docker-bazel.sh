@@ -81,15 +81,27 @@ readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
-# yes: always try to run integration tests
-# auto: only try to run integration tests if the config file is executable.
-if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || (\
-  "${RUN_INTEGRATION_TESTS}" == "auto" && -r \
-  "${INTEGRATION_TESTS_CONFIG}" && -r \
-  "${TEST_KEY_FILE_JSON}" && -r \
-  "${TEST_KEY_FILE_P12}" && -r \
-  "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
-  "${KOKORO_SETUP_KEY}") ]]; then
+
+should_run_integration_tests() {
+  if [[ "${SOURCE_DIR:-}" == "super" ]]; then
+    # super builds cannot run the integration tests
+    return 1
+  elif [[ "${RUN_INTEGRATION_TESTS:-}" == "yes" ]]; then
+    # yes: always try to run the integration tests
+    return 0
+  elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
+    # auto: only try to run integration tests if the config files are present
+    if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
+      "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+      "${TEST_KEY_FILE_JSON}" && -r \
+      "${TEST_KEY_FILE_P12}" ]]; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+if should_run_integration_tests; then
   echo "================================================================"
   log_normal "Running the integration tests"
   echo "================================================================"

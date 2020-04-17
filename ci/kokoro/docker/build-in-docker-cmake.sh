@@ -189,18 +189,26 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
   readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 
-  if [[ ((\
-    "${RUN_INTEGRATION_TESTS}" == "yes") || (\
-    \
-    "${RUN_INTEGRATION_TESTS}" == "auto" && -r \
-    "${INTEGRATION_TESTS_CONFIG}" && -r \
-    "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
-    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r \
-    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}")) && (\
-    \
-    "${SOURCE_DIR}" != "super") ]]; then # yes: always try to run the integration tests
-    # auto: only try to run integration tests if the config files are present
-    # super builds cannot run the integration tests
+  should_run_integration_tests() {
+    if [[ "${SOURCE_DIR:-}" == "super" ]]; then
+      # super builds cannot run the integration tests
+      return 1
+    elif [[ "${RUN_INTEGRATION_TESTS:-}" == "yes" ]]; then
+      # yes: always try to run the integration tests
+      return 0
+    elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
+      # auto: only try to run integration tests if the config files are present
+      if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
+        "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+        "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r \
+        "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ]]; then
+        return 0
+      fi
+    fi
+    return 1
+  }
+
+  if should_run_integration_tests; then
     echo "================================================================"
     log_yellow "Running the integration tests against production"
 
