@@ -64,7 +64,7 @@ maybe_dirs=(
 
 dirs=()
 for dir in "${maybe_dirs[@]}"; do
-  if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
+  if [[ -d "${dir}" ]]; then dirs+=("${dir}"); fi
 done
 
 echo "================================================================"
