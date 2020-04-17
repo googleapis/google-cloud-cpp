@@ -102,6 +102,7 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="asan"
+  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "msan" ]]; then
   # Compile with the MemorySanitizer enabled.
@@ -110,6 +111,7 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   export DISTRO=fedora-libcxx-msan
   export DISTRO_VERSION=30
   export BAZEL_CONFIG="msan"
+  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
@@ -118,6 +120,8 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=30
   export BAZEL_CONFIG="tsan"
+  # TODO(#3832) - fix bugs and enable
+  # RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
@@ -126,6 +130,8 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="ubsan"
+  # TODO(#3832) - fix bugs and enable
+  # RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"

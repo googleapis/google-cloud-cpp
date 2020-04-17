@@ -18,8 +18,9 @@ FROM fedora:${DISTRO_VERSION}
 # Install the minimal packages needed to compile libcxx, install Bazel, and
 # then compile our code.
 RUN dnf makecache && \
-    dnf install -y clang clang-tools-extra cmake gcc-c++ git llvm-devel \
-        make ninja-build python3-lit tar unzip which wget xz
+    dnf install -y clang clang-tools-extra cmake findutils gcc-c++ git \
+        llvm-devel make ninja-build openssl-devel python3-lit tar unzip which \
+        wget xz
 
 WORKDIR /var/tmp/build
 RUN wget -q http://releases.llvm.org/8.0.0/libcxx-8.0.0.src.tar.xz
@@ -59,6 +60,12 @@ RUN cmake -Hlibcxx-8.0.0.src -B.build-libcxx -GNinja -Wno-dev \
 # we do not care about.
 RUN cmake --build .build-libcxx --target cxx
 RUN cmake --build .build-libcxx --target install-cxx
+
+# Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
+# client.  They are used in the integration tests.
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+RUN /var/tmp/ci/install-cloud-sdk.sh
 
 # We need Bazel for this build.
 COPY . /var/tmp/ci
