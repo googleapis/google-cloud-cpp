@@ -267,7 +267,9 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   std::string const expected_date = fields["x-goog-date"];
   std::string const expected_signature = fields["x-goog-signature"];
   std::string const expected_policy = fields["policy"];
-  std::string const expected_decoded_policy = output["expectedDecodedPolicy"];
+  // We need to escape it because nl::json interprets the escaped characters.
+  std::string const expected_decoded_policy =
+      *internal::PostPolicyV4Escape(output["expectedDecodedPolicy"]);
 
   auto headers = ExtractFields(input);
 
@@ -434,10 +436,13 @@ int main(int argc, char* argv[]) {
                  back_inserter(name), [](char c) {
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
+#if !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     if (name == "POSTPolicyCharacterEscaping") {
-      // TODO(3635): Remove once proper escaping is implemented.
+      // Escaping is not supported if codecvt header or exceptions are
+      // unavailable.
       continue;
     }
+#endif  // !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     bool inserted =
         google::cloud::storage::post_policy_tests->emplace(name, j_obj.value())
             .second;

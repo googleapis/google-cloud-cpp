@@ -54,6 +54,32 @@ TEST(PolicyDocumentV4Request, SigningAccount) {
               ::testing::ElementsAre("test-delegate1", "test-delegate2"));
 }
 
+TEST(PostPolicyV4EscapeTest, OnlyAscii) {
+  EXPECT_EQ("\\\\\\b\\f\\n\\r\\t\\vabcd",
+            *PostPolicyV4Escape("\\\b\f\n\r\t\vabcd"));
+}
+
+#if GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+TEST(PostPolicyV4EscapeTest, InvalidUtf) {
+  // In UTF8 a byte larger than 0x7f indicates that there is a byte following
+  // it. Here we truncate the string to cause the UTF parser to fail.
+  std::string invalid_utf8(1, 0x80);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            PostPolicyV4Escape(invalid_utf8).status().code());
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+TEST(PostPolicyV4EscapeTest, Simple) {
+#if GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ("\127\065abcd$", *PostPolicyV4Escape("\127\065abcd$"));
+  EXPECT_EQ("\\\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
+            *PostPolicyV4Escape("\\\b\f\n\r\t\v\u0080ę"));
+#else   // GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(StatusCode::kUnimplemented,
+            PostPolicyV4Escape("ąę").status().code());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(PolicyDocumentV4Request, Printing) {
   PolicyDocumentV4 doc;
   doc.bucket = "test-bucket";
