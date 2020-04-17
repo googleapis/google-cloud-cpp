@@ -15,8 +15,8 @@
 
 CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
 readonly CONFIG_DIRECTORY
-if [[ -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" && \
-      -r "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh" ]]; then
+if [[ -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" && -r \
+  "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh" ]]; then
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 
   run_args=(
@@ -34,17 +34,16 @@ if [[ -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" && \
 
   echo "================================================================"
   echo "$(date -u): Run Bigtable test programs against installed libraries" \
-      "${DISTRO}."
+    "${DISTRO}."
   docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-      "/i/bigtable/quickstart" \
-      "${GOOGLE_CLOUD_PROJECT}" \
-      "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}" "quickstart"
-
+    "/i/bigtable/quickstart" \
+    "${GOOGLE_CLOUD_PROJECT}" \
+    "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}" "quickstart"
 
   echo "================================================================"
   echo "$(date -u): Run Storage test programs against installed libraries" \
-      "${DISTRO}."
+    "${DISTRO}."
   docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-      "/i/storage/quickstart" \
-      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    "/i/storage/quickstart" \
+    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
 fi

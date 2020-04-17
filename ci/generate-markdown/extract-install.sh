@@ -19,5 +19,5 @@ set -eu
 readonly BINDIR=$(dirname "$0")
 
 sed -e '0,/^.*\[START INSTALL.md\].*$/d' \
-    -e '/^.*\[END INSTALL.md\].*$/,$d' "$@" | \
-    "${BINDIR}/dockerfile2markdown.sh"
+  -e '/^.*\[END INSTALL.md\].*$/,$d' "$@" |
+  "${BINDIR}/dockerfile2markdown.sh"

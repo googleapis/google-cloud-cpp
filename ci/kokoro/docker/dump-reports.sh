@@ -17,7 +17,10 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 
@@ -41,5 +44,5 @@ export -f dump_report
 
 # Dumps the API/ABI compatibility report.
 find "${BUILD_OUTPUT}" -name 'src_compat_report.html' \
-    -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
+  -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null ||
   echo "No ABI compatibility reports found."

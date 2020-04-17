@@ -17,13 +17,16 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  PROJECT_ROOT="$(cd "$(dirname "$0")/.."; pwd)"
+  PROJECT_ROOT="$(
+    cd "$(dirname "$0")/.."
+    pwd
+  )"
   readonly PROJECT_ROOT
 fi
 source "${PROJECT_ROOT}/ci/etc/install-config.sh"
 
-readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" \
-  |  tr '[:upper:]' '[:lower:]')
+readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" |
+  tr '[:upper:]' '[:lower:]')
 
 readonly BAZEL_VERSION="${GOOGLE_CLOUD_CPP_BAZEL_VERSION}"
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"

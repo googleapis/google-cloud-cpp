@@ -17,7 +17,10 @@
 set -eu
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
@@ -36,13 +39,13 @@ run_default_event_based_hold_examples() {
   local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
+    "${bucket_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples get-default-event-based-hold \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples enable-default-event-based-hold \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples disable-default-event-based-hold \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
@@ -61,17 +64,17 @@ run_retention_policy_examples() {
   local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
+    "${bucket_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples get-retention-policy \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples set-retention-policy \
-      "${bucket_name}" 30
+    "${bucket_name}" 30
   run_example ./storage_bucket_samples remove-retention-policy \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples set-retention-policy \
-      "${bucket_name}" 30
+    "${bucket_name}" 30
   run_example ./storage_bucket_samples lock-retention-policy \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
@@ -90,15 +93,15 @@ run_lifecycle_management_examples() {
   local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
+    "${bucket_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples enable-bucket-lifecycle-management \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-lifecycle-management \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples disable-bucket-lifecycle-management \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-lifecycle-management \
-      "${bucket_name}"
+    "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
@@ -121,24 +124,24 @@ run_resumable_write_object_examples() {
   # We need to capture the output, so the usual `run_example` helper does not
   # help here :-)
   set +e
-  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        " storage_object_samples start-resumable-upload"
+  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+    " storage_object_samples start-resumable-upload"
   local session_id
   session_id=$(./storage_object_samples start-resumable-upload \
-      "${bucket_name}" "${object_name}" | \
-      sed "s/Created resumable upload: //")
+    "${bucket_name}" "${object_name}" |
+    sed "s/Created resumable upload: //")
   if [[ $? = 0 ]]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        " storage_object_samples start-resumable-upload"
+      " storage_object_samples start-resumable-upload"
   else
-    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
-        " storage_object_samples start-resumable-upload"
+    echo "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+      " storage_object_samples start-resumable-upload"
   fi
   run_example ./storage_object_samples resume-resumable-upload \
-      "${bucket_name}" "${object_name}" "${session_id}"
+    "${bucket_name}" "${object_name}" "${session_id}"
 
   run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
+    "${bucket_name}" "${object_name}"
 }
 
 ################################################
@@ -159,12 +162,12 @@ run_rename_object_example() {
   local source_object_name="rename-source-object-${RANDOM}-${RANDOM}.txt"
   local target_object_name="rename-target-object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
-      "${source_bucket_name}" "${source_object_name}" \
-      "a-string-to-serve-as-object-media-in-rename-example"
+    "${source_bucket_name}" "${source_object_name}" \
+    "a-string-to-serve-as-object-media-in-rename-example"
   run_example ./storage_object_samples rename-object \
-      "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
+    "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${target_object_name}"
+    "${source_bucket_name}" "${target_object_name}"
 }
 
 ################################################
@@ -184,13 +187,13 @@ run_rename_object_example() {
 ################################################
 run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
-      " Running Google Cloud Storage Examples"
+    " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
   run_default_event_based_hold_examples
   run_retention_policy_examples
   run_lifecycle_management_examples
   run_resumable_write_object_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
-      " Google Cloud Storage Examples Finished"
+    " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"
 }

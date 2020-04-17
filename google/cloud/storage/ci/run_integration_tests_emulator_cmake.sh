@@ -20,7 +20,10 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-BINARY_DIR="$(cd "${1}"; pwd)"
+BINARY_DIR="$(
+  cd "${1}"
+  pwd
+)"
 readonly BINARY_DIR
 shift
 ctest_args=("$@")
@@ -28,7 +31,10 @@ ctest_args=("$@")
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 CMDDIR="$(dirname "$0")"
 readonly CMDDIR
-PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
+PROJECT_ROOT="$(
+  cd "${CMDDIR}/../../../.."
+  pwd
+)"
 readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
@@ -50,9 +56,9 @@ start_testbench
 # are missing too.
 if [[ -x "google/cloud/storage/examples/storage_bucket_samples" ]]; then
   google/cloud/storage/examples/storage_bucket_samples \
-      create-bucket-for-project \
-      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
-      "${GOOGLE_CLOUD_PROJECT}" >/dev/null
+    create-bucket-for-project \
+    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
+    "${GOOGLE_CLOUD_PROJECT}" >/dev/null
 fi
 
 ctest -L "storage-integration-tests" "${ctest_args[@]}"

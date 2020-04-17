@@ -17,7 +17,10 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 source "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_utils.sh"
@@ -38,9 +41,9 @@ readonly HMAC_SERVICE_ACCOUNT="fake-sa-hmac@example.com"
 
 # Most of the examples assume a bucket already exists, create one for them.
 run_example ./storage_bucket_samples create-bucket-for-project \
-      "${BUCKET_NAME}" "${PROJECT_ID}"
+  "${BUCKET_NAME}" "${PROJECT_ID}"
 run_example ./storage_bucket_samples create-bucket-for-project \
-      "${DESTINATION_BUCKET_NAME}" "${PROJECT_ID}"
+  "${DESTINATION_BUCKET_NAME}" "${PROJECT_ID}"
 
 run_all_storage_examples
 

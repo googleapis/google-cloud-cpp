@@ -15,7 +15,10 @@
 # limitations under the License.
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.." || exit; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../../.." || exit
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
@@ -61,19 +64,19 @@ start_testbench() {
   trap kill_testbench EXIT
 
   gunicorn --bind 0.0.0.0:0 \
-      --worker-class gevent \
-      --access-logfile - \
-      --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
-      testbench:application \
-      >testbench.log 2>&1 </dev/null &
+    --worker-class gevent \
+    --access-logfile - \
+    --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
+    testbench:application \
+    >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 
   local testbench_port=""
   local -r listening_at='Listening at: http://0.0.0.0:\([1-9][0-9]*\)'
   for attempt in $(seq 1 8); do
     if [[ -r testbench.log ]]; then
-        testbench_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" testbench.log)
-        [[ -n "${testbench_port}" ]] && break
+      testbench_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" testbench.log)
+      [[ -n "${testbench_port}" ]] && break
     fi
     sleep 1
   done

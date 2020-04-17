@@ -27,19 +27,19 @@ readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/colors.sh"
 
 # Build paths to ignore in find(1) commands by reading .gitignore.
-declare -a ignore=( -path ./.git )
+declare -a ignore=(-path ./.git)
 if [[ -f .gitignore ]]; then
   while read -r line; do
     case "${line}" in
-    [^#]*/*) ignore+=( -o -path "./$(expr "${line}" : '\(.*\)/')" ) ;;
-    [^#]*)   ignore+=( -o -name "${line}" ) ;;
+    [^#]*/*) ignore+=(-o -path "./$(expr "${line}" : '\(.*\)/')") ;;
+    [^#]*) ignore+=(-o -name "${line}") ;;
     esac
-  done < .gitignore
+  done <.gitignore
 fi
 
 problems=""
 if ! find google/cloud -name '*.h' -print0 |
-       xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
+  xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
   problems="${problems} include-guards"
 fi
 
@@ -62,14 +62,14 @@ replace_original_if_changed() {
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 find . \( "${ignore[@]}" \) -prune -o \
-       \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
-       -print0 |
+  \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
+  -print0 |
   xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 | \
+find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
   xargs -0 clang-format -i
 
 # Apply several transformations that cannot be enforced by clang-format:
@@ -84,39 +84,39 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
     # So we first apply the change to a temporary file, and replace the original
     # only if something changed.
     sed -e 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \
-        -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
-        -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
-        "${file}" > "${file}.tmp"
+      -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
+      -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
+      "${file}" >"${file}.tmp"
     replace_original_if_changed "${file}" "${file}.tmp"
   done
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 find . \( "${ignore[@]}" \) -prune -o \
-       \( -name WORKSPACE -o -name BUILD \
-          -o -name '*.BUILD' -o -name '*.bzl' \) \
-       -print0 |
+  \( -name WORKSPACE -o -name BUILD \
+  -o -name '*.BUILD' -o -name '*.bzl' \) \
+  -print0 |
   xargs -0 buildifier -mode=fix
 
 # Apply psf/black to format Python files.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 find . \( "${ignore[@]}" \) -prune -o \
-       \( -name '*.py' \) \
-       -print0 |
+  \( -name '*.py' \) \
+  -print0 |
   xargs -0 python3 -m black
 find google/cloud/storage/testbench \
-       \( -name '*.py' \) \
-       -print0 |
+  \( -name '*.py' \) \
+  -print0 |
   xargs -0 python3 -m black
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 if ! find . \( "${ignore[@]}" \) -prune -o \
-       -type f -name '*.sh' -print0 \
-       | xargs -0 shellcheck \
-         --exclude=SC1090 \
-         --exclude=SC2034 \
-         --exclude=SC2153 \
-         --exclude=SC2181; then
+  -type f -name '*.sh' -print0 |
+  xargs -0 shellcheck \
+    --exclude=SC1090 \
+    --exclude=SC2034 \
+    --exclude=SC2153 \
+    --exclude=SC2181; then
   problems="${problems} shellcheck"
 fi
 
@@ -125,11 +125,11 @@ fi
 # we do not expand TABs (they currently only appear in Makefiles and Makefile
 # snippets).
 find . \( "${ignore[@]}" \) -prune -o \
-       -type f ! -name '*.gz' \
-       -print0 |
+  -type f ! -name '*.gz' \
+  -print0 |
   while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
-        "${file}" > "${file}.tmp"
+      "${file}" >"${file}.tmp"
     replace_original_if_changed "${file}" "${file}.tmp"
   done
 

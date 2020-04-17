@@ -21,18 +21,19 @@ quickstart_libraries() {
 quickstart_arguments() {
   local -r library="$1"
   case "${library}" in
-    "bigtable")
-        echo "${GOOGLE_CLOUD_PROJECT}"
-        echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
-        echo "quickstart"
-        return 0
-        ;;
-    "storage")
-        echo "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-        return 0
-        ;;
-    *)
-        echo "Unknown argument list for ${library}'s quickstart"
+  "bigtable")
+    echo "${GOOGLE_CLOUD_PROJECT}"
+    echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+    echo "quickstart"
+    return 0
+    ;;
+  "storage")
+    echo "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    return 0
+    ;;
+  *)
+    echo "Unknown argument list for ${library}'s quickstart"
+    ;;
   esac
   return 1
 }

@@ -225,7 +225,10 @@ else
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
@@ -286,8 +289,8 @@ if "${has_cache}"; then
   docker_build_flags+=("--cache-from=${IMAGE}:latest")
 fi
 
-if [[ "${RUNNING_CI:-}" == "yes" ]] && \
-   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+if [[ "${RUNNING_CI:-}" == "yes" ]] &&
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   docker_build_flags+=("--no-cache")
 fi
 
@@ -301,7 +304,7 @@ log_yellow "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 set +e
 mkdir -p "${BUILD_OUTPUT}"
 if timeout 3600s docker build "${docker_build_flags[@]}" ci \
-    >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
+  >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
   update_cache="true"
   log_green "Docker image successfully rebuilt"
 else
@@ -310,7 +313,7 @@ else
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
-   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   log_yellow "Uploading updated base image for ${DISTRO}."
   # Do not stop the build on a failure to update the cache.
@@ -327,7 +330,7 @@ fi
 # - Typically this is the branch that was checked out by Kokoro.
 echo "================================================================"
 log_yellow "Detecting the branch name."
-BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
+BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" |
   grep -v 'HEAD' | tail -1 || exit 0)"
 # Enable extglob if not enabled
 shopt -q extglob || shopt -s extglob
@@ -356,134 +359,134 @@ mkdir -p "${BUILD_HOME}"
 
 # We use an array for the flags so they are easier to document.
 docker_flags=(
-    # Enable ptrace as it is needed by s
-    "--cap-add" "SYS_PTRACE"
+  # Enable ptrace as it is needed by s
+  "--cap-add" "SYS_PTRACE"
 
-    # The name and version of the, this is used to call linux-config.sh
-    "--env" "DISTRO=${DISTRO}"
-    "--env" "DISTRO_VERSION=${DISTRO_VERSION}"
+  # The name and version of the, this is used to call linux-config.sh
+  "--env" "DISTRO=${DISTRO}"
+  "--env" "DISTRO_VERSION=${DISTRO_VERSION}"
 
-    # The C++ and C compiler, both Bazel and CMake use this environment variable
-    # to select the compiler binary.
-    "--env" "CXX=${CXX}"
-    "--env" "CC=${CC}"
+  # The C++ and C compiler, both Bazel and CMake use this environment variable
+  # to select the compiler binary.
+  "--env" "CXX=${CXX}"
+  "--env" "CC=${CC}"
 
-    "--env" "NCPU=${NCPU}"
+  "--env" "NCPU=${NCPU}"
 
-    # Pass down the BUILD_NAME.
-    "--env" "BUILD_NAME=${BUILD_NAME}"
-    "--env" "BRANCH=${BRANCH}"
+  # Pass down the BUILD_NAME.
+  "--env" "BUILD_NAME=${BUILD_NAME}"
+  "--env" "BRANCH=${BRANCH}"
 
-    # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
-    "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
+  # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
+  "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
 
-    # The type of the build for CMake.
-    "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
-    # Additional flags to enable CMake features.
-    "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
+  # The type of the build for CMake.
+  "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
+  # Additional flags to enable CMake features.
+  "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
 
-    # When running the integration tests this directory contains the
-    # configuration files needed to run said tests. Make it available inside
-    # the Docker container.
-    "--volume" "${KOKORO_GFILE_DIR:-/dev/shm}:/c"
+  # When running the integration tests this directory contains the
+  # configuration files needed to run said tests. Make it available inside
+  # the Docker container.
+  "--volume" "${KOKORO_GFILE_DIR:-/dev/shm}:/c"
 
-    # The type of the build for Bazel.
-    "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
+  # The type of the build for Bazel.
+  "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
 
-    # With CMake we can disable the tests, this is useful for package
-    # maintainers and we need to test it.
-    "--env" "BUILD_TESTING=${BUILD_TESTING:=yes}"
+  # With CMake we can disable the tests, this is useful for package
+  # maintainers and we need to test it.
+  "--env" "BUILD_TESTING=${BUILD_TESTING:=yes}"
 
-    # If set, enable using libc++ with CMake.
-    "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
+  # If set, enable using libc++ with CMake.
+  "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
 
-    # If set, enable the Ninja generator with CMake.
-    "--env" "USE_NINJA=${USE_NINJA:-}"
+  # If set, enable the Ninja generator with CMake.
+  "--env" "USE_NINJA=${USE_NINJA:-}"
 
-    # If set, run the check-abi.sh script.
-    "--env" "CHECK_ABI=${CHECK_ABI:-}"
+  # If set, run the check-abi.sh script.
+  "--env" "CHECK_ABI=${CHECK_ABI:-}"
 
-    # If set, run the check-abi.sh script and *then* update the API/ABI
-    # baseline.
-    "--env" "UPDATE_ABI=${UPDATE_ABI:-}"
+  # If set, run the check-abi.sh script and *then* update the API/ABI
+  # baseline.
+  "--env" "UPDATE_ABI=${UPDATE_ABI:-}"
 
-    # If set, run the scripts to check (and fix) the code formatting (i.e.
-    # clang-format, cmake-format, and buildifier).
-    "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
+  # If set, run the scripts to check (and fix) the code formatting (i.e.
+  # clang-format, cmake-format, and buildifier).
+  "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
 
-    # If set to 'yes', the build script will verify that auto-generated
-    # markdown files are in sync.
-    "--env" "CHECK_MARKDOWN=${CHECK_MARKDOWN:-}"
+  # If set to 'yes', the build script will verify that auto-generated
+  # markdown files are in sync.
+  "--env" "CHECK_MARKDOWN=${CHECK_MARKDOWN:-}"
 
-    # If set to 'yes', the build script will configure clang-tidy. Currently
-    # only the CMake builds use this flag.
-    "--env" "CLANG_TIDY=${CLANG_TIDY:-}"
+  # If set to 'yes', the build script will configure clang-tidy. Currently
+  # only the CMake builds use this flag.
+  "--env" "CLANG_TIDY=${CLANG_TIDY:-}"
 
-    # If set to 'no', skip the integration tests.
-    "--env" "RUN_INTEGRATION_TESTS=${RUN_INTEGRATION_TESTS:-}"
+  # If set to 'no', skip the integration tests.
+  "--env" "RUN_INTEGRATION_TESTS=${RUN_INTEGRATION_TESTS:-}"
 
-    # The Bigtable Admin integration tests can only run in nightly builds, the
-    # quota (as in calls per day) is too restrictive to run more often.
-    "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+  # The Bigtable Admin integration tests can only run in nightly builds, the
+  # quota (as in calls per day) is too restrictive to run more often.
+  "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
-    # If set, run the scripts to generate Doxygen docs. Note that the scripts
-    # to upload said docs are not part of the build, they run afterwards on
-    # Travis.
-    "--env" "GENERATE_DOCS=${GENERATE_DOCS:-}"
+  # If set, run the scripts to generate Doxygen docs. Note that the scripts
+  # to upload said docs are not part of the build, they run afterwards on
+  # Travis.
+  "--env" "GENERATE_DOCS=${GENERATE_DOCS:-}"
 
-    # If set, execute tests to verify `make install` works and produces working
-    # installations.
-    "--env" "TEST_INSTALL=${TEST_INSTALL:-}"
+  # If set, execute tests to verify `make install` works and produces working
+  # installations.
+  "--env" "TEST_INSTALL=${TEST_INSTALL:-}"
 
-    # Configure the location of the Cloud Bigtable command-line tool and
-    # emulator.
-    "--env" "CBT=/usr/local/google-cloud-sdk/bin/cbt"
-    "--env" "CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
+  # Configure the location of the Cloud Bigtable command-line tool and
+  # emulator.
+  "--env" "CBT=/usr/local/google-cloud-sdk/bin/cbt"
+  "--env" "CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
 
-    # Let the Docker image script know what kind of terminal we are using, that
-    # produces properly colorized error messages.
-    "--env" "TERM=${TERM:-dumb}"
+  # Let the Docker image script know what kind of terminal we are using, that
+  # produces properly colorized error messages.
+  "--env" "TERM=${TERM:-dumb}"
 
-    # If set, add a flag --runs_per_test=<value> to bazel or --repeat-until-fail
-    # to ctest.
-    "--env" "RUNS_PER_TEST=${RUNS_PER_TEST:-}"
+  # If set, add a flag --runs_per_test=<value> to bazel or --repeat-until-fail
+  # to ctest.
+  "--env" "RUNS_PER_TEST=${RUNS_PER_TEST:-}"
 
-    # Tells scripts whether they are running as part of a CI or not.
-    "--env" "RUNNING_CI=${RUNNING_CI:-no}"
+  # Tells scripts whether they are running as part of a CI or not.
+  "--env" "RUNNING_CI=${RUNNING_CI:-no}"
 
-    # Run the docker script and this user id. Because the docker image gets to
-    # write in ${PWD} you typically want this to be your user id.
-    "--user" "${docker_uid}:${docker_gid}"
+  # Run the docker script and this user id. Because the docker image gets to
+  # write in ${PWD} you typically want this to be your user id.
+  "--user" "${docker_uid}:${docker_gid}"
 
-    # Bazel needs this environment variable to work correctly.
-    "--env" "USER=${docker_user}"
+  # Bazel needs this environment variable to work correctly.
+  "--env" "USER=${docker_user}"
 
-    # We give Bazel and CMake a fake $HOME inside the docker image. Bazel caches
-    # build byproducts in this directory. CMake (when ccache is enabled) uses
-    # it to store $HOME/.ccache
+  # We give Bazel and CMake a fake $HOME inside the docker image. Bazel caches
+  # build byproducts in this directory. CMake (when ccache is enabled) uses
+  # it to store $HOME/.ccache
 
-    # Make the fake directory available inside the docker image as `/h`.
-    "--volume" "${PWD}/${BUILD_HOME}:/h"
-    "--env" "HOME=/h"
+  # Make the fake directory available inside the docker image as `/h`.
+  "--volume" "${PWD}/${BUILD_HOME}:/h"
+  "--env" "HOME=/h"
 
-    # Mount the current directory (which is the top-level directory for the
-    # project) as `/v` inside the docker image, and move to that directory.
-    "--volume" "${PWD}:/v"
-    "--workdir" "/v"
+  # Mount the current directory (which is the top-level directory for the
+  # project) as `/v` inside the docker image, and move to that directory.
+  "--volume" "${PWD}:/v"
+  "--workdir" "/v"
 
-    # Mask any other builds that may exist at the same time. That is, these
-    # directories appear as empty inside the Docker container, this prevents the
-    # container from writing into other builds, or to get confused by the output
-    # of other builds. In the CI system this does not matter, as each build runs
-    # on a completely separate VM. This is useful when running multiple builds
-    # in your workstation.
-    "--volume" "/v/cmake-out/home"
-    "--volume" "/v/cmake-out"
-    "--volume" "/v/cmake-build-debug"
-    "--volume" "${PWD}/${BUILD_OUTPUT}:/v/${BUILD_OUTPUT}"
+  # Mask any other builds that may exist at the same time. That is, these
+  # directories appear as empty inside the Docker container, this prevents the
+  # container from writing into other builds, or to get confused by the output
+  # of other builds. In the CI system this does not matter, as each build runs
+  # on a completely separate VM. This is useful when running multiple builds
+  # in your workstation.
+  "--volume" "/v/cmake-out/home"
+  "--volume" "/v/cmake-out"
+  "--volume" "/v/cmake-build-debug"
+  "--volume" "${PWD}/${BUILD_OUTPUT}:/v/${BUILD_OUTPUT}"
 
-    # No need to preserve the container.
-    "--rm"
+  # No need to preserve the container.
+  "--rm"
 )
 
 # When running on Travis the build gets a tty, and docker can produce nicer
@@ -501,7 +504,7 @@ CACHE_NAME="cache-${DOCKER_IMAGE_BASENAME}-${BUILD_NAME}"
 readonly CACHE_NAME
 
 "${PROJECT_ROOT}/ci/kokoro/docker/download-cache.sh" \
-      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+  "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
 
 # If more than two arguments are given, arguments after the first one will
 # become the commands run in the container, otherwise run $in_docker_script with
@@ -509,7 +512,7 @@ readonly CACHE_NAME
 echo "================================================================"
 if [[ $# -ge 2 ]]; then
   log_yellow "Running the given commands '" "${@:2}" "' in the container."
-  readonly commands=( "${@:2}" )
+  readonly commands=("${@:2}")
 else
   log_yellow "Running the full build inside docker."
   readonly commands=(
@@ -535,11 +538,11 @@ else
 fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" \
-    "${IMAGE}:latest" "${docker_flags[@]}"
+  "${IMAGE}:latest" "${docker_flags[@]}"
 
 if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
-      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+    "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
 fi
 
 if [[ "${exit_status}" != 0 ]]; then
@@ -557,8 +560,8 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
   log_yellow "cleaning up artifacts."
-  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 \
-    | xargs -0 -t rm -rf
+  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 |
+    xargs -0 -t rm -rf
 else
   log_yellow "Not a CI build; skipping artifact cleanup"
 fi

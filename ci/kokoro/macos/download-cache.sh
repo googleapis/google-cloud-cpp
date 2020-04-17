@@ -21,7 +21,10 @@ if [[ $# != 2 ]]; then
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(
+    cd "$(dirname "$0")/../../.."
+    pwd
+  )"
 fi
 GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/colors.sh"
@@ -31,7 +34,7 @@ readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 
 mkdir -p "${HOME}/.ccache"
-[[ -f "${HOME}/.ccache/ccache.conf" ]] || \
+[[ -f "${HOME}/.ccache/ccache.conf" ]] ||
   echo "max_size = 4.0G" >"${HOME}/.ccache/ccache.conf"
 
 KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
@@ -45,8 +48,8 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
-   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
+if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] &&
+  [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   log_normal "Cache not downloaded as this is not a PR build."
   exit 0
@@ -67,14 +70,14 @@ activate_service_account_keyfile "${KEYFILE}"
 echo "================================================================"
 log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
+  gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
 
 echo "================================================================"
 log_normal "Extracting build cache"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
-tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 | \
-    grep -E -v 'tar:.*in the future'
+tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 |
+  grep -E -v 'tar:.*in the future'
 log_normal "Extraction completed"
 
 exit 0

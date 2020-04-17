@@ -66,9 +66,12 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
   # run the tests anyway, no need to run them again.
   echo "================================================================"
   log_yellow "Running unit tests."
-  (cd "${BINARY_DIR}"; ctest \
+  (
+    cd "${BINARY_DIR}"
+    ctest \
       -LE integration-tests \
-      --output-on-failure -j "${NCPU}")
+      --output-on-failure -j "${NCPU}"
+  )
   echo "================================================================"
 fi
 

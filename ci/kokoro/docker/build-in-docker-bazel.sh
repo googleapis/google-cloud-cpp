@@ -47,25 +47,25 @@ echo "================================================================"
 
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
-    bazel_args+=("--runs_per_test=${RUNS_PER_TEST}")
+  bazel_args+=("--runs_per_test=${RUNS_PER_TEST}")
 fi
 
 if [[ -n "${BAZEL_CONFIG}" ]]; then
-    bazel_args+=("--config" "${BAZEL_CONFIG}")
+  bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
 echo "================================================================"
 log_normal "Fetching dependencies"
 echo "================================================================"
 "${PROJECT_ROOT}/ci/retry-command.sh" \
-    "${BAZEL_BIN}" fetch -- //google/cloud/...:all
+  "${BAZEL_BIN}" fetch -- //google/cloud/...:all
 
 echo "================================================================"
 log_normal "Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
-    -- //google/cloud/...:all
+  "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
+  -- //google/cloud/...:all
 
 echo "================================================================"
 log_normal "Compiling all the code, including integration tests"
@@ -73,23 +73,35 @@ echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
 "${BAZEL_BIN}" build \
-    "${bazel_args[@]}" \
-    -- //google/cloud/...:all
+  "${bazel_args[@]}" \
+  -- //google/cloud/...:all
 
 readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
-# yes: always try to run integration tests
-# auto: only try to run integration tests if the config file is executable.
-if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
-      ( "${RUN_INTEGRATION_TESTS}" == "auto" && \
-        -r "${INTEGRATION_TESTS_CONFIG}" && \
-        -r "${TEST_KEY_FILE_JSON}" && \
-        -r "${TEST_KEY_FILE_P12}" && \
-        -r "${GOOGLE_APPLICATION_CREDENTIALS}" && \
-        -r "${KOKORO_SETUP_KEY}" ) ]]; then
+
+should_run_integration_tests() {
+  if [[ "${SOURCE_DIR:-}" == "super" ]]; then
+    # super builds cannot run the integration tests
+    return 1
+  elif [[ "${RUN_INTEGRATION_TESTS:-}" == "yes" ]]; then
+    # yes: always try to run the integration tests
+    return 0
+  elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
+    # auto: only try to run integration tests if the config files are present
+    if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
+      "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+      "${TEST_KEY_FILE_JSON}" && -r \
+      "${TEST_KEY_FILE_P12}" ]]; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+if should_run_integration_tests; then
   echo "================================================================"
   log_normal "Running the integration tests"
   echo "================================================================"
@@ -171,30 +183,30 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
   bazel_args+=(
-      # Common configuration
-      "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
-      "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
-      "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+    # Common configuration
+    "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
+    "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+    "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 
-      # Bigtable
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
-      "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+    # Bigtable
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
+    "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
-      # Storage
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
+    # Storage
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
   )
 
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
@@ -204,28 +216,28 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # examples require environment variables with dynamic values, we run them
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
-      "${bazel_args[@]}" \
-      "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
-      -- //google/cloud/...:all \
-         -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
-         -//google/cloud/storage/examples:storage_service_account_samples \
-         -//google/cloud/storage/tests:service_account_integration_test
+    "${bazel_args[@]}" \
+    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
+    -- //google/cloud/...:all \
+    -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
+    -//google/cloud/storage/examples:storage_service_account_samples \
+    -//google/cloud/storage/tests:service_account_integration_test
 
   # Run the integration tests that need an access token. We separate them
   # because adding the access token to the `bazel_args` invalidates the build
   # cache for all builds.
   "${BAZEL_BIN}" test \
-      "${bazel_args[@]}" \
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
-      -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
+    "${bazel_args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
+    -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
 
   # Run the integration tests and examples that need the HMAC service account.
   # Note the special error handling to avoid leaking the service account.
   "${BAZEL_BIN}" test \
-      "${bazel_args[@]}" \
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-       -- //google/cloud/storage/examples:storage_service_account_samples \
-          //google/cloud/storage/tests:service_account_integration_test
+    "${bazel_args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+    -- //google/cloud/storage/examples:storage_service_account_samples \
+    //google/cloud/storage/tests:service_account_integration_test
 
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
@@ -237,8 +249,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   log_normal "Running Google Cloud Storage Examples"
   echo "================================================================"
   echo "Running Google Cloud Storage Examples"
-  (cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" && \
-      "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
+  (cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" &&
+    "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
 fi
 
 echo "================================================================"

@@ -22,13 +22,13 @@ if [ -z "${CBT_INSTANCE_ADMIN_EMULATOR_CMD+x}" ]; then
   readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../tests/instance_admin_emulator"
 fi
 
-function kill_emulators {
+function kill_emulators() {
   echo -n "Killing Bigtable Emulators [${EMULATOR_PID} ${INSTANCE_ADMIN_EMULATOR_PID}] "
   kill "${EMULATOR_PID}" || echo -n "-"
   echo -n "."
   wait "${EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
   echo -n "."
-  kill "${INSTANCE_ADMIN_EMULATOR_PID}"  || echo -n "-"
+  kill "${INSTANCE_ADMIN_EMULATOR_PID}" || echo -n "-"
   echo -n "."
   wait "${INSTANCE_ADMIN_EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
   echo -n "."
@@ -53,18 +53,18 @@ wait_for_port() {
   local -r expected='Cloud Bigtable emulator running on'
   for attempt in $(seq 1 8); do
     if grep -q "${expected}" "${logfile}"; then
-       # The port number is whatever is after the last ':'. Note that on IPv6
-       # there may be multiple ':' characters, and recall that regular
-       # expressions are greedy. If grep has multiple matches this breaks,
-       # which is Okay because then the emulator is exhibiting unexpected
-       # behavior.
-       emulator_port=$(grep "${expected}" "${logfile}" | sed 's/^.*://')
-       break
+      # The port number is whatever is after the last ':'. Note that on IPv6
+      # there may be multiple ':' characters, and recall that regular
+      # expressions are greedy. If grep has multiple matches this breaks,
+      # which is Okay because then the emulator is exhibiting unexpected
+      # behavior.
+      emulator_port=$(grep "${expected}" "${logfile}" | sed 's/^.*://')
+      break
     fi
     sleep 1
   done
 
-  if [[ "${emulator_port}" = "0"  ]]; then
+  if [[ "${emulator_port}" = "0" ]]; then
     echo "Cannot determine Bigtable emulator port." >&2
     kill_emulators
     exit 1
@@ -83,19 +83,19 @@ wait_for_port() {
 # Returns:
 #   None
 ################################################
-function wait_until_emulator_connects {
+function wait_until_emulator_connects() {
   local address=$1
   local subcmd=$2
   shift 2
 
-  local -a CBT_ARGS=( "-project" "emulated" "-instance" "emulated" "-creds" "default" )
+  local -a CBT_ARGS=("-project" "emulated" "-instance" "emulated" "-creds" "default")
   # Wait until the emulator starts responding.
   delay=1
   connected=no
   local -r attempts=$(seq 1 8)
   for attempt in ${attempts}; do
     if env BIGTABLE_EMULATOR_HOST="${address}" \
-           "${CBT_CMD}" "${CBT_ARGS[@]}" "${subcmd}" >/dev/null 2>&1; then
+      "${CBT_CMD}" "${CBT_ARGS[@]}" "${subcmd}" >/dev/null 2>&1; then
       connected=yes
       break
     fi
@@ -111,8 +111,7 @@ function wait_until_emulator_connects {
   echo "Successfully connected to the Cloud Bigtable emulator on ${address}."
 }
 
-
-function start_emulators {
+function start_emulators() {
   echo "Launching Cloud Bigtable emulators in the background"
   trap kill_emulators EXIT
 
