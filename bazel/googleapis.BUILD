@@ -37,22 +37,3 @@ cc_library(
         "@com_github_grpc_grpc//:grpc++",
     ],
 )
-
-cc_library(
-    name = "bigquery_protos",
-    # Do not sort: grpc++ must come last
-    deps = [
-        "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_grpc",
-        "@com_github_grpc_grpc//:grpc++",
-    ],
-)
-
-cc_library(
-    name = "bigtable_protos",
-    # Do not sort: grpc++ must come last
-    deps = [
-        "//google/bigtable/admin/v2:admin_cc_grpc",
-        "//google/bigtable/v2:bigtable_cc_grpc",
-        "@com_github_grpc_grpc//:grpc++",
-    ],
-)
