@@ -18,12 +18,21 @@ licenses(["notice"])  # Apache 2.0
 
 load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
+# This rule is needed by `google-cloud-cpp-common`. It lets us include headers
+# from googleapis targets using angle brackets like system includes.
 cc_library(
-    name = "grpc_utils_protos",
+    name = "googleapis_system_includes",
     includes = [
         ".",
     ],
+)
+
+# TODO(googleapis/google-cloud-cpp#3838): Delete this rule once it's no longer
+# used after the next release of -common.
+cc_library(
+    name = "grpc_utils_protos",
     deps = [
+        ":googleapis_system_includes",
         "//google/rpc:status_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
     ],
