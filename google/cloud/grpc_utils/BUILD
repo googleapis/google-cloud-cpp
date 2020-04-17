@@ -29,7 +29,5 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_googleapis//:grpc_utils_protos",
     ],
 )

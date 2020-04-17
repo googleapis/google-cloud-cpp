@@ -23,8 +23,6 @@ cc_test(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_googleapis//:grpc_utils_protos",
         "@com_google_googletest//:gtest",
     ],
 )
