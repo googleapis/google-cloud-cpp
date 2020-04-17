@@ -120,6 +120,10 @@ if ! find . \( "${ignore[@]}" \) -prune -o \
   problems="${problems} shellcheck"
 fi
 
+# Apply shfmt to format all shell scripts
+find . \( "${ignore[@]}" \) -prune -o \
+  -iname '*.sh' -print0 | xargs -0 shfmt -w -i 2
+
 # Apply transformations to fix whitespace formatting in files not handled by
 # clang-format(1) above.  For now we simply remove trailing blanks.  Note that
 # we do not expand TABs (they currently only appear in Makefiles and Makefile

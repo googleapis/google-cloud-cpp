@@ -42,6 +42,12 @@ RUN pip3 install cmake_format==0.6.8
 # Install black to automatically format the Python files.
 RUN pip3 install black==19.3b0
 
+# Install shfmt to automatically format the Shell scripts.
+RUN curl -L -o /usr/local/bin/shfmt \
+    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64" && \
+    chmod 755 /usr/local/bin/shfmt
+
+# Install the Python modules needed to run the storage testbench
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
