@@ -251,7 +251,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  * @param gen the pseudo-random number generator.
  *
  * @par Example
- * @snippet storage_object_samples.cc generate encryption key
+ * @snippet storage_object_csek_samples.cc generate encryption key
  *
  * @see https://en.cppreference.com/w/cpp/numeric/random for a general
  *     overview of C++ pseudo-random number support.

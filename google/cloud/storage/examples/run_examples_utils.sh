@@ -81,71 +81,6 @@ run_lifecycle_management_examples() {
 }
 
 ################################################
-# Run resumable write object examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_resumable_write_object_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="resumable-upload-${RANDOM}-${RANDOM}.txt"
-
-  # We need to capture the output, so the usual `run_example` helper does not
-  # help here :-)
-  set +e
-  echo "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-    " storage_object_samples start-resumable-upload"
-  local session_id
-  session_id=$(./storage_object_samples start-resumable-upload \
-    "${bucket_name}" "${object_name}" |
-    sed "s/Created resumable upload: //")
-  if [[ $? = 0 ]]; then
-    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-      " storage_object_samples start-resumable-upload"
-  else
-    echo "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
-      " storage_object_samples start-resumable-upload"
-  fi
-  run_example ./storage_object_samples resume-resumable-upload \
-    "${bucket_name}" "${object_name}" "${session_id}"
-
-  run_example ./storage_object_samples delete-object \
-    "${bucket_name}" "${object_name}"
-}
-
-################################################
-# Run the example showing how to rename one object.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   source_bucket_name: an existing bucket where the source object will be
-#     created and then renamed.
-# Returns:
-#   None
-################################################
-run_rename_object_example() {
-  local source_bucket_name=$1
-  shift
-
-  local source_object_name="rename-source-object-${RANDOM}-${RANDOM}.txt"
-  local target_object_name="rename-target-object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_object_samples insert-object \
-    "${source_bucket_name}" "${source_object_name}" \
-    "a-string-to-serve-as-object-media-in-rename-example"
-  run_example ./storage_object_samples rename-object \
-    "${source_bucket_name}" "${source_object_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-    "${source_bucket_name}" "${target_object_name}"
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -166,7 +101,6 @@ run_all_storage_examples() {
   EMULATOR_LOG="testbench.log"
   run_retention_policy_examples
   run_lifecycle_management_examples
-  run_resumable_write_object_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"
