@@ -54,6 +54,7 @@ cc_library(
     name = "curl",
     srcs = [
         "include/curl_config.h",
+        "include/curl_ca_bundle_location.h",
         "lib/amigaos.h",
         "lib/arpa_telnet.h",
         "lib/asyn.h",
@@ -452,6 +453,27 @@ cc_binary(
 )
 
 genrule(
+    name = "get-ca-bundle-location",
+    outs = ["include/curl_ca_bundle_location.h"],
+    cmd = select({
+        ":windows": """echo '#define CURL_CA_BUNDLE ""'>$@""",
+        ":darwin": """echo '#define CURL_CA_BUNDLE ""'>$@""",
+        "//conditions:default": """
+      if [ -f /etc/fedora-release ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
+      elif [ -f /etc/redhat-release ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
+      elif [ -f /etc/debian_version ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/ssl/certs/ca-certificates.crt"'
+      else
+        >&2 echo "Unknown platform, cannot guess location of CA bundle"
+        exit 1
+      fi >$@
+    """,
+    }),
+)
+
+genrule(
     name = "configure",
     outs = ["include/curl_config.h"],
     cmd = "\n".join([
@@ -494,7 +516,7 @@ genrule(
         "#  define OS \"x86_64-apple-darwin15.5.0\"",
         "#  define USE_SECTRANSP 1",
         "#else",
-        "#  define CURL_CA_BUNDLE \"/etc/ssl/certs/ca-certificates.crt\"",
+        "#  include \"include/curl_ca_bundle_location.h\"",
         "#  define GETSERVBYPORT_R_ARGS 6",
         "#  define GETSERVBYPORT_R_BUFSIZE 4096",
         "#  define HAVE_BORINGSSL 1",
