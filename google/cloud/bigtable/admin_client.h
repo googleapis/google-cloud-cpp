@@ -195,6 +195,22 @@ class AdminClient {
   AsyncListTables(grpc::ClientContext* context,
                   google::bigtable::admin::v2::ListTablesRequest const& request,
                   grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncGetIamPolicy(grpc::ClientContext* context,
+                    google::iam::v1::GetIamPolicyRequest const& request,
+                    grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncSetIamPolicy(grpc::ClientContext* context,
+                    google::iam::v1::SetIamPolicyRequest const& request,
+                    grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::iam::v1::TestIamPermissionsResponse>>
+  AsyncTestIamPermissions(
+      grpc::ClientContext* context,
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{

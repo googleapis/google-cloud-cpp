@@ -568,6 +568,26 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
   return proto;
 }
 
+future<StatusOr<google::iam::v1::Policy>> TableAdmin::AsyncGetIamPolicy(
+    CompletionQueue& cq, std::string const& table_id) {
+  ::google::iam::v1::GetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  auto client = client_;
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      /*is_idempotent=*/true,
+      [client, resource](grpc::ClientContext* context,
+                         ::google::iam::v1::GetIamPolicyRequest const& request,
+                         grpc::CompletionQueue* cq) {
+        MetadataUpdatePolicy(resource, MetadataParamTypes::RESOURCE)
+            .Setup(*context);
+        return client->AsyncGetIamPolicy(context, request, cq);
+      },
+      std::move(request));
+}
+
 StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
     std::string const& table_id, google::iam::v1::Policy const& iam_policy) {
   grpc::Status status;
@@ -591,6 +611,28 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
   }
 
   return proto;
+}
+
+future<StatusOr<google::iam::v1::Policy>> TableAdmin::AsyncSetIamPolicy(
+    CompletionQueue& cq, std::string const& table_id,
+    google::iam::v1::Policy const& iam_policy) {
+  ::google::iam::v1::SetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+  *request.mutable_policy() = iam_policy;
+
+  auto client = client_;
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      /*is_idempotent=*/false,
+      [client, resource](grpc::ClientContext* context,
+                         ::google::iam::v1::SetIamPolicyRequest const& request,
+                         grpc::CompletionQueue* cq) {
+        MetadataUpdatePolicy(resource, MetadataParamTypes::RESOURCE)
+            .Setup(*context);
+        return client->AsyncSetIamPolicy(context, request, cq);
+      },
+      std::move(request));
 }
 
 StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
@@ -627,6 +669,44 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
   }
 
   return resource_permissions;
+}
+
+future<StatusOr<std::vector<std::string>>> TableAdmin::AsyncTestIamPermissions(
+    CompletionQueue& cq, std::string const& table_id,
+    std::vector<std::string> const& permissions) {
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
+
+  auto client = client_;
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, resource](
+                 grpc::ClientContext* context,
+                 ::google::iam::v1::TestIamPermissionsRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(resource, MetadataParamTypes::RESOURCE)
+                   .Setup(*context);
+               return client->AsyncTestIamPermissions(context, request, cq);
+             },
+             std::move(request))
+      .then([](future<StatusOr<::google::iam::v1::TestIamPermissionsResponse>>
+                   response_fut) -> StatusOr<std::vector<std::string>> {
+        auto response = response_fut.get();
+        if (!response) {
+          return response.status();
+        }
+        std::vector<std::string> res;
+        res.reserve(response->permissions_size());
+        std::move(response->mutable_permissions()->begin(),
+                  response->mutable_permissions()->end(),
+                  std::back_inserter(res));
+        return res;
+      });
 }
 
 std::string TableAdmin::InstanceName() const {

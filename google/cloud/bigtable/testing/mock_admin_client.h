@@ -101,16 +101,35 @@ class MockAdminClient : public bigtable::AdminClient {
                grpc::Status(grpc::ClientContext* context,
                             google::iam::v1::GetIamPolicyRequest const& request,
                             google::iam::v1::Policy* response));
+  MOCK_METHOD3(
+      AsyncGetIamPolicy,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+          grpc::ClientContext* context,
+          google::iam::v1::GetIamPolicyRequest const& request,
+          grpc::CompletionQueue* cq));
   MOCK_METHOD3(SetIamPolicy,
                grpc::Status(grpc::ClientContext* context,
                             google::iam::v1::SetIamPolicyRequest const& request,
                             google::iam::v1::Policy* response));
   MOCK_METHOD3(
+      AsyncSetIamPolicy,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+          grpc::ClientContext* context,
+          google::iam::v1::SetIamPolicyRequest const& request,
+          grpc::CompletionQueue* cq));
+  MOCK_METHOD3(
       TestIamPermissions,
       grpc::Status(grpc::ClientContext* context,
                    google::iam::v1::TestIamPermissionsRequest const& request,
                    google::iam::v1::TestIamPermissionsResponse* response));
-
+  MOCK_METHOD3(AsyncTestIamPermissions,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::iam::v1::TestIamPermissionsResponse>>(
+                   grpc::ClientContext*,
+                   google::iam::v1::TestIamPermissionsRequest const&,
+                   grpc::CompletionQueue*));
   MOCK_METHOD3(
       GetOperation,
       grpc::Status(grpc::ClientContext* context,
@@ -158,13 +177,6 @@ class MockAdminClient : public bigtable::AdminClient {
                    grpc::ClientContext* context,
                    const google::longrunning::GetOperationRequest& request,
                    grpc::CompletionQueue* cq));
-  MOCK_METHOD3(
-      AsyncGetIamPolicy,
-      std::unique_ptr<
-          grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
-          grpc::ClientContext* context,
-          google::iam::v1::GetIamPolicyRequest const& request,
-          grpc::CompletionQueue* cq));
 };
 
 }  // namespace testing
