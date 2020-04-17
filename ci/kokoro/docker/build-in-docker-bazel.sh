@@ -238,19 +238,6 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
     -- //google/cloud/storage/examples:storage_service_account_samples \
     //google/cloud/storage/tests:service_account_integration_test
-
-  export INTEGRATION_TESTS_CONFIG
-  export TEST_KEY_FILE_JSON
-  export TEST_KEY_FILE_P12
-  export GOOGLE_APPLICATION_CREDENTIALS
-
-  echo
-  echo "================================================================"
-  log_normal "Running Google Cloud Storage Examples"
-  echo "================================================================"
-  echo "Running Google Cloud Storage Examples"
-  (cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" &&
-    "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
 fi
 
 echo "================================================================"
