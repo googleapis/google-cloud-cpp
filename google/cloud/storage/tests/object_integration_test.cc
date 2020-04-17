@@ -463,11 +463,12 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSimultaneously) {
   ASSERT_STATUS_OK(num_fds_during_test);
   ASSERT_STATUS_OK(num_fds_after_test);
 
+  EXPECT_LT(*num_fds_before_test, *num_fds_during_test)
+      << "Clients keeps at least some file descriptors open";
+  EXPECT_LT(*num_fds_after_test, *num_fds_during_test)
+      << "Releasing clients also releases at least some file descriptors";
   EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
       << "Clients are leaking descriptors";
-
-  EXPECT_GE(*num_fds_before_test + 200, *num_fds_during_test)
-      << "100 clients should open at most 200 descriptors";
 #endif  // __linux__
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -492,6 +493,7 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
 
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
+  std::size_t delta = 0;
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
@@ -501,9 +503,15 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
 #ifdef __linux__
     auto num_fds_during_test = GetNumOpenFiles();
     ASSERT_STATUS_OK(num_fds_before_test);
-    ASSERT_STATUS_OK(num_fds_before_test);
-    EXPECT_GE(*num_fds_before_test + 2, *num_fds_during_test)
-        << "One client should open at most two descriptors";
+    ASSERT_STATUS_OK(num_fds_during_test);
+    if (delta == 0) {
+      delta = *num_fds_during_test - *num_fds_before_test;
+    }
+    EXPECT_GE(*num_fds_before_test + delta, *num_fds_during_test)
+        << "Expect each client to create the same number of file descriptors"
+        << ", num_fds_before_test=" << *num_fds_before_test
+        << ", num_fds_during_test=" << *num_fds_during_test
+        << ", delta=" << delta;
 #endif  // __linux__
   }
 #ifdef __linux__
