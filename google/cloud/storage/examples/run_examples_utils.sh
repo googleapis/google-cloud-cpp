@@ -25,33 +25,6 @@ fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
-# Run all examples showing how to use lifecycle policies.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_lifecycle_management_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-    "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples enable-bucket-lifecycle-management \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples get-bucket-lifecycle-management \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples disable-bucket-lifecycle-management \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples get-bucket-lifecycle-management \
-    "${bucket_name}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -70,7 +43,6 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_lifecycle_management_examples
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
     " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"
