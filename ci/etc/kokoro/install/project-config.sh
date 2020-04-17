@@ -41,10 +41,6 @@ _EOF_
   done
 ) || true # read always exit with error
 
-echo =====
-echo ${QUICKSTART_FRAGMENT} | tr '\003' '\n'
-echo =====
-
 BUILD_AND_TEST_PROJECT_FRAGMENT=$(
   replace_fragments \
     "INSTALL_CRC32C_FROM_SOURCE" \
