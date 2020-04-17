@@ -39,7 +39,7 @@ fi
 
 problems=""
 if ! find google/cloud -name '*.h' -print0 |
-       xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
+  xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
   problems="${problems} include-guards"
 fi
 
@@ -111,12 +111,12 @@ find google/cloud/storage/testbench \
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 if ! find . \( "${ignore[@]}" \) -prune -o \
-       -type f -name '*.sh' -print0 \
-       | xargs -0 shellcheck \
-         --exclude=SC1090 \
-         --exclude=SC2034 \
-         --exclude=SC2153 \
-         --exclude=SC2181; then
+  -type f -name '*.sh' -print0 |
+  xargs -0 shellcheck \
+    --exclude=SC1090 \
+    --exclude=SC2034 \
+    --exclude=SC2153 \
+    --exclude=SC2181; then
   problems="${problems} shellcheck"
 fi
 
