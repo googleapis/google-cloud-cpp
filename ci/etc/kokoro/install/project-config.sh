@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+source "${DESTINATION_ROOT}/ci/etc/quickstart-config.sh"
+
 declare -A ORIGINAL_COPYRIGHT_YEAR=(
   ["centos-7"]=2018
   ["centos-8"]=2019
@@ -27,12 +29,29 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
 
 declare -a FROZEN_FILES=()
 
+read -r -d '' QUICKSTART_FRAGMENT < <(
+  for library in $(quickstart_libraries); do
+    tr '\n' '\003' <<_EOF_
+WORKDIR /home/build/quickstart-cmake/${library}
+COPY google/cloud/${library}/quickstart /home/build/quickstart-cmake/${library}
+RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/${library}
+RUN cmake --build /i/${library}
+
+_EOF_
+  done
+) || true # read always exit with error
+
+echo =====
+echo ${QUICKSTART_FRAGMENT} | tr '\003' '\n'
+echo =====
+
 BUILD_AND_TEST_PROJECT_FRAGMENT=$(
   replace_fragments \
     "INSTALL_CRC32C_FROM_SOURCE" \
     "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
     "INSTALL_GOOGLETEST_FROM_SOURCE" \
-    "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" <<'_EOF_'
+    "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
+    "QUICKSTART_FRAGMENT" <<'_EOF_'
 # #### crc32c
 
 # The project depends on the Crc32c library, we need to compile this from
@@ -94,19 +113,10 @@ WORKDIR /home/build/bigtable-make
 COPY google/cloud/bigtable/quickstart /home/build/bigtable-make
 RUN make
 
-WORKDIR /home/build/bigtable-cmake
-COPY google/cloud/bigtable/quickstart /home/build/bigtable-cmake
-RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
-RUN cmake --build /i/bigtable -- -j ${NCPU:-4}
-
 WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
-WORKDIR /home/build/storage-cmake
-COPY google/cloud/storage/quickstart /home/build/storage-cmake
-RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
-RUN cmake --build /i/storage -- -j ${NCPU:-4}
-
+@QUICKSTART_FRAGMENT@
 _EOF_
 )

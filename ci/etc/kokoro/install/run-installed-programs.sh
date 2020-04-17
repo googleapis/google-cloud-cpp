@@ -13,13 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
-readonly CONFIG_DIRECTORY
-if [[ -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" && -r \
-  "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh" ]]; then
+run_all_installed_quickstart_programs() {
+  CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
+  readonly CONFIG_DIRECTORY
+  if [[ ! -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" ]]; then
+    return 0
+  fi
+  source "${PROJECT_ROOT}/ci/colors.sh"
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+  source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
-  run_args=(
+  local run_args=(
     # Remove the container after running
     "--rm"
 
@@ -30,20 +34,30 @@ if [[ -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" && -r \
     # Mount the config directory as a volume in `/c`
     "--volume" "${CONFIG_DIRECTORY}:/c"
   )
-  readonly NONCE="$(date +%s)-${RANDOM}"
 
-  echo "================================================================"
-  echo "$(date -u): Run Bigtable test programs against installed libraries" \
-    "${DISTRO}."
-  docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-    "/i/bigtable/quickstart" \
-    "${GOOGLE_CLOUD_PROJECT}" \
-    "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}" "quickstart"
+  local errors=""
+  for library in $(quickstart_libraries); do
+    echo
+    log_yellow "Running ${library}'s quickstart program for ${DISTRO}"
+    local args=()
+    while IFS="" read -r line; do
+      args+=("${line}")
+    done < <(quickstart_arguments "${library}")
+    if ! docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
+      "/i/${library}/quickstart" "${args[@]}"; then
+      log_red "Error running the quickstart program"
+      errors="${errors} ${library}"
+    fi
+  done
 
-  echo "================================================================"
-  echo "$(date -u): Run Storage test programs against installed libraries" \
-    "${DISTRO}."
-  docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-    "/i/storage/quickstart" \
-    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-fi
+  echo
+  if [[ -z "${errors}" ]]; then
+    log_green "All quickstart builds were successful"
+    return 0
+  fi
+
+  log_red "Build failed for ${errors:1}"
+  return 1
+}
+
+run_all_installed_quickstart_programs
