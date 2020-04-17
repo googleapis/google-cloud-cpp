@@ -49,10 +49,27 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] ||
   exit 0
 fi
 
+maybe_dirs=(
+  # This is where ccache stores its files, if present we want to back it up
+  "${HOME_DIR}/.ccache"
+
+  # The quickstart builds need to preserve the contents of the vcpkg installed/
+  # directory, but we have to separate it from the other files in `vcpkg` or
+  # things like `git clone` do not work as expected.
+  "${HOME_DIR}/vcpkg-quickstart-cache"
+
+  # Bazel, when running inside the Docker container, puts its cache here:
+  "${HOME_DIR}/.cache"
+)
+
+dirs=()
+for dir in "${maybe_dirs[@]}"; do
+  if [[ -d "${dir}" ]]; then dirs+=("${dir}"); fi
+done
+
 echo "================================================================"
 log_normal "Preparing cache tarball for ${CACHE_NAME}"
-tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
-  "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
+tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 
 echo "================================================================"
 log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"

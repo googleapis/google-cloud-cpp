@@ -219,6 +219,10 @@ elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-bazel.sh"
+elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
+  in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-cmake.sh"
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
