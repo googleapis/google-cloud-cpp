@@ -220,33 +220,6 @@ void CopyObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CopyEncryptedObject(google::cloud::storage::Client client,
-                         std::vector<std::string> const& argv) {
-  //! [copy encrypted object]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name, std::string key_base64) {
-    StatusOr<gcs::ObjectMetadata> new_copy_meta = client.CopyObject(
-        source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
-
-    if (!new_copy_meta) {
-      throw std::runtime_error(new_copy_meta.status().message());
-    }
-
-    std::cout << "Successfully copied " << source_object_name << " in bucket "
-              << source_bucket_name << " to bucket " << new_copy_meta->bucket()
-              << " with name " << new_copy_meta->name()
-              << ".\nThe full metadata after the copy is: " << *new_copy_meta
-              << "\n";
-  }
-  //! [copy encrypted object]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-   argv.at(4));
-}
-
 void GetObjectMetadata(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [get object metadata] [START storage_get_metadata]
@@ -355,68 +328,6 @@ void WriteObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), std::stol(argv.at(2)));
 }
 
-void StartResumableUpload(google::cloud::storage::Client client,
-                          std::vector<std::string> const& argv) {
-  //! [start resumable upload]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectWriteStream stream = client.WriteObject(
-        bucket_name, object_name, gcs::NewResumableUploadSession());
-    std::cout << "Created resumable upload: " << stream.resumable_session_id()
-              << "\n";
-    // As it is customary in C++, the destructor automatically closes the
-    // stream, that would finish the upload and create the object. For this
-    // example we want to restore the session as-if the application had crashed,
-    // where no destructors get called.
-    stream << "This data will not get uploaded, it is too small\n";
-    std::move(stream).Suspend();
-  }
-  //! [start resumable upload]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ResumeResumableUpload(google::cloud::storage::Client client,
-                           std::vector<std::string> const& argv) {
-  //! [resume resumable upload]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string session_id) {
-    // Restore a resumable upload stream, the library automatically queries the
-    // state of the upload and discovers the next expected byte.
-    gcs::ObjectWriteStream stream =
-        client.WriteObject(bucket_name, object_name,
-                           gcs::RestoreResumableUploadSession(session_id));
-    if (!stream.IsOpen() && stream.metadata().ok()) {
-      std::cout << "The upload has already been finalized.  The object "
-                << "metadata is: " << *stream.metadata() << "\n";
-    }
-    if (stream.next_expected_byte() == 0) {
-      // In this example we create a small object, smaller than the resumable
-      // upload quantum (256 KiB), so either all the data is there or not.
-      // Applications use `next_expected_byte()` to find the position in their
-      // input where they need to start uploading.
-      stream << R"""(
-Lorem ipsum dolor sit amet, consectetur adipiscing
-elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-)""";
-    }
-
-    stream.Close();
-
-    StatusOr<gcs::ObjectMetadata> metadata = stream.metadata();
-    if (!metadata) throw std::runtime_error(metadata.status().message());
-    std::cout << "Upload completed, the new object metadata is: " << *metadata
-              << "\n";
-  }
-  //! [resume resumable upload]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
 void UpdateObjectMetadata(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [update object metadata] [START storage_set_metadata]
@@ -490,89 +401,6 @@ void PatchObjectContentType(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-std::string GenerateEncryptionKey(google::cloud::storage::Client,
-                                  std::vector<std::string> const& /*argv*/) {
-  //! [generate encryption key] [START storage_generate_encryption_key]
-  // Create a pseudo-random number generator (PRNG), this is included for
-  // demonstration purposes only. You should consult your security team about
-  // best practices to initialize PRNG. In particular, you should verify that
-  // the C++ library and operating system provide enough entropy to meet the
-  // security policies in your organization.
-
-  // Use the Mersenne-Twister Engine in this example:
-  //   https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
-  // Any C++ PRNG can be used below, the choice is arbitrary.
-  using GeneratorType = std::mt19937_64;
-
-  // Create the default random device to fetch entropy.
-  std::random_device rd;
-
-  // Compute how much entropy we need to initialize the GeneratorType:
-  constexpr auto kRequiredEntropyWords =
-      GeneratorType::state_size *
-      (GeneratorType::word_size / std::numeric_limits<unsigned int>::digits);
-
-  // Capture the entropy bits into a vector.
-  std::vector<unsigned long> entropy(kRequiredEntropyWords);
-  std::generate(entropy.begin(), entropy.end(), [&rd] { return rd(); });
-
-  // Create the PRNG with the fetched entropy.
-  std::seed_seq seed(entropy.begin(), entropy.end());
-
-  // initialized with enough entropy such that the encryption keys are not
-  // predictable. Note that the default constructor for all the generators in
-  // the C++ standard library produce predictable keys.
-  std::mt19937_64 gen(seed);
-
-  namespace gcs = google::cloud::storage;
-  gcs::EncryptionKeyData data = gcs::CreateKeyFromGenerator(gen);
-
-  std::cout << "Base64 encoded key = " << data.key << "\n"
-            << "Base64 encoded SHA256 of key = " << data.sha256 << "\n";
-  //! [generate encryption key] [END storage_generate_encryption_key]
-  return data.key;
-}
-
-void WriteEncryptedObject(google::cloud::storage::Client client,
-                          std::vector<std::string> const& argv) {
-  //! [insert encrypted object] [START storage_upload_encrypted_file]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string base64_aes256_key) {
-    StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
-        bucket_name, object_name, "top secret",
-        gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "The object " << object_metadata->name()
-              << " was created in bucket " << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << "\n";
-  }
-  //! [insert encrypted object] [END storage_upload_encrypted_file]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ReadEncryptedObject(google::cloud::storage::Client client,
-                         std::vector<std::string> const& argv) {
-  //! [read encrypted object] [START storage_download_encrypted_file]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string base64_aes256_key) {
-    gcs::ObjectReadStream stream =
-        client.ReadObject(bucket_name, object_name,
-                          gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-
-    std::string data(std::istreambuf_iterator<char>{stream}, {});
-    std::cout << "The object contents are: " << data << "\n";
-  }
-  //! [read encrypted object] [END storage_download_encrypted_file]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
 void ComposeObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   auto it = argv.cbegin();
@@ -602,40 +430,6 @@ void ComposeObject(google::cloud::storage::Client client,
   }
   //! [compose object] [END storage_compose_file]
   (std::move(client), bucket_name, destination_object_name,
-   std::move(compose_objects));
-}
-
-void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
-                                       std::vector<std::string> const& argv) {
-  auto it = argv.cbegin();
-  auto bucket_name = *it++;
-  auto destination_object_name = *it++;
-  auto base64_aes256_key = *it++;
-  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
-  do {
-    compose_objects.push_back({*it++, {}, {}});
-  } while (it != argv.cend());
-
-  //! [compose object from encrypted objects]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name,
-     std::string destination_object_name, std::string base64_aes256_key,
-     std::vector<gcs::ComposeSourceObject> compose_objects) {
-    StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
-        bucket_name, compose_objects, destination_object_name,
-        gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-
-    if (!composed_object) {
-      throw std::runtime_error(composed_object.status().message());
-    }
-
-    std::cout << "Composed new object " << composed_object->name()
-              << " in bucket " << composed_object->bucket()
-              << "\nFull metadata: " << *composed_object << "\n";
-  }
-  //! [compose object from encrypted objects]
-  (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
    std::move(compose_objects));
 }
 
@@ -701,31 +495,6 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client,
   // [END storage_change_file_storage_class]
   //! [change file storage class]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void RotateEncryptionKey(google::cloud::storage::Client client,
-                         std::vector<std::string> const& argv) {
-  //! [rotate encryption key] [START storage_rotate_encryption_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string old_key_base64, std::string new_key_base64) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.RewriteObjectBlocking(
-            bucket_name, object_name, bucket_name, object_name,
-            gcs::SourceEncryptionKey::FromBase64Key(old_key_base64),
-            gcs::EncryptionKey::FromBase64Key(new_key_base64));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Rotated key on object " << object_metadata->name()
-              << " in bucket " << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << "\n";
-  }
-  //! [rotate encryption key] [END storage_rotate_encryption_key]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -829,49 +598,6 @@ void RunAll(std::vector<std::string> const& argv) {
       client, {bucket_name, multipart_object_name, "text/plain", object_media});
   DeleteObject(client, {bucket_name, multipart_object_name});
 
-  auto const encrypted_object_name =
-      examples::MakeRandomObjectName(generator, "enc-obj-");
-  auto const encrypted_composed_object_name =
-      examples::MakeRandomObjectName(generator, "composed-enc-obj-");
-  auto const encrypted_copied_object_name =
-      examples::MakeRandomObjectName(generator, "copied-enc-obj-");
-
-  std::cout << "\nRunning GenerateEncryptionKey() example" << std::endl;
-  auto const key = GenerateEncryptionKey(client, {});
-
-  std::cout << "\nRunning WriteEncryptedObject() example" << std::endl;
-  WriteEncryptedObject(client, {bucket_name, encrypted_object_name, key});
-
-  std::cout << "\nRunning ReadEncryptedObject() example [1]" << std::endl;
-  ReadEncryptedObject(client, {bucket_name, encrypted_object_name, key});
-
-  std::cout << "\nRunning ComposeObjectFromEncryptedObjects() example"
-            << std::endl;
-  ComposeObjectFromEncryptedObjects(
-      client, {bucket_name, encrypted_composed_object_name, key,
-               encrypted_object_name, encrypted_object_name});
-
-  std::cout << "\nRunning ReadEncryptedObject() example [2]" << std::endl;
-  ReadEncryptedObject(client,
-                      {bucket_name, encrypted_composed_object_name, key});
-
-  std::cout << "\nRunning CopyEncryptedObject() example" << std::endl;
-  CopyEncryptedObject(client, {bucket_name, encrypted_object_name, bucket_name,
-                               encrypted_copied_object_name, key});
-
-  std::cout << "\nRunning ReadEncryptedObject() example [3]" << std::endl;
-  ReadEncryptedObject(client, {bucket_name, encrypted_copied_object_name, key});
-
-  std::cout << "\nRunning RotateEncryptionKey() example" << std::endl;
-  auto const newkey = GenerateEncryptionKey(client, {});
-  RotateEncryptionKey(client,
-                      {bucket_name, encrypted_object_name, key, newkey});
-
-  std::cout << "\nRunning DeleteObject() examples [2]" << std::endl;
-  DeleteObject(client, {bucket_name, encrypted_copied_object_name});
-  DeleteObject(client, {bucket_name, encrypted_composed_object_name});
-  DeleteObject(client, {bucket_name, encrypted_object_name});
-
   std::cout << "\nRunning InsertObjectStrictIdempotency() example" << std::endl;
   auto const object_name_strict =
       examples::MakeRandomObjectName(generator, "object-strict-");
@@ -922,12 +648,6 @@ int main(int argc, char* argv[]) {
           {"<source-bucket-name>", "<source-object-name>",
            "<destination-bucket-name>", "<destination-object-name>"},
           CopyObject),
-      examples::CreateCommandEntry(
-          "copy-encrypted-object",
-          {"<source-bucket-name>", "<source-object-name>",
-           "<destination-bucket-name>", "<destination-object-name>",
-           "<encryption-key-base64>"},
-          CopyEncryptedObject),
       make_entry("get-object-metadata", {"<object-name>"}, GetObjectMetadata),
       make_entry("read-object", {"<object-name>"}, ReadObject),
       make_entry("read-object-range", {"<object-name>", "<start>", "<end>"},
@@ -935,41 +655,21 @@ int main(int argc, char* argv[]) {
       make_entry("delete-object", {"<object-name>"}, DeleteObject),
       make_entry("write-object",
                  {"<object-name>", "<target-object-line-count>"}, WriteObject),
-      make_entry("start-resumable-upload", {"<object-name>"},
-                 StartResumableUpload),
-      make_entry("resume-resumable-upload", {"<object-name>", "<session-id>"},
-                 ResumeResumableUpload),
       make_entry("update-object-metadata",
                  {"<object-name>", "<key>", "<value>"}, UpdateObjectMetadata),
       make_entry("update-object-metadata", {"<object-name>"},
                  PatchObjectDeleteMetadata),
       make_entry("update-object-metadata", {"<object-name>", "<content-type>"},
                  PatchObjectContentType),
-      examples::CreateCommandEntry("generate-encryption-key", {},
-                                   GenerateEncryptionKey),
-      make_entry("write-encrypted-object",
-                 {"<object-name>", "<base64-encoded-aes256-key>"},
-                 WriteEncryptedObject),
-      make_entry("read-encrypted-object",
-                 {"<object-name>", "<base64-encoded-aes256-key>"},
-                 ReadEncryptedObject),
       make_entry("compose-object",
                  {"<destination-object-name>", "<object>", "[object...]"},
                  ComposeObject),
-      make_entry("compose-object-from-encrypted-objects",
-                 {"<destination-object-name>", "<base64-encoded-aes256-key>",
-                  "<object>", "[object...]"},
-                 ComposeObjectFromEncryptedObjects),
       make_entry("compose-object-from-many",
                  {"<destination-object-name>", "<object>", "[object...]"},
                  ComposeObjectFromMany),
       make_entry("change-object-storage-class",
                  {"<object-name>", "<storage-class>"},
                  ChangeObjectStorageClass),
-      make_entry(
-          "rotate-encryption-key",
-          {"<object-name>", "<old-encryption-key>", "<new-encryption-key>"},
-          RotateEncryptionKey),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

@@ -933,7 +933,7 @@ class Client {
    * @snippet storage_object_samples.cc copy object
    *
    * @par Example: copy an encrypted object
-   * @snippet storage_object_samples.cc copy encrypted object
+   * @snippet storage_object_csek_samples.cc copy encrypted object
    *
    * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
    *   a full description of the advantages of `Objects: rewrite` over
@@ -1034,7 +1034,7 @@ class Client {
    * @snippet storage_object_samples.cc read object range
    *
    * @par Example: read a object encrypted with a CSEK.
-   * @snippet storage_object_samples.cc read encrypted object
+   * @snippet storage_object_csek_samples.cc read encrypted object
    */
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,
@@ -1113,10 +1113,10 @@ class Client {
    * @snippet storage_object_cmek_samples.cc write object with kms key
    *
    * @par Example: starting a resumable upload.
-   * @snippet storage_object_samples.cc start resumable upload
+   * @snippet storage_object_resumable_write_samples.cc start resumable upload
    *
    * @par Example: resuming a resumable upload.
-   * @snippet storage_object_samples.cc resume resumable upload
+   * @snippet storage_object_resumable_write_samples.cc resume resumable upload
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
@@ -1353,7 +1353,7 @@ class Client {
    * @snippet storage_object_samples.cc compose object
    *
    * @par Example: using encrypted objects with CSEK
-   * @snippet storage_object_samples.cc compose object from encrypted objects
+   * @snippet storage_object_csek_samples.cc compose object csek
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> ComposeObject(
@@ -1509,7 +1509,7 @@ class Client {
    * @snippet storage_object_rewrite_samples.cc rewrite object
    *
    * @par Example: using rewrite object to rotate the encryption key
-   * @snippet storage_object_samples.cc rotate encryption key
+   * @snippet storage_object_csek_samples.cc rotate encryption key
    *
    * @par Example: using rewrite object to rename an object
    * @snippet storage_object_rewrite_samples.cc rename object
