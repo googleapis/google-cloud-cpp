@@ -44,7 +44,7 @@ cc_library(
     deps = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//:pubsub_protos",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
     ],
 )
 
