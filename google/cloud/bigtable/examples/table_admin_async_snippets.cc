@@ -297,10 +297,6 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
 void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (UsingEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
   //! [async get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -326,11 +322,6 @@ void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (UsingEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-
   //! [async set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -382,10 +373,6 @@ void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 void AsyncTestIamPermissions(google::cloud::bigtable::TableAdmin admin,
                              google::cloud::bigtable::CompletionQueue cq,
                              std::vector<std::string> argv) {
-  if (UsingEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
   //! [async test iam permissions]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -508,20 +495,23 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncDropAllRows() example" << std::endl;
   AsyncDropAllRows(admin, cq, {table_id});
 
-  std::cout << "\nRunning AsyncGetIamPolicy() example" << std::endl;
-  AsyncGetIamPolicy(admin, cq, {table_id});
+  // TODO(#151) - remove workarounds for emulator bug(s).
+  if (!UsingEmulator()) {
+    std::cout << "\nRunning AsyncGetIamPolicy() example" << std::endl;
+    AsyncGetIamPolicy(admin, cq, {table_id});
 
-  std::cout << "\nRunning AsyncSetIamPolicy() example" << std::endl;
-  AsyncSetIamPolicy(
-      admin, cq,
-      {table_id, "roles/bigtable.user", "serviceAccount:" + service_account});
+    std::cout << "\nRunning AsyncSetIamPolicy() example" << std::endl;
+    AsyncSetIamPolicy(
+        admin, cq,
+        {table_id, "roles/bigtable.user", "serviceAccount:" + service_account});
 
-  std::cout << "\nRunning AsyncTestIamPermissions() example [1]" << std::endl;
-  AsyncTestIamPermissionsCommand(
-      {project_id, instance_id, table_id, "bigtable.tables.get"});
+    std::cout << "\nRunning AsyncTestIamPermissions() example [1]" << std::endl;
+    AsyncTestIamPermissionsCommand(
+        {project_id, instance_id, table_id, "bigtable.tables.get"});
 
-  std::cout << "\nRunning AsyncTestIamPermissions() example [2]" << std::endl;
-  AsyncTestIamPermissions(admin, cq, {table_id, "bigtable.tables.get"});
+    std::cout << "\nRunning AsyncTestIamPermissions() example [2]" << std::endl;
+    AsyncTestIamPermissions(admin, cq, {table_id, "bigtable.tables.get"});
+  }
 
   std::cout << "\nRunning the AsyncDeleteTable() example" << std::endl;
   AsyncDeleteTable(admin, cq, {table_id});
