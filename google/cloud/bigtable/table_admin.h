@@ -674,6 +674,25 @@ class TableAdmin {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
 
   /**
+   * Asynchronously gets the IAM policy for @p table_id.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the instance to query.
+   * @return a future satisfied when either (a) the policy is fetched or (b)
+   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async get iam policy
+   */
+  future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
+      CompletionQueue& cq, std::string const& table_id);
+
+  /**
    * Sets the IAM policy for a table.
    *
    * This is the preferred way to the overload for `IamBindings`. This is more
@@ -697,6 +716,31 @@ class TableAdmin {
       std::string const& table_id, google::iam::v1::Policy const& iam_policy);
 
   /**
+   * Asynchronously sets the IAM policy for a table.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id which instance to set the IAM policy for.
+   * @param iam_policy google::iam::v1::Policy object containing role and
+   * members.
+   * @return a future satisfied when either (a) the policy is created or (b)
+   *     an unretriable error occurs or (c) retry policy has been
+   *     exhausted.
+   *
+   * @warning ETags are currently not used by Cloud Bigtable.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async set iam policy
+   */
+  future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
+      CompletionQueue& cq, std::string const& table_id,
+      google::iam::v1::Policy const& iam_policy);
+
+  /**
    * Returns a permission set that the caller has on the specified table.
    *
    * @param table_id the ID of the table to query.
@@ -713,6 +757,29 @@ class TableAdmin {
    */
   StatusOr<std::vector<std::string>> TestIamPermissions(
       std::string const& table_id, std::vector<std::string> const& permissions);
+
+  /**
+   * Asynchronously obtains a permission set that the caller has on the
+   * specified table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the ID of the table to query.
+   * @param permissions set of permissions to check for the resource.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async test iam permissions
+   *
+   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
+   *     valid permissions on Google Cloud Bigtable.
+   */
+  future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
+      CompletionQueue& cq, std::string const& table_id,
+      std::vector<std::string> const& permissions);
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {

@@ -168,6 +168,33 @@ InProcessAdminClient::AsyncCheckConsistency(
 }
 
 std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+InProcessAdminClient::AsyncGetIamPolicy(
+    grpc::ClientContext* context,
+    google::iam::v1::GetIamPolicyRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncGetIamPolicy(context, request, cq);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+InProcessAdminClient::AsyncSetIamPolicy(
+    grpc::ClientContext* context,
+    google::iam::v1::SetIamPolicyRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncSetIamPolicy(context, request, cq);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::iam::v1::TestIamPermissionsResponse>>
+InProcessAdminClient::AsyncTestIamPermissions(
+    grpc::ClientContext* context,
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncTestIamPermissions(context, request, cq);
+}
+
+std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 InProcessAdminClient::AsyncGetOperation(
     grpc::ClientContext* context,

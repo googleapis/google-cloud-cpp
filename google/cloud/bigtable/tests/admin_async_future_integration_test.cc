@@ -26,6 +26,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 using namespace google::cloud::testing_util::chrono_literals;
 
 class AdminAsyncFutureIntegrationTest
@@ -33,6 +34,7 @@ class AdminAsyncFutureIntegrationTest
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
+  std::string service_account_;
 
   void SetUp() {
     if (google::cloud::internal::GetEnv(
@@ -40,6 +42,11 @@ class AdminAsyncFutureIntegrationTest
             .value_or("") != "yes") {
       GTEST_SKIP();
     }
+    service_account_ = google::cloud::internal::GetEnv(
+                           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
+                           .value_or("");
+    ASSERT_FALSE(service_account_.empty());
+
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
         testing::TableTestEnvironment::project_id(), ClientOptions());
@@ -356,6 +363,82 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
 
   auto status = chain.get();
   EXPECT_STATUS_OK(status);
+  cq.Shutdown();
+  pool.join();
+}
+
+TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
+  // TODO(#151) - remove workarounds for emulator bugs(s)
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  std::string const table_id = RandomTableId();
+
+  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
+      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
+
+  TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
+                            {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
+                           {"a1000", "a2000", "b3000", "m5000"});
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  future<void> chain =
+      table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY)
+          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
+            StatusOr<std::vector<btadmin::Table>> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            auto previous_count = CountMatchingTables(table_id, *result);
+            EXPECT_EQ(0, previous_count)
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
+            return table_admin_->AsyncCreateTable(cq, table_id, table_config);
+          })
+          .then([&](future<StatusOr<btadmin::Table>> fut) {
+            StatusOr<btadmin::Table> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
+            return table_admin_->AsyncSetIamPolicy(cq, table_id, iam_policy);
+          })
+          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
+            StatusOr<google::iam::v1::Policy> get_result = fut.get();
+            EXPECT_STATUS_OK(get_result);
+            return table_admin_->AsyncGetIamPolicy(cq, table_id);
+          })
+          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
+            StatusOr<google::iam::v1::Policy> get_result = fut.get();
+            EXPECT_STATUS_OK(get_result);
+            return table_admin_->AsyncTestIamPermissions(
+                cq, table_id,
+                {"bigtable.tables.get", "bigtable.tables.readRows"});
+          })
+          .then([&](future<StatusOr<std::vector<std::string>>> fut) {
+            StatusOr<std::vector<std::string>> get_result = fut.get();
+            EXPECT_STATUS_OK(get_result);
+            EXPECT_EQ(2, get_result->size());
+            return table_admin_->AsyncDeleteTable(cq, table_id);
+          })
+          .then([&](future<Status> fut) {
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
+            return table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY);
+          })
+          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
+            StatusOr<std::vector<btadmin::Table>> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            auto previous_count = CountMatchingTables(table_id, *result);
+            ASSERT_EQ(0, previous_count)
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
+          });
+
+  chain.get();
+  SUCCEED();  // we expect that previous operations do not fail.
+
   cq.Shutdown();
   pool.join();
 }
