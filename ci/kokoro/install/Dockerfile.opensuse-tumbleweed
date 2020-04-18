@@ -144,16 +144,16 @@ WORKDIR /home/build/bigtable-make
 COPY google/cloud/bigtable/quickstart /home/build/bigtable-make
 RUN make
 
-WORKDIR /home/build/bigtable-cmake
-COPY google/cloud/bigtable/quickstart /home/build/bigtable-cmake
-RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
-RUN cmake --build /i/bigtable -- -j ${NCPU:-4}
-
 WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
-WORKDIR /home/build/storage-cmake
-COPY google/cloud/storage/quickstart /home/build/storage-cmake
+WORKDIR /home/build/quickstart-cmake/bigtable
+COPY google/cloud/bigtable/quickstart /home/build/quickstart-cmake/bigtable
+RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
+RUN cmake --build /i/bigtable
+
+WORKDIR /home/build/quickstart-cmake/storage
+COPY google/cloud/storage/quickstart /home/build/quickstart-cmake/storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
-RUN cmake --build /i/storage -- -j ${NCPU:-4}
+RUN cmake --build /i/storage
