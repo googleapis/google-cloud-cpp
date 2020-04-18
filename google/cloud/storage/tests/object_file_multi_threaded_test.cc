@@ -46,10 +46,10 @@ class ObjectFileMultiThreadedTest
     if (object_count) object_count_ = std::stoi(*object_count);
   }
 
-  unsigned ThreadCount() {
-    static unsigned const count = [] {
-      auto c = std::thread::hardware_concurrency();
-      return c == 0 ? 4u : 4 * c;
+  static int ThreadCount() {
+    static int const count = [] {
+      auto c = static_cast<int>(std::thread::hardware_concurrency());
+      return c == 0 ? 4 : 4 * c;
     }();
     return count;
   }
@@ -104,7 +104,6 @@ class ObjectFileMultiThreadedTest
   Status DeleteSomeObjects(Client client,
                            std::vector<std::string> const& object_names,
                            int thread_count, int modulo) {
-    auto contents = MakeRandomData(kObjectSize);
     int index = 0;
     Status status;
     for (auto& name : object_names) {
@@ -123,14 +122,14 @@ class ObjectFileMultiThreadedTest
                      std::vector<std::string> const& object_names) {
     // Parallelize the object deletion too because it can be slow.
     int const thread_count = ThreadCount();
-    auto create_some_objects = [this, &client, &object_names,
+    auto delete_some_objects = [this, &client, &object_names,
                                 thread_count](int modulo) {
       return DeleteSomeObjects(client, object_names, thread_count, modulo);
     };
     std::vector<std::future<Status>> tasks(thread_count);
     int modulo = 0;
     for (auto& t : tasks) {
-      t = std::async(std::launch::async, create_some_objects, modulo++);
+      t = std::async(std::launch::async, delete_some_objects, modulo++);
     }
     for (auto& t : tasks) {
       auto const status = t.get();
@@ -153,11 +152,10 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   std::cout << " DONE\n";
 
   // Create multiple threads, each downloading a portion of the objects.
-  int const thread_count = ThreadCount();
+  auto const thread_count = ThreadCount();
   auto download_some_objects = [this, thread_count, &client,
                                 &object_names](int modulo) {
     std::cout << '+' << std::flush;
-    auto contents = MakeRandomData(kObjectSize);
     int index = 0;
     for (auto& name : object_names) {
       if (index++ % thread_count != modulo) continue;
