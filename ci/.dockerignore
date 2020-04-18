@@ -1,0 +1,10 @@
+# During the docker-build phase, when building the docker image, we only need
+# access to the top-level scripts and their configs in etc/. Ignoring
+# everything else prevents unnecessarily rebuilding docker images.
+#
+# Note: This file does not prevent us from accessing other files from within a
+# running docker *container*. Those will be availble from our mounted volume.
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+*
+!*.*
+!etc
