@@ -99,8 +99,8 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
   export CC=clang
   export CXX=clang++
-  export DISTRO=ubuntu
-  export DISTRO_VERSION=18.04
+  export DISTRO=fedora
+  export DISTRO_VERSION=31
   export BAZEL_CONFIG="asan"
   RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -109,7 +109,7 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora-libcxx-msan
-  export DISTRO_VERSION=30
+  export DISTRO_VERSION=31
   export BAZEL_CONFIG="msan"
   RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -117,18 +117,17 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
   export CC=clang
   export CXX=clang++
-  export DISTRO=fedora-install
-  export DISTRO_VERSION=30
+  export DISTRO=fedora
+  export DISTRO_VERSION=31
   export BAZEL_CONFIG="tsan"
-  # TODO(#3832) - fix bugs and enable
   # RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
   export CC=clang
   export CXX=clang++
-  export DISTRO=ubuntu
-  export DISTRO_VERSION=18.04
+  export DISTRO=fedora
+  export DISTRO_VERSION=31
   export BAZEL_CONFIG="ubsan"
   # TODO(#3832) - fix bugs and enable
   # RUN_INTEGRATION_TESTS=auto
