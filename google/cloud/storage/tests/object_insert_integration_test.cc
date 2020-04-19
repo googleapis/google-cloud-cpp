@@ -670,7 +670,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   EXPECT_LT(0, count) << "logs=" << [&backend] {
     std::string msg;
     for (auto const& l : backend->log_lines) {
-      if (msg.find(" POST ") == std::string::npos) continue;
+      if (l.find(" POST ") == std::string::npos) continue;
       msg += l;
       msg += "\n";
     }
