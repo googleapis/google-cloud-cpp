@@ -18,7 +18,8 @@ FROM fedora:${DISTRO_VERSION}
 # Install the tools necessary to run Bazel and CMake Super builds.
 RUN dnf makecache && \
     dnf install -y clang clang-tools-extra cmake diffutils findutils \
-        gcc-c++ git libcxx-devel libcxxabi-devel make openssl-devel pkgconfig \
+        gcc-c++ git libcxx-devel libcxxabi-devel libubsan libubsan-static \
+        make openssl-devel pkgconfig \
         python3 python3-devel python3-pip tar unzip wget which zlib-devel
 
 # Install the Python modules needed to run the storage testbench
