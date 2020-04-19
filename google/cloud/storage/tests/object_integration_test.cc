@@ -493,7 +493,9 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
 
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
+#ifdef __linux__
   std::size_t delta = 0;
+#endif  // __linux__
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
