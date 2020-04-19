@@ -69,7 +69,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
 # Install googleapis, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz && \
+RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DBUILD_SHARED_LIBS=YES \
@@ -79,7 +79,7 @@ RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -94,7 +94,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
 
 # Download and compile google-cloud-cpp-common from source too.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+RUN curl -sSL https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -H. -Bcmake-out \
       -DBUILD_SHARED_LIBS=YES \

@@ -79,7 +79,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.0.6.tar.gz | \
 #   as the dependent (gRPC or google-cloud-cpp) works.
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/protobuf/archive/v3.11.3.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+    tar -xzf - --strip-components=1
 WORKDIR cmake
 RUN for build_type in "Debug" "Release"; do \
     cmake \
