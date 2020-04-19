@@ -22,9 +22,9 @@ if (NOT TARGET curl-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_CURL_URL
-        "https://curl.haxx.se/download/curl-7.65.3.tar.gz")
+        "https://curl.haxx.se/download/curl-7.69.1.tar.gz")
     set(GOOGLE_CLOUD_CPP_CURL_SHA256
-        "4376ac72b95572fb6c4fbffefb97c7ea0dd083e1974c0e44cd7e49396f454839")
+        "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()

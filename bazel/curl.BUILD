@@ -1,5 +1,5 @@
 # This is based on:
-#   https://github.com/tensorflow/tensorflow/blob/6dcdbbf6211706d78ef499f2f134dadc3804cd25/third_party/curl.BUILD
+#   https://github.com/tensorflow/tensorflow/blob/51d480498b07346b8b6e2ee3fbd3dc486f60ed96/third_party/curl.BUILD
 # Description:
 #   curl is a tool for talking to web servers.
 
@@ -20,9 +20,30 @@ config_setting(
 )
 
 config_setting(
-    name = "darwin",
+    name = "macos",
     values = {"cpu": "darwin"},
     visibility = ["//visibility:public"],
+)
+
+genrule(
+    name = "get-ca-bundle-location",
+    outs = ["include/curl_ca_bundle_location.h"],
+    cmd = select({
+        ":windows": """echo '#define CURL_CA_BUNDLE ""'>$@""",
+        ":macos": """echo '#define CURL_CA_BUNDLE ""'>$@""",
+        "//conditions:default": """
+      if [ -f /etc/fedora-release ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
+      elif [ -f /etc/redhat-release ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
+      elif [ -f /etc/debian_version ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/ssl/certs/ca-certificates.crt"'
+      else
+        >&2 echo "Unknown platform, cannot guess location of CA bundle"
+        exit 1
+      fi >$@
+    """,
+    }),
 )
 
 CURL_WIN_COPTS = [
@@ -45,6 +66,7 @@ CURL_WIN_SRCS = [
     "lib/asyn-thread.c",
     "lib/inet_ntop.c",
     "lib/system_win32.c",
+    "lib/x509asn1.c",
     "lib/vtls/schannel.c",
     "lib/vtls/schannel_verify.c",
     "lib/idn_win32.c",
@@ -180,8 +202,11 @@ cc_library(
         "lib/pop3.h",
         "lib/progress.c",
         "lib/progress.h",
+        "lib/quic.h",
         "lib/rand.c",
         "lib/rand.h",
+        "lib/rename.h",
+        "lib/rename.c",
         "lib/rtsp.c",
         "lib/rtsp.h",
         "lib/security.c",
@@ -202,13 +227,14 @@ cc_library(
         "lib/smb.h",
         "lib/smtp.h",
         "lib/sockaddr.h",
+        "lib/socketpair.h",
+        "lib/socketpair.c",
         "lib/socks.c",
         "lib/socks.h",
         "lib/speedcheck.c",
         "lib/speedcheck.h",
         "lib/splay.c",
         "lib/splay.h",
-        "lib/ssh.h",
         "lib/strcase.c",
         "lib/strcase.h",
         "lib/strdup.c",
@@ -238,13 +264,13 @@ cc_library(
         "lib/vauth/vauth.c",
         "lib/vauth/vauth.h",
         "lib/version.c",
+        "lib/vssh/ssh.h",
+        "lib/vtls/bearssl.h",
         "lib/vtls/gskit.h",
         "lib/vtls/gtls.h",
         "lib/vtls/mbedtls.h",
         "lib/vtls/nssg.h",
         "lib/vtls/openssl.h",
-        "lib/vtls/polarssl.h",
-        "lib/vtls/polarssl_threadlock.h",
         "lib/vtls/schannel.h",
         "lib/vtls/vtls.c",
         "lib/vtls/vtls.h",
@@ -253,7 +279,6 @@ cc_library(
         "lib/warnless.h",
         "lib/wildcard.c",
         "lib/wildcard.h",
-        "lib/x509asn1.c",
         "lib/x509asn1.h",
         "lib/psl.h",
         "lib/psl.c",
@@ -269,7 +294,7 @@ cc_library(
         "lib/doh.h",
         "lib/doh.c",
     ] + select({
-        ":darwin": [
+        ":macos": [
             "lib/vtls/sectransp.c",
         ],
         ":windows": CURL_WIN_SRCS,
@@ -302,7 +327,7 @@ cc_library(
             "-Wno-string-plus-int",
         ],
     }) + select({
-        ":darwin": [
+        ":macos": [
             "-fno-constant-cfstrings",
         ],
         ":windows": [
@@ -316,7 +341,7 @@ cc_library(
     defines = ["CURL_STATICLIB"],
     includes = ["include"],
     linkopts = select({
-        ":darwin": [
+        ":macos": [
             "-Wl,-framework",
             "-Wl,CoreFoundation",
             "-Wl,-framework",
@@ -345,7 +370,7 @@ cc_library(
 )
 
 CURL_BIN_WIN_COPTS = [
-    "/Iexternal/curl/lib",
+    "/Iexternal/com_github_curl_curl/lib",
     "/DHAVE_CONFIG_H",
     "/DCURL_DISABLE_LIBCURL_OPTION",
 ]
@@ -442,7 +467,6 @@ cc_binary(
         ":windows": CURL_BIN_WIN_COPTS,
         "//conditions:default": [
             "-Iexternal/com_github_curl_curl/lib",
-            "-Iexternal/com_github_curl_curl/src",
             "-D_GNU_SOURCE",
             "-DHAVE_CONFIG_H",
             "-DCURL_DISABLE_LIBCURL_OPTION",
@@ -450,27 +474,6 @@ cc_binary(
         ],
     }),
     deps = [":curl"],
-)
-
-genrule(
-    name = "get-ca-bundle-location",
-    outs = ["include/curl_ca_bundle_location.h"],
-    cmd = select({
-        ":windows": """echo '#define CURL_CA_BUNDLE ""'>$@""",
-        ":darwin": """echo '#define CURL_CA_BUNDLE ""'>$@""",
-        "//conditions:default": """
-      if [ -f /etc/fedora-release ]; then
-        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
-      elif [ -f /etc/redhat-release ]; then
-        echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
-      elif [ -f /etc/debian_version ]; then
-        echo '#define CURL_CA_BUNDLE "/etc/ssl/certs/ca-certificates.crt"'
-      else
-        >&2 echo "Unknown platform, cannot guess location of CA bundle"
-        exit 1
-      fi >$@
-    """,
-    }),
 )
 
 genrule(

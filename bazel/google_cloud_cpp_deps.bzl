@@ -121,10 +121,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_github_curl_curl",
             urls = [
-                "https://curl.haxx.se/download/curl-7.65.3.tar.gz",
+                "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
             ],
-            strip_prefix = "curl-7.65.3",
-            sha256 = "4376ac72b95572fb6c4fbffefb97c7ea0dd083e1974c0e44cd7e49396f454839",
+            strip_prefix = "curl-7.69.1",
+            sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:curl.BUILD",
         )
 
