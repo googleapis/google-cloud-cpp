@@ -1,0 +1,10 @@
+# We do not need the git repository in docker images.
+.git/
+
+# We do not need the typical build directories in docker images.
+.idea/
+.build/
+_build/
+build-output/
+cmake-build-*/
+cmake-out/
