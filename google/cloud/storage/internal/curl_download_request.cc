@@ -150,11 +150,11 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
-#if LIBCURL_VERSION_NUM >= 0x074500
+#if CURL_AT_LEAST_VERSION(7, 69, 0)
   if (!curl_closed_ && paused_) {
 #else
   if (!curl_closed_) {
-#endif  // LIBCURL_VERSION_NUM
+#endif  // libcurl >= 7.69.0
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     if (!status.ok()) {
       TRACE_STATE() << ", status=" << status;

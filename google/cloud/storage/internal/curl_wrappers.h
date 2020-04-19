@@ -29,6 +29,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+#ifndef CURL_AT_LEAST_VERSION
+#define CURL_AT_LEAST_VERSION(Ma, Mi, Pa) \
+  (LIBCURL_VERSION_NUM >= ((((Ma) << 16) | ((Mi) << 8)) | (Pa)))
+#endif  // CURL_AT_LEAST_VERSION
+
 /// Hold a CURL* handle and automatically clean it up.
 using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
 

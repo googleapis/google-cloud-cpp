@@ -39,7 +39,7 @@ TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
 
 #if !defined(SIGPIPE)
   return;  // nothing to do
-#elif LIBCURL_VERSION_NUM > 0x072900
+#elif CURL_AT_LEAST_VERSION(7, 30, 0)
   // libcurl <= 7.29.0 installs its own signal handler for SIGPIPE during
   // curl_global_init(). Unfortunately 7.29.0 is the default on CentOS-7, and
   // the tests here fails. We simply skip the test with this ancient library.
