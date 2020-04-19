@@ -32,7 +32,7 @@ namespace internal {
 
 #ifndef CURL_AT_LEAST_VERSION
 #define CURL_AT_LEAST_VERSION(Ma, Mi, Pa) \
-  (LIBCURL_VERSION_NUM >= ((((Ma) << 8) | ((Mi) << 8)) | (Pa)))
+  (LIBCURL_VERSION_NUM >= ((((Ma) << 16) | ((Mi) << 8)) | (Pa)))
 #endif  // CURL_AT_LEAST_VERSION
 
 /// Hold a CURL* handle and automatically clean it up.
