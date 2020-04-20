@@ -403,9 +403,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
             EXPECT_STATUS_OK(result);
             auto previous_count = CountMatchingTables(table_id, *result);
             EXPECT_EQ(0, previous_count)
-                      << "Table (" << table_id << ") already exists."
-                      << " This is unexpected, as the table ids are"
-                      << " generated at random.";
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
             return table_admin_->AsyncCreateTable(cq, table_id, table_config);
           })
           .then([&](future<StatusOr<btadmin::Table>> fut) {
@@ -442,9 +442,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
             EXPECT_STATUS_OK(result);
             auto previous_count = CountMatchingTables(table_id, *result);
             ASSERT_EQ(0, previous_count)
-                          << "Table (" << table_id << ") already exists."
-                          << " This is unexpected, as the table ids are"
-                          << " generated at random.";
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
           });
 
   chain.get();
@@ -473,10 +473,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
                                << " This is unexpected, as the table ids are"
                                << " generated at random.";
 
-
   TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
                             {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
-                                {"a1000", "a2000", "b3000", "m5000"});
+                           {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));

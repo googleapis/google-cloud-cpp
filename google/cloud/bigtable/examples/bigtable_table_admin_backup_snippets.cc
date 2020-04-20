@@ -21,7 +21,6 @@
 namespace {
 
 using google::cloud::bigtable::examples::Usage;
-using google::cloud::bigtable::examples::UsingEmulator;
 
 void CreateBackup(google::cloud::bigtable::TableAdmin admin,
                   std::vector<std::string> const& argv) {

@@ -23,6 +23,7 @@ bigtable_examples = [
     "bigtable_hello_table_admin.cc",
     "bigtable_hello_world.cc",
     "bigtable_instance_admin_snippets.cc",
+    "bigtable_table_admin_backup_async_snippets.cc",
     "bigtable_table_admin_backup_snippets.cc",
     "data_async_snippets.cc",
     "data_filter_snippets.cc",

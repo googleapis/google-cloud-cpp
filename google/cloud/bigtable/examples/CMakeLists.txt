@@ -37,6 +37,8 @@ if (BUILD_TESTING)
         bigtable_hello_table_admin.cc
         bigtable_hello_world.cc
         bigtable_instance_admin_snippets.cc
+        bigtable_table_admin_backup_async_snippets.cc
+        bigtable_table_admin_backup_snippets.cc
         data_async_snippets.cc
         data_filter_snippets.cc
         data_snippets.cc
@@ -98,7 +100,7 @@ if (BUILD_TESTING)
     # We just know that these tests need to be run against production.
     set(bigtable_examples_production
         # cmake-format: sort
-        bigtable_grpc_credentials.cc table_admin_iam_policy_snippets.cc bigtable_table_admin_backup_snippets.cc)
+        bigtable_grpc_credentials.cc table_admin_iam_policy_snippets.cc bigtable_table_admin_backup_snippets.cc bigtable_table_admin_backup_async_snippets.cc)
 
     foreach (fname ${bigtable_examples_production})
         google_cloud_cpp_set_target_name(target "bigtable_examples" "${fname}")

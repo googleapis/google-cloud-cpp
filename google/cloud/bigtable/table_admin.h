@@ -492,7 +492,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async create backup
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async create backup
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
@@ -553,7 +553,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async get backup
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
       CompletionQueue& cq, std::string const& cluster_id,
@@ -629,7 +629,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async update backup
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async update backup
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
@@ -702,7 +702,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async delete backup
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
    */
   future<Status> AsyncDeleteBackup(CompletionQueue& cq,
                                    std::string const& cluster_id,
@@ -729,7 +729,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async delete backup
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
    */
   future<Status> AsyncDeleteBackup(
       CompletionQueue& cq, google::bigtable::admin::v2::Backup const& backup);
@@ -869,7 +869,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async list backups
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async list backups
    *
    */
   future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
@@ -948,7 +948,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async restore table
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async restore table
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
