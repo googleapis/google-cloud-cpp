@@ -12,38 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=30
+ARG DISTRO_VERSION=31
 FROM fedora:${DISTRO_VERSION}
 
-RUN dnf makecache && dnf install -y \
-    autoconf \
-    automake \
-    c-ares-devel \
-    ccache \
-    clang \
-    clang-tools-extra \
-    cmake \
-    curl \
-    dia \
-    doxygen \
-    gcc-c++ \
-    git \
-    libcurl-devel \
-    libcxx-devel \
-    libcxxabi-devel \
-    libtool \
-    make \
-    ncurses-term \
-    openssl-devel \
-    pkgconfig \
-    python3 \
-    python3-devel \
-    shtool \
-    unzip \
-    wget \
-    which \
-    zlib-devel
+# Install the tools necessary to run Bazel and CMake Super builds.
+RUN dnf makecache && \
+    dnf install -y clang clang-tools-extra cmake diffutils findutils \
+        gcc-c++ git libcxx-devel libcxxabi-devel libasan libubsan libtsan \
+        make openssl-devel pkgconfig python3 python3-devel python3-pip tar \
+        unzip wget which zlib-devel
 
+# Install the Python modules needed to run the storage testbench
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
