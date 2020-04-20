@@ -42,9 +42,11 @@ if (BUILD_TESTING)
         bigtable_benchmark_test.cc embedded_server_test.cc
         format_duration_test.cc setup_test.cc)
     foreach (fname ${bigtable_benchmarks_unit_tests})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
+        string(REPLACE "/" "_" basename ${fname})
+        string(REPLACE ".cc" "" basename ${basename})
+        set(target "bigtable_benchmarks_${basename}")
         add_executable(${target} ${fname})
+        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(
             ${target}
             PRIVATE bigtable_benchmark_common

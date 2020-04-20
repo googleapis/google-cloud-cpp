@@ -53,9 +53,11 @@ create_bazel_config(bigtable_examples_common)
 if (BUILD_TESTING)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
     foreach (fname ${bigtable_examples_unit_tests})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
+        string(REPLACE "/" "_" basename ${fname})
+        string(REPLACE ".cc" "" basename ${basename})
+        set(target "bigtable_examples_${basename}")
         add_executable(${target} ${fname})
+        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(
             ${target}
             PRIVATE bigtable_examples_common
