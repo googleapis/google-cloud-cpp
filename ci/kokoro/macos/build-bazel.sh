@@ -88,10 +88,10 @@ readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="${CONFIG_DIR}/kokoro-run-key.p12"
 
 should_run_integration_tests() {
-  if [[ -r "${INTEGRATION_TESTS_CONFIG}" && \
-        -r "${GOOGLE_APPLICATION_CREDENTIALS}" && \
-        -r "${TEST_KEY_FILE_JSON}" && \
-        -r "${TEST_KEY_FILE_P12}" ]]; then
+  if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
+    "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+    "${TEST_KEY_FILE_JSON}" && -r \
+    "${TEST_KEY_FILE_P12}" ]]; then
     return 0
   fi
   return 1
