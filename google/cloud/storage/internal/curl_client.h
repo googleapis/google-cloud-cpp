@@ -219,22 +219,9 @@ class CurlClient : public RawClient,
   std::string xml_download_endpoint_;
   std::string iam_endpoint_;
 
-  // These mutexes are used to protect different portions of `share_`.
-  std::mutex mu_share_;
-  std::mutex mu_dns_;
-  std::mutex mu_ssl_session_;
-  std::mutex mu_connect_;
-  std::mutex mu_psl_;
-  CurlShare share_;
-
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
 
-  // The factories must be listed *after* the CurlShare. libcurl keeps a
-  // usage count on each CURLSH* handle, which is only released once the CURL*
-  // handle is *closed*. So we want the order of destruction to be (1)
-  // factories, as that will delete all the CURL* handles, and then (2) CURLSH*.
-  // To guarantee this order just list the members in the opposite order.
   std::shared_ptr<CurlHandleFactory> storage_factory_;
   std::shared_ptr<CurlHandleFactory> upload_factory_;
   std::shared_ptr<CurlHandleFactory> xml_upload_factory_;
