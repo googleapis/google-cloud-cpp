@@ -408,7 +408,7 @@ void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
   }
   auto const project_id = argv[0];
   auto const instance_id = argv[1];
-  argv.erase(argv.begin(), argv.begin() + 1);
+  argv.erase(argv.begin(), argv.begin() + 2);
 
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });
