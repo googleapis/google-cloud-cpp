@@ -317,6 +317,7 @@ if (BUILD_TESTING)
         client_notifications_test.cc
         client_object_acl_test.cc
         client_object_copy_test.cc
+        client_options_test.cc
         client_service_account_test.cc
         client_sign_policy_document_test.cc
         client_sign_url_test.cc
@@ -388,16 +389,17 @@ if (BUILD_TESTING)
         service_account_test.cc
         signed_url_options_test.cc
         storage_class_test.cc
-        storage_client_options_test.cc
         storage_iam_policy_test.cc
         storage_version_test.cc
         well_known_headers_test.cc
         well_known_parameters_test.cc)
 
     foreach (fname ${storage_client_unit_tests})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
+        string(REPLACE "/" "_" basename ${fname})
+        string(REPLACE ".cc" "" basename ${basename})
+        set(target "storage_${basename}")
         add_executable(${target} ${fname})
+        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

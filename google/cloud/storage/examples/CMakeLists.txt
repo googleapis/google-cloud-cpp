@@ -67,9 +67,11 @@ if (BUILD_TESTING)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     foreach (fname ${storage_examples_unit_tests})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
+        string(REPLACE "/" "_" basename ${fname})
+        string(REPLACE ".cc" "" basename ${basename})
+        set(target "storage_examples_${basename}")
         add_executable(${target} ${fname})
+        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(
             ${target}
             PRIVATE storage_examples_common
