@@ -27,9 +27,9 @@ function (pubsub_client_define_samples)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("pubsub_client_integration_samples.bzl"
-                         "pubsub_client_integration_samples")
+                         "pubsub_client_integration_samples" YEAR "2020")
     export_list_to_bazel("pubsub_client_unit_samples.bzl"
-                         "pubsub_client_unit_samples")
+                         "pubsub_client_unit_samples" YEAR "2020")
 
     # Generate a target for each unit test.
     foreach (fname ${pubsub_client_integration_samples}

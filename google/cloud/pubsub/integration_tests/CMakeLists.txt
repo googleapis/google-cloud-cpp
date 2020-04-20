@@ -36,9 +36,9 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("pubsub_client_integration_tests.bzl"
-                         "pubsub_client_integration_tests")
+                         "pubsub_client_integration_tests" YEAR "2020")
     export_list_to_bazel("pubsub_client_install_tests.bzl"
-                         "pubsub_client_install_tests")
+                         "pubsub_client_install_tests" YEAR "2020")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(pubsub-client-integration-tests)

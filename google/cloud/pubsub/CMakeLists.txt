@@ -139,7 +139,7 @@ add_library(googleapis-c++::pubsub_client ALIAS googleapis_cpp_pubsub_client)
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(googleapis_cpp_pubsub_client)
+create_bazel_config(googleapis_cpp_pubsub_client YEAR "2020")
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_pubsub_client_define_tests)
@@ -164,7 +164,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("googleapis_cpp_pubsub_client_unit_tests.bzl"
-                         "googleapis_cpp_pubsub_client_unit_tests")
+                         "googleapis_cpp_pubsub_client_unit_tests" YEAR "2020")
 
     # Generate a target for each unit test.
     foreach (fname ${googleapis_cpp_pubsub_client_unit_tests})
