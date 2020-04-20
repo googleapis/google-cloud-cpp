@@ -59,6 +59,18 @@ class ObjectInsertIntegrationTest
     ASSERT_FALSE(bucket_name_.empty());
   }
 
+  std::string GetLinesWith(
+      google::cloud::testing_util::CaptureLogLinesBackend const& backend,
+      std::string const& text) {
+    std::string msg;
+    for (auto const& l : backend.log_lines) {
+      if (l.find(text) == std::string::npos) continue;
+      msg += l;
+      msg += "\n";
+    }
+    return msg;
+  }
+
   ::google::cloud::testing_util::ScopedEnvironment application_credentials_;
   std::string bucket_name_;
 };
@@ -558,18 +570,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  // Create the regular expression we want to match.
-  std::regex re = [this] {
-    std::string regex = ".* POST .*";
-    regex += "/b/" + bucket_name_ + "/o";
-    regex += ".*quotaUser=test-quota-user.*";
-    return std::regex(regex, std::regex_constants::egrep);
-  }();
-
-  auto count = std::count_if(
-      backend->log_lines.begin(), backend->log_lines.end(),
-      [&re](std::string const& line) { return std::regex_match(line, re); });
-  EXPECT_LT(0, count);
+  auto predicate = [this](std::string const& line) {
+    return line.find(" POST ") != std::string::npos &&
+           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
+           line.find("quotaUser=test-quota-user") != std::string::npos;
+  };
+  auto count = std::count_if(backend->log_lines.begin(),
+                             backend->log_lines.end(), predicate);
+  EXPECT_LT(0, count) << ", logs matching POST="
+                      << GetLinesWith(*backend, " POST ") << "\n";
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -601,18 +610,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  // Create the regular expression we want to match.
-  std::regex re = [this] {
-    std::string regex = ".* POST .*";
-    regex += "/b/" + bucket_name_ + "/o";
-    regex += ".*userIp=127\\.0\\.0\\.1.*";
-    return std::regex(regex, std::regex_constants::egrep);
-  }();
-
-  auto count = std::count_if(
-      backend->log_lines.begin(), backend->log_lines.end(),
-      [&re](std::string const& line) { return std::regex_match(line, re); });
-  EXPECT_LT(0, count);
+  auto predicate = [this](std::string const& line) {
+    return line.find(" POST ") != std::string::npos &&
+           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
+           line.find("userIp=127.0.0.1") != std::string::npos;
+  };
+  auto count = std::count_if(backend->log_lines.begin(),
+                             backend->log_lines.end(), predicate);
+  EXPECT_LT(0, count) << ", logs matching POST="
+                      << GetLinesWith(*backend, " POST ") << "\n";
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -656,27 +662,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  // Create the regular expression we want to match.
-  std::regex re = [this] {
-    std::string regex = ".* POST .*";
-    regex += "/b/" + bucket_name_ + "/o";
-    regex += ".*userIp=.*";
-    return std::regex(regex, std::regex_constants::egrep);
-  }();
-
-  auto count = std::count_if(
-      backend->log_lines.begin(), backend->log_lines.end(),
-      [&re](std::string const& line) { return std::regex_match(line, re); });
-  EXPECT_LT(0, count) << "logs=" << [&backend] {
-    std::string msg;
-    for (auto const& l : backend->log_lines) {
-      if (l.find(" POST ") == std::string::npos) continue;
-      msg += l;
-      msg += "\n";
-    }
-    msg += "===================================================\n";
-    return msg;
-  }();
+  auto predicate = [this](std::string const& line) {
+    return line.find(" POST ") != std::string::npos &&
+           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
+           line.find("userIp=") != std::string::npos;
+  };
+  auto count = std::count_if(backend->log_lines.begin(),
+                             backend->log_lines.end(), predicate);
+  EXPECT_LT(0, count) << ", logs matching POST="
+                      << GetLinesWith(*backend, " POST ") << "\n";
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
