@@ -28,7 +28,7 @@ namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 
 char const kDescription[] = R"""(
-A thoughput benchmark for the Google Cloud Storage C++ client library.
+A throughput benchmark for the Google Cloud Storage C++ client library.
 
 This program benchmarks the Google Cloud Storage (GCS) C++ client library when
 used to upload and download files. The program creates a file of a prescribed
@@ -57,7 +57,7 @@ struct Options {
   std::int64_t upload_buffer_size = 16 * gcs_bm::kMiB;
 };
 
-google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]);
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
 
@@ -181,7 +181,8 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgsDefault(
+    std::vector<std::string> const& argv) {
   Options options;
 
   bool wants_help = false;
@@ -214,7 +215,7 @@ google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]) {
   };
   auto usage = gcs_bm::BuildUsage(descriptors, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(descriptors, {argv, argv + argc});
+  auto unparsed = gcs_bm::OptionsParse(descriptors, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }
@@ -240,6 +241,57 @@ google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]) {
   }
 
   return options;
+}
+
+google::cloud::StatusOr<Options> SelfTest() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  google::cloud::Status const self_test_error(
+      google::cloud::StatusCode::kUnknown, "self-test failure");
+
+  {
+    auto options = ParseArgsDefault(
+        {"self-test", "--help", "--description", "fake-region"});
+    if (!options) return options;
+  }
+  {
+    // Missing the region should be an error
+    auto options = ParseArgsDefault({"self-test"});
+    if (options) return self_test_error;
+  }
+  {
+    // Too many positional arguments should be an error
+    auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
+    if (options) return self_test_error;
+  }
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    throw std::runtime_error(std::move(os).str());
+  }
+  return ParseArgsDefault({
+      "self-test",
+      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+      "--duration=1s",
+      "--file-size=1KiB",
+      "--upload-buffer-size=1KiB",
+      "--download-buffer-size=1KiB",
+      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+  });
+}
+
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return SelfTest();
+
+  return ParseArgsDefault({argv, argv + argc});
 }
 
 }  // namespace

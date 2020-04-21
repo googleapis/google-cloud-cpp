@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,11 +16,5 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-storage_benchmark_programs = [
-    "storage_latency_benchmark.cc",
-    "storage_parallel_uploads_benchmark.cc",
-    "storage_shard_throughput_benchmark.cc",
-    "storage_throughput_benchmark.cc",
-    "storage_throughput_vs_cpu_benchmark.cc",
-    "storage_file_transfer_benchmark.cc",
+storage_benchmark_programs_manual_run = [
 ]
