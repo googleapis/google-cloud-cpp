@@ -125,18 +125,58 @@ if ($LastExitCode) {
     throw "bazel test failed with exit code ${LastExitCode}."
 }
 
-if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
+function Integration-Tests-Enabled {
+    if ((Test-Path env:KOKORO_GFILE_DIR) -and
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json") -and
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12")) {
+        return $True
+    }
+    return $False
+}
+
+$PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
+if (Integration-Tests-Enabled) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
+    $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
+    . "${integration_tests_config}"
+    (New-Object System.Net.WebClient).Downloadfile(
+        'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem',
+         "${env:KOKORO_GFILE_DIR}/roots.pem")
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+
     $integration_flags=@(
-        "--test_env", "GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
-        "--test_env", "GOOGLE_APPLICATION_CREDENTIALS=${env:GOOGLE_APPLICATION_CREDENTIALS}",
-        "--test_env", "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
-        "--test_env", "RUN_SLOW_INTEGRATION_TESTS=${env:RUN_SLOW_INTEGRATION_TESTS}",
-        "--test_env", "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
+        # Common configuration
+        "--test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}",
+        "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
+        "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
+        "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
+
+        # Bigtable
+        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}",
+        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}",
+        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}",
+        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}",
+        "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${env:ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}",
+
+        # Storage
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
     )
     bazel $common_flags test $test_flags $integration_flags `
-      --test_tag_filters=integration-tests `
-      -- //google/cloud/...:all
+        "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" `
+        -- //google/cloud/...:all `
+        -//google/cloud/bigtable/examples:bigtable_grpc_credentials `
+        -//google/cloud/storage/examples:storage_service_account_samples `
+        -//google/cloud/storage/tests:service_account_integration_test
     if ($LastExitCode) {
         throw "Integration tests failed with exit code ${LastExitCode}."
     }
