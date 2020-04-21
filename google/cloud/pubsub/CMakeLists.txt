@@ -22,7 +22,7 @@ include(EnableClangTidy)
 include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 include(EnableDoxygen)
 
@@ -126,10 +126,10 @@ target_link_libraries(
            googleapis-c++::pubsub_protos)
 set_target_properties(
     googleapis_cpp_pubsub_client
-    PROPERTIES VERSION "${PUBSUB_CLIENT_VERSION}"
-               SOVERSION "${PUBSUB_CLIENT_VERSION_MAJOR}")
+    PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}"
+               SOVERSION "${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MAJOR}")
 target_compile_options(googleapis_cpp_pubsub_client
-                       PUBLIC ${GOOGLE_CLOUD_CPP_PUBSUB_EXCEPTIONS_FLAG})
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 google_cloud_cpp_add_clang_tidy(googleapis_cpp_pubsub_client)
 google_cloud_cpp_add_common_options(googleapis_cpp_pubsub_client)
@@ -202,9 +202,9 @@ add_subdirectory(integration_tests)
 
 # Only compile the samples if we're building with exceptions enabled. They
 # require exceptions to keep them simple and idiomatic.
-if (GOOGLE_CLOUD_CPP_PUBSUB_ENABLE_CXX_EXCEPTIONS)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_PUBSUB_ENABLE_CXX_EXCEPTIONS)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
@@ -240,18 +240,15 @@ google_cloud_cpp_install_headers("googleapis_cpp_pubsub_client"
                                  "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_PUBSUB_CONFIG_VERSION_MAJOR
-    ${GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_PUBSUB_CONFIG_VERSION_MINOR
-    ${GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR})
-set(GOOGLE_CLOUD_PUBSUB_CONFIG_VERSION_PATCH
-    ${GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PUBSUB_PC_NAME "The Google Cloud Pubsub C++ Client Library")
-set(GOOGLE_CLOUD_PUBSUB_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
+set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
-set(GOOGLE_CLOUD_PUBSUB_PC_REQUIRES
+set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
-set(GOOGLE_CLOUD_PUBSUB_PC_LIBS "-lgoogleapis_cpp_pubsub_client")
+set(GOOGLE_CLOUD_PC_LIBS "-lgoogleapis_cpp_pubsub_client")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"
