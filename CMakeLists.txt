@@ -136,6 +136,7 @@ option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
        ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
@@ -162,6 +163,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
     add_subdirectory(google/cloud/firestore)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
+    add_subdirectory(google/cloud/pubsub)
 endif ()
 
 # The examples are more readable if we use exceptions for error handling. We had
