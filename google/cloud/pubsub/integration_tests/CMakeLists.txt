@@ -13,10 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ~~~
-
-include(EnableClangTidy)
-include(EnableWerror)
-include(GoogleCloudCppPubsubFunctions)
+function (google_cloud_cpp_test_name_to_target var fname)
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    set("${var}"
+        "${target}"
+        PARENT_SCOPE)
+endfunction ()
 
 function (google_cloud_cpp_pubsub_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -51,7 +54,6 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
             ${target}
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
                     GTest::gmock_main GTest::gmock GTest::gtest)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
@@ -84,7 +86,6 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         target_link_libraries(${target} PRIVATE googleapis-c++::pubsub_client)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         add_test(NAME ${target} COMMAND ${target})

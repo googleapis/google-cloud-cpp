@@ -18,13 +18,12 @@ find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 find_package(googleapis CONFIG REQUIRED)
 
-include(EnableClangTidy)
-include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
-include(EnableDoxygen)
+
+include(GoogleCloudCppCommon)
 
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
@@ -131,7 +130,6 @@ set_target_properties(
 target_compile_options(googleapis_cpp_pubsub_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-google_cloud_cpp_add_clang_tidy(googleapis_cpp_pubsub_client)
 google_cloud_cpp_add_common_options(googleapis_cpp_pubsub_client)
 
 add_library(googleapis-c++::pubsub_client ALIAS googleapis_cpp_pubsub_client)
@@ -178,7 +176,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc GTest::gmock_main
                     GTest::gmock GTest::gtest)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
