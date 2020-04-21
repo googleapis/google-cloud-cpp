@@ -104,6 +104,7 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
     EXPECT_EQ(3, std::count(actual.begin(), actual.end(), name))
         << "Expected to find 3 copies of " << name << " in the object list:\n"
         << produce_joined_list();
+    EXPECT_STATUS_OK(client->DeleteObject(bucket_name_, name));
   }
 }
 

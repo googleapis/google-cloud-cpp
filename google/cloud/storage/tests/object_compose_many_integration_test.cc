@@ -33,42 +33,56 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ObjectComposeManyIntegrationTest =
-    ::google::cloud::storage::testing::ObjectIntegrationTest;
+class ObjectComposeManyIntegrationTest
+    : public google::cloud::storage::testing::ObjectIntegrationTest {
+ protected:
+  void SetUp() override {
+    google::cloud::storage::testing::ObjectIntegrationTest::SetUp();
+    client_ = MakeIntegrationTestClient();
+    ASSERT_STATUS_OK(client_);
+  }
+
+  void TearDown() override {
+    for (auto const& source_object : source_objects_) {
+      EXPECT_STATUS_OK(
+          client_->DeleteObject(bucket_name_, source_object.object_name));
+    }
+    google::cloud::storage::testing::ObjectIntegrationTest::TearDown();
+  }
+
+  StatusOr<Client> client_;
+  std::vector<ComposeSourceObject> source_objects_;
+};
 
 TEST_F(ObjectComposeManyIntegrationTest, ComposeMany) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 
-  std::vector<ComposeSourceObject> source_objs;
   std::string expected;
   for (int i = 0; i != 33; ++i) {
     std::string const object_name = prefix + ".src-" + std::to_string(i);
     std::string content = std::to_string(i);
     expected += content;
-    StatusOr<ObjectMetadata> insert_meta = client->InsertObject(
+    StatusOr<ObjectMetadata> insert_meta = client_->InsertObject(
         bucket_name_, object_name, std::move(content), IfGenerationMatch(0));
     ASSERT_STATUS_OK(insert_meta);
-    source_objs.emplace_back(ComposeSourceObject{
+    source_objects_.emplace_back(ComposeSourceObject{
         std::move(object_name), insert_meta->generation(), {}});
   }
 
-  auto res = ComposeMany(*client, bucket_name_, std::move(source_objs), prefix,
+  auto res = ComposeMany(*client_, bucket_name_, source_objects_, prefix,
                          dest_object_name, false);
 
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(dest_object_name, res->name());
 
-  auto stream = client->ReadObject(bucket_name_, dest_object_name);
+  auto stream = client_->ReadObject(bucket_name_, dest_object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deletion_status = client->DeleteObject(
+  auto deletion_status = client_->DeleteObject(
       bucket_name_, dest_object_name, IfGenerationMatch(res->generation()));
-  ASSERT_STATUS_OK(deletion_status);
+  EXPECT_STATUS_OK(deletion_status);
 }
 
 }  // anonymous namespace
