@@ -32,12 +32,12 @@ sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     ],
 )
 
-load(":googleapis_cpp_pubsub_client.bzl", "googleapis_cpp_pubsub_client_hdrs", "googleapis_cpp_pubsub_client_srcs")
+load(":pubsub_client.bzl", "pubsub_client_hdrs", "pubsub_client_srcs")
 
 cc_library(
     name = "pubsub_client",
-    srcs = googleapis_cpp_pubsub_client_srcs + ["internal/build_info.cc"],
-    hdrs = googleapis_cpp_pubsub_client_hdrs,
+    srcs = pubsub_client_srcs + ["internal/build_info.cc"],
+    hdrs = pubsub_client_hdrs,
     data = [
         ":generate_build_info",
     ],
@@ -48,7 +48,7 @@ cc_library(
     ],
 )
 
-load(":googleapis_cpp_pubsub_client_unit_tests.bzl", "googleapis_cpp_pubsub_client_unit_tests")
+load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -60,4 +60,4 @@ load(":googleapis_cpp_pubsub_client_unit_tests.bzl", "googleapis_cpp_pubsub_clie
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
-) for test in googleapis_cpp_pubsub_client_unit_tests]
+) for test in pubsub_client_unit_tests]

@@ -20,4 +20,4 @@ include("${CMAKE_CURRENT_LIST_DIR}/pubsub-targets.cmake")
 
 add_library(googleapis-c++::pubsub_client IMPORTED INTERFACE)
 set_target_properties(googleapis-c++::pubsub_client PROPERTIES
-    INTERFACE_LINK_LIBRARIES "googleapis_cpp_pubsub_client")
+    INTERFACE_LINK_LIBRARIES "pubsub_client")
