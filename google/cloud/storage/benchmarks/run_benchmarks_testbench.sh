@@ -16,7 +16,7 @@
 
 set -eu
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(
     cd "$(dirname "$0")/../../../.."
     pwd
@@ -37,14 +37,6 @@ FAKE_REGION="fake-region-${RANDOM}-${RANDOM}"
 # them. We are not trying to validate the output is correct, or the performance
 # has not changed.
 export GOOGLE_CLOUD_PROJECT="fake-project-${RANDOM}-${RANDOM}"
-
-run_example_usage ./storage_file_transfer_benchmark \
-  --help --description
-run_example ./storage_file_transfer_benchmark \
-  "--project-id=${GOOGLE_CLOUD_PROJECT}" \
-  "--region=${FAKE_REGION}" \
-  --object-size=16KiB \
-  --duration=1s
 
 run_example ./storage_latency_benchmark \
   --duration=1 \
