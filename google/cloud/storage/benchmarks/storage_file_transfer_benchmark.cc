@@ -272,7 +272,8 @@ google::cloud::StatusOr<Options> SelfTest() {
     if (!value.empty()) continue;
     std::ostringstream os;
     os << "The environment variable " << var << " is not set or empty";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                 std::move(os).str());
   }
   return ParseArgsDefault({
       "self-test",
