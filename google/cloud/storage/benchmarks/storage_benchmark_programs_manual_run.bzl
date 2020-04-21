@@ -17,4 +17,9 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_benchmark_programs_manual_run = [
+    "storage_latency_benchmark.cc",
+    "storage_parallel_uploads_benchmark.cc",
+    "storage_shard_throughput_benchmark.cc",
+    "storage_throughput_benchmark.cc",
+    "storage_throughput_vs_cpu_benchmark.cc",
 ]

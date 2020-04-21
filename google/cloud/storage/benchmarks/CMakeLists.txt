@@ -38,7 +38,7 @@ if (BUILD_TESTING)
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)
 
-    set(storage_benchmarks_programs_manual_run
+    set(storage_benchmark_programs_manual_run
         # cmake-format: sort
         storage_latency_benchmark.cc
         storage_parallel_uploads_benchmark.cc
@@ -47,7 +47,7 @@ if (BUILD_TESTING)
         storage_throughput_vs_cpu_benchmark.cc)
     set(storage_benchmark_programs
         # cmake-format: sort
-        ${storage_benchmarks_programs_manual_run}
+        ${storage_benchmark_programs_manual_run}
         storage_file_transfer_benchmark.cc)
 
     foreach (fname ${storage_benchmark_programs})
@@ -72,7 +72,7 @@ if (BUILD_TESTING)
     endforeach ()
 
     # TODO(#3525) - remove this loop once the list is empty
-    foreach (fname ${storage_benchmarks_programs_manual_run})
+    foreach (fname ${storage_benchmark_programs_manual_run})
         string(REPLACE "/" "_" target ${fname})
         string(REPLACE ".cc" "" target ${target})
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
