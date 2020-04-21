@@ -42,8 +42,8 @@ struct CustomerEncryption {
 /// Defines one of the source objects for a compose operation.
 struct ComposeSourceObject {
   std::string object_name;
-  google::cloud::optional<long> generation;
-  google::cloud::optional<long> if_generation_match;
+  google::cloud::optional<std::int64_t> generation;
+  google::cloud::optional<std::int64_t> if_generation_match;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
