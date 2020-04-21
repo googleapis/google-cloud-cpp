@@ -284,6 +284,8 @@ if (BUILD_TESTING)
         testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
+        testing/object_integration_test.cc
+        testing/object_integration_test.h
         testing/random_names.cc
         testing/random_names.h
         testing/retry_tests.h

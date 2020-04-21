@@ -21,6 +21,7 @@ storage_client_testing_hdrs = [
     "testing/mock_client.h",
     "testing/mock_fake_clock.h",
     "testing/mock_http_request.h",
+    "testing/object_integration_test.h",
     "testing/random_names.h",
     "testing/retry_tests.h",
     "testing/storage_integration_test.h",
@@ -29,6 +30,7 @@ storage_client_testing_hdrs = [
 
 storage_client_testing_srcs = [
     "testing/mock_http_request.cc",
+    "testing/object_integration_test.cc",
     "testing/random_names.cc",
     "testing/storage_integration_test.cc",
     "testing/temp_file.cc",
