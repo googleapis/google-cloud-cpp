@@ -75,18 +75,22 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   read_clients.clear();
   auto num_fds_after_test = GetNumOpenFiles();
 
-#ifdef __linux__
-  ASSERT_STATUS_OK(num_fds_before_test);
-  ASSERT_STATUS_OK(num_fds_during_test);
-  ASSERT_STATUS_OK(num_fds_after_test);
-
-  EXPECT_LT(*num_fds_before_test, *num_fds_during_test)
-      << "Clients keeps at least some file descriptors open";
-  EXPECT_LT(*num_fds_after_test, *num_fds_during_test)
-      << "Releasing clients also releases at least some file descriptors";
-  EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
-      << "Clients are leaking descriptors";
-#endif  // __linux__
+  // `GetNumOpenFiles()` is not implemented on all platforms.
+  // If they all return ok then check the values,
+  // otherwise they must all be `kUnimplemented`
+  if (num_fds_before_test.ok() && num_fds_during_test.ok() &&
+      num_fds_after_test.ok()) {
+    EXPECT_LT(*num_fds_before_test, *num_fds_during_test)
+        << "Clients keeps at least some file descriptors open";
+    EXPECT_LT(*num_fds_after_test, *num_fds_during_test)
+        << "Releasing clients also releases at least some file descriptors";
+    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+        << "Clients are leaking descriptors";
+  } else {
+    EXPECT_EQ(StatusCode::kUnimplemented, num_fds_before_test.status().code());
+    EXPECT_EQ(StatusCode::kUnimplemented, num_fds_during_test.status().code());
+    EXPECT_EQ(StatusCode::kUnimplemented, num_fds_after_test.status().code());
+  }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);

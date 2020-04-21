@@ -56,18 +56,18 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
+  // Create a iostream to read the object back.
+
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.
-  // However, we don't have a way of doing this on non-linux platforms.
-  bool track_open_files = true;
-#ifndef __linux__
-  track_open_files = false;
-#endif  // __linux __
-
-  // Create a iostream to read the object back.
+  //
+  // However, `GetNumOpenFiles()` is not implemented on all platforms, so
+  // omit the checking when it's not available.
   auto num_fds_before_test = GetNumOpenFiles();
-  // this will alert us if the behavior of `GetNumOpenFiles` changes.
-  ASSERT_EQ(track_open_files, num_fds_before_test.ok());
+  bool track_open_files = num_fds_before_test.ok();
+  if (!track_open_files) {
+    EXPECT_EQ(StatusCode::kUnimplemented, num_fds_before_test.status().code());
+  }
   std::size_t delta = 0;
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();

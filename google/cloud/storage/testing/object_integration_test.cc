@@ -36,7 +36,7 @@ StatusOr<std::size_t> GetNumEntries(std::string const& path) {
     return Status(StatusCode::kInternal, "Failed to open directory \"" + path +
                                              "\": " + strerror(errno));
   }
-  int count = 0;
+  std::size_t count = 0;
   while (readdir(dir)) {
     ++count;
   }
@@ -53,9 +53,7 @@ StatusOr<std::size_t> GetNumEntries(std::string const& path) {
 
 StatusOr<std::size_t> ObjectIntegrationTest::GetNumOpenFiles() {
   auto res = GetNumEntries("/proc/self/fd");
-  if (!res) {
-    return res;
-  }
+  if (!res) return res;
   if (*res < 3) {
     return Status(StatusCode::kInternal,
                   "Expected at least three entries in /proc/self/fd: ., .., "
