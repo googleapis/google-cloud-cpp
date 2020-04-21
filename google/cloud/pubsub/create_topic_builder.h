@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
-#define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
 
 #include "google/cloud/pubsub/topic.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -72,4 +72,4 @@ class CreateTopicBuilder {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H

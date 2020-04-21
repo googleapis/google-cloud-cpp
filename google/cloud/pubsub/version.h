@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_VERSION_H
-#define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_VERSION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_VERSION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_VERSION_H
 
 #include "google/cloud/pubsub/version_info.h"
 #include "google/cloud/version.h"
@@ -81,4 +81,4 @@ std::string VersionString();
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_VERSION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_VERSION_H

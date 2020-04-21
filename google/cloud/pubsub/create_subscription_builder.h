@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
-#define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
 
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
@@ -189,4 +189,4 @@ class CreateSubscriptionBuilder {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_SUBSCRIPTION_BUILDER_H
