@@ -37,7 +37,7 @@ StatusOr<std::size_t> GetNumEntries(std::string const& path) {
                                              "\": " + strerror(errno));
   }
   int count = 0;
-  while (struct dirent* entry = readdir(dir)) {
+  while (readdir(dir)) {
     ++count;
   }
   closedir(dir);
