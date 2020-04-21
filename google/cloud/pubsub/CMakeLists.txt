@@ -20,7 +20,7 @@ find_package(googleapis CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 
 include(GoogleCloudCppCommon)
@@ -125,8 +125,8 @@ target_link_libraries(
            googleapis-c++::pubsub_protos)
 set_target_properties(
     googleapis_cpp_pubsub_client
-    PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}"
-               SOVERSION "${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MAJOR}")
+    PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
+               SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 target_compile_options(googleapis_cpp_pubsub_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
@@ -237,9 +237,9 @@ google_cloud_cpp_install_headers("googleapis_cpp_pubsub_client"
                                  "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
