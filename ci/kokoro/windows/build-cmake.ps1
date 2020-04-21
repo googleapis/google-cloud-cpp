@@ -77,4 +77,39 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
     }
 }
 
+function Integration-Tests-Enabled {
+    if ((Test-Path env:KOKORO_GFILE_DIR) -and
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json") -and
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12")) {
+        return $True
+    }
+    return $False
+}
+
+if (Integration-Tests-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
+    $integration_tests_config="${project_root}/ci/etc/integration-tests-config.ps1"
+    . "${integration_tests_config}"
+    (New-Object System.Net.WebClient).Downloadfile(
+        'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem',
+         "${env:KOKORO_GFILE_DIR}/roots.pem")
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    ${env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}="yes"
+    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
+    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE}="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+
+    Set-Location "${project_root}"
+    Set-Location "${binary_dir}"
+    ctest $ctest_flags `
+        -L '(bigtable-integration-tests|storage-integration-tests|integration-tests-no-emulator)' `
+        -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)'
+    if ($LastExitCode) {
+        throw "Integration tests failed with exit code ${LastExitCode}."
+    }
+    Set-Location "${project_root}"
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
