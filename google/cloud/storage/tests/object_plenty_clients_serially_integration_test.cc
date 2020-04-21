@@ -56,39 +56,44 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
+  // Track the number of open files to ensure every client creates the same
+  // number of file descriptors and none are leaked.
+  // However, we don't have a way of doing this on non-linux platforms.
+  bool track_open_files = true;
+#ifndef __linux__
+  track_open_files = false;
+#endif  // __linux __
+
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
-#ifdef __linux__
+  // this will alert us if the behavior of `GetNumOpenFiles` changes.
+  ASSERT_EQ(track_open_files, num_fds_before_test.ok());
   std::size_t delta = 0;
-#endif  // __linux__
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
     auto stream = read_client->ReadObject(bucket_name_, object_name);
     char c;
     stream.read(&c, 1);
-#ifdef __linux__
-    auto num_fds_during_test = GetNumOpenFiles();
-    ASSERT_STATUS_OK(num_fds_before_test);
-    ASSERT_STATUS_OK(num_fds_during_test);
-    if (delta == 0) {
-      delta = *num_fds_during_test - *num_fds_before_test;
+    if (track_open_files) {
+      auto num_fds_during_test = GetNumOpenFiles();
+      ASSERT_STATUS_OK(num_fds_during_test);
+      if (delta == 0) {
+        delta = *num_fds_during_test - *num_fds_before_test;
+      }
+      EXPECT_GE(*num_fds_before_test + delta, *num_fds_during_test)
+          << "Expect each client to create the same number of file descriptors"
+          << ", num_fds_before_test=" << *num_fds_before_test
+          << ", num_fds_during_test=" << *num_fds_during_test
+          << ", delta=" << delta;
     }
-    EXPECT_GE(*num_fds_before_test + delta, *num_fds_during_test)
-        << "Expect each client to create the same number of file descriptors"
-        << ", num_fds_before_test=" << *num_fds_before_test
-        << ", num_fds_during_test=" << *num_fds_during_test
-        << ", delta=" << delta;
-#endif  // __linux__
   }
-#ifdef __linux__
-  auto num_fds_after_test = GetNumOpenFiles();
-  ASSERT_STATUS_OK(num_fds_before_test);
-  ASSERT_STATUS_OK(num_fds_after_test);
-
-  EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
-      << "Clients are leaking descriptors";
-#endif  // __linux__
+  if (track_open_files) {
+    auto num_fds_after_test = GetNumOpenFiles();
+    ASSERT_STATUS_OK(num_fds_after_test);
+    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+        << "Clients are leaking descriptors";
+  }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
