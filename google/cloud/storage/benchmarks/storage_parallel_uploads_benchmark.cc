@@ -433,6 +433,36 @@ google::cloud::StatusOr<Options> SelfTest() {
     auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
     if (options) return self_test_error;
   }
+  {
+    // Object size range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-object-size=8",
+        "--maximum-object-size=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Shard count range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-num-shards=8",
+        "--maximum-num-shards=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Sample count range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-sample-count=8",
+        "--maximum-sample-count=4",
+    });
+    if (options) return self_test_error;
+  }
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
