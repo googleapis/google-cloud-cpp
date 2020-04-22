@@ -405,7 +405,8 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
             << "ms\n";
 }
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgsDefault(
+    std::vector<std::string> argv) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
@@ -442,7 +443,7 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(desc, {argv, argv + argc});
+  auto unparsed = gcs_bm::OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }
@@ -469,6 +470,59 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   }
 
   return options;
+}
+
+google::cloud::StatusOr<Options> SelfTest() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  google::cloud::Status const self_test_error(
+      google::cloud::StatusCode::kUnknown, "self-test failure");
+
+  {
+    auto options = ParseArgsDefault(
+        {"self-test", "--help", "--description", "fake-region"});
+    if (!options) return options;
+  }
+  {
+    // Missing the region should be an error
+    auto options = ParseArgsDefault({"self-test"});
+    if (options) return self_test_error;
+  }
+  {
+    // Too many positional arguments should be an error
+    auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
+    if (options) return self_test_error;
+  }
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                 std::move(os).str());
+  }
+  return ParseArgsDefault({
+      "self-test",
+      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+      "--duration=1s",
+      "--object-count=8",
+      "--thread-count=2",
+      "--enable-connection-pool=true",
+      "--enable-xml-api=true",
+      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+  });
+}
+
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return SelfTest();
+
+  return ParseArgsDefault({argv, argv + argc});
 }
 
 }  // namespace

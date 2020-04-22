@@ -164,114 +164,7 @@ StatusOr<std::chrono::milliseconds> TimeSingleUpload(
   return status;
 }
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
-  Options options;
-  bool wants_help = false;
-  bool wants_description = false;
-  std::vector<gcs_bm::OptionDescriptor> desc{
-      {"--help", "print usage information",
-       [&wants_help](std::string const&) { wants_help = true; }},
-      {"--description", "print benchmark description",
-       [&wants_description](std::string const&) { wants_description = true; }},
-      {"--project-id", "use the given project id for the benchmark",
-       [&options](std::string const& val) { options.project_id = val; }},
-      {"--bucket-prefix", "use the given prefix for created temporary bucket",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
-      {"--object-prefix", "use the given prefix for created objects",
-       [&options](std::string const& val) { options.object_prefix = val; }},
-      {"--directory", "use the given directory for files to be uploaded",
-       [&options](std::string const& val) { options.directory = val; }},
-      {"--region", "use the given region for the benchmark",
-       [&options](std::string const& val) { options.region = val; }},
-      {"--thread-count", "set the number of threads in the benchmark",
-       [&options](std::string const& val) {
-         options.thread_count = std::stoi(val);
-       }},
-      {"--minimum-object-size", "configure the minimum object size in the test",
-       [&options](std::string const& val) {
-         options.minimum_object_size = gcs_bm::ParseSize(val);
-       }},
-      {"--maximum-object-size", "configure the maximum object size in the test",
-       [&options](std::string const& val) {
-         options.maximum_object_size = gcs_bm::ParseSize(val);
-       }},
-      {"--minimum-num-shards",
-       "configure the minimum number of shards in the test",
-       [&options](std::string const& val) {
-         options.minimum_num_shards = gcs_bm::ParseSize(val);
-       }},
-      {"--maximum-num-shards",
-       "configure the maximum number of shards in the test",
-       [&options](std::string const& val) {
-         options.maximum_num_shards = gcs_bm::ParseSize(val);
-       }},
-      {"--duration", "continue the test for at least this amount of time",
-       [&options](std::string const& val) {
-         options.duration = gcs_bm::ParseDuration(val);
-       }},
-      {"--minimum-sample-count",
-       "continue the test until at least this number of samples are "
-       "obtained",
-       [&options](std::string const& val) {
-         options.minimum_sample_count = std::stol(val);
-       }},
-      {"--maximum-sample-count",
-       "stop the test when this number of samples are obtained",
-       [&options](std::string const& val) {
-         options.maximum_sample_count = std::stol(val);
-       }},
-  };
-  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
-
-  auto unparsed = gcs_bm::OptionsParse(desc, {argv, argv + argc});
-  if (wants_help) {
-    std::cout << usage << "\n";
-  }
-
-  if (wants_description) {
-    std::cout << kDescription << "\n";
-  }
-
-  if (unparsed.size() > 2) {
-    std::ostringstream os;
-    os << "Unknown arguments or options\n" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
-  }
-  if (unparsed.size() == 2) {
-    options.region = unparsed[1];
-  }
-  if (options.region.empty()) {
-    std::ostringstream os;
-    os << "Missing value for --region option" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
-  }
-
-  if (options.minimum_object_size > options.maximum_object_size) {
-    std::ostringstream os;
-    os << "Invalid range for object size [" << options.minimum_object_size
-       << ',' << options.maximum_object_size << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
-  }
-  if (options.minimum_num_shards > options.maximum_num_shards) {
-    std::ostringstream os;
-    os << "Invalid range for number of shards [" << options.minimum_num_shards
-       << ',' << options.maximum_num_shards << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
-  }
-  if (options.minimum_sample_count > options.maximum_sample_count) {
-    std::ostringstream os;
-    os << "Invalid range for sample range [" << options.minimum_sample_count
-       << ',' << options.maximum_sample_count << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
-  }
-
-  return options;
-}
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
 
@@ -405,3 +298,176 @@ int main(int argc, char* argv[]) {
   }
   return 0;
 }
+
+namespace {
+
+google::cloud::StatusOr<Options> ParseArgsDefault(
+    std::vector<std::string> argv) {
+  Options options;
+  bool wants_help = false;
+  bool wants_description = false;
+  std::vector<gcs_bm::OptionDescriptor> desc{
+      {"--help", "print usage information",
+       [&wants_help](std::string const&) { wants_help = true; }},
+      {"--description", "print benchmark description",
+       [&wants_description](std::string const&) { wants_description = true; }},
+      {"--project-id", "use the given project id for the benchmark",
+       [&options](std::string const& val) { options.project_id = val; }},
+      {"--bucket-prefix", "use the given prefix for created temporary bucket",
+       [&options](std::string const& val) { options.bucket_prefix = val; }},
+      {"--object-prefix", "use the given prefix for created objects",
+       [&options](std::string const& val) { options.object_prefix = val; }},
+      {"--directory", "use the given directory for files to be uploaded",
+       [&options](std::string const& val) { options.directory = val; }},
+      {"--region", "use the given region for the benchmark",
+       [&options](std::string const& val) { options.region = val; }},
+      {"--thread-count", "set the number of threads in the benchmark",
+       [&options](std::string const& val) {
+         options.thread_count = std::stoi(val);
+       }},
+      {"--minimum-object-size", "configure the minimum object size in the test",
+       [&options](std::string const& val) {
+         options.minimum_object_size = gcs_bm::ParseSize(val);
+       }},
+      {"--maximum-object-size", "configure the maximum object size in the test",
+       [&options](std::string const& val) {
+         options.maximum_object_size = gcs_bm::ParseSize(val);
+       }},
+      {"--minimum-num-shards",
+       "configure the minimum number of shards in the test",
+       [&options](std::string const& val) {
+         options.minimum_num_shards = gcs_bm::ParseSize(val);
+       }},
+      {"--maximum-num-shards",
+       "configure the maximum number of shards in the test",
+       [&options](std::string const& val) {
+         options.maximum_num_shards = gcs_bm::ParseSize(val);
+       }},
+      {"--duration", "continue the test for at least this amount of time",
+       [&options](std::string const& val) {
+         options.duration = gcs_bm::ParseDuration(val);
+       }},
+      {"--minimum-sample-count",
+       "continue the test until at least this number of samples are "
+       "obtained",
+       [&options](std::string const& val) {
+         options.minimum_sample_count = std::stol(val);
+       }},
+      {"--maximum-sample-count",
+       "stop the test when this number of samples are obtained",
+       [&options](std::string const& val) {
+         options.maximum_sample_count = std::stol(val);
+       }},
+  };
+  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
+
+  auto unparsed = gcs_bm::OptionsParse(desc, argv);
+  if (wants_help) {
+    std::cout << usage << "\n";
+  }
+
+  if (wants_description) {
+    std::cout << kDescription << "\n";
+  }
+
+  if (unparsed.size() > 2) {
+    std::ostringstream os;
+    os << "Unknown arguments or options\n" << usage << "\n";
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
+  }
+  if (unparsed.size() == 2) {
+    options.region = unparsed[1];
+  }
+  if (options.region.empty()) {
+    std::ostringstream os;
+    os << "Missing value for --region option" << usage << "\n";
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
+  }
+
+  if (options.minimum_object_size > options.maximum_object_size) {
+    std::ostringstream os;
+    os << "Invalid range for object size [" << options.minimum_object_size
+       << ',' << options.maximum_object_size << "]";
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
+  }
+  if (options.minimum_num_shards > options.maximum_num_shards) {
+    std::ostringstream os;
+    os << "Invalid range for number of shards [" << options.minimum_num_shards
+       << ',' << options.maximum_num_shards << "]";
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
+  }
+  if (options.minimum_sample_count > options.maximum_sample_count) {
+    std::ostringstream os;
+    os << "Invalid range for sample range [" << options.minimum_sample_count
+       << ',' << options.maximum_sample_count << "]";
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
+  }
+
+  return options;
+}
+
+google::cloud::StatusOr<Options> SelfTest() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  google::cloud::Status const self_test_error(
+      google::cloud::StatusCode::kUnknown, "self-test failure");
+
+  {
+    auto options = ParseArgsDefault(
+        {"self-test", "--help", "--description", "fake-region"});
+    if (!options) return options;
+  }
+  {
+    // Missing the region should be an error
+    auto options = ParseArgsDefault({"self-test"});
+    if (options) return self_test_error;
+  }
+  {
+    // Too many positional arguments should be an error
+    auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
+    if (options) return self_test_error;
+  }
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                 std::move(os).str());
+  }
+  return ParseArgsDefault({
+      "self-test",
+      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+      "--bucket-prefix=cloud-cpp-testing-",
+      "--object-prefix=parallel-upload/",
+      "--directory=.",
+      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+      "--thread-count=2",
+      "--minimum-object-size=16KiB",
+      "--maximum-object-size=32KiB",
+      "--minimum-num-shard=2",
+      "--maximum-num-shards=4",
+      "--duration=1s",
+      "--minimum-sample-count=2",
+      "--maximum-sample-count=4",
+  });
+}
+
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return SelfTest();
+
+  return ParseArgsDefault({argv, argv + argc});
+}
+
+}  // namespace
