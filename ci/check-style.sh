@@ -61,7 +61,7 @@ git ls-files -z | grep -zE '\.(cc|h)$' | xargs -0 clang-format -i
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 git ls-files -z | grep -zE '\.(BUILD|bzl)$' | xargs -0 buildifier -mode=fix
-git ls-files -z | grep -zE '((^|/)BUILD|WORKSPACE)$' |
+git ls-files -z | grep -zE '(^|/)(BUILD|WORKSPACE)$' |
   xargs -0 buildifier -mode=fix
 
 # Apply psf/black to format Python files.
