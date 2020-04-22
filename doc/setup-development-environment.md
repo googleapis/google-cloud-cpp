@@ -78,22 +78,21 @@ You may need to clone and compile the code as described [here](setup-cmake-envir
 Run the tests using:
 
 ```console
-env -C cmake-out/home ctest --output-on-failure
+env -C cmake-out/home ctest --output-on-failure -LE integration-tests
 ```
 
 Run the Google Cloud Storage integration tests:
 
 ```console
-env -C cmake-out/home $PWD/google/cloud/storage/ci/run_integration_tests.sh
+env -C cmake-out/home \
+    $PWD/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh
 ```
 
 Run the Google Cloud Bigtable integration tests:
 
 ```console
 env -C cmake-out/home \
-    CBT=$HOME/google-cloud-sdk/bin/cbt \
-    CBT_EMULATOR=$HOME/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-    $PWD/google/cloud/bigtable/ci/run_integration_tests.sh
+    $PWD/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh
 ```
 
 ### Installing Docker

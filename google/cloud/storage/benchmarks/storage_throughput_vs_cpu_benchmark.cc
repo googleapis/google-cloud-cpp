@@ -16,6 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <future>
 #include <iomanip>
@@ -347,7 +348,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   return results;
 }
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgsDefault(
+    std::vector<std::string> argv) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
@@ -397,7 +399,7 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(desc, {argv, argv + argc});
+  auto unparsed = gcs_bm::OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }
@@ -454,6 +456,95 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   }
 
   return options;
+}
+
+google::cloud::StatusOr<Options> SelfTest() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  google::cloud::Status const self_test_error(
+      google::cloud::StatusCode::kUnknown, "self-test failure");
+
+  {
+    auto options = ParseArgsDefault(
+        {"self-test", "--help", "--description", "fake-region"});
+    if (!options) return options;
+  }
+  {
+    // Missing the region should be an error
+    auto options = ParseArgsDefault({"self-test"});
+    if (options) return self_test_error;
+  }
+  {
+    // Too many positional arguments should be an error
+    auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
+    if (options) return self_test_error;
+  }
+  {
+    // Object size range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-object-size=8",
+        "--maximum-object-size=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Chunk size range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-chunk-size=8",
+        "--maximum-chunk-size=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Sample count range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-sample-size=8",
+        "--maximum-sample-size=4",
+    });
+    if (options) return self_test_error;
+  }
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                 std::move(os).str());
+  }
+  auto const thread_count_arg = gcs_bm::SimpleTimer::SupportPerThreadUsage()
+                                    ? "--thread-count=2"
+                                    : "--thread-count=1";
+  return ParseArgsDefault({
+      "self-test",
+      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+      thread_count_arg,
+      "--minimum-object-size=16KiB",
+      "--maximum-object-size=32KiB",
+      "--minimum-chunk-size=1KiB",
+      "--maximum-chunk-size=2KiB",
+      "--duration=1s",
+      "--minimum-sample-count=1",
+      "--maximum-sample-count=2",
+  });
+}
+
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return SelfTest();
+
+  return ParseArgsDefault({argv, argv + argc});
 }
 
 }  // namespace

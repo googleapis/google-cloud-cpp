@@ -38,17 +38,15 @@ if (BUILD_TESTING)
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)
 
-    set(storage_benchmark_programs_manual_run
+    set(storage_benchmark_programs
         # cmake-format: sort
+        ${storage_benchmark_programs_manual_run}
+        storage_file_transfer_benchmark.cc
         storage_latency_benchmark.cc
         storage_parallel_uploads_benchmark.cc
         storage_shard_throughput_benchmark.cc
         storage_throughput_benchmark.cc
         storage_throughput_vs_cpu_benchmark.cc)
-    set(storage_benchmark_programs
-        # cmake-format: sort
-        ${storage_benchmark_programs_manual_run}
-        storage_file_transfer_benchmark.cc)
 
     foreach (fname ${storage_benchmark_programs})
         string(REPLACE "/" "_" target ${fname})
@@ -71,17 +69,8 @@ if (BUILD_TESTING)
                                  "integration-tests;storage-integration-tests")
     endforeach ()
 
-    # TODO(#3525) - remove this loop once the list is empty
-    foreach (fname ${storage_benchmark_programs_manual_run})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
-    endforeach ()
-
     export_list_to_bazel("storage_benchmark_programs.bzl"
                          "storage_benchmark_programs" YEAR 2019)
-    export_list_to_bazel("storage_benchmark_programs_manual_run.bzl"
-                         "storage_benchmark_programs_manual_run" YEAR 2020)
 
     # List the unit tests, then setup the targets and dependencies.
     set(storage_benchmarks_unit_tests

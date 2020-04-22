@@ -83,6 +83,8 @@ struct Options {
   bool create_objects = true;
   bool upload_objects = true;
   bool download_objects = true;
+
+  bool exit_success = false;
 };
 
 enum class OpType { OP_READ, OP_WRITE, OP_CREATE };
@@ -118,6 +120,9 @@ int main(int argc, char* argv[]) {
   if (!options) {
     std::cerr << options.status() << "\n";
     return 1;
+  }
+  if (options->exit_success) {
+    return 0;
   }
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -466,7 +471,8 @@ void RunTest(gcs::Client client, Options const& options,
   }
 }
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgsDefault(
+    std::vector<std::string> argv) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
@@ -552,15 +558,17 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(desc, {argv, argv + argc});
+  auto unparsed = gcs_bm::OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
-    std::exit(0);
+    options.exit_success = true;
+    return options;
   }
 
   if (wants_description) {
     std::cout << kDescription << "\n";
-    std::exit(0);
+    options.exit_success = true;
+    return options;
   }
 
   if (unparsed.size() > 1) {
@@ -590,6 +598,87 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   }
 
   return options;
+}
+
+google::cloud::StatusOr<Options> SelfTest() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  google::cloud::Status const self_test_error(
+      google::cloud::StatusCode::kUnknown, "self-test failure");
+
+  {
+    auto options = ParseArgsDefault({"self-test", "--help"});
+    if (!options) return options;
+    if (!options->exit_success) return self_test_error;
+  }
+  {
+    auto options = ParseArgsDefault({"self-test", "--description"});
+    if (!options) return options;
+    if (!options->exit_success) return self_test_error;
+  }
+  {
+    // Unparsed arguments are an error
+    auto options = ParseArgsDefault({"self-test", "unparsed"});
+    if (options) return self_test_error;
+  }
+  {
+    // Unset region and bucket is an error
+    auto options =
+        ParseArgsDefault({"self-test", "--region=", "--bucket-name="});
+    if (options) return self_test_error;
+  }
+  {
+    // Sample count range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--bucket-name=b",
+        "--minimum-sample-count=8",
+        "--maximum-sample-count=4",
+    });
+    if (options) return self_test_error;
+  }
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                 std::move(os).str());
+  }
+  return ParseArgsDefault({
+      "self-test",
+      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+      "--duration=1s",
+      "--object-count=4",
+      "--object-size=16KiB",
+      "--chunk-size=4KiB",
+      "--minimum-read-size=2KiB",
+      "--maximum-read-size=4KiB",
+      "--thread-count=2",
+      "--enable-connection-pool=true",
+      "--enable-xml-api=true",
+      "--create-bucket=true",
+      "--delete-bucket=true",
+      "--create-objects=true",
+      "--upload-objects=true",
+      "--download-objects=true",
+      "--minimum-sample-count=1",
+      "--maximum-sample-count=2",
+  });
+}
+
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return SelfTest();
+
+  return ParseArgsDefault({argv, argv + argc});
 }
 
 }  // namespace
