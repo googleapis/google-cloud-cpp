@@ -70,54 +70,28 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# Benchmark Table::ReadRows().
-add_executable(scan_throughput_benchmark scan_throughput_benchmark.cc)
-target_link_libraries(
-    scan_throughput_benchmark
-    PRIVATE bigtable_benchmark_common
-            bigtable_client
-            bigtable_protos
-            bigtable_common_options
-            google_cloud_cpp_grpc_utils
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf)
-
-# Benchmark for Table::Apply() and Table::ReadRow().
-add_executable(apply_read_latency_benchmark apply_read_latency_benchmark.cc)
-target_link_libraries(
-    apply_read_latency_benchmark
-    PRIVATE bigtable_benchmark_common
-            bigtable_client
-            bigtable_protos
-            bigtable_common_options
-            google_cloud_cpp_grpc_utils
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf)
-
-# A benchmark for ReadRow() comparing sync vs. async throughput.
-add_executable(read_sync_vs_async_benchmark read_sync_vs_async_benchmark.cc)
-target_link_libraries(
-    read_sync_vs_async_benchmark
-    PRIVATE bigtable_benchmark_common
-            bigtable_client
-            bigtable_protos
-            bigtable_common_options
-            google_cloud_cpp_grpc_utils
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf)
-
-# A benchmark to measure performance of long running programs.
-add_executable(endurance_benchmark endurance_benchmark.cc)
-target_link_libraries(
-    endurance_benchmark
-    PRIVATE bigtable_benchmark_common
-            bigtable_client
-            bigtable_protos
-            bigtable_common_options
-            google_cloud_cpp_grpc_utils
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf)
+set(storage_benchmark_programs
+    # cmake-format: sort
+    apply_read_latency_benchmark.cc endurance_benchmark.cc
+    read_sync_vs_async_benchmark.cc scan_throughput_benchmark.cc)
+foreach (fname ${storage_benchmark_programs})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    add_executable(${target} ${fname})
+    target_link_libraries(
+        ${target}
+        PRIVATE bigtable_benchmark_common
+                bigtable_client
+                bigtable_protos
+                bigtable_common_options
+                google_cloud_cpp_grpc_utils
+                gRPC::grpc++
+                gRPC::grpc
+                protobuf::libprotobuf)
+    if (BUILD_TESTING)
+        add_test(NAME ${target} COMMAND ${target})
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-tests;bigtable-integration-tests")
+    endif ()
+endforeach ()

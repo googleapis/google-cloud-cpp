@@ -14,9 +14,11 @@
 
 #include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 using namespace google::cloud::bigtable::benchmarks;
+using ::testing::HasSubstr;
 
 namespace {
 char arg0[] = "program";
@@ -131,21 +133,71 @@ TEST(BenchmarkSetup, Test3) {
 }
 
 TEST(BenchmarkSetup, Test2) {
+  google::cloud::testing_util::ScopedEnvironment env(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0, arg1, arg2};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_FALSE(MakeBenchmarkSetup("t1", argc, argv));
 }
 
 TEST(BenchmarkSetup, Test1) {
+  google::cloud::testing_util::ScopedEnvironment env(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0, arg1};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_FALSE(MakeBenchmarkSetup("t1", argc, argv));
 }
 
 TEST(BenchmarkSetup, Test0) {
+  google::cloud::testing_util::ScopedEnvironment env(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_FALSE(MakeBenchmarkSetup("t0", argc, argv));
+}
+
+TEST(BenchmarkSetup, TestAutoRun) {
+  google::cloud::testing_util::ScopedEnvironment auto_run(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
+  google::cloud::testing_util::ScopedEnvironment project_id(
+      "GOOGLE_CLOUD_PROJECT", "test-unused-project");
+  google::cloud::testing_util::ScopedEnvironment instance_id(
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", "test-instance");
+  char* argv[] = {arg0};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  auto setup = MakeBenchmarkSetup("t0", argc, argv);
+  EXPECT_STATUS_OK(setup);
+  EXPECT_EQ("test-unused-project", setup->project_id());
+  EXPECT_EQ("test-instance", setup->instance_id());
+}
+
+TEST(BenchmarkSetup, TestAutoRunMissingProject) {
+  google::cloud::testing_util::ScopedEnvironment auto_run(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
+  google::cloud::testing_util::ScopedEnvironment project_id(
+      "GOOGLE_CLOUD_PROJECT", {});
+  google::cloud::testing_util::ScopedEnvironment instance_id(
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", "test-instance");
+  char* argv[] = {arg0};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  auto setup = MakeBenchmarkSetup("t0", argc, argv);
+  EXPECT_FALSE(setup);
+  EXPECT_THAT(setup.status().message(), HasSubstr("GOOGLE_CLOUD_PROJECT"));
+}
+
+TEST(BenchmarkSetup, TestAutoRunMissingInstanceId) {
+  google::cloud::testing_util::ScopedEnvironment auto_run(
+      "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
+  google::cloud::testing_util::ScopedEnvironment project_id(
+      "GOOGLE_CLOUD_PROJECT", "test-unused-project");
+  google::cloud::testing_util::ScopedEnvironment instance_id(
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", {});
+  char* argv[] = {arg0};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  auto setup = MakeBenchmarkSetup("t0", argc, argv);
+  EXPECT_FALSE(setup);
+  EXPECT_THAT(setup.status().message(),
+              HasSubstr("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID"));
 }
 
 TEST(BenchmarkSetup, TestDuration) {
