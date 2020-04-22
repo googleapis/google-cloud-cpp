@@ -42,8 +42,7 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ "${RUNNING_CI:-}" != "yes" ]] ||
-  [[ "${KOKORO_JOB_TYPE:-}" != "CONTINUOUS_INTEGRATION" ]]; then
+if [[ "${RUNNING_CI:-}" != "yes" || "${KOKORO_JOB_TYPE:-}" != "CONTINUOUS_INTEGRATION" ]]; then
   echo "================================================================"
   log_normal "Cache not updated as this is not a CI build or it is a PR build."
   exit 0
