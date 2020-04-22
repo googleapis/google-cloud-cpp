@@ -172,7 +172,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         break
       fi
     done
-    if [ "${success}" != "yes" ]; then
+    if [[ "${success}" != "yes" ]]; then
       log_red "integration tests failed multiple times, aborting tests."
       exit 1
     fi
@@ -267,25 +267,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     echo "================================================================"
     log_yellow "Completed the integration tests against production"
-  fi
-
-  if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
-    echo
-    log_yellow "Running integration tests"
-    echo
-
-    # Run the integration tests. Not all projects have them, so just iterate
-    # over the ones that do.
-    (
-      cd "${BINARY_DIR}"
-      echo
-      log_yellow "Running integration tests for google/cloud/bigtable"
-      "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests.sh"
-    )
-
-    echo
-    log_yellow "Completed integration tests"
-    echo
   fi
 fi
 
