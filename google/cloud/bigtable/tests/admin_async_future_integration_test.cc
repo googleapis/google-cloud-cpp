@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 
@@ -34,7 +33,6 @@ class AdminAsyncFutureIntegrationTest
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
-  std::string service_account_;
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
 
   void SetUp() override {
@@ -53,8 +51,7 @@ class AdminAsyncFutureIntegrationTest
         bigtable::testing::TableTestEnvironment::project_id(),
         bigtable::ClientOptions());
     instance_admin_ =
-        google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
-            instance_admin_client);
+        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
 
   int CountMatchingTables(std::string const& table_id,
@@ -378,82 +375,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
   pool.join();
 }
 
-TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
-  // TODO(#151) - remove workarounds for emulator bugs(s)
-  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
-
-  using namespace google::cloud::testing_util::chrono_literals;
-
-  std::string const table_id = RandomTableId();
-
-  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
-      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
-
-  TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
-                            {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
-                           {"a1000", "a2000", "b3000", "m5000"});
-
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
-  future<void> chain =
-      table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY)
-          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
-            StatusOr<std::vector<btadmin::Table>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            EXPECT_EQ(0, previous_count)
-                << "Table (" << table_id << ") already exists."
-                << " This is unexpected, as the table ids are"
-                << " generated at random.";
-            return table_admin_->AsyncCreateTable(cq, table_id, table_config);
-          })
-          .then([&](future<StatusOr<btadmin::Table>> fut) {
-            StatusOr<btadmin::Table> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
-            return table_admin_->AsyncSetIamPolicy(cq, table_id, iam_policy);
-          })
-          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
-            StatusOr<google::iam::v1::Policy> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            return table_admin_->AsyncGetIamPolicy(cq, table_id);
-          })
-          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
-            StatusOr<google::iam::v1::Policy> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            return table_admin_->AsyncTestIamPermissions(
-                cq, table_id,
-                {"bigtable.tables.get", "bigtable.tables.readRows"});
-          })
-          .then([&](future<StatusOr<std::vector<std::string>>> fut) {
-            StatusOr<std::vector<std::string>> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            EXPECT_EQ(2, get_result->size());
-            return table_admin_->AsyncDeleteTable(cq, table_id);
-          })
-          .then([&](future<Status> fut) {
-            Status delete_result = fut.get();
-            EXPECT_STATUS_OK(delete_result);
-            return table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY);
-          })
-          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
-            StatusOr<std::vector<btadmin::Table>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            ASSERT_EQ(0, previous_count)
-                << "Table (" << table_id << ") already exists."
-                << " This is unexpected, as the table ids are"
-                << " generated at random.";
-          });
-
-  chain.get();
-  SUCCEED();  // we expect that previous operations do not fail.
-
-  cq.Shutdown();
-  pool.join();
-}
-
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work
 /// as expected.
 TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
@@ -486,8 +407,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
   std::string const backup_cluster_full_name =
       clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
-      backup_cluster_full_name.rfind("/") + 1,
-      backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
+      backup_cluster_full_name.rfind('/') + 1,
+      backup_cluster_full_name.size() - backup_cluster_full_name.rfind('/'));
   std::string const backup_id = RandomBackupId();
   std::string const backup_full_name =
       backup_cluster_full_name + "/backups/" + backup_id;
@@ -536,15 +457,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
-            return table_admin_->AsyncListBackups(cq, {});
-          })
-          .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
-            StatusOr<std::vector<btadmin::Backup>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            auto previous_count =
-                CountMatchingBackups(backup_cluster_id, backup_id, *result);
-            ASSERT_EQ(0, previous_count)
-                << "Backup (" << backup_id << ") still exists.";
           });
   chain.get();
 
@@ -594,8 +506,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
   std::string const backup_cluster_full_name =
       clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
-      backup_cluster_full_name.rfind("/") + 1,
-      backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
+      backup_cluster_full_name.rfind('/') + 1,
+      backup_cluster_full_name.size() - backup_cluster_full_name.rfind('/'));
   std::string const backup_id = RandomBackupId();
   std::string const backup_full_name =
       backup_cluster_full_name + "/backups/" + backup_id;

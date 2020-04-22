@@ -116,32 +116,34 @@ auto create_policy_with_params = []() {
   };
 };
 
-auto create_list_backups_lambda = [](std::string expected_token,
-                                     std::string returned_token,
-                                     std::vector<std::string> backup_names) {
-  return [expected_token, returned_token, backup_names](
-             grpc::ClientContext* context,
-             btadmin::ListBackupsRequest const& request,
-             btadmin::ListBackupsResponse* response) {
-    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
-    auto const cluster_name = instance_name + "/clusters/-";
-    EXPECT_EQ(cluster_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_backups_lambda =
+    [](std::string const& expected_token, std::string const& returned_token,
+       std::vector<std::string> const& backup_names) {
+      return [expected_token, returned_token, backup_names](
+                 grpc::ClientContext* context,
+                 btadmin::ListBackupsRequest const& request,
+                 btadmin::ListBackupsResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        auto const cluster_name = instance_name + "/clusters/-";
+        EXPECT_EQ(cluster_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& backup_name : backup_names) {
-      auto& backup = *response->add_backups();
-      backup.set_name(instance_name + "/clusters/the-cluster/backups/" +
-                      backup_name);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& backup_name : backup_names) {
+          auto& backup = *response->add_backups();
+          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+          backup.set_name(instance_name + "/clusters/the-cluster/backups/" +
+                          backup_name);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -456,8 +458,6 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
 /// @test Verify that `bigtable::TableAdmin::ListBackups` works in the easy
 /// case.
 TEST_F(TableAdminTest, ListBackups) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, kInstanceId);
   auto mock_list_backups = create_list_backups_lambda("", "", {"b0", "b1"});
   EXPECT_CALL(*client_, ListBackups(_, _, _))
@@ -475,8 +475,6 @@ TEST_F(TableAdminTest, ListBackups) {
 
 /// @test Verify that `bigtable::TableAdmin::ListBackups` handles failures.
 TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListBackupsRequest const&,
@@ -511,8 +509,6 @@ TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
  * failures.
  */
 TEST_F(TableAdminTest, ListBackupsUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ListBackups(_, _, _))
       .WillRepeatedly(
@@ -526,9 +522,6 @@ TEST_F(TableAdminTest, ListBackupsUnrecoverableFailures) {
  * recoverable failures.
  */
 TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
@@ -547,9 +540,6 @@ TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
 
 /// @test Verify that `bigtable::TableAdmin::GetBackup` works in the easy case.
 TEST_F(TableAdminTest, GetBackupSimple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
     name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
@@ -572,9 +562,6 @@ TEST_F(TableAdminTest, GetBackupSimple) {
  * failures.
  */
 TEST_F(TableAdminTest, GetBackupUnrecoverableFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GetBackup(_, _, _))
       .WillRepeatedly(
@@ -589,9 +576,6 @@ TEST_F(TableAdminTest, GetBackupUnrecoverableFailures) {
  * recoverable failures.
  */
 TEST_F(TableAdminTest, GetBackupTooManyFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
@@ -606,9 +590,6 @@ TEST_F(TableAdminTest, GetBackupTooManyFailures) {
 /// @test Verify that `bigtable::TableAdmin::UpdateBackup` works in the easy
 /// case.
 TEST_F(TableAdminTest, UpdateBackupSimple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
     backup {
@@ -641,9 +622,6 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
  * failures.
  */
 TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, UpdateBackup(_, _, _))
       .WillRepeatedly(
@@ -663,9 +641,6 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
  * recoverable failures.
  */
 TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
@@ -684,7 +659,6 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
 
 /// @test Verify that bigtable::TableAdmin::DeleteBackup works as expected.
 TEST_F(TableAdminTest, DeleteBackup) {
-  using namespace ::testing;
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -713,8 +687,6 @@ TEST_F(TableAdminTest, DeleteBackup) {
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, DeleteBackupFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DeleteBackup(_, _, _))
       .WillRepeatedly(

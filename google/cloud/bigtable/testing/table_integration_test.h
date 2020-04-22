@@ -142,7 +142,7 @@ class TableIntegrationTest : public ::testing::Test {
    * Bigtable instance.  To avoid conflicts and minimize coordination between
    * the tests, we run each test with a randomly selected backup name.
    */
-  std::string RandomBackupId();
+  static std::string RandomBackupId();
 
   /// Some tests cannot run on the emulator.
   static bool UsingCloudBigtableEmulator() {

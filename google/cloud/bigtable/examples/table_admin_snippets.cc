@@ -699,11 +699,6 @@ int main(int argc, char* argv[]) {
                                  CheckConsistency),
       examples::MakeCommandEntry("generate-consistency-token", {"<table-id>"},
                                  GenerateConsistencyToken),
-      examples::MakeCommandEntry("get-iam-policy", {"<table-id>"},
-                                 GetIamPolicy),
-      examples::MakeCommandEntry(
-          "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
-      {"test-iam-permissions", TestIamPermissions},
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
