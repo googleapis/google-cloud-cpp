@@ -37,6 +37,13 @@ elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
   # name.
   BUILD_NAME="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
   export BUILD_NAME
+
+  # This is passed into the environment of the remaining scripts to tell them if
+  # they are running as part of a CI build rather than just a human invocation
+  # of "build.sh <build-name>". This allows scripts to be strict when run in a
+  # CI, but a little more friendly when run by a human.
+  RUNNING_CI="yes"
+  export RUNNING_CI
 else
   echo "Aborting build as the build name is not defined."
   echo "If you are invoking this script via the command line use:"
