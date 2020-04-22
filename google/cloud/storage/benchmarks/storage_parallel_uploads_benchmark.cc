@@ -453,7 +453,7 @@ google::cloud::StatusOr<Options> SelfTest() {
       "--thread-count=2",
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
-      "--minimum-num-shard=2",
+      "--minimum-num-shards=2",
       "--maximum-num-shards=4",
       "--duration=1s",
       "--minimum-sample-count=2",
