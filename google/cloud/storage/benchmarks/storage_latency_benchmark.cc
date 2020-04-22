@@ -63,11 +63,10 @@ A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
-constexpr long kBlobSize = gcs_bm::kMiB;
-
 struct Options {
   std::string region;
   std::chrono::seconds duration = std::chrono::seconds(60);
+  std::int64_t object_size = gcs_bm::kMiB;
   long object_count = 1000;
   int thread_count = 1;
   bool enable_connection_pool = false;
@@ -149,11 +148,12 @@ int main(int argc, char* argv[]) {
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
             << "\n# Region: " << options->region
+            << "\n# Duration: " << options->duration.count() << "s"
             << "\n# Object Count: " << options->object_count
             << "\n# Thread Count: " << options->thread_count
             << "\n# Enable connection pool: " << options->enable_connection_pool
             << "\n# Enable XML API: " << options->enable_xml_api
-            << "\n# Build info: " << notes << "\n";
+            << "\n# Build info: " << notes << std::endl;
 
   std::vector<std::string> object_names =
       CreateAllObjects(client, generator, bucket_name, *options);
@@ -239,7 +239,7 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   auto elapsed = std::chrono::steady_clock::now() - start;
   using std::chrono::milliseconds;
   auto ms = std::chrono::duration_cast<milliseconds>(elapsed);
-  return IterationResult{OP_READ, (total_size == kBlobSize), ms};
+  return IterationResult{OP_READ, (total_size == options.object_size), ms};
 }
 
 TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
@@ -247,7 +247,7 @@ TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, kBlobSize);
+  std::string random_data = gcs_bm::MakeRandomData(generator, options.object_size);
   TestResult result;
   for (auto const& object_name : group) {
     result.emplace_back(
@@ -264,7 +264,7 @@ std::vector<std::string> CreateAllObjects(
 
   auto const max_group_size =
       std::max(options.object_count / options.thread_count, 1L);
-  std::cout << "# Creating test objects [" << max_group_size << "]\n";
+  std::cout << "# Creating test objects [" << max_group_size << "]" << std::endl;
 
   // Generate the list of object names.
   std::vector<std::string> object_names;
@@ -298,7 +298,7 @@ std::vector<std::string> CreateAllObjects(
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   std::cout << "# Created in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms\n";
+            << "ms" << std::endl;
   return object_names;
 }
 
@@ -308,7 +308,7 @@ TestResult RunTestThread(gcs::Client const& client,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, kBlobSize);
+  std::string random_data = gcs_bm::MakeRandomData(generator, options.object_size);
 
   std::uniform_int_distribution<std::size_t> object_number_gen(
       0, object_names.size() - 1);
@@ -402,7 +402,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms\n";
+            << "ms" << std::endl;
 }
 
 google::cloud::StatusOr<Options> ParseArgsDefault(
@@ -418,6 +418,10 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
       {"--duration", "set the total execution time for the benchmark",
        [&options](std::string const& val) {
          options.duration = gcs_bm::ParseDuration(val);
+       }},
+       {"--object-size", "set the size of the objects used in the test",
+       [&options](std::string const& val) {
+         options.object_size = gcs_bm::ParseSize(val);
        }},
       {"--object-count", "set the number of objects created by the benchmark",
        [&options](std::string const& val) {
@@ -508,8 +512,9 @@ google::cloud::StatusOr<Options> SelfTest() {
       "self-test",
       "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
       "--duration=1s",
-      "--object-count=8",
-      "--thread-count=2",
+      "--object-size=16KiB",
+      "--object-count=4",
+      "--thread-count=1",
       "--enable-connection-pool=true",
       "--enable-xml-api=true",
       "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
