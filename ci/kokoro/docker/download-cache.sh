@@ -46,7 +46,7 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ -z "${KOKORO_JOB_TYPE:-}" ]] ||
+if [[ "${RUNNING_CI:-}" != "yes" ]] ||
   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] &&
   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
