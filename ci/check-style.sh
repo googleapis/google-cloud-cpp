@@ -87,7 +87,7 @@ fi
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
 git ls-files -z | grep -zE '\.(cc|h)$' |
-  while IFS= read -r file; do
+  while IFS= read -r -d $'\0' file; do
     # We used to run run `sed -i` to apply these changes, but that touches the
     # files even if there are no changes applied, forcing a rebuild each time.
     # So we first apply the change to a temporary file, and replace the original
@@ -104,7 +104,7 @@ git ls-files -z | grep -zE '\.(cc|h)$' |
 # we do not expand TABs (they currently only appear in Makefiles and Makefile
 # snippets).
 git ls-files -z | grep -zv '\.gz$' |
-  while IFS= read -r file; do
+  while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
       "${file}" >"${file}.tmp"
     replace_original_if_changed "${file}" "${file}.tmp"
