@@ -26,17 +26,6 @@ fi
 readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/colors.sh"
 
-# Build paths to ignore in find(1) commands by reading .gitignore.
-declare -a ignore=(-path ./.git)
-if [[ -f .gitignore ]]; then
-  while read -r line; do
-    case "${line}" in
-    [^#]*/*) ignore+=(-o -path "./$(expr "${line}" : '\(.*\)/')") ;;
-    [^#]*) ignore+=(-o -name "${line}") ;;
-    esac
-  done <.gitignore
-fi
-
 problems=""
 if ! find google/cloud -name '*.h' -print0 |
   xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
@@ -61,23 +50,43 @@ replace_original_if_changed() {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-find . \( "${ignore[@]}" \) -prune -o \
-  \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
-  -print0 |
+git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
   xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
-  xargs -0 clang-format -i
+git ls-files -z | grep -zE '\.(cc|h)$' | xargs -0 clang-format -i
+
+# Apply buildifier to fix the BUILD and .bzl formatting rules.
+#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
+git ls-files -z | grep -zE '\.(BUILD|bzl)$' | xargs -0 buildifier -mode=fix
+git ls-files -z | grep -zE '(^|/)(BUILD|WORKSPACE)$' |
+  xargs -0 buildifier -mode=fix
+
+# Apply psf/black to format Python files.
+#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
+git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black
+
+# Apply shfmt to format all shell scripts
+git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w -i 2
+
+# Apply shellcheck(1) to emit warnings for common scripting mistakes.
+if ! git ls-files -z | grep -z '\.sh$' |
+  xargs -0 shellcheck \
+    --exclude=SC1090 \
+    --exclude=SC2034 \
+    --exclude=SC2153 \
+    --exclude=SC2181; then
+  problems="${problems} shellcheck"
+fi
 
 # Apply several transformations that cannot be enforced by clang-format:
 #     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
+git ls-files -z | grep -zE '\.(cc|h)$' |
   while IFS= read -r -d $'\0' file; do
     # We used to run run `sed -i` to apply these changes, but that touches the
     # files even if there are no changes applied, forcing a rebuild each time.
@@ -90,47 +99,11 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
     replace_original_if_changed "${file}" "${file}.tmp"
   done
 
-# Apply buildifier to fix the BUILD and .bzl formatting rules.
-#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-find . \( "${ignore[@]}" \) -prune -o \
-  \( -name WORKSPACE -o -name BUILD \
-  -o -name '*.BUILD' -o -name '*.bzl' \) \
-  -print0 |
-  xargs -0 buildifier -mode=fix
-
-# Apply psf/black to format Python files.
-#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-find . \( "${ignore[@]}" \) -prune -o \
-  \( -name '*.py' \) \
-  -print0 |
-  xargs -0 python3 -m black
-find google/cloud/storage/testbench \
-  \( -name '*.py' \) \
-  -print0 |
-  xargs -0 python3 -m black
-
-# Apply shellcheck(1) to emit warnings for common scripting mistakes.
-if ! find . \( "${ignore[@]}" \) -prune -o \
-  -type f -name '*.sh' -print0 |
-  xargs -0 shellcheck \
-    --exclude=SC1090 \
-    --exclude=SC2034 \
-    --exclude=SC2153 \
-    --exclude=SC2181; then
-  problems="${problems} shellcheck"
-fi
-
-# Apply shfmt to format all shell scripts
-find . \( "${ignore[@]}" \) -prune -o \
-  -iname '*.sh' -print0 | xargs -0 shfmt -w -i 2
-
 # Apply transformations to fix whitespace formatting in files not handled by
 # clang-format(1) above.  For now we simply remove trailing blanks.  Note that
 # we do not expand TABs (they currently only appear in Makefiles and Makefile
 # snippets).
-find . \( "${ignore[@]}" \) -prune -o \
-  -type f ! -name '*.gz' \
-  -print0 |
+git ls-files -z | grep -zv '\.gz$' |
   while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
       "${file}" >"${file}.tmp"
