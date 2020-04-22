@@ -36,11 +36,17 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
+include(CreateBazelConfig)
+create_bazel_config(bigtable_benchmark_common YEAR 2020)
+
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
         bigtable_benchmark_test.cc embedded_server_test.cc
         format_duration_test.cc setup_test.cc)
+    export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
+                         "bigtable_benchmarks_unit_tests" YEAR 2020)
+
     foreach (fname ${bigtable_benchmarks_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})
@@ -70,11 +76,14 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-set(storage_benchmark_programs
+set(bigtable_benchmark_programs
     # cmake-format: sort
     apply_read_latency_benchmark.cc endurance_benchmark.cc
     read_sync_vs_async_benchmark.cc scan_throughput_benchmark.cc)
-foreach (fname ${storage_benchmark_programs})
+export_list_to_bazel("bigtable_benchmark_programs.bzl"
+                     "bigtable_benchmark_programs")
+
+foreach (fname ${bigtable_benchmark_programs})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
