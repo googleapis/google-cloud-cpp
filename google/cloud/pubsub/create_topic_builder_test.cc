@@ -31,11 +31,10 @@ TEST(Topic, TopicOnly) {
   auto const actual =
       CreateTopicBuilder(Topic("test-project", "test-topic")).as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -45,13 +44,12 @@ TEST(Topic, AddLabel) {
                           .add_label("key1", "label1")
                           .as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        labels: { key: "key1" value: "label1" }
-        labels: { key: "key0" value: "label0" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    labels: { key: "key1" value: "label1" }
+    labels: { key: "key0" value: "label0" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -62,12 +60,11 @@ TEST(Topic, ClearLabel) {
                           .add_label("key1", "label1")
                           .as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        labels: { key: "key1" value: "label1" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    labels: { key: "key1" value: "label1" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -77,15 +74,14 @@ TEST(Topic, AddAllowedPersistenceRegion) {
                           .add_allowed_persistence_region("us-west1")
                           .as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        message_storage_policy {
-          allowed_persistence_regions: "us-central1"
-          allowed_persistence_regions: "us-west1"
-        }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    message_storage_policy {
+      allowed_persistence_regions: "us-central1"
+      allowed_persistence_regions: "us-west1"
+    }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -96,12 +92,11 @@ TEST(Topic, ClearAllowedPersistenceRegions) {
                           .add_allowed_persistence_region("us-west1")
                           .as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        message_storage_policy { allowed_persistence_regions: "us-west1" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    message_storage_policy { allowed_persistence_regions: "us-west1" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -110,12 +105,11 @@ TEST(Topic, SetKmsKeyName) {
                           .set_kms_key_name("projects/.../test-only-string")
                           .as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        kms_key_name: "projects/.../test-only-string"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    kms_key_name: "projects/.../test-only-string"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -128,18 +122,17 @@ TEST(Topic, MoveProto) {
                      .set_kms_key_name("projects/.../test-only-string");
   auto const actual = std::move(builder).as_proto();
   google::pubsub::v1::Topic expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/topics/test-topic"
-        labels: { key: "key1" value: "label1" }
-        labels: { key: "key0" value: "label0" }
-        message_storage_policy {
-          allowed_persistence_regions: "us-central1"
-          allowed_persistence_regions: "us-west1"
-        }
-        kms_key_name: "projects/.../test-only-string"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/topics/test-topic"
+    labels: { key: "key1" value: "label1" }
+    labels: { key: "key0" value: "label0" }
+    message_storage_policy {
+      allowed_persistence_regions: "us-central1"
+      allowed_persistence_regions: "us-west1"
+    }
+    kms_key_name: "projects/.../test-only-string"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 

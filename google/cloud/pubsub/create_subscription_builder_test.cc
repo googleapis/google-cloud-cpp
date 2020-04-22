@@ -32,11 +32,10 @@ TEST(CreateSubscriptionBuilder, MakeOidcToken) {
   auto const actual =
       PushConfigBuilder::MakeOidcToken("test-account@example.com");
   google::pubsub::v1::PushConfig::OidcToken expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        service_account_email: "test-account@example.com"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    service_account_email: "test-account@example.com"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -44,12 +43,11 @@ TEST(CreateSubscriptionBuilder, MakeOidcTokenWithAudience) {
   auto const actual = PushConfigBuilder::MakeOidcToken(
       "test-account@example.com", "test-audience");
   google::pubsub::v1::PushConfig::OidcToken expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        service_account_email: "test-account@example.com"
-        audience: "test-audience"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    service_account_email: "test-account@example.com"
+    audience: "test-audience"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -57,11 +55,10 @@ TEST(CreateSubscriptionBuilder, PushConfigBasic) {
   auto const actual =
       PushConfigBuilder("https://endpoint.example.com").as_proto();
   google::pubsub::v1::PushConfig expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        push_endpoint: "https://endpoint.example.com"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    push_endpoint: "https://endpoint.example.com"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -71,13 +68,12 @@ TEST(CreateSubscriptionBuilder, PushConfigAddAttribute) {
                           .add_attribute("key1", "label1")
                           .as_proto();
   google::pubsub::v1::PushConfig expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        push_endpoint: "https://endpoint.example.com"
-        attributes: { key: "key1" value: "label1" }
-        attributes: { key: "key0" value: "label0" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    push_endpoint: "https://endpoint.example.com"
+    attributes: { key: "key1" value: "label1" }
+    attributes: { key: "key0" value: "label0" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -88,12 +84,11 @@ TEST(CreateSubscriptionBuilder, PushConfigSetAttributes) {
                           .set_attributes({{"key2", "label2"}})
                           .as_proto();
   google::pubsub::v1::PushConfig expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        push_endpoint: "https://endpoint.example.com"
-        attributes: { key: "key2" value: "label2" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    push_endpoint: "https://endpoint.example.com"
+    attributes: { key: "key2" value: "label2" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -104,15 +99,14 @@ TEST(CreateSubscriptionBuilder, PushConfigSetAuthentication) {
               "fake-service-account@example.com", "test-audience"))
           .as_proto();
   google::pubsub::v1::PushConfig expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        push_endpoint: "https://endpoint.example.com"
-        oidc_token {
-          service_account_email: "fake-service-account@example.com"
-          audience: "test-audience"
-        }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    push_endpoint: "https://endpoint.example.com"
+    oidc_token {
+      service_account_email: "fake-service-account@example.com"
+      audience: "test-audience"
+    }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -122,12 +116,11 @@ TEST(CreateSubscriptionBuilder, Basic) {
                           Topic("test-project", "test-topic"))
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -138,13 +131,12 @@ TEST(CreateSubscriptionBuilder, SetAckDeadline) {
                           .set_ack_deadline(std::chrono::seconds(600))
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        ack_deadline_seconds: 600
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    ack_deadline_seconds: 600
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -155,13 +147,12 @@ TEST(CreateSubscriptionBuilder, SetRetainAckedMessages) {
                           .set_retain_acked_messages(true)
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        retain_acked_messages: true
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    retain_acked_messages: true
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -175,13 +166,12 @@ TEST(CreateSubscriptionBuilder, SetMessageRetentionDuration) {
                                           std::chrono::microseconds(3))
           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        message_retention_duration { seconds: 62 nanos: 3000 }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    message_retention_duration { seconds: 62 nanos: 3000 }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -194,13 +184,12 @@ TEST(CreateSubscriptionBuilder, SetPushConfig) {
               PushConfigBuilder("https://ep.example.com").as_proto())
           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        push_config { push_endpoint: "https://ep.example.com" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    push_config { push_endpoint: "https://ep.example.com" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -212,14 +201,13 @@ TEST(CreateSubscriptionBuilder, AddLabels) {
                           .add_label("key1", "label1")
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        labels: { key: "key0", value: "label0" }
-        labels: { key: "key1", value: "label1" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    labels: { key: "key0", value: "label0" }
+    labels: { key: "key1", value: "label1" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -232,13 +220,12 @@ TEST(CreateSubscriptionBuilder, SetLabels) {
                           .set_labels({{"key2", "label2"}})
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        labels: { key: "key2", value: "label2" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    labels: { key: "key2", value: "label2" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -251,13 +238,12 @@ TEST(CreateSubscriptionBuilder, ClearLabels) {
                           .add_label("key1", "label1")
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        labels: { key: "key1", value: "label1" }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    labels: { key: "key1", value: "label1" }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -268,13 +254,12 @@ TEST(CreateSubscriptionBuilder, EnableMessageOrdering) {
                           .enable_message_ordering(true)
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        enable_message_ordering: true
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    enable_message_ordering: true
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -288,13 +273,12 @@ TEST(CreateSubscriptionBuilder, SetExpirationPolicy) {
                   std::chrono::hours(2) + std::chrono::nanoseconds(3)))
           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        expiration_policy { ttl { seconds: 7200 nanos: 3 } }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    expiration_policy { ttl { seconds: 7200 nanos: 3 } }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -307,16 +291,15 @@ TEST(CreateSubscriptionBuilder, SetDeadLetterPolicy) {
                                   Topic("test-project", "dead-letter"), 3))
                           .as_proto();
   google::pubsub::v1::Subscription expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/subscriptions/test-subscription"
-        topic: "projects/test-project/topics/test-topic"
-        dead_letter_policy {
-          dead_letter_topic: "projects/test-project/topics/dead-letter"
-          max_delivery_attempts: 3
-        }
-      )pb",
-      &expected));
+  std::string const text = R"pb(
+    name: "projects/test-project/subscriptions/test-subscription"
+    topic: "projects/test-project/topics/test-topic"
+    dead_letter_policy {
+      dead_letter_topic: "projects/test-project/topics/dead-letter"
+      max_delivery_attempts: 3
+    }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
