@@ -530,7 +530,7 @@ google::cloud::StatusOr<Options> SelfTest() {
       thread_count_arg,
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
-      "--minimum-chunk=size=1KiB",
+      "--minimum-chunk-size=1KiB",
       "--maximum-chunk-size=2KiB",
       "--duration=1s",
       "--minimum-sample-count=1",
