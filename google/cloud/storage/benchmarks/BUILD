@@ -35,18 +35,6 @@ cc_library(
 
 load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 
-# TODO(#3525) - remove this once the list is empty
-load(":storage_benchmark_programs_manual_run.bzl", "storage_benchmark_programs_manual_run")
-
-auto_run_tags = [
-    "integration-tests",
-    "storage-integration-tests",
-]
-
-manual_tags = [
-    "integration-tests",
-]
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -54,7 +42,10 @@ manual_tags = [
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
-    tags = manual_tags if test in storage_benchmark_programs_manual_run else auto_run_tags,
+    tags = [
+        "integration-tests",
+        "storage-integration-tests",
+    ],
     deps = [
         ":storage_benchmarks",
         "//google/cloud/storage:nlohmann_json",
