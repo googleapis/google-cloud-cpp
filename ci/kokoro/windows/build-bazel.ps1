@@ -40,6 +40,7 @@ $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRAN
 # support those well.
 $CACHE_BASENAME="cache-windows-bazel"
 
+$IsCI = (Test-Path env:KOKORO_JOB_TYPE)
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
@@ -56,7 +57,7 @@ if (Test-Path env:TEMP) {
 } elseif (-not $download_dir) {
     Make-Item -Type "Directory" ${download_dir}
 }
-if ($IsPR -and $CacheConfigured -and $Has7z) {
+if ($IsCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     gcloud auth activate-service-account --key-file `
         "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
@@ -191,7 +192,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel 
 bazel $common_flags shutdown
 bazel shutdown
 
-if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
+if ($IsCI -and (-not $IsPR) -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).

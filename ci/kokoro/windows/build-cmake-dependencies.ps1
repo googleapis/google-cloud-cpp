@@ -119,10 +119,11 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
+$IsCI = (Test-Path env:KOKORO_JOB_TYPE)
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
-if ((-not $IsPR) -and $HasBuildCache) {
+if ($IsCI -and (-not $IsPR) -and $HasBuildCache) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "zip vcpkg cache for upload."
     7z a vcpkg-installed.zip installed\ -bsp0
@@ -142,5 +143,6 @@ if ((-not $IsPR) -and $HasBuildCache) {
     }
 } else {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-      "vcpkg not updated IsPR == $IsPR, HasBuildCache == $HasBuildCache."
+      "vcpkg not updated IsCI = $IsCI, IsPR = $IsPR, " `
+      "HasBuildCache = $HasBuildCache."
 }
