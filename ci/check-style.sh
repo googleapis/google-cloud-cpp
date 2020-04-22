@@ -50,27 +50,30 @@ replace_original_if_changed() {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-git ls-files | grep -P '(CMakeLists\.txt|\.cmake)$' | xargs cmake-format -i
+git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
+  xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-git ls-files | grep -P '\.(cc|h)$' | xargs clang-format -i
+git ls-files -z | grep -zE '\.(cc|h)$' | xargs -0 clang-format -i
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-git ls-files | grep -P '\.(BUILD|bzl)$' | xargs buildifier -mode=fix
+git ls-files -z | grep -zE '\.(BUILD|bzl)$' | xargs -0 buildifier -mode=fix
+git ls-files -z | grep -zE '((^|/)BUILD|WORKSPACE)$' |
+  xargs -0 buildifier -mode=fix
 
 # Apply psf/black to format Python files.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-git ls-files | grep '\.py$' | xargs python3 -m black
+git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black
 
 # Apply shfmt to format all shell scripts
-git ls-files | grep '\.sh$' | xargs shfmt -w -i 2
+git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w -i 2
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
-if ! git ls-files | grep '\.sh$' |
-  xargs shellcheck \
+if ! git ls-files -z | grep -z '\.sh$' |
+  xargs -0 shellcheck \
     --exclude=SC1090 \
     --exclude=SC2034 \
     --exclude=SC2153 \
@@ -83,7 +86,7 @@ fi
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-git ls-files | grep -P '\.(cc|h)$' |
+git ls-files -z | grep -zE '\.(cc|h)$' |
   while IFS= read -r file; do
     # We used to run run `sed -i` to apply these changes, but that touches the
     # files even if there are no changes applied, forcing a rebuild each time.
@@ -100,7 +103,7 @@ git ls-files | grep -P '\.(cc|h)$' |
 # clang-format(1) above.  For now we simply remove trailing blanks.  Note that
 # we do not expand TABs (they currently only appear in Makefiles and Makefile
 # snippets).
-git ls-files | grep -v '\.gz$' |
+git ls-files -z | grep -zv '\.gz$' |
   while IFS= read -r file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
       "${file}" >"${file}.tmp"
