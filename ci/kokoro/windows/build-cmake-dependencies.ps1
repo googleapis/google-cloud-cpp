@@ -24,6 +24,14 @@ if (-not (Test-Path env:VCPKG_TRIPLET)) {
     throw "Aborting build because the VCPKG_TRIPLET environment variable is not set."
 }
 
+$RunningCI = (Test-Path env:RUNNING_CI) -and `
+    ($env:RUNNING_CI -eq "yes")
+$IsCI = (Test-Path env:KOKORO_JOB_TYPE) -and `
+    ($env:KOKORO_JOB_TYPE -eq "CONTINUOUS_INTEGRATION")
+$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
+    ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
+$HasBuildCache = (Test-Path env:BUILD_CACHE)
+
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_dir = "cmake-out\vcpkg"
 $packages = @("zlib", "openssl",
@@ -43,7 +51,7 @@ if ($args.count -ge 1) {
 # multiple times while debugging vcpkg installs.  It also works on Kokoro
 # where we cache the vcpkg installation, but it might be empty on the first
 # build.
-if ((Test-Path env:RUNNING_CI) -and (Test-Path "${vcpkg_dir}")) {
+if ($RunningCI -and (Test-Path "${vcpkg_dir}")) {
     Remove-Item -LiteralPath "${vcpkg_dir}" -Force -Recurse
 }
 if (-not (Test-Path ${vcpkg_dir})) {
@@ -63,7 +71,7 @@ Set-Location "${vcpkg_dir}"
 
 # If BUILD_CACHE is set (which typically is on Kokoro builds), try
 # to download and extract the build cache.
-if ((Test-Path env:BUILD_CACHE) -and (Test-Path env:KOKORO_GFILE_DIR)) {
+if ($RunningCI -and $IsPR -and $HasBuildCache) {
     gcloud auth activate-service-account `
         --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
@@ -119,10 +127,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
-$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
-$HasBuildCache = (Test-Path env:BUILD_CACHE)
-if ((-not $IsPR) -and $HasBuildCache) {
+if ($RunningCI -and $IsCI -and $HasBuildCache) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "zip vcpkg cache for upload."
     7z a vcpkg-installed.zip installed\ -bsp0
@@ -142,5 +147,6 @@ if ((-not $IsPR) -and $HasBuildCache) {
     }
 } else {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-      "vcpkg not updated IsPR == $IsPR, HasBuildCache == $HasBuildCache."
+      "vcpkg not updated IsCI = $IsCI, IsPR = $IsPR, " `
+      "HasBuildCache = $HasBuildCache."
 }

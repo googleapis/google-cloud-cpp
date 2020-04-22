@@ -42,10 +42,9 @@ if [[ ! -f "${KEYFILE}" ]]; then
   exit 0
 fi
 
-if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] ||
-  [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
+if [[ "${RUNNING_CI:-}" != "yes" || "${KOKORO_JOB_TYPE:-}" != "CONTINUOUS_INTEGRATION" ]]; then
   echo "================================================================"
-  log_normal "Cache not updated as this is a PR build."
+  log_normal "Cache not updated as this is not a CI build or it is a PR build."
   exit 0
 fi
 
