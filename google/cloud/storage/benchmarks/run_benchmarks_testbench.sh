@@ -38,48 +38,6 @@ FAKE_REGION="fake-region-${RANDOM}-${RANDOM}"
 # has not changed.
 export GOOGLE_CLOUD_PROJECT="fake-project-${RANDOM}-${RANDOM}"
 
-run_example ./storage_throughput_benchmark --help
-run_example ./storage_throughput_benchmark --description
-readonly THROUGHPUT_BUCKET_NAME="bm-bucket-${RANDOM}"
-run_example ./storage_throughput_benchmark \
-  --duration=1 \
-  --object-count=8 \
-  --object-size=128KiB \
-  --chunk-size=64KiB \
-  --minimum-read-size=2KiB \
-  --maximum-read-size=4KiB \
-  --thread-count=1 \
-  --enable-connection-pool=true \
-  --enable-xml-api=true \
-  "--region=${FAKE_REGION}" \
-  "--bucket-name=${THROUGHPUT_BUCKET_NAME}" \
-  --create-bucket=true \
-  --delete-bucket=false \
-  --create-objects=true \
-  --upload-objects=true \
-  --download-objects=true \
-  --minimum-sample-count=1 \
-  --maximum-sample-count=2
-run_example ./storage_throughput_benchmark \
-  --duration=1 \
-  --object-count=8 \
-  --object-size=128KiB \
-  --chunk-size=64KiB \
-  --minimum-read-size=2KiB \
-  --maximum-read-size=4KiB \
-  --thread-count=1 \
-  --enable-connection-pool=true \
-  --enable-xml-api=true \
-  "--region=${FAKE_REGION}" \
-  "--bucket-name=${THROUGHPUT_BUCKET_NAME}" \
-  --create-bucket=false \
-  --delete-bucket=true \
-  --create-objects=false \
-  --upload-objects=false \
-  --download-objects=false \
-  --minimum-sample-count=1 \
-  --maximum-sample-count=2
-
 run_example_usage ./storage_throughput_vs_cpu_benchmark \
   --help --description
 run_example ./storage_throughput_vs_cpu_benchmark \
