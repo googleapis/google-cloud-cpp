@@ -231,7 +231,7 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
     stream = client.ReadObject(bucket_name, object_name,
                                gcs::IfGenerationNotMatch(0));
   }
-  std::size_t total_size = 0;
+  std::int64_t total_size = 0;
   char buf[4096];
   while (stream.read(buf, sizeof(buf))) {
     total_size += stream.gcount();
@@ -247,7 +247,8 @@ TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, options.object_size);
+  std::string random_data =
+      gcs_bm::MakeRandomData(generator, options.object_size);
   TestResult result;
   for (auto const& object_name : group) {
     result.emplace_back(
@@ -264,7 +265,8 @@ std::vector<std::string> CreateAllObjects(
 
   auto const max_group_size =
       std::max(options.object_count / options.thread_count, 1L);
-  std::cout << "# Creating test objects [" << max_group_size << "]" << std::endl;
+  std::cout << "# Creating test objects [" << max_group_size << "]"
+            << std::endl;
 
   // Generate the list of object names.
   std::vector<std::string> object_names;
@@ -308,7 +310,8 @@ TestResult RunTestThread(gcs::Client const& client,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, options.object_size);
+  std::string random_data =
+      gcs_bm::MakeRandomData(generator, options.object_size);
 
   std::uniform_int_distribution<std::size_t> object_number_gen(
       0, object_names.size() - 1);
@@ -419,7 +422,7 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&options](std::string const& val) {
          options.duration = gcs_bm::ParseDuration(val);
        }},
-       {"--object-size", "set the size of the objects used in the test",
+      {"--object-size", "set the size of the objects used in the test",
        [&options](std::string const& val) {
          options.object_size = gcs_bm::ParseSize(val);
        }},
