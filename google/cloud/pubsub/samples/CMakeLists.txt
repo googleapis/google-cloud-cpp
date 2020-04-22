@@ -42,7 +42,9 @@ function (pubsub_client_define_samples)
 
     foreach (fname ${pubsub_client_integration_samples})
         google_cloud_cpp_test_name_to_target(target "${fname}")
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        set_tests_properties(
+            ${target}
+            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
     endforeach ()
 endfunction ()
 

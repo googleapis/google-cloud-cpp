@@ -63,7 +63,9 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        set_tests_properties(
+            ${target}
+            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
         add_dependencies(pubsub-client-integration-tests ${target})
     endforeach ()
 
@@ -89,7 +91,9 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         google_cloud_cpp_add_common_options(${target})
 
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        set_tests_properties(
+            ${target}
+            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
     endforeach ()
 endfunction ()
 

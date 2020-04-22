@@ -23,7 +23,10 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
-    tags = ["integration-tests"],
+    tags = [
+        "integration-tests",
+        "pubsub-integration-tests",
+    ],
     deps = [
         "//google/cloud/pubsub:pubsub_client",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
@@ -35,7 +38,10 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    tags = ["integration-tests"],
+    tags = [
+        "integration-tests",
+        "pubsub-integration-tests",
+    ],
     deps = [
         "//google/cloud/pubsub:pubsub_client",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
