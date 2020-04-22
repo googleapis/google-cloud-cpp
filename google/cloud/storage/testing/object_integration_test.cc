@@ -31,17 +31,17 @@ namespace {
 
 StatusOr<std::size_t> GetNumEntries(std::string const& path) {
 #ifdef __unix__
-  dirent** namelist;
-  int res = scandir(path.c_str(), &namelist, nullptr, alphasort);
-  if (res < 0) {
+  DIR* dir = opendir(path.c_str());
+  if (dir == nullptr) {
     return Status(StatusCode::kInternal, "Failed to open directory \"" + path +
                                              "\": " + strerror(errno));
   }
-  for (int i = 0; i < res; ++i) {
-    free(namelist[i]);
+  std::size_t count = 0;
+  while (readdir(dir)) {
+    ++count;
   }
-  free(namelist);
-  return res;
+  closedir(dir);
+  return count;
 #else   // __unix__
   return Status(StatusCode::kUnimplemented,
                 "Can't check #entries in " + path +
@@ -53,13 +53,11 @@ StatusOr<std::size_t> GetNumEntries(std::string const& path) {
 
 StatusOr<std::size_t> ObjectIntegrationTest::GetNumOpenFiles() {
   auto res = GetNumEntries("/proc/self/fd");
-  if (!res) {
-    return res;
-  }
+  if (!res) return res;
   if (*res < 3) {
     return Status(StatusCode::kInternal,
                   "Expected at least three entries in /proc/self/fd: ., .., "
-                  "and the directory itself, found " +
+                  "and /proc/self/fd itself, found " +
                       std::to_string(*res));
   }
   return *res - 3;
