@@ -46,6 +46,7 @@ BUILD_NAMES=(
   opensuse-tumbleweed
   ubuntu-xenial
   ubuntu-bionic
+  ubuntu-focal
 )
 readonly BUILD_NAMES
 
