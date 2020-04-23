@@ -25,6 +25,7 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
   ["opensuse-tumbleweed"]=2018
   ["ubuntu-xenial"]=2018
   ["ubuntu-bionic"]=2018
+  ["ubuntu-focal"]=2020
 )
 
 declare -a FROZEN_FILES=()
