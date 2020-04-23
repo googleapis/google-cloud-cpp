@@ -37,7 +37,6 @@ WORKDIR /home/build/quickstart-cmake/${library}
 COPY google/cloud/${library}/quickstart /home/build/quickstart-cmake/${library}
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/${library}
 RUN cmake --build /i/${library}
-
 _EOF_
   done
 ) || true # read always exit with error
@@ -127,7 +126,6 @@ COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
 @QUICKSTART_FRAGMENT@
-
 ## [START IGNORED]
 # This is just here to speed up the pre-submit builds and should not be part
 # of the instructions on how to compile the code.

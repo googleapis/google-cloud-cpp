@@ -31,8 +31,8 @@ ARG NCPU=4
 
 # ```bash
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y automake cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel libtool make tar wget which
+    zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
+        gzip libcurl-devel libopenssl-devel libtool make tar wget which
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -177,6 +177,18 @@ ARG NCPU=4
 # ```bash
 WORKDIR /home/build/project
 COPY . /home/build/project
+## [START IGNORED]
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+ENV CCACHE_DIR=/h/.ccache
+RUN mkdir -p /h/.ccache && \
+    echo "max_size = 4.0G" >"/h/.ccache/ccache.conf" && \
+    if [ -r ci/kokoro/install/ccache-contents/fedora.tar.gz ]; then \
+      tar -xf ci/kokoro/install/ccache-contents/fedora.tar.gz -C /h || true; \
+      ccache --show-stats || true; \
+      ccache --zero-stats || true; \
+    fi
+## [END IGNORED]
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 WORKDIR /home/build/project/cmake-out
@@ -201,8 +213,13 @@ WORKDIR /home/build/quickstart-cmake/bigtable
 COPY google/cloud/bigtable/quickstart /home/build/quickstart-cmake/bigtable
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
 RUN cmake --build /i/bigtable
-
 WORKDIR /home/build/quickstart-cmake/storage
 COPY google/cloud/storage/quickstart /home/build/quickstart-cmake/storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
 RUN cmake --build /i/storage
+
+## [START IGNORED]
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+RUN ccache --show-stats --zero-stats || true
+## [END IGNORED]

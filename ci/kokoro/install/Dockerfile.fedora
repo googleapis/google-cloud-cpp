@@ -166,7 +166,6 @@ WORKDIR /home/build/quickstart-cmake/bigtable
 COPY google/cloud/bigtable/quickstart /home/build/quickstart-cmake/bigtable
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
 RUN cmake --build /i/bigtable
-
 WORKDIR /home/build/quickstart-cmake/storage
 COPY google/cloud/storage/quickstart /home/build/quickstart-cmake/storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
