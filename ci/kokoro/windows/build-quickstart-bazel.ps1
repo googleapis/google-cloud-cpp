@@ -66,7 +66,7 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
         "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "downloading Bazel cache."
-    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar" "${download_dir}"
+    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z" "${download_dir}"
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
@@ -74,6 +74,9 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "continue building without a cache"
     } else {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "decompressing build cache."
+        7z x "${download_dir}/${CACHE_BASENAME}.7z" "-o${download_dir}" "-aoa" "-bso0" "-bsp0"
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "extracting build cache."
         $extract_flags=@(
@@ -192,6 +195,9 @@ if ($RUnningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
     )
     Remove-Item "${download_dir}\${CACHE_BASENAME}.tar" -ErrorAction SilentlyContinue
     7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compressing cache tarball"
+    Remove-Item "${download_dir}\${CACHE_BASENAME}.7z" -ErrorAction SilentlyContinue
+    7z a "${download_dir}\${CACHE_BAZENAME}.7z" "${download_dir}\${CACHE_BAZENAME}.7z" -bso0 -bsp0
     if ($LastExitCode) {
         # Just report these errors and continue, caching failures should
         # not break the build.
@@ -202,9 +208,8 @@ if ($RUnningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
             "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "uploading Bazel cache."
-        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
-            "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
-        if ($LastExitCode) {
+            gsutil -q cp "${download_dir}\${CACHE_BASENAME}.7z" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z"
+            if ($LastExitCode) {
             # Just report these errors and continue, caching failures should
             # not break the build.
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
