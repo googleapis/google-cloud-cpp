@@ -69,7 +69,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
 # Install googleapis, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz | \
+RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DBUILD_SHARED_LIBS=YES \

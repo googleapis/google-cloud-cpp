@@ -132,7 +132,7 @@ RUN cd /var/tmp && rm -fr build
 
 # Install googleapis.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz | \
+RUN curl -sSL https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DBUILD_SHARED_LIBS=YES \
