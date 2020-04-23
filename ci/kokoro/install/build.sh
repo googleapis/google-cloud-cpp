@@ -49,13 +49,6 @@ else
   exit 1
 fi
 
-echo "================================================================"
-echo "Load Google Container Registry configuration parameters $(date)."
-
-if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
-  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
-fi
-
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(
     cd "$(dirname "$0")/../../.."
@@ -63,16 +56,24 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
   )"
 fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
-echo "Change working directory to project root $(date)."
+log_yellow "Change working directory to project root."
 cd "${PROJECT_ROOT}"
 
 echo "================================================================"
-echo "Building with ${NCPU} cores $(date) on ${PWD}."
+log_normal "Load Google Container Registry configuration parameters."
+
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
 
 echo "================================================================"
-echo "Setup Google Container Registry access $(date)."
+log_normal "Building with ${NCPU} cores on ${PWD}."
+
+echo "================================================================"
+log_normal "Setup Google Container Registry access."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
@@ -80,7 +81,7 @@ fi
 gcloud auth configure-docker
 
 echo "================================================================"
-echo "Download existing image (if available) for ${DISTRO} $(date)."
+log_normal "Download existing image (if available) for ${DISTRO}."
 has_cache="false"
 if docker pull "${INSTALL_IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
@@ -88,7 +89,7 @@ if docker pull "${INSTALL_IMAGE}:latest"; then
 fi
 
 echo "================================================================"
-echo "Build base image with minimal development tools for ${DISTRO} $(date)."
+log_normal "Build base image with minimal development tools for ${DISTRO}."
 update_cache="false"
 
 devtools_flags=(
@@ -111,7 +112,7 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] &&
   devtools_flags+=("--no-cache")
 fi
 
-echo "Running docker build with " "${devtools_flags[@]}"
+log_normal "Running docker build with " "${devtools_flags[@]}"
 if docker build "${devtools_flags[@]}" ci; then
   update_cache="true"
 fi
@@ -125,13 +126,28 @@ if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
 fi
 
 echo "================================================================"
-echo "Run validation script for INSTALL instructions on ${DISTRO}."
+log_yellow "Compile and install the code and the quickstart programs."
 readonly INSTALL_RUN_IMAGE="${DOCKER_IMAGE_PREFIX}/ci-install-runtime-${DISTRO}"
 docker build -t "${INSTALL_RUN_IMAGE}" \
   "--cache-from=${INSTALL_IMAGE}:latest" \
   "--target=install" \
   "--build-arg" "NCPU=${NCPU}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
-echo "================================================================"
 
+echo "================================================================"
+log_yellow "Run quickstart programs."
 source "${PROJECT_ROOT}/ci/etc/kokoro/install/run-installed-programs.sh"
+
+echo
+log_green "Build successful."
+
+set +e
+echo "================================================================"
+log_normal "Preparing and uploading ccache tarball."
+mkdir -p ci/kokoro/install/ccache-contents
+docker run --rm --volume $PWD:/v \
+    --workdir /h \
+    "${INSTALL_RUN_IMAGE}:latest" \
+    tar -zcf "/v/ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" .ccache
+
+exit 0

@@ -8,3 +8,6 @@
 *
 !*.*
 !etc
+
+# Ignore staging files for the kokoro/install builds
+kokoro/install/ccache-contents/
