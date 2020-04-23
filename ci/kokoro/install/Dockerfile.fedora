@@ -141,7 +141,7 @@ RUN mkdir -p /h/.ccache && \
       ccache --show-stats || true; \
       ccache --zero-stats || true; \
     fi
-## [END IGNORED}
+## [END IGNORED]
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 WORKDIR /home/build/project/cmake-out
@@ -176,3 +176,4 @@ RUN cmake --build /i/storage
 # This is just here to speed up the pre-submit builds and should not be part
 # of the instructions on how to compile the code.
 RUN ccache --show-stats --zero-stats || true
+## [END IGNORED]
