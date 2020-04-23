@@ -217,7 +217,7 @@ if should_run_integration_tests; then
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
+    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests" \
     -- //google/cloud/...:all \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
     -//google/cloud/storage/examples:storage_service_account_samples \
