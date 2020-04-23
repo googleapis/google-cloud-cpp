@@ -13,8 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-echo "DEBUG DEBUG DEBUG $0"
-
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {
