@@ -94,6 +94,18 @@ ARG NCPU=4
 # ```bash
 WORKDIR /home/build/project
 COPY . /home/build/project
+## [START IGNORED]
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+ENV CCACHE_DIR=/h/.ccache
+RUN mkdir -p /h/.ccache && \
+    echo "max_size = 4.0G" >"/h/.ccache/ccache.conf" && \
+    if [ -r ci/kokoro/install/ccache-contents/fedora.tar.gz ]; then \
+      tar -xf ci/kokoro/install/ccache-contents/fedora.tar.gz -C /h || true; \
+      ccache --show-stats || true; \
+      ccache --zero-stats || true; \
+    fi
+## [END IGNORED]
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 WORKDIR /home/build/project/cmake-out
@@ -115,5 +127,12 @@ COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
 @QUICKSTART_FRAGMENT@
+
+## [START IGNORED]
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+RUN ccache --show-stats --zero-stats || true
+## [END IGNORED]
+
 _EOF_
 )
