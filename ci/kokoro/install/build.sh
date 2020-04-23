@@ -112,6 +112,7 @@ devtools_flags=(
   # upload it.
   "-t" "${INSTALL_IMAGE}:latest"
   "--build-arg" "NCPU=${NCPU}"
+  "--build-arg" "DISTRO=${DISTRO}"
   "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 

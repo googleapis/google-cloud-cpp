@@ -85,6 +85,7 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 
 FROM devtools AS install
 ARG NCPU=4
+ARG DISTRO="distro-name"
 
 # #### Compile and install the main project
 
@@ -99,8 +100,8 @@ COPY . /home/build/project
 ENV CCACHE_DIR=/h/.ccache
 RUN mkdir -p /h/.ccache && \
     echo "max_size = 4.0G" >"/h/.ccache/ccache.conf" && \
-    if [ -r ci/kokoro/install/ccache-contents/fedora.tar.gz ]; then \
-      tar -xf ci/kokoro/install/ccache-contents/fedora.tar.gz -C /h || true; \
+    if [ -r "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" ]; then \
+      tar -xf "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" -C /h || true; \
       ccache --show-stats || true; \
       ccache --zero-stats || true; \
     fi
