@@ -202,6 +202,7 @@ these dependencies.
 - [Fedora 30](#fedora-30)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
+- [Ubuntu (20.04 - Bionic Beaver)](#ubuntu-2004---focal-fossa)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
 - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
 - [Debian (Stretch)](#debian-stretch)
@@ -221,6 +222,10 @@ echo "### openSUSE (Tumbleweed)"
 echo
 echo "### openSUSE (Leap)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
+
+echo
+echo "### Ubuntu (20.04 - Focal Fossa)"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-focal"
 
 echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"

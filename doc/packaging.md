@@ -181,6 +181,7 @@ these dependencies.
 - [Fedora 30](#fedora-30)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
+- [Ubuntu (20.04 - Bionic Beaver)](#ubuntu-2004---focal-fossa)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
 - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
 - [Debian (Stretch)](#debian-stretch)
@@ -471,6 +472,139 @@ sudo ldconfig
 
 We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We manually install it using:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
+    make -j ${NCPU:-4} && \
+sudo make install && \
+sudo ldconfig
+```
+
+#### crc32c
+
+The project depends on the Crc32c library, we need to compile this from
+source:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
+    tar -xf 1.1.0.tar.gz && \
+    cd crc32c-1.1.0 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### googleapis
+
+We need a recent version of the Google Cloud Platform proto C++ libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.8.0.tar.gz && \
+    tar -xf v0.8.0.tar.gz && \
+    cd cpp-cmakefiles-0.8.0 && \
+    cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### googletest
+
+We need a recent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
+    tar -xf release-1.10.0.tar.gz && \
+    cd googletest-release-1.10.0 && \
+    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+The project also depends on google-cloud-cpp-common, the libraries shared by
+all the Google Cloud C++ client libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
+    cmake -H. -Bcmake-out \
+        -DBUILD_TESTING=OFF \
+        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Compile and install the main project
+
+We can now compile, test, and install `google-cloud-cpp`.
+
+```bash
+cd $HOME/project
+cmake -H. -Bcmake-out
+cmake --build cmake-out -- -j "${NCPU:-4}"
+cd $HOME/project/cmake-out
+ctest -LE integration-tests --output-on-failure
+sudo cmake --build . --target install
+```
+
+
+### Ubuntu (20.04 - Focal Fossa)
+
+Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+
+```bash
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
+        pkg-config tar wget zlib1g-dev
+```
+
+#### Protobuf
+
+We need to install a version of Protobuf that is recent enough to support the
+Google Cloud Platform proto files:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
+    tar -xf v3.11.3.tar.gz && \
+    cd protobuf-3.11.3/cmake && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### gRPC
+
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We install it using:
 
 ```bash
 cd $HOME/Downloads
