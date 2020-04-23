@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
@@ -35,14 +34,11 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ObjectBasicCRUDIntegrationTest =
-    ::google::cloud::storage::testing::ObjectIntegrationTest;
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto objects = client->ListObjects(bucket_name_);
+  auto objects = client().ListObjects(bucket_name());
   std::vector<ObjectMetadata> initial_list;
   for (auto&& o : objects) {
     initial_list.emplace_back(std::move(o).value());
@@ -62,11 +58,11 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> insert_meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection("full"));
+      client().InsertObject(bucket_name(), object_name, LoremIpsum(),
+                            IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
 
-  objects = client->ListObjects(bucket_name_);
+  objects = client().ListObjects(bucket_name());
 
   std::vector<ObjectMetadata> current_list;
   for (auto&& o : objects) {
@@ -74,8 +70,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   }
   EXPECT_EQ(1, name_counter(object_name, current_list));
 
-  StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
-      bucket_name_, object_name, Generation(insert_meta->generation()),
+  StatusOr<ObjectMetadata> get_meta = client().GetObjectMetadata(
+      bucket_name(), object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
   EXPECT_EQ(*get_meta, *insert_meta);
@@ -90,8 +86,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       .set_content_language("en")
       .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
-  StatusOr<ObjectMetadata> updated_meta = client->UpdateObject(
-      bucket_name_, object_name, update, Projection("full"));
+  StatusOr<ObjectMetadata> updated_meta = client().UpdateObject(
+      bucket_name(), object_name, update, Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
 
   // Because some of the ACL values are not predictable we convert the values we
@@ -126,8 +122,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   desired_patch.set_content_language("en");
   desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
-  StatusOr<ObjectMetadata> patched_meta = client->PatchObject(
-      bucket_name_, object_name, *updated_meta, desired_patch);
+  StatusOr<ObjectMetadata> patched_meta = client().PatchObject(
+      bucket_name(), object_name, *updated_meta, desired_patch);
   ASSERT_STATUS_OK(patched_meta);
 
   EXPECT_EQ(desired_patch.metadata(), patched_meta->metadata())
@@ -135,10 +131,10 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   EXPECT_EQ(desired_patch.content_language(), patched_meta->content_language())
       << *patched_meta;
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(status);
 
-  objects = client->ListObjects(bucket_name_);
+  objects = client().ListObjects(bucket_name());
   current_list.clear();
   for (auto&& o : objects) {
     current_list.emplace_back(std::move(o).value());

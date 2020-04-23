@@ -28,29 +28,16 @@ namespace {
 
 using ::testing::HasSubstr;
 
-class CurlSignBlobIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  void SetUp() override {
-    service_account_ =
-        google::cloud::internal::GetEnv(
-            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
-            .value_or("");
-    ASSERT_FALSE(service_account_.empty());
-  }
-
-  std::string service_account_;
-};
+using CurlSignBlobIntegrationTest =
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 TEST_F(CurlSignBlobIntegrationTest, Simple) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto encoded = Base64Encode(LoremIpsum());
 
-  SignBlobRequest request(service_account_, encoded, {});
+  SignBlobRequest request(test_signing_service_account(), encoded, {});
 
-  StatusOr<SignBlobResponse> response = client->raw_client()->SignBlob(request);
+  StatusOr<SignBlobResponse> response =
+      client().raw_client()->SignBlob(request);
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->key_id.empty());

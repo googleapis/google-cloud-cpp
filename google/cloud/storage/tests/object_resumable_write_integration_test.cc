@@ -28,32 +28,18 @@ namespace {
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-class ObjectResumableWriteIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  void SetUp() override {
-    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
-  }
-
-  std::string bucket_name_;
-};
+using ObjectResumableWriteIntegrationTest =
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(
-      bucket_name_, object_name, IfGenerationMatch(0),
+  auto os = client().WriteObject(
+      bucket_name(), object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
   os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
@@ -62,21 +48,18 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name_, meta.bucket());
+  EXPECT_EQ(bucket_name(), meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -84,7 +67,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(
+  auto os = client().WriteObject(
       bucket_name, object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
   EXPECT_TRUE(os.bad());
@@ -93,17 +76,15 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                NewResumableUploadSession());
+  auto os =
+      client().WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
+                           NewResumableUploadSession());
   os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
@@ -111,20 +92,17 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name_, meta.bucket());
+  EXPECT_EQ(bucket_name(), meta.bucket());
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -134,15 +112,15 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   std::string session_id;
   {
     auto old_os =
-        client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                            NewResumableUploadSession());
+        client().WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
+                             NewResumableUploadSession());
     ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
-  auto os = client->WriteObject(bucket_name_, object_name,
-                                RestoreResumableUploadSession(session_id));
+  auto os = client().WriteObject(bucket_name(), object_name,
+                                 RestoreResumableUploadSession(session_id));
   ASSERT_TRUE(os.good()) << "status=" << os.metadata().status();
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
@@ -150,68 +128,63 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name_, meta.bucket());
+  EXPECT_EQ(bucket_name(), meta.bucket());
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   // Start a resumable upload and finalize the upload.
   std::string session_id;
   {
     auto old_os =
-        client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                            NewResumableUploadSession());
+        client().WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
+                             NewResumableUploadSession());
     ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
     session_id = old_os.resumable_session_id();
     old_os << LoremIpsum();
   }
 
-  auto os = client->WriteObject(bucket_name_, object_name,
-                                RestoreResumableUploadSession(session_id));
+  auto os = client().WriteObject(bucket_name(), object_name,
+                                 RestoreResumableUploadSession(session_id));
   EXPECT_FALSE(os.IsOpen());
   EXPECT_EQ(session_id, os.resumable_session_id());
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name_, meta.bucket());
+  EXPECT_EQ(bucket_name(), meta.bucket());
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client().InsertObject(
+      bucket_name(), object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
 
   EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
+  EXPECT_EQ(bucket_name(), meta->bucket());
 
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                NewResumableUploadSession());
+  auto os =
+      client().WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
+                           NewResumableUploadSession());
   os << "Expected failure data:\n" << LoremIpsum();
 
   // This operation should fail because the object already exists.
@@ -220,7 +193,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -228,15 +201,16 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
   std::chrono::seconds timeout(3);
   auto retry_policy =
       LimitedTimeRetryPolicy(/*maximum_duration=*/timeout).clone();
-  StatusOr<Client> client = MakeIntegrationTestClient(std::move(retry_policy));
-  ASSERT_STATUS_OK(client);
+  StatusOr<Client> limited_retry_client =
+      MakeIntegrationTestClient(std::move(retry_policy));
+  ASSERT_STATUS_OK(limited_retry_client);
 
   auto object_name = MakeRandomObjectName();
 
   auto data = MakeRandomData(1024 * 1024);
 
-  auto os =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  auto os = limited_retry_client->WriteObject(bucket_name(), object_name,
+                                              IfGenerationMatch(0));
   os.write(data.data(), data.size());
   EXPECT_FALSE(os.bad());
   std::cout << "Sleeping to force timeout ... " << std::flush;
@@ -251,7 +225,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
   EXPECT_FALSE(os.bad());
   EXPECT_STATUS_OK(os.metadata());
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -270,7 +244,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
     SCOPED_TRACE("Testing with desired_size=" + std::to_string(desired_size) +
                  ", name=" + object_name);
     auto os = client.WriteObject(
-        bucket_name_, object_name, IfGenerationMatch(0),
+        bucket_name(), object_name, IfGenerationMatch(0),
         CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
     auto offset = 0L;
     while (offset < desired_size) {
@@ -285,7 +259,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
     EXPECT_STATUS_OK(os.metadata());
     EXPECT_EQ(desired_size, os.metadata()->size());
 
-    auto status = client.DeleteObject(bucket_name_, object_name);
+    auto status = client.DeleteObject(bucket_name(), object_name);
     EXPECT_STATUS_OK(status);
   }
 }
@@ -303,11 +277,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
   std::uniform_int_distribution<long> size_gen(quantum, 5 * quantum);
   for (int i = 0; i != 10; ++i) {
     auto object_name = MakeRandomObjectName();
-    auto const desired_size = size_gen(generator_);
+    auto const desired_size = size_gen(generator());
     SCOPED_TRACE("Testing with desired_size=" + std::to_string(desired_size) +
                  ", name=" + object_name);
     auto os = client.WriteObject(
-        bucket_name_, object_name, IfGenerationMatch(0),
+        bucket_name(), object_name, IfGenerationMatch(0),
         CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
     auto offset = 0L;
     while (offset < desired_size) {
@@ -322,15 +296,13 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
     EXPECT_STATUS_OK(os.metadata());
     EXPECT_EQ(desired_size, os.metadata()->size());
 
-    auto status = client.DeleteObject(bucket_name_, object_name);
+    auto status = client.DeleteObject(bucket_name(), object_name);
     EXPECT_STATUS_OK(status);
   }
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
   if (UsingTestbench()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto const chunk_size = 256 * 1024L;
   auto const chunk = MakeRandomData(chunk_size);
@@ -339,8 +311,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
   auto const desired_size = 5 * chunk_size;
   // Use an invalid value in the X-Upload-Content-Length header, the library
   // should return an error.
-  auto os = client->WriteObject(
-      bucket_name_, object_name, IfGenerationMatch(0),
+  auto os = client().WriteObject(
+      bucket_name(), object_name, IfGenerationMatch(0),
       CustomHeader("X-Upload-Content-Length", std::to_string(3 * chunk_size)));
   auto offset = 0L;
   while (offset < desired_size) {

@@ -85,6 +85,7 @@ class V4SignedUrlConformanceTest
       public ::testing::WithParamInterface<std::string> {
  protected:
   void SetUp() override {
+    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
     service_account_key_filename_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE")

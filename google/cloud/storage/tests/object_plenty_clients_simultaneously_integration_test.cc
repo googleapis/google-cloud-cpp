@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -38,24 +37,21 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::UnorderedElementsAre;
 
 using ObjectPlentyClientsSimultaneouslyIntegrationTest =
-    ::google::cloud::storage::testing::ObjectIntegrationTest;
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
        PlentyClientsSimultaneously) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client().InsertObject(
+      bucket_name(), object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
 
   EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
+  EXPECT_EQ(bucket_name(), meta->bucket());
 
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
@@ -64,7 +60,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
-    auto stream = read_client->ReadObject(bucket_name_, object_name);
+    auto stream = read_client->ReadObject(bucket_name(), object_name);
     char c;
     stream.read(&c, 1);
     read_streams.emplace_back(std::move(stream));
@@ -92,7 +88,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_after_test.status().code());
   }
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(status);
 }
 

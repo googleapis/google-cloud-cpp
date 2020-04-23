@@ -33,29 +33,20 @@ using ::testing::HasSubstr;
 class ObjectWriteStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  void SetUp() override {
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
-  }
-
   void CheckUpload(int line_count, int line_size) {
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
     auto object_name = MakeRandomObjectName();
 
-    ResumableUploadRequest request(bucket_name_, object_name);
+    ResumableUploadRequest request(bucket_name(), object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
     StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-        client->raw_client()->CreateResumableSession(request);
+        client().raw_client()->CreateResumableSession(request);
     ASSERT_STATUS_OK(session);
 
     ObjectWriteStream writer(
         google::cloud::internal::make_unique<ObjectWriteStreambuf>(
             std::move(session).value(),
-            client->raw_client()->client_options().upload_buffer_size(),
+            client().raw_client()->client_options().upload_buffer_size(),
             google::cloud::internal::make_unique<NullHashValidator>()));
 
     std::ostringstream expected_stream;
@@ -63,9 +54,9 @@ class ObjectWriteStreambufIntegrationTest
     writer.Close();
     ObjectMetadata metadata = writer.metadata().value();
     EXPECT_EQ(object_name, metadata.name());
-    EXPECT_EQ(bucket_name_, metadata.bucket());
+    EXPECT_EQ(bucket_name(), metadata.bucket());
 
-    ObjectReadStream reader = client->ReadObject(bucket_name_, object_name);
+    ObjectReadStream reader = client().ReadObject(bucket_name(), object_name);
 
     std::string actual(std::istreambuf_iterator<char>{reader}, {});
 
@@ -73,12 +64,10 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
 
-    auto status = client->DeleteObject(bucket_name_, object_name,
-                                       Generation(metadata.generation()));
+    auto status = client().DeleteObject(bucket_name(), object_name,
+                                        Generation(metadata.generation()));
     ASSERT_STATUS_OK(status);
   }
-
-  std::string bucket_name_;
 };
 
 TEST_F(ObjectWriteStreambufIntegrationTest, Simple) { CheckUpload(20, 128); }

@@ -18,7 +18,9 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include <gmock/gmock.h>
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -31,18 +33,29 @@ namespace testing {
  */
 class StorageIntegrationTest : public ::testing::Test {
  protected:
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeIntegrationTestClient();
+  // Get the number of files open in this process.
+  static StatusOr<std::size_t> GetNumOpenFiles();
 
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy);
+  // Normally called automatically, but if you derive from this class and
+  // override `SetUp()`, ensure you call this `SetUp()` explicitly.
+  void SetUp() override;
 
-  static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
-  static std::unique_ptr<RetryPolicy> TestRetryPolicy();
+  // These accessors must only be used after `SetUp()`.
+  Client client() const { return *client_; }
+  std::string const& project_id() const { return project_id_; }
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::string const& test_service_account() const {
+    return test_service_account_;
+  }
+  std::string const& test_signing_service_account() const {
+    return test_signing_service_account_;
+  }
+  google::cloud::internal::DefaultPRNG& generator() { return generator_; }
 
   std::string MakeRandomBucketName();
   std::string MakeRandomObjectName();
   std::string MakeRandomFilename();
+  std::string MakeEntityName();
 
   static std::string LoremIpsum();
 
@@ -59,8 +72,38 @@ class StorageIntegrationTest : public ::testing::Test {
 
   static bool UsingTestbench();
 
+  // Tests should generally use the `Client` returned by `client()` but these
+  // are supplied for tests that need to create multiple `Client`s or change
+  // the retry policy.
+  static StatusOr<Client> MakeIntegrationTestClient();
+  static StatusOr<Client> MakeIntegrationTestClient(
+      std::unique_ptr<RetryPolicy> retry_policy);
+
+ private:
+  static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
+  static std::unique_ptr<RetryPolicy> TestRetryPolicy();
+
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
+  StatusOr<Client> client_;
+  std::string project_id_;
+  std::string bucket_name_;
+  std::string test_service_account_;
+  std::string test_signing_service_account_;
+};
+
+/**
+ * Common class for storage integration tests that use a HMAC Service Account.
+ */
+class StorageIntegrationTestWithHmacServiceAccount
+    : public StorageIntegrationTest {
+ protected:
+  void SetUp() override;
+
+  std::string const& service_account() const { return service_account_; }
+
+ private:
+  std::string service_account_;
 };
 
 /**

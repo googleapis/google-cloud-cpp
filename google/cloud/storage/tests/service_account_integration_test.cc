@@ -26,35 +26,18 @@ namespace {
 
 using ::testing::HasSubstr;
 
-class ServiceAccountIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  void SetUp() override {
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id_.empty());
-    service_account_ = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
-                           .value_or("");
-    ASSERT_FALSE(service_account_.empty());
-  }
-
-  std::string project_id_;
-  std::string service_account_;
-};
+using ServiceAccountIntegrationTest = ::google::cloud::storage::testing::
+    StorageIntegrationTestWithHmacServiceAccount;
 
 TEST_F(ServiceAccountIntegrationTest, Get) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   StatusOr<ServiceAccount> a1 =
-      client->GetServiceAccountForProject(project_id_);
+      client().GetServiceAccountForProject(project_id());
   ASSERT_STATUS_OK(a1);
   EXPECT_FALSE(a1->email_address().empty());
 
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
-  Client client_with_default(client_options->set_project_id(project_id_));
+  Client client_with_default(client_options->set_project_id(project_id()));
   StatusOr<ServiceAccount> a2 = client_with_default.GetServiceAccount();
   ASSERT_STATUS_OK(a2);
   EXPECT_FALSE(a2->email_address().empty());
@@ -66,10 +49,10 @@ TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
 
-  Client client(client_options->set_project_id(project_id_));
+  Client client(client_options->set_project_id(project_id()));
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client.CreateHmacKey(
-      service_account_, OverrideDefaultProject(project_id_));
+      service_account(), OverrideDefaultProject(project_id()));
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
@@ -87,12 +70,12 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
 
-  Client client(client_options->set_project_id(project_id_));
+  Client client(client_options->set_project_id(project_id()));
 
   auto get_current_access_ids = [&client, this]() {
     std::vector<std::string> access_ids;
-    auto range = client.ListHmacKeys(OverrideDefaultProject(project_id_),
-                                     ServiceAccountFilter(service_account_));
+    auto range = client.ListHmacKeys(OverrideDefaultProject(project_id()),
+                                     ServiceAccountFilter(service_account()));
     std::transform(
         range.begin(), range.end(), std::back_inserter(access_ids),
         [](StatusOr<HmacKeyMetadata> x) { return x.value().access_id(); });
@@ -102,7 +85,7 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   auto initial_access_ids = get_current_access_ids();
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
-      client.CreateHmacKey(service_account_);
+      client.CreateHmacKey(service_account());
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
@@ -141,7 +124,7 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
 
-  Client client(client_options->set_project_id(project_id_));
+  Client client(client_options->set_project_id(project_id()));
 
   // Test failures in the HmacKey operations by using an invalid project id:
   auto create_status = client.CreateHmacKey("invalid-service-account",

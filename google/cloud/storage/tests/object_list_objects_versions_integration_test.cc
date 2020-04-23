@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -34,44 +33,41 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ObjectListObjectsVersionsIntegrationTest =
-    ::google::cloud::storage::testing::ObjectIntegrationTest;
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
   // bucket created in the testbench also has versioning. Regardless, set the
   // bucket to the desired state, which will produce a better error message if
   // there is a configuration problem.
-  auto bucket_meta = client->GetBucketMetadata(bucket_name_);
+  auto bucket_meta = client().GetBucketMetadata(bucket_name());
   ASSERT_STATUS_OK(bucket_meta);
-  auto updated_meta = client->PatchBucket(
-      bucket_name_,
+  auto updated_meta = client().PatchBucket(
+      bucket_name(),
       BucketMetadataPatchBuilder().SetVersioning(BucketVersioning{true}),
       IfMetagenerationMatch(bucket_meta->metageneration()));
   ASSERT_STATUS_OK(updated_meta);
   ASSERT_TRUE(updated_meta->versioning().has_value());
   ASSERT_TRUE(updated_meta->versioning().value().enabled);
 
-  auto create_object_with_3_versions = [&client, this] {
+  auto create_object_with_3_versions = [this] {
     auto object_name = MakeRandomObjectName();
     // ASSERT_TRUE does not work inside this lambda because the return type is
     // not `void`, use `.value()` instead to throw (or crash) on the unexpected
     // error.
-    auto meta = client
-                    ->InsertObject(bucket_name_, object_name,
-                                   "contents for the first revision",
-                                   storage::IfGenerationMatch(0))
+    auto meta = client()
+                    .InsertObject(bucket_name(), object_name,
+                                  "contents for the first revision",
+                                  storage::IfGenerationMatch(0))
                     .value();
-    client
-        ->InsertObject(bucket_name_, object_name,
-                       "contents for the second revision")
+    client()
+        .InsertObject(bucket_name(), object_name,
+                      "contents for the second revision")
         .value();
-    client
-        ->InsertObject(bucket_name_, object_name,
-                       "contents for the final revision")
+    client()
+        .InsertObject(bucket_name(), object_name,
+                      "contents for the final revision")
         .value();
     return meta.name();
   };
@@ -80,11 +76,12 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
   std::generate_n(expected.begin(), expected.size(),
                   create_object_with_3_versions);
 
-  ListObjectsReader reader = client->ListObjects(bucket_name_, Versions(true));
+  ListObjectsReader reader =
+      client().ListObjects(bucket_name(), Versions(true));
   std::vector<std::string> actual;
   for (auto it = reader.begin(); it != reader.end(); ++it) {
     auto const& meta = it->value();
-    EXPECT_EQ(bucket_name_, meta.bucket());
+    EXPECT_EQ(bucket_name(), meta.bucket());
     actual.push_back(meta.name());
   }
   auto produce_joined_list = [&actual] {

@@ -29,42 +29,25 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::HasSubstr;
 
-class SignedUrlIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  void SetUp() override {
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
-    service_account_ =
-        google::cloud::internal::GetEnv(
-            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
-            .value_or("");
-    ASSERT_FALSE(service_account_.empty());
-  }
-
-  std::string bucket_name_;
-  std::string service_account_;
-};
+using SignedUrlIntegrationTest =
+    ::google::cloud::storage::testing::StorageIntegrationTest;
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   // The testbench does not implement signed URLs.
   if (UsingTestbench()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  auto meta = client->InsertObject(bucket_name_, object_name, expected,
-                                   IfGenerationMatch(0));
+  auto meta = client().InsertObject(bucket_name(), object_name, expected,
+                                    IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
 
-  StatusOr<std::string> signed_url = client->CreateV2SignedUrl(
-      "GET", bucket_name_, object_name, SigningAccount(service_account_));
+  StatusOr<std::string> signed_url = client().CreateV2SignedUrl(
+      "GET", bucket_name(), object_name,
+      SigningAccount(test_signing_service_account()));
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
@@ -77,23 +60,22 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
 
   EXPECT_EQ(expected, response->payload);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   // The testbench does not implement signed URLs.
   if (UsingTestbench()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
-  StatusOr<std::string> signed_url = client->CreateV2SignedUrl(
-      "PUT", bucket_name_, object_name, SigningAccount(service_account_),
-      ContentType("application/octet-stream"));
+  StatusOr<std::string> signed_url =
+      client().CreateV2SignedUrl("PUT", bucket_name(), object_name,
+                                 SigningAccount(test_signing_service_account()),
+                                 ContentType("application/octet-stream"));
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
@@ -106,31 +88,30 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client().ReadObject(bucket_name(), object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   // The testbench does not implement signed URLs.
   if (UsingTestbench()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  auto meta = client->InsertObject(bucket_name_, object_name, expected,
-                                   IfGenerationMatch(0));
+  auto meta = client().InsertObject(bucket_name(), object_name, expected,
+                                    IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
 
-  StatusOr<std::string> signed_url = client->CreateV4SignedUrl(
-      "GET", bucket_name_, object_name, SigningAccount(service_account_));
+  StatusOr<std::string> signed_url = client().CreateV4SignedUrl(
+      "GET", bucket_name(), object_name,
+      SigningAccount(test_signing_service_account()));
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
@@ -143,22 +124,21 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
 
   EXPECT_EQ(expected, response->payload);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   // The testbench does not implement signed URLs.
   if (UsingTestbench()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
-  StatusOr<std::string> signed_url = client->CreateV4SignedUrl(
-      "PUT", bucket_name_, object_name, SigningAccount(service_account_));
+  StatusOr<std::string> signed_url = client().CreateV4SignedUrl(
+      "PUT", bucket_name(), object_name,
+      SigningAccount(test_signing_service_account()));
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
@@ -170,11 +150,11 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client().ReadObject(bucket_name(), object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client().DeleteObject(bucket_name(), object_name);
   ASSERT_STATUS_OK(deleted);
 }
 

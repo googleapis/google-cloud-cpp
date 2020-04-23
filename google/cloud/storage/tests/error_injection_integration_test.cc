@@ -38,17 +38,11 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 #ifndef _WIN32
 
 class ErrorInjectionIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
+    : public ::google::cloud::storage::testing::StorageIntegrationTest {
   void SetUp() override {
     if (!UsingTestbench()) GTEST_SKIP();
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
+    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
   }
-
-  std::string bucket_name_;
 };
 
 /**
@@ -214,7 +208,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   // Make sure the buffer is big enough to cause a flush.
   std::vector<char> buf(opts->upload_buffer_size() + 1, 'X');
@@ -249,14 +243,14 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   WriteRandomLines(os, expected, 80, opts->download_buffer_size() * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
 
-  auto is = client.ReadObject(bucket_name_, object_name);
+  auto is = client.ReadObject(bucket_name(), object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
@@ -266,7 +260,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   is.Close();
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -283,7 +277,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   os.exceptions(std::ios_base::badbit);
 
@@ -292,7 +286,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
 
-  auto is = client.ReadObject(bucket_name_, object_name);
+  auto is = client.ReadObject(bucket_name(), object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   // The failed recv will trigger a retry, which includes sending.
@@ -307,7 +301,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 1);
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name(), object_name);
   EXPECT_STATUS_OK(status);
 }
 

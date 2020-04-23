@@ -33,40 +33,20 @@ class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id_.empty());
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
+    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
     topic_name_ = google::cloud::internal::GetEnv(
                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME")
                       .value_or("");
     ASSERT_FALSE(topic_name_.empty());
-    service_account_ = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
-                           .value_or("");
-    ASSERT_FALSE(service_account_.empty());
   }
 
-  std::string MakeEntityName() {
-    // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + project_id_;
-  }
-
-  std::string project_id_;
-  std::string bucket_name_;
   std::string topic_name_;
-  std::string service_account_;
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
-  auto buckets = client->ListBucketsForProject(project_id_);
+  auto buckets = client().ListBucketsForProject(project_id());
   std::vector<BucketMetadata> initial_buckets;
   for (auto&& b : buckets) {
     initial_buckets.emplace_back(std::move(b).value());
@@ -81,19 +61,19 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
-  auto insert_meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                                    BucketMetadata());
+  auto insert_meta = client().CreateBucketForProject(bucket_name, project_id(),
+                                                     BucketMetadata());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
 
-  buckets = client->ListBucketsForProject(project_id_);
+  buckets = client().ListBucketsForProject(project_id());
   std::vector<BucketMetadata> current_buckets;
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
   }
   EXPECT_EQ(1, name_counter(bucket_name, current_buckets));
 
-  StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
+  StatusOr<BucketMetadata> get_meta = client().GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get_meta);
   EXPECT_EQ(*insert_meta, *get_meta);
 
@@ -107,7 +87,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   BucketMetadata update = *get_meta;
   update.set_storage_class(desired_storage_class);
   StatusOr<BucketMetadata> updated_meta =
-      client->UpdateBucket(bucket_name, update);
+      client().UpdateBucket(bucket_name, update);
   ASSERT_STATUS_OK(updated_meta);
   EXPECT_EQ(desired_storage_class, updated_meta->storage_class());
 
@@ -123,21 +103,21 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       .set_website(BucketWebsite{"index.html", "404.html"});
 
   StatusOr<BucketMetadata> patched =
-      client->PatchBucket(bucket_name, *updated_meta, desired_state);
+      client().PatchBucket(bucket_name, *updated_meta, desired_state);
   ASSERT_STATUS_OK(patched);
   EXPECT_EQ(storage_class::Standard(), patched->storage_class());
   EXPECT_EQ(1, patched->lifecycle().rule.size());
 
   // Patch the metadata again, this time remove billing and website settings.
-  patched = client->PatchBucket(
+  patched = client().PatchBucket(
       bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
   ASSERT_STATUS_OK(patched);
   EXPECT_FALSE(patched->has_billing());
   EXPECT_FALSE(patched->has_website());
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
-  buckets = client->ListBucketsForProject(project_id_);
+  buckets = client().ListBucketsForProject(project_id());
   current_buckets.clear();
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
@@ -156,15 +136,13 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
 
-    auto metadata = client->CreateBucketForProject(
-        bucket_name, project_id_, BucketMetadata(), PredefinedAcl(acl));
+    auto metadata = client().CreateBucketForProject(
+        bucket_name, project_id(), BucketMetadata(), PredefinedAcl(acl));
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
 
-    auto status = client->DeleteBucket(bucket_name);
+    auto status = client().DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
   }
 }
@@ -183,37 +161,33 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
 
-    auto metadata = client->CreateBucketForProject(
-        bucket_name, project_id_, BucketMetadata(),
+    auto metadata = client().CreateBucketForProject(
+        bucket_name, project_id(), BucketMetadata(),
         PredefinedDefaultObjectAcl(acl));
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
 
-    auto status = client->DeleteBucket(bucket_name);
+    auto status = client().DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
   }
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // We need to have an available bucket for logging ...
   std::string logging_name = MakeRandomBucketName();
-  StatusOr<BucketMetadata> const logging_meta = client->CreateBucketForProject(
-      logging_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+  StatusOr<BucketMetadata> const logging_meta = client().CreateBucketForProject(
+      logging_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("noAcl"));
   ASSERT_STATUS_OK(logging_meta);
   EXPECT_EQ(logging_name, logging_meta->name());
 
   // Create a Bucket, use the default settings for most fields, except the
   // storage class and location. Fetch the full attributes of the bucket.
-  StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id_,
+  StatusOr<BucketMetadata> const insert_meta = client().CreateBucketForProject(
+      bucket_name, project_id(),
       BucketMetadata().set_location("US").set_storage_class(
           storage_class::Standard()),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
@@ -286,7 +260,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   }
 
   StatusOr<BucketMetadata> patched =
-      client->PatchBucket(bucket_name, *insert_meta, desired_state);
+      client().PatchBucket(bucket_name, *insert_meta, desired_state);
   ASSERT_STATUS_OK(patched);
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
@@ -333,22 +307,20 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   EXPECT_EQ(desired_state.website_as_optional(),
             patched->website_as_optional());
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
-  status = client->DeleteBucket(logging_name);
+  status = client().DeleteBucket(logging_name);
   ASSERT_STATUS_OK(status);
 }
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
-  StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+  StatusOr<BucketMetadata> const insert_meta = client().CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
@@ -360,27 +332,25 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   desired_state.set_iam_configuration(std::move(iam_configuration));
 
   StatusOr<BucketMetadata> patched =
-      client->PatchBucket(bucket_name, *insert_meta, desired_state);
+      client().PatchBucket(bucket_name, *insert_meta, desired_state);
   ASSERT_STATUS_OK(patched);
 
   ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
   ASSERT_TRUE(patched->iam_configuration().bucket_policy_only)
       << "patched=" << *patched;
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
-  StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+  StatusOr<BucketMetadata> const insert_meta = client().CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
@@ -393,81 +363,67 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   desired_state.set_iam_configuration(std::move(iam_configuration));
 
   StatusOr<BucketMetadata> patched =
-      client->PatchBucket(bucket_name, *insert_meta, desired_state);
+      client().PatchBucket(bucket_name, *insert_meta, desired_state);
   ASSERT_STATUS_OK(patched);
 
   ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
   ASSERT_TRUE(patched->iam_configuration().uniform_bucket_level_access)
       << "patched=" << *patched;
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto metadata = client->GetBucketMetadata(bucket_name_);
+  auto metadata = client().GetBucketMetadata(bucket_name());
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_EQ(bucket_name_, metadata->id());
+  EXPECT_EQ(bucket_name(), metadata->name());
+  EXPECT_EQ(bucket_name(), metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto metadata = client->GetBucketMetadata(bucket_name_, Fields("name"));
+  auto metadata = client().GetBucketMetadata(bucket_name(), Fields("name"));
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
+  EXPECT_EQ(bucket_name(), metadata->name());
   EXPECT_TRUE(metadata->id().empty());
   EXPECT_TRUE(metadata->kind().empty());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto metadata = client->GetBucketMetadata(bucket_name_);
+  auto metadata = client().GetBucketMetadata(bucket_name());
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_EQ(bucket_name_, metadata->id());
+  EXPECT_EQ(bucket_name(), metadata->name());
+  EXPECT_EQ(bucket_name(), metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
-  auto metadata2 = client->GetBucketMetadata(
-      bucket_name_, storage::Projection("noAcl"),
+  auto metadata2 = client().GetBucketMetadata(
+      bucket_name(), storage::Projection("noAcl"),
       storage::IfMetagenerationMatch(metadata->metageneration()));
   ASSERT_STATUS_OK(metadata2);
   EXPECT_EQ(*metadata2, *metadata);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto metadata = client->GetBucketMetadata(bucket_name_);
+  auto metadata = client().GetBucketMetadata(bucket_name());
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_EQ(bucket_name_, metadata->id());
+  EXPECT_EQ(bucket_name(), metadata->name());
+  EXPECT_EQ(bucket_name(), metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
-  auto metadata2 = client->GetBucketMetadata(
-      bucket_name_, storage::Projection("noAcl"),
+  auto metadata2 = client().GetBucketMetadata(
+      bucket_name(), storage::Projection("noAcl"),
       storage::IfMetagenerationNotMatch(metadata->metageneration()));
   EXPECT_FALSE(metadata2.ok()) << "metadata=" << *metadata2;
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private" PredefinedAcl so
   // we know what the contents of the ACL will be.
-  auto meta = client->CreateBucketForProject(
-      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+  auto meta = client().CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
       Projection("full"));
   ASSERT_STATUS_OK(meta);
 
@@ -490,12 +446,12 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
       << " created with a predefine ACL which should preclude this result.";
 
   StatusOr<BucketAccessControl> result =
-      client->CreateBucketAcl(bucket_name, entity_name, "OWNER");
+      client().CreateBucketAcl(bucket_name, entity_name, "OWNER");
   ASSERT_STATUS_OK(result);
   EXPECT_EQ("OWNER", result->role());
 
   StatusOr<std::vector<BucketAccessControl>> current_acl =
-      client->ListBucketAcl(bucket_name);
+      client().ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_FALSE(current_acl->empty());
   // Search using the entity name returned by the request, because we use
@@ -504,17 +460,17 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
   StatusOr<BucketAccessControl> get_result =
-      client->GetBucketAcl(bucket_name, entity_name);
+      client().GetBucketAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(*get_result, *result);
 
   BucketAccessControl new_acl = *get_result;
   new_acl.set_role("READER");
-  auto updated_result = client->UpdateBucketAcl(bucket_name, new_acl);
+  auto updated_result = client().UpdateBucketAcl(bucket_name, new_acl);
   ASSERT_STATUS_OK(updated_result);
   EXPECT_EQ("READER", updated_result->role());
 
-  get_result = client->GetBucketAcl(bucket_name, entity_name);
+  get_result = client().GetBucketAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(*get_result, *updated_result);
 
@@ -523,31 +479,29 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // Because this is a freshly created bucket, with a random name, we do not
   // worry about implementing optimistic concurrency control.
   get_result =
-      client->PatchBucketAcl(bucket_name, entity_name, *get_result, new_acl);
+      client().PatchBucketAcl(bucket_name, entity_name, *get_result, new_acl);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(get_result->role(), new_acl.role());
 
-  auto status = client->DeleteBucketAcl(bucket_name, entity_name);
+  auto status = client().DeleteBucketAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(status);
 
-  current_acl = client->ListBucketAcl(bucket_name);
+  current_acl = client().ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  status = client->DeleteBucket(bucket_name);
+  status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private"
   // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
   // ACL.
-  auto meta = client->CreateBucketForProject(
-      bucket_name, project_id_, BucketMetadata(),
+  auto meta = client().CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(meta);
 
@@ -570,68 +524,66 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
       << " created with a predefine ACL which should preclude this result.";
 
   StatusOr<ObjectAccessControl> result =
-      client->CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
+      client().CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
   ASSERT_STATUS_OK(result);
   EXPECT_EQ("OWNER", result->role());
 
-  auto current_acl = client->ListDefaultObjectAcl(bucket_name);
+  auto current_acl = client().ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_FALSE(current_acl->empty());
   // Search using the entity name returned by the request, because we use
-  // 'project-editors-<project_id_>' this different than the original entity
+  // 'project-editors-<project_id()>' this different than the original entity
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
-  auto get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  auto get_result = client().GetDefaultObjectAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(*get_result, *result);
 
   ObjectAccessControl new_acl = *get_result;
   new_acl.set_role("READER");
-  auto updated_result = client->UpdateDefaultObjectAcl(bucket_name, new_acl);
+  auto updated_result = client().UpdateDefaultObjectAcl(bucket_name, new_acl);
   ASSERT_STATUS_OK(updated_result);
 
   EXPECT_EQ(updated_result->role(), "READER");
-  get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  get_result = client().GetDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_EQ(*get_result, *updated_result);
 
   new_acl = *get_result;
   new_acl.set_role("OWNER");
   get_result =
-      client->PatchDefaultObjectAcl(bucket_name, entity_name, *get_result,
-                                    new_acl, IfMatchEtag(get_result->etag()));
+      client().PatchDefaultObjectAcl(bucket_name, entity_name, *get_result,
+                                     new_acl, IfMatchEtag(get_result->etag()));
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(get_result->role(), new_acl.role());
 
-  auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
+  auto status = client().DeleteDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_STATUS_OK(status);
 
-  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  current_acl = client().ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  status = client->DeleteBucket(bucket_name);
+  status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
+  auto meta = client().CreateBucketForProject(bucket_name, project_id(),
+                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
-  auto current_notifications = client->ListNotifications(bucket_name);
+  auto current_notifications = client().ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
   EXPECT_TRUE(current_notifications->empty())
       << "Test aborted. Non-empty notification list returned from newly"
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
 
-  auto create = client->CreateNotification(
+  auto create = client().CreateNotification(
       bucket_name, topic_name_, payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
   ASSERT_STATUS_OK(create);
@@ -639,7 +591,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
   EXPECT_THAT(create->topic(), HasSubstr(topic_name_));
 
-  current_notifications = client->ListNotifications(bucket_name);
+  current_notifications = client().ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
   auto count = std::count_if(current_notifications->begin(),
                              current_notifications->end(),
@@ -648,14 +600,14 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                              });
   EXPECT_EQ(1, count) << "create=" << *create;
 
-  auto get = client->GetNotification(bucket_name, create->id());
+  auto get = client().GetNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(get);
   EXPECT_EQ(*create, *get);
 
-  auto status = client->DeleteNotification(bucket_name, create->id());
+  auto status = client().DeleteNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(status);
 
-  current_notifications = client->ListNotifications(bucket_name);
+  current_notifications = client().ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
   count = std::count_if(current_notifications->begin(),
                         current_notifications->end(),
@@ -664,21 +616,19 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                         });
   EXPECT_EQ(0, count) << "create=" << *create;
 
-  status = client->DeleteBucket(bucket_name);
+  status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
+  auto meta = client().CreateBucketForProject(bucket_name, project_id(),
+                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
-  StatusOr<IamPolicy> policy = client->GetBucketIamPolicy(bucket_name);
+  StatusOr<IamPolicy> policy = client().GetBucketIamPolicy(bucket_name);
   ASSERT_STATUS_OK(policy);
   auto const& bindings = policy->bindings;
   // There must always be at least an OWNER for the Bucket.
@@ -686,7 +636,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
                bindings.find("roles/storage.legacyBucketOwner"));
 
   StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
+      client().ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(acl);
   // Unfortunately we cannot compare the values in the ACL to the values in the
   // IamPolicy directly. The ids for entities have different formats, for
@@ -707,7 +657,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
                             "allAuthenticatedUsers");
 
   StatusOr<IamPolicy> updated_policy =
-      client->SetBucketIamPolicy(bucket_name, update);
+      client().SetBucketIamPolicy(bucket_name, update);
   ASSERT_STATUS_OK(updated_policy);
   EXPECT_EQ(update.bindings, updated_policy->bindings);
   EXPECT_NE(update.etag, updated_policy->etag);
@@ -715,26 +665,24 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
   StatusOr<std::vector<std::string>> actual_permissions =
-      client->TestBucketIamPermissions(bucket_name, expected_permissions);
+      client().TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
   EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
+  auto meta = client().CreateBucketForProject(bucket_name, project_id(),
+                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =
-      client->GetNativeBucketIamPolicy(bucket_name);
+      client().GetNativeBucketIamPolicy(bucket_name);
   ASSERT_STATUS_OK(policy);
   auto const& bindings = policy->bindings();
   // There must always be at least an OWNER for the Bucket.
@@ -745,7 +693,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   ASSERT_NE(bindings.end(), owner_it);
 
   StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
+      client().ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(acl);
   // Unfortunately we cannot compare the values in the ACL to the values in the
   // IamPolicy directly. The ids for entities have different formats, for
@@ -786,272 +734,228 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   }
 
   StatusOr<NativeIamPolicy> updated_policy =
-      client->SetNativeBucketIamPolicy(bucket_name, update);
+      client().SetNativeBucketIamPolicy(bucket_name, update);
   ASSERT_STATUS_OK(updated_policy);
 
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
   StatusOr<std::vector<std::string>> actual_permissions =
-      client->TestBucketIamPermissions(bucket_name, expected_permissions);
+      client().TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
   EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
+  auto meta = client().CreateBucketForProject(bucket_name, project_id(),
+                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
-  auto after_setting_retention_policy = client->PatchBucket(
+  auto after_setting_retention_policy = client().PatchBucket(
       bucket_name,
       BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
       IfMetagenerationMatch(meta->metageneration()));
   ASSERT_STATUS_OK(after_setting_retention_policy);
 
-  auto after_locking = client->LockBucketRetentionPolicy(
+  auto after_locking = client().LockBucketRetentionPolicy(
       bucket_name, after_setting_retention_policy->metageneration());
   ASSERT_STATUS_OK(after_locking);
 
   ASSERT_TRUE(after_locking->has_retention_policy());
   ASSERT_TRUE(after_locking->retention_policy().is_locked);
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // This should fail because the bucket does not exist.
   StatusOr<BucketMetadata> status =
-      client->LockBucketRetentionPolicy(bucket_name, 42U);
+      client().LockBucketRetentionPolicy(bucket_name, 42U);
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   // Project IDs must end with a letter or number, test with an invalid ID.
-  auto stream = client->ListBucketsForProject("Invalid-project-id-");
+  auto stream = client().ListBucketsForProject("Invalid-project-id-");
   auto it = stream.begin();
   StatusOr<BucketMetadata> metadata = *it;
   EXPECT_FALSE(metadata.ok()) << "value=" << metadata.value();
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   // Try to create an invalid bucket (the name should not start with an
   // uppercase letter), the service (or testbench) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
-  StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = client().CreateBucketForProject(
       "Invalid_Bucket_Name", "Invalid-project-id-", BucketMetadata());
   ASSERT_FALSE(meta.ok()) << "metadata=" << meta.value();
 }
 
 TEST_F(BucketIntegrationTest, GetFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least
   // it is very unlikely to exist, the name is random.
-  auto status = client->GetBucketMetadata(bucket_name);
+  auto status = client().GetBucketMetadata(bucket_name);
   ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to delete a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  auto status = client->UpdateBucket(bucket_name, BucketMetadata());
+  auto status = client().UpdateBucket(bucket_name, BucketMetadata());
   ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, PatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  auto status = client->PatchBucket(bucket_name, BucketMetadataPatchBuilder());
+  auto status = client().PatchBucket(bucket_name, BucketMetadataPatchBuilder());
   ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->GetBucketIamPolicy(bucket_name);
+  auto policy = client().GetBucketIamPolicy(bucket_name);
   EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->SetBucketIamPolicy(bucket_name, IamPolicy{});
+  auto policy = client().SetBucketIamPolicy(bucket_name, IamPolicy{});
   EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto items = client->TestBucketIamPermissions(bucket_name, {});
+  auto items = client().TestBucketIamPermissions(bucket_name, {});
   EXPECT_FALSE(items.ok()) << "items[0]=" << items.value().front();
 }
 
 TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  auto list = client->ListBucketAcl(bucket_name);
+  auto list = client().ListBucketAcl(bucket_name);
   EXPECT_FALSE(list.ok()) << "list[0]=" << list.value().front();
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto acl = client->CreateBucketAcl(bucket_name, entity_name, "READER");
+  auto acl = client().CreateBucketAcl(bucket_name, entity_name, "READER");
   EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto acl = client->GetBucketAcl(bucket_name, entity_name);
+  auto acl = client().GetBucketAcl(bucket_name, entity_name);
   EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto acl = client->UpdateBucketAcl(
+  auto acl = client().UpdateBucketAcl(
       bucket_name,
       BucketAccessControl().set_entity(entity_name).set_role("READER"));
   EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto acl = client->PatchBucketAcl(
+  auto acl = client().PatchBucketAcl(
       bucket_name, entity_name, BucketAccessControl(),
       BucketAccessControl().set_entity(entity_name).set_role("READER"));
   EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status = client->DeleteBucketAcl(bucket_name, entity_name);
+  auto status = client().DeleteBucketAcl(bucket_name, entity_name);
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status = client->ListDefaultObjectAcl(bucket_name).status();
+  auto status = client().ListDefaultObjectAcl(bucket_name).status();
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status =
-      client->CreateDefaultObjectAcl(bucket_name, entity_name, "READER")
-          .status();
+  auto status = client()
+                    .CreateDefaultObjectAcl(bucket_name, entity_name, "READER")
+                    .status();
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status = client->GetDefaultObjectAcl(bucket_name, entity_name).status();
+  auto status = client().GetDefaultObjectAcl(bucket_name, entity_name).status();
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
   auto status =
-      client
-          ->UpdateDefaultObjectAcl(
+      client()
+          .UpdateDefaultObjectAcl(
               bucket_name,
               ObjectAccessControl().set_entity(entity_name).set_role("READER"))
           .status();
@@ -1059,15 +963,13 @@ TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
   auto status =
-      client
-          ->PatchDefaultObjectAcl(
+      client()
+          .PatchDefaultObjectAcl(
               bucket_name, entity_name, ObjectAccessControl(),
               ObjectAccessControl().set_entity(entity_name).set_role("READER"))
           .status();
@@ -1075,20 +977,16 @@ TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
+  auto status = client().DeleteDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
   BucketMetadata original = BucketMetadata();
@@ -1099,11 +997,11 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   original.set_iam_configuration(std::move(configuration));
 
   auto meta =
-      client->CreateBucketForProject(bucket_name, project_id_, original);
+      client().CreateBucketForProject(bucket_name, project_id(), original);
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =
-      client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(1));
+      client().GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(1));
 
   ASSERT_STATUS_OK(policy);
   ASSERT_EQ(1, policy->version());
@@ -1127,12 +1025,13 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
     auto& members = binding.members();
     if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
         members.end()) {
-      members.emplace_back("serviceAccount:" + service_account_);
+      members.emplace_back("serviceAccount:" + test_service_account());
     }
   }
   if (!role_updated) {
     update.bindings().emplace_back(NativeIamBinding(
-        "roles/storage.objectViewer", {"serviceAccount:" + service_account_},
+        "roles/storage.objectViewer",
+        {"serviceAccount:" + test_service_account()},
         NativeExpression(
             "request.time < timestamp(\"2019-07-01T00:00:00.000Z\")",
             "Expires_July_1_2019", "Expires on July 1, 2019")));
@@ -1140,22 +1039,22 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   }
 
   StatusOr<NativeIamPolicy> updated_policy =
-      client->SetNativeBucketIamPolicy(bucket_name, update);
+      client().SetNativeBucketIamPolicy(bucket_name, update);
   ASSERT_STATUS_OK(updated_policy);
 
   StatusOr<NativeIamPolicy> policy_with_condition =
-      client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(3));
+      client().GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(3));
   ASSERT_STATUS_OK(policy_with_condition);
   ASSERT_EQ(3, policy_with_condition->version());
 
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
   StatusOr<std::vector<std::string>> actual_permissions =
-      client->TestBucketIamPermissions(bucket_name, expected_permissions);
+      client().TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
   EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client().DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 }  // namespace

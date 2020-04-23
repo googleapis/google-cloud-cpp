@@ -37,10 +37,8 @@ class ObjectFileMultiThreadedTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    ASSERT_FALSE(bucket_name_.empty());
+    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
+
     auto object_count = google::cloud::internal::GetEnv(
         "GOOGLE_CLOUD_CPP_STORAGE_TEST_OBJECT_COUNT");
     if (object_count) object_count_ = std::stoi(*object_count);
@@ -78,7 +76,7 @@ class ObjectFileMultiThreadedTest
         std::cout << '.' << std::flush;
       }
       auto metadata =
-          client.InsertObject(bucket_name_, n, contents, IfGenerationMatch(0));
+          client.InsertObject(bucket_name(), n, contents, IfGenerationMatch(0));
       if (!metadata) return metadata.status();
     }
     return Status();
@@ -114,7 +112,7 @@ class ObjectFileMultiThreadedTest
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto result = client.DeleteObject(bucket_name_, name);
+      auto result = client.DeleteObject(bucket_name(), name);
       if (!result.ok()) status = result;
     }
     return status;
@@ -140,23 +138,18 @@ class ObjectFileMultiThreadedTest
   }
 
   std::mutex mu_;
-  std::string bucket_name_;
   int object_count_ = 128;
 };
 
 TEST_F(ObjectFileMultiThreadedTest, Download) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
   auto const object_names = CreateObjectNames();
   std::cout << "Create test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(CreateObjects(*client, object_names));
+  ASSERT_NO_FATAL_FAILURE(CreateObjects(client(), object_names));
   std::cout << " DONE\n";
 
   // Create multiple threads, each downloading a portion of the objects.
   auto const thread_count = ThreadCount();
-  auto download_some_objects = [this, thread_count, &client,
-                                &object_names](int modulo) {
+  auto download_some_objects = [this, thread_count, &object_names](int modulo) {
     std::cout << '+' << std::flush;
     int index = 0;
     for (auto& name : object_names) {
@@ -165,7 +158,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto status = client->DownloadToFile(bucket_name_, name, name);
+      auto status = client().DownloadToFile(bucket_name(), name, name);
       if (!status.ok()) return status;  // stop on the first error
     }
     return Status();
@@ -187,7 +180,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   }
 
   std::cout << "Delete test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(DeleteObjects(*client, object_names));
+  ASSERT_NO_FATAL_FAILURE(DeleteObjects(client(), object_names));
   std::cout << " DONE\n";
 }
 
