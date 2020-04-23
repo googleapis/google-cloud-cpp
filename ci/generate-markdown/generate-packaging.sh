@@ -205,7 +205,9 @@ these dependencies.
 - [Ubuntu (20.04 - Bionic Beaver)](#ubuntu-2004---focal-fossa)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
 - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+- [Debian (Buster)](#debian-buster)
 - [Debian (Stretch)](#debian-stretch)
+- [CentOS 8](#centos-8)
 - [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
@@ -236,8 +238,16 @@ echo "### Ubuntu (16.04 - Xenial Xerus)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
 
 echo
+echo "### Debian (Buster)"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-buster"
+
+echo
 echo "### Debian (Stretch)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-stretch"
+
+echo
+echo "### CentOS (8)"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-8"
 
 echo
 echo "### CentOS (7)"
