@@ -97,7 +97,7 @@ readonly CACHE_NAME="${DISTRO}.tar.gz"
 
 if cache_download_enabled; then
   cache_download_tarball \
-    "${CACHE_FOLDER}" "ci/kokoro/install/ccache-contents" "${CACHE_NAME}"
+    "${CACHE_FOLDER}" "ci/kokoro/install/ccache-contents" "${CACHE_NAME}" || true
 fi
 
 echo "================================================================"
