@@ -195,7 +195,7 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel
 ```
 
@@ -293,13 +293,6 @@ We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
-```
-
 
 ### openSUSE (Tumbleweed)
 
@@ -1382,7 +1375,7 @@ sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch
 sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+sudo yum install -y automake ccache cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
 sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
@@ -1526,10 +1519,3 @@ We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
-```
-
