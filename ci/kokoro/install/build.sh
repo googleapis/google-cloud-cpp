@@ -162,10 +162,10 @@ echo "================================================================"
 log_normal "Preparing and uploading ccache tarball."
 mkdir -p ci/kokoro/install/ccache-contents
 docker run --rm --volume $PWD:/v \
-    --workdir /h \
-    "${INSTALL_RUN_IMAGE}:latest" \
-    tar -zcf "/v/ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" .ccache
+  --workdir /h \
+  "${INSTALL_RUN_IMAGE}:latest" \
+  tar -zcf "/v/ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" .ccache
 cache_upload_tarball "ci/kokoro/install/ccache-contents" "${DISTRO}.tar.gz" \
-    "${CACHE_FOLDER}"
+  "${CACHE_FOLDER}"
 
 exit 0
