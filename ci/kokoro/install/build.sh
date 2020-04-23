@@ -92,7 +92,7 @@ if docker pull "${INSTALL_IMAGE}:latest"; then
 fi
 
 readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/master/install/"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/master/install"
 readonly CACHE_NAME="${DISTRO}.tar.gz"
 
 if cache_download_enabled; then

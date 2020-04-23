@@ -63,7 +63,7 @@ cache_upload_enabled() {
     return 1
   fi
 
-  if [[ "${RUNNING_CI:-}" != "TODO(coryan)" || "${KOKORO_JOB_TYPE:-}" != "CONTINUOUS_INTEGRATION" ]]; then
+  if [[ "${RUNNING_CI:-}" != "yes" || "${KOKORO_JOB_TYPE:-}" != "CONTINUOUS_INTEGRATION" ]]; then
     echo "================================================================"
     log_normal "Cache not updated as this is not a CI build or it is a PR build."
     return 1
