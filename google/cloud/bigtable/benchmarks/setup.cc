@@ -112,7 +112,8 @@ google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
     setup_data.app_profile_id = "default";
     setup_data.thread_count = 1;
     setup_data.test_duration = std::chrono::seconds(1);
-    setup_data.table_size = 1000;
+    // Must be > 10,000 or scan_throughput_benchmark crashes on Windows
+    setup_data.table_size = 11000;
     return BenchmarkSetup{setup_data};
   }
 
