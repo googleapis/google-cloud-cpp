@@ -29,6 +29,7 @@ fi
 GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"

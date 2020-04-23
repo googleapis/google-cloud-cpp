@@ -32,6 +32,7 @@ readonly KOKORO_GFILE_DIR
 
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
