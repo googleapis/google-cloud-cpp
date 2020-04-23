@@ -55,8 +55,11 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
     pwd
   )"
 fi
+GCLOUD=gcloud
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 echo "================================================================"
 log_yellow "Change working directory to project root."
@@ -86,6 +89,15 @@ has_cache="false"
 if docker pull "${INSTALL_IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
   has_cache="true"
+fi
+
+readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/master/install/"
+readonly CACHE_NAME="${DISTRO}.tar.gz"
+
+if cache_download_enabled; then
+  cache_download_tarball \
+    "${CACHE_FOLDER}" "ci/kokoro/install/ccache-contents" "${CACHE_NAME}"
 fi
 
 echo "================================================================"
@@ -142,6 +154,10 @@ echo
 log_green "Build successful."
 
 set +e
+if ! cache_upload_enabled; then
+  exit 0
+fi
+
 echo "================================================================"
 log_normal "Preparing and uploading ccache tarball."
 mkdir -p ci/kokoro/install/ccache-contents
@@ -149,5 +165,7 @@ docker run --rm --volume $PWD:/v \
     --workdir /h \
     "${INSTALL_RUN_IMAGE}:latest" \
     tar -zcf "/v/ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" .ccache
+cache_upload_tarball "ci/kokoro/install/ccache-contents" "${DISTRO}.tar.gz" \
+    "${CACHE_FOLDER}"
 
 exit 0

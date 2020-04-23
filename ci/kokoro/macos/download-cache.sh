@@ -27,8 +27,12 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
   )"
 fi
 GCLOUD=gcloud
+KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
+readonly KOKORO_GFILE_DIR
+
 source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
@@ -37,41 +41,13 @@ mkdir -p "${HOME}/.ccache"
 [[ -f "${HOME}/.ccache/ccache.conf" ]] ||
   echo "max_size = 4.0G" >"${HOME}/.ccache/ccache.conf"
 
-KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly KOKORO_GFILE_DIR
-
-readonly KEYFILE="${KOKORO_GFILE_DIR}/build-results-service-account.json"
-if [[ ! -f "${KEYFILE}" ]]; then
-  echo "================================================================"
-  log_normal "Service account for cache access is not configured."
-  log_normal "No attempt will be made to download the cache, exit with success."
+if ! cache_download_enabled; then
   exit 0
 fi
-
-if [[ "${RUNNING_CI:-}" != "yes" || (\
-  "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" && \
-  "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB") ]]; then
-  echo "================================================================"
-  log_normal "Cache not downloaded as this is not a PR build."
-  exit 0
-fi
-
-trap cleanup EXIT
-cleanup() {
-  revoke_service_account_keyfile "${KEYFILE}" || true
-  delete_gcloud_config
-}
 
 readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
-
-create_gcloud_config
-activate_service_account_keyfile "${KEYFILE}"
-
-echo "================================================================"
-log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
-env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
-  gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
+cache_download_tarball "${CACHE_FOLDER}" "${DOWNLOAD}" "${CACHE_NAME}.tar.gz"
 
 echo "================================================================"
 log_normal "Extracting build cache"
