@@ -578,7 +578,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        automake build-essential ccache cmake ca-certificates git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
