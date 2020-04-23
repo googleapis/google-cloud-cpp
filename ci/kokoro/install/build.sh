@@ -161,7 +161,7 @@ fi
 echo "================================================================"
 log_normal "Preparing and uploading ccache tarball."
 mkdir -p ci/kokoro/install/ccache-contents
-docker run --rm --volume $PWD:/v \
+docker run --rm --volume "$PWD:/v" \
   --workdir /h \
   "${INSTALL_RUN_IMAGE}:latest" \
   tar -zcf "/v/ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" .ccache
