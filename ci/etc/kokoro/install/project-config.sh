@@ -126,11 +126,9 @@ COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
 @QUICKSTART_FRAGMENT@
-## [START IGNORED]
+
 # This is just here to speed up the pre-submit builds and should not be part
 # of the instructions on how to compile the code.
 RUN ccache --show-stats --zero-stats || true
-## [END IGNORED]
-
 _EOF_
 )
