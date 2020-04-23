@@ -35,7 +35,7 @@ cache_download_enabled() {
 
 cache_gcloud_cleanup() {
   revoke_service_account_keyfile "${CACHE_KEYFILE}" || true
-  delete_gcloud_config
+  delete_gcloud_config || true
 }
 
 cache_download_tarball() {
