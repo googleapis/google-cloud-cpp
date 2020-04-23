@@ -43,7 +43,7 @@ cache_download_tarball() {
   local -r DESTINATION="$2"
   local -r FILENAME="$3"
 
-  trap cache_gcloud_cleanup EXIT
+  trap cache_gcloud_cleanup RETURN
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
 
@@ -77,7 +77,7 @@ cache_upload_tarball() {
   echo "================================================================"
   log_normal "Uploading build cache ${FILENAME} to ${GCS_FOLDER}"
 
-  trap cache_gcloud_cleanup EXIT
+  trap cache_gcloud_cleanup RETURN
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
