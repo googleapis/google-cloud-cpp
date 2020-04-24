@@ -42,8 +42,8 @@ cc_library(
         ":generate_build_info",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
     ],
 )
@@ -55,9 +55,9 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     srcs = [test],
     deps = [
         ":pubsub_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 ) for test in pubsub_client_unit_tests]

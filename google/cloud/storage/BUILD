@@ -49,11 +49,11 @@ cc_library(
     }),
     deps = [
         ":nlohmann_json",
+        "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
     ],
 )
 
@@ -70,11 +70,11 @@ cc_library(
     deps = [
         ":nlohmann_json",
         ":storage_client",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -96,11 +96,11 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         ":nlohmann_json",
         ":storage_client",
         ":storage_client_testing",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],

@@ -105,8 +105,7 @@ standard [GitHub workflow][workflow-link]:
 
 This repository follows the [Google C++ Style Guide](
 https://google.github.io/styleguide/cppguide.html), with some additional
-constraints specified in the [google-cloud-cpp-common style guide](
-https://github.com/googleapis/google-cloud-cpp-common/blob/master/doc/cpp-style-guide.md).
+constraints specified in the [style guide](doc/cpp-style-guide.md).
 Please make sure your contributions adhere to the style guide.
 
 ### Formatting

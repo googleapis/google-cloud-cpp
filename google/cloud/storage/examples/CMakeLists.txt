@@ -64,8 +64,6 @@ create_bazel_config(storage_examples_common)
 # part of the examples.
 
 if (BUILD_TESTING)
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
     foreach (fname ${storage_examples_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})

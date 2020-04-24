@@ -151,7 +151,9 @@ include(CTest)
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
 
-# Only build the common library if any of the other libraries are enabled.
+# TODO(#...) - minimize the components built in the common library. For example,
+# if only google/cloud/storage is enabled, we can disable the gRPC components.
+add_subdirectory(google/cloud)
 if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
     add_subdirectory(google/cloud/storage)
 endif ()

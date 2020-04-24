@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 find_package(googleapis CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
@@ -143,8 +141,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     set(pubsub_client_unit_tests
         # cmake-format: sort

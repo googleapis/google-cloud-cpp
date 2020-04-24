@@ -38,9 +38,11 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/internal/*"
     "*/google/cloud/testing_util/*"
     "*/google/cloud/bigtable/*"
+    "*/google/cloud/bigquery/*"
     "*/google/cloud/firestore/*"
     "*/google/cloud/spanner/*"
     "*/google/cloud/storage/*"
+    "*/google/cloud/pubsub/*"
     "*/google/cloud/grpc_utils/*"
     "*/google/cloud/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOL "internal")

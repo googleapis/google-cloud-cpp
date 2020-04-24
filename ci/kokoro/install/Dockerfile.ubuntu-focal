@@ -30,7 +30,7 @@ ARG NCPU=4
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
+        automake build-essential cmake ca-certificates git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
@@ -118,24 +118,6 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
     tar -xf release-1.10.0.tar.gz && \
     cd googletest-release-1.10.0 && \
     cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### google-cloud-cpp-common
-
-# The project also depends on google-cloud-cpp-common, the libraries shared by
-# all the Google Cloud C++ client libraries:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
-    tar -xf v0.25.0.tar.gz && \
-    cd google-cloud-cpp-common-0.25.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig

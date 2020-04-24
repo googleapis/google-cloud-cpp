@@ -289,12 +289,15 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       echo /var/tmp/staging/include/google/cloud/bigtable
       echo /var/tmp/staging/include/google/cloud/bigtable/internal
       echo /var/tmp/staging/include/google/cloud/firestore
+      echo /var/tmp/staging/include/google/cloud/grpc_utils
+      echo /var/tmp/staging/include/google/cloud/internal
       echo /var/tmp/staging/include/google/cloud/pubsub
       echo /var/tmp/staging/include/google/cloud/pubsub/internal
       echo /var/tmp/staging/include/google/cloud/storage
       echo /var/tmp/staging/include/google/cloud/storage/internal
       echo /var/tmp/staging/include/google/cloud/storage/oauth2
       echo /var/tmp/staging/include/google/cloud/storage/testing
+      echo /var/tmp/staging/include/google/cloud/testing_util
       /bin/true
     ) | grep -q /var/tmp; then
     log_red "Installed directories do not match expectation."
