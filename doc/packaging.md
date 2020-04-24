@@ -195,7 +195,7 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel
 ```
 
@@ -307,7 +307,7 @@ Install the minimal development tools, libcurl and OpenSSL:
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
+sudo zypper install --allow-downgrade -y ccache cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
@@ -420,8 +420,8 @@ workstation or build server.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y automake cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel libtool make tar wget which
+sudo zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
+        gzip libcurl-devel libopenssl-devel libtool make tar wget which
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -578,7 +578,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        automake build-essential ccache cmake ca-certificates git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -710,7 +710,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        automake build-essential ccache cmake ca-certificates git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -842,7 +842,7 @@ Install the minimal development tools, OpenSSL and libcurl:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        automake build-essential ccache cmake ca-certificates git gcc g++ \
         libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -989,7 +989,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates cmake git gcc g++ cmake \
+        automake build-essential ca-certificates ccache cmake git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -1102,9 +1102,9 @@ prevent you from compiling against openssl-1.1.0.
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential cmake ca-certificates git gcc g++ cmake libc-ares-dev \
-        libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 pkg-config tar \
-        wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates git gcc g++ \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 \
+        pkg-config tar wget zlib1g-dev
 ```
 
 #### Protobuf
@@ -1234,7 +1234,9 @@ library (required by gRPC):
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y epel-release && \
+sudo dnf makecache && \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
@@ -1382,7 +1384,7 @@ sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch
 sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+sudo yum install -y automake ccache cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
 sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```

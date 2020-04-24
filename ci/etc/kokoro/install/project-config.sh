@@ -37,7 +37,6 @@ WORKDIR /home/build/quickstart-cmake/${library}
 COPY google/cloud/${library}/quickstart /home/build/quickstart-cmake/${library}
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/${library}
 RUN cmake --build /i/${library}
-
 _EOF_
   done
 ) || true # read always exit with error
@@ -86,6 +85,7 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 
 FROM devtools AS install
 ARG NCPU=4
+ARG DISTRO="distro-name"
 
 # #### Compile and install the main project
 
@@ -94,6 +94,19 @@ ARG NCPU=4
 # ```bash
 WORKDIR /home/build/project
 COPY . /home/build/project
+## [START IGNORED]
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+ENV CCACHE_DIR=/h/.ccache
+RUN mkdir -p /h/.ccache; \
+    echo "max_size = 4.0G" >"/h/.ccache/ccache.conf"; \
+    if [ -r "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" ]; then \
+      tar -xf "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" -C /h; \
+      ccache --show-stats; \
+      ccache --zero-stats; \
+    fi; \
+    true # Ignore all errors, failures in caching should not break the build
+## [END IGNORED]
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 WORKDIR /home/build/project/cmake-out
@@ -115,5 +128,9 @@ COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
 @QUICKSTART_FRAGMENT@
+
+# This is just here to speed up the pre-submit builds and should not be part
+# of the instructions on how to compile the code.
+RUN ccache --show-stats --zero-stats || true
 _EOF_
 )

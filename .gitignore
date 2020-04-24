@@ -22,5 +22,8 @@ github-io-staging/
 .vsbuild/
 .vscode/
 
+# Ignore staging files for the ci/kokoro/install builds
+ci/kokoro/install/ccache-contents/
+
 google/cloud/storage/testbench/__pycache__/
 google/cloud/storage/testbench/*.pyc
