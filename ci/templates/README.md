@@ -8,7 +8,7 @@ files that cannot be refactored in any other form.
 To use these scripts use:
 
 ```bash
-./generate-kokoro-readme.sh ${MY_CLONE_DIR}
+./generate-kokoro-install.sh ${MY_CLONE_DIR}
 ```
 
 where `MY_CLONE_DIR` is the location of a clone for one of the Google Cloud C++
@@ -20,5 +20,5 @@ For example:
 git clone git@github.com:$GIT_USER_NAME/google-cloud-cpp-common
 git clone git@github.com:$GIT_USER_NAME/google-cloud-cpp-spanner
 cd google-cloud-cpp-common
-./ci/templates/generate-kokoro-readme.sh ../google-cloud-cpp-spanner
+./ci/templates/generate-kokoro-install.sh ../google-cloud-cpp-spanner
 ```
