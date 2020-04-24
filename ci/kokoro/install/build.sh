@@ -99,6 +99,7 @@ readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/master/insta
 readonly CACHE_NAME="${DISTRO}.tar.gz"
 
 if cache_download_enabled; then
+  mkdir -p ci/kokoro/install/ccache-contents
   cache_download_tarball \
     "${CACHE_FOLDER}" "ci/kokoro/install/ccache-contents" "${CACHE_NAME}" || true
 fi
@@ -115,7 +116,6 @@ devtools_flags=(
   # upload it.
   "-t" "${INSTALL_IMAGE}:latest"
   "--build-arg" "NCPU=${NCPU}"
-  "--build-arg" "DISTRO=${DISTRO}"
   "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 
@@ -148,6 +148,7 @@ docker build -t "${INSTALL_RUN_IMAGE}" \
   "--cache-from=${INSTALL_IMAGE}:latest" \
   "--target=install" \
   "--build-arg" "NCPU=${NCPU}" \
+  "--build-arg" "DISTRO=${DISTRO}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
 
 echo "================================================================"
