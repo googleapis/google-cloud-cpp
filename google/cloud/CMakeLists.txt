@@ -201,7 +201,7 @@ set_target_properties(
                SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_common)
+create_bazel_config(google_cloud_cpp_common YEAR 2018)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 add_subdirectory(testing_util)
@@ -237,7 +237,7 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
-                         "google_cloud_cpp_common_unit_tests")
+                         "google_cloud_cpp_common_unit_tests" YEAR 2018)
 
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         string(REPLACE "/" "_" basename ${fname})

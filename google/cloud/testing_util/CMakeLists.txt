@@ -45,7 +45,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
-                         "google_cloud_cpp_testing_unit_tests")
+                         "google_cloud_cpp_testing_unit_tests" YEAR 2018)
 
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
