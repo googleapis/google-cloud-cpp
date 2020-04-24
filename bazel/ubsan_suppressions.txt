@@ -1,2 +1,0 @@
-vptr:codecvt.h
-vptr:locale_conv.h
