@@ -178,7 +178,7 @@ these dependencies.
 
 ## Table of Contents
 
-- [Fedora 30](#fedora-30)
+- [Fedora 31](#fedora-31)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
 - [Ubuntu (20.04 - Bionic Beaver)](#ubuntu-2004---focal-fossa)
@@ -189,7 +189,7 @@ these dependencies.
 - [CentOS 8](#centos-8)
 - [CentOS 7](#centos-7)
 
-### Fedora (30)
+### Fedora (31)
 
 Install the minimal development tools:
 
@@ -199,7 +199,7 @@ sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel
 ```
 
-Fedora 30 includes packages for gRPC, libcurl, and OpenSSL that are recent
+Fedora 31 includes packages for gRPC, libcurl, and OpenSSL that are recent
 enough for the project. Install these packages and additional development
 tools to compile the dependencies:
 

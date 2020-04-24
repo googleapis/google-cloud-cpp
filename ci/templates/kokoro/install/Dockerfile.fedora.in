@@ -14,7 +14,7 @@
 
 @WARNING_GENERATED_FILE_FRAGMENT@
 
-ARG DISTRO_VERSION=30
+ARG DISTRO_VERSION=31
 FROM fedora:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
@@ -28,7 +28,7 @@ RUN dnf makecache && \
         zlib-devel
 # ```
 
-# Fedora 30 includes packages for gRPC, libcurl, and OpenSSL that are recent
+# Fedora 31 includes packages for gRPC, libcurl, and OpenSSL that are recent
 # enough for the project. Install these packages and additional development
 # tools to compile the dependencies:
 
