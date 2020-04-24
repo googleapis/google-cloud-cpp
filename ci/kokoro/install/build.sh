@@ -78,10 +78,10 @@ log_normal "Building with ${NCPU} cores on ${PWD}."
 echo "================================================================"
 log_normal "Setup Google Container Registry access."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
-  "${GCLOUD}" auth activate-service-account --key-file \
+  gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
 fi
-"${GCLOUD}" auth configure-docker
+gcloud auth configure-docker
 
 echo "================================================================"
 log_normal "Download existing image (if available) for ${DISTRO}."

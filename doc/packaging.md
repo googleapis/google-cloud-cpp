@@ -989,7 +989,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates cmake git gcc g++ cmake \
+        automake build-essential ca-certificates ccache cmake git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -1234,7 +1234,9 @@ library (required by gRPC):
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y epel-release && \
+sudo dnf makecache && \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 

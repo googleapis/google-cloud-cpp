@@ -104,7 +104,6 @@ RUN mkdir -p /h/.ccache; \
       tar -xf "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" -C /h; \
       ccache --show-stats; \
       ccache --zero-stats; \
-      false; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]

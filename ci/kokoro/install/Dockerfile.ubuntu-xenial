@@ -170,13 +170,14 @@ COPY . /home/build/project
 # This is just here to speed up the pre-submit builds and should not be part
 # of the instructions on how to compile the code.
 ENV CCACHE_DIR=/h/.ccache
-RUN mkdir -p /h/.ccache && \
-    echo "max_size = 4.0G" >"/h/.ccache/ccache.conf" && \
+RUN mkdir -p /h/.ccache; \
+    echo "max_size = 4.0G" >"/h/.ccache/ccache.conf"; \
     if [ -r "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" ]; then \
-      tar -xf "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" -C /h || true; \
-      ccache --show-stats || true; \
-      ccache --zero-stats || true; \
-    fi
+      tar -xf "ci/kokoro/install/ccache-contents/${DISTRO}.tar.gz" -C /h; \
+      ccache --show-stats; \
+      ccache --zero-stats; \
+    fi; \
+    true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
