@@ -15,7 +15,7 @@
 
 read_into_variable() {
   # Reading a heredoc into a variable with `read` always exits with an error.
-  read -r -d '' "${1}" || true;
+  read -r -d '' "${1}" || true
 }
 
 # We need a way to replace "variables" into a chunk of text, but this is
@@ -30,11 +30,11 @@ replace_fragments() {
   for fragment in "${fragment_names[@]}"; do
     # shellcheck disable=SC2016
     sed_args+=("-e" "s,@${fragment}@,$(/bin/echo -n "${!fragment}" |
-        # Note the use of \003 ("End of Text") as the magic character to
-        # represent newlines. This must match the invert `tr` call below. It
-        # allows us to escape newlines in the sed expression.
-        tr '\n' '\003' |
-        sed -e 's,\\,\\\\,g' -e 's/&/\\&/g' -e 's/,/\\,/g' -e 's/`/\\`/' ),")
+      # Note the use of \003 ("End of Text") as the magic character to
+      # represent newlines. This must match the invert `tr` call below. It
+      # allows us to escape newlines in the sed expression.
+      tr '\n' '\003' |
+      sed -e 's,\\,\\\\,g' -e 's/&/\\&/g' -e 's/,/\\,/g' -e 's/`/\\`/'),")
   done
 
   sed "${sed_args[@]}" | tr '\003' '\n'
