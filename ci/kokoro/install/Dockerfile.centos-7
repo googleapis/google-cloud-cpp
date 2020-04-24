@@ -34,7 +34,7 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
 RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
-    yum install -y automake ccache cmake3 curl-devel gcc gcc-c++ git libtool \
+    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
@@ -149,24 +149,6 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
     tar -xf release-1.10.0.tar.gz && \
     cd googletest-release-1.10.0 && \
     cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### google-cloud-cpp-common
-
-# The project also depends on google-cloud-cpp-common, the libraries shared by
-# all the Google Cloud C++ client libraries:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
-    tar -xf v0.25.0.tar.gz && \
-    cd google-cloud-cpp-common-0.25.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig

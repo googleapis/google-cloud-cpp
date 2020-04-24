@@ -30,9 +30,9 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
         "pubsub-integration-tests",
     ],
     deps = [
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in pubsub_client_integration_samples]
@@ -41,9 +41,9 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in pubsub_client_unit_samples]

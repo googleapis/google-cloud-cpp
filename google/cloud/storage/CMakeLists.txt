@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER
@@ -275,8 +273,6 @@ create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
 
 if (BUILD_TESTING)
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
     add_library(
         storage_client_testing
         testing/canonical_errors.h

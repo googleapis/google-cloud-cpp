@@ -153,18 +153,6 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# Download and compile google-cloud-cpp from source too:
-WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake -H. -Bcmake-out \
-      -DBUILD_SHARED_LIBS=YES \
-      -DBUILD_TESTING=OFF \
-      -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
-    cmake --build cmake-out --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
-
 RUN find /usr/local -type d | xargs chmod 777
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line

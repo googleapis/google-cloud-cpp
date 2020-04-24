@@ -22,8 +22,8 @@ cc_library(
     hdrs = bigquery_client_hdrs,
     # Do not sort: grpc++ must come last
     deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
         "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_grpc",
         "@com_github_grpc_grpc//:grpc++",
     ],
@@ -37,8 +37,8 @@ cc_library(
     hdrs = bigquery_client_testing_hdrs,
     deps = [
         ":bigquery_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -51,8 +51,8 @@ load(":bigquery_client_unit_tests.bzl", "bigquery_client_unit_tests")
     deps = [
         ":bigquery_client",
         ":bigquery_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigquery_client_unit_tests]

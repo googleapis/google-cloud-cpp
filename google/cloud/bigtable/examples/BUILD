@@ -23,9 +23,9 @@ cc_library(
     srcs = bigtable_examples_common_srcs,
     hdrs = bigtable_examples_common_hdrs,
     deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/bigtable:bigtable_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
     ],
@@ -38,11 +38,11 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
     srcs = [test],
     deps = [
         ":bigtable_examples_common",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_examples_unit_tests]
@@ -58,11 +58,11 @@ load(":bigtable_examples.bzl", "bigtable_examples")
     ],
     deps = [
         ":bigtable_examples_common",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/bigtable:bigtable_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_examples]

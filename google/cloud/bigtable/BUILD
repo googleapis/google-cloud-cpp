@@ -27,8 +27,8 @@ cc_library(
     hdrs = bigtable_client_hdrs,
     # Do not sort: grpc++ must come last
     deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
@@ -45,10 +45,10 @@ cc_library(
     hdrs = bigtable_client_testing_hdrs,
     deps = [
         ":bigtable_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -61,10 +61,10 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     deps = [
         ":bigtable_client",
         ":bigtable_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_unit_tests]
@@ -78,10 +78,10 @@ cc_test(
     deps = [
         ":bigtable_client",
         ":bigtable_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 )

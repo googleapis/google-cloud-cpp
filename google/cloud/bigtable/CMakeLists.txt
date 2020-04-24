@@ -14,9 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(googleapis)
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(googleapis CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
@@ -199,8 +197,6 @@ create_bazel_config(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)
 
 if (BUILD_TESTING)
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
     add_library(
         bigtable_client_testing
         testing/embedded_server_test_fixture.cc

@@ -14,8 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(googleapis CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
@@ -135,8 +134,6 @@ function (bigquery_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     add_library(
         bigquery_client_testing

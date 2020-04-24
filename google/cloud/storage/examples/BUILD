@@ -23,8 +23,8 @@ cc_library(
     srcs = storage_examples_common_srcs,
     hdrs = storage_examples_common_hdrs,
     deps = [
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
     ],
 )
 
@@ -35,10 +35,10 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
     srcs = [test],
     deps = [
         ":storage_examples_common",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in storage_examples_unit_tests]
@@ -54,9 +54,9 @@ load(":storage_examples.bzl", "storage_examples")
     ],
     deps = [
         ":storage_examples_common",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in storage_examples]

@@ -51,7 +51,6 @@ export_list_to_bazel("bigtable_examples_unit_tests.bzl"
 create_bazel_config(bigtable_examples_common)
 
 if (BUILD_TESTING)
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
     foreach (fname ${bigtable_examples_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})

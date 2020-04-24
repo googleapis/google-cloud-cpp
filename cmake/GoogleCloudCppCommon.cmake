@@ -53,23 +53,6 @@ if (${CMAKE_VERSION} VERSION_LESS "3.9")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
 else ()
-    # Use externalproject_add() to download the doxygen tag file. That way it is
-    # done only once, only if it is required by the build, and there is an
-    # automated retry loop.
-    if (NOT TARGET google-cloud-cpp-common-tag)
-        include(ExternalProject)
-        ExternalProject_Add(
-            google-cloud-cpp-common-tag
-            URL "https://cloud-cpp-doxygen-resources.storage.googleapis.com/google-cloud-common.tag"
-            PREFIX "${PROJECT_BINARY_DIR}/tags"
-                   DOWNLOAD_NO_EXTRACT
-                   1
-            CONFIGURE_COMMAND ""
-            BUILD_COMMAND ""
-            INSTALL_COMMAND "")
-        ExternalProject_Get_Property(google-cloud-cpp-common-tag DOWNLOAD_DIR)
-    endif ()
-
     find_package(Doxygen)
     if (Doxygen_FOUND)
         set(DOXYGEN_RECURSIVE YES)
@@ -113,21 +96,21 @@ else ()
             "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
         set(DOXYGEN_LAYOUT_FILE
             "${PROJECT_SOURCE_DIR}/doc/config/DoxygenLayout.xml")
-
         set(GOOGLE_CLOUD_CPP_COMMON_TAG
-            "${PROJECT_BINARY_DIR}/tags/src/google-cloud-common.tag")
-        if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
-            set(DOXYGEN_TAGFILES
-                "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
-            )
-        elseif (NOT "${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
-            set(DOXYGEN_TAGFILES
-                "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
-            )
-        else ()
-            set(DOXYGEN_TAGFILES
-                "${GOOGLE_CLOUD_CPP_COMMON_TAG}=../../google-cloud-common/master/"
-            )
+            "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
+        if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
+            if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
+                set(DOXYGEN_TAGFILES
+                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
+                )
+            elseif (NOT "${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+                set(DOXYGEN_TAGFILES
+                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
+                )
+            else ()
+                set(DOXYGEN_TAGFILES
+                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=../../html/")
+            endif ()
         endif ()
 
         doxygen_add_docs(
@@ -135,9 +118,9 @@ else ()
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMENT
             "Generate HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
-        add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
-                         google-cloud-cpp-common-tag)
-
+        if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
+            add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "cloud-docs")
+        endif ()
     endif ()
 endif ()
 

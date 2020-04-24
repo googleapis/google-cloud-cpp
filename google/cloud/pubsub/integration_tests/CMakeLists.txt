@@ -28,8 +28,6 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
     set(pubsub_client_integration_tests
         # cmake-format: sortable
         publisher_admin_integration_test.cc

@@ -14,8 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(googleapis CONFIG REQUIRED)
 
 # Pick the right MSVC runtime libraries.
 include(SelectMSVCRuntime)

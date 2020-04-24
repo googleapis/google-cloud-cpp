@@ -74,15 +74,6 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 @INSTALL_GOOGLETEST_FROM_SOURCE@
 # ```
 
-# #### google-cloud-cpp-common
-
-# The project also depends on google-cloud-cpp-common, the libraries shared by
-# all the Google Cloud C++ client libraries:
-
-# ```bash
-@INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE@
-# ```
-
 FROM devtools AS install
 ARG NCPU=4
 ARG DISTRO="distro-name"

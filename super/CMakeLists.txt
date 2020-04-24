@@ -47,7 +47,6 @@ include(external/crc32c)
 include(external/grpc)
 include(external/googleapis)
 include(external/googletest)
-include(external/google-cloud-cpp-common)
 include(ProcessorCount)
 processorcount(NCPU)
 
@@ -55,9 +54,8 @@ include(ExternalProjectHelper)
 set_external_project_build_parallel_level(PARALLEL)
 set_external_project_vars()
 
-set(GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST
-    grpc-project curl-project crc32c-project googleapis-project
-    googletest-project google-cloud-cpp-common-project)
+set(GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST grpc-project curl-project crc32c-project
+                                       googleapis-project googletest-project)
 
 include(ExternalProject)
 ExternalProject_Add(
