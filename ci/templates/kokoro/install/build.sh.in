@@ -13,11 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# WARNING: This is an automatically generated file. Consider changing the
-#     sources instead. You can find the source templates and scripts at:
-#     https://github.com/googleapis/google-cloud-cpp/tree/master/ci/templates
-#
+@WARNING_GENERATED_FILE_FRAGMENT@
 
 set -eu
 
@@ -95,7 +91,7 @@ if docker pull "${INSTALL_IMAGE}:latest"; then
 fi
 
 readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/master/install"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/@GOOGLE_CLOUD_CPP_REPOSITORY@/master/install"
 readonly CACHE_NAME="${DISTRO}.tar.gz"
 
 if cache_download_enabled; then
