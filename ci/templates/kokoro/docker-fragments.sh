@@ -17,7 +17,7 @@ read_into_variable WARNING_GENERATED_FILE_FRAGMENT <<'_EOF_'
 #
 # WARNING: This is an automatically generated file. Consider changing the
 #     sources instead. You can find the source templates and scripts at:
-#     https://github.com/googleapis/google-cloud-cpp-common/tree/master/ci/templates
+#     https://github.com/googleapis/google-cloud-cpp/tree/master/ci/templates
 #
 _EOF_
 
