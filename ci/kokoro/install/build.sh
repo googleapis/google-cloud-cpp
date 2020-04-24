@@ -55,22 +55,25 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
     pwd
   )"
 fi
-GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
-source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
-source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
-echo "================================================================"
-log_yellow "Change working directory to project root."
-cd "${PROJECT_ROOT}"
-
+# ATTENTION: The gcr-configuration.sh script MUST be sourced first if present.
 echo "================================================================"
 log_normal "Load Google Container Registry configuration parameters."
 
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
   source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
 fi
+# ATTENTION: The gcr-configuration.sh script MUST be sourced before this file.
+source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+
+GCLOUD=gcloud
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
+
+echo "================================================================"
+log_yellow "Change working directory to project root."
+cd "${PROJECT_ROOT}"
 
 echo "================================================================"
 log_normal "Building with ${NCPU} cores on ${PWD}."
