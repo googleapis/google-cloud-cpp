@@ -51,12 +51,13 @@ replace_original_if_changed() {
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
-  xargs -0 cmake-format -i
+  xargs -P "${NCPU}" -n 1 -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-git ls-files -z | grep -zE '\.(cc|h)$' | xargs -0 clang-format -i
+git ls-files -z | grep -zE '\.(cc|h)$' |
+  xargs -P "${NCPU}" -n 50 -0 clang-format -i
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
