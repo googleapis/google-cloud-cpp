@@ -25,7 +25,9 @@ ARG NCPU=4
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+    dnf install -y epel-release && \
+    dnf makecache && \
+    dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 

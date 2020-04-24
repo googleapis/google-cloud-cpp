@@ -89,6 +89,7 @@ git -C "${DESTINATION_ROOT}" checkout -- "ci/kokoro/install/common.cfg"
 
 replace_fragments \
   "WARNING_GENERATED_FILE_FRAGMENT" \
+  "GOOGLE_CLOUD_CPP_REPOSITORY" \
   <"${PROJECT_ROOT}/ci/templates/kokoro/install/build.sh.in" \
   >"${DESTINATION_ROOT}/ci/kokoro/install/build.sh"
 chmod 755 "${DESTINATION_ROOT}/ci/kokoro/install/build.sh"
