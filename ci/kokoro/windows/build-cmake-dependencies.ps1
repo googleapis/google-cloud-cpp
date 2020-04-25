@@ -37,10 +37,9 @@ $vcpkg_dir = "cmake-out\vcpkg"
 $packages = @("zlib", "openssl",
               "protobuf", "c-ares",
               "grpc", "gtest", "crc32c", "curl",
-              "googleapis", "google-cloud-cpp-common[test]")
+              "googleapis")
 $vcpkg_flags=@(
-    "--triplet", "${env:VCPKG_TRIPLET}",
-    "--overlay-ports=${project_root}/ci/kokoro/windows/vcpkg-ports")
+    "--triplet", "${env:VCPKG_TRIPLET}")
 if ($args.count -ge 1) {
     $vcpkg_dir, $packages = $args
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
