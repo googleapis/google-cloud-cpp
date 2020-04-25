@@ -68,7 +68,7 @@ check_library() {
   fi
   set -e
 
-  if [[ "${UPDATE_ABI}" = "yes" ]]; then
+  if [[ "${UPDATE_ABI}" == "yes" ]]; then
     abi-dumper "${libdir}/lib${library}.so" \
       -public-headers "${includedir}" \
       -lver "reference" -o "${BINARY_DIR}/${new_dump_file}"
@@ -80,7 +80,13 @@ check_library() {
 exit_status=0
 # We are keeping the library list alphabetical for now, there is no preferred
 # order otherwise.
-for library in bigtable_client storage_client; do
+libraries=(
+  "bigtable_client"
+  "google_cloud_cpp_common"
+  "google_cloud_cpp_grpc_utils"
+  "storage_client"
+)
+for library in "${libraries[@]}"; do
   check_library "${library}" || exit_status=1
 done
 
