@@ -61,6 +61,20 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x64-windows-static/cmake.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
+} elseif ($BuildName -eq "cmake-debug-x86") {
+    $env:CONFIG = "Debug"
+    $env:GENERATOR = "Ninja"
+    $env:VCPKG_TRIPLET = "x86-windows-static"
+    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x86-windows-static/cmake-debug.zip"
+    $DependencyScript = "build-cmake-dependencies.ps1"
+    $BuildScript = "build-cmake.ps1"
+} elseif ($BuildName -eq "cmake-release-x86") {
+    $env:CONFIG = "Release"
+    $env:GENERATOR = "Ninja"
+    $env:VCPKG_TRIPLET = "x86-windows-static"
+    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x86-windows-static/cmake-release.zip"
+    $DependencyScript = "build-cmake-dependencies.ps1"
+    $BuildScript = "build-cmake.ps1"
 } elseif ($BuildName -eq "bazel") {
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
