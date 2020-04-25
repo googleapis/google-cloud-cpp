@@ -26,14 +26,3 @@ cc_library(
         ".",
     ],
 )
-
-# TODO(googleapis/google-cloud-cpp#3838): Delete this rule once it's no longer
-# used after the next release of -common.
-cc_library(
-    name = "grpc_utils_protos",
-    deps = [
-        ":googleapis_system_includes",
-        "//google/rpc:status_cc_proto",
-        "@com_github_grpc_grpc//:grpc++",
-    ],
-)
