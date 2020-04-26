@@ -49,7 +49,7 @@ Checks: >
 WarningsAsErrors: "*"
 
 # TODO(#3920) - Enable clang-tidy checks in our headers.
-HeaderFilterRegex: "google/cloud/pubbsub/.*"
+HeaderFilterRegex: "google/cloud/pubsub/.*"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
