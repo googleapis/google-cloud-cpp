@@ -8,6 +8,9 @@ cmake-out/
 bazel-*
 !bazel-*.cfg
 
+# Used by some IDEs and LSP plugins
+compile_commands.json
+
 # Backup files for Emacs
 *~
 
