@@ -75,22 +75,14 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_PUBSUB_BUILD_METADATA)
 message(STATUS "google-cloud-cpp-pubsub build metadata set to"
                " ${GOOGLE_CLOUD_CPP_PUBSUB_BUILD_METADATA}")
 
-# Create the file that captures build information. Having access to the compiler
-# and build flags at runtime allows us to print better benchmark results.
-string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_PUBSUB_BUILD_TYPE_UPPER)
-configure_file(internal/build_info.cc.in internal/build_info.cc)
-
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     pubsub_client # cmake-format: sort
-    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     connection_options.cc
     connection_options.h
     create_subscription_builder.h
     create_topic_builder.h
     internal/build_info.h
-    internal/compiler_info.cc
-    internal/compiler_info.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/subscriber_stub.cc
@@ -144,13 +136,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     set(pubsub_client_unit_tests
         # cmake-format: sort
-        create_subscription_builder_test.cc
-        create_topic_builder_test.cc
-        internal/build_info_test.cc
-        internal/compiler_info_test.cc
-        internal/user_agent_prefix_test.cc
-        subscription_test.cc
-        topic_test.cc)
+        create_subscription_builder_test.cc create_topic_builder_test.cc
+        internal/user_agent_prefix_test.cc subscription_test.cc topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

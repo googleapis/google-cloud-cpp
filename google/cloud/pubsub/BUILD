@@ -16,31 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-genrule(
-    name = "generate_build_info",
-    srcs = ["internal/build_info.cc.in"],
-    outs = ["internal/build_info.cc"],
-    cmd = """
-V="unknown";
-sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;\\$${CMAKE_CXX_FLAGS_.*};-c $(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_PUBSUB_BUILD_METADATA@;$${V};" < $< > $@
-  """,
-    toolchains = [
-        "@bazel_tools//tools/cpp:current_cc_toolchain",
-        "@bazel_tools//tools/cpp:cc_flags",
-    ],
-)
-
 load(":pubsub_client.bzl", "pubsub_client_hdrs", "pubsub_client_srcs")
 
 cc_library(
     name = "pubsub_client",
-    srcs = pubsub_client_srcs + ["internal/build_info.cc"],
+    srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
-    data = [
-        ":generate_build_info",
-    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
