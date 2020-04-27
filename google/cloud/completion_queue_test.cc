@@ -129,8 +129,6 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
 }
 
 TEST(CompletionQueueTest, CanCancelAllEvents) {
-  using ms = std::chrono::milliseconds;
-
   CompletionQueue cq;
   promise<void> done;
   std::thread runner([&cq, &done] {
@@ -138,18 +136,21 @@ TEST(CompletionQueueTest, CanCancelAllEvents) {
     done.set_value();
   });
   for (int i = 0; i < 3; ++i) {
-    cq.MakeRelativeTimer(ms(20000)).then(
+    using hours = std::chrono::hours;
+    cq.MakeRelativeTimer(hours(1)).then(
         [](future<StatusOr<std::chrono::system_clock::time_point>> result) {
           // Cancelled timers return CANCELLED status.
           EXPECT_EQ(StatusCode::kCancelled, result.get().status().code());
         });
   }
+  using ms = std::chrono::milliseconds;
   auto f = done.get_future();
   EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(1)));
   cq.Shutdown();
   EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(1)));
   cq.CancelAll();
-  EXPECT_EQ(std::future_status::ready, f.wait_for(ms(100)));
+  f.wait();
+  EXPECT_TRUE(f.is_ready());
   runner.join();
 }
 
