@@ -15,12 +15,19 @@
 
 set -eu
 
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $(basename "$0") <branch-name>"
+  exit 1
+fi
+BRANCH="$1"
+
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(
     cd "$(dirname "$0")/../../.."
     pwd
   )"
 fi
+source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
@@ -48,43 +55,15 @@ fi
 GH_TOKEN="$(cat "${KOKORO_GFILE_DIR}/github-io-upload-token")"
 readonly GH_TOKEN
 
-# Because Kokoro checks out the code in `detached HEAD` mode there is no easy
-# way to discover what is the current branch (and Kokoro does not expose the
-# branch as an enviroment variable, like other CI systems do). We use the
-# following trick:
-# - Find out the current commit using git rev-parse HEAD.
-# - Find out what branches contain that commit.
-# - Exclude "HEAD detached" branches (they are not really branches).
-# - Typically this is the single branch that was checked out by Kokoro.
-BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" |
-  grep -v 'HEAD detached' || exit 0)"
-BRANCH="${BRANCH/  /}"
-BRANCH="${BRANCH/* /}"
-BRANCH="${BRANCH/origin\//}"
-readonly BRANCH
-
-case "${BRANCH:-}" in
-master)
-  subdir="latest"
-  ;;
-v[0-9]\.*)
-  subdir="${BRANCH/v/}"
-  subdir="${subdir%.x%}"
-  subdir="${subdir}.0"
-  ;;
-*)
-  echo "Will not upload documents as the branch (${BRANCH}) is not a release branch nor 'master'."
-  #exit 0
-  ;;
-esac
-
 # Allow the user to override the destination directory.
 if [[ -n "${DOCS_SUBDIR:-}" ]]; then
   subdir="${DOCS_SUBDIR}"
+else
+  subdir=""
 fi
 
 echo "================================================================"
-echo "Uploading generated Doxygen docs to github.io [${subdir}] $(date)."
+log_normal "Uploading generated Doxygen docs to github.io [${subdir}]."
 
 # The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
 # is to create a branch (gh-pages) and post the documentation in that branch.
@@ -97,7 +76,7 @@ if [[ ! -d cmake-out/github-io-staging ]]; then
   git clone -b gh-pages "${REPO_URL}" cmake-out/github-io-staging
 else
   if [[ ! -d cmake-out/github-io-staging/.git ]]; then
-    echo "github-io-staging exists but it is not a git repository."
+    log_red "github-io-staging exists but it is not a git repository."
     exit 1
   fi
   (cd cmake-out/github-io-staging && git checkout gh-pages && git pull)
@@ -108,11 +87,13 @@ fi
 (
   cd cmake-out/github-io-staging
   git rm -qfr --ignore-unmatch \
-    "${subdir}/{bigtable,firestore,storage}"
+    "${subdir}/{common,bigtable,firestore,storage}"
 )
 
-# Copy the build results into the gh-pages clone.
+log_normal "Copy the build results into the gh-pages clone."
 mkdir -p "cmake-out/github-io-staging/${subdir}"
+cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
+  "cmake-out/github-io-staging/${subdir}/common"
 for lib in bigtable firestore storage; do
   cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
     "cmake-out/github-io-staging/${subdir}/${lib}"
@@ -124,22 +105,25 @@ git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
 git add --all "latest"
 
 if git diff --quiet HEAD; then
-  echo "No changes to the documentation, skipping upload."
+  log_normal "No changes to the documentation, skipping upload."
   exit 0
 fi
 
 git commit -q -m"Automatically generated documentation"
 
 if [[ "${REPO_URL:0:8}" != "https://" ]]; then
-  echo "Repository is not in https:// format, attempting push to ${REPO_URL}"
+  log_normal "Repository is not in https:// format, attempting push to ${REPO_URL}"
   git push
+  log_normal "Documentation upload completed successfully"
   exit 0
 fi
 
 if [[ -z "${GH_TOKEN:-}" ]]; then
-  echo "Skipping documentation upload as GH_TOKEN is not configured."
+  log_normal "Skipping documentation upload as GH_TOKEN is not configured."
   exit 0
 fi
 
 readonly REPO_REF=${REPO_URL/https:\/\//}
 git push https://"${GH_TOKEN}@${REPO_REF}" gh-pages
+
+log_normal "Documentation upload completed successfully"

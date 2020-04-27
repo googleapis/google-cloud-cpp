@@ -88,6 +88,9 @@ upload_docs() {
   return 0
 }
 
+upload_docs "google-cloud-common" \
+  "${BUILD_OUTPUT}/google/cloud/cloud/html" "${BRANCH}" \
+  "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
 upload_docs "google-cloud-bigtable" \
   "${BUILD_OUTPUT}/google/cloud/bigtable/html" "${BRANCH}" \
   "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
