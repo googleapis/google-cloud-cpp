@@ -75,30 +75,24 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_BIGQUERY_BUILD_METADATA)
 message(STATUS "google-cloud-cpp-bigquery build metadata set to"
                " ${GOOGLE_CLOUD_CPP_BIGQUERY_BUILD_METADATA}")
 
-# Create the file that captures build information. Having access to the compiler
-# and build flags at runtime allows us to print better benchmark results.
-string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BIGQUERY_BUILD_TYPE_UPPER)
-configure_file(internal/build_info.cc.in internal/build_info.cc)
-
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     bigquery_client
-    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     client.cc
     client.h
     connection.h
     connection_options.cc
     connection_options.h
-    internal/storage_stub.cc
-    internal/storage_stub.h
     internal/connection_impl.cc
     internal/connection_impl.h
+    internal/storage_stub.cc
+    internal/storage_stub.h
     internal/stream_reader.h
     internal/streaming_read_result_source.cc
     internal/streaming_read_result_source.h
     read_result.h
-    read_stream.h
     read_stream.cc
+    read_stream.h
     row.h
     row_set.h
     version.cc

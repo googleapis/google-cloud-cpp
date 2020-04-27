@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/user_agent_prefix.h"
-#include "google/cloud/pubsub/internal/compiler_info.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,7 +30,7 @@ TEST(UserAgentPrefix, Format) {
   auto const actual = UserAgentPrefix();
   EXPECT_THAT(actual, StartsWith("gcloud-cpp/"));
   EXPECT_THAT(actual, HasSubstr(pubsub::VersionString()));
-  EXPECT_THAT(actual, HasSubstr(CompilerId()));
+  EXPECT_THAT(actual, HasSubstr(::google::cloud::internal::CompilerId()));
 }
 
 }  // namespace

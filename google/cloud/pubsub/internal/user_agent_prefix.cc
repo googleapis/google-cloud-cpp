@@ -3,7 +3,7 @@
 //
 
 #include "google/cloud/pubsub/internal/user_agent_prefix.h"
-#include "google/cloud/pubsub/internal/compiler_info.h"
+#include "google/cloud/internal/compiler_info.h"
 
 namespace google {
 namespace cloud {
@@ -12,8 +12,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string UserAgentPrefix() {
   return "gcloud-cpp/" + google::cloud::pubsub::VersionString() + " (" +
-         CompilerId() + "-" + CompilerVersion() + "; " + CompilerFeatures() +
-         ")";
+         ::google::cloud::internal::CompilerId() + "-" +
+         ::google::cloud::internal::CompilerVersion() + "; " +
+         ::google::cloud::internal::CompilerFeatures() + ")";
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
