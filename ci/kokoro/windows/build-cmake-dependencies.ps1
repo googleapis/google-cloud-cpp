@@ -137,6 +137,8 @@ if ($RunningCI -and $IsCI -and $HasBuildCache) {
     } else {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "upload zip with vcpkg cache."
+        gcloud auth activate-service-account `
+            --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
         gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
         if ($LastExitCode) {
             # Ignore errors, caching failures should not break the build.
