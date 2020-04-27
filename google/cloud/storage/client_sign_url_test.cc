@@ -20,7 +20,6 @@
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {

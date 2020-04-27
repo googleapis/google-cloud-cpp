@@ -76,7 +76,6 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
-        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_benchmarks_unit_tests]

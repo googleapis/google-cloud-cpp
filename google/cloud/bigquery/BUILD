@@ -39,7 +39,7 @@ cc_library(
         ":bigquery_client",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 

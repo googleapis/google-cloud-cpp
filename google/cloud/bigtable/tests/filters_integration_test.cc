@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 
 namespace {
 namespace bigtable = google::cloud::bigtable;
@@ -57,7 +56,7 @@ class FilterIntegrationTest : public bigtable::testing::TableIntegrationTest {
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
       new ::bigtable::testing::TableTestEnvironment);
 

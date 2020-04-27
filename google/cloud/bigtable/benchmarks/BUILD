@@ -62,7 +62,6 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_benchmarks_unit_tests]

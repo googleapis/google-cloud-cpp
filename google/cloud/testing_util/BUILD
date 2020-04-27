@@ -24,7 +24,7 @@ cc_library(
     hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -48,7 +48,7 @@ cc_library(
     hdrs = google_cloud_cpp_testing_grpc_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ],
 )

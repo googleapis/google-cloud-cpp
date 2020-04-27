@@ -23,7 +23,6 @@ google_cloud_cpp_testing_hdrs = [
     "chrono_literals.h",
     "expect_exception.h",
     "expect_future_error.h",
-    "init_google_mock.h",
     "scoped_environment.h",
     "testing_types.h",
 ]
@@ -31,7 +30,6 @@ google_cloud_cpp_testing_hdrs = [
 google_cloud_cpp_testing_srcs = [
     "assert_ok.cc",
     "capture_log_lines_backend.cc",
-    "custom_google_mock_main.cc",
     "scoped_environment.cc",
     "testing_types.cc",
 ]

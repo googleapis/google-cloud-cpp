@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -449,7 +448,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
       new google::cloud::bigtable::testing::TableTestEnvironment);
   return RUN_ALL_TESTS();

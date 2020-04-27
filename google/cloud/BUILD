@@ -92,6 +92,6 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]
