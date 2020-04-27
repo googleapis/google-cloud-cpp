@@ -14,11 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# This should be included from the top level CMakeLists file
-set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
-set(GOOGLE_CLOUD_CPP_VERSION_MINOR 26)
-set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
-
 string(CONCAT GOOGLE_CLOUD_CPP_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}" "."
               "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
               "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
@@ -29,9 +24,7 @@ configure_file(internal/version_info.h.in
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-)
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/README.md"

@@ -99,7 +99,7 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  * contains the expected result. Operations that do not return a value simply
  * return a `google::cloud::Status` indicating success or the details of the
  * error Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * @code
  * namespace cbt = google::cloud::bigtable;
@@ -150,7 +150,7 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
  *     for an overview of the underlying Cloud Bigtable API.
  *
- * @see #google::cloud::v0::StatusOr for a description of the error reporting
+ * @see #google::cloud::v1::StatusOr for a description of the error reporting
  *     class used by this library.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
