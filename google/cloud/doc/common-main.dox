@@ -1,0 +1,28 @@
+/*!
+@mainpage Common Components for the Google Cloud C++ Client Libraries
+
+# Overview
+
+This library contains common components shared by all the Google Cloud C++
+Client Libraries. Including:
+
+- [Status](@ref google::cloud::v1::Status) error codes and details from an
+  operation.
+- [StatusOr<T>](@ref google::cloud::v1::StatusOr) returns a value on success
+  and a `Status` on error.
+- [optional<T>](@ref google::cloud::v1::optional) a backport of `std::optional`
+  for C++11.
+- [future<T>](@ref google::cloud::v1::future) and
+  [promise<T>](@ref google::cloud::v1::promise) futures (a holder that will
+  receive a value asynchronously) and promises (the counterpart of a future,
+  where values are stored asynchronously). They satisfy the API for
+  `std::future` and `std::promise`, and add support for callbacks and
+  cancellation.
+
+@warning The symbols in the `google::cloud::internal` namespace are
+implementation details and subject to change and/or removal without notice.
+
+@warning The symbols in the `google::cloud::testing_util` namespace are
+implementation details and subject to change and/or removal without notice.
+
+*/

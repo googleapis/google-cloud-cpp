@@ -38,7 +38,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/pubsub/*"
     "*/google/cloud/grpc_utils/*"
     "*/google/cloud/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOL "internal")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
