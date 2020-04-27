@@ -25,10 +25,8 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
-        custom_google_mock_main.cc
         expect_exception.h
         expect_future_error.h
-        init_google_mock.h
         scoped_environment.cc
         scoped_environment.h
         testing_types.cc

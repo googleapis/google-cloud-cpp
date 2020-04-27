@@ -32,8 +32,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_integration_samples]
 
@@ -44,6 +43,6 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_unit_samples]

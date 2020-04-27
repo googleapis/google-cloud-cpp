@@ -23,7 +23,6 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <type_traits>
@@ -451,7 +450,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
 
   return RUN_ALL_TESTS();
 }

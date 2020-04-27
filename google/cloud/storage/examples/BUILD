@@ -39,7 +39,7 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples_unit_tests]
 
@@ -56,7 +56,6 @@ load(":storage_examples.bzl", "storage_examples")
         ":storage_examples_common",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples]

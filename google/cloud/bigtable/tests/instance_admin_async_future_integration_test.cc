@@ -19,7 +19,6 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
