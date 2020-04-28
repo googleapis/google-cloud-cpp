@@ -354,13 +354,17 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   if (!signed_blob) {
     return signed_blob.status();
   }
-
+  std::string signature = internal::HexEncode(signed_blob->signed_blob);
+  auto required_fiels = request.RequiredFormFields();
+  required_fiels["x-goog-signature"] = signature;
+  required_fiels["policy"] = base64_policy;
   return PolicyDocumentV4Result{request.Url(),
                                 request.Credentials(),
                                 request.ExpirationDate(),
                                 base64_policy,
-                                internal::HexEncode(signed_blob->signed_blob),
-                                "GOOG4-RSA-SHA256"};
+                                signature,
+                                "GOOG4-RSA-SHA256",
+                                std::move(required_fiels)};
 }
 
 std::string CreateRandomPrefixName(std::string const& prefix) {

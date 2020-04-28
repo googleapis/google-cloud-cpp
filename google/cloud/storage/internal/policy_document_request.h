@@ -130,7 +130,11 @@ class PolicyDocumentV4Request {
 
   std::string Credentials() const;
 
+  std::map<std::string, std::string> RequiredFormFields() const;
+
  private:
+  std::vector<PolicyDocumentCondition> GetAllConditions() const;
+
   PolicyDocumentV4 document_;
   SigningAccount signing_account_;
   SigningAccountDelegates signing_account_delegates_;

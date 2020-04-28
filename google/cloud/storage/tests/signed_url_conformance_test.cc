@@ -266,6 +266,11 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   std::string const expected_date = fields["x-goog-date"];
   std::string const expected_signature = fields["x-goog-signature"];
   std::string const expected_policy = fields["policy"];
+
+  std::map<std::string, std::string> expected_form_fields;
+  for (auto const& field : fields.items()) {
+    expected_form_fields[field.key()] = field.value();
+  }
   // We need to escape it because nl::json interprets the escaped characters.
   std::string const expected_decoded_policy =
       *internal::PostPolicyV4Escape(output["expectedDecodedPolicy"]);
@@ -295,6 +300,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
                                doc_res->expiration - valid_for));
   EXPECT_EQ(expected_algorithm, doc_res->signing_algorithm);
   EXPECT_EQ(expected_signature, doc_res->signature);
+  EXPECT_EQ(expected_form_fields, doc_res->required_form_fields);
 }
 
 INSTANTIATE_TEST_SUITE_P(

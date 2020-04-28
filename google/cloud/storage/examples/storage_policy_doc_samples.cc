@@ -95,19 +95,12 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
     // Create the HTML form for the computed policy.
     std::ostringstream os;
     os << "<form action='" << document->url << "' method='POST'"
-       << " enctype='multipart/form-data'>\n"
-       << "  <input name='key' value='" << object_name << "' type='hidden' />\n"
-       << "  <input name='policy' value='" << document->policy
-       << "' type='hidden' />\n"
-       << "  <input name='x-goog-algorithm' value='"
-       << document->signing_algorithm << "' type='hidden' />\n"
-       << "  <input name='x-goog-credential' value='" << document->access_id
-       << "' type='hidden' />\n"
-       << "  <input name='x-goog-date' value='"
-       << gcs::FormatDateForForm(*document) << "' type='hidden' />\n"
-       << "  <input name='x-goog-signature' value='" << document->signature
-       << "' type='hidden' />\n"
-       << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
+       << " enctype='multipart/form-data'>\n";
+    for (auto const& field : document->required_form_fields) {
+      os << "  <input name='" << field.first << "' value='" << field.second
+         << "' type='hidden' />\n";
+    }
+    os << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
        << "  <input type='file' name='file' /><br />\n"
        << "</form>";
 

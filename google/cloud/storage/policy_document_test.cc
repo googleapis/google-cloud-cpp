@@ -186,7 +186,8 @@ TEST(PolicyDocumentTests, PolicyDocumentV4ResultStreaming) {
       google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
       "test-policy",
       "test-sig",
-      "test-alg"};
+      "test-alg",
+      {}};
   std::ostringstream os;
   os << result;
   auto actual = os.str();
