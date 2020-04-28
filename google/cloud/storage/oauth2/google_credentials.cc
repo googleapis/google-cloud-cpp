@@ -164,14 +164,14 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
   }
 
-  // 3) Check for implicit environment-based credentials (GCE, GAE Flexible
-  // Environment).
-  // Note: GCE credentials *should* also work when running on a VM instance in
-  // the App Engine Flexible Environment, but this has not been explicitly
-  // tested, as it requires a custom GAEF runtime.
-  if (storage::internal::RunningOnComputeEngineVm()) {
-    return StatusOr<std::shared_ptr<Credentials>>(
-        std::make_shared<ComputeEngineCredentials<>>());
+  // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
+  // Cloud Run or GKE Environment).
+  auto gce_creds = std::make_shared<ComputeEngineCredentials<>>();
+  auto override_val =
+      google::cloud::internal::GetEnv(internal::GceCheckOverrideEnvVar());
+  if (override_val.has_value() ? (std::string("1") == *override_val)
+                               : gce_creds->AuthorizationHeader().ok()) {
+    return StatusOr<std::shared_ptr<Credentials>>(std::move(gce_creds));
   }
 
   // We've exhausted all search points, thus credentials cannot be constructed.

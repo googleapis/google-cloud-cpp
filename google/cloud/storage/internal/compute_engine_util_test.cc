@@ -26,24 +26,11 @@ namespace {
 class ComputeEngineUtilTest : public ::testing::Test {
  public:
   ComputeEngineUtilTest()
-      : gce_check_override_env_var_(GceCheckOverrideEnvVar(), {}),
-        gce_metadata_hostname_env_var_(GceMetadataHostnameEnvVar(), {}) {}
+      : gce_metadata_hostname_env_var_(GceMetadataHostnameEnvVar(), {}) {}
 
  protected:
-  google::cloud::testing_util::ScopedEnvironment gce_check_override_env_var_;
   google::cloud::testing_util::ScopedEnvironment gce_metadata_hostname_env_var_;
 };
-
-/// @test Ensure we can override the return value for checking if we're on GCE.
-TEST_F(ComputeEngineUtilTest, CanOverrideRunningOnGceCheckViaEnvVar) {
-  google::cloud::testing_util::ScopedEnvironment gce_check_override_env_var1(
-      GceCheckOverrideEnvVar(), "1");
-  EXPECT_TRUE(RunningOnComputeEngineVm());
-
-  google::cloud::testing_util::ScopedEnvironment gce_check_override_env_var0(
-      GceCheckOverrideEnvVar(), "0");
-  EXPECT_FALSE(RunningOnComputeEngineVm());
-}
 
 /// @test Ensure we can override the value for the GCE metadata hostname.
 TEST_F(ComputeEngineUtilTest, CanOverrideGceMetadataHostname) {

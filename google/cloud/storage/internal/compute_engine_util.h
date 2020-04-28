@@ -48,16 +48,6 @@ inline char const* GceMetadataHostnameEnvVar() {
   return kEnvVarName;
 }
 
-/**
- * Returns true if the program is running on a Compute Engine VM.
- *
- * This method checks the system BIOS information to determine if the program
- * is running on a GCE VM. This has proven to be more reliable than pinging the
- * GCE metadata server (e.g. the metadata server may be temporarily unavailable,
- * the VM may be experiencing network issues, etc.).
- */
-bool RunningOnComputeEngineVm();
-
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
