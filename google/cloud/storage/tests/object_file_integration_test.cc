@@ -50,7 +50,7 @@ TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -84,7 +84,7 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -118,7 +118,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_FALSE(status.ok());

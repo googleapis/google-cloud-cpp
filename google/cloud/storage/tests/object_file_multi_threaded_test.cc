@@ -56,8 +56,10 @@ class ObjectFileMultiThreadedTest
 
   std::vector<std::string> CreateObjectNames() {
     std::vector<std::string> object_names(object_count_);
+    // Use MakeRandomFilename() because the same name is used for
+    // the destination file.
     std::generate_n(object_names.begin(), object_names.size(),
-                    [this] { return MakeRandomObjectName(); });
+                    [this] { return MakeRandomFilename(); });
     return object_names;
   }
 
