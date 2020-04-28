@@ -54,7 +54,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   // Construct a large object, or at least large enough that it is not
   // downloaded in the first chunk.
@@ -612,7 +612,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   Status status = client.DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_FALSE(status.ok());
@@ -627,7 +627,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   std::ofstream(file_name, std::ios::binary) << LoremIpsum();
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace google {
@@ -68,16 +69,21 @@ std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
       .clone();
 }
 
+std::string StorageIntegrationTest::MakeRandomBucketName() {
+  // The total length of this bucket name must be <= 63 characters,
+  char constexpr kPrefix[] = "gcs-cpp-test-bucket-";  // NOLINT
+  auto constexpr kMaxBucketNameLength = 63;
+  static_assert(kMaxBucketNameLength > sizeof(kPrefix),
+                "The bucket prefix is too long");
+  return storage::testing::MakeRandomBucketName(generator_, kPrefix);
+}
+
 std::string StorageIntegrationTest::MakeRandomObjectName() {
-  // GCS accepts object name up to 1024 characters, but 128 seems long enough to
-  // avoid collisions.
-  auto constexpr kObjectNameLength = 128;
-  return "ob-" +
-         google::cloud::internal::Sample(generator_, kObjectNameLength,
-                                         "abcdefghijklmnopqrstuvwxyz"
-                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         "012456789") +
-         ".txt";
+  return "ob-" + storage::testing::MakeRandomObjectName(generator_) + ".txt";
+}
+
+std::string StorageIntegrationTest::MakeRandomFilename() {
+  return storage::testing::MakeRandomFileName(generator_);
 }
 
 std::string StorageIntegrationTest::LoremIpsum() {
@@ -100,17 +106,6 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
   // them. Google Cloud Storage does not save customer-supplied keys, and if
   // lost the encrypted data cannot be decrypted.
   return CreateKeyFromGenerator(generator_);
-}
-
-std::string StorageIntegrationTest::MakeRandomBucketName() {
-  // The total length of this bucket name must be <= 63 characters,
-  auto constexpr kPrefix = "gcs-cpp-test-bucket-";
-  auto constexpr kMaxBucketNameLength = 63;
-  auto const max_random_characters =
-      kMaxBucketNameLength - std::strlen(kPrefix);
-  return kPrefix + google::cloud::internal::Sample(
-                       generator_, static_cast<int>(max_random_characters),
-                       "abcdefghijklmnopqrstuvwxyz012456789");
 }
 
 bool StorageIntegrationTest::UsingTestbench() {

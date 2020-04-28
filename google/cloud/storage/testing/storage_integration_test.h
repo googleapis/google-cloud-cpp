@@ -40,13 +40,13 @@ class StorageIntegrationTest : public ::testing::Test {
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
   static std::unique_ptr<RetryPolicy> TestRetryPolicy();
 
+  std::string MakeRandomBucketName();
   std::string MakeRandomObjectName();
+  std::string MakeRandomFilename();
 
   static std::string LoremIpsum();
 
   EncryptionKeyData MakeEncryptionKeyData();
-
-  std::string MakeRandomBucketName();
 
   static constexpr int kDefaultRandomLineCount = 1000;
   static constexpr int kDefaultLineSize = 200;
