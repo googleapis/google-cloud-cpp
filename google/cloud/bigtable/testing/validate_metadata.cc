@@ -24,6 +24,7 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 #include <regex>
+#include <sstream>
 
 namespace google {
 namespace cloud {
