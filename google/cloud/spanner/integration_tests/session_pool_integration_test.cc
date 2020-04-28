@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/testing/database_environment.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -115,7 +114,7 @@ TEST(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
-  ::google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
       new google::cloud::spanner_testing::DatabaseEnvironment());
 

@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_environment.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <future>
 #include <random>
@@ -196,7 +195,7 @@ TEST(ClientStressTest, UpsertAndRead) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
-  ::google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
 
   // TODO(#...) - refactor google-cloud-cpp code for command-line parsing.
   std::string const table_size_arg = "--table-size=";

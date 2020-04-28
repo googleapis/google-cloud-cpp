@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -347,7 +346,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
-  ::google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
       new google::cloud::spanner_testing::DatabaseEnvironment());
 
