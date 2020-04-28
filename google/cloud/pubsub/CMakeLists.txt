@@ -157,6 +157,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
                     google_cloud_cpp_testing_grpc GTest::gmock_main
                     GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
 
         # With googletest it is relatively easy to exceed the default number of
         # sections (~65,000) in a single .obj file. Add the /bigobj option to
