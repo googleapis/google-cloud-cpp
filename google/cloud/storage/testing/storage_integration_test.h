@@ -31,18 +31,18 @@ namespace testing {
  */
 class StorageIntegrationTest : public ::testing::Test {
  protected:
-  google::cloud::StatusOr<google::cloud::storage::Client>
+  static google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient();
 
-  google::cloud::StatusOr<google::cloud::storage::Client>
+  static google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy);
 
-  std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
-  std::unique_ptr<RetryPolicy> TestRetryPolicy();
+  static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
+  static std::unique_ptr<RetryPolicy> TestRetryPolicy();
 
   std::string MakeRandomObjectName();
 
-  std::string LoremIpsum() const;
+  static std::string LoremIpsum();
 
   EncryptionKeyData MakeEncryptionKeyData();
 
@@ -57,7 +57,7 @@ class StorageIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomData(std::size_t desired_size);
 
-  bool UsingTestbench() const;
+  static bool UsingTestbench();
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();

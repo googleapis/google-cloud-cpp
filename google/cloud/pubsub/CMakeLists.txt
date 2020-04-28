@@ -112,12 +112,12 @@ target_include_directories(
 target_link_libraries(
     pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                          googleapis-c++::pubsub_protos)
+google_cloud_cpp_add_common_options(pubsub_client)
+google_cloud_cpp_add_clang_tidy(pubsub_client)
 set_target_properties(
     pubsub_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                              SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 target_compile_options(pubsub_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-google_cloud_cpp_add_common_options(pubsub_client)
 
 add_library(googleapis-c++::pubsub_client ALIAS pubsub_client)
 

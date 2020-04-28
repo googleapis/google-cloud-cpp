@@ -106,13 +106,13 @@ target_include_directories(
 target_link_libraries(
     bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                            googleapis-c++::cloud_bigquery_protos)
+google_cloud_cpp_add_common_options(bigquery_client)
+google_cloud_cpp_add_clang_tidy(bigquery_client)
 set_target_properties(
     bigquery_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                                SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 target_compile_options(bigquery_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-google_cloud_cpp_add_common_options(bigquery_client)
 
 add_library(googleapis-c++::bigquery_client ALIAS bigquery_client)
 
@@ -137,6 +137,8 @@ function (bigquery_client_define_tests)
         bigquery_client_testing
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
                GTest::gmock_main GTest::gmock GTest::gtest)
+    google_cloud_cpp_add_common_options(bigquery_client_testing)
+    google_cloud_cpp_add_clang_tidy(bigquery_client_testing)
     create_bazel_config(bigquery_client_testing YEAR "2019")
     target_include_directories(
         bigquery_client_testing

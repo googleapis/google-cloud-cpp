@@ -172,6 +172,7 @@ target_link_libraries(
     google_cloud_cpp_common
     PUBLIC Threads::Threads
     PRIVATE google_cloud_cpp_common_options)
+google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -197,7 +198,6 @@ set_target_properties(
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common YEAR 2018)
-google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 add_subdirectory(testing_util)
 
@@ -336,6 +336,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         PUBLIC googleapis-c++::rpc_status_protos google_cloud_cpp_common
                gRPC::grpc++ gRPC::grpc
         PRIVATE google_cloud_cpp_common_options)
+    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
     target_include_directories(
         google_cloud_cpp_grpc_utils
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -350,7 +351,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
 
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
-    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
 
     if (BUILD_TESTING)
         # List the unit tests, then setup the targets and dependencies.

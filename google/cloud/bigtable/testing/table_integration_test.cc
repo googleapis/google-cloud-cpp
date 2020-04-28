@@ -20,8 +20,6 @@
 #include <algorithm>
 #include <cctype>
 
-namespace btadmin = ::google::bigtable::admin::v2;
-
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -69,12 +67,16 @@ void TableTestEnvironment::SetUp() {
   std::string const family2 = "family2";
   std::string const family3 = "family3";
   std::string const family4 = "family4";
-  bigtable::TableConfig table_config =
-      bigtable::TableConfig({{family1, bigtable::GcRule::MaxNumVersions(10)},
-                             {family2, bigtable::GcRule::MaxNumVersions(10)},
-                             {family3, bigtable::GcRule::MaxNumVersions(10)},
-                             {family4, bigtable::GcRule::MaxNumVersions(10)}},
-                            {});
+  auto constexpr kTestMaxVersions = 10;
+  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {
+          {family1, test_gc_rule},
+          {family2, test_gc_rule},
+          {family3, test_gc_rule},
+          {family4, test_gc_rule},
+      },
+      {});
 
   table_id_ = RandomTableId();
   ASSERT_STATUS_OK(table_admin.CreateTable(table_id_, table_config));
@@ -99,11 +101,11 @@ std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
 std::string TableTestEnvironment::RandomTableId() {
   // This value was discovered by trial and error, it is not documented in the
   // proto files.
-  constexpr int kMaxTableIdLength = 50;
-  static char const prefix[] = "table-";
-  static_assert(kMaxTableIdLength > sizeof(prefix), "prefix is too long");
-  constexpr int sample_count = kMaxTableIdLength - sizeof(prefix) + 1;
-  return CreateRandomId(prefix, sample_count);
+  auto constexpr kMaxTableIdLength = 50;
+  static char const kPrefix[] = "table-";  // NOLINT(modernize-avoid-c-arrays)
+  static_assert(kMaxTableIdLength > sizeof(kPrefix), "prefix is too long");
+  auto constexpr kSampleCount = kMaxTableIdLength - sizeof(kPrefix) + 1;
+  return CreateRandomId(kPrefix, kSampleCount);
 }
 
 std::string TableTestEnvironment::RandomInstanceId() {
@@ -115,12 +117,12 @@ std::string TableTestEnvironment::RandomInstanceId() {
   // returned values, these fields have their limits (e.g. 30 for cluster id)
   // so need to keep some reserve.
   constexpr int kReserveForSuffix = 10;
-  static char const prefix[] = "inst-";
-  static_assert((kMaxInstanceIdLength - kReserveForSuffix) > sizeof(prefix),
+  static char const kPrefix[] = "inst-";  // NOLINT(modernize-avoid-c-arrays)
+  static_assert((kMaxInstanceIdLength - kReserveForSuffix) > sizeof(kPrefix),
                 "prefix is too long");
-  constexpr int sample_count =
-      (kMaxInstanceIdLength - kReserveForSuffix) - sizeof(prefix) + 1;
-  return CreateRandomId(prefix, sample_count);
+  auto constexpr kSampleCount =
+      (kMaxInstanceIdLength - kReserveForSuffix) - sizeof(kPrefix) + 1;
+  return CreateRandomId(kPrefix, kSampleCount);
 }
 
 void TableIntegrationTest::SetUp() {
@@ -189,7 +191,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
-    std::string table_name, bigtable::Filter filter) {
+    std::string const& table_name, bigtable::Filter filter) {
   bigtable::Table table(data_client_, table_name);
   return ReadRows(table, std::move(filter));
 }
@@ -224,7 +226,9 @@ void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
   std::map<RowKeyType, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
-    using namespace std::chrono;
+    using std::chrono::duration_cast;
+    using std::chrono::microseconds;
+    using std::chrono::milliseconds;
     auto key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
     inserted.first->second.emplace_back(bigtable::SetCell(
@@ -254,11 +258,10 @@ std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
   std::vector<bigtable::Cell> return_cells;
   std::transform(cells.begin(), cells.end(), std::back_inserter(return_cells),
                  [](Cell& cell) {
-                   bigtable::Cell newCell(
+                   return bigtable::Cell(
                        std::move(cell.row_key()), std::move(cell.family_name()),
                        std::move(cell.column_qualifier()), 0,
                        std::move(cell.value()), std::move(cell.labels()));
-                   return newCell;
                  });
 
   return return_cells;

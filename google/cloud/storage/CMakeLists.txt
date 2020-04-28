@@ -232,6 +232,8 @@ target_link_libraries(
            OpenSSL::Crypto
            ZLIB::ZLIB
     PRIVATE storage_common_options)
+google_cloud_cpp_add_common_options(storage_client)
+google_cloud_cpp_add_clang_tidy(storage_client)
 target_include_directories(
     storage_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -270,7 +272,6 @@ set_target_properties(
         SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 create_bazel_config(storage_client)
-google_cloud_cpp_add_clang_tidy(storage_client)
 
 if (BUILD_TESTING)
     add_library(
@@ -294,6 +295,8 @@ if (BUILD_TESTING)
         PUBLIC storage_client nlohmann_json GTest::gmock_main GTest::gmock
                GTest::gtest
         PRIVATE storage_common_options)
+    google_cloud_cpp_add_common_options(storage_client_testing)
+    google_cloud_cpp_add_clang_tidy(storage_client_testing)
     target_include_directories(
         storage_client_testing
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

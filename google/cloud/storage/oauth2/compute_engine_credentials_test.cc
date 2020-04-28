@@ -47,10 +47,10 @@ using ::testing::UnorderedElementsAre;
 class ComputeEngineCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    MockHttpRequestBuilder::mock =
+    MockHttpRequestBuilder::mock_ =
         std::make_shared<MockHttpRequestBuilder::Impl>();
   }
-  void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
+  void TearDown() override { MockHttpRequestBuilder::mock_.reset(); }
 };
 
 /// @test Verify that we can create and refresh ComputeEngineCredentials.
@@ -76,7 +76,7 @@ TEST_F(ComputeEngineCredentialsTest,
   EXPECT_CALL(*second_mock_req_impl, MakeRequest(_))
       .WillOnce(Return(HttpResponse{200, token_info_resp, {}}));
 
-  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
       .WillOnce(Invoke([first_mock_req_impl] {
         MockHttpRequest mock_request;
@@ -231,7 +231,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
       // Parse with an invalid metadata response.
       .WillOnce(Return(HttpResponse{1, svc_acct_info_resp, {}}));
 
-  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
       .Times(3)
       .WillRepeatedly(Invoke([first_mock_req_impl] {
@@ -297,7 +297,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
       .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}))
       .WillOnce(Return(HttpResponse{1, token_info_resp, {}}));
 
-  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  auto mock_req_builder = MockHttpRequestBuilder::mock_;
   auto mock_matcher = Invoke([mock_req] {
     MockHttpRequest mock_request;
     mock_request.mock = mock_req;
@@ -369,7 +369,7 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
   EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
       .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}));
 
-  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
       .WillOnce(Invoke([first_mock_req_impl] {
         MockHttpRequest mock_request;

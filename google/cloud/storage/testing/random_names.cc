@@ -31,14 +31,21 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
-  return google::cloud::internal::Sample(gen, 128,
+  // GCS accepts object name up to 1024 characters, but 128 seems long enough to
+  // avoid collisions.
+  auto constexpr kObjectNameLength = 128;
+  return google::cloud::internal::Sample(gen, kObjectNameLength,
                                          "abcdefghijklmnopqrstuvwxyz"
                                          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                          "0123456789");
 }
 
 std::string MakeRandomFileName(google::cloud::internal::DefaultPRNG& gen) {
-  return google::cloud::internal::Sample(gen, 28,
+  // All the operating systems we support handle filenames with 28 characters,
+  // they may support much longer names in fact, but 28 is good enough for our
+  // purposes.
+  auto constexpr kFilenameLength = 28;
+  return google::cloud::internal::Sample(gen, kFilenameLength,
                                          "abcdefghijklmnopqrstuvwxyz"
                                          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                          "0123456789") +
