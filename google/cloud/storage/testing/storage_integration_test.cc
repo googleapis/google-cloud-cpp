@@ -58,9 +58,8 @@ std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
 
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
   auto constexpr kBackoffScalingFactor = 2.0;
-  return ExponentialBackoffPolicy(initial_delay,
-                                  /*maximum_delay=*/kMaximumBackoffDelay,
-                                  /*scaling=*/kBackoffScalingFactor)
+  return ExponentialBackoffPolicy(initial_delay, kMaximumBackoffDelay,
+                                  kBackoffScalingFactor)
       .clone();
 }
 
