@@ -13,6 +13,11 @@
 #  -modernize-return-braced-init-list: We think removing typenames and using
 #      only braced-init can hurt readability.
 #
+#  -modernize-avoid-c-arrays: We only use C arrays when they seem to be the
+#      right tool for the job, such as `char foo[] = "hello"`. In these cases,
+#      avoiding C arrays often makes the code less readable, and std::array is
+#      not a drop-in replacement because it doesn't deduce the size.
+#
 #  -performance-move-const-arg: This warning requires the developer to
 #      know/care more about the implementation details of types/functions than
 #      should be necessary. For example, `A a; F(std::move(a));` will trigger a
@@ -40,6 +45,7 @@ Checks: >
   -misc-non-private-member-variables-in-classes,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
+  -modernize-avoid-c-arrays,
   -performance-move-const-arg,
   -readability-braces-around-statements,
   -readability-magic-numbers,
