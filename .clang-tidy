@@ -39,17 +39,18 @@ Checks: >
   -google-runtime-references,
   -misc-non-private-member-variables-in-classes,
   -modernize-return-braced-init-list,
-  -performance-move-const-arg,
-  -readability-named-parameter,
   -modernize-use-trailing-return-type,
+  -performance-move-const-arg,
   -readability-braces-around-statements,
+  -readability-magic-numbers,
+  -readability-named-parameter,
   -readability-redundant-declaration
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
 
 # TODO(#3920) - Enable clang-tidy checks in our headers.
-HeaderFilterRegex: "google/cloud/pubsub/.*"
+HeaderFilterRegex: "google/cloud/(pubsub|spanner)/.*"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
