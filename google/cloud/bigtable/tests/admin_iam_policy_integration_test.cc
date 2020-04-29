@@ -36,11 +36,6 @@ class AdminIAMPolicyIntegrationTest
   std::string service_account_;
 
   void SetUp() {
-    if (google::cloud::internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
-            .value_or("") != "yes") {
-      GTEST_SKIP();
-    }
     service_account_ = google::cloud::internal::GetEnv(
                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
