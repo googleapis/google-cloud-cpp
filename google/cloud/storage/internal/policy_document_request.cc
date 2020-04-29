@@ -219,16 +219,13 @@ std::string PolicyDocumentV4Request::Credentials() const {
          "/auto/storage/goog4_request";
 }
 
-std::string PolicyDocumentV4Request::StringToSign() const {
-  using internal::nl::json;
-  auto const document = policy_document();
-
-  json j;
-
+std::vector<PolicyDocumentCondition> PolicyDocumentV4Request::GetAllConditions()
+    const {
   std::vector<PolicyDocumentCondition> conditions;
   for (auto const& field : extension_fields_) {
     conditions.push_back(PolicyDocumentCondition({field.first, field.second}));
   }
+  auto const& document = policy_document();
   std::copy(document.conditions.begin(), document.conditions.end(),
             std::back_inserter(conditions));
   conditions.push_back(PolicyDocumentCondition({"key", document.object}));
@@ -239,9 +236,32 @@ std::string PolicyDocumentV4Request::StringToSign() const {
       PolicyDocumentCondition({"x-goog-credential", Credentials()}));
   conditions.push_back(
       PolicyDocumentCondition({"x-goog-algorithm", "GOOG4-RSA-SHA256"}));
-  j["conditions"] = TransformConditions(conditions);
+  return conditions;
+}
+
+std::string PolicyDocumentV4Request::StringToSign() const {
+  using internal::nl::json;
+  json j;
+  j["conditions"] = TransformConditions(GetAllConditions());
   j["expiration"] = google::cloud::internal::FormatRfc3339(ExpirationDate());
   return std::move(j).dump();
+}
+
+std::map<std::string, std::string> PolicyDocumentV4Request::RequiredFormFields()
+    const {
+  std::map<std::string, std::string> res;
+  for (auto const& condition : GetAllConditions()) {
+    auto const& elements = condition.elements();
+    if (elements.size() == 2) {
+      res[elements[0]] = elements[1];
+      continue;
+    }
+    if (elements.size() == 3 && elements[0] == "eq" && elements[1].size() > 1 &&
+        elements[1][0] == '$') {
+      res[elements[1].substr(1)] = elements[2];
+    }
+  }
+  return res;
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r) {

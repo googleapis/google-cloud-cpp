@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include <chrono>
+#include <map>
 #include <string>
 #include <utility>
 #include <vector>
@@ -194,6 +195,7 @@ struct PolicyDocumentV4Result {
   std::string policy;
   std::string signature;
   std::string signing_algorithm;
+  std::map<std::string, std::string> required_form_fields;
 };
 
 /// Format the current date in the format expected by a POST form
