@@ -39,21 +39,19 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 
   // Setup the return type of the ExecuteQuery results:
   //! [return-metadata]
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Greeting",
+        type: { code: STRING }
+      }
+    })pb";
   google::spanner::v1::ResultSetMetadata metadata;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Id",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "Greeting",
-            type: { code: STRING }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   //! [return-metadata]
 

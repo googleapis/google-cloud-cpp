@@ -168,17 +168,16 @@ TEST(ProfileQueryResult, TimestampPresent) {
 
 TEST(ProfileQueryResult, ExecutionStats) {
   auto mock_source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    query_stats {
+      fields {
+        key: "elapsed_time"
+        value { string_value: "42 secs" }
+      }
+    }
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        query_stats {
-          fields {
-            key: "elapsed_time"
-            value { string_value: "42 secs" }
-          }
-        }
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
   std::vector<std::pair<const std::string, std::string>> expected;
@@ -190,12 +189,11 @@ TEST(ProfileQueryResult, ExecutionStats) {
 
 TEST(ProfileQueryResult, ExecutionPlan) {
   auto mock_source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    query_plan { plan_nodes: { index: 42 } }
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        query_plan { plan_nodes: { index: 42 } }
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillRepeatedly(Return(stats));
 
   ProfileQueryResult query_result(std::move(mock_source));
@@ -205,12 +203,11 @@ TEST(ProfileQueryResult, ExecutionPlan) {
 
 TEST(DmlResult, RowsModified) {
   auto mock_source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_count_exact: 42
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_count_exact: 42
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
   DmlResult dml_result(std::move(mock_source));
@@ -219,12 +216,11 @@ TEST(DmlResult, RowsModified) {
 
 TEST(ProfileDmlResult, RowsModified) {
   auto mock_source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_count_exact: 42
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_count_exact: 42
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
   ProfileDmlResult dml_result(std::move(mock_source));
@@ -233,17 +229,16 @@ TEST(ProfileDmlResult, RowsModified) {
 
 TEST(ProfileDmlResult, ExecutionStats) {
   auto mock_source = make_unique<MockResultSetSource>();
-  google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  auto constexpr kText =
       R"pb(
-        query_stats {
-          fields {
-            key: "elapsed_time"
-            value { string_value: "42 secs" }
-          }
-        }
-      )pb",
-      &stats));
+    query_stats {
+      fields {
+        key: "elapsed_time"
+        value { string_value: "42 secs" }
+      }
+    })pb";
+  google::spanner::v1::ResultSetStats stats;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
   EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
 
   std::vector<std::pair<const std::string, std::string>> expected;

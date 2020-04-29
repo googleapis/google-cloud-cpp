@@ -65,20 +65,19 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  */
 TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "AnInt",
-              type: { code: INT64 }
-            }
-          }
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "AnInt",
+          type: { code: INT64 }
         }
-        values: { string_value: "80" }
-      )pb",
-      &response));
+      }
+    }
+    values: { string_value: "80" }
+  )pb";
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
@@ -116,8 +115,9 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto constexpr kText = R"pb(metadata: {})pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(metadata: {})pb", &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
@@ -135,11 +135,11 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto constexpr kText = R"pb(
+    metadata: {}
+    values: { string_value: "10" })pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(
-                                            metadata: {}
-                                            values: { string_value: "10" })pb",
-                                          &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read()).WillOnce(Return(response));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
@@ -161,41 +161,40 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
  */
 TEST(PartialResultSetSourceTest, SingleResponse) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "10" }
+    values: { string_value: "user10" }
+    stats: {
+      query_stats: {
+        fields: {
+          key: "rows_returned",
+          value: { string_value: "1" }
+        }
+        fields: {
+          key: "elapsed_time",
+          value: { string_value: "1.22 secs" }
+        }
+        fields: {
+          key: "cpu_time",
+          value: { string_value: "1.19 secs" }
+        }
+      }
+    }
+  )pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "UserId",
-              type: { code: INT64 }
-            }
-            fields: {
-              name: "UserName",
-              type: { code: STRING }
-            }
-          }
-        }
-        values: { string_value: "10" }
-        values: { string_value: "user10" }
-        stats: {
-          query_stats: {
-            fields: {
-              key: "rows_returned",
-              value: { string_value: "1" }
-            }
-            fields: {
-              key: "elapsed_time",
-              value: { string_value: "1.22 secs" }
-            }
-            fields: {
-              key: "cpu_time",
-              value: { string_value: "1.19 secs" }
-            }
-          }
-        }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
@@ -206,21 +205,21 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned metadata is correct.
+  auto constexpr kTextExpectedMetadata = R"pb(
+    row_type: {
+      fields: {
+        name: "UserId",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "UserName",
+        type: { code: STRING }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata expected_metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "UserId",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "UserName",
-            type: { code: STRING }
-          }
-        }
-      )pb",
-      &expected_metadata));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kTextExpectedMetadata, &expected_metadata));
   auto actual_metadata = (*reader)->Metadata();
   EXPECT_TRUE(actual_metadata.has_value());
   EXPECT_THAT(*actual_metadata, IsProtoEqual(expected_metadata));
@@ -235,25 +234,24 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(Row{}));
 
   // Verify the returned stats are correct.
+  auto constexpr kTextExpectedStats = R"pb(
+    query_stats: {
+      fields: {
+        key: "rows_returned",
+        value: { string_value: "1" }
+      }
+      fields: {
+        key: "elapsed_time",
+        value: { string_value: "1.22 secs" }
+      }
+      fields: {
+        key: "cpu_time",
+        value: { string_value: "1.19 secs" }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetStats expected_stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        query_stats: {
-          fields: {
-            key: "rows_returned",
-            value: { string_value: "1" }
-          }
-          fields: {
-            key: "elapsed_time",
-            value: { string_value: "1.22 secs" }
-          }
-          fields: {
-            key: "cpu_time",
-            value: { string_value: "1.19 secs" }
-          }
-        }
-      )pb",
-      &expected_stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedStats, &expected_stats));
   auto actual_stats = (*reader)->Stats();
   EXPECT_TRUE(actual_stats.has_value());
   EXPECT_THAT(*actual_stats, IsProtoEqual(expected_stats));
@@ -265,8 +263,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
  */
 TEST(PartialResultSetSourceTest, MultipleResponses) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 5> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 5> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -281,25 +278,17 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "10" }
         values: { string_value: "user10" }
       )pb",
-      &response[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "22" }
         values: { string_value: "user22" }
       )pb",
-      &response[2]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "99" }
       )pb",
-      &response[3]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "99user99" }
         stats: {
@@ -319,7 +308,12 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
           }
         }
       )pb",
-      &response[4]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
@@ -356,8 +350,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
  */
 TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 3> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 3> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -368,13 +361,16 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString("", &response[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
+      "",
       R"pb(
         values: { string_value: "22" }
       )pb",
-      &response[2]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
@@ -400,8 +396,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 5> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 5> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -415,32 +410,29 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
         values: { string_value: "first_chunk" }
         chunked_value: true
       )pb",
-      &response[0]));
-  // Note this is part of a value that spans 3 responses.
-  ASSERT_TRUE(TextFormat::ParseFromString(
+      // Note this is part of a value that spans 3 responses.
       R"pb(
         values: { string_value: "second_chunk" }
         chunked_value: true
       )pb",
-      &response[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "third_chunk" }
         values: { string_value: "second group first_chunk " }
         chunked_value: true
       )pb",
-      &response[2]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "second group second_chunk" }
         values: { string_value: "also not_chunked" }
       )pb",
-      &response[3]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "still not_chunked" }
       )pb",
-      &response[4]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
@@ -473,8 +465,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 2> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 2> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -485,9 +476,13 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(
-      TextFormat::ParseFromString(R"pb(chunked_value: true)pb", &response[1]));
+      R"pb(chunked_value: true)pb",
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]));
@@ -513,8 +508,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 2> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 2> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -527,8 +521,13 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
         values: { string_value: "incomplete" }
         chunked_value: true
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(R"pb()pb", &response[1]));
+      R"pb()pb",
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]));
@@ -553,8 +552,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 2> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 2> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -565,13 +563,16 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "incomplete" }
         chunked_value: true
       )pb",
-      &response[1]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
@@ -595,8 +596,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
  */
 TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 3> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 3> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -607,18 +607,19 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { number_value: 86 }
         chunked_value: true
       )pb",
-      &response[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { number_value: 99 }
       )pb",
-      &response[2]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
@@ -642,8 +643,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
  */
 TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
   auto grpc_reader = make_unique<MockPartialResultSetReader>();
-  std::array<spanner_proto::PartialResultSet, 5> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  std::array<char const*, 5> text{{
       R"pb(
         metadata: {
           row_type: {
@@ -658,25 +658,17 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
           }
         }
       )pb",
-      &response[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "10" }
         values: { string_value: "user10" }
       )pb",
-      &response[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "22" }
         values: { string_value: "user22" }
       )pb",
-      &response[2]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         values: { string_value: "99" }
       )pb",
-      &response[3]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         stats: {
           query_stats: {
@@ -695,7 +687,12 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
           }
         }
       )pb",
-      &response[4]));
+  }};
+  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  for (std::size_t i = 0; i != text.size(); ++i) {
+    SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
+    ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
+  }
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))

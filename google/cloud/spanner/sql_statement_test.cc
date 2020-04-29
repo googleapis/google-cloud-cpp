@@ -112,9 +112,9 @@ TEST(SqlStatementTest, Equality) {
 
 TEST(SqlStatementTest, ToProtoStatementOnly) {
   SqlStatement stmt("select * from foo");
+  auto constexpr kText = R"pb(sql: "select * from foo")pb";
   internal::SqlStatementProto expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(sql: "select * from foo")pb",
-                                          &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
 }
 
@@ -127,37 +127,36 @@ TEST(SqlStatementTest, ToProtoWithParams) {
       "SELECT * FROM foo WHERE last = @last AND first = @first AND "
       "destroyed_cars >= @destroyed_cars";
   SqlStatement stmt(sql, params);
+  auto const text = std::string(R"(sql: ")") + sql + R"(")" + R"pb(
+    params: {
+      fields: {
+        key: "destroyed_cars",
+        value: { string_value: "103" }
+      }
+      fields: {
+        key: "first",
+        value: { string_value: "Elwood" }
+      }
+      fields: {
+        key: "last",
+        value: { string_value: "Blues" }
+      }
+    }
+    param_types: {
+      key: "destroyed_cars",
+      value: { code: INT64 }
+    }
+    param_types: {
+      key: "last",
+      value: { code: STRING }
+    }
+    param_types: {
+      key: "first",
+      value: { code: STRING }
+    }
+  )pb";
   internal::SqlStatementProto expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      std::string(R"(sql: ")") + sql + R"(")" + R"pb(
-        params: {
-          fields: {
-            key: "destroyed_cars",
-            value: { string_value: "103" }
-          }
-          fields: {
-            key: "first",
-            value: { string_value: "Elwood" }
-          }
-          fields: {
-            key: "last",
-            value: { string_value: "Blues" }
-          }
-        }
-        param_types: {
-          key: "destroyed_cars",
-          value: { code: INT64 }
-        }
-        param_types: {
-          key: "last",
-          value: { code: STRING }
-        }
-        param_types: {
-          key: "first",
-          value: { code: STRING }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
 }
 

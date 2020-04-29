@@ -56,16 +56,15 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
+  auto constexpr kText = R"pb(
+    name: "projects/test-project/instances/test-instance"
+    config: "test-config"
+    display_name: "test display name"
+    node_count: 7
+    state: CREATING
+  )pb";
   gcsa::Instance expected_instance;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/instances/test-instance"
-        config: "test-config"
-        display_name: "test display name"
-        node_count: 7
-        state: CREATING
-      )pb",
-      &expected_instance));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance(_, _))
@@ -296,13 +295,12 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
 TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
   std::string const expected_name =
       "projects/test-project/instanceConfigs/test-instance-config";
+  auto constexpr kText = R"pb(
+    name: "projects/test-project/instanceConfigs/test-instance-config"
+    display_name: "test display name"
+  )pb";
   gcsa::InstanceConfig expected_instance_config;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        name: "projects/test-project/instanceConfigs/test-instance-config"
-        display_name: "test display name"
-      )pb",
-      &expected_instance_config));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance_config));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
@@ -538,17 +536,16 @@ TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
+  auto constexpr kText = R"pb(
+    etag: "request-etag"
+    bindings {
+      role: "roles/spanner.databaseReader"
+      members: "user:test-user-1@example.com"
+      members: "user:test-user-2@example.com"
+    }
+  )pb";
   giam::Policy expected_policy;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        etag: "request-etag"
-        bindings {
-          role: "roles/spanner.databaseReader"
-          members: "user:test-user-1@example.com"
-          members: "user:test-user-2@example.com"
-        }
-      )pb",
-      &expected_policy));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_policy));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy(_, _))

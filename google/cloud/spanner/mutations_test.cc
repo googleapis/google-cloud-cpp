@@ -62,22 +62,21 @@ TEST(MutationsTest, InsertSimple) {
   EXPECT_NE(insert, empty);
 
   auto actual = std::move(insert).as_proto();
+  auto constexpr kText = R"pb(
+    insert: {
+      columns: "col_a"
+      columns: "col_b"
+      columns: "col_c"
+      table: "table-name"
+      values: {
+        values: { string_value: "foo" }
+        values: { string_value: "bar" }
+        values: { bool_value: true }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        insert: {
-          columns: "col_a"
-          columns: "col_b"
-          columns: "col_c"
-          table: "table-name"
-          values: {
-            values: { string_value: "foo" }
-            values: { string_value: "bar" }
-            values: { bool_value: true }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -92,27 +91,26 @@ TEST(MutationsTest, InsertComplex) {
   EXPECT_EQ(insert, moved);
 
   auto actual = std::move(insert).as_proto();
+  auto constexpr kText = R"pb(
+    insert: {
+      table: "table-name"
+      columns: "col1"
+      columns: "col2"
+      columns: "col3"
+      values: {
+        values: { string_value: "42" }
+        values: { string_value: "foo" }
+        values: { bool_value: false }
+      }
+      values: {
+        values: { null_value: NULL_VALUE }
+        values: { string_value: "bar" }
+        values: { null_value: NULL_VALUE }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        insert: {
-          table: "table-name"
-          columns: "col1"
-          columns: "col2"
-          columns: "col3"
-          values: {
-            values: { string_value: "42" }
-            values: { string_value: "foo" }
-            values: { bool_value: false }
-          }
-          values: {
-            values: { null_value: NULL_VALUE }
-            values: { string_value: "bar" }
-            values: { null_value: NULL_VALUE }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -125,22 +123,21 @@ TEST(MutationsTest, UpdateSimple) {
   EXPECT_NE(update, empty);
 
   auto actual = std::move(update).as_proto();
+  auto constexpr kText = R"pb(
+    update: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      columns: "col_c"
+      values: {
+        values: { string_value: "foo" }
+        values: { string_value: "bar" }
+        values: { bool_value: true }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        update: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          columns: "col_c"
-          values: {
-            values: { string_value: "foo" }
-            values: { string_value: "bar" }
-            values: { bool_value: true }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -155,29 +152,28 @@ TEST(MutationsTest, UpdateComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
-  spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        update: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          values: {
-            values: { list_value: {} }
-            values: { number_value: 7.0 }
-          }
-          values: {
-            values: {
-              list_value: {
-                values: { string_value: "a" }
-                values: { string_value: "b" }
-              }
-            }
-            values: { null_value: NULL_VALUE }
+  auto constexpr kText = R"pb(
+    update: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      values: {
+        values: { list_value: {} }
+        values: { number_value: 7.0 }
+      }
+      values: {
+        values: {
+          list_value: {
+            values: { string_value: "a" }
+            values: { string_value: "b" }
           }
         }
-      )pb",
-      &expected));
+        values: { null_value: NULL_VALUE }
+      }
+    }
+  )pb";
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -190,22 +186,21 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
   EXPECT_NE(update, empty);
 
   auto actual = std::move(update).as_proto();
+  auto constexpr kText = R"pb(
+    insert_or_update: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      columns: "col_c"
+      values: {
+        values: { string_value: "foo" }
+        values: { string_value: "bar" }
+        values: { bool_value: true }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        insert_or_update: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          columns: "col_c"
-          values: {
-            values: { string_value: "foo" }
-            values: { string_value: "bar" }
-            values: { bool_value: true }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -219,32 +214,31 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
-  spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        insert_or_update: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          values: {
-            values: {
-              list_value: {
-                values: { string_value: "a" }
-                values: { number_value: 7.0 }
-              }
-            }
-          }
-          values: {
-            values: {
-              list_value: {
-                values: { string_value: "b" }
-                values: { number_value: 8.0 }
-              }
-            }
+  auto constexpr kText = R"pb(
+    insert_or_update: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      values: {
+        values: {
+          list_value: {
+            values: { string_value: "a" }
+            values: { number_value: 7.0 }
           }
         }
-      )pb",
-      &expected));
+      }
+      values: {
+        values: {
+          list_value: {
+            values: { string_value: "b" }
+            values: { number_value: 8.0 }
+          }
+        }
+      }
+    }
+  )pb";
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -257,22 +251,21 @@ TEST(MutationsTest, ReplaceSimple) {
   EXPECT_NE(replace, empty);
 
   auto actual = std::move(replace).as_proto();
+  auto constexpr kText = R"pb(
+    replace: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      columns: "col_c"
+      values: {
+        values: { string_value: "foo" }
+        values: { string_value: "bar" }
+        values: { bool_value: true }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        replace: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          columns: "col_c"
-          values: {
-            values: { string_value: "foo" }
-            values: { string_value: "bar" }
-            values: { bool_value: true }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -286,24 +279,23 @@ TEST(MutationsTest, ReplaceComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
+  auto constexpr kText = R"pb(
+    replace: {
+      table: "table-name"
+      columns: "col_a"
+      columns: "col_b"
+      values: {
+        values: { string_value: "a" }
+        values: { number_value: 7.0 }
+      }
+      values: {
+        values: { string_value: "b" }
+        values: { number_value: 8.0 }
+      }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        replace: {
-          table: "table-name"
-          columns: "col_a"
-          columns: "col_b"
-          values: {
-            values: { string_value: "a" }
-            values: { number_value: 7.0 }
-          }
-          values: {
-            values: { string_value: "b" }
-            values: { number_value: 8.0 }
-          }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -316,15 +308,14 @@ TEST(MutationsTest, DeleteSimple) {
   EXPECT_NE(dele, empty);
 
   auto actual = std::move(dele).as_proto();
+  auto constexpr kText = R"pb(
+    delete: {
+      table: "table-name"
+      key_set: { keys: { values { string_value: "key-to-delete" } } }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        delete: {
-          table: "table-name"
-          key_set: { keys: { values { string_value: "key-to-delete" } } }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -418,15 +409,14 @@ TEST(MutationsTest, FluentDeleteBuilder) {
   auto ks = KeySet().AddKey(MakeKey("key-to-delete"));
   Mutation m = DeleteMutationBuilder("table-name", ks).Build();
   auto actual = std::move(m).as_proto();
+  auto constexpr kText = R"pb(
+    delete: {
+      table: "table-name"
+      key_set: { keys: { values { string_value: "key-to-delete" } } }
+    }
+  )pb";
   spanner_proto::Mutation expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        delete: {
-          table: "table-name"
-          key_set: { keys: { values { string_value: "key-to-delete" } } }
-        }
-      )pb",
-      &expected));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 

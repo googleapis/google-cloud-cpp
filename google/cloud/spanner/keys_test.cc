@@ -118,10 +118,7 @@ TEST(KeySetTest, ValueSemantics) {
 
 TEST(KeySetTest, NoKeys) {
   ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-      )pb",
-      &expected));
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString("", &expected));
   KeySet no_keys;
   ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
   EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
@@ -129,12 +126,11 @@ TEST(KeySetTest, NoKeys) {
 }
 
 TEST(KeySetTest, AllKeys) {
+  auto constexpr kText = R"pb(
+    all: true
+  )pb";
   ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        all: true
-      )pb",
-      &expected));
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
   auto all_keys = KeySet::All();
   ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
   EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));

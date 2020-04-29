@@ -26,48 +26,48 @@ namespace internal {
 namespace {
 
 google::spanner::v1::Mutation MakeMutation() {
+  auto constexpr kText = R"pb(
+    insert {
+      table: "Singers"
+      columns: "SingerId"
+      columns: "FirstName"
+      columns: "LastName"
+      values {
+        values { string_value: "1" }
+        values { string_value: "test-fname-1" }
+        values { string_value: "test-lname-1" }
+      }
+      values {
+        values { string_value: "2" }
+        values { string_value: "test-fname-2" }
+        values { string_value: "test-lname-2" }
+      }
+    }
+  )pb";
   google::spanner::v1::Mutation mutation;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        insert {
-          table: "Singers"
-          columns: "SingerId"
-          columns: "FirstName"
-          columns: "LastName"
-          values {
-            values { string_value: "1" }
-            values { string_value: "test-fname-1" }
-            values { string_value: "test-lname-1" }
-          }
-          values {
-            values { string_value: "2" }
-            values { string_value: "test-fname-2" }
-            values { string_value: "test-lname-2" }
-          }
-        }
-      )pb",
-      &mutation));
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &mutation));
   return mutation;
 }
 
 TEST(LogWrapper, DefaultOptions) {
   TracingOptions tracing_options;
   // clang-format off
-  EXPECT_EQ(R"pb(insert { )pb"
-            R"pb(table: "Singers" )pb"
-            R"pb(columns: "SingerId" )pb"
-            R"pb(columns: "FirstName" )pb"
-            R"pb(columns: "LastName" )pb"
-            R"pb(values { values { string_value: "1" } )pb"
-            R"pb(values { string_value: "test-fname-1" } )pb"
-            R"pb(values { string_value: "test-lname-1" } } )pb"
-            R"pb(values { values { string_value: "2" } )pb"
-            R"pb(values { string_value: "test-fname-2" } )pb"
-            R"pb(values { string_value: "test-lname-2" } )pb"
-            R"pb(} )pb"
-            R"pb(} )pb",
-            internal::DebugString(MakeMutation(), tracing_options));
+  std::string const text =
+      R"pb(insert { )pb"
+      R"pb(table: "Singers" )pb"
+      R"pb(columns: "SingerId" )pb"
+      R"pb(columns: "FirstName" )pb"
+      R"pb(columns: "LastName" )pb"
+      R"pb(values { values { string_value: "1" } )pb"
+      R"pb(values { string_value: "test-fname-1" } )pb"
+      R"pb(values { string_value: "test-lname-1" } } )pb"
+      R"pb(values { values { string_value: "2" } )pb"
+      R"pb(values { string_value: "test-fname-2" } )pb"
+      R"pb(values { string_value: "test-lname-2" } )pb"
+      R"pb(} )pb"
+      R"pb(} )pb";
   // clang-format on
+  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
 
 // bool single_line_mode_ = true;
@@ -78,7 +78,7 @@ TEST(LogWrapper, MultiLine) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("single_line_mode=off");
   // clang-format off
-  EXPECT_EQ(R"pb(insert {
+  std::string const text = R"pb(insert {
   table: "Singers"
   columns: "SingerId"
   columns: "FirstName"
@@ -106,16 +106,16 @@ TEST(LogWrapper, MultiLine) {
     }
   }
 }
-)pb",
-            internal::DebugString(MakeMutation(), tracing_options));
+)pb";
   // clang-format on
+  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
 
 TEST(LogWrapper, Truncate) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("truncate_string_field_longer_than=8");
   // clang-format off
-  EXPECT_EQ(R"pb(insert { )pb"
+  std::string const text =R"pb(insert { )pb"
             R"pb(table: "Singers" )pb"
             R"pb(columns: "SingerId" )pb"
             R"pb(columns: "FirstNam...<truncated>..." )pb"
@@ -127,9 +127,9 @@ TEST(LogWrapper, Truncate) {
             R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
             R"pb(values { string_value: "test-lna...<truncated>..." } )pb"
             R"pb(} )pb"
-            R"pb(} )pb",
-            internal::DebugString(MakeMutation(), tracing_options));
+            R"pb(} )pb";
   // clang-format on
+  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
 
 }  // namespace

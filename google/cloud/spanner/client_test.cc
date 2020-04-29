@@ -85,21 +85,20 @@ TEST(ClientTest, ReadSuccess) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "Id",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Steve", 12)))
@@ -131,17 +130,16 @@ TEST(ClientTest, ReadFailure) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Steve")))
@@ -175,21 +173,20 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "Id",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Steve", 12)))
@@ -221,17 +218,16 @@ TEST(ClientTest, ExecuteQueryFailure) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Steve")))
@@ -410,17 +406,16 @@ TEST(ClientTest, CommitMutatorSuccess) {
   Connection::CommitParams actual_commit_params{txn, {}};
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: STRING }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: STRING }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Bob")))
@@ -459,17 +454,16 @@ TEST(ClientTest, CommitMutatorRollback) {
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
@@ -505,17 +499,16 @@ TEST(ClientTest, CommitMutatorRollbackError) {
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
@@ -551,17 +544,16 @@ TEST(ClientTest, CommitMutatorException) {
   auto conn = std::make_shared<MockConnection>();
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
@@ -875,33 +867,31 @@ TEST(ClientTest, ProfileQuerySuccess) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText0 = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "Id",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &metadata));
+  auto constexpr kText1 = R"pb(
+    query_plan: { plan_nodes: { display_name: "test-node" } }
+    query_stats {
+      fields {
+        key: "elapsed_time"
+        value { string_value: "42 secs" }
+      }
+    }
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        query_plan: { plan_nodes: { display_name: "test-node" } }
-        query_stats {
-          fields {
-            key: "elapsed_time"
-            value { string_value: "42 secs" }
-          }
-        }
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText1, &stats));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Ann", 42)))
@@ -941,33 +931,31 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   Client client(conn);
 
   auto source = make_unique<MockResultSetSource>();
+  auto constexpr kText0 = R"pb(
+    row_type: {
+      fields: {
+        name: "Name",
+        type: { code: INT64 }
+      }
+      fields: {
+        name: "Id",
+        type: { code: INT64 }
+      }
+    }
+  )pb";
   spanner_proto::ResultSetMetadata metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        row_type: {
-          fields: {
-            name: "Name",
-            type: { code: INT64 }
-          }
-          fields: {
-            name: "Id",
-            type: { code: INT64 }
-          }
-        }
-      )pb",
-      &metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &metadata));
+  auto constexpr kText1 = R"pb(
+    query_plan: { plan_nodes: { display_name: "test-node" } }
+    query_stats {
+      fields {
+        key: "elapsed_time"
+        value { string_value: "42 secs" }
+      }
+    }
+  )pb";
   google::spanner::v1::ResultSetStats stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        query_plan: { plan_nodes: { display_name: "test-node" } }
-        query_stats {
-          fields {
-            key: "elapsed_time"
-            value { string_value: "42 secs" }
-          }
-        }
-      )pb",
-      &stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText1, &stats));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Ann", 42)))

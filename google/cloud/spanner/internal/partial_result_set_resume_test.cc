@@ -62,21 +62,21 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
 
 TEST(PartialResultSetResume, Success) {
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  auto constexpr kText =
       R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "TestColumn",
-              type: { code: STRING }
-            }
-          }
+    metadata: {
+      row_type: {
+        fields: {
+          name: "TestColumn",
+          type: { code: STRING }
         }
-        resume_token: "test-token-0"
-        values: { string_value: "value-1" }
-        values: { string_value: "value-2" }
-      )pb",
-      &response));
+      }
+    }
+    resume_token: "test-token-0"
+    values: { string_value: "value-1" }
+    values: { string_value: "value-2" }
+      )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
@@ -104,30 +104,29 @@ TEST(PartialResultSetResume, Success) {
 }
 
 TEST(PartialResultSetResume, SuccessWithRestart) {
-  spanner_proto::PartialResultSet r0;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "TestColumn",
-              type: { code: STRING }
-            }
-          }
+  auto constexpr kText0 = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "TestColumn",
+          type: { code: STRING }
         }
-        resume_token: "test-token-0"
-        values: { string_value: "value-1" }
-        values: { string_value: "value-2" }
-      )pb",
-      &r0));
+      }
+    }
+    resume_token: "test-token-0"
+    values: { string_value: "value-1" }
+    values: { string_value: "value-2" }
+  )pb";
+  spanner_proto::PartialResultSet r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText0, &r0));
+
+  auto constexpr kText1 = R"pb(
+    resume_token: "test-token-1"
+    values: { string_value: "value-3" }
+    values: { string_value: "value-4" }
+  )pb";
   spanner_proto::PartialResultSet r1;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        resume_token: "test-token-1"
-        values: { string_value: "value-3" }
-        values: { string_value: "value-4" }
-      )pb",
-      &r1));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
@@ -176,22 +175,22 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
 }
 
 TEST(PartialResultSetResume, PermanentError) {
-  spanner_proto::PartialResultSet r0;
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  auto constexpr kText =
       R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "TestColumn",
-              type: { code: STRING }
-            }
-          }
+    metadata: {
+      row_type: {
+        fields: {
+          name: "TestColumn",
+          type: { code: STRING }
         }
-        resume_token: "test-token-0"
-        values: { string_value: "value-1" }
-        values: { string_value: "value-2" }
-      )pb",
-      &r0));
+      }
+    }
+    resume_token: "test-token-0"
+    values: { string_value: "value-1" }
+    values: { string_value: "value-2" }
+      )pb";
+  spanner_proto::PartialResultSet r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
@@ -229,22 +228,21 @@ TEST(PartialResultSetResume, PermanentError) {
 }
 
 TEST(PartialResultSetResume, TransientNonIdempotent) {
-  spanner_proto::PartialResultSet r0;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "TestColumn",
-              type: { code: STRING }
-            }
-          }
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "TestColumn",
+          type: { code: STRING }
         }
-        resume_token: "test-token-0"
-        values: { string_value: "value-1" }
-        values: { string_value: "value-2" }
-      )pb",
-      &r0));
+      }
+    }
+    resume_token: "test-token-0"
+    values: { string_value: "value-1" }
+    values: { string_value: "value-2" }
+  )pb";
+  spanner_proto::PartialResultSet r0;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))

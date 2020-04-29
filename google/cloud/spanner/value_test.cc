@@ -946,12 +946,11 @@ TEST(Value, CommitTimestamp) {
   auto tv = internal::ToProto(v);
   EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, tv.first.code());
 
+  auto constexpr kText = R"pb(
+    string_value: "spanner.commit_timestamp()"
+  )pb";
   google::protobuf::Value pv;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        string_value: "spanner.commit_timestamp()"
-      )pb",
-      &pv));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &pv));
   EXPECT_THAT(tv.second, IsProtoEqual(pv));
 
   auto good = v.get<CommitTimestamp>();

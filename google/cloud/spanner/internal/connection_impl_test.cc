@@ -231,27 +231,26 @@ TEST(ConnectionImplTest, ReadSuccess) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   auto reader2 = make_unique<MockGrpcReader>();
-  spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "UserId",
-              type: { code: INT64 }
-            }
-            fields: {
-              name: "UserName",
-              type: { code: STRING }
-            }
-          }
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
         }
-        values: { string_value: "12" }
-        values: { string_value: "Steve" }
-        values: { string_value: "42" }
-        values: { string_value: "Ann" }
-      )pb",
-      &response));
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "12" }
+    values: { string_value: "Steve" }
+    values: { string_value: "42" }
+    values: { string_value: "Ann" }
+  )pb";
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*reader2, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -362,9 +361,9 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
+  auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb", &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -446,27 +445,26 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
-  spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "UserId",
-              type: { code: INT64 }
-            }
-            fields: {
-              name: "UserName",
-              type: { code: STRING }
-            }
-          }
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
         }
-        values: { string_value: "12" }
-        values: { string_value: "Steve" }
-        values: { string_value: "42" }
-        values: { string_value: "Ann" }
-      )pb",
-      &response));
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "12" }
+    values: { string_value: "Steve" }
+    values: { string_value: "42" }
+    values: { string_value: "Ann" }
+  )pb";
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -506,9 +504,9 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
+  auto constexpr kText = R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb", &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -586,13 +584,12 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_exact: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -656,36 +653,35 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "12" }
+    values: { string_value: "Steve" }
+    values: { string_value: "42" }
+    values: { string_value: "Ann" }
+    stats: {
+      query_plan { plan_nodes: { index: 42 } }
+      query_stats {
+        fields {
+          key: "elapsed_time"
+          value { string_value: "42 secs" }
+        }
+      }
+    }
+  )pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {
-          row_type: {
-            fields: {
-              name: "UserId",
-              type: { code: INT64 }
-            }
-            fields: {
-              name: "UserName",
-              type: { code: STRING }
-            }
-          }
-        }
-        values: { string_value: "12" }
-        values: { string_value: "Steve" }
-        values: { string_value: "42" }
-        values: { string_value: "Ann" }
-        stats: {
-          query_plan { plan_nodes: { index: 42 } }
-          query_stats {
-            fields {
-              key: "elapsed_time"
-              value { string_value: "42 secs" }
-            }
-          }
-        }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -709,12 +705,11 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   }
   EXPECT_EQ(row_number, expected.size());
 
+  auto constexpr kTextExpectedPlan = R"pb(
+    plan_nodes: { index: 42 }
+  )pb";
   google::spanner::v1::QueryPlan expected_plan;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        plan_nodes: { index: 42 }
-      )pb",
-      &expected_plan));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedPlan, &expected_plan));
 
   auto plan = result.ExecutionPlan();
   ASSERT_TRUE(plan);
@@ -806,22 +801,21 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
-  spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: {
-          row_count_exact: 42
-          query_plan { plan_nodes: { index: 42 } }
-          query_stats {
-            fields {
-              key: "elapsed_time"
-              value { string_value: "42 secs" }
-            }
-          }
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: {
+      row_count_exact: 42
+      query_plan { plan_nodes: { index: 42 } }
+      query_stats {
+        fields {
+          key: "elapsed_time"
+          value { string_value: "42 secs" }
         }
-      )pb",
-      &response));
+      }
+    }
+  )pb";
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -832,12 +826,11 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->RowsModified(), 42);
 
+  auto constexpr kTextExpectedPlan = R"pb(
+    plan_nodes: { index: 42 }
+  )pb";
   google::spanner::v1::QueryPlan expected_plan;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        plan_nodes: { index: 42 }
-      )pb",
-      &expected_plan));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedPlan, &expected_plan));
 
   auto plan = result->ExecutionPlan();
   ASSERT_TRUE(plan);
@@ -858,13 +851,12 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_exact: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(
@@ -885,13 +877,12 @@ TEST(ConnectionImplTest, ProfileDmlDeleteTooManyTransientFailures) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_exact: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .Times(AtLeast(2))
@@ -919,13 +910,12 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
+  auto constexpr kText = R"pb(
+    metadata: {}
+    stats: { query_plan { plan_nodes: { index: 42 } } }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: {}
-        stats: { query_plan { plan_nodes: { index: 42 } } }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(ByMove(std::move(response))));
@@ -934,12 +924,11 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        SqlStatement("select * from table")});
 
+  auto constexpr kTextExpectedPlan = R"pb(
+    plan_nodes: { index: 42 }
+  )pb";
   google::spanner::v1::QueryPlan expected_plan;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        plan_nodes: { index: 42 }
-      )pb",
-      &expected_plan));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedPlan, &expected_plan));
 
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, spanner_testing::IsProtoEqual(expected_plan));
@@ -972,13 +961,12 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_exact: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(
@@ -999,13 +987,12 @@ TEST(ConnectionImplTest, AnalyzeSqlDeleteTooManyTransientFailures) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_exact: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .Times(AtLeast(2))
@@ -1026,17 +1013,16 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    result_sets: {
+      metadata: { transaction: { id: "1234567890" } }
+      stats: { row_count_exact: 0 }
+    }
+    result_sets: { stats: { row_count_exact: 1 } }
+    result_sets: { stats: { row_count_exact: 2 } }
+  )pb";
   spanner_proto::ExecuteBatchDmlResponse response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        result_sets: {
-          metadata: { transaction: { id: "1234567890" } }
-          stats: { row_count_exact: 0 }
-        }
-        result_sets: { stats: { row_count_exact: 1 } }
-        result_sets: { stats: { row_count_exact: 2 } }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteBatchDml(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
@@ -1067,17 +1053,16 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kText = R"pb(
+    result_sets: {
+      metadata: { transaction: { id: "1234567890" } }
+      stats: { row_count_exact: 42 }
+    }
+    result_sets: { stats: { row_count_exact: 43 } }
+    status: { code: 2 message: "oops" }
+  )pb";
   spanner_proto::ExecuteBatchDmlResponse response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        result_sets: {
-          metadata: { transaction: { id: "1234567890" } }
-          stats: { row_count_exact: 42 }
-        }
-        result_sets: { stats: { row_count_exact: 43 } }
-        status: { code: 2 message: "oops" }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteBatchDml(_, _)).WillOnce(Return(response));
 
   auto request = {
@@ -1157,23 +1142,21 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kTextTxn = R"pb(
+    id: "1234567890"
+  )pb";
   spanner_proto::Transaction txn;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        id: "1234567890"
-      )pb",
-      &txn));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextTxn, &txn));
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
 
+  auto constexpr kTextResponse = R"pb(
+    metadata: { transaction: { id: "1234567890" } }
+    stats: { row_count_lower_bound: 42 }
+  )pb";
   spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_lower_bound: 42 }
-      )pb",
-      &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextResponse, &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -1212,12 +1195,11 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kTextTxn = R"pb(
+    id: "1234567890"
+  )pb";
   spanner_proto::Transaction txn;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        id: "1234567890"
-      )pb",
-      &txn));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextTxn, &txn));
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
@@ -1242,12 +1224,11 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
+  auto constexpr kTextTxn = R"pb(
+    id: "1234567890"
+  )pb";
   spanner_proto::Transaction txn;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        id: "1234567890"
-      )pb",
-      &txn));
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextTxn, &txn));
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
@@ -1726,29 +1707,29 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
+  auto constexpr kTextPartitionResponse = R"pb(
+    partitions: { partition_token: "BADDECAF" }
+    partitions: { partition_token: "DEADBEEF" }
+    transaction: { id: "CAFEDEAD" }
+  )pb";
   google::spanner::v1::PartitionResponse partition_response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        partitions: { partition_token: "BADDECAF" }
-        partitions: { partition_token: "DEADBEEF" }
-        transaction: { id: "CAFEDEAD" }
-      )pb",
-      &partition_response));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kTextPartitionResponse, &partition_response));
 
+  auto constexpr kTextPartitionRequest = R"pb(
+    session: "test-session-name"
+    transaction: {
+      begin { read_only { strong: true return_read_timestamp: true } }
+    }
+    table: "table"
+    columns: "UserId"
+    columns: "UserName"
+    key_set: { all: true }
+    partition_options: {}
+  )pb";
   google::spanner::v1::PartitionReadRequest partition_request;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        session: "test-session-name"
-        transaction: {
-          begin { read_only { strong: true return_read_timestamp: true } }
-        }
-        table: "table"
-        columns: "UserId"
-        columns: "UserName"
-        key_set: { all: true }
-        partition_options: {}
-      )pb",
-      &partition_request));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kTextPartitionRequest, &partition_request));
 
   EXPECT_CALL(
       *mock_spanner_stub,
@@ -1835,27 +1816,27 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
+  auto constexpr kTextPartitionResponse = R"pb(
+    partitions: { partition_token: "BADDECAF" }
+    partitions: { partition_token: "DEADBEEF" }
+    transaction: { id: "CAFEDEAD" }
+  )pb";
   google::spanner::v1::PartitionResponse partition_response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        partitions: { partition_token: "BADDECAF" }
-        partitions: { partition_token: "DEADBEEF" }
-        transaction: { id: "CAFEDEAD" }
-      )pb",
-      &partition_response));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kTextPartitionResponse, &partition_response));
 
+  auto constexpr kTextPartitionRequest = R"pb(
+    session: "test-session-name"
+    transaction: {
+      begin { read_only { strong: true return_read_timestamp: true } }
+    }
+    sql: "select * from table"
+    params: {}
+    partition_options: {}
+  )pb";
   google::spanner::v1::PartitionQueryRequest partition_request;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        session: "test-session-name"
-        transaction: {
-          begin { read_only { strong: true return_read_timestamp: true } }
-        }
-        sql: "select * from table"
-        params: {}
-        partition_options: {}
-      )pb",
-      &partition_request));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kTextPartitionRequest, &partition_request));
   EXPECT_CALL(
       *mock_spanner_stub,
       PartitionQuery(_, spanner_testing::IsProtoEqual(partition_request)))
@@ -1999,24 +1980,22 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
               BatchCreateSessions(_, BatchCreateSessionsRequestHasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"session-1"})))
       .WillOnce(Return(MakeSessionsResponse({"session-2"})));
-  //      .WillOnce(Return(MakeSessionsResponse({"session-1", "session-2"})));
 
   constexpr int kNumResponses = 4;
   std::array<spanner_proto::PartialResultSet, kNumResponses> responses;
   std::array<std::unique_ptr<MockGrpcReader>, kNumResponses> readers;
   for (int i = 0; i < kNumResponses; ++i) {
-    ASSERT_TRUE(TextFormat::ParseFromString(
-        R"pb(
-          metadata: {
-            row_type: {
-              fields: {
-                name: "Number",
-                type: { code: INT64 }
-              }
-            }
+    auto constexpr kText = R"pb(
+      metadata: {
+        row_type: {
+          fields: {
+            name: "Number",
+            type: { code: INT64 }
           }
-        )pb",
-        &responses[i]));
+        }
+      }
+    )pb";
+    ASSERT_TRUE(TextFormat::ParseFromString(kText, &responses[i]));
     // The first two responses are reads from two different "begin"
     // transactions.
     switch (i) {
@@ -2109,9 +2088,9 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
           });
 
   auto grpc_reader = make_unique<MockGrpcReader>();
+  auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb", &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));

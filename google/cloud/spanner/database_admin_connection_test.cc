@@ -523,17 +523,16 @@ TEST(DatabaseAdminClientTest, GetIamPolicyTooManyTransients) {
 TEST(DatabaseAdminClientTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
+  auto constexpr kText = R"pb(
+    etag: "request-etag"
+    bindings {
+      role: "roles/spanner.databaseReader"
+      members: "user:test-user-1@example.com"
+      members: "user:test-user-2@example.com"
+    }
+  )pb";
   google::iam::v1::Policy expected_policy;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        etag: "request-etag"
-        bindings {
-          role: "roles/spanner.databaseReader"
-          members: "user:test-user-1@example.com"
-          members: "user:test-user-2@example.com"
-        }
-      )pb",
-      &expected_policy));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_policy));
 
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
