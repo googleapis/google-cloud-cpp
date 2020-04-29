@@ -83,11 +83,11 @@ constexpr char kSubjectForGrant[] = "user@foo.bar";
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    MockHttpRequestBuilder::mock =
+    MockHttpRequestBuilder::mock_ =
         std::make_shared<MockHttpRequestBuilder::Impl>();
     FakeClock::reset_clock(kFixedJwtTimestamp);
   }
-  void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
+  void TearDown() override { MockHttpRequestBuilder::mock_.reset(); }
 
   std::string CreateRandomFileName() {
     // When running on the internal Google CI systems we cannot write to the
@@ -118,7 +118,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
         return HttpResponse{200, response, {}};
       }));
 
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
     MockHttpRequest result;
     result.mock = mock_request;
@@ -189,7 +189,7 @@ TEST_F(ServiceAccountCredentialsTest,
       .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
     MockHttpRequest request;
     request.mock = mock_request;
@@ -396,7 +396,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       .WillOnce(Invoke(make_request_assertion(clock_value_1)))
       .WillOnce(Invoke(make_request_assertion(clock_value_2)));
 
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
     MockHttpRequest result;
     result.mock = mock_request;
@@ -440,7 +440,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
 /// @test Verify that we can create sign blobs using a service account.
 TEST_F(ServiceAccountCredentialsTest, SignBlob) {
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
@@ -494,7 +494,7 @@ x-goog-meta-foo:bar,baz
 
 /// @test Verify that signing blobs fails with invalid e-mail.
 TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
@@ -530,7 +530,7 @@ TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
 
 /// @test Verify that we can get the client id from a service account.
 TEST_F(ServiceAccountCredentialsTest, ClientId) {
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));

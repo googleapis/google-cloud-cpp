@@ -177,6 +177,8 @@ target_link_libraries(
     PUBLIC bigtable_protos google_cloud_cpp_common google_cloud_cpp_grpc_utils
            gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
     PRIVATE bigtable_common_options)
+google_cloud_cpp_add_common_options(bigtable_client)
+google_cloud_cpp_add_clang_tidy(bigtable_client)
 target_include_directories(
     bigtable_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -194,7 +196,6 @@ add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)
 create_bazel_config(bigtable_client)
-google_cloud_cpp_add_clang_tidy(bigtable_client)
 
 if (BUILD_TESTING)
     add_library(
@@ -232,6 +233,8 @@ if (BUILD_TESTING)
                gRPC::grpc
                protobuf::libprotobuf
         PRIVATE bigtable_common_options)
+    google_cloud_cpp_add_common_options(bigtable_client_testing)
+    google_cloud_cpp_add_clang_tidy(bigtable_client_testing)
 
     create_bazel_config(bigtable_client_testing)
 

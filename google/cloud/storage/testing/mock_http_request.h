@@ -63,7 +63,7 @@ class MockHttpRequestBuilder {
  public:
   explicit MockHttpRequestBuilder(
       std::string url, std::shared_ptr<internal::CurlHandleFactory>) {
-    mock->Constructor(std::move(url));
+    mock_->Constructor(std::move(url));
   }
 
   using RequestType = MockHttpRequest;
@@ -72,7 +72,7 @@ class MockHttpRequestBuilder {
   void AddWellKnownParameter(
       internal::WellKnownParameter<P, std::string> const& p) {
     if (p.has_value()) {
-      mock->AddQueryParameter(p.parameter_name(), p.value());
+      mock_->AddQueryParameter(p.parameter_name(), p.value());
     }
   }
 
@@ -80,7 +80,7 @@ class MockHttpRequestBuilder {
   void AddWellKnownParameter(
       internal::WellKnownParameter<P, std::int64_t> const& p) {
     if (p.has_value()) {
-      mock->AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
+      mock_->AddQueryParameter(p.parameter_name(), std::to_string(p.value()));
     }
   }
 
@@ -89,29 +89,29 @@ class MockHttpRequestBuilder {
     if (!p.has_value()) {
       return;
     }
-    mock->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
+    mock_->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
   }
 
-  MockHttpRequest BuildRequest() { return mock->BuildRequest(); }
+  MockHttpRequest BuildRequest() { return mock_->BuildRequest(); }
 
   void AddUserAgentPrefix(std::string const& prefix) {
-    mock->AddUserAgentPrefix(prefix);
+    mock_->AddUserAgentPrefix(prefix);
   }
 
-  void AddHeader(std::string const& header) { mock->AddHeader(header); }
+  void AddHeader(std::string const& header) { mock_->AddHeader(header); }
 
   void AddQueryParameter(std::string const& key, std::string const& value) {
-    mock->AddQueryParameter(key, value);
+    mock_->AddQueryParameter(key, value);
   }
 
-  void SetMethod(std::string const& method) { mock->SetMethod(method); }
+  void SetMethod(std::string const& method) { mock_->SetMethod(method); }
 
-  void SetDebugLogging(bool enable) { mock->SetDebugLogging(enable); }
+  void SetDebugLogging(bool enable) { mock_->SetDebugLogging(enable); }
 
-  std::string UserAgentSuffix() { return mock->UserAgentSuffix(); }
+  std::string UserAgentSuffix() { return mock_->UserAgentSuffix(); }
 
   std::unique_ptr<char[]> MakeEscapedString(std::string const& tmp) {
-    return mock->MakeEscapedString(tmp);
+    return mock_->MakeEscapedString(tmp);
   }
 
   struct Impl {
@@ -128,7 +128,7 @@ class MockHttpRequestBuilder {
                  std::unique_ptr<char[]>(std::string const&));
   };
 
-  static std::shared_ptr<Impl> mock;
+  static std::shared_ptr<Impl> mock_;
 };
 
 }  // namespace testing

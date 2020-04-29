@@ -43,10 +43,10 @@ using ::testing::StrEq;
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    MockHttpRequestBuilder::mock =
+    MockHttpRequestBuilder::mock_ =
         std::make_shared<MockHttpRequestBuilder::Impl>();
   }
-  void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
+  void TearDown() override { MockHttpRequestBuilder::mock_.reset(); }
 };
 
 /// @test Verify that we can create credentials from a JWT string.
@@ -67,7 +67,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
         return HttpResponse{200, response, {}};
       }));
 
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder,
               Constructor(StrEq("https://oauth2.googleapis.com/token")))
       .Times(1);
@@ -121,7 +121,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
     MockHttpRequest request;
     request.mock = mock_request;
@@ -162,7 +162,7 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
       .WillOnce(Return(HttpResponse{400, "", {}}));
 
   // Now setup the builder to return those responses.
-  auto mock_builder = MockHttpRequestBuilder::mock;
+  auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
     MockHttpRequest request;
     request.mock = mock_request;

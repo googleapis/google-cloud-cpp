@@ -18,7 +18,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
-std::shared_ptr<MockHttpRequestBuilder::Impl> MockHttpRequestBuilder::mock;
+std::shared_ptr<MockHttpRequestBuilder::Impl> MockHttpRequestBuilder::mock_;
 
 }  // namespace testing
 }  // namespace storage

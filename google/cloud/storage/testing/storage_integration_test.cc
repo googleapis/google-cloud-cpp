@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace google {
@@ -50,13 +51,15 @@ StorageIntegrationTest::MakeIntegrationTestClient(
 
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
   std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
+  auto constexpr kShortDelayForTestbench = std::chrono::milliseconds(10);
   if (UsingTestbench()) {
-    initial_delay = std::chrono::milliseconds(10);
+    initial_delay = kShortDelayForTestbench;
   }
 
-  return ExponentialBackoffPolicy(initial_delay,
-                                  /*maximum_delay=*/std::chrono::minutes(5),
-                                  /*scaling=*/2.0)
+  auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
+  auto constexpr kBackoffScalingFactor = 2.0;
+  return ExponentialBackoffPolicy(initial_delay, kMaximumBackoffDelay,
+                                  kBackoffScalingFactor)
       .clone();
 }
 
@@ -65,16 +68,24 @@ std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
       .clone();
 }
 
-std::string StorageIntegrationTest::MakeRandomObjectName() {
-  return "ob-" +
-         google::cloud::internal::Sample(generator_, 16,
-                                         "abcdefghijklmnopqrstuvwxyz"
-                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         "012456789") +
-         ".txt";
+std::string StorageIntegrationTest::MakeRandomBucketName() {
+  // The total length of this bucket name must be <= 63 characters,
+  char constexpr kPrefix[] = "gcs-cpp-test-bucket-";  // NOLINT
+  auto constexpr kMaxBucketNameLength = 63;
+  static_assert(kMaxBucketNameLength > sizeof(kPrefix),
+                "The bucket prefix is too long");
+  return storage::testing::MakeRandomBucketName(generator_, kPrefix);
 }
 
-std::string StorageIntegrationTest::LoremIpsum() const {
+std::string StorageIntegrationTest::MakeRandomObjectName() {
+  return "ob-" + storage::testing::MakeRandomObjectName(generator_) + ".txt";
+}
+
+std::string StorageIntegrationTest::MakeRandomFilename() {
+  return storage::testing::MakeRandomFileName(generator_);
+}
+
+std::string StorageIntegrationTest::LoremIpsum() {
   return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -96,18 +107,7 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
   return CreateKeyFromGenerator(generator_);
 }
 
-std::string StorageIntegrationTest::MakeRandomBucketName() {
-  // The total length of this bucket name must be <= 63 characters,
-  static std::string const prefix = "gcs-cpp-test-bucket-";
-  static std::size_t const kMaxBucketNameLength = 63;
-  std::size_t const max_random_characters =
-      kMaxBucketNameLength - prefix.size();
-  return prefix + google::cloud::internal::Sample(
-                      generator_, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
-}
-
-bool StorageIntegrationTest::UsingTestbench() const {
+bool StorageIntegrationTest::UsingTestbench() {
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
       .has_value();
 }

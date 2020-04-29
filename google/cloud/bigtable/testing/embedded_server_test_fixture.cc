@@ -37,8 +37,7 @@ void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
   grpc::ChannelArguments channel_arguments;
-  static std::string const user_agent_prefix = ClientOptions::UserAgentPrefix();
-  channel_arguments.SetUserAgentPrefix(user_agent_prefix);
+  channel_arguments.SetUserAgentPrefix(ClientOptions::UserAgentPrefix());
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);

@@ -89,22 +89,23 @@ class TableIntegrationTest : public ::testing::Test {
   bigtable::Table GetTable();
 
   /// Return all the cells in @p table that pass @p filter.
-  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
-                                       bigtable::Filter filter);
+  static std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                              bigtable::Filter filter);
 
   /// Return all the cells in @p table that pass @p filter.
-  std::vector<bigtable::Cell> ReadRows(std::string table_name,
+  std::vector<bigtable::Cell> ReadRows(std::string const& table_name,
                                        bigtable::Filter filter);
 
-  std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
-                                       std::int64_t rows_limit,
-                                       bigtable::Filter filter);
+  static std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
+                                              std::int64_t rows_limit,
+                                              bigtable::Filter filter);
 
-  std::vector<bigtable::Cell> MoveCellsFromReader(bigtable::RowReader& reader);
+  static std::vector<bigtable::Cell> MoveCellsFromReader(
+      bigtable::RowReader& reader);
 
   /// Return all the cells in @p table that pass @p filter.
-  void CreateCells(bigtable::Table& table,
-                   std::vector<bigtable::Cell> const& cells);
+  static void CreateCells(bigtable::Table& table,
+                          std::vector<bigtable::Cell> const& cells);
 
   /**
    * Return @p cells with all timestamps set to a fixed value.
@@ -112,15 +113,15 @@ class TableIntegrationTest : public ::testing::Test {
    * This is useful to compare sets of cells but ignoring their timestamp
    * values.
    */
-  std::vector<bigtable::Cell> GetCellsIgnoringTimestamp(
+  static std::vector<bigtable::Cell> GetCellsIgnoringTimestamp(
       std::vector<bigtable::Cell> cells);
 
   /**
    * Compare two sets of cells.
    * Unordered because ReadRows does not guarantee a particular order.
    */
-  void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
-                           std::vector<bigtable::Cell> actual);
+  static void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
+                                  std::vector<bigtable::Cell> actual);
 
   /**
    * Generate a random table id.
@@ -129,7 +130,7 @@ class TableIntegrationTest : public ::testing::Test {
    * Bigtable instance.  To avoid conflicts and minimize coordination between
    * the tests, we run each test with a randomly selected table name.
    */
-  std::string RandomTableId();
+  static std::string RandomTableId();
 
   /// Some tests cannot run on the emulator.
   bool UsingCloudBigtableEmulator() const {

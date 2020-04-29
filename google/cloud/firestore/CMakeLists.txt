@@ -47,6 +47,8 @@ include(CreateBazelConfig)
 # the client library
 add_library(firestore_client field_path.cc field_path.h)
 target_link_libraries(firestore_client PRIVATE firestore_common_options)
+google_cloud_cpp_add_common_options(firestore_client)
+google_cloud_cpp_add_clang_tidy(firestore_client)
 target_include_directories(
     firestore_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

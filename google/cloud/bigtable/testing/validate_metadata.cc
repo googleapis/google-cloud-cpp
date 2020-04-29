@@ -24,6 +24,7 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 #include <regex>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -147,7 +148,7 @@ StatusOr<std::map<std::string, std::string> > ExtractMDFromContext(
 }
 
 /// A poorman's check if a value matches a glob used in URL patterns.
-bool ValueMatchesPattern(std::string val, std::string pattern) {
+bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
   std::string regexified_pattern =
       regex_replace(pattern, std::regex("\\*"), std::string("[^/]+"));
   return std::regex_match(val, std::regex(regexified_pattern));
@@ -245,11 +246,11 @@ Status IsContextMDValid(grpc::ClientContext& context,
                     "Expected param \"" + param + "\" not found in metadata");
     }
     if (!ValueMatchesPattern(found_it->second, expected_pattern)) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Expected param \"" + param +
-                        "\" found, but its value (\"" + found_it->second +
-                        "\") does not satisfy the pattern (\"" +
-                        expected_pattern + "\").");
+      std::ostringstream os;
+      os << "Expected param \"" << param << "\" found, but its value (\""
+         << found_it->second << "\") does not satisfy the pattern (\""
+         << expected_pattern << "\").";
+      return Status(StatusCode::kInvalidArgument, std::move(os).str());
     }
   }
   return Status();

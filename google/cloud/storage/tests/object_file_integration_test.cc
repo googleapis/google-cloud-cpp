@@ -50,7 +50,7 @@ TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -84,7 +84,7 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -118,7 +118,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_FALSE(status.ok());
@@ -136,7 +136,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
   ASSERT_STATUS_OK(meta);
 
   // Create an invalid path for the destination object.
-  auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
+  auto file_name = MakeRandomFilename() + "/" + MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_FALSE(status.ok());
@@ -181,7 +181,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -217,7 +217,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
@@ -259,7 +259,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
@@ -288,7 +288,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = MakeRandomObjectName();
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
@@ -302,7 +302,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create the file.
@@ -333,7 +333,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   ASSERT_NE(-1, mkfifo(file_name.c_str(), 0777));
@@ -372,7 +372,7 @@ TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -418,7 +418,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -457,7 +457,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -498,7 +498,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -538,7 +538,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -577,7 +577,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
-  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 

@@ -49,7 +49,6 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomObjectName();
 
   // Construct an object too large to fit in the first chunk.
   auto const read_size = 1024 * 1024L;
