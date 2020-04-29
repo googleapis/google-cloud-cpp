@@ -102,7 +102,7 @@ std::string TableTestEnvironment::RandomTableId() {
   // This value was discovered by trial and error, it is not documented in the
   // proto files.
   auto constexpr kMaxTableIdLength = 50;
-  static char const kPrefix[] = "table-";  // NOLINT(modernize-avoid-c-arrays)
+  static char const kPrefix[] = "table-";
   static_assert(kMaxTableIdLength > sizeof(kPrefix), "prefix is too long");
   auto constexpr kSampleCount = kMaxTableIdLength - sizeof(kPrefix) + 1;
   return CreateRandomId(kPrefix, kSampleCount);
@@ -117,7 +117,7 @@ std::string TableTestEnvironment::RandomInstanceId() {
   // returned values, these fields have their limits (e.g. 30 for cluster id)
   // so need to keep some reserve.
   constexpr int kReserveForSuffix = 10;
-  static char const kPrefix[] = "inst-";  // NOLINT(modernize-avoid-c-arrays)
+  static char const kPrefix[] = "inst-";
   static_assert((kMaxInstanceIdLength - kReserveForSuffix) > sizeof(kPrefix),
                 "prefix is too long");
   auto constexpr kSampleCount =

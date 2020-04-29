@@ -58,7 +58,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   // that is the value should match `bytes=0-[0-9]+`:
   std::string const& range = r->second;
 
-  char const prefix[] = "bytes=0-";  // NOLINT(modernize-avoid-c-arrays)
+  char const prefix[] = "bytes=0-";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
   if (range.rfind(prefix, 0) != 0) {
     std::ostringstream os;

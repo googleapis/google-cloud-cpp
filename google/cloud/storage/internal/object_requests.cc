@@ -333,7 +333,7 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
        << ">";
     google::cloud::internal::ThrowInvalidArgument(os.str());
   };
-  char const unit_descriptor[] = "bytes";  // NOLINT(modernize-avoid-c-arrays)
+  char const unit_descriptor[] = "bytes";
   if (content_range_value.rfind(unit_descriptor, 0) != 0) {
     raise_error();
   }
