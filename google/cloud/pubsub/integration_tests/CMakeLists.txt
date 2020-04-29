@@ -53,6 +53,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
                     GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
 
         # With googletest it is relatively easy to exceed the default number of
         # sections (~65,000) in a single .obj file. Add the /bigobj option to
@@ -87,6 +88,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         add_executable(${target} ${fname})
         target_link_libraries(${target} PRIVATE googleapis-c++::pubsub_client)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
 
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(

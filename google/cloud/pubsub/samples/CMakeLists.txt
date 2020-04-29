@@ -32,12 +32,13 @@ function (pubsub_client_define_samples)
                    ${pubsub_client_unit_samples})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
-        google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
                     GTest::gmock_main GTest::gmock GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     foreach (fname ${pubsub_client_integration_samples})
