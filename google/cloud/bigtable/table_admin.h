@@ -669,7 +669,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc get iam policy
+   * @snippet table_admin_iam_policy_snippets.cc get iam policy
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
 
@@ -687,7 +687,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async get iam policy
+   * @snippet table_admin_iam_policy_snippets.cc async get iam policy
    */
   future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
       CompletionQueue& cq, std::string const& table_id);
@@ -710,7 +710,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc set iam policy
+   * @snippet table_admin_iam_policy_snippets.cc set iam policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& table_id, google::iam::v1::Policy const& iam_policy);
@@ -734,7 +734,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async set iam policy
+   * @snippet table_admin_iam_policy_snippets.cc async set iam policy
    */
   future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
       CompletionQueue& cq, std::string const& table_id,
@@ -750,7 +750,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc test iam permissions
+   * @snippet table_admin_iam_policy_snippets.cc test iam permissions
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
@@ -772,7 +772,7 @@ class TableAdmin {
    * @param permissions set of permissions to check for the resource.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async test iam permissions
+   * @snippet table_admin_iam_policy_snippets.cc async test iam permissions
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.

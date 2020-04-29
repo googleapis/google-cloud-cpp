@@ -39,6 +39,7 @@ set(bigtable_examples
     data_snippets.cc
     instance_admin_async_snippets.cc
     table_admin_async_snippets.cc
+    table_admin_iam_policy_snippets.cc
     table_admin_snippets.cc)
 
 set(bigtable_examples_unit_tests # cmake-format: sort
@@ -99,7 +100,11 @@ foreach (fname ${bigtable_examples})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (target bigtable_grpc_credentials)
+set(bigtable_examples_production
+    # cmake-format: sort
+    bigtable_grpc_credentials table_admin_iam_policy_snippets)
+
+foreach (target ${bigtable_examples_production})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")

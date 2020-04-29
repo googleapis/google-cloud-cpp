@@ -18,6 +18,7 @@
 
 bigtable_client_integration_tests = [
     "admin_async_future_integration_test.cc",
+    "admin_iam_policy_integration_test.cc",
     "admin_integration_test.cc",
     "data_async_future_integration_test.cc",
     "data_integration_test.cc",
