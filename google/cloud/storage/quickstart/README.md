@@ -78,6 +78,14 @@ https://cloud.google.com/docs/authentication/production
    .build/quickstart [GCP PROJECT] [BUCKET NAME]
    ```
 
+## Platform Specific Notes
+
+### Windows
+
+To correctly configure the MSVC runtime you should change the CMake minimum
+required version to 3.15 or add `-DCMAKE_POLICY_DEFAULT_CMP0091=NEW` to the
+CMake configuration step.
+
 [bazel-install]: https://docs.bazel.build/versions/master/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

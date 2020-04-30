@@ -67,6 +67,7 @@ ForEach($library in ("bigtable", "storage")) {
     $cmake_flags += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
     $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
     $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
+    $cmake_flags += "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW"
 
     # Configure CMake and create the build directory.
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_flags"

@@ -108,6 +108,10 @@ bazel build --copt=-DGRPC_BAZEL_BUILD ...
 
 ### Windows
 
+To correctly configure the MSVC runtime you should change the CMake minimum
+required version to 3.15 or add `-DCMAKE_POLICY_DEFAULT_CMP0091=NEW` to the
+CMake configuration step.
+
 gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
 trust store for SSL certificates, you can download and configure this using:
 
