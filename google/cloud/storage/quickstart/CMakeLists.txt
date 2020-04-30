@@ -15,7 +15,7 @@
 # A minimal CMakeList.txt showing how to use the Google Cloud Storage C++ client
 # library in CMake-based projects.
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.5)
 project(google-cloud-cpp-storage-quickstart CXX C)
 
 set(CMAKE_CXX_STANDARD 11)
