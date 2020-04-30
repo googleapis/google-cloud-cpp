@@ -31,7 +31,7 @@ class GcsBucket(object):
         self.name = name
         self.gcs_url = gcs_url
         self.metadata = {
-            "metageneration": 0,
+            "metageneration": "0",
             "name": self.name,
             "location": "US",
             "storageClass": "STANDARD",
@@ -39,7 +39,7 @@ class GcsBucket(object):
             "labels": {"foo": "bar", "baz": "qux"},
             "owner": {"entity": "project-owners-123456789", "entityId": ""},
         }
-        self.notification_id = 1
+        self.notification_id = "1"
         self.notifications = {}
         self.iam_version = 1
         self.counter = 1
@@ -68,7 +68,7 @@ class GcsBucket(object):
 
     def increase_metageneration(self):
         """Increase the current metageneration number."""
-        new = self.metadata.get("metageneration", 0) + 1
+        new = str(int(self.metadata.get("metageneration", "0")) + 1)
         self.metadata["metageneration"] = new
 
     def versioning_enabled(self):
@@ -211,17 +211,14 @@ class GcsBucket(object):
 
         if (
             metageneration_not_match is not None
-            and int(metageneration_not_match) == metageneration
+            and metageneration_not_match == metageneration
         ):
             raise error_response.ErrorResponse(
                 "Precondition Failed (metageneration = %s)" % metageneration,
                 status_code=412,
             )
 
-        if (
-            metageneration_match is not None
-            and int(metageneration_match) != metageneration
-        ):
+        if metageneration_match is not None and metageneration_match != metageneration:
             raise error_response.ErrorResponse(
                 "Precondition Failed (metageneration = %s)" % metageneration,
                 status_code=412,
@@ -385,13 +382,13 @@ class GcsBucket(object):
         :return: the new notification value.
         :rtype:dict
         """
-        notification_id = "notification-%d" % self.notification_id
+        notification_id = "notification-%s" % self.notification_id
         link = "%s/b/%s/notificationConfigs/%s" % (
             self.gcs_url,
             self.name,
             notification_id,
         )
-        self.notification_id += 1
+        self.notification_id = str(int(self.notification_id) + 1)
         notification = json.loads(request.data)
         notification.update(
             {
@@ -580,7 +577,7 @@ class GcsBucket(object):
             raise error_response.ErrorResponse(
                 "Missing ifMetagenerationMatch parameter", status_code=400
             )
-        if int(metageneration) != self.metadata.get("metageneration"):
+        if metageneration != self.metadata.get("metageneration"):
             raise error_response.ErrorResponse(
                 "Precondition Failed (metageneration = %s)" % metageneration,
                 status_code=412,
