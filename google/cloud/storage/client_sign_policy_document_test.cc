@@ -233,6 +233,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4) {
       "{\"bucket\":\"travel-maps\"},"
       "[\"eq\",\"$Content-Disposition\",\"inline\"],"
       "[\"content-length-range\",0,1000000],"
+      "{\"bucket\":\"test-bucket\"},"
       "{\"key\":\"test-object\"},"
       "{\"x-goog-date\":\"20100616T111111Z\"},"
       "{\"x-goog-credential\":\"foo-email@foo-project.iam.gserviceaccount.com/"
@@ -243,14 +244,14 @@ TEST_F(CreateSignedPolicyDocTest, SignV4) {
       Dec64(actual->policy));
 
   EXPECT_EQ(
-      "1ad929a8db0f03f6617f20c448998467d048a74ebbd1e794a36eb81d2a99de9b1a173037"
-      "27e1f5b9793759c35bb3449f6bf496c384e8d62b079d9fa8acc2646ec2638697f9a83fef"
-      "aa5c44cc1877bfa0cd590003ccfc958cc29bed4fb5467a32063221eb0bfa6e27107eb43e"
-      "c7d6c70da40ac7e86d70410ed6ef53d3a8da3a072b781b83dd285bb8d57e07f1acc27d13"
-      "98193ae09baee4f6331b67df91bd3e7f745cd772a660378128f5ea21fa0613adbe17b68a"
-      "844c8783e725de9927dc3da183bbd6a908971eef946c240bfdafc8c0b728b312b969871a"
-      "1efe7820f5bd362d03c953005e48c9dc50cc82d54613208aee82fcae4d6e27fd5dd8d33d"
-      "3fd3735e",
+      "25b5ef60e9d80fc94ac8c0d94bb8533b6d59de07371091ecf3f698cf465c8d54240a60bf"
+      "39840c3e1133d3d07345842809ee97e809a73a801b20ad1a6bcb4d2fb8dfd796b99a85c5"
+      "8dde9f76f28d4724543bad012b6f69fd822179c338852d717272313456b895ca95303ced"
+      "6fbdee01e23f983df8a594b23a6977b24ff5027a3b491ef2c54fb008cac1eccec15da422"
+      "fb6422722edad8e4208e82f8bee82e095441b22a721b8a1d64139958d3fa91739244b203"
+      "62998a73258afc68b1bf7bdb9cbeec392829a401e186ec6fb810f647b502005b1742d333"
+      "421393b555fc1446f5c6e2b715054f1dd6abbc21b5aade89f17de8edcbae9720bc4bfcb7"
+      "ace38d22",
       actual->signature);
 
   EXPECT_EQ("GOOG4-RSA-SHA256", actual->signing_algorithm);

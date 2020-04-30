@@ -90,9 +90,9 @@ TEST(PolicyDocumentV4Request, Printing) {
   std::stringstream stream;
   stream << req;
   EXPECT_EQ(
-      "PolicyDocumentRequest={{\"conditions\":[{\"key\":\"test-object\"},{\"x-"
-      "goog-date\":\"20100616T111111Z\"},{\"x-goog-credential\":\"/20100616/"
-      "auto/storage/"
+      "PolicyDocumentRequest={{\"conditions\":[{\"bucket\":\"test-bucket\"},{"
+      "\"key\":\"test-object\"},{\"x-goog-date\":\"20100616T111111Z\"},{\"x-"
+      "goog-credential\":\"/20100616/auto/storage/"
       "goog4_request\"},{\"x-goog-algorithm\":\"GOOG4-RSA-SHA256\"}],"
       "\"expiration\":\"2010-06-16T11:11:24Z\"}}",
       stream.str());
@@ -115,7 +115,6 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
   std::map<std::string, std::string> expected_fields{
       {"Content-Type", "image/jpeg"},
       {"acl", "bucket-owner-read"},
-      {"bucket", "travel-maps"},
       {"key", "test-object"},
       {"x-goog-algorithm", "GOOG4-RSA-SHA256"},
       {"x-goog-credential", "/20100616/auto/storage/goog4_request"},
