@@ -29,8 +29,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::testing::HasSubstr;
-
 auto const kObjectSize = 16 * 1024;
 
 class ObjectFileMultiThreadedTest
@@ -47,11 +45,11 @@ class ObjectFileMultiThreadedTest
   }
 
   static int ThreadCount() {
-    static int const count = [] {
+    static int const kCount = [] {
       auto c = static_cast<int>(std::thread::hardware_concurrency());
       return c == 0 ? 4 : 4 * c;
     }();
-    return count;
+    return kCount;
   }
 
   std::vector<std::string> CreateObjectNames() {

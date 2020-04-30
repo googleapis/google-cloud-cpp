@@ -69,6 +69,7 @@ foreach (fname ${storage_client_integration_tests})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
+    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 
 # We just know that these tests need to be run against production.

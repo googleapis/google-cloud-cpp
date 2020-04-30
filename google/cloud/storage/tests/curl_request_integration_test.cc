@@ -202,7 +202,7 @@ TEST(CurlRequestTest, UserAgent) {
 }
 
 /// @test Verify that the Projection parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
+TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -225,7 +225,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
 }
 
 /// @test Verify that the UserProject parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
+TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -248,7 +248,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
 }
 
 /// @test Verify that the IfGenerationMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
+TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -271,7 +271,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
 }
 
 /// @test Verify that the IfGenerationNotMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
+TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -294,7 +294,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
 }
 
 /// @test Verify that the IfMetagenerationMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
+TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -317,7 +317,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
 }
 
 /// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
+TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -340,7 +340,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
 }
 
 /// @test Verify that the well-known query parameters are included if set.
-TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
+TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/get",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -366,7 +366,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
-  void Process(google::cloud::LogRecord const& lr) { ProcessWithOwnership(lr); }
+  void Process(google::cloud::LogRecord const& lr) override {
+    ProcessWithOwnership(lr);
+  }
   MOCK_METHOD1(ProcessWithOwnership, void(google::cloud::LogRecord));
 };
 
@@ -381,10 +383,11 @@ TEST(CurlRequestTest, Logging) {
 
   std::string log_messages;
   EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))
-      .WillRepeatedly(Invoke([&log_messages](google::cloud::LogRecord lr) {
-        log_messages += lr.message;
-        log_messages += "\n";
-      }));
+      .WillRepeatedly(
+          Invoke([&log_messages](google::cloud::LogRecord const& lr) {
+            log_messages += lr.message;
+            log_messages += "\n";
+          }));
 
   {
     storage::internal::CurlRequestBuilder request(

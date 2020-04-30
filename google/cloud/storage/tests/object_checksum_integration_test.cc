@@ -26,8 +26,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::CountMatchingEntities;
-using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
 class ObjectChecksumIntegrationTest
@@ -388,7 +386,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
-TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
+TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
   if (!UsingTestbench()) GTEST_SKIP();
@@ -424,7 +422,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
 
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
-TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
+TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
   if (!UsingTestbench()) GTEST_SKIP();

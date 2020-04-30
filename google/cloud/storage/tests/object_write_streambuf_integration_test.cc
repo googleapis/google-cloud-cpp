@@ -28,8 +28,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
-
 class ObjectWriteStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:

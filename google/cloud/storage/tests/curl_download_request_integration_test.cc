@@ -27,8 +27,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
-
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
       .value_or("https://nghttp2.org/httpbin");

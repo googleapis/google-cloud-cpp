@@ -25,9 +25,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::TestPermanentFailure;
-using ::testing::HasSubstr;
-
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
@@ -256,16 +253,16 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
-  auto const MiB = 1024 * 1024L;
-  auto const chunk_size = 2 * MiB;
+  auto constexpr kMiB = 1024 * 1024L;
+  auto constexpr kChunkSize = 2 * kMiB;
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
-  Client client(options->SetUploadBufferSize(chunk_size));
+  Client client(options->SetUploadBufferSize(kChunkSize));
 
-  auto const chunk = MakeRandomData(chunk_size);
+  auto const chunk = MakeRandomData(kChunkSize);
 
-  for (auto const desired_size : {2 * MiB, 3 * MiB, 4 * MiB}) {
+  for (auto const desired_size : {2 * kMiB, 3 * kMiB, 4 * kMiB}) {
     auto object_name = MakeRandomObjectName();
     SCOPED_TRACE("Testing with desired_size=" + std::to_string(desired_size) +
                  ", name=" + object_name);
@@ -274,7 +271,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
         CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
     auto offset = 0L;
     while (offset < desired_size) {
-      auto const n = (std::min)(desired_size - offset, chunk_size);
+      auto const n = (std::min)(desired_size - offset, kChunkSize);
       os.write(chunk.data(), n);
       ASSERT_FALSE(os.bad());
       offset += n;
@@ -291,16 +288,16 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
-  auto const quantum = 256 * 1024L;
-  auto const chunk_size = 2 * quantum;
+  auto constexpr kQuantum = 256 * 1024L;
+  size_t constexpr kChunkSize = 2 * kQuantum;
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
-  Client client(options->SetUploadBufferSize(chunk_size));
+  Client client(options->SetUploadBufferSize(kChunkSize));
 
-  auto const chunk = MakeRandomData(chunk_size);
+  auto const chunk = MakeRandomData(kChunkSize);
 
-  std::uniform_int_distribution<long> size_gen(quantum, 5 * quantum);
+  std::uniform_int_distribution<std::size_t> size_gen(kQuantum, 5 * kQuantum);
   for (int i = 0; i != 10; ++i) {
     auto object_name = MakeRandomObjectName();
     auto const desired_size = size_gen(generator_);
@@ -309,9 +306,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
     auto os = client.WriteObject(
         bucket_name_, object_name, IfGenerationMatch(0),
         CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
-    auto offset = 0L;
+    std::size_t offset = 0L;
     while (offset < desired_size) {
-      auto const n = (std::min)(desired_size - offset, chunk_size);
+      auto const n = (std::min)(desired_size - offset, kChunkSize);
       os.write(chunk.data(), n);
       ASSERT_FALSE(os.bad());
       offset += n;
@@ -332,19 +329,19 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto const chunk_size = 256 * 1024L;
-  auto const chunk = MakeRandomData(chunk_size);
+  auto constexpr kChunkSize = 256 * 1024L;
+  auto const chunk = MakeRandomData(kChunkSize);
 
   auto object_name = MakeRandomObjectName();
-  auto const desired_size = 5 * chunk_size;
+  auto const desired_size = 5 * kChunkSize;
   // Use an invalid value in the X-Upload-Content-Length header, the library
   // should return an error.
   auto os = client->WriteObject(
       bucket_name_, object_name, IfGenerationMatch(0),
-      CustomHeader("X-Upload-Content-Length", std::to_string(3 * chunk_size)));
+      CustomHeader("X-Upload-Content-Length", std::to_string(3 * kChunkSize)));
   auto offset = 0L;
   while (offset < desired_size) {
-    auto const n = (std::min)(desired_size - offset, chunk_size);
+    auto const n = (std::min)(desired_size - offset, kChunkSize);
     os.write(chunk.data(), n);
     ASSERT_FALSE(os.bad());
     offset += n;

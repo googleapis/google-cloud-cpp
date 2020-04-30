@@ -24,8 +24,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::testing::HasSubstr;
-
 class ServiceAccountIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:

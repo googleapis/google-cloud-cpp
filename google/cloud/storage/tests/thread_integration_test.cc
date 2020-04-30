@@ -32,8 +32,9 @@ using ObjectNameList = std::vector<std::string>;
 class ThreadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  public:
-  void CreateObjects(std::string const& bucket_name, ObjectNameList group,
-                     std::string contents) {
+  static void CreateObjects(std::string const& bucket_name,
+                            ObjectNameList const& group,
+                            std::string const& contents) {
     // Create our own client so no state is shared with the other threads.
     StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
@@ -44,7 +45,8 @@ class ThreadIntegrationTest
     }
   }
 
-  void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
+  static void DeleteObjects(std::string const& bucket_name,
+                            ObjectNameList const& group) {
     // Create our own client so no state is shared with the other threads.
     StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
@@ -72,7 +74,7 @@ class ThreadIntegrationTest
  * Divides @p source in to @p count groups of approximately equal size.
  */
 std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
-    ObjectNameList const& source, int count) {
+    ObjectNameList const& source, unsigned int count) {
   std::vector<ObjectNameList> groups;
   groups.reserve(count);
   auto div = source.size() / count;
@@ -129,9 +131,10 @@ TEST_F(ThreadIntegrationTest, Unshared) {
 
   auto groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks;
+  tasks.reserve(groups.size());
   for (auto const& g : groups) {
     tasks.emplace_back(std::async(std::launch::async,
-                                  &ThreadIntegrationTest::CreateObjects, this,
+                                  &ThreadIntegrationTest::CreateObjects,
                                   bucket_name, g, LoremIpsum()));
   }
   for (auto& t : tasks) {
@@ -139,9 +142,10 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   }
 
   tasks.clear();
+  tasks.reserve(groups.size());
   for (auto const& g : groups) {
     tasks.emplace_back(std::async(std::launch::async,
-                                  &ThreadIntegrationTest::DeleteObjects, this,
+                                  &ThreadIntegrationTest::DeleteObjects,
                                   bucket_name, g));
   }
   for (auto& t : tasks) {

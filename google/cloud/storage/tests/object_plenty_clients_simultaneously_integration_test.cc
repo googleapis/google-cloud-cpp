@@ -34,9 +34,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::TestPermanentFailure;
-using ::testing::UnorderedElementsAre;
-
 using ObjectPlentyClientsSimultaneouslyIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 

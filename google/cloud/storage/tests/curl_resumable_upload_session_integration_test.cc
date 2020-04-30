@@ -25,8 +25,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
-
 class CurlResumableUploadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
