@@ -39,10 +39,10 @@ TEST(CustomerSuppliedBackgroundThreads, LifecycleNoShutdown) {
   EXPECT_NE(std::future_status::ready, has_shutdown.wait_for(ms(2)));
 
   auto expired = cq.MakeRelativeTimer(ms(0));
-  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(100)));
+  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(500)));
 
   cq.Shutdown();
-  EXPECT_EQ(std::future_status::ready, has_shutdown.wait_for(ms(100)));
+  EXPECT_EQ(std::future_status::ready, has_shutdown.wait_for(ms(500)));
 
   t.join();
 }
@@ -62,7 +62,7 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
         return std::this_thread::get_id();
       });
   std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(std::future_status::ready, id.wait_for(ms(100)));
+  EXPECT_EQ(std::future_status::ready, id.wait_for(ms(500)));
   EXPECT_EQ(t.get_id(), id.get());
 
   cq.Shutdown();
@@ -76,7 +76,7 @@ TEST(AutomaticallyCreatedBackgroundThreads, IsActive) {
   using ms = std::chrono::milliseconds;
 
   auto expired = actual.cq().MakeRelativeTimer(ms(0));
-  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(100)));
+  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(500)));
 }
 
 }  // namespace

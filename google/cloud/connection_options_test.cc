@@ -181,7 +181,7 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
 
   // Verify we can create our own threads to drain the completion queue.
   std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(100)));
+  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(500)));
 
   cq.Shutdown();
   t.join();
