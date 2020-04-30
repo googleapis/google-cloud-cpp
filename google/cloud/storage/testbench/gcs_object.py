@@ -479,7 +479,7 @@ class GcsObject(object):
         patched = testbench_utils.json_api_patch(
             version.metadata, patch, recurse_on={"metadata"}
         )
-        patched["metageneration"] = str(int(patched.get("metageneration", 0)) + 1)
+        patched["metageneration"] = str(int(patched.get("metageneration", "0")) + 1)
         version.metadata = patched
         return version
 
