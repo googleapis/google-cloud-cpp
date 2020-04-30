@@ -587,7 +587,6 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
   auto read_partitions =
       client_->PartitionRead(ro_transaction, "Singers", KeySet::All(),
                              {"SingerId", "FirstName", "LastName"});
-  if (EmulatorUnimplemented(read_partitions.status())) return;
   ASSERT_STATUS_OK(read_partitions);
 
   std::vector<std::string> serialized_partitions;
@@ -686,7 +685,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
         return Mutations{};
       });
 
-  if (EmulatorUnimplemented(commit_result.status())) return;
   ASSERT_STATUS_OK(commit_result);
   ASSERT_STATUS_OK(batch_result);
   ASSERT_STATUS_OK(batch_result->status);
@@ -756,7 +754,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
         return Mutations{};
       });
 
-  if (EmulatorUnimplemented(commit_result.status())) return;
   ASSERT_STATUS_OK(commit_result);
 
   ASSERT_STATUS_OK(batch_result_left);
@@ -815,7 +812,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
       });
 
   ASSERT_FALSE(commit_result.ok());
-  if (EmulatorUnimplemented(batch_result.status())) return;
   ASSERT_STATUS_OK(batch_result);
   ASSERT_FALSE(batch_result->status.ok());
   ASSERT_EQ(batch_result->stats.size(), 2);
