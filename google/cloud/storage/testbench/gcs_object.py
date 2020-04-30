@@ -40,7 +40,7 @@ class GcsObjectVersion(object):
         self.gcs_url = gcs_url
         self.bucket_name = bucket_name
         self.name = name
-        self.generation = generation
+        self.generation = str(generation)
         self.object_id = bucket_name + "/o/" + name + "/" + str(generation)
         now = time.gmtime(time.time())
         timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", now)
@@ -52,11 +52,11 @@ class GcsObjectVersion(object):
         self.metadata = {
             "timeCreated": timestamp,
             "updated": timestamp,
-            "metageneration": 0,
-            "generation": generation,
+            "metageneration": "0",
+            "generation": str(generation),
             "location": "US",
             "storageClass": "STANDARD",
-            "size": len(self.media),
+            "size": str(len(self.media)),
             "etag": "XYZ=",
             "owner": {"entity": "project-owners-123456789", "entityId": ""},
             "md5Hash": base64.b64encode(hashlib.md5(self.media).digest()).decode(
@@ -115,7 +115,7 @@ class GcsObjectVersion(object):
                 "updated": timestamp,
             }
         )
-        tmp["metageneration"] = tmp.get("metageneration", 0) + 1
+        tmp["metageneration"] = str(int(tmp.get("metageneration", "0")) + 1)
         self.metadata = tmp
         self._validate_hashes()
 
@@ -261,7 +261,7 @@ class GcsObjectVersion(object):
             "entity": entity,
             "entity_id": "",
             "etag": self.metadata.get("etag", "XYZ="),
-            "generation": self.generation,
+            "generation": str(self.generation),
             "id": self.metadata.get("id", "") + "/" + entity,
             "kind": "storage#objectAccessControl",
             "object": self.name,
@@ -379,7 +379,7 @@ class GcsObject(object):
         generation = request.args.get(version_field_name)
         if generation is None:
             return self.get_latest()
-        version = self.revisions.get(int(generation))
+        version = self.revisions.get(generation)
         if version is None:
             raise error_response.ErrorResponse(
                 "Precondition Failed: generation %s not found" % generation
@@ -396,7 +396,7 @@ class GcsObject(object):
         generation = request.args.get("generation") or self.current_generation
         if generation is None:
             return True
-        self.revisions.pop(int(generation))
+        self.revisions.pop(generation)
         if len(self.revisions) == 0:
             self.current_generation = None
             return True
@@ -447,7 +447,7 @@ class GcsObject(object):
         if generation is None:
             version = self.get_latest()
         else:
-            version = self.revisions.get(int(generation))
+            version = self.revisions.get(generation)
             if version is None:
                 raise error_response.ErrorResponse(
                     "Precondition Failed: generation %s not found" % generation
@@ -466,10 +466,11 @@ class GcsObject(object):
             number.
         """
         generation = request.args.get("generation")
+
         if generation is None:
             version = self.get_latest()
         else:
-            version = self.revisions.get(int(generation))
+            version = self.revisions.get(generation)
             if version is None:
                 raise error_response.ErrorResponse(
                     "Precondition Failed: generation %s not found" % generation
@@ -478,7 +479,7 @@ class GcsObject(object):
         patched = testbench_utils.json_api_patch(
             version.metadata, patch, recurse_on={"metadata"}
         )
-        patched["metageneration"] = patched.get("metageneration", 0) + 1
+        patched["metageneration"] = str(int(patched.get("metageneration", "0")) + 1)
         version.metadata = patched
         return version
 
@@ -489,7 +490,7 @@ class GcsObject(object):
         :return: the object revision by generation or None.
         :rtype:GcsObjectRevision
         """
-        return self.revisions.get(generation, None)
+        return self.revisions.get(str(generation), None)
 
     def get_latest(self):
         return self.revisions.get(self.current_generation, None)
@@ -502,13 +503,13 @@ class GcsObject(object):
         metageneration_not_match,
     ):
         """Verify that the given precondition values are met."""
-        current_generation = self.current_generation or 0
-        if generation_match is not None and int(generation_match) != current_generation:
+        current_generation = self.current_generation or "0"
+        if generation_match is not None and generation_match != current_generation:
             raise error_response.ErrorResponse("Precondition Failed", status_code=412)
         # This object does not exist (yet), testing in this case is special.
         if (
             generation_not_match is not None
-            and int(generation_not_match) == current_generation
+            and generation_not_match == current_generation
         ):
             raise error_response.ErrorResponse("Precondition Failed", status_code=412)
 
@@ -525,13 +526,10 @@ class GcsObject(object):
         metageneration = current.metadata.get("metageneration")
         if (
             metageneration_not_match is not None
-            and int(metageneration_not_match) == metageneration
+            and metageneration_not_match == metageneration
         ):
             raise error_response.ErrorResponse("Precondition Failed", status_code=412)
-        if (
-            metageneration_match is not None
-            and int(metageneration_match) != metageneration
-        ):
+        if metageneration_match is not None and metageneration_match != metageneration:
             raise error_response.ErrorResponse("Precondition Failed", status_code=412)
 
     def check_preconditions(
@@ -576,13 +574,13 @@ class GcsObject(object):
         :param revision: GcsObjectVersion the new revision to insert.
         :rtype:NoneType
         """
-        update = {self.generation_generator: revision}
+        update = {str(self.generation_generator): revision}
         bucket = testbench_utils.lookup_bucket(self.bucket_name)
         if not bucket.versioning_enabled():
             self.revisions = update
         else:
             self.revisions.update(update)
-        self.current_generation = self.generation_generator
+        self.current_generation = str(self.generation_generator)
 
     def insert(self, gcs_url, request):
         """Insert a new revision based on the give flask request.
@@ -840,9 +838,9 @@ class GcsObject(object):
         """Create a new rewrite token for `Objects: rewrite`."""
         generation = request.args.get("sourceGeneration")
         if generation is None:
-            generation = self.generation_generator
+            generation = str(self.generation_generator)
         else:
-            generation = int(generation)
+            generation = generation
 
         self.rewrite_token_generator = self.rewrite_token_generator + 1
         body = json.loads(request.data)
