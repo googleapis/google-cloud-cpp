@@ -228,6 +228,7 @@ std::vector<PolicyDocumentCondition> PolicyDocumentV4Request::GetAllConditions()
   auto const& document = policy_document();
   std::copy(document.conditions.begin(), document.conditions.end(),
             std::back_inserter(conditions));
+  conditions.push_back(PolicyDocumentCondition({"bucket", document.bucket}));
   conditions.push_back(PolicyDocumentCondition({"key", document.object}));
   conditions.push_back(PolicyDocumentCondition(
       {"x-goog-date", google::cloud::internal::FormatV4SignedUrlTimestamp(
@@ -252,6 +253,10 @@ std::map<std::string, std::string> PolicyDocumentV4Request::RequiredFormFields()
   std::map<std::string, std::string> res;
   for (auto const& condition : GetAllConditions()) {
     auto const& elements = condition.elements();
+    // According to conformance tests, bucket should not be present.
+    if (elements.size() == 2 && elements[0] == "bucket") {
+      continue;
+    }
     if (elements.size() == 2) {
       res[elements[0]] = elements[1];
       continue;
