@@ -63,7 +63,6 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
     std::function<void(Config&, std::string)> parser;
   };
 
-  // NOLINTNEXTLINE(modernize-avoid-c-arrays)
   Flag flags[] = {
       {"--experiment=",
        [](Config& c, std::string v) { c.experiment = std::move(v); }},
