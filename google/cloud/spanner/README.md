@@ -29,11 +29,9 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Quickstart
 
-<!-- TODO(googleapis/google-cloud-cpp#3973): move the quickstart directory -->
-
-The [quickstart/](../../../quickstart/) directory contains a minimal environment to
-help you quickly get started using this client library. The following is the
-"Hello World" program you'll be running, which should give you a taste of this
+The [quickstart/](quickstart/) directory contains a minimal environment to help
+you quickly get started using this client library. The following is the "Hello
+World" program you'll be running, which should give you a taste of this
 library.
 
 ```cc
