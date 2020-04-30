@@ -54,7 +54,7 @@ function (spanner_client_define_benchmarks)
                $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                $<INSTALL_INTERFACE:include>)
     target_compile_options(spanner_client_benchmarks
-                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(spanner_client_benchmark_programs
         # cmake-format: sortable

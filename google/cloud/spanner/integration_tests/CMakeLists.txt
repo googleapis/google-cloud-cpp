@@ -80,7 +80,7 @@ function (spanner_client_define_integration_tests)
             PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
     endif ()
 
-    if (NOT GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         return()
     endif ()
 

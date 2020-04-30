@@ -17,14 +17,19 @@
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
-include(EnableClangTidy)
-include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
-set(DOXYGEN_PROJECT_NUMBER "${SPANNER_CLIENT_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/../../../quickstart)
-include(EnableDoxygen)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_testing")
+set(DOXYGEN_PREDEFINED "SPANNER_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/google/cloud/spanner/README.md" "*/google/cloud/spanner/internal/*"
+    "*/google/cloud/spanner/benchmarks/*" "*/google/cloud/spanner/testing/*"
+    "*/google/cloud/spanner/*_test.cc")
+
+include(GoogleCloudCppCommon)
 
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
@@ -224,10 +229,10 @@ target_link_libraries(
     spanner_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                           googleapis-c++::spanner_protos)
 set_target_properties(
-    spanner_client PROPERTIES VERSION "${SPANNER_CLIENT_VERSION}"
-                              SOVERSION "${SPANNER_CLIENT_VERSION_MAJOR}")
+    spanner_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
+                              SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 target_compile_options(spanner_client
-                       PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 google_cloud_cpp_add_clang_tidy(spanner_client)
 google_cloud_cpp_add_common_options(spanner_client)
@@ -260,7 +265,7 @@ target_include_directories(
               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
               $<INSTALL_INTERFACE:include>)
 target_compile_options(spanner_client_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
@@ -311,7 +316,7 @@ function (spanner_client_define_tests)
                $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                $<INSTALL_INTERFACE:include>)
     target_compile_options(spanner_client_testing
-                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(spanner_client_unit_tests
         # cmake-format: sortable
@@ -454,12 +459,9 @@ add_subdirectory(benchmarks) # macro benchmarks
 
 # Only compile the samples if we're building with exceptions enabled. They
 # require exceptions to keep them simple and idiomatic.
-if (GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
-
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT spanner-targets
@@ -493,15 +495,15 @@ google_cloud_cpp_install_headers("spanner_client_mocks"
                                  "include/google/cloud/spanner")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MINOR ${SPANNER_CLIENT_VERSION_MINOR})
-set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_PATCH ${SPANNER_CLIENT_VERSION_PATCH})
-set(GOOGLE_CLOUD_SPANNER_PC_NAME "The Google Cloud Spanner C++ Client Library")
-set(GOOGLE_CLOUD_SPANNER_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Spanner.")
-set(GOOGLE_CLOUD_SPANNER_PC_REQUIRES
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
-set(GOOGLE_CLOUD_SPANNER_PC_LIBS "-lspanner_client")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
