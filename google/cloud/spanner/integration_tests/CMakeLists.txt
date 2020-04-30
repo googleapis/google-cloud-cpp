@@ -41,7 +41,7 @@ function (spanner_client_define_integration_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_integration_tests.bzl"
-                         "spanner_client_integration_tests")
+                         "spanner_client_integration_tests" YEAR "2019")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(spanner-client-integration-tests)

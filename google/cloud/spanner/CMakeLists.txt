@@ -242,7 +242,7 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(spanner_client)
+create_bazel_config(spanner_client YEAR "2019")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -258,7 +258,7 @@ target_link_libraries(
     spanner_client_mocks
     INTERFACE googleapis-c++::spanner_client google_cloud_cpp_testing
               GTest::gmock_main GTest::gmock GTest::gtest)
-create_bazel_config(spanner_client_mocks)
+create_bazel_config(spanner_client_mocks YEAR "2019")
 target_include_directories(
     spanner_client_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -308,7 +308,7 @@ function (spanner_client_define_tests)
         PUBLIC spanner_client_mocks googleapis-c++::spanner_client
                google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                GTest::gtest)
-    create_bazel_config(spanner_client_testing)
+    create_bazel_config(spanner_client_testing YEAR "2019")
 
     target_include_directories(
         spanner_client_testing
@@ -380,7 +380,7 @@ function (spanner_client_define_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_unit_tests.bzl"
-                         "spanner_client_unit_tests")
+                         "spanner_client_unit_tests" YEAR "2019")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(spanner-client-tests)
@@ -426,7 +426,7 @@ function (spanner_client_define_benchmarks)
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_benchmarks.bzl"
-                         "spanner_client_benchmarks")
+                         "spanner_client_benchmarks" YEAR "2019")
 
     # Create a custom target so we can say "build all the benchmarks"
     add_custom_target(spanner-client-benchmarks)

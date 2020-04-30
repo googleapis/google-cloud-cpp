@@ -46,7 +46,7 @@ function (spanner_client_define_benchmarks)
                GTest::gmock_main
                GTest::gmock
                GTest::gtest)
-    create_bazel_config(spanner_client_benchmarks)
+    create_bazel_config(spanner_client_benchmarks YEAR "2019")
 
     target_include_directories(
         spanner_client_benchmarks
@@ -64,7 +64,7 @@ function (spanner_client_define_benchmarks)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_benchmark_programs.bzl"
-                         "spanner_client_benchmark_programs")
+                         "spanner_client_benchmark_programs" YEAR "2019")
 
     # Generate a target for each benchmark.
     foreach (fname ${spanner_client_benchmark_programs})

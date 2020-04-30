@@ -27,9 +27,9 @@ function (spanner_client_define_samples)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_integration_samples.bzl"
-                         "spanner_client_integration_samples")
+                         "spanner_client_integration_samples" YEAR "2019")
     export_list_to_bazel("spanner_client_unit_samples.bzl"
-                         "spanner_client_unit_samples")
+                         "spanner_client_unit_samples" YEAR "2019")
 
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_integration_samples}
