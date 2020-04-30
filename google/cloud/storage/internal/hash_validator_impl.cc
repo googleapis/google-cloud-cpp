@@ -44,7 +44,7 @@ void MD5HashValidator::ProcessHeader(std::string const& key,
   if (key != "x-goog-hash") {
     return;
   }
-  char const prefix[] = "md5=";  // NOLINT(modernize-avoid-c-arrays)
+  char const prefix[] = "md5=";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
   auto pos = value.find(prefix);
   if (pos == std::string::npos) {
@@ -88,7 +88,7 @@ void Crc32cHashValidator::ProcessHeader(std::string const& key,
   if (key != "x-goog-hash") {
     return;
   }
-  char const prefix[] = "crc32c=";  // NOLINT(modernize-avoid-c-arrays)
+  char const prefix[] = "crc32c=";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
   auto pos = value.find(prefix);
   if (pos == std::string::npos) {

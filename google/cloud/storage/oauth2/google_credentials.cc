@@ -32,7 +32,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-char constexpr kAdcLink[] =  // NOLINT(modernize-avoid-c-arrays)
+char constexpr kAdcLink[] =
     "https://developers.google.com/identity/protocols/"
     "application-default-credentials";
 
