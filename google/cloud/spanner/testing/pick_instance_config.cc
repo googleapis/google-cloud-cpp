@@ -42,7 +42,7 @@ std::string PickInstanceConfig(
     }
     return ret;
   }();
-  if (instance_configs.size() > 0) {
+  if (!instance_configs.empty()) {
     auto random_index = std::uniform_int_distribution<std::size_t>(
         0, instance_configs.size() - 1);
     instance_config_name = instance_configs[random_index(generator)];

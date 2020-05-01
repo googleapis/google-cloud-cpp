@@ -147,7 +147,7 @@ StatusOr<std::map<std::string, std::string> > ExtractMDFromHeaders(
 }
 
 /// A poor man's check if a value matches a glob used in URL patterns.
-bool ValueMatchesPattern(std::string val, std::string pattern) {
+bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
   std::string regexified_pattern =
       regex_replace(pattern, std::regex("\\*"), std::string("[^/]+"));
   return std::regex_match(val, std::regex(regexified_pattern));
@@ -248,11 +248,12 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                     "Expected param \"" + param + "\" not found in metadata");
     }
     if (!ValueMatchesPattern(found_it->second, expected_pattern)) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Expected param \"" + param +
-                        "\" found, but its value (\"" + found_it->second +
-                        "\") does not satisfy the pattern (\"" +
-                        expected_pattern + "\").");
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Expected param \"" + param + "\" found, but its value (\"" +
+              // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+              found_it->second + "\") does not satisfy the pattern (\"" +
+              expected_pattern + "\").");
     }
   }
 

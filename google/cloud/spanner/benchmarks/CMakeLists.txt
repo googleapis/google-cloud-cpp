@@ -47,6 +47,7 @@ function (spanner_client_define_benchmarks)
                GTest::gmock
                GTest::gtest)
     create_bazel_config(spanner_client_benchmarks YEAR "2019")
+    google_cloud_cpp_add_clang_tidy(spanner_client_benchmarks)
 
     target_include_directories(
         spanner_client_benchmarks
