@@ -30,8 +30,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
-using ::google::cloud::storage::testing::TestPermanentFailure;
-using ::testing::HasSubstr;
 
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -59,21 +57,20 @@ class ObjectInsertIntegrationTest
     ASSERT_FALSE(bucket_name_.empty());
   }
 
-  std::string GetLinesWith(
-      google::cloud::testing_util::CaptureLogLinesBackend const& backend,
-      std::string const& text) {
-    std::string msg;
-    for (auto const& l : backend.log_lines) {
-      if (l.find(text) == std::string::npos) continue;
-      msg += l;
-      msg += "\n";
-    }
-    return msg;
-  }
-
   ::google::cloud::testing_util::ScopedEnvironment application_credentials_;
   std::string bucket_name_;
 };
+
+std::string GetLinesWith(testing_util::CaptureLogLinesBackend const& backend,
+                         std::string const& text) {
+  std::string msg;
+  for (auto const& l : backend.log_lines) {
+    if (l.find(text) == std::string::npos) continue;
+    msg += l;
+    msg += "\n";
+  }
+  return msg;
+}
 
 TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();

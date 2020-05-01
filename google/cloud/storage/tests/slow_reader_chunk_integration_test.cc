@@ -27,8 +27,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::testing::HasSubstr;
-
 class SlowReaderChunkIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
@@ -77,7 +75,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
   auto const period_increment = std::chrono::seconds(UsingTestbench() ? 5 : 60);
   auto const max_slow_reader_period = std::chrono::minutes(10);
   std::vector<char> buffer;
-  long const size = 1024 * 1024;
+  std::size_t const size = 1024 * 1024;
   buffer.resize(size);
   stream.read(buffer.data(), size);
   EXPECT_STATUS_OK(stream.status());

@@ -542,11 +542,11 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
-  auto bucket_name_ = MakeRandomBucketName();
+  auto bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  ListObjectsReader reader = client->ListObjects(bucket_name_, Versions(true));
+  ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
 
   // This operation should fail because the bucket does not exist.
   TestPermanentFailure([&] {

@@ -29,8 +29,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
-using ::google::cloud::storage::testing::TestPermanentFailure;
-using ::testing::HasSubstr;
 
 class ObjectRewriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -392,8 +390,8 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   auto source_name = MakeRandomObjectName();
 
   std::string large_text;
-  long const lines = 8 * 1024 * 1024 / 128;
-  for (long i = 0; i != lines; ++i) {
+  std::size_t const lines = 8 * 1024 * 1024 / 128;
+  for (std::size_t i = 0; i != lines; ++i) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

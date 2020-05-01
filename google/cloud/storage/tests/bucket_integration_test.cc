@@ -25,7 +25,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
@@ -426,7 +425,7 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
   EXPECT_TRUE(metadata->kind().empty());
 }
 
-TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
+TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -443,7 +442,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
   EXPECT_EQ(*metadata2, *metadata);
 }
 
-TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
+TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

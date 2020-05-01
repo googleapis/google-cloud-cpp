@@ -321,7 +321,7 @@ INSTANTIATE_TEST_SUITE_P(
 }  // namespace cloud
 }  // namespace google
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   auto conformance_tests_file =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME")

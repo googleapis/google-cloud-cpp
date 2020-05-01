@@ -26,7 +26,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::HasSubstr;
 
 class KeyFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,

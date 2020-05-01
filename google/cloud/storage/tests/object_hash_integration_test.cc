@@ -29,8 +29,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::CountMatchingEntities;
-using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
 class ObjectHashIntegrationTest
@@ -497,7 +495,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 }
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
+TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
   if (!UsingTestbench()) GTEST_SKIP();
@@ -532,7 +530,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
 }
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
+TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
   if (!UsingTestbench()) GTEST_SKIP();

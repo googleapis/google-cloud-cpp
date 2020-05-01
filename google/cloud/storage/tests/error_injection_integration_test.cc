@@ -251,7 +251,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
-  WriteRandomLines(os, expected, 80, opts->download_buffer_size() * 3 / 80);
+  WriteRandomLines(os, expected, 80,
+                   static_cast<int>(opts->download_buffer_size()) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
@@ -287,7 +288,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
                                NewResumableUploadSession());
   os.exceptions(std::ios_base::badbit);
 
-  WriteRandomLines(os, expected, 80, opts->download_buffer_size() * 3 / 80);
+  WriteRandomLines(os, expected, 80,
+                   static_cast<int>(opts->download_buffer_size()) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
