@@ -26,9 +26,9 @@ v**1**.13.0
 
 See above regarding the common library inlined namespace.
 
-**OTHER CHANGES** 
+**OTHER CHANGES**
 
-* cleanup: the library now links against the common libraries included in this 
+* cleanup: the library now links against the common libraries included in this
   repository, applications developers should not install the standalone common
   libraries in the (now archived) google-cloud-cpp-common repository.
 * feat: compile bigtable benchmarks with Bazel (#3884)
@@ -55,9 +55,9 @@ See above regarding the common library inlined namespace.
   environment. We apologize to any customers affected by this change, but we
   think it is unlikely that anybody used the field on that platform.
 
-**OTHER CHANGES** 
+**OTHER CHANGES**
 
-* cleanup: the library now links against the common libraries included in this 
+* cleanup: the library now links against the common libraries included in this
   repository, applications developers should not install the standalone common
   libraries in the (now archived) google-cloud-cpp-common repository.
 * feat: implement POST policy signatures. Applications can use the Google Cloud
