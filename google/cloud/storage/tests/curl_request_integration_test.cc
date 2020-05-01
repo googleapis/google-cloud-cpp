@@ -366,11 +366,11 @@ TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
-  // TODO(#3983) clang-tidy and clang-3.8 conflict about annotating
-  // `Process` as `override`. See the issue for details.
-  // NOLINTNEXTLINE(modernize-use-override)
-  void Process(google::cloud::LogRecord const& lr) { ProcessWithOwnership(lr); }
-  MOCK_METHOD1(ProcessWithOwnership, void(google::cloud::LogRecord));
+  void Process(google::cloud::LogRecord const& lr) override {
+    ProcessWithOwnership(lr);
+  }
+  MOCK_METHOD(void, ProcessWithOwnership, (google::cloud::LogRecord),
+              (override));
 };
 
 /// @test Verify that CurlRequest logs when requested.
