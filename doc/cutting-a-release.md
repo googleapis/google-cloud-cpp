@@ -105,8 +105,13 @@ uploaded documentation will generally be live in an hour at the following URLs:
 
 Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
 *next* version (i.e., one version past the release you just did above), and
-send the PR for review against `master`. For an example, look at
-[#3182](https://github.com/googleapis/google-cloud-cpp/pull/3182)
+send the PR for review against `master` You need to:
+
+- Update the version numbers in the top-level `CMakeLists.txt` file.
+- Run the cmake configuration step, this will update the different
+  `version_info.sh` files.
+- Update the version number and SHA256 checksums in the `quickstart/WORKSPACE`
+  files.
 
 ## Review the branch protections
 
