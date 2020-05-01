@@ -412,7 +412,6 @@ void PatchObjectContentType(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
 void ComposeObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   auto it = argv.cbegin();
