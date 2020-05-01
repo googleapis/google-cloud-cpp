@@ -31,7 +31,7 @@ void ListObjects(google::cloud::storage::Client client,
                  std::vector<std::string> const& argv) {
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     for (auto&& object_metadata : client.ListObjects(bucket_name)) {
       if (!object_metadata) {
         throw std::runtime_error(object_metadata.status().message());
@@ -49,7 +49,8 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [list objects with prefix] [START storage_list_files_with_prefix]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string bucket_prefix) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& bucket_prefix) {
     for (auto&& object_metadata :
          client.ListObjects(bucket_name, gcs::Prefix(bucket_prefix))) {
       if (!object_metadata) {
@@ -68,7 +69,7 @@ void ListVersionedObjects(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [list versioned objects] [START storage_list_file_archived_generations]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     for (auto&& object_metadata :
          client.ListObjects(bucket_name, gcs::Versions{true})) {
       if (!object_metadata) {
@@ -89,8 +90,8 @@ void InsertObject(google::cloud::storage::Client client,
   //! [insert object]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string contents) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& contents) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents));
 
@@ -106,12 +107,14 @@ void InsertObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 void InsertObjectStrictIdempotency(google::cloud::storage::Client,
                                    std::vector<std::string> const& argv) {
   //! [insert object strict idempotency]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](std::string bucket_name, std::string object_name, std::string contents) {
+  [](std::string const& bucket_name, std::string const& object_name,
+     std::string const& contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
     StatusOr<gcs::ClientOptions> options =
@@ -135,12 +138,14 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client,
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 void InsertObjectModifiedRetry(google::cloud::storage::Client,
                                std::vector<std::string> const& argv) {
   //! [insert object modified retry]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](std::string bucket_name, std::string object_name, std::string contents) {
+  [](std::string const& bucket_name, std::string const& object_name,
+     std::string const& contents) {
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
     StatusOr<gcs::ClientOptions> options =
@@ -170,8 +175,9 @@ void InsertObjectMultipart(google::cloud::storage::Client client,
   //! [insert object multipart]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string content_type, std::string contents) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& content_type,
+     std::string const& contents) {
     // Setting the object metadata (via the `gcs::WithObjectMadata` option)
     // requires a multipart upload, the library prefers simple uploads unless
     // required as in this case.
@@ -199,9 +205,10 @@ void CopyObject(google::cloud::storage::Client client,
   //! [copy object] [START storage_copy_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name) {
     StatusOr<gcs::ObjectMetadata> new_copy_meta =
         client.CopyObject(source_bucket_name, source_object_name,
                           destination_bucket_name, destination_object_name);
@@ -225,7 +232,8 @@ void GetObjectMetadata(google::cloud::storage::Client client,
   //! [get object metadata] [START storage_get_metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.GetObjectMetadata(bucket_name, object_name);
 
@@ -245,7 +253,8 @@ void ReadObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [read object] [START storage_download_file]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
 
     int count = 0;
@@ -264,8 +273,8 @@ void ReadObjectRange(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [read object range] [START storage_download_byte_range]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::int64_t start, std::int64_t end) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::int64_t start, std::int64_t end) {
     gcs::ObjectReadStream stream =
         client.ReadObject(bucket_name, object_name, gcs::ReadRange(start, end));
 
@@ -287,7 +296,8 @@ void DeleteObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [delete object] [START storage_delete_file]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     google::cloud::Status status =
         client.DeleteObject(bucket_name, object_name);
 
@@ -304,8 +314,8 @@ void WriteObject(google::cloud::storage::Client client,
   //! [write object] [START storage_stream_file_upload]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     long desired_line_count) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, int desired_line_count) {
     std::string const text = "Lorem ipsum dolor sit amet";
     gcs::ObjectWriteStream stream =
         client.WriteObject(bucket_name, object_name);
@@ -325,7 +335,7 @@ void WriteObject(google::cloud::storage::Client client,
               << "\nFull metadata: " << *metadata << "\n";
   }
   //! [write object] [END storage_stream_file_upload]
-  (std::move(client), argv.at(0), argv.at(1), std::stol(argv.at(2)));
+  (std::move(client), argv.at(0), argv.at(1), std::stoi(argv.at(2)));
 }
 
 void UpdateObjectMetadata(google::cloud::storage::Client client,
@@ -333,8 +343,9 @@ void UpdateObjectMetadata(google::cloud::storage::Client client,
   //! [update object metadata] [START storage_set_metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string key, std::string value) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& key,
+     std::string const& value) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.GetObjectMetadata(bucket_name, object_name);
 
@@ -362,8 +373,8 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client,
   //! [patch object delete metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string key) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& key) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
@@ -387,8 +398,8 @@ void PatchObjectContentType(google::cloud::storage::Client client,
   //! [patch object content type]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string content_type) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& content_type) {
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetContentType(content_type));
@@ -401,6 +412,7 @@ void PatchObjectContentType(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 void ComposeObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   auto it = argv.cbegin();
@@ -414,9 +426,9 @@ void ComposeObject(google::cloud::storage::Client client,
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name,
-     std::string destination_object_name,
-     std::vector<gcs::ComposeSourceObject> compose_objects) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& destination_object_name,
+     std::vector<gcs::ComposeSourceObject> const& compose_objects) {
     StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name);
 
@@ -446,9 +458,9 @@ void ComposeObjectFromMany(google::cloud::storage::Client client,
   //! [compose object from many] [START storage_compose_file_from_many]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name,
-     std::string destination_object_name,
-     std::vector<gcs::ComposeSourceObject> compose_objects) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& destination_object_name,
+     std::vector<gcs::ComposeSourceObject> const& compose_objects) {
     std::string prefix = gcs::CreateRandomPrefixName(".tmpfiles");
     StatusOr<gcs::ObjectMetadata> composed_object =
         ComposeMany(client, bucket_name, compose_objects, prefix,
@@ -476,8 +488,8 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client,
   // [START storage_change_file_storage_class]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string storage_class) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& storage_class) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.RewriteObjectBlocking(
             bucket_name, object_name, bucket_name, object_name,
@@ -626,7 +638,7 @@ int main(int argc, char* argv[]) {
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
 
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("list-objects", {}, ListObjects),
       make_entry("list-objects-with-prefix", {"<prefix>"},
                  ListObjectsWithPrefix),

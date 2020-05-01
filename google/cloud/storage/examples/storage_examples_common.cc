@@ -134,7 +134,7 @@ Commands::value_type CreateCommandEntry(
     ClientCommand const& command) {
   bool allow_varargs =
       !arg_names.empty() && arg_names.back().find("...") != std::string::npos;
-  auto adapter = [=](std::vector<std::string> argv) {
+  auto adapter = [=](std::vector<std::string> const& argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         (allow_varargs ? argv.size() < (arg_names.size() - 1)
                        : argv.size() != arg_names.size())) {

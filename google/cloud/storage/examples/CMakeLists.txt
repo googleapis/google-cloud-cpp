@@ -81,6 +81,7 @@ if (BUILD_TESTING)
                     GTest::gtest
                     storage_common_options)
         add_test(NAME ${target} COMMAND ${target})
+        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 endif ()
 
@@ -96,6 +97,7 @@ foreach (fname ${storage_examples})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
+    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 
 # We just know that these tests need to be run against production.
@@ -107,4 +109,5 @@ foreach (
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")
+    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()

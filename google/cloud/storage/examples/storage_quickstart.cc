@@ -77,7 +77,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       {"storage-quickstart", StorageQuickstartCommand},
       {"auto", RunAll},
   });

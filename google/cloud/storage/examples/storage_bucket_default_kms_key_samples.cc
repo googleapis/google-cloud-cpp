@@ -25,7 +25,8 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
   //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string key_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& key_name) {
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
                          gcs::BucketEncryption{key_name}));
@@ -53,7 +54,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client,
   //! [get bucket default kms key] [START storage_bucket_get_default_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
         client.GetBucketMetadata(bucket_name);
     if (!metadata) throw std::runtime_error(metadata.status().message());
@@ -77,7 +78,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client,
   // [START storage_bucket_delete_default_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
     if (!updated) throw std::runtime_error(updated.status().message());
@@ -143,7 +144,7 @@ int main(int argc, char* argv[]) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("add-bucket-default-kms-key", {"<kms-key-name>"},
                  AddBucketDefaultKmsKey),
       make_entry("get-bucket-default-kms-key", {}, GetBucketDefaultKmsKey),

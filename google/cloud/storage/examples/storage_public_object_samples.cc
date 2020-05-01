@@ -28,7 +28,8 @@ void MakeObjectPublic(google::cloud::storage::Client client,
   //! [make object public] [START storage_make_public]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
         gcs::PredefinedAcl::PublicRead());
@@ -47,7 +48,7 @@ void ReadObjectUnauthenticated(std::vector<std::string> const& argv) {
   }
   //! [download_public_file] [START storage_download_public_file]
   namespace gcs = google::cloud::storage;
-  [](std::string bucket_name, std::string object_name) {
+  [](std::string const& bucket_name, std::string const& object_name) {
     // Create a client that does not authenticate with the server.
     gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
 
@@ -104,7 +105,7 @@ The actual contents are not interesting.
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       examples::CreateCommandEntry("set-cors-configuration",
                                    {"<bucket-name>", "<object-name>"},
                                    MakeObjectPublic),

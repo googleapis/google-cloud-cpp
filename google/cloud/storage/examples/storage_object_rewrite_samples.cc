@@ -26,9 +26,10 @@ void RewriteObject(google::cloud::storage::Client client,
   //! [rewrite object]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name) {
     StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name);
@@ -46,9 +47,10 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client,
   //! [rewrite object non blocking]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name) {
     gcs::ObjectRewriter rewriter =
         client.RewriteObject(source_bucket_name, source_object_name,
                              destination_bucket_name, destination_object_name);
@@ -74,9 +76,10 @@ void RewriteObjectToken(google::cloud::storage::Client client,
   //! [rewrite object token]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name) {
     gcs::ObjectRewriter rewriter = client.RewriteObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::MaxBytesRewrittenPerCall(1024 * 1024));
@@ -100,9 +103,11 @@ void RewriteObjectResume(google::cloud::storage::Client client,
   //! [rewrite object resume]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name, std::string rewrite_token) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name,
+     std::string const& rewrite_token) {
     gcs::ObjectRewriter rewriter = client.ResumeRewriteObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, rewrite_token,
@@ -130,8 +135,8 @@ void RenameObject(google::cloud::storage::Client client,
   //! [rename object] [START storage_move_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string old_object_name,
-     std::string new_object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& old_object_name, std::string const& new_object_name) {
     StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
         bucket_name, old_object_name, bucket_name, new_object_name);
     if (!metadata) throw std::runtime_error(metadata.status().message());
@@ -256,7 +261,7 @@ int main(int argc, char* argv[]) {
          "<destination-bucket-name>", "<destination-object-name>"});
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("rewrite-object", {}, RewriteObject),
       make_entry("rewrite-object-non-blocking", {}, RewriteObjectNonBlocking),
       make_entry("rewrite-object-token", {}, RewriteObjectToken),

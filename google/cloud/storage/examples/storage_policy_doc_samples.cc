@@ -25,7 +25,7 @@ void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
   //! [create signed policy document]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::PolicyDocumentResult> document =
         client.CreateSignedPolicyDocument(gcs::PolicyDocument{
             std::chrono::system_clock::now() + std::chrono::minutes(15),
@@ -53,7 +53,7 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
   //! [create signed policy document v4]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::PolicyDocumentV4Result> document =
         client.GenerateSignedPostPolicyV4(gcs::PolicyDocumentV4{
             std::move(bucket_name),
@@ -82,7 +82,8 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
   // [START storage_generate_signed_post_policy_v4]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     auto document = client.GenerateSignedPostPolicyV4(
         gcs::PolicyDocumentV4{
             bucket_name,

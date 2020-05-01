@@ -26,7 +26,8 @@ void SetCorsConfiguration(google::cloud::storage::Client client,
   //! [cors configuration] [START storage_cors_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string origin) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& origin) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -65,7 +66,7 @@ void RemoveCorsConfiguration(google::cloud::storage::Client client,
   // [START storage_remove_cors_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
     if (!original) throw std::runtime_error(original.status().message());
@@ -117,7 +118,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       examples::CreateCommandEntry("set-cors-configuration",
                                    {"<bucket-name>", "<config>"},
                                    SetCorsConfiguration),
