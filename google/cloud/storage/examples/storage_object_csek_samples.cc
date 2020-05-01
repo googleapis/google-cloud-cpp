@@ -49,7 +49,7 @@ std::string GenerateEncryptionKey() {
       (GeneratorType::word_size / std::numeric_limits<unsigned int>::digits);
 
   // Capture the entropy bits into a vector.
-  std::vector<unsigned long> entropy(kRequiredEntropyWords);
+  std::vector<std::uint64_t> entropy(kRequiredEntropyWords);
   std::generate(entropy.begin(), entropy.end(), [&rd] { return rd(); });
 
   // Create the PRNG with the fetched entropy.
@@ -81,8 +81,8 @@ void WriteEncryptedObject(google::cloud::storage::Client client,
   //! [insert encrypted object] [START storage_upload_encrypted_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string base64_aes256_key) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& base64_aes256_key) {
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
         bucket_name, object_name, "top secret",
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
@@ -103,8 +103,8 @@ void ReadEncryptedObject(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [read encrypted object] [START storage_download_encrypted_file]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string base64_aes256_key) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& base64_aes256_key) {
     gcs::ObjectReadStream stream =
         client.ReadObject(bucket_name, object_name,
                           gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
@@ -130,9 +130,10 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   //! [compose object csek]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name,
-     std::string destination_object_name, std::string base64_aes256_key,
-     std::vector<gcs::ComposeSourceObject> compose_objects) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& destination_object_name,
+     std::string const& base64_aes256_key,
+     std::vector<gcs::ComposeSourceObject> const& compose_objects) {
     StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
@@ -155,9 +156,11 @@ void CopyEncryptedObject(google::cloud::storage::Client client,
   //! [copy encrypted object]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string source_bucket_name,
-     std::string source_object_name, std::string destination_bucket_name,
-     std::string destination_object_name, std::string key_base64) {
+  [](gcs::Client client, std::string const& source_bucket_name,
+     std::string const& source_object_name,
+     std::string const& destination_bucket_name,
+     std::string const& destination_object_name,
+     std::string const& key_base64) {
     StatusOr<gcs::ObjectMetadata> new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
@@ -182,8 +185,9 @@ void RotateEncryptionKey(google::cloud::storage::Client client,
   //! [rotate encryption key] [START storage_rotate_encryption_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string old_key_base64, std::string new_key_base64) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& old_key_base64,
+     std::string const& new_key_base64) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.RewriteObjectBlocking(
             bucket_name, object_name, bucket_name, object_name,
@@ -277,7 +281,7 @@ int main(int argc, char* argv[]) {
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
 
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       {"generate-encryption-key", GenerateEncryptionKeyCommand},
       make_entry("write-encrypted-object", {"<base64-encoded-aes256-key>"},
                  WriteEncryptedObject),

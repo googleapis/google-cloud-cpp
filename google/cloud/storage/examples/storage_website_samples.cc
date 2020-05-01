@@ -25,7 +25,7 @@ void GetStaticWebsiteConfiguration(google::cloud::storage::Client client,
   // [START storage_print_bucket_website_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
 
@@ -56,8 +56,8 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
   // [START storage_define_bucket_website_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string main_page_suffix,
-     std::string not_found_page) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& main_page_suffix, std::string const& not_found_page) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -94,7 +94,7 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
   //! [remove bucket website configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -167,7 +167,7 @@ int main(int argc, char* argv[]) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
     return examples::CreateCommandEntry(name, arg_names, cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("get-static-website-configuration", {},
                  GetStaticWebsiteConfiguration),
       make_entry("set-static-website-configuration",

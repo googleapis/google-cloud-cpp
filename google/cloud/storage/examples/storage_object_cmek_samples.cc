@@ -26,8 +26,8 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client,
   //! [write object with kms key] [START storage_upload_with_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string kms_key_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& kms_key_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::KmsKeyName(kms_key_name));
 
@@ -54,8 +54,9 @@ void ObjectCsekToCmek(google::cloud::storage::Client client,
   //! [object csek to cmek] [START storage_object_csek_to_cmek]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string old_csek_key_base64, std::string new_cmek_key_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& old_csek_key_base64,
+     std::string const& new_cmek_key_name) {
     StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
         bucket_name, object_name, bucket_name, object_name,
         gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
@@ -76,7 +77,8 @@ void GetObjectKmsKey(google::cloud::storage::Client client,
   //! [get object kms key] [START storage_object_get_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> metadata =
         client.GetObjectMetadata(bucket_name, object_name);
     if (!metadata) throw std::runtime_error(metadata.status().message());
@@ -166,7 +168,7 @@ int main(int argc, char* argv[]) {
     arg_names.insert(arg_names.begin(), {"<bucket-name>", "<object-name>"});
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("write-object-with-kms-key", {"<kms-key-name>"},
                  WriteObjectWithKmsKey),
       make_entry(

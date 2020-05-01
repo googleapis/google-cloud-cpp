@@ -30,7 +30,8 @@ void StartResumableUpload(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [start resumable upload]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::NewResumableUploadSession());
     std::cout << "Created resumable upload: " << stream.resumable_session_id()
@@ -51,8 +52,8 @@ void ResumeResumableUpload(google::cloud::storage::Client client,
   //! [resume resumable upload]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string session_id) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& session_id) {
     // Restore a resumable upload stream, the library automatically queries the
     // state of the upload and discovers the next expected byte.
     gcs::ObjectWriteStream stream =
@@ -137,7 +138,7 @@ int main(int argc, char* argv[]) {
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
 
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("start-resumable-upload", {}, StartResumableUpload),
       make_entry("resume-resumable-upload", {"<session-id>"},
                  ResumeResumableUpload),

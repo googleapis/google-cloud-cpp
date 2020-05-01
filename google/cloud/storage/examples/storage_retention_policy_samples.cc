@@ -28,7 +28,7 @@ void GetRetentionPolicy(google::cloud::storage::Client client,
   // [START storage_get_retention_policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
 
@@ -57,7 +57,8 @@ void SetRetentionPolicy(google::cloud::storage::Client client,
   // [START storage_set_retention_policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::chrono::seconds period) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::chrono::seconds period) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -92,7 +93,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client,
   // [START storage_remove_retention_policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -128,7 +129,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client,
   // [START storage_lock_retention_policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -209,7 +210,7 @@ int main(int argc, char* argv[]) {
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
 
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("get-retention-policy", {}, GetRetentionPolicy),
       make_entry("set-retention-policy", {"<period>"}, SetRetentionPolicy),
       make_entry("remove-retention-policy", {}, RemoveRetentionPolicy),

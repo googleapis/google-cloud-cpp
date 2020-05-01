@@ -24,7 +24,8 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client,
   //! [set event based hold] [START storage_set_event_based_hold]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
     if (!original) throw std::runtime_error(original.status().message());
@@ -48,7 +49,8 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
   //! [release event based hold] [START storage_release_event_based_hold]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
     if (!original) throw std::runtime_error(original.status().message());
@@ -72,7 +74,8 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client,
   //! [set temporary hold] [START storage_set_temporary_hold]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
     if (!original) throw std::runtime_error(original.status().message());
@@ -96,7 +99,8 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   //! [release temporary hold] [START storage_release_temporary_hold]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
@@ -178,7 +182,7 @@ int main(int argc, char* argv[]) {
     return examples::CreateCommandEntry(
         name, {"<bucket-name>", "<object-name>"}, cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("set-event-based-hold", SetObjectEventBasedHold),
       make_entry("release-event-based-hold", ReleaseObjectEventBasedHold),
       make_entry("set-temporary-hold", SetObjectTemporaryHold),

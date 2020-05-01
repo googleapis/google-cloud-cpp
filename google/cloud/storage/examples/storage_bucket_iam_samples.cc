@@ -26,7 +26,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client,
   //! [get bucket iam policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
 
@@ -43,7 +43,7 @@ void NativeGetBucketIamPolicy(google::cloud::storage::Client client,
   //! [native get bucket iam policy] [START storage_view_bucket_iam_members]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
 
@@ -60,8 +60,8 @@ void AddBucketIamMember(google::cloud::storage::Client client,
   //! [add bucket iam member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string member) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& member) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
 
@@ -85,8 +85,8 @@ void NativeAddBucketIamMember(google::cloud::storage::Client client,
   //! [native add bucket iam member] [START storage_add_bucket_iam_member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string member) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& member) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
 
@@ -120,9 +120,11 @@ void NativeAddBucketConditionalIamBinding(
   //! [native add bucket conditional iam binding]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string member, std::string condition_title,
-     std::string condition_description, std::string condition_expression) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& member,
+     std::string const& condition_title,
+     std::string const& condition_description,
+     std::string const& condition_expression) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
     if (!policy) throw std::runtime_error(policy.status().message());
@@ -157,8 +159,8 @@ void RemoveBucketIamMember(google::cloud::storage::Client client,
   //! [remove bucket iam member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string member) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& member) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
     if (!policy) throw std::runtime_error(policy.status().message());
@@ -180,8 +182,8 @@ void NativeRemoveBucketIamMember(google::cloud::storage::Client client,
   //! [native remove bucket iam member] [START storage_remove_bucket_iam_member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string member) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& member) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
     if (!policy) throw std::runtime_error(policy.status().message());
@@ -217,9 +219,10 @@ void NativeRemoveBucketConditionalIamBinding(
   //! [native remove bucket conditional iam binding]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string role,
-     std::string condition_title, std::string condition_description,
-     std::string condition_expression) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& role, std::string const& condition_title,
+     std::string const& condition_description,
+     std::string const& condition_expression) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
     if (!policy) throw std::runtime_error(policy.status().message());
@@ -260,8 +263,8 @@ void TestBucketIamPermissions(google::cloud::storage::Client client,
   //! [test bucket iam permissions]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name,
-     std::vector<std::string> permissions) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::vector<std::string> const& permissions) {
     StatusOr<std::vector<std::string>> actual_permissions =
         client.TestBucketIamPermissions(bucket_name, permissions);
 
@@ -290,7 +293,7 @@ void SetBucketPublicIam(google::cloud::storage::Client client,
   // [START storage_set_bucket_public_iam]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<google::cloud::IamPolicy> current_policy =
         client.GetBucketIamPolicy(bucket_name);
 
@@ -340,7 +343,7 @@ void NativeSetBucketPublicIam(google::cloud::storage::Client client,
   // [START native storage_set_bucket_public_iam]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     auto current_policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
 
@@ -466,7 +469,7 @@ int main(int argc, char* argv[]) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       make_entry("get-bucket-iam-policy", {}, GetBucketIamPolicy),
       make_entry("native-get-bucket-iam-policy", {}, NativeGetBucketIamPolicy),
       make_entry("add-bucket-iam-member", {"<role>", "<member>"},

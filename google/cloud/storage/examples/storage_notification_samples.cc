@@ -24,7 +24,7 @@ void ListNotifications(google::cloud::storage::Client client,
   //! [list notifications] [START storage_list_bucket_notifications]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<std::vector<gcs::NotificationMetadata>> items =
         client.ListNotifications(bucket_name);
     if (!items) throw std::runtime_error(items.status().message());
@@ -43,7 +43,8 @@ void CreateNotification(google::cloud::storage::Client client,
   //! [create notification] [START storage_create_bucket_notifications]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string topic_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& topic_name) {
     StatusOr<gcs::NotificationMetadata> notification =
         client.CreateNotification(bucket_name, topic_name,
                                   gcs::payload_format::JsonApiV1(),
@@ -67,7 +68,8 @@ void GetNotification(google::cloud::storage::Client client,
   //! [get notification] [START storage_print_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string notification_id) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& notification_id) {
     StatusOr<gcs::NotificationMetadata> notification =
         client.GetNotification(bucket_name, notification_id);
     if (!notification) {
@@ -93,7 +95,8 @@ void DeleteNotification(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [delete notification] [START storage_delete_bucket_notification]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string notification_id) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& notification_id) {
     google::cloud::Status status =
         client.DeleteNotification(bucket_name, notification_id);
     if (!status.ok()) throw std::runtime_error(status.message());
@@ -178,7 +181,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       examples::CreateCommandEntry("list-notifications", {"<bucket-name>"},
                                    ListNotifications),
       examples::CreateCommandEntry("create-notification",

@@ -26,7 +26,8 @@ void GetBilling(google::cloud::storage::Client client,
   //! [get billing] [START storage_get_requester_pays_status]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string user_project) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& user_project) {
     StatusOr<gcs::BucketMetadata> metadata =
         client.GetBucketMetadata(bucket_name, gcs::UserProject(user_project));
     if (!metadata) throw std::runtime_error(metadata.status().message());
@@ -58,7 +59,7 @@ void EnableRequesterPays(google::cloud::storage::Client client,
   //! [enable requester pays] [START storage_enable_requester_pays]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{true}));
@@ -84,7 +85,8 @@ void DisableRequesterPays(google::cloud::storage::Client client,
   //! [disable requester pays] [START storage_disable_requester_pays]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string billed_project) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& billed_project) {
     StatusOr<gcs::BucketMetadata> metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{false}),
@@ -111,8 +113,8 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client,
   //! [write object requester pays]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string billed_project) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& billed_project) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::UserProject(billed_project));
     for (int lineno = 0; lineno != 10; ++lineno) {
@@ -137,8 +139,8 @@ void ReadObjectRequesterPays(google::cloud::storage::Client client,
   //! [read object requester pays]
   // [START storage_download_file_requester_pays]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string billed_project) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& billed_project) {
     gcs::ObjectReadStream stream = client.ReadObject(
         bucket_name, object_name, gcs::UserProject(billed_project));
 
@@ -156,8 +158,8 @@ void DeleteObjectRequesterPays(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [delete object requester pays]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string billed_project) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& billed_project) {
     google::cloud::Status status = client.DeleteObject(
         bucket_name, object_name, gcs::UserProject(billed_project));
     if (!status.ok()) throw std::runtime_error(status.message());
@@ -221,7 +223,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
-  google::cloud::storage::examples::Example example({
+  examples::Example example({
       examples::CreateCommandEntry(
           "get-billing", {"<bucket-name>", "<user-project>"}, GetBilling),
       examples::CreateCommandEntry("enable-requester-pays", {"<bucket-name>"},

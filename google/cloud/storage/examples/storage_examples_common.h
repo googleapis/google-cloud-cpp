@@ -63,7 +63,7 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
 
 using ClientCommand = std::function<void(google::cloud::storage::Client,
-                                         std::vector<std::string> argv)>;
+                                         std::vector<std::string> const& argv)>;
 
 // If the last value of `arg_names` contains `...` it represents a variable
 // number (0 or more) of arguments.
