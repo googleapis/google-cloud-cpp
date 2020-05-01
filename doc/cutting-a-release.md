@@ -44,6 +44,7 @@ git log --no-merges --format="format:* %s" \
    ':(exclude)google/cloud/bigquery/' \
    ':(exclude)google/cloud/bigtable/' \
    ':(exclude)google/cloud/pubsub/' \
+   ':(exclude)google/cloud/spanner/' \
    ':(exclude)google/cloud/storage/'
 ```
 
