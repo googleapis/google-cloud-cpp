@@ -18,20 +18,34 @@ release notes.
 
 ### Update CHANGELOG.md
 
-Update `CHANGELOG.md` based on the release notes for both Bigtable and Storage:
+Update `CHANGELOG.md` based on the release notes for Bigtable, Storage, and the
+common libraries:
 
 ```bash
-# Summarize the output of this into CHANGELOG.md
+# Summarize the output of this into CHANGELOG.md under the Bigtable header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/bigtable
 ```
 
 ```bash
-# Summarize the output of this into CHANGELOG.md
+# Summarize the output of this into CHANGELOG.md under the Storage header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/storage
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the Storage header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
+    upstream/master -- google/cloud \
+   ':(exclude)google/cloud/firestore/' \
+   ':(exclude)google/cloud/bigquery/' \
+   ':(exclude)google/cloud/bigtable/' \
+   ':(exclude)google/cloud/pubsub/' \
+   ':(exclude)google/cloud/spanner/' \
+   ':(exclude)google/cloud/storage/'
 ```
 
 ### Send a PR with all these changes
