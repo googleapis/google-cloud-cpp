@@ -366,9 +366,10 @@ TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
-  void Process(google::cloud::LogRecord const& lr) override {
-    ProcessWithOwnership(lr);
-  }
+  // TODO(#3983) clang-tidy and clang-3.8 conflict about annotating
+  // `Process` as `override`. See the issue for details.
+  // NOLINTNEXTLINE(modernize-use-override)
+  void Process(google::cloud::LogRecord const& lr) { ProcessWithOwnership(lr); }
   MOCK_METHOD1(ProcessWithOwnership, void(google::cloud::LogRecord));
 };
 

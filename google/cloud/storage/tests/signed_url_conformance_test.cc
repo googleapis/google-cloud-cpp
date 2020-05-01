@@ -321,7 +321,11 @@ INSTANTIATE_TEST_SUITE_P(
 }  // namespace cloud
 }  // namespace google
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[])
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    try
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+{
   auto conformance_tests_file =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME")
@@ -459,7 +463,10 @@ int main(int argc, char* argv[]) try {
   ::testing::InitGoogleMock(&argc, argv);
 
   return RUN_ALL_TESTS();
-} catch (std::exception const& ex) {
+}
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
