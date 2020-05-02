@@ -140,7 +140,7 @@ class ClientOptions {
   ClientOptions& SetUploadBufferSize(std::size_t size);
 
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
-  ClientOptions& add_user_agent_prefx(std::string const& v) {
+  ClientOptions& add_user_agent_prefix(std::string const& v) {
     std::string prefix = v;
     if (!user_agent_prefix_.empty()) {
       prefix += '/';
@@ -148,6 +148,10 @@ class ClientOptions {
     }
     user_agent_prefix_ = std::move(prefix);
     return *this;
+  }
+  // Backward-compatibility typo.
+  ClientOptions& add_user_agent_prefx(std::string const& v) {
+    return add_user_agent_prefix(v);
   }
 
   std::size_t maximum_simple_upload_size() const {
@@ -217,7 +221,6 @@ class ClientOptions {
  private:
   void SetupFromEnvironment();
 
- private:
   std::shared_ptr<oauth2::Credentials> credentials_;
   std::string endpoint_;
   std::string iam_endpoint_;
