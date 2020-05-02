@@ -185,7 +185,7 @@ TEST(CurlRequestTest, UserAgent) {
       storage::internal::GetDefaultCurlHandleFactory());
   auto options =
       ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
-          .add_user_agent_prefx("test-user-agent-prefix");
+          .add_user_agent_prefix("test-user-agent-prefix");
   builder.ApplyClientOptions(options);
   builder.AddHeader("Accept: application/json");
   builder.AddHeader("charsets: utf-8");
