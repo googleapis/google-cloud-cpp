@@ -3,4 +3,4 @@
 # is the same as .gitignore.
 
 # The owners for all files in the repo, sorted alphabetically.
-* @coryan @devbww @devjgm @mr-salty @scotthart
+* @googleapis/cloud-cxx-owners
