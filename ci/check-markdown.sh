@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# TESTING PLEASE IGNORE
+
 set -eu
 
 if [[ "${CHECK_MARKDOWN}" != "yes" ]]; then
