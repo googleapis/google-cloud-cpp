@@ -99,7 +99,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * @code
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
  * StatusOr<std::int64_t> i = v.get<std::int64_t>();
- * assert(!i.ok());  // Can't get the value becuase v is null
+ * assert(!i.ok());  // Can't get the value because v is null
  * StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
  * assert(j.ok());  // OK because an empty option can represent the null
  * assert(!j->has_value());  // v held no value.

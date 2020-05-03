@@ -60,8 +60,8 @@ class UpdateInstanceRequestBuilder {
 
   /**
    * Constructs `UpdateInstanceRequestBuilder` with
-   * google::spanner::admin::instance::v1::Instance. It's particulaly useful if
-   * you want to add some labels to existing instances.
+   * google::spanner::admin::instance::v1::Instance. It's particularly useful
+   * if you want to add some labels to existing instances.
    */
   explicit UpdateInstanceRequestBuilder(
       google::spanner::admin::instance::v1::Instance in) {
