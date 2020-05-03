@@ -21,7 +21,6 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
-using ::testing::HasSubstr;
 
 TEST(Status, StatusCodeToString) {
   EXPECT_EQ("OK", StatusCodeToString(StatusCode::kOk));

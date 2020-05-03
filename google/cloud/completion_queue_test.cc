@@ -35,7 +35,6 @@ class MockCompletionQueue : public internal::CompletionQueueImpl {
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::StrictMock;
 
 class MockClient {

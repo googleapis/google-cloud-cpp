@@ -17,15 +17,13 @@
 #include <future>
 #include <vector>
 
-using namespace google::cloud::internal;
-
 TEST(Random, Basic) {
   // This is not a statistical test for PRNG, basically we want to make
   // sure that MakeDefaultPRNG uses different seeds, or at least creates
   // different series:
   auto gen_string = []() {
-    auto g = MakeDefaultPRNG();
-    return Sample(g, 32, "0123456789abcdefghijklm");
+    auto g = google::cloud::internal::MakeDefaultPRNG();
+    return google::cloud::internal::Sample(g, 32, "0123456789abcdefghijklm");
   };
   std::string s0 = gen_string();
   std::string s1 = gen_string();
@@ -50,7 +48,7 @@ TEST(Random, Threads) {
   std::generate_n(workers.begin(), workers.size(), [&] {
     return std::async(std::launch::async, [&] {
       for (auto i = 0; i != kIterations; ++i) {
-        auto g = MakeDefaultPRNG();
+        auto g = google::cloud::internal::MakeDefaultPRNG();
         (void)g();
       }
       return kIterations;

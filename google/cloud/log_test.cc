@@ -73,6 +73,7 @@ class MockLogBackend : public LogBackend {
 TEST(LogSinkTest, BackendAddRemove) {
   LogSink sink;
   EXPECT_TRUE(sink.empty());
+  // NOLINTNEXTLINE(google-runtime-int)
   long id = sink.AddBackend(std::make_shared<MockLogBackend>());
   EXPECT_FALSE(sink.empty());
   sink.RemoveBackend(id);
@@ -92,7 +93,7 @@ TEST(LogSinkTest, LogEnabled) {
   LogSink sink;
   auto backend = std::make_shared<MockLogBackend>();
   EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
         EXPECT_EQ("test message", lr.message);
       }));
@@ -122,7 +123,7 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
 TEST(LogSinkTest, LogDefaultInstance) {
   auto backend = std::make_shared<MockLogBackend>();
   EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
         EXPECT_EQ("test message", lr.message);
       }));

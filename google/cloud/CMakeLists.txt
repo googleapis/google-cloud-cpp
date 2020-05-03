@@ -245,6 +245,7 @@ if (BUILD_TESTING)
             PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
                     GTest::gmock_main GTest::gmock GTest::gtest
                     google_cloud_cpp_common_options)
+        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -386,6 +387,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
                         gRPC::grpc++
                         gRPC::grpc
                         google_cloud_cpp_common_options)
+            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()

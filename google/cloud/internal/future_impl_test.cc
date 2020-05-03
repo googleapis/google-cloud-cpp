@@ -26,11 +26,10 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using testing_util::chrono_literals::operator""_us;
 using testing_util::ExpectFutureError;
 using testing_util::NoDefaultConstructor;
 using testing_util::Observable;
-
-using namespace google::cloud::testing_util::chrono_literals;
 
 TEST(FutureImplBaseTest, Basic) {
   future_shared_state_base shared_state;
@@ -110,7 +109,7 @@ TEST(FutureImplBaseTest, AbandonReady) {
 
 // @test Verify that we can create continuations.
 TEST(ContinuationVoidTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<void>>) {};
+  auto functor = [](std::shared_ptr<future_shared_state<void>> const&) {};
 
   using tested_type = continuation<decltype(functor), void>;
 
@@ -125,10 +124,11 @@ TEST(ContinuationVoidTest, Constructor) {
 /// continuation.
 TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
   bool called = false;
-  auto functor = [&called](std::shared_ptr<future_shared_state<void>> state) {
-    called = true;
-    state->get();
-  };
+  auto functor =
+      [&called](std::shared_ptr<future_shared_state<void>> const& state) {
+        called = true;
+        state->get();
+      };
 
   auto input = std::make_shared<future_shared_state<void>>();
   std::shared_ptr<future_shared_state<void>> output =
@@ -157,10 +157,11 @@ TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
 /// continuation.
 TEST(ContinuationVoidTest, SetValueCallsContinuation) {
   bool called = false;
-  auto functor = [&called](std::shared_ptr<future_shared_state<void>> state) {
-    called = true;
-    state->get();
-  };
+  auto functor =
+      [&called](std::shared_ptr<future_shared_state<void>> const& state) {
+        called = true;
+        state->get();
+      };
 
   auto input = std::make_shared<future_shared_state<void>>();
   std::shared_ptr<future_shared_state<void>> output =
@@ -175,7 +176,7 @@ TEST(ContinuationVoidTest, SetValueCallsContinuation) {
 
 class TestContinuation : public continuation_base {
  public:
-  TestContinuation(int* r) : execute_counter(r) {}
+  explicit TestContinuation(int* r) : execute_counter(r) {}
   void execute() override { (*execute_counter)++; }
 
   int* execute_counter;
@@ -453,7 +454,7 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
 
 // @test Verify that we can create continuations.
 TEST(ContinuationIntTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<int>>) {};
+  auto functor = [](std::shared_ptr<future_shared_state<int>> const&) {};
 
   using tested_type = continuation<decltype(functor), int>;
 
@@ -468,10 +469,11 @@ TEST(ContinuationIntTest, Constructor) {
 /// continuation.
 TEST(ContinuationIntTest, SetExceptionCallsContinuation) {
   bool called = false;
-  auto functor = [&called](std::shared_ptr<future_shared_state<int>> state) {
-    called = true;
-    return 2 * state->get();
-  };
+  auto functor =
+      [&called](std::shared_ptr<future_shared_state<int>> const& state) {
+        called = true;
+        return 2 * state->get();
+      };
 
   auto input = std::make_shared<future_shared_state<int>>();
   std::shared_ptr<future_shared_state<int>> output =
@@ -500,10 +502,11 @@ TEST(ContinuationIntTest, SetExceptionCallsContinuation) {
 /// continuation.
 TEST(ContinuationIntTest, SetValueCallsContinuation) {
   bool called = false;
-  auto functor = [&called](std::shared_ptr<future_shared_state<int>> state) {
-    called = true;
-    return 2 * state->get();
-  };
+  auto functor =
+      [&called](std::shared_ptr<future_shared_state<int>> const& state) {
+        called = true;
+        return 2 * state->get();
+      };
 
   auto input = std::make_shared<future_shared_state<int>>();
   std::shared_ptr<future_shared_state<int>> output =
