@@ -117,7 +117,7 @@ class FieldPath {
    * @param string A const string to write to.
    * @return The vector of string after splitting via delimiter
    */
-  static std::vector<std::string> Split(std::string const string);
+  static std::vector<std::string> Split(std::string string);
 
   /**
    * Replace all occurences of @p find in @p string with @p replace.

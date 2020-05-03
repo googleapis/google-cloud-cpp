@@ -85,6 +85,7 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target} PRIVATE firestore_client GTest::gmock_main GTest::gmock
                               GTest::gtest firestore_common_options)
+        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
