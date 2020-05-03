@@ -29,11 +29,11 @@ inline namespace BIGQUERY_CLIENT_NS {
 template <typename RowType>
 class RowSet {
  public:
-  using value_type = StatusOr<RowType>;
-  class iterator {
+  template <typename T>
+  class Iterator {
    public:
     using iterator_category = std::input_iterator_tag;
-    using value_type = RowSet::value_type;
+    using value_type = T;
     using difference_type = std::ptrdiff_t;
     using pointer = value_type*;
     using reference = value_type&;
@@ -41,30 +41,30 @@ class RowSet {
     reference operator*() { return curr_; }
     pointer operator->() { return &curr_; }
 
-    iterator& operator++() {
+    Iterator& operator++() {
       Advance();
       return *this;
     }
 
-    iterator operator++(int) {
+    Iterator operator++(int) {
       auto const old = *this;
       operator++();
       return old;
     }
 
-    friend bool operator==(iterator const& lhs, iterator const rhs) {
+    friend bool operator==(Iterator const& lhs, Iterator const rhs) {
       bool const lhs_done = !lhs.source_;
       bool const rhs_done = !rhs.source_;
       return lhs_done == rhs_done;
     }
 
-    friend bool operator!=(iterator const& lhs, iterator const& rhs) {
+    friend bool operator!=(Iterator const& lhs, Iterator const& rhs) {
       return !(lhs == rhs);
     }
 
    private:
     friend RowSet;
-    explicit iterator(std::function<StatusOr<optional<RowType>>()>* source)
+    explicit Iterator(std::function<StatusOr<optional<RowType>>()>* source)
         : source_(source) {
       if (source_) {
         Advance();
@@ -86,6 +86,9 @@ class RowSet {
     std::function<StatusOr<optional<RowType>>()>* source_;
     StatusOr<RowType> curr_;
   };
+
+  using value_type = StatusOr<RowType>;
+  using iterator = Iterator<value_type>;
 
   explicit RowSet(std::function<StatusOr<optional<RowType>>()> source)
       : source_(std::move(source)) {}

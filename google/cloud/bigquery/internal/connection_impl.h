@@ -27,7 +27,7 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 
-// An implementation of the Connection interface that sents requests
+// An implementation of the Connection interface that sends requests
 // to a read stub. This class acts as the point of entry for all
 // client operations. This class should never contain
 // transport-related logic (e.g., any gRPC-specific code).
@@ -37,12 +37,12 @@ class ConnectionImpl : public Connection {
 
   StatusOr<std::vector<ReadStream>> ParallelRead(
       std::string const& parent_project_id, std::string const& table,
-      std::vector<std::string> const& columns = {}) override;
+      std::vector<std::string> const& columns) override;
 
  private:
   friend std::shared_ptr<ConnectionImpl> MakeConnection(
       std::shared_ptr<StorageStub> read_stub);
-  ConnectionImpl(std::shared_ptr<StorageStub> read_stub);
+  explicit ConnectionImpl(std::shared_ptr<StorageStub> read_stub);
 
   google::cloud::StatusOr<
       google::cloud::bigquery::storage::v1beta1::ReadSession>

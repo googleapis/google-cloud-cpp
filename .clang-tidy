@@ -56,7 +56,7 @@ Checks: >
 WarningsAsErrors: "*"
 
 # TODO(#3920) - Enable clang-tidy checks in our headers.
-HeaderFilterRegex: "google/cloud/(pubsub|spanner)/.*"
+HeaderFilterRegex: "google/cloud/(bigquery|pubsub|spanner)/.*"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
