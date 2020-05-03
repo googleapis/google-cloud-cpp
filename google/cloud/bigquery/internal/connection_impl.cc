@@ -69,7 +69,6 @@ ReadResult ConnectionImpl::Read(ReadStream const& read_stream) {
 // TODO(aryann) - convert all TODO entries to use GitHub issues.
 // TODO(aryann) - follow Google Style Guide wrt to default arguments and virtual
 //     functions.
-// NOLINTNEXTLINE(google-default-arguments)
 StatusOr<std::vector<ReadStream>> ConnectionImpl::ParallelRead(
     std::string const& parent_project_id, std::string const& table,
     std::vector<std::string> const& columns) {

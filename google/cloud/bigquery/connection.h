@@ -34,7 +34,7 @@ class Connection {
 
   virtual StatusOr<std::vector<ReadStream>> ParallelRead(
       std::string const& parent_project_id, std::string const& table,
-      std::vector<std::string> const& columns = {}) = 0;
+      std::vector<std::string> const& columns) = 0;
 };
 
 }  // namespace BIGQUERY_CLIENT_NS

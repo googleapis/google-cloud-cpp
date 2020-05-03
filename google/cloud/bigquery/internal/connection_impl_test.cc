@@ -48,7 +48,7 @@ TEST(ConnectionImplTest, ParallelReadTableFailure) {
 
   {
     StatusOr<std::vector<ReadStream>> result = conn->ParallelRead(
-        "my-parent-project", "my-project.my-dataset.my-table");
+        "my-parent-project", "my-project.my-dataset.my-table", {});
     EXPECT_THAT(result.status().code(), Eq(StatusCode::kInvalidArgument));
     EXPECT_THAT(
         result.status().message(),
@@ -57,7 +57,7 @@ TEST(ConnectionImplTest, ParallelReadTableFailure) {
 
   {
     StatusOr<std::vector<ReadStream>> result = conn->ParallelRead(
-        "my-parent-project", "my-project:my-dataset:my-table");
+        "my-parent-project", "my-project:my-dataset:my-table", {});
     EXPECT_THAT(result.status().code(), Eq(StatusCode::kInvalidArgument));
     EXPECT_THAT(
         result.status().message(),
@@ -75,8 +75,8 @@ TEST(ConnectionImplTest, ParallelReadRpcFailure) {
             return Status(StatusCode::kPermissionDenied, "Permission denied!");
           }));
 
-  StatusOr<std::vector<ReadStream>> result =
-      conn->ParallelRead("my-parent-project", "my-project:my-dataset.my-table");
+  StatusOr<std::vector<ReadStream>> result = conn->ParallelRead(
+      "my-parent-project", "my-project:my-dataset.my-table", {});
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kPermissionDenied));
   EXPECT_THAT(result.status().message(), Eq("Permission denied!"));
 }
