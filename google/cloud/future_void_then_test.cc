@@ -24,7 +24,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
-using testing_util::chrono_literals::operator""_ms;
+using testing_util::chrono_literals::operator"" _ms;
 using testing_util::ExpectFutureError;
 
 TEST(FutureTestVoid, ThenSimple) {
