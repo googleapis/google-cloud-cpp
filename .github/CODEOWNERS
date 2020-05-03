@@ -2,5 +2,5 @@
 # request containing files matching the given path. The syntax for file paths
 # is the same as .gitignore.
 
-# The owners for all files in the repo, sorted alphabetically.
-* @coryan @devbww @devjgm @mr-salty @scotthart
+# The owners for all files in the repo.
+* @googleapis/cloud-cxx-owners
