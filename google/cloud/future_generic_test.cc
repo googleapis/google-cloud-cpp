@@ -22,7 +22,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
-using namespace testing_util::chrono_literals;
+using testing_util::chrono_literals::operator"" _ms;
 using testing_util::ExpectFutureError;
 
 /// @test Verify that destructing a promise does not introduce race conditions.
@@ -53,6 +53,7 @@ TEST(FutureTestInt, DestroyInSignalingThread) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_3) {
   // TODO(coryan) - allocators are not supported for now.
   static_assert(!std::uses_allocator<promise<int>, std::allocator<int>>::value,
@@ -60,6 +61,7 @@ TEST(FutureTestInt, conform_30_6_5_3) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_4_default) {
   promise<int> p0;
   auto f0 = p0.get_future();
@@ -70,6 +72,7 @@ TEST(FutureTestInt, conform_30_6_5_4_default) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_5) {
   // promise<R> move constructor clears the shared state on the moved-from
   // promise.
@@ -81,10 +84,15 @@ TEST(FutureTestInt, conform_30_6_5_5) {
   ASSERT_EQ(std::future_status::ready, f1.wait_for(0_ms));
   f1.get();
 
-  ExpectFutureError([&] { p0.set_value(42); }, std::future_errc::no_state);
+  ExpectFutureError(
+      [&] {  // NOLINT(bugprone-use-after-move)
+        p0.set_value(42);
+      },
+      std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_7) {
   // promise<R> destructor abandons the shared state, the associated future
   // becomes satisfied with an exception.
@@ -112,6 +120,7 @@ TEST(FutureTestInt, conform_30_6_5_7) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_8) {
   // promise<R> move assignment clears the shared state in the moved-from
   // promise.
@@ -124,10 +133,15 @@ TEST(FutureTestInt, conform_30_6_5_8) {
   ASSERT_EQ(std::future_status::ready, f1.wait_for(0_ms));
   f1.get();
 
-  ExpectFutureError([&] { p0.set_value(42); }, std::future_errc::no_state);
+  ExpectFutureError(
+      [&] {  // NOLINT(bugprone-use-after-move)
+        p0.set_value(42);
+      },
+      std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_10) {
   // promise<R>::swap() actually swaps shared states.
   promise<int> p0;
@@ -147,6 +161,7 @@ TEST(FutureTestInt, conform_30_6_5_10) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_14_1) {
   // promise<R>::get_future() raises if future was already retrieved.
   promise<int> p0;
@@ -156,14 +171,18 @@ TEST(FutureTestInt, conform_30_6_5_14_1) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_14_2) {
   // promise<R>::get_future() raises if there is no shared state.
   promise<int> p0;
   promise<int> p1(std::move(p0));
-  ExpectFutureError([&] { p0.get_future(); }, std::future_errc::no_state);
+  ExpectFutureError([&]  // NOLINT(bugprone-use-after-move)
+                    { p0.get_future(); },
+                    std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_15) {
   // promise<R>::set_value() stores the value in the shared state and makes it
   // ready.
@@ -176,6 +195,7 @@ TEST(FutureTestInt, conform_30_6_5_15) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_16_1) {
   // promise<R>::set_value() raises if there is a value in the shared state.
   promise<int> p0;
@@ -185,14 +205,18 @@ TEST(FutureTestInt, conform_30_6_5_16_1) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_17_2) {
   // promise<R>::set_value() raises if there is no shared state.
   promise<int> p0;
   promise<int> p1(std::move(p0));
-  ExpectFutureError([&] { p0.set_value(42); }, std::future_errc::no_state);
+  ExpectFutureError([&]  // NOLINT(bugprone-use-after-move)
+                    { p0.set_value(42); },
+                    std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_18) {
   // promise<R>::set_exception() sets an exception and makes the shared state
   // ready.
@@ -216,6 +240,7 @@ TEST(FutureTestInt, conform_30_6_5_18) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_20_1_value) {
   // promise<R>::set_exception() raises if the shared state is already storing
   // a value.
@@ -230,6 +255,7 @@ TEST(FutureTestInt, conform_30_6_5_20_1_value) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_20_1_exception) {
   // promise<R>::set_exception() raises if the shared state is already storing
   // an exception.
@@ -244,20 +270,22 @@ TEST(FutureTestInt, conform_30_6_5_20_1_exception) {
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_20_2) {
   // promise<R>::set_exception() raises if the promise does not have a shared
   // state.
   promise<int> p0;
   promise<int> p1(std::move(p0));
   ExpectFutureError(
-      [&] {
-        p0.set_exception(  // NOLINT
+      [&] {  // NOLINT(bugprone-use-after-move)
+        p0.set_exception(
             std::make_exception_ptr(std::runtime_error("testing")));
       },
       std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_3_a) {
   // Calling get() on a future with `valid() == false` is undefined, but the
   // implementation is encouraged to raise `future_error` with an error code
@@ -268,6 +296,7 @@ TEST(FutureTestInt, conform_30_6_6_3_a) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_3_b) {
   // Calling wait() on a future with `valid() == false` is undefined, but the
   // implementation is encouraged to raise `future_error` with an error code
@@ -278,6 +307,7 @@ TEST(FutureTestInt, conform_30_6_6_3_b) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_3_c) {
   // Calling wait_for() on a future with `valid() == false` is undefined, but
   // the implementation is encouraged to raise `future_error` with an error code
@@ -288,6 +318,7 @@ TEST(FutureTestInt, conform_30_6_6_3_c) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_3_d) {
   // Calling wait_until() on a future with `valid() == false` is undefined, but
   // the implementation is encouraged to raise `future_error` with an error code
@@ -300,6 +331,7 @@ TEST(FutureTestInt, conform_30_6_6_3_d) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_5) {
   // future<int>::future() constructs an empty future with no shared state.
   future<int> f;
@@ -307,6 +339,7 @@ TEST(FutureTestInt, conform_30_6_6_5) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_7) {
   // future<int> move constructor is `noexcept`.
   future<int> f0;
@@ -314,6 +347,7 @@ TEST(FutureTestInt, conform_30_6_6_7) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_8_a) {
   // future<int> move constructor transfers futures with valid state.
   promise<int> p;
@@ -321,22 +355,24 @@ TEST(FutureTestInt, conform_30_6_6_8_a) {
   EXPECT_TRUE(f0.valid());
 
   future<int> f1(std::move(f0));
-  EXPECT_FALSE(f0.valid());
+  EXPECT_FALSE(f0.valid());  // NOLINT(bugprone-use-after-move)
   EXPECT_TRUE(f1.valid());
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_8_b) {
   // future<int> move constructor transfers futures with no state.
   future<int> f0;
   EXPECT_FALSE(f0.valid());
 
   future<int> f1(std::move(f0));
-  EXPECT_FALSE(f0.valid());
+  EXPECT_FALSE(f0.valid());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(f1.valid());
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_9) {
   // future<int> destructor releases the shared state.
   promise<int> p;
@@ -347,6 +383,7 @@ TEST(FutureTestInt, conform_30_6_6_9) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_10) {
   // Move assignment is noexcept.
   promise<int> p;
@@ -358,6 +395,7 @@ TEST(FutureTestInt, conform_30_6_6_10) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_11_a) {
   // future<int> move assignment transfers futures with valid state.
   promise<int> p;
@@ -366,11 +404,12 @@ TEST(FutureTestInt, conform_30_6_6_11_a) {
 
   future<int> f1;
   f1 = std::move(f0);
-  EXPECT_FALSE(f0.valid());
+  EXPECT_FALSE(f0.valid());  // NOLINT(bugprone-use-after-move)
   EXPECT_TRUE(f1.valid());
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_11_b) {
   // future<int> move assignment transfers futures with invalid state.
   future<int> f0;
@@ -378,7 +417,7 @@ TEST(FutureTestInt, conform_30_6_6_11_b) {
 
   future<int> f1;
   f1 = std::move(f0);
-  EXPECT_FALSE(f0.valid());
+  EXPECT_FALSE(f0.valid());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(f1.valid());
 }
 
@@ -386,6 +425,7 @@ TEST(FutureTestInt, conform_30_6_6_11_b) {
 // not implementing yet.
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_15) {
   // future<int>::get() only returns once the promise is satisfied.
   promise<int> p;
@@ -417,6 +457,7 @@ TEST(FutureTestInt, conform_30_6_6_15) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_16_3) {
   // future<int>::get() returns void.
   promise<int> p;
@@ -425,6 +466,7 @@ TEST(FutureTestInt, conform_30_6_6_16_3) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_17) {
   // future<int>::get() throws if an exception was set in the promise.
   promise<int> p;
@@ -446,6 +488,7 @@ TEST(FutureTestInt, conform_30_6_6_17) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_18_a) {
   // future<int>::get() releases the shared state.
   promise<int> p;
@@ -456,6 +499,7 @@ TEST(FutureTestInt, conform_30_6_6_18_a) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_18_b) {
   // future<int>::get() throws releases the shared state.
   promise<int> p;
@@ -474,6 +518,7 @@ TEST(FutureTestInt, conform_30_6_6_18_b) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_19_a) {
   // future<int>::valid() returns true when the future has a shared state.
   promise<int> p;
@@ -483,6 +528,7 @@ TEST(FutureTestInt, conform_30_6_6_19_a) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_19_b) {
   // future<int>::valid() returns false when the future has no shared state.
   future<int> const f;
@@ -491,6 +537,7 @@ TEST(FutureTestInt, conform_30_6_6_19_b) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_20) {
   // future<int>::wait() blocks until state is ready.
   promise<int> p;
@@ -519,6 +566,7 @@ TEST(FutureTestInt, conform_30_6_6_20) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_21) {
   // future<int>::wait_for() blocks until state is ready.
   promise<int> p;
@@ -551,6 +599,7 @@ TEST(FutureTestInt, conform_30_6_6_21) {
 // test needed.
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_22_2) {
   // wait_for() returns std::future_status::ready if the future is ready.
   promise<int> p0;
@@ -563,6 +612,7 @@ TEST(FutureTestInt, conform_30_6_6_22_2) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_22_3) {
   // wait_for() returns std::future_status::timeout if the future is not ready.
   promise<int> p0;
@@ -578,6 +628,7 @@ TEST(FutureTestInt, conform_30_6_6_22_3) {
 // this is just giving implementors freedom.
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_24) {
   // future<int>::wait_until() blocks until state is ready.
   promise<int> p;
@@ -610,6 +661,7 @@ TEST(FutureTestInt, conform_30_6_6_24) {
 // test needed.
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_25_2) {
   // wait_until() returns std::future_status::ready if the future is ready.
   promise<int> p0;
@@ -623,6 +675,7 @@ TEST(FutureTestInt, conform_30_6_6_25_2) {
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_6_25_3) {
   // wait_until() returns std::future_status::timeout if the future is not
   // ready.
@@ -639,7 +692,7 @@ TEST(FutureTestInt, conform_30_6_6_25_3) {
 // this is just giving implementors freedom.
 
 /// @test Verify the behavior around cancellation.
-TEST(FutureTestInt, cancellation_without_satisfaction) {
+TEST(FutureTestInt, CancellationWithoutSatisfaction) {
   bool cancelled = false;
   promise<int> p0([&cancelled] { cancelled = true; });
   auto f0 = p0.get_future();
@@ -648,7 +701,7 @@ TEST(FutureTestInt, cancellation_without_satisfaction) {
 }
 
 /// @test Verify the case for cancel then satisfy.
-TEST(FutureTestInt, cancellation_and_satisfaction) {
+TEST(FutureTestInt, CancellationAndSatisfaction) {
   bool cancelled = false;
   promise<int> p0([&cancelled] { cancelled = true; });
   auto f0 = p0.get_future();
@@ -660,7 +713,7 @@ TEST(FutureTestInt, cancellation_and_satisfaction) {
 }
 
 /// @test Verify the cancellation fails on satisfied promise.
-TEST(FutureTestInt, cancellation_after_satisfaction) {
+TEST(FutureTestInt, CancellationAfterSatisfaction) {
   bool cancelled = false;
   promise<int> p0([&cancelled] { cancelled = true; });
   auto f0 = p0.get_future();

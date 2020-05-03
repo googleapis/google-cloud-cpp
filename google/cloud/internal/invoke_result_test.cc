@@ -20,15 +20,16 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
+
 TEST(ResultOfTest, Lambda) {
   // This test mostly uses static assertions because the result_of classes are
   // largely meta-functions.
 
-  auto l = [](long, int) -> int { return 7; };
+  auto l = [](long, int) -> int { return 7; };  // NOLINT(google-runtime-int)
 
   using F = decltype(l);
 
-  using R = invoke_result<F, long, int>::type;
+  using R = invoke_result<F, long, int>::type;  // NOLINT(google-runtime-int)
 
   static_assert(std::is_same<R, int>::value,
                 "expected `int` in invoke_result_t<>");

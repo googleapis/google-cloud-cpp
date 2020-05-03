@@ -24,7 +24,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
-using namespace testing_util::chrono_literals;
+using testing_util::chrono_literals::operator"" _ms;
 using testing_util::ExpectFutureError;
 
 TEST(FutureTestInt, ThenSimple) {
@@ -193,6 +193,7 @@ TEST(FutureTestInt, CancelThroughContinuation) {
 // The test names match the section and paragraph from the TS.
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_2_a) {
   // future<T> should have an unwrapping constructor.
   promise<future<int>> p;
@@ -203,6 +204,7 @@ TEST(FutureTestInt, conform_2_3_2_a) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_3_a) {
   // A future<T> created via the unwrapping constructor becomes satisfied
   // when both become satisfied.
@@ -222,6 +224,7 @@ TEST(FutureTestInt, conform_2_3_3_a) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_3_b) {
   // A future<T> created via the unwrapping constructor becomes satisfied
   // when the wrapped future is satisfied by an exception.
@@ -249,6 +252,7 @@ TEST(FutureTestInt, conform_2_3_3_b) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_3_c) {
   // A future<T> created via the unwrapping constructor becomes satisfied
   // when the inner future is satisfied by an exception.
@@ -280,6 +284,7 @@ TEST(FutureTestInt, conform_2_3_3_c) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_3_d) {
   // A future<T> created via the unwrapping constructor becomes satisfied
   // when the inner future is invalid.
@@ -307,6 +312,7 @@ TEST(FutureTestInt, conform_2_3_3_d) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_4) {
   // future<T> should leaves the source invalid.
   promise<future<int>> p;
@@ -314,10 +320,11 @@ TEST(FutureTestInt, conform_2_3_4) {
 
   future<int> unwrapped(std::move(f));
   EXPECT_TRUE(unwrapped.valid());
-  EXPECT_FALSE(f.valid());
+  EXPECT_FALSE(f.valid());  // NOLINT(bugprone-use-after-move)
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_5) {
   // future<int>::then() is a template member function that takes callables.
   future<int> f;
@@ -328,7 +335,10 @@ TEST(FutureTestInt, conform_2_3_5) {
   EXPECT_TRUE(
       (std::is_same<future<void>, decltype(f.then(void_callable))>::value));
 
-  auto long_callable = [](future<int> f) -> long { return 2 * f.get(); };
+  auto long_callable =
+      [](future<int> f) -> long {  // NOLINT(google-runtime-int)
+    return 2 * f.get();
+  };
   EXPECT_TRUE(
       (std::is_same<future<long>, decltype(f.then(long_callable))>::value));
 
@@ -345,11 +355,12 @@ auto test_then(int)
 }
 
 template <typename T>
-auto test_then(long) -> std::false_type {
+auto test_then(long) -> std::false_type {  // NOLINT(google-runtime-int)
   return std::false_type{};
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_7) {
   // future<int>::then() requires callables that take future<int> as a
   // parameter.
@@ -368,6 +379,7 @@ TEST(FutureTestInt, conform_2_3_7) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_8_a) {
   // future<int>::then() creates a future with a valid shared state.
   promise<int> p;
@@ -378,6 +390,7 @@ TEST(FutureTestInt, conform_2_3_8_a) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_8_b) {
   // future<int>::then() calls the functor when the future becomes ready.
   promise<int> p;
@@ -393,6 +406,7 @@ TEST(FutureTestInt, conform_2_3_8_b) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_8_c) {
   // future<int>::then() calls the functor if the future was ready.
   promise<int> p;
@@ -406,6 +420,7 @@ TEST(FutureTestInt, conform_2_3_8_c) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_8_d) {
   // future<int>::then() propagates the value from the functor to the returned
   // future.
@@ -420,6 +435,7 @@ TEST(FutureTestInt, conform_2_3_8_d) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_8_e) {
   // future<int>::then() propagates exceptions raised by the functort to the
   // returned future.
@@ -446,6 +462,7 @@ TEST(FutureTestInt, conform_2_3_8_e) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_9_a) {
   // future<int>::then() returns a functor containing the type of the value
   // returned by the functor.
@@ -466,6 +483,7 @@ TEST(FutureTestInt, conform_2_3_9_a) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_9_b) {
   // future<int>::then() implicitly unwraps the future type when a functor
   // returns a future<>.
@@ -496,6 +514,7 @@ TEST(FutureTestInt, conform_2_3_9_b) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_9_c) {
   // future<int>::then() implicitly unwrapping captures the returned value.
   promise<int> p;
@@ -522,6 +541,7 @@ TEST(FutureTestInt, conform_2_3_9_c) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_9_d) {
   // future<int>::then() implicitly unwrapping captures exceptions.
   promise<int> p;
@@ -559,6 +579,7 @@ TEST(FutureTestInt, conform_2_3_9_d) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_9_e) {
   // future<int>::then() implicitly unwrapping raises on invalid future
   // returned by continuation.
@@ -594,6 +615,7 @@ TEST(FutureTestInt, conform_2_3_9_e) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_10) {
   // future<int>::then() invalidates the source future.
   promise<int> p;
@@ -609,6 +631,7 @@ TEST(FutureTestInt, conform_2_3_10) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_11_a) {
   // future<int>::is_ready() returns false for futures that are not ready.
   promise<int> p;
@@ -617,6 +640,7 @@ TEST(FutureTestInt, conform_2_3_11_a) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_11_b) {
   // future<int>::is_ready() returns true for futures that are ready.
   promise<int> p;
@@ -626,6 +650,7 @@ TEST(FutureTestInt, conform_2_3_11_b) {
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_2_3_11_c) {
   // future<int>::is_ready() raises for futures that are not valid.
   future<int> const f;
@@ -633,6 +658,7 @@ TEST(FutureTestInt, conform_2_3_11_c) {
 }
 
 /// @test Verify conformance with section 2.10 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestString, conform_2_10_4_2_a) {
   // When T is a simple value type we get back T.
   future<std::string> f = make_ready_future(std::string("42"));
@@ -642,6 +668,7 @@ TEST(FutureTestString, conform_2_10_4_2_a) {
 }
 
 /// @test Verify conformance with section 2.10 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestString, conform_2_10_4_2_b) {
   // When T is a reference we get std::decay<T>::type.
   std::string value("42");
@@ -653,6 +680,7 @@ TEST(FutureTestString, conform_2_10_4_2_b) {
 }
 
 //// @test Verify conformance with section 2.10 of the Concurrency TS.
+// NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestString, conform_2_10_4_2_c) {
 #if 1
   using V =
@@ -671,13 +699,15 @@ TEST(FutureTestString, conform_2_10_4_2_c) {
 
 class MockFunctor {
  public:
-  MockFunctor() : moved_from_() {}
-  MockFunctor(MockFunctor&& other) { other.moved_from_ = true; }
+  MockFunctor() = default;
+  MockFunctor(MockFunctor&& other) noexcept : moved_from_(other.moved_from_) {
+    other.moved_from_ = true;
+  }
   MockFunctor(MockFunctor const& other) = default;
 
   void operator()(future<int>) {}
 
-  bool moved_from_;
+  bool moved_from_{false};
 };
 
 TEST(FutureTestInt, RValueThenFunctorIsMoved) {
@@ -686,7 +716,7 @@ TEST(FutureTestInt, RValueThenFunctorIsMoved) {
   MockFunctor fun;
   fut.then(std::move(fun));
   promise.set_value(1);
-  EXPECT_TRUE(fun.moved_from_);
+  EXPECT_TRUE(fun.moved_from_);  // NOLINT(bugprone-use-after-move)
 }
 
 TEST(FutureTestInt, LValueThenFunctorIsCopied) {
@@ -700,13 +730,16 @@ TEST(FutureTestInt, LValueThenFunctorIsCopied) {
 
 class MockUnwrapFunctor {
  public:
-  MockUnwrapFunctor() : moved_from_() {}
-  MockUnwrapFunctor(MockUnwrapFunctor&& other) { other.moved_from_ = true; }
+  MockUnwrapFunctor() = default;
+  MockUnwrapFunctor(MockUnwrapFunctor&& other) noexcept
+      : moved_from_(other.moved_from_) {
+    other.moved_from_ = true;
+  }
   MockUnwrapFunctor(MockUnwrapFunctor const& other) = default;
 
   future<void> operator()(future<int>) { return make_ready_future(); }
 
-  bool moved_from_;
+  bool moved_from_{false};
 };
 
 TEST(FutureTestInt, RValueThenUnwrapFunctorIsMoved) {
@@ -715,7 +748,7 @@ TEST(FutureTestInt, RValueThenUnwrapFunctorIsMoved) {
   MockUnwrapFunctor fun;
   fut.then(std::move(fun));
   promise.set_value(1);
-  EXPECT_TRUE(fun.moved_from_);
+  EXPECT_TRUE(fun.moved_from_);  // NOLINT(bugprone-use-after-move)
 }
 
 TEST(FutureTestInt, LValueThenUnwrapFunctorIsCopied) {

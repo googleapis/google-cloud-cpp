@@ -25,7 +25,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::testing::ElementsAre;
-using ::testing::HasSubstr;
 using ::testing::StartsWith;
 
 /// Use these traits to test ConnectionOptions.

@@ -98,7 +98,8 @@ TEST(ExponentialBackoffPolicy, Randomness) {
   // The type used to represent a duration varies by platform, better to use
   // the alias guaranteed by the standard than trying to guess the type or
   // use a lot of casts.
-  std::vector<std::chrono::milliseconds::rep> output1, output2;
+  std::vector<std::chrono::milliseconds::rep> output1;
+  std::vector<std::chrono::milliseconds::rep> output2;
 
   auto delay = test_object1.OnCompletion();
   EXPECT_LE(ms(10), delay);

@@ -32,6 +32,7 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
@@ -81,8 +82,6 @@ using RpcExponentialBackoffPolicy =
     google::cloud::internal::ExponentialBackoffPolicy;
 
 TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
@@ -135,8 +134,6 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
 }
 
 TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;
@@ -184,8 +181,6 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
 }
 
 TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
@@ -237,8 +232,6 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
 }
 
 TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
@@ -319,8 +312,6 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
 }
 
 TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;

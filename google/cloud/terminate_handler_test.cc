@@ -16,13 +16,16 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-using namespace google::cloud;
+using ::google::cloud::GetTerminateHandler;
+using ::google::cloud::SetTerminateHandler;
+using ::google::cloud::Terminate;
+using ::google::cloud::TerminateHandler;
 
 namespace {
-const std::string handler_msg = "Custom handler invoked. Extra description: ";
+const std::string kHandlerMsg = "Custom handler invoked. Extra description: ";
 
 void CustomHandler(const char* msg) {
-  std::cerr << handler_msg << msg << "\n";
+  std::cerr << kHandlerMsg << msg << "\n";
   abort();
 }
 
@@ -51,7 +54,7 @@ TEST(TerminateHandler, OldHandlerIsReturned) {
 
 TEST(TerminateHandler, TerminateTerminates) {
   SetTerminateHandler(&CustomHandler);
-  EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), handler_msg + "details");
+  EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), kHandlerMsg + "details");
 }
 
 TEST(TerminateHandler, NoAbortAborts) {
