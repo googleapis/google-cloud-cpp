@@ -66,8 +66,8 @@ git ls-files -z | grep -zE '(^|/)(BUILD|WORKSPACE)$' |
   xargs -0 buildifier -mode=fix
 
 # Apply psf/black to format Python files.
-#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black
+#    https://pypi.org/project/black/
+git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black --quiet
 
 # Apply shfmt to format all shell scripts
 git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w -i 2
@@ -111,8 +111,7 @@ git ls-files -z | grep -zv '\.gz$' |
     replace_original_if_changed "${file}" "${file}.tmp"
   done
 
-# Report any differences created by running the formatting tools. Report any
-# differences created by running the formatting tools.
+# Report any differences created by running the formatting tools.
 if ! git diff --ignore-submodules=all --color --exit-code .; then
   problems="${problems} formatting"
 fi
