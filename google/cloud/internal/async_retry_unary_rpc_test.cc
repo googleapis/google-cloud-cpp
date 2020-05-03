@@ -32,7 +32,7 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::MockCompletionQueue;
-using ::google::cloud::testing_util::chrono_literals::operator""_us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
