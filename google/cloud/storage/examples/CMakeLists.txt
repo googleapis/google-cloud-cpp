@@ -98,7 +98,7 @@ endforeach ()
 foreach (
     fname
     # cmake-format: sort
-    storage_policy_doc_samples storage_signed_url_v2_samples.cc
+    storage_policy_doc_samples.cc storage_signed_url_v2_samples.cc
     storage_signed_url_v4_samples.cc)
     google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
     set_tests_properties(
