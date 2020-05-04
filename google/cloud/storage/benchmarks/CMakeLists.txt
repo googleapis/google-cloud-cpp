@@ -49,8 +49,7 @@ if (BUILD_TESTING)
         storage_throughput_vs_cpu_benchmark.cc)
 
     foreach (fname ${storage_benchmark_programs})
-        string(REPLACE "/" "_" target ${fname})
-        string(REPLACE ".cc" "" target ${target})
+        google_cloud_cpp_unique_target_name("storage" ${fname} target)
         add_executable(${target} ${fname})
         target_link_libraries(
             ${target}
@@ -80,7 +79,8 @@ if (BUILD_TESTING)
     foreach (fname ${storage_benchmarks_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})
-        set(target "storage_benchmarks_${basename}")
+        google_cloud_cpp_unique_target_name("storage_benchmarks" ${basename}
+                                            target)
         add_executable(${target} ${fname})
         set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         if (MSVC)

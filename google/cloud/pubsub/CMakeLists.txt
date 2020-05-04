@@ -96,7 +96,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     foreach (fname ${pubsub_client_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})
-        set(target "pubsub_${basename}")
+        google_cloud_cpp_unique_target_name("pubsub" ${basename} target)
         add_executable(${target} ${fname})
         set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(

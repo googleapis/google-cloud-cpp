@@ -176,3 +176,28 @@ function (google_cloud_cpp_install_headers target destination)
         install(FILES "${header}" DESTINATION "${destination}/${dir}")
     endforeach ()
 endfunction ()
+
+#
+# google_cloud_cpp_unique_target_name : generate a unique target name for tests
+#
+# CMake requires most target names to be globally unique. This function
+# generates a unique target name by prepending the given `prefix` to a cleaned-
+# up version of `name` in an attempt to produce a unique, yet human readable,
+# name to use as a target name.
+#
+# * prefix a unique string to prepend to the target name. Usually this should be
+#   a string indicating the product, such as "pubsub" or "storage".
+# * name is the name that should be used for the target. Typically this is a
+#   filename, in which case the filename will be cleaned-up by removing slashes
+#   and the file extension.
+# * var the name of the variable to be set in the parent scope.
+#
+function (google_cloud_cpp_unique_target_name prefix name var)
+    # Clean up `name` in case it's a filename, which is common.
+    string(REPLACE "/" "_" name "${name}")
+    string(REPLACE ".cc" "" name "${name}")
+    string(CONCAT target "${prefix}" "_" "${name}")
+    set("${var}"
+        "${target}"
+        PARENT_SCOPE)
+endfunction ()

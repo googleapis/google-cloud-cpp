@@ -237,7 +237,7 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         string(REPLACE "/" "_" basename ${fname})
         string(REPLACE ".cc" "" basename ${basename})
-        set(target "google_cloud_cpp_common_${basename}")
+        google_cloud_cpp_unique_target_name("common" ${basename} target)
         add_executable(${target} ${fname})
         set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(
@@ -371,7 +371,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         foreach (fname ${google_cloud_cpp_grpc_utils_unit_tests})
             string(REPLACE "/" "_" basename ${fname})
             string(REPLACE ".cc" "" basename ${basename})
-            set(target "google_cloud_cpp_grpc_utils_${basename}")
+            google_cloud_cpp_unique_target_name("common_grpc_utils" ${basename}
+                                                target)
             add_executable(${target} ${fname})
             set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
             target_link_libraries(

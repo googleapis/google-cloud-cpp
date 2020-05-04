@@ -53,9 +53,7 @@ create_bazel_config(bigtable_examples_common)
 
 if (BUILD_TESTING)
     foreach (fname ${bigtable_examples_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        set(target "bigtable_examples_${basename}")
+        google_cloud_cpp_unique_target_name("bigtable_examples" ${fname} target)
         add_executable(${target} ${fname})
         set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         target_link_libraries(
@@ -78,8 +76,7 @@ if (BUILD_TESTING)
 endif ()
 
 foreach (fname ${bigtable_examples})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
+    google_cloud_cpp_unique_target_name("bigtable_examples" ${fname} target)
     add_executable(${target} ${fname})
     target_link_libraries(
         ${target}
@@ -104,7 +101,8 @@ set(bigtable_examples_production
     # cmake-format: sort
     bigtable_grpc_credentials table_admin_iam_policy_snippets)
 
-foreach (target ${bigtable_examples_production})
+foreach (fname ${bigtable_examples_production})
+    google_cloud_cpp_unique_target_name("bigtable_examples" ${fname} target)
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")
