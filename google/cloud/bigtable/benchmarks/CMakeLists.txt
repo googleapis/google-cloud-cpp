@@ -48,12 +48,7 @@ if (BUILD_TESTING)
                          "bigtable_benchmarks_unit_tests" YEAR 2020)
 
     foreach (fname ${bigtable_benchmarks_unit_tests})
-       string(REPLACE "/" "_" basename ${fname})
-       string(REPLACE ".cc" "" basename ${basename})
-        google_cloud_cpp_unique_target_name("bigtable_benchmarks" ${basename}
-                                            target)
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "bigtable_benchmarks" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigtable_benchmark_common
@@ -85,8 +80,7 @@ export_list_to_bazel("bigtable_benchmark_programs.bzl"
                      "bigtable_benchmark_programs")
 
 foreach (fname ${bigtable_benchmark_programs})
-    google_cloud_cpp_unique_target_name("bigtable" ${fname} target)
-    add_executable(${target} ${fname})
+    google_cloud_cpp_add_executable(target "bigtable" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE bigtable_benchmark_common

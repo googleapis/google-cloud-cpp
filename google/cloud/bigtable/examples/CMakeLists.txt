@@ -53,11 +53,7 @@ create_bazel_config(bigtable_examples_common)
 
 if (BUILD_TESTING)
     foreach (fname ${bigtable_examples_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        google_cloud_cpp_unique_target_name("bigtable_examples" ${basename} target)
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "bigtable_examples" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigtable_examples_common
@@ -78,8 +74,7 @@ if (BUILD_TESTING)
 endif ()
 
 foreach (fname ${bigtable_examples})
-    google_cloud_cpp_unique_target_name("bigtable_examples" ${fname} target)
-    add_executable(${target} ${fname})
+    google_cloud_cpp_add_executable(target "bigtable_examples" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE bigtable_examples_common
@@ -101,10 +96,10 @@ endforeach ()
 # We just know that these tests need to be run against production.
 set(bigtable_examples_production
     # cmake-format: sort
-    bigtable_grpc_credentials table_admin_iam_policy_snippets)
+    bigtable_grpc_credentials.cc table_admin_iam_policy_snippets.cc)
 
 foreach (fname ${bigtable_examples_production})
-    google_cloud_cpp_unique_target_name("bigtable_examples" ${fname} target)
+    google_cloud_cpp_set_target_name(target "bigtable_examples" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")

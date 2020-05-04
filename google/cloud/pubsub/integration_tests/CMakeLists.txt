@@ -39,8 +39,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${pubsub_client_integration_tests})
-        google_cloud_cpp_unique_target_name("pubsub" ${fname} target)
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "pubsub" ${fname})
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
@@ -77,8 +76,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     endif ()
 
     foreach (fname ${pubsub_client_install_tests})
-        google_cloud_cpp_unique_target_name("pubsub" ${fname} target)
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(${target} PRIVATE googleapis-c++::pubsub_client)
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})

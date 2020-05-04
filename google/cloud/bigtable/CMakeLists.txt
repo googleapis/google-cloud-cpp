@@ -299,11 +299,7 @@ if (BUILD_TESTING)
     list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
 
     foreach (fname ${bigtable_client_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        google_cloud_cpp_unique_target_name("bigtable" ${basename} target)
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "bigtable" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigtable_client_testing

@@ -109,11 +109,7 @@ function (bigquery_client_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${bigquery_client_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        google_cloud_cpp_unique_target_name("bigquery" ${basename} target)
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "bigquery" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigquery_client_testing googleapis-c++::bigquery_client

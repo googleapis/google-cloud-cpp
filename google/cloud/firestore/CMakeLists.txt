@@ -77,11 +77,7 @@ if (BUILD_TESTING)
                          "firestore_client_unit_tests")
 
     foreach (fname ${firestore_client_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        google_cloud_cpp_unique_target_name("firestore" ${basename} target)
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "firestore" "${fname}")
         target_link_libraries(
             ${target} PRIVATE firestore_client GTest::gmock_main GTest::gmock
                               GTest::gtest firestore_common_options)

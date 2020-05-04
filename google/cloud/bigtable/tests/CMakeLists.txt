@@ -33,8 +33,7 @@ export_list_to_bazel("bigtable_client_integration_tests.bzl"
                      "bigtable_client_integration_tests")
 
 foreach (fname ${bigtable_client_integration_tests})
-    google_cloud_cpp_unique_target_name("bigtable" ${fname} target)
-    add_executable(${target} ${fname})
+    google_cloud_cpp_add_executable(target "bigtable" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE bigtable_client_testing
@@ -72,7 +71,7 @@ set(bigtable_integration_tests_production # cmake-format: sort
                                           admin_iam_policy_integration_test.cc)
 
 foreach (fname ${bigtable_integration_tests_production})
-    google_cloud_cpp_unique_target_name("bigtable" ${fname} target)
+    google_cloud_cpp_set_target_name(target "bigtable" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")
