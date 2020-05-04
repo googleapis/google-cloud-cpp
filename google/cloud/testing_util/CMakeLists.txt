@@ -46,11 +46,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
                          "google_cloud_cpp_testing_unit_tests" YEAR 2018)
 
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        set(target "google_cloud_cpp_testing_${basename}")
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "common_testing" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
@@ -80,11 +76,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
                          "google_cloud_cpp_testing_grpc_unit_tests" YEAR 2020)
 
     foreach (fname ${google_cloud_cpp_testing_grpc_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        set(target "google_cloud_cpp_testing_grpc_${basename}")
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "common_testing_grpc" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_testing_grpc

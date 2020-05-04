@@ -65,11 +65,7 @@ create_bazel_config(storage_examples_common)
 
 if (BUILD_TESTING)
     foreach (fname ${storage_examples_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        set(target "storage_examples_${basename}")
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE storage_examples_common
@@ -86,9 +82,7 @@ if (BUILD_TESTING)
 endif ()
 
 foreach (fname ${storage_examples})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
+    google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
     target_link_libraries(
         ${target} PRIVATE storage_examples_common storage_client
                           google_cloud_cpp_common storage_common_options)
@@ -102,10 +96,11 @@ endforeach ()
 
 # We just know that these tests need to be run against production.
 foreach (
-    target
+    fname
     # cmake-format: sort
-    storage_policy_doc_samples storage_signed_url_v2_samples
-    storage_signed_url_v4_samples)
+    storage_policy_doc_samples.cc storage_signed_url_v2_samples.cc
+    storage_signed_url_v4_samples.cc)
+    google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")

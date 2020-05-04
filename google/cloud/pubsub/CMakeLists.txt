@@ -94,11 +94,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${pubsub_client_unit_tests})
-        string(REPLACE "/" "_" basename ${fname})
-        string(REPLACE ".cc" "" basename ${basename})
-        set(target "pubsub_${basename}")
-        add_executable(${target} ${fname})
-        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
+        google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing

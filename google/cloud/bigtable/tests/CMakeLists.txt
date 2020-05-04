@@ -33,9 +33,7 @@ export_list_to_bazel("bigtable_client_integration_tests.bzl"
                      "bigtable_client_integration_tests")
 
 foreach (fname ${bigtable_client_integration_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
+    google_cloud_cpp_add_executable(target "bigtable" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE bigtable_client_testing
@@ -70,9 +68,10 @@ target_link_libraries(
 
 # We just know that these tests need to be run against production.
 set(bigtable_integration_tests_production # cmake-format: sort
-                                          admin_iam_policy_integration_test)
+                                          admin_iam_policy_integration_test.cc)
 
-foreach (target ${bigtable_integration_tests_production})
+foreach (fname ${bigtable_integration_tests_production})
+    google_cloud_cpp_set_target_name(target "bigtable" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")

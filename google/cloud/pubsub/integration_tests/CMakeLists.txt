@@ -13,13 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ~~~
-function (google_cloud_cpp_test_name_to_target var fname)
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    set("${var}"
-        "${target}"
-        PARENT_SCOPE)
-endfunction ()
 
 function (google_cloud_cpp_pubsub_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -46,8 +39,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${pubsub_client_integration_tests})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "pubsub" ${fname})
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
@@ -84,8 +76,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     endif ()
 
     foreach (fname ${pubsub_client_install_tests})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(${target} PRIVATE googleapis-c++::pubsub_client)
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})

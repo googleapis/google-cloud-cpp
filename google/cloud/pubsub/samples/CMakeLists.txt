@@ -30,8 +30,7 @@ function (pubsub_client_define_samples)
     # Generate a target for each unit test.
     foreach (fname ${pubsub_client_integration_samples}
                    ${pubsub_client_unit_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
@@ -42,7 +41,7 @@ function (pubsub_client_define_samples)
     endforeach ()
 
     foreach (fname ${pubsub_client_integration_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
+        google_cloud_cpp_set_target_name(target "pubsub" "${fname}")
         set_tests_properties(
             ${target}
             PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
