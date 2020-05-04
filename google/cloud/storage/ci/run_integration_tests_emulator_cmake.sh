@@ -54,9 +54,8 @@ start_testbench
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
-readonly STORAGE_BUCKET_SAMPLES="google/cloud/storage/examples/storage_examples_storage_bucket_samples"
-if [[ -x "${STORAGE_BUCKET_SAMPLES}" ]]; then
-  "${STORAGE_BUCKET_SAMPLES}" \
+if [[ -x "google/cloud/storage/examples/storage_bucket_samples" ]]; then
+  google/cloud/storage/examples/storage_bucket_samples \
     create-bucket-for-project \
     "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
     "${GOOGLE_CLOUD_PROJECT}" >/dev/null
