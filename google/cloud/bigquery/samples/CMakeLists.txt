@@ -30,8 +30,11 @@ function (bigquery_client_define_samples)
     # Generate a target for each unit test.
     foreach (fname ${bigquery_client_integration_samples}
                    ${bigquery_client_unit_samples})
-        google_cloud_cpp_unique_target_name("bigquery" ${fname} target)
+        string(REPLACE "/" "_" basename ${fname})
+        string(REPLACE ".cc" "" basename ${basename})
+        google_cloud_cpp_unique_target_name("bigquery" ${basename} target)
         add_executable(${target} ${fname})
+        set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
         add_test(NAME ${target} COMMAND ${target})

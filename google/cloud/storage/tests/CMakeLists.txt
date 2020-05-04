@@ -49,8 +49,11 @@ set(storage_client_integration_tests
     thread_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
-    google_cloud_cpp_unique_target_name("storage" ${fname} target)
+    string(REPLACE "/" "_" basename ${fname})
+    string(REPLACE ".cc" "" basename ${basename})
+    google_cloud_cpp_unique_target_name("storage" ${basename} target)
     add_executable(${target} ${fname})
+    set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
     target_link_libraries(
         ${target}
         PRIVATE storage_client
@@ -73,7 +76,7 @@ endforeach ()
 
 # We just know that these tests need to be run against production.
 foreach (fname # cmake-format: sort
-               key_file_integration_test signed_url_integration_test)
+               key_file_integration_test.cc signed_url_integration_test.cc)
     google_cloud_cpp_unique_target_name("storage" ${fname} target)
     set_tests_properties(
         ${target} PROPERTIES LABELS

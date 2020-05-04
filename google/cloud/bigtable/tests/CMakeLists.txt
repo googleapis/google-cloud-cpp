@@ -69,7 +69,7 @@ target_link_libraries(
 
 # We just know that these tests need to be run against production.
 set(bigtable_integration_tests_production # cmake-format: sort
-                                          admin_iam_policy_integration_test)
+                                          admin_iam_policy_integration_test.cc)
 
 foreach (fname ${bigtable_integration_tests_production})
     google_cloud_cpp_unique_target_name("bigtable" ${fname} target)

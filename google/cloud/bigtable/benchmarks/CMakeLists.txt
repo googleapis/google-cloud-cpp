@@ -48,7 +48,9 @@ if (BUILD_TESTING)
                          "bigtable_benchmarks_unit_tests" YEAR 2020)
 
     foreach (fname ${bigtable_benchmarks_unit_tests})
-        google_cloud_cpp_unique_target_name("bigtable_benchmarks" ${fname}
+       string(REPLACE "/" "_" basename ${fname})
+       string(REPLACE ".cc" "" basename ${basename})
+        google_cloud_cpp_unique_target_name("bigtable_benchmarks" ${basename}
                                             target)
         add_executable(${target} ${fname})
         set_target_properties(${target} PROPERTIES OUTPUT_NAME ${basename})
