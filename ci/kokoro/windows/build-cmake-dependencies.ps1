@@ -35,7 +35,7 @@ $HasBuildCache = (Test-Path env:BUILD_CACHE)
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_dir = "cmake-out\vcpkg"
 $packages = @("zlib", "openssl",
-              "protobuf", "c-ares",
+              "protobuf", "c-ares", "benchmark",
               "grpc", "gtest", "crc32c", "curl",
               "googleapis")
 $vcpkg_flags=@(
