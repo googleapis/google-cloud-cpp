@@ -63,6 +63,7 @@ fi
   ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
+  ./vcpkg install google-cloud-cpp-spanner
 )
 # Use the new installed/ directory to create the cache.
 rm -fr "${HOME}/vcpkg-quickstart-cache"

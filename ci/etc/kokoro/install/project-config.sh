@@ -47,6 +47,7 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
     "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
     "INSTALL_GOOGLETEST_FROM_SOURCE" \
     "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
+    "INSTALL_GOOGLE_CLOUD_CPP_SPANNER_FROM_SOURCE" \
     "QUICKSTART_FRAGMENT" <<'_EOF_'
 # #### crc32c
 
@@ -72,6 +73,12 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 
 # ```bash
 @INSTALL_GOOGLETEST_FROM_SOURCE@
+# ```
+
+# #### spanner
+
+# ```bash
+@INSTALL_GOOGLE_CLOUD_CPP_SPANNER_FROM_SOURCE@
 # ```
 
 FROM devtools AS install
@@ -116,6 +123,10 @@ RUN make
 
 WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
+RUN make
+
+WORKDIR /home/build/spanner-make
+COPY google/cloud/spanner/quickstart /home/build/spanner-make
 RUN make
 
 @QUICKSTART_FRAGMENT@

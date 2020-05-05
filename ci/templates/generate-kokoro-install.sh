@@ -76,6 +76,7 @@ generate_dockerfile() {
     "INSTALL_GOOGLETEST_FROM_SOURCE" \
     "INSTALL_CRC32C_FROM_SOURCE" \
     "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
+    "INSTALL_GOOGLE_CLOUD_CPP_SPANNER_FROM_SOURCE" \
     "BUILD_AND_TEST_PROJECT_FRAGMENT" \
     <"${source}" |
     sed -e "s/Copyright [0-9][0-9][0-9][0-9]/Copyright ${ORIGINAL_COPYRIGHT_YEAR[${build}]}/" \

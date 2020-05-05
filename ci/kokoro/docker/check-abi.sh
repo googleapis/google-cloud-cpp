@@ -84,6 +84,7 @@ libraries=(
   "bigtable_client"
   "google_cloud_cpp_common"
   "google_cloud_cpp_grpc_utils"
+  "spanner_client"
   "storage_client"
 )
 for library in "${libraries[@]}"; do
