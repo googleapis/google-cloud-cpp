@@ -48,6 +48,17 @@ def google_cloud_cpp_deps():
             sha256 = "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb",
         )
 
+    # Load a version of benchmark that we know works.
+    if "com_google_benchmark" not in native.existing_rules():
+        http_archive(
+            name = "com_google_benchmark",
+            strip_prefix = "benchmark-1.5.0",
+            urls = [
+                "https://github.com/google/benchmark/archive/v1.5.0.tar.gz",
+            ],
+            sha256 = "3c6a165b6ecc948967a1ead710d4a181d7b0fbcaa183ef7ea84604994966221a",
+        )
+
     # Load the googleapis dependency.
     if "com_google_googleapis" not in native.existing_rules():
         http_archive(
