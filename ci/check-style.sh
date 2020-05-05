@@ -30,9 +30,9 @@ source "${BINDIR}/colors.sh"
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
 
+problems=""
 printf "%-30s" "Running check-include-guards:"
 time {
-  problems=""
   if ! find google/cloud -name '*.h' -print0 |
     xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
     problems="${problems} include-guards"
