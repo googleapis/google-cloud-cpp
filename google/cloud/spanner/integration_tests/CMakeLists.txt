@@ -14,10 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(EnableClangTidy)
-include(EnableWerror)
-include(GoogleCloudCppSpannerFunctions)
-
 function (spanner_client_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
     # config file for googletest (that is, the CMake file installed by
@@ -48,8 +44,7 @@ function (spanner_client_define_integration_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_integration_tests})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::spanner_client spanner_client_testing
@@ -85,8 +80,7 @@ function (spanner_client_define_integration_tests)
     endif ()
 
     foreach (fname ${spanner_client_install_tests})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})

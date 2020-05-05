@@ -14,10 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(EnableClangTidy)
-include(EnableWerror)
-include(GoogleCloudCppSpannerFunctions)
-
 function (spanner_client_define_benchmarks)
     # Find out if the platform supports getrusage(). Note that the Bazel builds
     # do not test for this, and therefore the feature is *not* used for any
@@ -69,8 +65,7 @@ function (spanner_client_define_benchmarks)
 
     # Generate a target for each benchmark.
     foreach (fname ${spanner_client_benchmark_programs})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE spanner_client_benchmarks

@@ -14,10 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(EnableClangTidy)
-include(EnableWerror)
-include(GoogleCloudCppSpannerFunctions)
-
 function (spanner_client_define_samples)
     set(spanner_client_integration_samples # cmake-format: sortable
                                            samples.cc)
@@ -34,8 +30,7 @@ function (spanner_client_define_samples)
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_integration_samples}
                    ${spanner_client_unit_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        add_executable(${target} ${fname})
+        google_cloud_cpp_add_executable(target "spanner" "${fname}")
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
@@ -47,7 +42,7 @@ function (spanner_client_define_samples)
     endforeach ()
 
     foreach (fname ${spanner_client_integration_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
+        google_cloud_cpp_set_target_name(target "spanner" "${fname}")
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     endforeach ()
 endfunction ()
