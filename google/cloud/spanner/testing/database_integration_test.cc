@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/testing/database_environment.h"
+#include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -24,10 +24,10 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-google::cloud::spanner::Database* DatabaseEnvironment::db_;
-google::cloud::internal::DefaultPRNG* DatabaseEnvironment::generator_;
+google::cloud::spanner::Database* DatabaseIntegrationTest::db_;
+google::cloud::internal::DefaultPRNG* DatabaseIntegrationTest::generator_;
 
-void DatabaseEnvironment::SetUp() {
+void DatabaseIntegrationTest::SetUpTestSuite() {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
@@ -82,7 +82,7 @@ void DatabaseEnvironment::SetUp() {
   std::cout << "DONE\n";
 }
 
-void DatabaseEnvironment::TearDown() {
+void DatabaseIntegrationTest::TearDownTestSuite() {
   spanner::DatabaseAdminClient admin_client;
   auto drop_status = admin_client.DropDatabase(*db_);
   EXPECT_STATUS_OK(drop_status);

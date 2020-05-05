@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/session_pool.h"
-#include "google/cloud/spanner/testing/database_environment.h"
+#include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -47,10 +47,13 @@ struct SessionPoolFriendForTest {
 };
 namespace {
 
-TEST(SessionPoolIntegrationTest, SessionAsyncCRUD) {
+class SessionPoolIntegrationTest
+    : public spanner_testing::DatabaseIntegrationTest {};
+
+TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-  auto const db = spanner_testing::DatabaseEnvironment::GetDatabase();
+  auto const db = GetDatabase();
   auto stub = CreateDefaultSpannerStub(ConnectionOptions{}, /*channel_id=*/0);
   auto session_pool =
       MakeSessionPool(db, {stub}, SessionPoolOptions{}, cq,
@@ -112,11 +115,3 @@ TEST(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleMock(&argc, argv);
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::spanner_testing::DatabaseEnvironment());
-
-  return RUN_ALL_TESTS();
-}

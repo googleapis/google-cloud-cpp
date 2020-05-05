@@ -282,8 +282,8 @@ function (spanner_client_define_tests)
         testing/cleanup_stale_instances.cc
         testing/cleanup_stale_instances.h
         testing/compiler_supports_regexp.h
-        testing/database_environment.cc
-        testing/database_environment.h
+        testing/database_integration_test.cc
+        testing/database_integration_test.h
         testing/fake_clock.h
         testing/matchers.h
         testing/mock_database_admin_stub.h

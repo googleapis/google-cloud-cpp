@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/testing/database_environment.h"
+#include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <future>
@@ -59,8 +59,10 @@ int TaskCount() {
                     : static_cast<int>(cores) * flag_threads_per_core;
 }
 
+class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
+
 /// @test Stress test the library using ExecuteQuery calls.
-TEST(ClientSqlStressTest, UpsertAndSelect) {
+TEST_F(ClientStressTest, UpsertAndSelect) {
   int const task_count = TaskCount();
 
   auto select_task = [](Client client) {
@@ -107,8 +109,7 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
     return result;
   };
 
-  Client client(
-      MakeConnection(spanner_testing::DatabaseEnvironment::GetDatabase()));
+  Client client(MakeConnection(GetDatabase()));
 
   std::vector<std::future<Result>> tasks(task_count);
   for (auto& t : tasks) {
@@ -125,7 +126,7 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
 }
 
 /// @test Stress test the library using Read calls.
-TEST(ClientStressTest, UpsertAndRead) {
+TEST_F(ClientStressTest, UpsertAndRead) {
   int const task_count = TaskCount();
 
   auto read_task = [](Client client) {
@@ -171,8 +172,7 @@ TEST(ClientStressTest, UpsertAndRead) {
     return result;
   };
 
-  Client client(
-      MakeConnection(spanner_testing::DatabaseEnvironment::GetDatabase()));
+  Client client(MakeConnection(GetDatabase()));
 
   std::vector<std::future<Result>> tasks(task_count);
   for (auto& t : tasks) {
@@ -224,9 +224,6 @@ int main(int argc, char* argv[]) {
       std::cerr << "Unknown flag: " << arg << "\n";
     }
   }
-
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::spanner_testing::DatabaseEnvironment());
 
   return RUN_ALL_TESTS();
 }

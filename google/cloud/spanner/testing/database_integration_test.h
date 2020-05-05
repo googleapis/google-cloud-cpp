@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_INTEGRATION_TEST_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_INTEGRATION_TEST_H
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
@@ -27,13 +27,12 @@ namespace spanner_testing {
 /// An inlined, versioned namespace for the testing helpers.
 inline namespace SPANNER_CLIENT_NS {
 
-class DatabaseEnvironment : public ::testing::Environment {
+class DatabaseIntegrationTest : public ::testing::Test {
  public:
-  static google::cloud::spanner::Database const& GetDatabase() { return *db_; }
+  static void SetUpTestSuite();
+  static void TearDownTestSuite();
 
- protected:
-  void SetUp() override;
-  void TearDown() override;
+  static google::cloud::spanner::Database const& GetDatabase() { return *db_; }
 
  private:
   static google::cloud::spanner::Database* db_;
@@ -45,4 +44,4 @@ class DatabaseEnvironment : public ::testing::Environment {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_INTEGRATION_TEST_H

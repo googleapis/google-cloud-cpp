@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
-#include "google/cloud/spanner/testing/database_environment.h"
+#include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -62,11 +62,13 @@ StatusOr<T> WriteReadData(Client& client, T const& data,
   return actual;
 }
 
-class DataTypeIntegrationTest : public ::testing::Test {
+class DataTypeIntegrationTest
+    : public spanner_testing::DatabaseIntegrationTest {
  public:
   static void SetUpTestSuite() {
+    spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
     client_ = google::cloud::internal::make_unique<Client>(
-        MakeConnection(spanner_testing::DatabaseEnvironment::GetDatabase()));
+        MakeConnection(GetDatabase()));
   }
 
   void SetUp() override {
@@ -76,7 +78,10 @@ class DataTypeIntegrationTest : public ::testing::Test {
     EXPECT_STATUS_OK(commit_result);
   }
 
-  static void TearDownTestSuite() { client_ = nullptr; }
+  static void TearDownTestSuite() {
+    client_ = nullptr;
+    spanner_testing::DatabaseIntegrationTest::TearDownTestCase();
+  }
 
  protected:
   static std::unique_ptr<Client> client_;
@@ -344,11 +349,3 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleMock(&argc, argv);
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::spanner_testing::DatabaseEnvironment());
-
-  return RUN_ALL_TESTS();
-}
