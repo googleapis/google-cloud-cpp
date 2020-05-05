@@ -21,8 +21,6 @@ function (spanner_client_define_integration_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
     set(spanner_client_integration_tests
         # cmake-format: sortable
         backup_integration_test.cc
