@@ -232,12 +232,17 @@ if should_run_integration_tests; then
     -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
 
   # Run the integration tests and examples that need the HMAC service account.
-  # Note the special error handling to avoid leaking the service account.
+  # We run these two tests in sequence because they cannot share the same
+  # service account, and creating two accounts seemed overly complicated.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-    -- //google/cloud/storage/examples:storage_service_account_samples \
-    //google/cloud/storage/tests:service_account_integration_test
+    -- //google/cloud/storage/examples:storage_service_account_samples
+
+  "${BAZEL_BIN}" test \
+    "${bazel_args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+    -- //google/cloud/storage/tests:service_account_integration_test
 fi
 
 echo "================================================================"
