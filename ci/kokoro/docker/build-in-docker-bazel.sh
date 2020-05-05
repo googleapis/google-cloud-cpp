@@ -212,37 +212,49 @@ if should_run_integration_tests; then
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
   readonly BAZEL_BIN_DIR
 
+  # These targets depend on the value of
+  # GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT which changes on each
+  # run and would dirty the cache for all the other tests if included in
+  # ${bazel_args[@]}
+  hmac_service_account_targets=(
+    "//google/cloud/storage/examples:storage_service_account_samples"
+    "//google/cloud/storage/tests:service_account_integration_test"
+  )
+  # This target depends on the value of
+  # GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN which changes on each run and
+  # would dirty the cache for all the other tests if included in
+  # ${bazel_args[@]}
+  access_token_targets=(
+    "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  )
+  excluded_targets=()
+  for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
+    excluded_targets+=("-${t}")
+  done
+
   # Run the integration tests using Bazel to drive them. Some of the tests and
   # examples require environment variables with dynamic values, we run them
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests" \
-    -- //google/cloud/...:all \
-    -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
-    -//google/cloud/storage/examples:storage_service_account_samples \
-    -//google/cloud/storage/tests:service_account_integration_test
+    -- //google/cloud/...:all "${excluded_targets[@]}"
 
-  # Run the integration tests that need an access token. We separate them
-  # because adding the access token to the `bazel_args` invalidates the build
-  # cache for all builds.
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
-    -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
+  # Run the integration tests that need an access token.
+  for target in "${access_token_targets[@]}"; do
+    "${BAZEL_BIN}" test \
+      "${bazel_args[@]}" \
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
+      -- "${target}"
+  done
 
   # Run the integration tests and examples that need the HMAC service account.
-  # We run these two tests in sequence because they cannot share the same
-  # service account, and creating two accounts seemed overly complicated.
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-    -- //google/cloud/storage/examples:storage_service_account_samples
-
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-    -- //google/cloud/storage/tests:service_account_integration_test
+  for target in "${hmac_service_account_targets[@]}"; do
+    "${BAZEL_BIN}" test \
+      "${bazel_args[@]}" \
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+      -- "${target}"
+  done
 fi
 
 echo "================================================================"
