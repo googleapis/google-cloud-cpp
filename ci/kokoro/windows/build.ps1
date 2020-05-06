@@ -122,7 +122,7 @@ if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
             -Exclude test.xml,sponge_log.xml,build.bat `
             -ErrorAction SilentlyContinue `
             -Path "${env:KOKORO_ARTIFACTS_DIR}" | `
-            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue    
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     } catch {
         Write-Host "$(Get-Date -Format o) error cleaning up KOKORO_ARTIFACTS DIR, ignored"
     }
