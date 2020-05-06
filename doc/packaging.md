@@ -253,33 +253,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -345,33 +327,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -486,33 +450,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -601,33 +547,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -715,33 +643,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -844,33 +754,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -932,33 +824,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1053,33 +927,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1180,33 +1036,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1326,32 +1164,14 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### googletest
-
-We need a recent version of GoogleTest to compile the unit and integration
-tests.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
