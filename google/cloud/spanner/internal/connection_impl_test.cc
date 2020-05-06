@@ -44,7 +44,7 @@ namespace {
 //   A a = {1, 2};  // <-- Warning, missing initializer for A::c.
 //
 // To make the test code in this file more readable, we disable this warning
-// and rely on the guranteed behavior of aggregate initialzation.
+// and rely on the guranteed behavior of aggregate initialization.
 // https://en.cppreference.com/w/cpp/language/aggregate_initialization
 // Note: "pragma GCC" works for both GCC and clang. MSVC doesn't warn.
 #if defined(__GNUC__) || defined(__clang__)
@@ -542,11 +542,16 @@ TEST(ConnectionImplTest, QueryOptions) {
     auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
     auto conn = MakeConnection(db, {mock});
 
+    // We wrap MockGrpcReader in NiceMock, because we don't really care how
+    // it's called in this test, and we want to minimize GMock's "uninteresting
+    // mock function call" warnings.
+    using ::testing::NiceMock;
+
     // Calls the 5 Connection::* methods that take SqlParams and ensures that
     // the protos being sent contain the expected options.
     EXPECT_CALL(*mock, ExecuteStreamingSql(_, m))
-        .WillOnce(Return(ByMove(make_unique<MockGrpcReader>())))
-        .WillOnce(Return(ByMove(make_unique<MockGrpcReader>())));
+        .WillOnce(Return(ByMove(make_unique<NiceMock<MockGrpcReader>>())))
+        .WillOnce(Return(ByMove(make_unique<NiceMock<MockGrpcReader>>())));
     (void)conn->ExecuteQuery(params);
     (void)conn->ProfileQuery(params);
 
