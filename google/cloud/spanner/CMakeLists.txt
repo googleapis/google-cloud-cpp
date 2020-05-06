@@ -507,9 +507,8 @@ install(
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/spanner/config-version.cmake.in"
-    "spanner_client-config-version.cmake" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
+               "spanner_client-config-version.cmake" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
