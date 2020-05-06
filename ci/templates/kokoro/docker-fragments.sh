@@ -32,17 +32,6 @@ RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz &
     ldconfig
 _EOF_
 
-read_into_variable INSTALL_GOOGLETEST_FROM_SOURCE <<'_EOF_'
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-_EOF_
-
 read_into_variable INSTALL_GOOGLE_BENCHMARK_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/benchmark/archive/v1.5.0.tar.gz && \

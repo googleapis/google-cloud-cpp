@@ -45,7 +45,6 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
   replace_fragments \
     "INSTALL_CRC32C_FROM_SOURCE" \
     "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
-    "INSTALL_GOOGLETEST_FROM_SOURCE" \
     "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
     "QUICKSTART_FRAGMENT" <<'_EOF_'
 # #### crc32c
@@ -63,15 +62,6 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 
 # ```bash
 @INSTALL_CPP_CMAKEFILES_FROM_SOURCE@
-# ```
-
-# #### googletest
-
-# We need a recent version of GoogleTest to compile the unit and integration
-# tests.
-
-# ```bash
-@INSTALL_GOOGLETEST_FROM_SOURCE@
 # ```
 
 FROM devtools AS install
@@ -98,11 +88,9 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
-RUN cmake -H. -Bcmake-out
+RUN cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
-WORKDIR /home/build/project/cmake-out
-RUN ctest -LE integration-tests --output-on-failure
-RUN cmake --build . --target install
+RUN cmake --build cmake-out --target install
 # ```
 
 ## [END INSTALL.md]

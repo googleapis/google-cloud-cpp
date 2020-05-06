@@ -84,22 +84,6 @@ RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz &
     ldconfig
 # ```
 
-# #### googletest
-
-# We need a recent version of GoogleTest to compile the unit and integration
-# tests.
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
 FROM devtools AS install
 ARG NCPU=4
 ARG DISTRO="distro-name"
@@ -124,11 +108,9 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
-RUN cmake -H. -Bcmake-out
+RUN cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
-WORKDIR /home/build/project/cmake-out
-RUN ctest -LE integration-tests --output-on-failure
-RUN cmake --build . --target install
+RUN cmake --build cmake-out --target install
 # ```
 
 ## [END INSTALL.md]
