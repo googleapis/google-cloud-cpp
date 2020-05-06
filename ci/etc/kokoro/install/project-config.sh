@@ -47,7 +47,6 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
     "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
     "INSTALL_GOOGLETEST_FROM_SOURCE" \
     "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
-    "INSTALL_GOOGLE_CLOUD_CPP_SPANNER_FROM_SOURCE" \
     "QUICKSTART_FRAGMENT" <<'_EOF_'
 # #### crc32c
 
@@ -75,12 +74,6 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(
 @INSTALL_GOOGLETEST_FROM_SOURCE@
 # ```
 
-# #### spanner
-
-# ```bash
-@INSTALL_GOOGLE_CLOUD_CPP_SPANNER_FROM_SOURCE@
-# ```
-
 FROM devtools AS install
 ARG NCPU=4
 ARG DISTRO="distro-name"
@@ -105,11 +98,9 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
-RUN cmake -H. -Bcmake-out
+RUN cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
-WORKDIR /home/build/project/cmake-out
-RUN ctest -LE integration-tests --output-on-failure
-RUN cmake --build . --target install
+RUN cmake --build cmake-out --target install
 # ```
 
 ## [END INSTALL.md]
@@ -125,9 +116,10 @@ WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
-WORKDIR /home/build/spanner-make
-COPY google/cloud/spanner/quickstart /home/build/spanner-make
-RUN make
+# TODO(#4015): Create a Makefile for spanner/quickstart.
+# WORKDIR /home/build/spanner-make
+# COPY google/cloud/spanner/quickstart /home/build/spanner-make
+# RUN make
 
 @QUICKSTART_FRAGMENT@
 
