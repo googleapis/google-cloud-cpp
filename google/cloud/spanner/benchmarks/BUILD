@@ -37,7 +37,10 @@ cc_library(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
-    tags = ["integration-tests"],
+    tags = [
+        "integration-tests",
+        "spanner-integration-tests",
+    ],
     deps = [
         ":spanner_client_benchmarks",
         "//google/cloud/spanner:spanner_client",

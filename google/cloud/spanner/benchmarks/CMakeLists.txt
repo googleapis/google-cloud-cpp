@@ -88,7 +88,9 @@ function (spanner_client_define_benchmarks)
         add_test(NAME ${target} COMMAND ${target})
         # To automatically smoke-test the benchmarks as part of the CI build we
         # label them as tests.
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-tests;spanner-integration-tests")
     endforeach ()
 endfunction ()
 

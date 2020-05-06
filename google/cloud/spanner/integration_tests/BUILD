@@ -22,7 +22,10 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
     name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
-    tags = ["integration-tests"],
+    tags = [
+        "integration-tests",
+        "spanner-integration-tests",
+    ],
     deps = [
         "//google/cloud/spanner:spanner_client",
         "//google/cloud/spanner:spanner_client_mocks",

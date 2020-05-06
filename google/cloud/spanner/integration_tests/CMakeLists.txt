@@ -58,7 +58,9 @@ function (spanner_client_define_integration_tests)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-tests;spanner-integration-tests")
         add_dependencies(spanner-client-integration-tests ${target})
     endforeach ()
 
@@ -76,16 +78,6 @@ function (spanner_client_define_integration_tests)
     if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         return()
     endif ()
-
-    foreach (fname ${spanner_client_install_tests})
-        google_cloud_cpp_add_executable(target "spanner" "${fname}")
-        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
-        google_cloud_cpp_add_clang_tidy(${target})
-        google_cloud_cpp_add_common_options(${target})
-
-        add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
-    endforeach ()
 endfunction ()
 
 # Only define the tests if testing is enabled. Package maintainers may not want
