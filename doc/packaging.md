@@ -269,31 +269,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -375,31 +359,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -530,31 +498,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -659,31 +611,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -787,31 +723,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -930,31 +850,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1032,31 +936,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1167,31 +1055,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1308,31 +1180,15 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
 
@@ -1468,30 +1324,14 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### spanner
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz && \
-    tar -xf v1.2.0.tar.gz && \
-    cd google-cloud-cpp-spanner-1.2.0 && \
-    cmake -H. -Bcmake-out \
-        -DBUILD_TESTING=OFF \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/project
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
-cd $HOME/project/cmake-out
-ctest -LE integration-tests --output-on-failure
-sudo cmake --build . --target install
+sudo cmake --build cmake-out --target install
 ```
 
