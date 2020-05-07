@@ -80,10 +80,10 @@ behaviors in the library.
 - `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
   configure the GCP project.
 
-- `GOOGLE_CLOUD_CPP_SPANNER_INSTANCE=...` is used in examples and integration
+- `GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=...` is used in examples and integration
   tests to, well, configure the spanner instance.
 
-- `GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA=...` is used in examples and
+- `GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=...` is used in examples and
   integration tests to set the service account for testing IAM operations.
 
 - `SPANNER_EMULATOR_HOST=host:port` tells the library to connect to the

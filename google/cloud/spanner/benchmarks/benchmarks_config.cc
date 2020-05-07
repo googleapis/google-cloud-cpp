@@ -54,9 +54,9 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
 
   config.project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  config.instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
+  config.instance_id = google::cloud::internal::GetEnv(
+                           "GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID")
+                           .value_or("");
 
   struct Flag {
     std::string flag_name;

@@ -44,7 +44,8 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(instance_id);
 
   auto test_iam_service_account =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
           .value_or("");
   ASSERT_TRUE(emulator || !test_iam_service_account.empty());
 

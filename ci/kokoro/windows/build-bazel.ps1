@@ -181,9 +181,12 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json",
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
+        # Spanner
+        "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+        "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
     )
     bazel $common_flags test $test_flags $integration_flags `
-        "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" `
+        "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,spanner-integration-tests" `
         -- //google/cloud/...:all `
         -//google/cloud/bigtable/examples:bigtable_grpc_credentials `
         -//google/cloud/storage/examples:storage_service_account_samples `

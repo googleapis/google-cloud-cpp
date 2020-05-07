@@ -2713,11 +2713,12 @@ void RunAll(bool emulator) {
   }
 
   auto test_iam_service_account =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
           .value_or("");
   if (!emulator && test_iam_service_account.empty()) {
     throw std::runtime_error(
-        "GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA is not set or is empty");
+        "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT is not set or is empty");
   }
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();

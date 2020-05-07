@@ -14,9 +14,9 @@ Spanner instance using the console or:
 
 ```console
 GOOGLE_CLOUD_PROJECT=...                      # Your project ID
-GOOGLE_CLOUD_CPP_SPANNER_INSTANCE=benchmarks  # Choose your instance ID
+GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=benchmarks  # Choose your instance ID
 INSTANCE_CONFIG=regional-us-central1          # Choose the instance location(s)
-gcloud spanner instances create ${GOOGLE_CLOUD_CPP_SPANNER_INSTANCE} \
+gcloud spanner instances create ${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --config=${INSTANCE_CONFIG} --description="An instance to run Benchmarks" \
     --nodes=3
 ```
@@ -83,7 +83,7 @@ of type `STRING` you would run:
 ```bash
 .build/google/cloud/spanner/benchmarks/multiple_rows_cpu_benchmark \
     --project=${GOOGLE_CLOUD_PROJECT} \
-    --instance=${GOOGLE_CLOUD_CPP_SPANNER_INSTANCE} \
+    --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --table-size=1000000 \
     --maximum-clients=8 \
     --maximum-threads=16 \
@@ -98,7 +98,7 @@ for exp in read-bool read-bytes read-date read-float64 \
            read-int64 read-string read-timestamp; do \
   .build/google/cloud/spanner/benchmarks/multiple_rows_cpu_benchmark \
     --project=${GOOGLE_CLOUD_PROJECT} \
-    --instance=${GOOGLE_CLOUD_CPP_SPANNER_INSTANCE} \
+    --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --table-size=1000000 \
     --maximum-clients=8 \
     --maximum-threads=16 \
@@ -144,7 +144,7 @@ of 15 seconds each:
 ```bash
 .build/google/cloud/spanner/benchmarks/single_row_throughput_benchmark \
     --project=${GOOGLE_CLOUD_PROJECT} \
-    --instance=${GOOGLE_CLOUD_CPP_SPANNER_INSTANCE} \
+    --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --iteration-duration=15 \
     --table-size=10000000 \
     --maximum-clients=32 \

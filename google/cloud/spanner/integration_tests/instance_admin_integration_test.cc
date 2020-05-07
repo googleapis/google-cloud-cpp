@@ -47,11 +47,12 @@ class InstanceAdminClientTest : public testing::Test {
         google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    instance_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-            .value_or("");
+    instance_id_ = google::cloud::internal::GetEnv(
+                       "GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID")
+                       .value_or("");
     test_iam_service_account_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
             .value_or("");
     auto const run_slow_integration_tests =
         google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
