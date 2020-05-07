@@ -106,10 +106,9 @@ WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
-# TODO(#4015): Create a Makefile for spanner/quickstart.
-# WORKDIR /home/build/spanner-make
-# COPY google/cloud/spanner/quickstart /home/build/spanner-make
-# RUN make
+WORKDIR /home/build/spanner-make
+COPY google/cloud/spanner/quickstart /home/build/spanner-make
+RUN make
 
 @QUICKSTART_FRAGMENT@
 
