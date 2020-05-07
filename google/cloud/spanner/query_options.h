@@ -27,6 +27,8 @@ inline namespace SPANNER_CLIENT_NS {
 /**
  * These QueryOptions allow users to configure features about how their SQL
  * queries executes on the server.
+ *
+ * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
  */
 class QueryOptions {
  public:

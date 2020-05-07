@@ -107,6 +107,8 @@ inline namespace SPANNER_CLIENT_NS {
  * ---------------------------- | --------------------
  * `SPANNER_OPTIMIZER_VERSION`  | `QueryOptions::optimizer_version()`
  *
+ * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
+ *
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview
  */
