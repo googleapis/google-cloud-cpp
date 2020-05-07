@@ -37,7 +37,6 @@ This repository contains idiomatic C++ client libraries for the following
 * [Google Cloud BigQuery](google/cloud/bigquery/README.md) (experimental)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md)
 * [Google Cloud Spanner](google/cloud/spanner/README.md)
-  (This currently lives in another repo, but is moving into this repo by June 2020).
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) (experimental)
 * [Google Cloud Storage](google/cloud/storage/README.md)
 
