@@ -15,6 +15,7 @@
 
 quickstart_libraries() {
   echo "bigtable"
+  echo "spanner"
   echo "storage"
 }
 
@@ -25,6 +26,12 @@ quickstart_arguments() {
     echo "${GOOGLE_CLOUD_PROJECT}"
     echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
     echo "quickstart"
+    return 0
+    ;;
+  "spanner")
+    echo "${GOOGLE_CLOUD_PROJECT}"
+    echo "${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+    echo "quickstart-db"
     return 0
     ;;
   "storage")

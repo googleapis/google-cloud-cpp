@@ -293,6 +293,9 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       echo /var/tmp/staging/include/google/cloud/internal
       echo /var/tmp/staging/include/google/cloud/pubsub
       echo /var/tmp/staging/include/google/cloud/pubsub/internal
+      echo /var/tmp/staging/include/google/cloud/spanner
+      echo /var/tmp/staging/include/google/cloud/spanner/internal
+      echo /var/tmp/staging/include/google/cloud/spanner/mocks
       echo /var/tmp/staging/include/google/cloud/storage
       echo /var/tmp/staging/include/google/cloud/storage/internal
       echo /var/tmp/staging/include/google/cloud/storage/oauth2
