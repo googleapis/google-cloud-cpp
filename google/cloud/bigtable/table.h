@@ -454,7 +454,7 @@ class Table {
    * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet data_snippets.cc read rows
+   * @snippet read_snippets.cc read rows
    */
   RowReader ReadRows(RowSet row_set, Filter filter);
 
@@ -471,7 +471,7 @@ class Table {
    * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet data_snippets.cc read rows with limit
+   * @snippet read_snippets.cc read rows with limit
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
@@ -490,7 +490,7 @@ class Table {
    * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet data_snippets.cc read row
+   * @snippet read_snippets.cc read row
    */
   StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter);
 

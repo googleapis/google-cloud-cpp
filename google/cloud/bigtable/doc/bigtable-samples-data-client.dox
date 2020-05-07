@@ -35,7 +35,7 @@ The example uses the following headers:
 
 ### Use the features to simplify reading big-endian values from Cloud Bigtable.
 
-@snippet data_snippets.cc read row
+@snippet read_snippets.cc read row
 
 ### Use CheckAndMutate to modify a cell if it has a value.
 
