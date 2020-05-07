@@ -30,63 +30,6 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 
 include(GoogleCloudCppCommon)
 
-# Define a function to fetch the current git revision. Using a function creates
-# a new scope, so the CMake variables do not leak to the global namespace.
-function (google_cloud_cpp_spanner_initialize_git_head var)
-    set(result "unknown")
-    # If we cannot find a `.git` directory do not even try to guess the git
-    # revision.
-    if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
-        # We need `git` to find the revision.
-        find_program(GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM NAMES git)
-        mark_as_advanced(GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM)
-        if (GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM)
-            # Run `git rev-parse --short HEAD` and capture the output in a
-            # variable.
-            execute_process(
-                COMMAND "${GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM}" rev-parse
-                        --short HEAD
-                OUTPUT_VARIABLE GIT_HEAD_LOG
-                ERROR_VARIABLE GIT_HEAD_LOG)
-            string(REPLACE "\n" "" result "${GIT_HEAD_LOG}")
-        endif ()
-    endif ()
-    set(${var}
-        "${result}"
-        PARENT_SCOPE)
-endfunction ()
-
-# Capture the compiler version and the git revision into variables, then
-# generate a config file with the values.
-if (NOT "${GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA}" STREQUAL "")
-    # The build metadata flag is already defined, do not re-compute the
-    # initialization value. This works both when the user supplies
-    # -DGOOGLE_CLOUD_CPP_SPANNER_METADATA=value in the command line, and when
-    # GOOGLE_CLOUD_CPP_SPANNER_METADATA has a cached value
-    set(GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD "unused")
-else ()
-    google_cloud_cpp_spanner_initialize_git_head(
-        GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD)
-endif ()
-
-# Define a CMake configuration option to set the build metadata. By default this
-# is initialized from `git rev-parse --short HEAD`, but the developer (or the
-# script building via CMake) can override the value.
-set(GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA
-    "${GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD}"
-    CACHE STRING "Append build metadata to the library version number")
-# This option is rarely needed. Mark it as "advanced" to remove it from the
-# default CMake UIs.
-mark_as_advanced(GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA)
-
-message(STATUS "google-cloud-cpp-spanner build metadata set to"
-               " ${GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA}")
-
-# Create the file that captures build information. Having access to the compiler
-# and build flags at runtime allows us to print better benchmark results.
-string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_SPANNER_BUILD_TYPE_UPPER)
-configure_file(internal/build_info.cc.in internal/build_info.cc)
-
 if (MSVC)
     # MSVC warns about using sscanf(), this is a valuable warning, so we do not
     # want to disable for everything. But for these files the usage is "safe".
@@ -101,7 +44,6 @@ endif ()
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     spanner_client
-    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     backoff_policy.h
     backup.cc
     backup.h
@@ -133,7 +75,6 @@ add_library(
     instance_admin_connection.h
     internal/api_client_header.cc
     internal/api_client_header.h
-    internal/build_info.h
     internal/channel.h
     internal/clock.h
     internal/compiler_info.cc
@@ -208,8 +149,8 @@ add_library(
     session_pool_options.h
     sql_statement.cc
     sql_statement.h
-    timestamp.h
     timestamp.cc
+    timestamp.h
     tracing_options.h
     transaction.cc
     transaction.h
@@ -332,7 +273,6 @@ function (spanner_client_define_tests)
         instance_admin_connection_test.cc
         instance_test.cc
         internal/api_client_header_test.cc
-        internal/build_info_test.cc
         internal/clock_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc

@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/internal/build_info.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
