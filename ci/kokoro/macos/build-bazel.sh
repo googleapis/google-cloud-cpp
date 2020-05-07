@@ -129,11 +129,15 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
+
+    # Spanner
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
   )
 
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
+    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,spanner-integration-tests" \
     -- //google/cloud/...:all \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
     -//google/cloud/storage/examples:storage_service_account_samples \

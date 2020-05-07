@@ -128,10 +128,19 @@ WORKDIR /home/build/storage-make
 COPY google/cloud/storage/quickstart /home/build/storage-make
 RUN make
 
+# TODO(#4015): Create a Makefile for spanner/quickstart.
+# WORKDIR /home/build/spanner-make
+# COPY google/cloud/spanner/quickstart /home/build/spanner-make
+# RUN make
+
 WORKDIR /home/build/quickstart-cmake/bigtable
 COPY google/cloud/bigtable/quickstart /home/build/quickstart-cmake/bigtable
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
 RUN cmake --build /i/bigtable
+WORKDIR /home/build/quickstart-cmake/spanner
+COPY google/cloud/spanner/quickstart /home/build/quickstart-cmake/spanner
+RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/spanner
+RUN cmake --build /i/spanner
 WORKDIR /home/build/quickstart-cmake/storage
 COPY google/cloud/storage/quickstart /home/build/quickstart-cmake/storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage

@@ -207,6 +207,10 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
+
+    # Spanner
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
   )
 
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
@@ -237,7 +241,7 @@ if should_run_integration_tests; then
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests" \
+    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
     -- //google/cloud/...:all "${excluded_targets[@]}"
 
   # Run the integration tests that need an access token.

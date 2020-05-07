@@ -1,0 +1,164 @@
+/*!
+
+@mainpage Cloud Spanner C++ Client Library
+
+The Cloud Spanner C++ Client library offers types and functions to use Cloud
+Spanner from C++11 applications.
+
+This library requires a C++11 compiler, it is supported (and tested) on multiple
+Linux distributions.
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud Spanner
+using the C++ client library.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id, you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project.
+3. Learn about [key terms and concepts][concepts-link] for Cloud Spanner.
+4. Setup the authentication for the examples:
+   - [Configure a service account][authentication-quickstart],
+   - or [login with your personal account][gcloud-quickstart]
+
+### Setting up your repo
+
+In order to use the Cloud Spanner C++ client library from your own code, you'll
+need to teach your build system how to fetch and compile the Cloud C++ client
+library. The Cloud Spanner C++ client library natively supports the
+[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
+We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
+includes detailed instructions on how to compile the library for use in your
+application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp-spanner.git
+cd google-cloud-cpp-spanner/google/cloud/spanner/quickstart
+@endcode
+
+@par Example: Hello World
+
+The following shows the code that you'll run in the
+`google/cloud/spanner/quickstart/` directory, which should give you a taste of
+the Cloud Spanner C++ client library API.
+
+@include quickstart.cc
+
+## API Notes
+
+The following are general notes about using the library.
+
+### Environment Variables
+
+There are several environment variables that can be set to configure certain
+behaviors in the library.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls, the library injects an additional Stub decorator that prints each gRPC
+  request and response.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
+  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
+  `Client::ProfileQuery()`. This can produce a lot of output, so use with
+  caution!
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=...` changes the default endpoint
+  (spanner.googleapis.com) for the library.
+
+- `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
+  configure the GCP project.
+
+- `GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=...` is used in examples and integration
+  tests to, well, configure the spanner instance.
+
+- `GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=...` is used in examples and
+  integration tests to set the service account for testing IAM operations.
+
+- `SPANNER_EMULATOR_HOST=host:port` tells the library to connect to the
+  specified emulator rather than the default endpoint.
+
+- `SPANNER_OPTIMIZER_VERSION=n` sets the default query optimizer version to use
+  in `Client::ExecuteQuery()` calls.
+
+### Error Handling
+
+This library never throws exceptions to signal error. In general, the library
+returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
+functions return objects that are not wrapped in a `StatusOr<>` but will
+themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
+long running operations return `future<StatusOr<T>>`, and the methods on
+`Client` that read from a database return a `RowStream`, which iterates a
+stream of `StatusOr<T>`.
+
+@par Example
+
+Applications should check if the `StatusOr<T>` contains a value before using
+it, much like how you might check that a pointer is not null before
+dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
+smart-pointer to `T`, with the main difference being that when it does not hold
+a `T` it will instead hold a `Status` object with extra information about the
+error.
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value. Alternatively, callers may instead use the
+`.value()` member function which is defined to throw a `RuntimeStatusError` if
+there is no value.
+
+@note If you're compiling with exceptions disabled, calling `.value()` on a
+    `StatusOr<T>` that does not contain a value will terminate the program
+    instead of throwing.
+
+@snippet samples.cc example-status-or
+
+### Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+follows the recommended practices with respect to backoff between retries.
+Application developers can override the default
+[retry](@ref google::cloud::spanner::v1::RetryPolicy) and
+[backoff](@ref google::cloud::spanner::v1::BackoffPolicy) policies.
+
+The default policies are to continue retrying for up to 15 minutes, and to
+use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
+period between retries.
+
+@snippet samples.cc custom-retry-policy
+
+@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::v1::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::v1::LimitedErrorCountRetryPolicy)
+   for alternative retry policies.
+
+@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::v1::ExponentialBackoffPolicy)
+   to configure different parameters for the exponential backoff policy.
+
+## Next Steps
+
+* @ref spanner-mocking
+
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[github-link]: https://github.com/googleapis/google-cloud-cpp-spanner 'GitHub Repository'
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp-spanner/blob/master/google/cloud/spanner/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp-common/blob/master/google/cloud/status_or.h
+
+*/

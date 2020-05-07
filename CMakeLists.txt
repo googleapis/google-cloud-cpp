@@ -132,6 +132,8 @@ option(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY "Enable building the BigQuery library."
        ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
        ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_SPANNER "Enable building the Spanner library."
+       ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
        ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
@@ -163,6 +165,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
     add_subdirectory(google/cloud/bigtable)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
+    add_subdirectory(google/cloud/spanner)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
     add_subdirectory(google/cloud/firestore)
