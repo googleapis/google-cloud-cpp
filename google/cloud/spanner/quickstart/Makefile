@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is a minimal Makefile to show how to use the Cloud Bigtable C++ client
+# This is a minimal Makefile to show how to use the Cloud Spanner C++ client
 # for developers that use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
@@ -23,13 +23,13 @@ CXXLD=$(CXX)
 
 all: quickstart
 
-# Configuration variables to compile and link against the Cloud Bigtable C++
+# Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
-CBT_DEPS := bigtable_client
-CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
-CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
-CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
+SPANNER_DEPS := spanner_client
+SPANNER_CXXFLAGS   := $(shell pkg-config $(SPANNER_DEPS) --cflags)
+SPANNER_CXXLDFLAGS := $(shell pkg-config $(SPANNER_DEPS) --libs-only-L)
+SPANNER_LIBS       := $(shell pkg-config $(SPANNER_DEPS) --libs-only-l)
 
-# A target using the Cloud Bigtable C++ client library.
+# A target using the Cloud Spanner C++ client library.
 quickstart: quickstart.cc
-	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+	$(CXXLD) $(CXXFLAGS) $(SPANNER_CXXFLAGS) $(SPANNER_CXXLDFLAGS) -o $@ $^ $(SPANNER_LIBS)

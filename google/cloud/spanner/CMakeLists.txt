@@ -494,7 +494,7 @@ set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Spanner.")
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_spanner_protos")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
 
 # Create and install the pkg-config files.
