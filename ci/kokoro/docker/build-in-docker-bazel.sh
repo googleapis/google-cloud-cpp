@@ -237,7 +237,7 @@ if should_run_integration_tests; then
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests" \
+    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
     -- //google/cloud/...:all "${excluded_targets[@]}"
 
   # Run the integration tests that need an access token.

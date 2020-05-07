@@ -59,8 +59,11 @@ function (spanner_client_define_integration_tests)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-tests;spanner-integration-tests")
+            ${target}
+            PROPERTIES
+                LABELS
+                "integration-tests;spanner-integration-tests;integration-tests-no-emulator"
+        )
         add_dependencies(spanner-client-integration-tests ${target})
     endforeach ()
 
