@@ -1,0 +1,71 @@
+/*!
+
+@page spanner-mocking Mocking the Cloud Spanner C++ Client with Google Mock
+
+In this document we describe how to write unit tests that mock
+`google::cloud::spanner::Client` using Google Mock. This document assumes the
+reader is familiar with the Google Test and Google Mock frameworks and with
+the Cloud Spanner C++ Client.
+
+## Mocking a successful `ExecuteQuery`
+
+First include the headers for the Cloud Spanner Client, the mocking class, and
+the Google Mock framework.
+
+@snippet mock_execute_query.cc required-includes
+
+The example uses a number of aliases to save typing and improve readability:
+
+@snippet mock_execute_query.cc helper-aliases
+
+Create a mocking object for `google::cloud::spanner::Connection`:
+
+@snippet mock_execute_query.cc create-mock
+
+We will setup this mock in a second, but first let's look at how it is used to
+create a `google::cloud::spanner::Client` object:
+
+@snippet mock_execute_query.cc create-client
+
+Once the client is created you can make calls on the client as usual:
+
+@snippet mock_execute_query.cc client-call
+
+And then verify the results meet your expectations:
+
+@snippet mock_execute_query.cc expected-results
+
+All of this depends on creating a `google::cloud::spanner::RowStream` that
+simulates the stream of results you want. To do so, you need to mock a source
+that streams `google::cloud::spanner::Row`s:
+
+@snippet mock_execute_query.cc create-streaming-source
+
+The source must define the names and types of the columns returned by the query:
+
+@snippet mock_execute_query.cc return-metadata
+
+And then setup the mock to return the results. Note that the results are
+returned one value at a time, even if a row contains multiple values.
+
+@snippet mock_execute_query.cc simulate-streaming-results
+
+Note that the last value in the stream is indicated by an optional without a
+value:
+
+@snippet mock_execute_query.cc simulate-streaming-end
+
+
+Once the `source` has been created and its behavior mocked, you mock the
+behavior for `ExecuteQuery`:
+
+@snippet mock_execute_query.cc mock-execute-query
+
+
+## Full Listing
+
+Finally we present the full code for this example:
+
+@snippet mock_execute_query.cc all
+
+*/
