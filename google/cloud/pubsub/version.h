@@ -42,13 +42,6 @@ namespace pubsub {
  * symbol becomes `pubsub::v1::Foo`.
  */
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
-using ::google::cloud::version;
-using ::google::cloud::version_major;
-using ::google::cloud::version_minor;
-using ::google::cloud::version_patch;
-using ::google::cloud::version_string;
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud

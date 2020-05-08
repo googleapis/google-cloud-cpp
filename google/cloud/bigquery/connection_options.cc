@@ -25,7 +25,7 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 std::string BaseUserAgentPrefix() {
-  return "gcloud-cpp/" + google::cloud::bigquery::version_string() + " (" +
+  return "gcloud-cpp/" + google::cloud::version_string() + " (" +
          ::google::cloud::internal::CompilerId() + "-" +
          ::google::cloud::internal::CompilerVersion() + "; " +
          ::google::cloud::internal::CompilerFeatures() + ")";

@@ -21,7 +21,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string UserAgentPrefix() {
-  return "gcloud-cpp/" + google::cloud::pubsub::version_string() + " (" +
+  return "gcloud-cpp/" + ::google::cloud::version_string() + " (" +
          ::google::cloud::internal::CompilerId() + "-" +
          ::google::cloud::internal::CompilerVersion() + "; " +
          ::google::cloud::internal::CompilerFeatures() + ")";

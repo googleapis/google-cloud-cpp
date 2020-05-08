@@ -36,15 +36,7 @@ namespace bigquery {
 // applications can use `bigquery::Foo` in their source, but the
 // symbols are versioned, e.g., the symbol becomes
 // `bigquery::v1::Foo`.
-inline namespace BIGQUERY_CLIENT_NS {
-
-using ::google::cloud::version;
-using ::google::cloud::version_major;
-using ::google::cloud::version_minor;
-using ::google::cloud::version_patch;
-using ::google::cloud::version_string;
-
-}  // namespace BIGQUERY_CLIENT_NS
+inline namespace BIGQUERY_CLIENT_NS {}  // namespace BIGQUERY_CLIENT_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
