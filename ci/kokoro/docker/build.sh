@@ -72,6 +72,7 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export GENERATE_DOCS=yes
   export CLANG_TIDY=yes
   export TEST_INSTALL=yes
+  export USE_NINJA=yes
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO=fedora-install
