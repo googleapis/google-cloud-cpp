@@ -20,19 +20,7 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-std::string VersionString() {
-  static std::string const kVersion = [] {
-    std::ostringstream os;
-    os << "v" << VersionMajor() << "." << VersionMinor() << "."
-       << VersionPatch();
-    auto metadata = ::google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }();
-  return kVersion;
-}
+std::string VersionString() { return ::google::cloud::version_string(); }
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud

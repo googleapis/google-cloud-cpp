@@ -63,14 +63,15 @@ int constexpr VersionPatch() {
   return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH;
 }
 
-auto constexpr kMaxPatchVersions = 100;
-auto constexpr kMaxMinorVersions = 100;
-
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr Version() {
-  return kMaxPatchVersions *
-             (kMaxMinorVersions * VersionMajor() + VersionMinor()) +
-         VersionPatch();
+  static_assert(::google::cloud::version_major() == VersionMajor(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == VersionMinor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == VersionPatch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
 }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.

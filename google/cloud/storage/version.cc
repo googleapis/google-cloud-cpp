@@ -22,22 +22,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-// NOLINTNEXTLINE(readability-identifier-naming)
-std::string version_string() {
-  static std::string const kVersion = [] {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
-    auto metadata = google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }();
-  return kVersion;
-}
+std::string version_string() { return ::google::cloud::version_string(); }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string x_goog_api_client() {
   static std::string const kXGoogApiClient = [] {
     std::ostringstream os;
