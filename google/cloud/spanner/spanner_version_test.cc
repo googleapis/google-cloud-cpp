@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/build_info.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
@@ -43,8 +42,9 @@ TEST(SpannerVersionTest, Format) {
 
 /// @test Verify the version does not contain build info for release builds.
 TEST(SpannerVersionTest, NoBuildInfoInRelease) {
-  if (!internal::BuildMetadata().empty()) {
-    EXPECT_THAT(VersionString(), HasSubstr("+" + internal::BuildMetadata()));
+  if (!google::cloud::internal::build_metadata().empty()) {
+    EXPECT_THAT(VersionString(),
+                HasSubstr("+" + google::cloud::internal::build_metadata()));
     return;
   }
   EXPECT_THAT(VersionString(), Not(HasSubstr("+")));

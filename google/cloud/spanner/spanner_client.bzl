@@ -36,7 +36,6 @@ spanner_client_hdrs = [
     "instance_admin_client.h",
     "instance_admin_connection.h",
     "internal/api_client_header.h",
-    "internal/build_info.h",
     "internal/channel.h",
     "internal/clock.h",
     "internal/compiler_info.h",

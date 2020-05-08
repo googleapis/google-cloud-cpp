@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
-#include "google/cloud/spanner/internal/build_info.h"
 #include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <sstream>
@@ -44,7 +44,8 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Use Only Clients: " << config.use_only_clients
             << "\n# Compiler: " << spanner::internal::CompilerId() << "-"
             << spanner::internal::CompilerVersion()
-            << "\n# Build Flags: " << spanner::internal::BuildFlags() << "\n";
+            << "\n# Build Flags: " << google::cloud::internal::compiler_flags()
+            << "\n";
 }
 
 google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {

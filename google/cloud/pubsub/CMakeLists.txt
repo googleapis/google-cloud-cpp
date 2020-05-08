@@ -30,7 +30,6 @@ add_library(
     connection_options.h
     create_subscription_builder.h
     create_topic_builder.h
-    internal/build_info.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/subscriber_stub.cc
