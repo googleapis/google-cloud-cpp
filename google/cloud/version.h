@@ -64,9 +64,20 @@ int constexpr version_minor() { return GOOGLE_CLOUD_CPP_VERSION_MINOR; }
  */
 int constexpr version_patch() { return GOOGLE_CLOUD_CPP_VERSION_PATCH; }
 
+namespace internal {
+auto constexpr kMaxMinorVersions = 100;
+auto constexpr kMaxPatchVersions = 100;
+}  // namespace internal
+
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr version() {
-  return 100 * (100 * version_major() + version_minor()) + version_patch();
+  static_assert(version_minor() < internal::kMaxMinorVersions,
+                "version_minor() should be < kMaxMinorVersions");
+  static_assert(version_patch() < internal::kMaxPatchVersions,
+                "version_patch() should be < kMaxPatchVersions");
+  return internal::kMaxPatchVersions *
+             (internal::kMaxMinorVersions * version_major() + version_minor()) +
+         version_patch();
 }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.

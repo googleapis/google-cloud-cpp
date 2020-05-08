@@ -59,7 +59,13 @@ int constexpr VersionPatch() { return SPANNER_CLIENT_VERSION_PATCH; }
 
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr Version() {
-  return 100 * (100 * VersionMajor() + VersionMinor()) + VersionPatch();
+  static_assert(::google::cloud::version_major() == VersionMajor(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == VersionMinor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == VersionPatch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
 }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.

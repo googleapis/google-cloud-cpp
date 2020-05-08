@@ -65,7 +65,13 @@ int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
 
 /// Returns a single integer representing the Major/Minor/Patch version.
 int constexpr version() {
-  return 100 * (100 * version_major() + version_minor()) + version_patch();
+  static_assert(::google::cloud::version_major() == version_major(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == version_minor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == version_patch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
 }
 
 /// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.

@@ -44,7 +44,13 @@ int constexpr VersionPatch() { return BIGQUERY_CLIENT_VERSION_PATCH; }
 // Returns a single integer representing the major, minor, and patch
 // version.
 int constexpr Version() {
-  return 100 * (100 * VersionMajor() + VersionMinor()) + VersionPatch();
+  static_assert(::google::cloud::version_major() == VersionMajor(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == VersionMinor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == VersionPatch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
 }
 
 // Returns the version as a string in the form `MAJOR.MINOR.PATCH`.

@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string version_string() {
   static std::string const kVersion = [] {
     std::ostringstream os;
