@@ -176,7 +176,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel 
 bazel $common_flags shutdown
 bazel shutdown
 
-if ($RUnningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
+if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
@@ -198,7 +198,7 @@ if ($RUnningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
     7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compressing cache tarball"
     Remove-Item "${download_dir}\${CACHE_BASENAME}.7z" -ErrorAction SilentlyContinue
-    7z a "${download_dir}\${CACHE_BAZENAME}.7z" "${download_dir}\${CACHE_BAZENAME}.7z" -bso0 -bsp0
+    7z a "${download_dir}\${CACHE_BASENAME}.7z" "${download_dir}\${CACHE_BASENAME}.tar" -bso0 -bsp0
     if ($LastExitCode) {
         # Just report these errors and continue, caching failures should
         # not break the build.
