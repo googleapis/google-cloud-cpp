@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/version.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
 #include <string>
@@ -24,8 +25,10 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 std::string BaseUserAgentPrefix() {
-  // TODO(aryann): Add more info here.
-  return "gcloud-cpp/" + VersionString();
+  return "gcloud-cpp/" + google::cloud::bigquery::version_string() + " (" +
+         ::google::cloud::internal::CompilerId() + "-" +
+         ::google::cloud::internal::CompilerVersion() + "; " +
+         ::google::cloud::internal::CompilerFeatures() + ")";
 }
 }  // namespace internal
 

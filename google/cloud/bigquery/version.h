@@ -37,24 +37,12 @@ namespace bigquery {
 // symbols are versioned, e.g., the symbol becomes
 // `bigquery::v1::Foo`.
 inline namespace BIGQUERY_CLIENT_NS {
-int constexpr VersionMajor() { return BIGQUERY_CLIENT_VERSION_MAJOR; }
-int constexpr VersionMinor() { return BIGQUERY_CLIENT_VERSION_MINOR; }
-int constexpr VersionPatch() { return BIGQUERY_CLIENT_VERSION_PATCH; }
 
-// Returns a single integer representing the major, minor, and patch
-// version.
-int constexpr Version() {
-  static_assert(::google::cloud::version_major() == VersionMajor(),
-                "Mismatched major version");
-  static_assert(::google::cloud::version_minor() == VersionMinor(),
-                "Mismatched minor version");
-  static_assert(::google::cloud::version_patch() == VersionPatch(),
-                "Mismatched patch version");
-  return ::google::cloud::version();
-}
-
-// Returns the version as a string in the form `MAJOR.MINOR.PATCH`.
-std::string VersionString();
+using ::google::cloud::version;
+using ::google::cloud::version_major;
+using ::google::cloud::version_minor;
+using ::google::cloud::version_patch;
+using ::google::cloud::version_string;
 
 }  // namespace BIGQUERY_CLIENT_NS
 }  // namespace bigquery

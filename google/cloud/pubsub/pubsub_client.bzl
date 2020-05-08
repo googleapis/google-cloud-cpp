@@ -44,5 +44,4 @@ pubsub_client_srcs = [
     "subscriber_connection.cc",
     "subscription.cc",
     "topic.cc",
-    "version.cc",
 ]

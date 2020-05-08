@@ -43,7 +43,6 @@ add_library(
     read_stream.h
     row.h
     row_set.h
-    version.cc
     version.h
     version_info.h)
 target_include_directories(

@@ -29,7 +29,7 @@ using ::testing::StartsWith;
 TEST(UserAgentPrefix, Format) {
   auto const actual = UserAgentPrefix();
   EXPECT_THAT(actual, StartsWith("gcloud-cpp/"));
-  EXPECT_THAT(actual, HasSubstr(pubsub::VersionString()));
+  EXPECT_THAT(actual, HasSubstr(pubsub::version_string()));
   EXPECT_THAT(actual, HasSubstr(::google::cloud::internal::CompilerId()));
 }
 

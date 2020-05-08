@@ -48,7 +48,6 @@ add_library(
     subscription.h
     topic.cc
     topic.h
-    version.cc
     version.h
     version_info.h)
 target_include_directories(

@@ -39,5 +39,4 @@ bigquery_client_srcs = [
     "internal/storage_stub.cc",
     "internal/streaming_read_result_source.cc",
     "read_stream.cc",
-    "version.cc",
 ]
