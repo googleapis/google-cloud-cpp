@@ -43,7 +43,7 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
         bigtable_benchmark_test.cc embedded_server_test.cc
-        format_duration_test.cc setup_test.cc)
+        format_duration_test.cc random_mutation_test.cc setup_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
                          "bigtable_benchmarks_unit_tests" YEAR 2020)
 
