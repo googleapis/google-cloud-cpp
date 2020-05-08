@@ -16,8 +16,11 @@
 #include "google/cloud/bigtable/benchmarks/constants.h"
 #include <gmock/gmock.h>
 
-using namespace bigtable::benchmarks;
-
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace benchmarks {
+namespace {
 TEST(BenchmarksRandomMutation, RandomValue) {
   auto g = google::cloud::internal::MakeDefaultPRNG();
   std::string val = MakeRandomValue(g);
@@ -36,3 +39,9 @@ TEST(BenchmarksRandomMutation, RandomMutation) {
   EXPECT_EQ(0, m.set_cell().timestamp_micros());
   EXPECT_EQ(static_cast<std::size_t>(kFieldSize), m.set_cell().value().size());
 }
+
+}  // namespace
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
