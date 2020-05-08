@@ -42,41 +42,6 @@ namespace pubsub {
  * symbol becomes `pubsub::v1::Foo`.
  */
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-/**
- * The Cloud pubsub C++ Client major version.
- */
-int constexpr VersionMajor() {
-  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR;
-}
-
-/**
- * The Cloud pubsub C++ Client minor version.
- */
-int constexpr VersionMinor() {
-  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR;
-}
-
-/**
- * The Cloud pubsub C++ Client patch version.
- */
-int constexpr VersionPatch() {
-  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH;
-}
-
-/// A single integer representing the Major/Minor/Patch version.
-int constexpr Version() {
-  static_assert(::google::cloud::version_major() == VersionMajor(),
-                "Mismatched major version");
-  static_assert(::google::cloud::version_minor() == VersionMinor(),
-                "Mismatched minor version");
-  static_assert(::google::cloud::version_patch() == VersionPatch(),
-                "Mismatched patch version");
-  return ::google::cloud::version();
-}
-
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
-std::string VersionString();
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud

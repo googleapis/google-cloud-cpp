@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) try {
   }
 
   std::cout << "Cloud Pub/Sub C++ Client version: "
-            << google::cloud::pubsub::VersionString() << "\n";
+            << google::cloud::version_string() << "\n";
 
   auto publisher = google::cloud::pubsub::PublisherClient(
       google::cloud::pubsub::MakePublisherConnection());
