@@ -93,10 +93,8 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
     if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
         message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE
-                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK
-                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set(CMAKE_CXX_COMPILER_LAUNCHER "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set(CMAKE_CC_COMPILER_LAUNCHER "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
     endif ()
 endif ()
 
