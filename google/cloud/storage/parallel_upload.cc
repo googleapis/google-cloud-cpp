@@ -129,7 +129,7 @@ ParallelUploadPersistentState::FromString(std::string const& json_rep) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state's 'destination' is not a string.");
   }
-  res.destination_object_name = destination_json;
+  res.destination_object_name = destination_json.get<std::string>();
   if (json.count("expected_generation") != 1) {
     return Status(
         StatusCode::kInternal,
@@ -148,7 +148,7 @@ ParallelUploadPersistentState::FromString(std::string const& json_rep) {
       return Status(StatusCode::kInternal,
                     "Parallel upload state's 'custom_data' is not a string.");
     }
-    res.custom_data = custom_data_json;
+    res.custom_data = custom_data_json.get<std::string>();
   }
   if (json.count("streams") != 1) {
     return Status(StatusCode::kInternal,
