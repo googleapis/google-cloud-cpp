@@ -74,7 +74,7 @@ int constexpr version() {
   static_assert(version_minor() < internal::kMaxMinorVersions,
                 "version_minor() should be < kMaxMinorVersions");
   static_assert(version_patch() < internal::kMaxPatchVersions,
-                "version_minor() should be < kMaxPatchVersions");
+                "version_patch() should be < kMaxPatchVersions");
   return internal::kMaxPatchVersions *
              (internal::kMaxMinorVersions * version_major() + version_minor()) +
          version_patch();
