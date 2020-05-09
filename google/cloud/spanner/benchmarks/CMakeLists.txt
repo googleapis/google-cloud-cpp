@@ -89,16 +89,13 @@ function (spanner_client_define_benchmarks)
         # To automatically smoke-test the benchmarks as part of the CI build we
         # label them as tests.
         set_tests_properties(
-            ${target}
-            PROPERTIES
-                LABELS
-                "integration-tests;spanner-integration-tests;integration-tests-no-emulator"
-        )
+            ${target} PROPERTIES LABELS
+                                 "integration-tests;spanner-integration-tests")
     endforeach ()
 endfunction ()
 
 # Only define the benchmarks if testing is enabled. Package maintainers may not
-# want to build all the benchmarks everytime they create a new package or when
+# want to build all the benchmarks every time they create a new package or when
 # the package is installed from source.
 if (BUILD_TESTING)
     spanner_client_define_benchmarks()

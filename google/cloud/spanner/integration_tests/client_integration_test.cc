@@ -591,6 +591,7 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
   auto read_partitions =
       client_->PartitionRead(ro_transaction, "Singers", KeySet::All(),
                              {"SingerId", "FirstName", "LastName"});
+  if (EmulatorUnimplemented(read_partitions.status())) GTEST_SKIP();
   ASSERT_STATUS_OK(read_partitions);
 
   std::vector<std::string> serialized_partitions;

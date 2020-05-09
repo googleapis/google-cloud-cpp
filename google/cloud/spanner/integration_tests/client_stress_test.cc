@@ -29,7 +29,7 @@ namespace {
 
 std::int64_t flag_table_size = 10 * 1000 * 1000;
 std::int64_t flag_maximum_read_size = 10 * 1000;
-std::chrono::seconds flag_duration(30);
+std::chrono::seconds flag_duration(5);
 int flag_threads = 0;  // 0 means use the threads_per_core setting.
 int flag_threads_per_core = 4;
 
