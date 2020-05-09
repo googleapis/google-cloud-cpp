@@ -107,7 +107,7 @@ void InsertObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-// TEST-DEBUG-coryan(performance-unnecessary-value-param)
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 void InsertObjectStrictIdempotency(google::cloud::storage::Client,
                                    std::vector<std::string> const& argv) {
   //! [insert object strict idempotency]
