@@ -60,7 +60,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
 
   static void TearDownTestSuite() {
     client_ = nullptr;
-    spanner_testing::DatabaseIntegrationTest::TearDownTestCase();
+    spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
  protected:

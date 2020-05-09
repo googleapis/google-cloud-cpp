@@ -80,7 +80,7 @@ class DataTypeIntegrationTest
 
   static void TearDownTestSuite() {
     client_ = nullptr;
-    spanner_testing::DatabaseIntegrationTest::TearDownTestCase();
+    spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
  protected:

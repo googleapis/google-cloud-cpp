@@ -342,8 +342,8 @@ BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" |
   grep -v 'HEAD' | tail -1 || exit 0)"
 # Enable extglob if not enabled
 shopt -q extglob || shopt -s extglob
-BRANCH="${BRANCH##*( )}"
-BRANCH="${BRANCH%%*( )}"
+BRANCH="${BRANCH##* }"
+BRANCH="${BRANCH%%* }"
 BRANCH="${BRANCH##remotes/origin/}"
 BRANCH="${BRANCH##remotes/upstream/}"
 export BRANCH
@@ -496,6 +496,14 @@ docker_flags=(
   # No need to preserve the container.
   "--rm"
 )
+
+if [[ -n "${KOKORO_JOB_TYPE:-}" ]]; then
+  docker_flags+=("--env" "KOKORO_JOB_TYPE=${KOKORO_JOB_TYPE:-}")
+fi
+
+if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}" ]]; then
+  docker_flags+=("--env" "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}")
+fi
 
 # When running on Travis the build gets a tty, and docker can produce nicer
 # output in that case, but on Kokoro the script does not get a tty, and Docker
