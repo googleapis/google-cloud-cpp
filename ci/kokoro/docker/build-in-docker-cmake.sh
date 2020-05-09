@@ -131,7 +131,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
     grep -E '\.(cc|h)$' |
-    xargs -d '\n' -r -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
+    xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
 echo
