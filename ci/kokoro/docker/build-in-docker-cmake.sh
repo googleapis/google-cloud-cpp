@@ -120,36 +120,26 @@ ${CMAKE_COMMAND} \
 echo
 log_yellow "Finished CMake config"
 
-log_green "DEBUG DEBUG DEBUG =============================================="
-ls -l "${BINARY_DIR}"
-log_green "DEBUG DEBUG DEBUG =============================================="
-echo
-echo "BRANCH = ${BRANCH}"
-echo
-log_green "DEBUG DEBUG DEBUG =============================================="
-echo
-echo "git diff"
-git diff --name-only "${BRANCH}"
-echo "git diff"
-git diff --name-only master
-log_green "DEBUG DEBUG DEBUG =============================================="
-echo
 if [[ "${CLANG_TIDY:-}" == "yes" ]]; then
   if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
     "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG" ]]; then
     # For presubmit builds we only run clang-tidy in the files that have changed
     # w.r.t. the target branch.
+    echo
+    log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
     git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" | grep -E '\.(cc|h)$' |
       xargs -d '\n' -r -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
   elif [[ "${KOKORO_JOB_TYPE:-}" == "CONTINUOUS_INTEGRATION" ]]; then
     # For continuous integration builds we run clang-tidy on all the files,
     # regardless of whether they have changed or not.
+    echo
+    log_yellow "Running clang-tidy on a continuous build, all files are tested."
     git ls-files -z | grep -zE '\.(cc|h)$' |
       xargs -0 -r -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
   fi
 fi
-log_green "DEBUG DEBUG DEBUG =============================================="
 
+echo
 echo "================================================================"
 log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
