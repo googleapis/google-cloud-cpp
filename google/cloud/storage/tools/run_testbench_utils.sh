@@ -14,13 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../../.." || exit
-    pwd
-  )"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
+source module lib/io.sh
 
 TESTBENCH_PID=0
 
@@ -28,19 +22,19 @@ TESTBENCH_PID=0
 # Terminate the Google Cloud Storage test bench
 # Globals:
 #   TESTBENCH_PID: the process id for the test bench
-#   COLOR_*: colorize output messages, defined in colors.sh
+#   IO_COLOR_*: colorize output messages, defined in ci/lib/io.sh
 # Arguments:
 #   None
 # Returns:
 #   None
 ################################################
 kill_testbench() {
-  echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment tear-down."
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment tear-down."
   echo -n "Killing testbench server [${TESTBENCH_PID}] ... "
   kill "${TESTBENCH_PID}"
   wait "${TESTBENCH_PID}" >/dev/null 2>&1
   echo "done."
-  echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment tear-down."
 
 }
 
@@ -52,14 +46,14 @@ kill_testbench() {
 #   TESTBENCH_PID: the process id for the test bench.
 #   CLOUD_STORAGE_TESTBENCH_ENDPOINT: the google cloud storage endpoint for the
 #       test bench.
-#   COLOR_*: colorize output messages, defined in colors.sh
+#   IO_COLOR_*: colorize output messages, defined in lib/io.sh
 # Arguments:
 #   None
 # Returns:
 #   None
 ################################################
 start_testbench() {
-  echo "${COLOR_GREEN}[ -------- ]${COLOR_RESET} Integration test environment set-up"
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment set-up"
   echo "Launching testbench emulator in the background"
   trap kill_testbench EXIT
 
@@ -107,5 +101,5 @@ start_testbench() {
     echo "Successfully connected to testbench [${TESTBENCH_PID}]"
   fi
 
-  echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment set-up."
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment set-up."
 }

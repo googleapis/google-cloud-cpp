@@ -15,6 +15,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 2 ]]; then
   echo "Usage: $(basename "$0") <source-directory> <binary-directory>"
   exit 1
@@ -23,25 +26,17 @@ fi
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
 
-# This script is supposed to run inside a Docker container, see
-# ci/kokoro/build.sh for the expected setup.  The /v directory is a volume
-# pointing to a (clean-ish) checkout of google-cloud-cpp:
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="/v"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
-
 # Run the "bazel build"/"bazel test" cycle inside a Docker image.
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 
 echo
-log_yellow "Starting docker build with ${NCPU} cores"
+io::log_yellow "Starting docker build with ${NCPU} cores"
 echo
 
 echo "================================================================"
 readonly BAZEL_BIN="/usr/local/bin/bazel"
-log_normal "Using Bazel in ${BAZEL_BIN}"
+io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 echo "================================================================"
 
@@ -55,20 +50,20 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
 fi
 
 echo "================================================================"
-log_normal "Fetching dependencies"
+io::log "Fetching dependencies"
 echo "================================================================"
 "${PROJECT_ROOT}/ci/retry-command.sh" \
   "${BAZEL_BIN}" fetch -- //google/cloud/...:all
 
 echo "================================================================"
-log_normal "Compiling and running unit tests"
+io::log "Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
   -- //google/cloud/...:all
 
 echo "================================================================"
-log_normal "Compiling all the code, including integration tests"
+io::log "Compiling all the code, including integration tests"
 echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
@@ -103,10 +98,9 @@ should_run_integration_tests() {
 
 if should_run_integration_tests; then
   echo "================================================================"
-  log_normal "Running the integration tests"
+  io::log "Running the integration tests"
   echo "================================================================"
 
-  # shellcheck disable=SC1091
   source "${INTEGRATION_TESTS_CONFIG}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
@@ -118,13 +112,13 @@ if should_run_integration_tests; then
 
   echo
   echo "================================================================"
-  log_normal "Delete any stale service account used in HMAC key tests."
+  io::log "Delete any stale service account used in HMAC key tests."
   activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
   cleanup_stale_hmac_service_accounts
 
   echo
   echo "================================================================"
-  log_normal "Create a service account to run the storage HMAC tests."
+  io::log "Create a service account to run the storage HMAC tests."
   # Recall that each evaluation of ${RANDOM} produces a different value, note
   # the YYYYMMDD prefix used above to delete stale accounts. We use the
   # hour, minute and seconds because ${RANDOM} is a small random number: while
@@ -137,7 +131,7 @@ if should_run_integration_tests; then
   export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
 
   # Deactivate the recently activated service accounts to prevent accidents.
-  log_normal "Revoke service account used to manage HMAC service accounts."
+  io::log "Revoke service account used to manage HMAC service accounts."
   revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
 
   trap delete_hmac_service_account EXIT
@@ -146,14 +140,14 @@ if should_run_integration_tests; then
     set +e
     echo
     echo "================================================================"
-    log_yellow "Performing cleanup actions."
-    log_normal "Activate service account used to manage HMAC service accounts."
+    io::log_yellow "Performing cleanup actions."
+    io::log "Activate service account used to manage HMAC service accounts."
     activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
-    log_normal "Delete service account used in HMAC key tests."
+    io::log "Delete service account used in HMAC key tests."
     cleanup_hmac_service_account "${ACCOUNT}"
 
     # Deactivate the recently activated service accounts to prevent accidents.
-    log_normal "Revoke service account used to manage HMAC service accounts."
+    io::log "Revoke service account used to manage HMAC service accounts."
     revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
 
     # This is normally revoked manually, but in case we exit before that point
@@ -162,7 +156,7 @@ if should_run_integration_tests; then
 
     delete_gcloud_config
 
-    log_yellow "Cleanup actions completed."
+    io::log_yellow "Cleanup actions completed."
     echo "================================================================"
     echo
     set -e
@@ -170,7 +164,7 @@ if should_run_integration_tests; then
 
   echo
   echo "================================================================"
-  log_normal "Create an access token to run the Bigtable credential examples."
+  io::log "Create an access token to run the Bigtable credential examples."
   activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object. Even though the account is deactivated
@@ -179,7 +173,7 @@ if should_run_integration_tests; then
   readonly ACCESS_TOKEN
 
   # Deactivate the recently activated service accounts to prevent accidents.
-  log_normal "Revoke service account after creating the access token."
+  io::log "Revoke service account after creating the access token."
   revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
   bazel_args+=(
@@ -262,7 +256,7 @@ if should_run_integration_tests; then
 fi
 
 echo "================================================================"
-log_normal "Build finished successfully"
+io::log "Build finished successfully"
 echo "================================================================"
 
 exit 0

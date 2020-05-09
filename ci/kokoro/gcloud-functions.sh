@@ -53,7 +53,7 @@ create_gcloud_config() {
     describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
     echo
     echo "================================================================"
-    log_normal "Create the gcloud configuration for the cloud-cpp tests."
+    io::log "Create the gcloud configuration for the cloud-cpp tests."
     "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
       create --no-activate "${GCLOUD_CONFIG}" >/dev/null
   fi
@@ -64,7 +64,7 @@ create_gcloud_config() {
 
 cleanup_hmac_service_account() {
   local -r ACCOUNT="$1"
-  log_normal "Deleting account ${ACCOUNT}"
+  io::log "Deleting account ${ACCOUNT}"
   # We can ignore errors here, sometime the account exists, but the bindings
   # are gone (or were never created). The binding is harmless if the account
   # is deleted.
@@ -96,7 +96,7 @@ create_hmac_service_account() {
   local -r ACCOUNT="$1"
   local -r EMAIL="${ACCOUNT}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts create "${ACCOUNT}"
-  log_normal "Grant service account permissions to create HMAC keys."
+  io::log "Grant service account permissions to create HMAC keys."
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
     "${GOOGLE_CLOUD_PROJECT}" \
     --member "serviceAccount:${EMAIL}" \

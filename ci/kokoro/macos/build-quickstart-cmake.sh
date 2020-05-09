@@ -15,19 +15,13 @@
 
 set -eu
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: $(basename "$0") <project-root>"
-  exit 1
-fi
-
-readonly PROJECT_ROOT="$1"
-
-source "${PROJECT_ROOT}/ci/colors.sh"
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+source module etc/integration-tests-config.sh
+source module etc/quickstart-config.sh
 
 echo "================================================================"
-log_yellow "Update or install dependencies."
+io::log_yellow "Update or install dependencies."
 
 # Clone and build vcpkg
 vcpkg_dir="cmake-out/vcpkg-quickstart"
@@ -77,16 +71,16 @@ build_quickstart() {
   local -r binary_dir="cmake-out/quickstart-${library}"
 
   echo
-  log_yellow "Configure CMake for ${library}'s quickstart."
+  io::log_yellow "Configure CMake for ${library}'s quickstart."
   cmake "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
-  log_yellow "Compiling ${library}'s quickstart."
+  io::log_yellow "Compiling ${library}'s quickstart."
   cmake --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    log_yellow "Running ${library}'s quickstart."
+    io::log_yellow "Running ${library}'s quickstart."
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
@@ -101,20 +95,20 @@ errors=""
 for library in $(quickstart_libraries); do
   echo
   echo "================================================================"
-  log_yellow "Building ${library}'s quickstart"
+  io::log_yellow "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
-    log_red "Building ${library}'s quickstart failed"
+    io::log_red "Building ${library}'s quickstart failed"
     errors="${errors} ${library}"
   else
-    log_green "Building ${library}'s quickstart was successful"
+    io::log_green "Building ${library}'s quickstart was successful"
   fi
 done
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
-  log_green "All quickstart builds were successful"
+  io::log_green "All quickstart builds were successful"
 else
-  log_red "Build failed for ${errors}"
+  io::log_red "Build failed for ${errors}"
   exit 1
 fi
 

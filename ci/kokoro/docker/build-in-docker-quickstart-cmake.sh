@@ -15,6 +15,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 2 ]]; then
   # The arguments are ignored, but required for compatibility with
   # build-in-docker-cmake.sh
@@ -25,13 +28,6 @@ fi
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
 
-# This script is supposed to run inside a Docker container, see
-# ci/kokoro/build.sh for the expected setup.  The /v directory is a volume
-# pointing to a (clean-ish) checkout of google-cloud-cpp:
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="/v"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
@@ -39,11 +35,11 @@ source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 # work in the context created by the ci/Dockerfile.* build scripts.
 
 echo
-log_yellow "compiling quickstart programs"
+io::log_yellow "compiling quickstart programs"
 echo
 
 echo "================================================================"
-log_yellow "Update or install dependencies."
+io::log_yellow "Update or install dependencies."
 
 # Clone and build vcpkg
 vcpkg_dir="${HOME}/vcpkg-quickstart"
@@ -89,16 +85,16 @@ build_quickstart() {
   local -r binary_dir="${BINARY_DIR}/quickstart-${library}"
 
   echo
-  log_yellow "Configure CMake for ${library}'s quickstart."
+  io::log_yellow "Configure CMake for ${library}'s quickstart."
   cmake "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
-  log_yellow "Compiling ${library}'s quickstart."
+  io::log_yellow "Compiling ${library}'s quickstart."
   cmake --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    log_yellow "Running ${library}'s quickstart."
+    io::log_yellow "Running ${library}'s quickstart."
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
@@ -112,20 +108,20 @@ errors=""
 for library in $(quickstart_libraries); do
   echo
   echo "================================================================"
-  log_yellow "Building ${library}'s quickstart"
+  io::log_yellow "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
-    log_red "Building ${library}'s quickstart failed"
+    io::log_red "Building ${library}'s quickstart failed"
     errors="${errors} ${library}"
   else
-    log_green "Building ${library}'s quickstart was successful"
+    io::log_green "Building ${library}'s quickstart was successful"
   fi
 done
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
-  log_green "All quickstart builds were successful"
+  io::log_green "All quickstart builds were successful"
 else
-  log_red "Build failed for ${errors}"
+  io::log_red "Build failed for ${errors}"
   exit 1
 fi
 

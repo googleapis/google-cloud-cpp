@@ -15,19 +15,15 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 3 ]]; then
   echo "Usage: $(basename "$0") <cache-folder> <cache-name> <home-directory>"
   exit 1
 fi
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../.."
-    pwd
-  )"
-fi
 GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
@@ -58,7 +54,7 @@ for dir in "${maybe_dirs[@]}"; do
 done
 
 echo "================================================================"
-log_normal "Preparing cache tarball for ${CACHE_NAME}"
+io::log "Preparing cache tarball for ${CACHE_NAME}"
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 
 cache_upload_tarball "${HOME_DIR}" "${CACHE_NAME}.tar.gz" "${CACHE_FOLDER}"

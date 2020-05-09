@@ -15,17 +15,12 @@
 
 set -eu
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: $(basename "$0") <project-root>"
-  exit 1
-fi
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
 
-readonly PROJECT_ROOT="$1"
-
-source "${PROJECT_ROOT}/ci/colors.sh"
 echo
 echo "================================================================"
-log_yellow "update or install Bazel."
+io::log_yellow "update or install Bazel."
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
@@ -40,7 +35,7 @@ mkdir -p "cmake-out/download"
 echo
 echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
-log_normal "Using Bazel in ${BAZEL_BIN}"
+io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 "${BAZEL_BIN}" shutdown
 
@@ -61,24 +56,24 @@ fi
 echo
 echo "================================================================"
 for repeat in 1 2 3; do
-  log_yellow "Fetch bazel dependencies [${repeat}/3]."
+  io::log_yellow "Fetch bazel dependencies [${repeat}/3]."
   if "${BAZEL_BIN}" fetch -- //google/cloud/...; then
     break
   else
-    log_yellow "bazel fetch failed with $?"
+    io::log_yellow "bazel fetch failed with $?"
   fi
 done
 
 echo
 echo "================================================================"
-log_yellow "build and run unit tests."
+io::log_yellow "build and run unit tests."
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
   -- //google/cloud/...:all
 
 echo
 echo "================================================================"
-log_yellow "build all targets."
+io::log_yellow "build all targets."
 "${BAZEL_BIN}" build \
   "${bazel_args[@]}" -- //google/cloud/...:all
 
@@ -100,7 +95,7 @@ should_run_integration_tests() {
 if should_run_integration_tests; then
   echo
   echo "================================================================"
-  log_yellow "running integration tests."
+  io::log_yellow "running integration tests."
 
   source "${INTEGRATION_TESTS_CONFIG}"
   bazel_args+=(

@@ -15,6 +15,8 @@
 
 set -eu
 
+source "$(dirname "$0")/../../../../ci/lib/init.sh"
+
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"
   exit 1
@@ -31,11 +33,6 @@ ctest_args=("$@")
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 CMDDIR="$(dirname "$0")"
 readonly CMDDIR
-PROJECT_ROOT="$(
-  cd "${CMDDIR}/../../../.."
-  pwd
-)"
-readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # Use the same configuration parameters as we use for testing against
