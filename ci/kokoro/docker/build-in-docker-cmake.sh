@@ -73,7 +73,14 @@ if [[ "${BUILD_TESTING:-}" == "no" ]]; then
 fi
 
 if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
-  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes")
+  cmake_extra_flags+=("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
+  # On pre-submit builds we run clang-tidy on only the changed files (see below)
+  # in other cases (interactive builds, continuous builds) we run clang-tidy as
+  # part of the regular build.
+  if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" && \
+    "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GIT_ON_BORG" ]]; then
+    cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_CLANG_TIDY=ON")
+  fi
 fi
 
 if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
@@ -115,6 +122,19 @@ ${CMAKE_COMMAND} \
 echo
 log_yellow "Finished CMake config"
 
+if [[ "${CLANG_TIDY:-}" == "yes" && (\
+  "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
+  "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
+  # For presubmit builds we only run clang-tidy in the files that have changed
+  # w.r.t. the target branch.
+  echo
+  log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
+  git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
+    grep -E '\.(cc|h)$' |
+    xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
+fi
+
+echo
 echo "================================================================"
 log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
