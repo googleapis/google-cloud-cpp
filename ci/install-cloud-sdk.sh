@@ -16,11 +16,13 @@
 
 set -eu
 
+source "$(dirname $0)/etc/install-config.sh"
+
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
-readonly TARBALL="google-cloud-sdk-282.0.0-linux-x86_64.tar.gz"
-readonly SHA256="db2fd176a998381ef937bd9f9e83b16eadff864111255d771976d654c961fc95"
+readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
 wget -q "${SITE}/${TARBALL}"
 
-echo "${SHA256} ${TARBALL}" | sha256sum --check -
+echo "${GOOGLE_CLOUD_CPP_SDK_SHA256} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f "${TARBALL}"
-/usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+/usr/local/google-cloud-sdk/bin/gcloud \
+  --quiet components install cbt bigtable cloud-spanner-emulator
