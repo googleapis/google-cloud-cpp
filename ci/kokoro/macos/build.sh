@@ -127,7 +127,7 @@ readonly CACHE_NAME
 echo "================================================================"
 io::log_yellow "starting build script."
 
-if "${driver_script}" "${script_flags[@]}"; then
+if "${driver_script}" "${script_flags[@]+"${script_flags[@]}"}"; then
   io::log_green "build script was successful."
   exit_status=0
 else
