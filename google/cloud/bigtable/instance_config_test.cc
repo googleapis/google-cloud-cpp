@@ -21,7 +21,7 @@ TEST(InstanceConfigTest, Constructor) {
   bigtable::InstanceConfig config(
       "my-instance", "pretty name",
       {{"my-cluster", {"somewhere", 7, bigtable::ClusterConfig::SSD}}});
-  auto proto = config.as_proto();
+  auto const& proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
   EXPECT_EQ("pretty name", proto.instance().display_name());
   ASSERT_EQ(1, proto.clusters_size());
@@ -39,7 +39,7 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
           {"cluster-2", {"elsewhere", 7, bigtable::ClusterConfig::HDD}},
           {"cluster-3", {"nowhere", 17, bigtable::ClusterConfig::HDD}},
       });
-  auto proto = config.as_proto();
+  auto const& proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
   EXPECT_EQ("pretty name", proto.instance().display_name());
   ASSERT_EQ(3, proto.clusters_size());

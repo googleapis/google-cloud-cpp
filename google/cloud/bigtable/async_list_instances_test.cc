@@ -30,10 +30,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace bt = ::google::cloud::bigtable;
 namespace btproto = google::bigtable::admin::v2;
-using namespace google::cloud::testing_util::chrono_literals;
-using namespace ::testing;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::ReturnRef;
 using MockAsyncListInstancesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         btproto::ListInstancesResponse>;
@@ -75,8 +76,9 @@ class AsyncListInstancesTest : public ::testing::Test {
 // unknown, so a function or function template would not work. Alternatively,
 // writing this inline is very repetitive.
 auto create_list_instances_lambda =
-    [](std::string returned_token, std::vector<std::string> instance_names,
-       std::vector<std::string> failed_locations) {
+    [](std::string const& returned_token,
+       std::vector<std::string> const& instance_names,
+       std::vector<std::string> const& failed_locations) {
       return [returned_token, instance_names, failed_locations](
                  btproto::ListInstancesResponse* response, grpc::Status* status,
                  void*) {

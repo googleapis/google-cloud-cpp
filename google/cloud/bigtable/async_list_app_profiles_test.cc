@@ -30,15 +30,17 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace bt = ::google::cloud::bigtable;
 namespace btadmin = google::bigtable::admin::v2;
-using namespace google::cloud::testing_util::chrono_literals;
-using namespace ::testing;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::ReturnRef;
+
 using MockAsyncListAppProfilesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         btadmin::ListAppProfilesResponse>;
-using google::cloud::testing_util::MockCompletionQueue;
-
 using Functor = std::function<void(
     CompletionQueue&, std::vector<btadmin::AppProfile>&, grpc::Status&)>;
 
@@ -74,20 +76,21 @@ class AsyncListAppProfilesTest : public ::testing::Test {
 // Dynamically create the lambda for `Invoke()`, note that the return type is
 // unknown, so a function or function template would not work. Alternatively,
 // writing this inline is very repetitive.
-auto create_list_profiles_lambda = [](std::string returned_token,
-                                      std::vector<std::string> profile_names) {
-  return [returned_token, profile_names](
-             btadmin::ListAppProfilesResponse* response, grpc::Status* status,
-             void*) {
-    for (auto const& app_profile_name : profile_names) {
-      auto& app_profile = *response->add_app_profiles();
-      app_profile.set_name(app_profile_name);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    *status = grpc::Status::OK;
-  };
-};
+auto create_list_profiles_lambda =
+    [](std::string const& returned_token,
+       std::vector<std::string> const& profile_names) {
+      return [returned_token, profile_names](
+                 btadmin::ListAppProfilesResponse* response,
+                 grpc::Status* status, void*) {
+        for (auto const& app_profile_name : profile_names) {
+          auto& app_profile = *response->add_app_profiles();
+          app_profile.set_name(app_profile_name);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        *status = grpc::Status::OK;
+      };
+    };
 
 std::vector<std::string> AppProfileNames(
     std::vector<btadmin::AppProfile> const& response) {

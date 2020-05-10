@@ -20,17 +20,18 @@
 #include <gmock/gmock.h>
 
 namespace btproto = ::google::bigtable::v2;
-namespace bigtable = google::cloud::bigtable;
+namespace bigtable = ::google::cloud::bigtable;
+
+using ::testing::_;
+using ::testing::Invoke;
 
 /// Define helper types and functions for this test.
 namespace {
 class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
-using namespace testing;
-
-auto create_rules_lambda = [](std::string expected_request_string,
-                              std::string generated_response_string) {
+auto create_rules_lambda = [](std::string const& expected_request_string,
+                              std::string const& generated_response_string) {
   return [expected_request_string, generated_response_string](
              grpc::ClientContext* context,
              btproto::ReadModifyWriteRowRequest const& request,

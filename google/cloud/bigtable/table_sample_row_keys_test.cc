@@ -20,6 +20,10 @@
 #include <typeinfo>
 
 namespace bigtable = google::cloud::bigtable;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 /// Define types and functions used for this tests.
 namespace {
@@ -29,7 +33,6 @@ using bigtable::testing::MockSampleRowKeysReader;
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
 TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
-  using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
   auto reader =
@@ -57,7 +60,6 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
 
 /// @test Verify that Table::SampleRows<T>() works for std::vector.
 TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
-  using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
   auto reader =
@@ -84,7 +86,6 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
 }
 
 TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
-  using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
   auto reader =
@@ -143,10 +144,8 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::sample_rows() reports correctly on too many errors.
 TEST_F(TableSampleRowKeysTest, TooManyFailures) {
-  using namespace ::testing;
   namespace btproto = ::google::bigtable::v2;
 
-  using namespace google::cloud::testing_util::chrono_literals;
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.

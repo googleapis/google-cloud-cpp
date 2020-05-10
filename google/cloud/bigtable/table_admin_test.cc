@@ -28,11 +28,21 @@
 #include <chrono>
 
 namespace {
+
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
+namespace bigtable = ::google::cloud::bigtable;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _h;
+using ::google::cloud::testing_util::chrono_literals::operator"" _min;
+using ::google::cloud::testing_util::chrono_literals::operator"" _s;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
+
 using MockAdminClient = bigtable::testing::MockAdminClient;
-using google::cloud::testing_util::MockCompletionQueue;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
@@ -42,8 +52,6 @@ std::string const kClusterId = "the-cluster";
 class TableAdminTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    using namespace ::testing;
-
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   }
 
@@ -53,32 +61,34 @@ class TableAdminTest : public ::testing::Test {
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_tables_lambda = [](std::string expected_token,
-                                    std::string returned_token,
-                                    std::vector<std::string> table_names) {
-  return [expected_token, returned_token, table_names](
-             grpc::ClientContext* context,
-             btadmin::ListTablesRequest const& request,
-             btadmin::ListTablesResponse* response) {
-    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + kInstanceId;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(btadmin::Table::FULL, request.view());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_tables_lambda =
+    [](std::string const& expected_token, std::string const& returned_token,
+       std::vector<std::string> const& table_names) {
+      return [expected_token, returned_token, table_names](
+                 grpc::ClientContext* context,
+                 btadmin::ListTablesRequest const& request,
+                 btadmin::ListTablesResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(btadmin::Table::FULL, request.view());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& table_name : table_names) {
-      auto& table = *response->add_tables();
-      table.set_name(instance_name + "/tables/" + table_name);
-      table.set_granularity(btadmin::Table::MILLIS);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& table_name : table_names) {
+          auto& table = *response->add_tables();
+          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+          table.set_name(instance_name + "/tables/" + table_name);
+          table.set_granularity(btadmin::Table::MILLIS);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 auto create_get_policy_mock = []() {
   return [](grpc::ClientContext* context,
@@ -121,8 +131,8 @@ struct MockRpcFactory {
                                      ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(std::string expected_request,
-                                             std::string const& method) {
+  static std::function<SignatureType> Create(
+      std::string const& expected_request, std::string const& method) {
     return std::function<SignatureType>(
         [expected_request, method](grpc::ClientContext* context,
                                    RequestType const& request,
@@ -151,8 +161,6 @@ struct MockRpcFactory {
 
 /// @test Verify basic functionality in the `bigtable::TableAdmin` class.
 TEST_F(TableAdminTest, Default) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_EQ("the-instance", tested.instance_id());
   EXPECT_EQ("projects/the-project/instances/the-instance",
@@ -161,8 +169,6 @@ TEST_F(TableAdminTest, Default) {
 
 /// @test Verify that `bigtable::TableAdmin::ListTables` works in the easy case.
 TEST_F(TableAdminTest, ListTables) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, kInstanceId);
   auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
   EXPECT_CALL(*client_, ListTables(_, _, _)).WillOnce(Invoke(mock_list_tables));
@@ -179,8 +185,6 @@ TEST_F(TableAdminTest, ListTables) {
 
 /// @test Verify that `bigtable::TableAdmin::ListTables` handles failures.
 TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListTablesRequest const&,
@@ -215,8 +219,6 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
  * failures.
  */
 TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillRepeatedly(
@@ -230,9 +232,6 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
  * recoverable failures.
  */
 TEST_F(TableAdminTest, ListTablesTooManyFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
@@ -251,9 +250,6 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
 TEST_F(TableAdminTest, CreateTableSimple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
 
   std::string expected_text = R"""(
@@ -295,8 +291,6 @@ initial_splits { key: 'p' }
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, CreateTableFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, CreateTable(_, _, _))
       .WillRepeatedly(
@@ -310,9 +304,9 @@ TEST_F(TableAdminTest, CreateTableFailure) {
  * copies all properties.
  */
 TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
-  using namespace ::testing;
-
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   bigtable::TableAdmin tested(client_, "the-copy-instance");
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   bigtable::TableAdmin table_admin(tested);
 
   EXPECT_EQ(tested.instance_id(), table_admin.instance_id());
@@ -334,9 +328,6 @@ TEST_F(TableAdminTest, CopyConstructibleAssignableTest) {
  * all properties including policies applied.
  */
 TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-construct-instance",
       bigtable::LimitedErrorCountRetryPolicy(3),
@@ -358,9 +349,6 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
 
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-instance/tables/the-table'
@@ -382,9 +370,6 @@ TEST_F(TableAdminTest, GetTableSimple) {
  * failures.
  */
 TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
@@ -399,9 +384,6 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
  * recoverable failures.
  */
 TEST_F(TableAdminTest, GetTableTooManyFailures) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
@@ -415,7 +397,6 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.
 TEST_F(TableAdminTest, DeleteTable) {
-  using namespace ::testing;
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -435,8 +416,6 @@ TEST_F(TableAdminTest, DeleteTable) {
  * only one try and let client know request status.
  */
 TEST_F(TableAdminTest, DeleteTableFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DeleteTable(_, _, _))
       .WillRepeatedly(
@@ -451,8 +430,6 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
  * expected.
  */
 TEST_F(TableAdminTest, ModifyColumnFamilies) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -487,9 +464,6 @@ modifications {
  * RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _))
       .WillRepeatedly(
@@ -505,7 +479,6 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
 TEST_F(TableAdminTest, DropRowsByPrefix) {
-  using namespace ::testing;
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -527,8 +500,6 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
  * RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DropRowRange(_, _, _))
       .WillRepeatedly(
@@ -539,7 +510,6 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
 TEST_F(TableAdminTest, DropAllRows) {
-  using namespace ::testing;
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -561,8 +531,6 @@ TEST_F(TableAdminTest, DropAllRows) {
  * RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, DropAllRowsFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DropRowRange(_, _, _))
       .WillRepeatedly(
@@ -577,8 +545,6 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
  * expected.
  */
 TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-instance/tables/the-table'
@@ -600,8 +566,6 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
  * one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
       .WillRepeatedly(
@@ -616,8 +580,6 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
  * expected.
  */
 TEST_F(TableAdminTest, CheckConsistencySimple) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-instance/tables/the-table'
@@ -639,8 +601,6 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
  * one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, CheckConsistencyFailure) {
-  using namespace ::testing;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, CheckConsistency(_, _, _))
       .WillRepeatedly(
@@ -652,9 +612,6 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicy) {
-  using ::testing::_;
-  using ::testing::Invoke;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_get_policy_mock();
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
@@ -668,9 +625,6 @@ TEST_F(TableAdminTest, GetIamPolicy) {
 
 /// @test Verify unrecoverable errors for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Return;
-
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
@@ -684,8 +638,6 @@ TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
 
 /// @test Verify recoverable errors for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -712,9 +664,6 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 
 /// @test Verify positive scenario for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicy) {
-  using ::testing::_;
-  using ::testing::Invoke;
-
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_policy_with_params();
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
@@ -732,9 +681,6 @@ TEST_F(TableAdminTest, SetIamPolicy) {
 
 /// @test Verify unrecoverable errors for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicyUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Return;
-
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
@@ -750,8 +696,6 @@ TEST_F(TableAdminTest, SetIamPolicyUnrecoverableError) {
 
 /// @test Verify recoverable errors for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::TableAdmin tested(client_, "the-instance");
@@ -782,8 +726,6 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
 
 /// @test Verify that TableAdmin::TestIamPermissions works in simple case.
 TEST_F(TableAdminTest, TestIamPermissions) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -814,9 +756,6 @@ TEST_F(TableAdminTest, TestIamPermissions) {
 
 /// @test Test for unrecoverable errors for TableAdmin::TestIamPermissions.
 TEST_F(TableAdminTest, TestIamPermissionsUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Return;
-
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
@@ -831,8 +770,6 @@ TEST_F(TableAdminTest, TestIamPermissionsUnrecoverableError) {
 
 /// @test Test for recoverable errors for TableAdmin::TestIamPermissions.
 TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -878,9 +815,7 @@ using MockAsyncCheckConsistencyResponse =
  * @test Verify that `bigtagble::TableAdmin::AsyncWaitForConsistency` works as
  * expected, with multiple asynchronous calls.
  */
-TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
+TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   using google::cloud::internal::make_unique;
 
   bigtable::TableAdmin tested(client_, "test-instance");
@@ -980,9 +915,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
  * @test Verify that `bigtable::TableAdmin::AsyncWaitForConsistency` makes only
  * one RPC attempt and reports errors on failure.
  */
-TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
+TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   using google::cloud::internal::make_unique;
 
   bigtable::TableAdmin tested(client_, "test-instance");
@@ -1072,7 +1005,6 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 };
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateTableRequest,
                                                 btadmin::Table>
       rpc_factory;
@@ -1089,7 +1021,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DeleteTableRequest,
                                                 google::protobuf::Empty>
       rpc_factory;
@@ -1103,7 +1034,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DropRowRangeRequest,
                                                 google::protobuf::Empty>
       rpc_factory;
@@ -1118,7 +1048,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DropRowRangeRequest,
                                                 google::protobuf::Empty>
       rpc_factory;
@@ -1133,7 +1062,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::GenerateConsistencyTokenRequest,
       btadmin::GenerateConsistencyTokenResponse>
@@ -1149,7 +1077,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<btadmin::ListTablesRequest,
                                                 btadmin::ListTablesResponse>
       rpc_factory;
@@ -1164,7 +1091,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
-  using ::testing::_;
   bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
       rpc_factory;
@@ -1188,7 +1114,6 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
         .WillOnce(Invoke([this](grpc::ClientContext* context,
@@ -1223,8 +1148,6 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
 
 /// @test Verify that AsyncGetIamPolicy works in simple case.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -1249,8 +1172,6 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
 
 /// @test Test unrecoverable errors for TableAdmin::AsyncGetIamPolicy.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -1283,7 +1204,6 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
         .WillOnce(Invoke([this](grpc::ClientContext* context,
@@ -1322,8 +1242,6 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
 
 /// @test Verify that AsyncSetIamPolicy works in simple case.
 TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -1353,8 +1271,6 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
 
 /// @test Test unrecoverable errors for TableAdmin::AsyncSetIamPolicy.
 TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -1387,7 +1303,6 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
         .WillOnce(Invoke([this](
@@ -1409,10 +1324,10 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
   }
 
  protected:
-  void Start(std::vector<std::string> permissions) {
+  void Start(std::vector<std::string> const& permissions) {
     bigtable::TableAdmin table_admin(client_, "the-instance");
-    user_future_ = table_admin.AsyncTestIamPermissions(cq_, "the-table",
-                                                       std::move(permissions));
+    user_future_ =
+        table_admin.AsyncTestIamPermissions(cq_, "the-table", permissions);
   }
 
   std::shared_ptr<MockCompletionQueue> cq_impl_;
@@ -1425,8 +1340,6 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
 
 /// @test Verify that AsyncTestIamPermissions works in simple case.
 TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
@@ -1450,8 +1363,6 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
 
 /// @test Test unrecoverable errors for TableAdmin::AsyncTestIamPermissions.
 TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
-  using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 

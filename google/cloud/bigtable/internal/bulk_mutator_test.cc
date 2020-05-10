@@ -25,11 +25,12 @@ namespace {
 namespace btproto = google::bigtable::v2;
 namespace bigtable = google::cloud::bigtable;
 namespace bt = ::bigtable;
-using namespace ::testing;
-using namespace google::cloud::testing_util::chrono_literals;
 
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockMutateRowsReader;
-using google::cloud::testing_util::MockCompletionQueue;
 
 std::unique_ptr<grpc::ClientContext> TestContext() {
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
@@ -88,11 +89,9 @@ TEST(MultipleRowsMutatorTest, Simple) {
 }
 
 /// @test Verify that MultipleRowsMutator uses app_profile_id when set.
-TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
+TEST(MultipleRowsMutatorTest, BulkApplyAppProfileId) {
   namespace btproto = ::google::bigtable::v2;
   namespace bt = ::bigtable;
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
 
   // In this test we create a Mutation for two rows, which succeeds in the
   // first RPC request.  First create the mutation.

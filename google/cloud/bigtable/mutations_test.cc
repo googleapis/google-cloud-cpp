@@ -19,8 +19,9 @@
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
+namespace bigtable = ::google::cloud::bigtable;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
 /// @test Verify that SetCell() works as expected.
 TEST(MutationsTest, SetCell) {

@@ -30,8 +30,12 @@ namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
-using namespace google::cloud::testing_util::chrono_literals;
-using google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
 
 std::string const kProjectId = "the-project";
 
@@ -39,8 +43,6 @@ std::string const kProjectId = "the-project";
 class InstanceAdminTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    using namespace ::testing;
-
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   }
 
@@ -50,30 +52,31 @@ class InstanceAdminTest : public ::testing::Test {
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_instances_lambda = [](std::string expected_token,
-                                       std::string returned_token,
-                                       std::vector<std::string> instance_ids) {
-  return [expected_token, returned_token, instance_ids](
-             grpc::ClientContext* context,
-             btadmin::ListInstancesRequest const& request,
-             btadmin::ListInstancesResponse* response) {
-    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-        *context,
-        "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
-    auto const project_name = "projects/" + kProjectId;
-    EXPECT_EQ(project_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_instances_lambda =
+    [](std::string const& expected_token, std::string const& returned_token,
+       std::vector<std::string> const& instance_ids) {
+      return [expected_token, returned_token, instance_ids](
+                 grpc::ClientContext* context,
+                 btadmin::ListInstancesRequest const& request,
+                 btadmin::ListInstancesResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& instance_id : instance_ids) {
-      auto& instance = *response->add_instances();
-      instance.set_name(project_name + "/instances/" + instance_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& instance_id : instance_ids) {
+          auto& instance = *response->add_instances();
+          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+          instance.set_name(project_name + "/instances/" + instance_id);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
@@ -119,8 +122,9 @@ auto create_policy_with_params = []() {
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
-    [](std::string expected_token, std::string returned_token,
-       std::string instance_id, std::vector<std::string> cluster_ids) {
+    [](std::string const& expected_token, std::string const& returned_token,
+       std::string const& instance_id,
+       std::vector<std::string> const& cluster_ids) {
       return [expected_token, returned_token, instance_id, cluster_ids](
                  grpc::ClientContext* context,
                  btadmin::ListClustersRequest const& request,
@@ -136,6 +140,7 @@ auto create_list_clusters_lambda =
         EXPECT_NE(nullptr, response);
         for (auto const& cluster_id : cluster_ids) {
           auto& cluster = *response->add_clusters();
+          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
           cluster.set_name(instance_name + "/clusters/" + cluster_id);
         }
         // Return the right token.
@@ -160,8 +165,8 @@ struct MockRpcFactory {
                                      ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(std::string expected_request,
-                                             std::string method) {
+  static std::function<SignatureType> Create(
+      std::string const& expected_request, std::string const& method) {
     return std::function<SignatureType>(
         [expected_request, method](grpc::ClientContext* context,
                                    RequestType const& request,
@@ -187,15 +192,14 @@ struct MockRpcFactory {
 
 /// @test Verify basic functionality in the `bigtable::InstanceAdmin` class.
 TEST_F(InstanceAdminTest, Default) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   EXPECT_EQ("the-project", tested.project_id());
 }
 
 TEST_F(InstanceAdminTest, CopyConstructor) {
   bigtable::InstanceAdmin source(client_);
-  std::string expected = source.project_id();
+  std::string const& expected = source.project_id();
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   bigtable::InstanceAdmin copy(source);
   EXPECT_EQ(expected, copy.project_id());
 }
@@ -215,7 +219,7 @@ TEST_F(InstanceAdminTest, CopyAssignment) {
       .WillRepeatedly(testing::ReturnRef(other_project));
 
   bigtable::InstanceAdmin source(client_);
-  std::string expected = source.project_id();
+  std::string const& expected = source.project_id();
   bigtable::InstanceAdmin dest(other_client);
   EXPECT_NE(expected, dest.project_id());
   dest = source;
@@ -240,8 +244,6 @@ TEST_F(InstanceAdminTest, MoveAssignment) {
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListInstances) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
@@ -259,8 +261,6 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
 TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListInstancesRequest const&,
@@ -296,8 +296,6 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
  * unrecoverable failures.
  */
 TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListInstances(_, _, _))
       .WillRepeatedly(
@@ -309,7 +307,6 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
 
 /// @test Verify that DeleteInstance works in the positive case.
 TEST_F(InstanceAdminTest, DeleteInstance) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -325,7 +322,6 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
 
 /// @test Verify unrecoverable error for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
-  using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillRepeatedly(
@@ -336,7 +332,6 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
 
 /// @test Verify that recoverable error for DeleteInstance
 TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
-  using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillRepeatedly(
@@ -349,8 +344,6 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
 /// case.
 TEST_F(InstanceAdminTest, ListClusters) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   std::string const& instance_id = "the-instance";
   auto mock_list_clusters =
@@ -369,8 +362,6 @@ TEST_F(InstanceAdminTest, ListClusters) {
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
 TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListClustersRequest const&,
@@ -409,8 +400,6 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
  * unrecoverable failures.
  */
 TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListClusters(_, _, _))
       .WillRepeatedly(
@@ -423,8 +412,6 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
 
 /// @test Verify positive scenario for GetCluster
 TEST_F(InstanceAdminTest, GetCluster) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   auto mock = create_get_cluster_mock();
   EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
@@ -437,8 +424,6 @@ TEST_F(InstanceAdminTest, GetCluster) {
 
 /// @test Verify unrecoverable error for GetCluster
 TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillRepeatedly(
@@ -448,8 +433,6 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
 
 /// @test Verify recoverable errors for GetCluster
 TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
-  using namespace ::testing;
-
   bigtable::InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::GetClusterRequest const&,
@@ -474,7 +457,6 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 
 /// @test Verify that DeleteCluster works in the positive case.
 TEST_F(InstanceAdminTest, DeleteCluster) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -490,7 +472,6 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
 
 /// @test Verify unrecoverable error for DeleteCluster
 TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
-  using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
@@ -501,7 +482,6 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
 
 /// @test Verify that recoverable error for DeleteCluster
 TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
-  using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
@@ -669,7 +649,6 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
         .WillOnce(Invoke([this](grpc::ClientContext* context,
@@ -1049,7 +1028,6 @@ class AsyncDeleteClusterTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncDeleteClusterReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncDeleteCluster(_, _, _))
         .WillOnce(Invoke([this](grpc::ClientContext* context,
@@ -1136,7 +1114,6 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
         .WillOnce(Invoke([this](grpc::ClientContext* context,
@@ -1306,7 +1283,6 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
-    using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
         .WillOnce(Invoke(
@@ -1328,10 +1304,10 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
   }
 
  protected:
-  void Start(std::vector<std::string> permissions) {
+  void Start(std::vector<std::string> const& permissions) {
     bigtable::InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncTestIamPermissions(
-        cq_, "the-resource", std::move(permissions));
+    user_future_ = instance_admin.AsyncTestIamPermissions(cq_, "the-resource",
+                                                          permissions);
   }
 
   std::shared_ptr<MockCompletionQueue> cq_impl_;
@@ -1624,7 +1600,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateInstance) {
 }
 
 TEST_F(InstanceAdminTest, CreateAppProfile) {
-  using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       parent: "projects/the-project/instances/the-instance"
@@ -1641,7 +1616,6 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -1656,7 +1630,6 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetAppProfile) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -1672,7 +1645,6 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetInstance) {
-  using namespace ::testing;
   using google::protobuf::Empty;
   bigtable::InstanceAdmin tested(client_);
   std::string expected_text = R"""(

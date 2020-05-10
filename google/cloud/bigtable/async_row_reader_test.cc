@@ -32,10 +32,15 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = google::bigtable::v2;
-using namespace ::testing;
-using namespace google::cloud::testing_util::chrono_literals;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
-using google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::HasSubstr;
+using ::testing::Invoke;
+using ::testing::Values;
+using ::testing::WithParamInterface;
 
 template <typename T>
 bool Unsatisfied(future<T> const& fut) {
@@ -96,7 +101,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   void ReadRows(int row_limit = RowReader::NO_ROWS_LIMIT) {
     table_.AsyncReadRows(
         cq_,
-        [this](Row row) {
+        [this](Row const& row) {
           EXPECT_EQ(expected_rows_.front(), row.row_key());
           expected_rows_.pop();
           row_promises_.front().set_value(row.row_key());
@@ -105,7 +110,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
           futures_from_user_cb_.pop();
           return ret;
         },
-        [this](Status stream_status) {
+        [this](Status const& stream_status) {
           stream_status_promise_.set_value(stream_status);
         },
         RowSet(), row_limit, Filter::PassAllFilter());
@@ -715,10 +720,10 @@ TEST_F(TableAsyncReadRowsTest, ParserFailure) {
 }
 
 enum class CancelMode {
-  FALSE_VALUE,
+  kFalseValue,
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  STD_EXCEPT,
-  OTHER_EXCEPT,
+  kStdExcept,
+  kOtherExcept,
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 };
 
@@ -774,18 +779,18 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
   ASSERT_EQ(0U, cq_impl_->size());
 
   switch (GetParam()) {
-    case CancelMode::FALSE_VALUE:
+    case CancelMode::kFalseValue:
       promises_from_user_cb_[0].set_value(false);
       break;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    case CancelMode::STD_EXCEPT:
+    case CancelMode::kStdExcept:
       try {
         throw std::runtime_error("user threw std::exception");
       } catch (...) {
         promises_from_user_cb_[0].set_exception(std::current_exception());
       }
       break;
-    case CancelMode::OTHER_EXCEPT:
+    case CancelMode::kOtherExcept:
       try {
         throw 5;
       } catch (...) {
@@ -804,15 +809,15 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
   auto stream_status = stream_status_future_.get();
   ASSERT_EQ(StatusCode::kCancelled, stream_status.code());
   switch (GetParam()) {
-    case CancelMode::FALSE_VALUE:
+    case CancelMode::kFalseValue:
       ASSERT_THAT(stream_status.message(), HasSubstr("User cancelled"));
       break;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    case CancelMode::STD_EXCEPT:
+    case CancelMode::kStdExcept:
       ASSERT_THAT(stream_status.message(),
                   HasSubstr("user threw std::exception"));
       break;
-    case CancelMode::OTHER_EXCEPT:
+    case CancelMode::kOtherExcept:
       ASSERT_THAT(stream_status.message(), HasSubstr("unknown exception"));
       break;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -823,11 +828,11 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                         Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
-                                CancelMode::OTHER_EXCEPT));
+                         Values(CancelMode::kFalseValue, CancelMode::kStdExcept,
+                                CancelMode::kOtherExcept));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                         Values(CancelMode::FALSE_VALUE));
+                         Values(CancelMode::kFalseValue));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Like CancelMidStream but after the underlying stream has finished.

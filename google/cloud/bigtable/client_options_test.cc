@@ -60,7 +60,7 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
                                          {}) {}
 
  protected:
-  std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
+  static std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
     return ClientOptionsTestTraits::InstanceAdminEndpoint(options);
   }
 

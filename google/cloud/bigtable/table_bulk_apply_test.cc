@@ -19,16 +19,19 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
-namespace btproto = google::bigtable::v2;
-namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
-using namespace testing;
 namespace bt = google::cloud::bigtable;
+namespace btproto = google::bigtable::v2;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 /// Define types and functions used in the tests.
 namespace {
-class TableBulkApplyTest : public bigtable::testing::TableTestFixture {};
-using bigtable::testing::MockMutateRowsReader;
+class TableBulkApplyTest : public bt::testing::TableTestFixture {};
+using bt::testing::MockMutateRowsReader;
 }  // anonymous namespace
 
 /// @test Verify that Table::BulkApply() works in the easy case.
@@ -100,10 +103,8 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo",
-                            {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar",
-                            {bigtable::SetCell("fam", "col", 0_ms, "qux")})));
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }

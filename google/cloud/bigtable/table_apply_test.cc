@@ -18,8 +18,10 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
-namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
+namespace bigtable = ::google::cloud::bigtable;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::testing::_;
+using ::testing::Invoke;
 
 /// Define helper types and functions for this test.
 namespace {
@@ -35,12 +37,11 @@ auto mock_mutate_row = [](grpc::Status const& status) {
 };
 
 class TableApplyTest : public bigtable::testing::TableTestFixture {};
-}  // anonymous namespace
+
+}  // namespace
 
 /// @test Verify that Table::Apply() works in a simplest case.
 TEST_F(TableApplyTest, Simple) {
-  using namespace ::testing;
-
   EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillOnce(Invoke(mock_mutate_row(grpc::Status::OK)));
 
@@ -51,8 +52,6 @@ TEST_F(TableApplyTest, Simple) {
 
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
-  using namespace ::testing;
-
   EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh"))));
@@ -65,8 +64,6 @@ TEST_F(TableApplyTest, Failure) {
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {
-  using namespace ::testing;
-
   EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillOnce(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))))
@@ -83,8 +80,6 @@ TEST_F(TableApplyTest, Retry) {
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.
 TEST_F(TableApplyTest, RetryIdempotent) {
-  using namespace ::testing;
-
   EXPECT_CALL(*client_, MutateRow(_, _, _))
       .WillRepeatedly(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))));
