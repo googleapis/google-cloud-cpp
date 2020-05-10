@@ -16,6 +16,7 @@ ARG DISTRO_VERSION=18.04
 FROM ubuntu:${DISTRO_VERSION}
 ARG NCPU=4
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y \
         abi-compliance-checker \
@@ -43,6 +44,7 @@ RUN apt-get update && \
         python3 \
         python3-pip \
         tar \
+        tzdata \
         unzip \
         wget \
         zlib1g-dev \
