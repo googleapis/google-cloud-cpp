@@ -413,7 +413,7 @@ TEST(NativeIamPolicy, ParsePoliciesFailures) {
   EXPECT_THAT(policy.status().message(),
               HasSubstr("expected string for 'etag' field"));
 
-  policy = NativeIamPolicy::CreateFromJson("{\"version\": \"13\"}");
+  policy = NativeIamPolicy::CreateFromJson(R"({"version": "13"})");
   ASSERT_FALSE(policy);
   EXPECT_THAT(policy.status().message(),
               HasSubstr("expected integer for 'version' field"));

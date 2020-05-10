@@ -27,10 +27,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Invoke;
 using ::testing::InvokeWithoutArgs;
@@ -255,7 +252,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
-    auto expected = payload;
+    auto const& expected = payload;
     EXPECT_EQ(expected, p);
     next_byte += p.size();
     return make_status_or(ResumableUploadResponse{

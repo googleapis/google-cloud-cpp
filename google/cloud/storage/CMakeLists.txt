@@ -412,6 +412,7 @@ if (BUILD_TESTING)
                         CURL::libcurl
                         storage_common_options
                         nlohmann_json)
+            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()

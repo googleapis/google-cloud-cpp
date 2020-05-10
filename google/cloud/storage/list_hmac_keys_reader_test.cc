@@ -29,7 +29,6 @@ using ::google::cloud::storage::internal::ListHmacKeysRequest;
 using ::google::cloud::storage::internal::ListHmacKeysResponse;
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::ContainerEq;
 using ::testing::Invoke;

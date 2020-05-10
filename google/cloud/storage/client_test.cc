@@ -40,13 +40,13 @@ class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
   }
 
   bool IsExhausted() const override {
-    ++is_exhausted_call_count;
+    ++is_exhausted_call_count_;
     return LimitedErrorCountRetryPolicy::IsExhausted();
   }
 
-  static int is_exhausted_call_count;
+  static int is_exhausted_call_count_;
 };
-int ObservableRetryPolicy::is_exhausted_call_count;
+int ObservableRetryPolicy::is_exhausted_call_count_;
 
 class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
  public:
@@ -57,82 +57,81 @@ class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
   }
 
   std::chrono::milliseconds OnCompletion() override {
-    ++on_completion_call_count;
+    ++on_completion_call_count_;
     return ExponentialBackoffPolicy::OnCompletion();
   }
 
-  static int on_completion_call_count;
+  static int on_completion_call_count_;
 };
+int ObservableBackoffPolicy::on_completion_call_count_;
 
 class ClientTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    ObservableRetryPolicy::is_exhausted_call_count = 0;
-    ObservableBackoffPolicy::on_completion_call_count = 0;
+    mock_ = std::make_shared<testing::MockClient>();
+    ObservableRetryPolicy::is_exhausted_call_count_ = 0;
+    ObservableBackoffPolicy::on_completion_call_count_ = 0;
   }
   void TearDown() override {
-    ObservableRetryPolicy::is_exhausted_call_count = 0;
-    ObservableBackoffPolicy::on_completion_call_count = 0;
-    mock.reset();
+    ObservableRetryPolicy::is_exhausted_call_count_ = 0;
+    ObservableBackoffPolicy::on_completion_call_count_ = 0;
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
+  std::shared_ptr<testing::MockClient> mock_;
 };
-
-int ObservableBackoffPolicy::on_completion_call_count;
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
+  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
+  Client client{std::shared_ptr<internal::RawClient>(mock_),
                 ObservableRetryPolicy(3)};
 
   // Reset the counters at the beginning of the test.
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
-  EXPECT_EQ(0, ObservableBackoffPolicy::on_completion_call_count);
+  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count_);
+  EXPECT_EQ(0, ObservableBackoffPolicy::on_completion_call_count_);
 }
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
+  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
+  Client client{std::shared_ptr<internal::RawClient>(mock_),
                 ObservableBackoffPolicy(ms(20), ms(100), 2.0)};
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_call_count);
-  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
+  EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_call_count_);
+  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count_);
 }
 
 TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
+  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
+  Client client{std::shared_ptr<internal::RawClient>(mock_),
                 ObservableBackoffPolicy(ms(20), ms(100), 2.0),
                 ObservableRetryPolicy(3)};
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
-  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
+  EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count_);
+  EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count_);
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.

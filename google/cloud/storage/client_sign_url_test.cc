@@ -28,7 +28,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
@@ -55,22 +54,22 @@ constexpr char kJsonKeyfileContents[] = R"""({
 class CreateSignedUrlTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock),
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock_),
         ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                  std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options =
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ =
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
@@ -119,7 +118,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
   std::string expected_signed_blob_safe = "dGVzdC1zaWduZWQtYmxvYg%3D%3D";
 
-  EXPECT_CALL(*mock, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob(_))
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce(
           Invoke([&expected_signed_blob](internal::SignBlobRequest const&) {
@@ -127,7 +126,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
                 "test-key-id", expected_signed_blob});
           }));
   StatusOr<std::string> actual =
-      client->CreateV2SignedUrl("GET", "test-bucket", "test-object");
+      client_->CreateV2SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
 }
@@ -135,7 +134,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
 /// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -146,7 +145,7 @@ TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
 /// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      *client_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -269,7 +268,7 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
   // Use `echo -n test-signed-blob | od -x` to create the magic string.
   std::string expected_signed_blob_hex = "746573742d7369676e65642d626c6f62";
 
-  EXPECT_CALL(*mock, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob(_))
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce(
           Invoke([&expected_signed_blob](internal::SignBlobRequest const&) {
@@ -277,7 +276,7 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
                 "test-key-id", expected_signed_blob});
           }));
   StatusOr<std::string> actual =
-      client->CreateV4SignedUrl("GET", "test-bucket", "test-object");
+      client_->CreateV4SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
 }
@@ -285,7 +284,7 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
 /// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -296,7 +295,7 @@ TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
 /// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      *client_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
             .status();

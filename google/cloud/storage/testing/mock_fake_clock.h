@@ -31,25 +31,24 @@ namespace testing {
  */
 struct FakeClock : public std::chrono::system_clock {
  public:
-  static long now_value;
+  static std::time_t now_value;
 
   // gmock doesn't easily allow copying mock objects, but we require this
   // struct to be copyable. So while the usual approach would be mocking this
   // method and defining its return value in each test, we instead override
   // this method and hard-code the return value for all instances.
   static std::chrono::system_clock::time_point now() {
-    return std::chrono::system_clock::from_time_t(
-        static_cast<std::time_t>(now_value));
+    return std::chrono::system_clock::from_time_t(now_value);
   }
 
-  static void reset_clock(long fixed_time_stamp) {
+  static void reset_clock(std::time_t fixed_time_stamp) {
     now_value = fixed_time_stamp;
   }
 };
 
 // We need to define this value since it is static; set it to an arbitrary
 // value.
-long FakeClock::now_value = 1530060324;
+std::time_t FakeClock::now_value = 1530060324;
 
 }  // namespace testing
 }  // namespace storage

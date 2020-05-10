@@ -29,33 +29,32 @@ namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::Invoke;
-using ::testing::Return;
 using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    log_backend = std::make_shared<CaptureLogLinesBackend>();
-    log_backend_id = google::cloud::LogSink::Instance().AddBackend(log_backend);
+    log_backend_ = std::make_shared<CaptureLogLinesBackend>();
+    log_backend_id_ =
+        google::cloud::LogSink::Instance().AddBackend(log_backend_);
   }
   void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id);
-    log_backend_id = 0;
-    log_backend.reset();
+    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
+    log_backend_id_ = 0;
+    log_backend_.reset();
   }
 
   std::size_t CountLines(std::string const& substr) {
-    return std::count_if(log_backend->log_lines.begin(),
-                         log_backend->log_lines.end(),
+    return std::count_if(log_backend_->log_lines.begin(),
+                         log_backend_->log_lines.end(),
                          [substr](std::string const& line) {
                            return std::string::npos != line.find(substr);
                          });
   }
 
-  std::shared_ptr<CaptureLogLinesBackend> log_backend = nullptr;
-  long log_backend_id = 0;
+  std::shared_ptr<CaptureLogLinesBackend> log_backend_ = nullptr;
+  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
 };
 
 TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {

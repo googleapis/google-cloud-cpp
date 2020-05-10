@@ -37,7 +37,6 @@ using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
-using ::testing::An;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;

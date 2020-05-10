@@ -23,7 +23,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
 // Version of DefaultCurlHandleFactory that keeps track of what calls have been
@@ -31,7 +30,7 @@ using ::testing::IsEmpty;
 class OverriddenDefaultCurlHandleFactory : public DefaultCurlHandleFactory {
  public:
   OverriddenDefaultCurlHandleFactory() = default;
-  OverriddenDefaultCurlHandleFactory(ChannelOptions const& options)
+  explicit OverriddenDefaultCurlHandleFactory(ChannelOptions const& options)
       : DefaultCurlHandleFactory(options) {}
 
  protected:
@@ -49,7 +48,7 @@ class OverriddenDefaultCurlHandleFactory : public DefaultCurlHandleFactory {
 // made to SetCurlStringOption.
 class OverriddenPooledCurlHandleFactory : public PooledCurlHandleFactory {
  public:
-  OverriddenPooledCurlHandleFactory(std::size_t maximum_size)
+  explicit OverriddenPooledCurlHandleFactory(std::size_t maximum_size)
       : PooledCurlHandleFactory(maximum_size) {}
   OverriddenPooledCurlHandleFactory(std::size_t maximum_size,
                                     ChannelOptions const& options)

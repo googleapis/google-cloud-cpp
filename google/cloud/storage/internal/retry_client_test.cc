@@ -34,20 +34,20 @@ using ::testing::Return;
 
 class RetryClientTest : public ::testing::Test {
  protected:
-  void SetUp() override { mock = std::make_shared<testing::MockClient>(); }
-  void TearDown() override { mock.reset(); }
+  void SetUp() override { mock_ = std::make_shared<testing::MockClient>(); }
+  void TearDown() override { mock_.reset(); }
 
-  std::shared_ptr<testing::MockClient> mock;
+  std::shared_ptr<testing::MockClient> mock_;
 };
 
 /// @test Verify that non-idempotent operations return on the first failure.
 TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock),
+  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
                      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
                      // Make the tests faster.
                      ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock_, DeleteObject(_))
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
   // Use a delete operation because this is idempotent only if the it has
@@ -59,13 +59,13 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
 
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, PermanentErrorHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock),
+  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
                      LimitedErrorCountRetryPolicy(3),
                      // Make the tests faster.
                      ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
@@ -76,13 +76,13 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, TooManyTransientsHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock),
+  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
                      LimitedErrorCountRetryPolicy(3),
                      // Make the tests faster.
                      ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata(_))
       .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
@@ -92,7 +92,7 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 
 /// @test Verify that the retry loop works with exhausted retry policy.
 TEST_F(RetryClientTest, ExpiredRetryPolicy) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock),
+  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
                      LimitedTimeRetryPolicy(std::chrono::milliseconds(0)),
                      ExponentialBackoffPolicy(1_us, 2_us, 2));
 

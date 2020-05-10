@@ -29,7 +29,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
@@ -70,10 +69,10 @@ class CreateSignedPolicyDocTest : public ::testing::Test {
     auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
         kJsonKeyfileContents);
     ASSERT_STATUS_OK(creds);
-    client.reset(new Client(*creds));
+    client_.reset(new Client(*creds));
   }
 
-  std::unique_ptr<Client> client;
+  std::unique_ptr<Client> client_;
 };
 
 /**
@@ -82,22 +81,22 @@ class CreateSignedPolicyDocTest : public ::testing::Test {
 class CreateSignedPolicyDocRPCTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{
-        std::static_pointer_cast<internal::RawClient>(mock),
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{
+        std::static_pointer_cast<internal::RawClient>(mock_),
         ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                  std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options =
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ =
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
@@ -120,7 +119,7 @@ PolicyDocument CreatePolicyDocumentForTest() {
 
 TEST_F(CreateSignedPolicyDocTest, Sign) {
   auto actual =
-      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client_->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com", actual->access_id);
@@ -156,7 +155,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   // string.
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
 
-  EXPECT_CALL(*mock, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob(_))
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce(
           Invoke([&expected_signed_blob](internal::SignBlobRequest const&) {
@@ -164,7 +163,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
                 "test-key-id", expected_signed_blob});
           }));
   auto actual =
-      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client_->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
 }
@@ -173,7 +172,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
 /// policies.
 TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
             .status();
@@ -185,7 +184,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
 /// policies.
 TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      *client_, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
             .status();
@@ -213,7 +212,7 @@ PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), AddExtensionFieldOption(),
       PredefinedAcl(), Scheme());
   ASSERT_STATUS_OK(actual);
@@ -258,7 +257,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4) {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(),
       AddExtensionField("my-field", "my-value"));
   ASSERT_STATUS_OK(actual);
@@ -267,7 +266,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), PredefinedAcl::BucketOwnerRead());
   ASSERT_STATUS_OK(actual);
 
@@ -276,7 +275,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"));
   ASSERT_STATUS_OK(actual);
 
@@ -284,7 +283,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"),
       Scheme("http"));
   ASSERT_STATUS_OK(actual);
@@ -293,7 +292,7 @@ TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
 }
 
 TEST_F(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client_->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), VirtualHostname(true));
   ASSERT_STATUS_OK(actual);
 

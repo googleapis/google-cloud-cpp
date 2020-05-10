@@ -33,29 +33,28 @@ using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
-  // Cannot use `override` here because if we do the build breaks: the compiler
-  // on macOS then expects *all* overriden functions to have it, and the
-  // MOCK_METHOD1() macro does not use override.
-  void Process(LogRecord const& lr) { ProcessWithOwnership(lr); }
+  void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
 
-  MOCK_METHOD1(ProcessWithOwnership, void(LogRecord));
+  MOCK_METHOD(void, ProcessWithOwnership, (google::cloud::LogRecord),
+              (override));
   // For the purposes of testing we just need one of the member functions.
 };
 
 class LoggingClientTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    log_backend = std::make_shared<MockLogBackend>();
-    log_backend_id = google::cloud::LogSink::Instance().AddBackend(log_backend);
+    log_backend_ = std::make_shared<MockLogBackend>();
+    log_backend_id_ =
+        google::cloud::LogSink::Instance().AddBackend(log_backend_);
   }
   void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id);
-    log_backend_id = 0;
-    log_backend.reset();
+    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
+    log_backend_id_ = 0;
+    log_backend_.reset();
   }
 
-  std::shared_ptr<MockLogBackend> log_backend = nullptr;
-  long log_backend_id = 0;
+  std::shared_ptr<MockLogBackend> log_backend_ = nullptr;
+  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
 };
 
 TEST_F(LoggingClientTest, GetBucketMetadata) {
@@ -73,13 +72,13 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       }))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("US"));
@@ -97,13 +96,13 @@ TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       }))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("status={"));
       }));
@@ -126,15 +125,15 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("InsertObjectMediaRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
         EXPECT_THAT(lr.message, HasSubstr("baz"));
         EXPECT_THAT(lr.message, HasSubstr("the contents"));
       }))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
@@ -161,13 +160,13 @@ TEST_F(LoggingClientTest, ListObjects) {
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord lr) {
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       }))
-      .WillOnce(Invoke([](LogRecord lr) {
+      .WillOnce(Invoke([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsResponse={"));

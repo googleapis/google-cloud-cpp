@@ -607,7 +607,7 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
 }
 
 /// @test Verify we can change the IAM Configuration in BucketMetadata.
-TEST(BucketMetadataTest, SetIamConfiguration_BPO) {
+TEST(BucketMetadataTest, SetIamConfigurationBPO) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   BucketIamConfiguration new_configuration;
@@ -622,7 +622,7 @@ TEST(BucketMetadataTest, SetIamConfiguration_BPO) {
 }
 
 /// @test Verify we can change the IAM Configuration in BucketMetadata.
-TEST(BucketMetadataTest, SetIamConfiguration_UBLA) {
+TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   BucketIamConfiguration new_configuration;

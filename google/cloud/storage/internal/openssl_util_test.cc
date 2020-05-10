@@ -24,8 +24,6 @@ namespace {
 
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
-using ::testing::HasSubstr;
-using ::testing::Not;
 
 TEST(OpensslUtilTest, Base64Encode) {
   // Produced input using:

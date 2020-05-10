@@ -46,23 +46,23 @@ using ms = std::chrono::milliseconds;
 class ObjectTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock),
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock_),
         LimitedErrorCountRetryPolicy(2),
         ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                  std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options =
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ =
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
@@ -73,7 +73,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
   auto expected =
       storage::internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock_, InsertObjectMedia(_))
       .WillOnce(Invoke(
           [&expected](internal::InsertObjectMediaRequest const& request) {
             EXPECT_EQ("test-bucket-name", request.bucket_name());
@@ -82,15 +82,15 @@ TEST_F(ObjectTest, InsertObjectMedia) {
             return make_status_or(expected);
           }));
 
-  auto actual = client->InsertObject("test-bucket-name", "test-object-name",
-                                     "test object contents");
+  auto actual = client_->InsertObject("test-bucket-name", "test-object-name",
+                                      "test object contents");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, InsertObjectMedia(_)),
+      mock_, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
       [](Client& client) {
         return client
             .InsertObject("test-bucket-name", "test-object-name",
@@ -108,7 +108,7 @@ TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
 
 TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, InsertObjectMedia(_)),
+      *client_, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
       [](Client& client) {
         return client
             .InsertObject("test-bucket-name", "test-object-name",
@@ -143,7 +143,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::GetObjectMetadataRequest const& r) {
@@ -152,14 +152,14 @@ TEST_F(ObjectTest, GetObjectMetadata) {
             return make_status_or(expected);
           }));
   auto actual =
-      client->GetObjectMetadata("test-bucket-name", "test-object-name");
+      client_->GetObjectMetadata("test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, GetObjectMetadata(_)),
+      mock_, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
       [](Client& client) {
         return client.GetObjectMetadata("test-bucket-name", "test-object-name")
             .status();
@@ -169,7 +169,7 @@ TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
 
 TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, GetObjectMetadata(_)),
+      *client_, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
       [](Client& client) {
         return client.GetObjectMetadata("test-bucket-name", "test-object-name")
             .status();
@@ -178,20 +178,20 @@ TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
 }
 
 TEST_F(ObjectTest, DeleteObject) {
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock_, DeleteObject(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       }));
-  auto status = client->DeleteObject("test-bucket-name", "test-object-name");
+  auto status = client_->DeleteObject("test-bucket-name", "test-object-name");
   EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock, EXPECT_CALL(*mock, DeleteObject(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteObject(_)),
       [](Client& client) {
         return client.DeleteObject("test-bucket-name", "test-object-name");
       },
@@ -204,7 +204,7 @@ TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
 
 TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client, EXPECT_CALL(*mock, DeleteObject(_)),
+      *client_, EXPECT_CALL(*mock_, DeleteObject(_)),
       [](Client& client) {
         return client.DeleteObject("test-bucket-name", "test-object-name");
       },
@@ -236,7 +236,7 @@ TEST_F(ObjectTest, UpdateObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, UpdateObject(_))
+  EXPECT_CALL(*mock_, UpdateObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::UpdateObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -272,14 +272,14 @@ TEST_F(ObjectTest, UpdateObject) {
       .set_content_type("new-type");
   update.mutable_metadata().emplace("test-label", "test-value");
   auto actual =
-      client->UpdateObject("test-bucket-name", "test-object-name", update);
+      client_->UpdateObject("test-bucket-name", "test-object-name", update);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, UpdateObject(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateObject(_)),
       [](Client& client) {
         return client
             .UpdateObject("test-bucket-name", "test-object-name",
@@ -298,7 +298,7 @@ TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
 
 TEST_F(ObjectTest, UpdateObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, UpdateObject(_)),
+      *client_, EXPECT_CALL(*mock_, UpdateObject(_)),
       [](Client& client) {
         return client
             .UpdateObject("test-bucket-name", "test-object-name",
@@ -333,7 +333,7 @@ TEST_F(ObjectTest, PatchObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, PatchObject(_))
+  EXPECT_CALL(*mock_, PatchObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::PatchObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -343,17 +343,17 @@ TEST_F(ObjectTest, PatchObject) {
         return make_status_or(expected);
       }));
   auto actual =
-      client->PatchObject("test-bucket-name", "test-object-name",
-                          ObjectMetadataPatchBuilder()
-                              .SetContentDisposition("new-disposition")
-                              .SetContentLanguage("x-made-up-lang"));
+      client_->PatchObject("test-bucket-name", "test-object-name",
+                           ObjectMetadataPatchBuilder()
+                               .SetContentDisposition("new-disposition")
+                               .SetContentLanguage("x-made-up-lang"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, PatchObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, PatchObject(_)),
+      mock_, EXPECT_CALL(*mock_, PatchObject(_)),
       [](Client& client) {
         return client
             .PatchObject(
@@ -374,7 +374,7 @@ TEST_F(ObjectTest, PatchObjectTooManyFailures) {
 
 TEST_F(ObjectTest, PatchObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, PatchObject(_)),
+      *client_, EXPECT_CALL(*mock_, PatchObject(_)),
       [](Client& client) {
         return client
             .PatchObject(
@@ -394,13 +394,13 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
   auto transient_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(TransientError());
   };
-  EXPECT_CALL(*mock, ReadObject(_))
+  EXPECT_CALL(*mock_, ReadObject(_))
       .WillOnce(Invoke(transient_error))
       .WillOnce(Invoke(transient_error))
       .WillOnce(Invoke(transient_error));
 
   Status status =
-      client->ReadObject("test-bucket-name", "test-object-name").status();
+      client_->ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(TransientError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
@@ -415,10 +415,10 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   auto permanent_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(PermanentError());
   };
-  EXPECT_CALL(*mock, ReadObject(_)).WillOnce(Invoke(permanent_error));
+  EXPECT_CALL(*mock_, ReadObject(_)).WillOnce(Invoke(permanent_error));
 
   Status status =
-      client->ReadObject("test-bucket-name", "test-object-name").status();
+      client_->ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(PermanentError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
@@ -607,11 +607,11 @@ ObjectMetadata MockObject(std::string const& bucket_name,
         "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
         "updated": "2018-05-19T19:31:24Z",
 )""";
-  text << "\"bucket\": \"" << bucket_name << "\","
-       << "\"generation\": \"" << generation << "\","
-       << "\"id\": \"" << bucket_name << "/" << object_name << "/" << generation
+  text << R"("bucket": ")" << bucket_name << "\","
+       << R"("generation": ")" << generation << "\","
+       << R"("id": ")" << bucket_name << "/" << object_name << "/" << generation
        << "\","
-       << "\"name\": \"" << object_name << "\"}";
+       << R"("name": ")" << object_name << "\"}";
   return internal::ObjectMetadataParser::FromString(text.str()).value();
 }
 
