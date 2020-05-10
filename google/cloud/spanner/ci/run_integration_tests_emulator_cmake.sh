@@ -112,6 +112,7 @@ function start_emulator() {
 # production. Easier to maintain just one copy.
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
+export RUN_SLOW_INTEGRATION_TESTS="instance"
 
 cd "${BINARY_DIR}"
 start_emulator
