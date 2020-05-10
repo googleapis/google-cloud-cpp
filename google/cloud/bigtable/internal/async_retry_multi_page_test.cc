@@ -33,16 +33,14 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace bt = ::google::cloud::bigtable;
-namespace btproto = google::bigtable::v2;
-using namespace ::testing;
-using namespace google::cloud::testing_util::chrono_literals;
-using google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
-  BackoffPolicyMock() : num_calls_from_last_clone_() {}
-
   MOCK_METHOD1(OnCompletionHook, std::chrono::milliseconds(Status const& s));
 
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
@@ -62,7 +60,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 
   void Setup(grpc::ClientContext&) const override {}
 
-  int num_calls_from_last_clone_;
+  int num_calls_from_last_clone_{0};
 };
 
 // Pretend independent backoff policies, but be only one under the hood.
@@ -176,7 +174,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
         },
         ListClustersRequest(), std::vector<std::string>(),
         [](std::vector<std::string> accumulator,
-           ListClustersResponse response) {
+           ListClustersResponse const& response) {
           std::transform(response.clusters().begin(), response.clusters().end(),
                          std::back_inserter(accumulator),
                          [](Cluster const& cluster) { return cluster.name(); });

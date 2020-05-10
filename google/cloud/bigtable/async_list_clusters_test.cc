@@ -30,15 +30,17 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace bt = ::google::cloud::bigtable;
 namespace btproto = google::bigtable::admin::v2;
-using namespace google::cloud::testing_util::chrono_literals;
-using namespace ::testing;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::ReturnRef;
+
 using MockAsyncListClustersReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         btproto::ListClustersResponse>;
-using google::cloud::testing_util::MockCompletionQueue;
-
 using Functor =
     std::function<void(CompletionQueue&, ClusterList&, grpc::Status&)>;
 
@@ -77,8 +79,9 @@ class AsyncListClustersTest : public ::testing::Test {
 // unknown, so a function or function template would not work. Alternatively,
 // writing this inline is very repetitive.
 auto create_list_clusters_lambda =
-    [](std::string returned_token, std::vector<std::string> cluster_names,
-       std::vector<std::string> failed_locations) {
+    [](std::string const& returned_token,
+       std::vector<std::string> const& cluster_names,
+       std::vector<std::string> const& failed_locations) {
       return [returned_token, cluster_names, failed_locations](
                  btproto::ListClustersResponse* response, grpc::Status* status,
                  void*) {

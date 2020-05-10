@@ -20,8 +20,6 @@ namespace bigtable = google::cloud::bigtable;
 
 /// @test Verify Cell instantiation and trivial accessors.
 TEST(CellTest, Simple) {
-  using namespace ::testing;
-
   std::string row_key = "row";
   std::string family_name = "family";
   std::string column_qualifier = "column";
@@ -39,8 +37,6 @@ TEST(CellTest, Simple) {
 
 /// Test for checking numeric value in bigtable::Cell
 TEST(CellTest, SimpleNumericValue) {
-  using namespace ::testing;
-
   std::string row_key = "row";
   std::string family_name = "family";
   std::string column_qualifier = "column";
@@ -59,8 +55,6 @@ TEST(CellTest, SimpleNumericValue) {
 
 /// Test for checking negative value in bigtable::Cell.
 TEST(CellTest, SimpleNumericNegativeValue) {
-  using namespace ::testing;
-
   std::string row_key = "row";
   std::string family_name = "family";
   std::string column_qualifier = "column";

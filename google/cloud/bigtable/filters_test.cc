@@ -20,6 +20,9 @@
 namespace btproto = ::google::bigtable::v2;
 namespace bigtable = google::cloud::bigtable;
 
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+
 TEST(FiltersTest, PassAllFilter) {
   auto proto = bigtable::Filter::PassAllFilter().as_proto();
   EXPECT_TRUE(proto.pass_all_filter());
@@ -70,7 +73,6 @@ TEST(FiltersTest, TimestampRangeMicros) {
 }
 
 TEST(FiltersTest, TimestampRange) {
-  using namespace google::cloud::testing_util::chrono_literals;
   auto proto = bigtable::Filter::TimestampRange(10_us, 10_ms).as_proto();
   EXPECT_EQ(10, proto.timestamp_range_filter().start_timestamp_micros());
   EXPECT_EQ(10000, proto.timestamp_range_filter().end_timestamp_micros());
@@ -206,7 +208,7 @@ TEST(FiltersTest, Condition) {
   using F = bigtable::Filter;
   auto filter = F::Condition(F::ColumnRegex("foo"), F::CellsRowLimit(1),
                              F::CellsRowOffset(2));
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_condition());
   auto const& predicate = proto.condition().predicate_filter();
   EXPECT_EQ("foo", predicate.column_qualifier_regex_filter());
@@ -221,7 +223,7 @@ TEST(FiltersTest, ChainMultipleArgs) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
   auto const& chain = proto.chain();
   ASSERT_EQ(4, chain.filters_size());
@@ -235,7 +237,7 @@ TEST(FiltersTest, ChainMultipleArgs) {
 TEST(FiltersTest, ChainNoArgs) {
   using F = bigtable::Filter;
   auto filter = F::Chain();
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
   auto const& chain = proto.chain();
   ASSERT_EQ(0, chain.filters_size());
@@ -245,7 +247,7 @@ TEST(FiltersTest, ChainNoArgs) {
 TEST(FiltersTest, ChainOneArg) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::Latest(2));
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
   auto const& chain = proto.chain();
   ASSERT_EQ(1, chain.filters_size());
@@ -259,7 +261,7 @@ TEST(FiltersTest, ChainFromRangeMany) {
                                    F::CellsRowOffset(2), F::Latest(1)};
   auto filter =
       F::ChainFromRange(filter_collection.begin(), filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
   auto const& chain = proto.chain();
   ASSERT_EQ(4, chain.filters_size());
@@ -275,7 +277,7 @@ TEST(FiltersTest, ChainFromRangeEmpty) {
   std::vector<F> filter_collection{};
   auto filter =
       F::ChainFromRange(filter_collection.begin(), filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
   auto const& chain = proto.chain();
   ASSERT_EQ(0, chain.filters_size());
@@ -287,11 +289,11 @@ TEST(FiltersTest, ChainFromRangeSingle) {
   std::vector<F> filter_collection{F::Latest(2)};
   auto filter =
       F::ChainFromRange(filter_collection.begin(), filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
-  auto const& Chain = proto.chain();
-  ASSERT_EQ(1, Chain.filters_size());
-  EXPECT_EQ(2, Chain.filters(0).cells_per_column_limit_filter());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(1, chain.filters_size());
+  EXPECT_EQ(2, chain.filters(0).cells_per_column_limit_filter());
 }
 
 /// @test Verify that `bigtable::Filter::Interleave` works as expected.
@@ -299,7 +301,7 @@ TEST(FiltersTest, InterleaveMultipleArgs) {
   using F = bigtable::Filter;
   auto filter = F::Interleave(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                               F::CellsRowOffset(2), F::Latest(1));
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(4, interleave.filters_size());
@@ -313,7 +315,7 @@ TEST(FiltersTest, InterleaveMultipleArgs) {
 TEST(FiltersTest, InterleaveNoArgs) {
   using F = bigtable::Filter;
   auto filter = F::Interleave();
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(0, interleave.filters_size());
@@ -323,7 +325,7 @@ TEST(FiltersTest, InterleaveNoArgs) {
 TEST(FiltersTest, InterleaveOneArg) {
   using F = bigtable::Filter;
   auto filter = F::Interleave(F::Latest(2));
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(1, interleave.filters_size());
@@ -337,7 +339,7 @@ TEST(FiltersTest, InterleaveFromRangeMany) {
                                    F::CellsRowOffset(2), F::Latest(1)};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
                                        filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(4, interleave.filters_size());
@@ -353,7 +355,7 @@ TEST(FiltersTest, InterleaveFromRangeEmpty) {
   std::vector<F> filter_collection{};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
                                        filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(0, interleave.filters_size());
@@ -365,7 +367,7 @@ TEST(FiltersTest, InterleaveFromRangeSingle) {
   std::vector<F> filter_collection{F::Latest(2)};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
                                        filter_collection.end());
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
   auto const& interleave = proto.interleave();
   ASSERT_EQ(1, interleave.filters_size());
@@ -375,7 +377,7 @@ TEST(FiltersTest, InterleaveFromRangeSingle) {
 /// @test Verify that `bigtable::Filter::Sink` works as expected.
 TEST(FiltersTest, Sink) {
   auto filter = bigtable::Filter::Sink();
-  auto proto = filter.as_proto();
+  auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.sink());
 }
 
@@ -386,6 +388,7 @@ TEST(FiltersTest, MoveProto) {
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
   auto proto_move = std::move(filter).as_proto();
+  // NOLINTNEXTLINE(bugprone-use-after-move)
   ASSERT_FALSE(filter.as_proto().has_chain());
 
   // Verify that as_proto() for rvalue-references returns the right type.

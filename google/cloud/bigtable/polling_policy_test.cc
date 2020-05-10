@@ -31,7 +31,7 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
-using namespace testing_util::chrono_literals;
+using testing_util::chrono_literals::operator"" _ms;
 auto const kLimitedTimeTestPeriod = 50_ms;
 auto const kLimitedTimeTolerance = 10_ms;
 

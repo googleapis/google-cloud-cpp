@@ -49,16 +49,17 @@ TEST_F(TableTest, TableName) {
 }
 
 TEST_F(TableTest, TableConstructor) {
-  std::string const kOtherTableId = "my-table";
-  std::string const kOtherTableName =
-      bigtable::TableName(client_, kOtherTableId);
-  bigtable::Table table(client_, kOtherTableId);
-  EXPECT_EQ(kOtherTableName, table.table_name());
+  std::string const other_table_id = "my-table";
+  std::string const other_table_name =
+      bigtable::TableName(client_, other_table_id);
+  bigtable::Table table(client_, other_table_id);
+  EXPECT_EQ(other_table_name, table.table_name());
 }
 
 TEST_F(TableTest, CopyConstructor) {
   bigtable::Table source(client_, "my-table");
-  std::string expected = source.table_name();
+  std::string const& expected = source.table_name();
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   bigtable::Table copy(source);
   EXPECT_EQ(expected, copy.table_name());
 }
@@ -72,7 +73,7 @@ TEST_F(TableTest, MoveConstructor) {
 
 TEST_F(TableTest, CopyAssignment) {
   bigtable::Table source(client_, "my-table");
-  std::string expected = source.table_name();
+  std::string const& expected = source.table_name();
   bigtable::Table dest(client_, "another-table");
   dest = source;
   EXPECT_EQ(expected, dest.table_name());

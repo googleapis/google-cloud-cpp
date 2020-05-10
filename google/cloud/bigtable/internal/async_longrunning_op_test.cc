@@ -31,15 +31,16 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace bt = ::google::cloud::bigtable;
-namespace btproto = google::bigtable::admin::v2;
-using namespace google::cloud::testing_util::chrono_literals;
-using namespace ::testing;
-using google::bigtable::v2::SampleRowKeysResponse;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::bigtable::v2::SampleRowKeysResponse;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::WithParamInterface;
+
 using MockAsyncLongrunningOpReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
-using google::cloud::testing_util::MockCompletionQueue;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
                                    grpc::Status& status) {
@@ -158,7 +159,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
    * - `SampleRowKeysResponse` with row_key equal to **returned otherwise
    */
   StatusOr<optional<StatusOr<SampleRowKeysResponse>>> SimulateCall(
-      std::function<void(google::longrunning::Operation&, grpc::Status&)>
+      std::function<void(google::longrunning::Operation&, grpc::Status&)> const&
           response_filler,
       google::longrunning::Operation op) {
     EXPECT_CALL(*longrunning_reader_, Finish(_, _, _))

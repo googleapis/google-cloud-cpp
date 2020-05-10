@@ -178,8 +178,8 @@ class AcceptanceTest : public ::testing::Test {
     return cells;
   }
 
-  std::vector<ReadRowsResponse_CellChunk> ConvertChunks(
-      std::vector<std::string> chunk_strings) {
+  static std::vector<ReadRowsResponse_CellChunk> ConvertChunks(
+      std::vector<std::string> const& chunk_strings) {
     using google::protobuf::TextFormat;
 
     std::vector<ReadRowsResponse_CellChunk> chunks;
@@ -195,7 +195,7 @@ class AcceptanceTest : public ::testing::Test {
   }
 
   google::cloud::Status FeedChunks(
-      std::vector<ReadRowsResponse_CellChunk> chunks) {
+      std::vector<ReadRowsResponse_CellChunk> const& chunks) {
     grpc::Status status;
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);

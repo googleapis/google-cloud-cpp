@@ -35,7 +35,6 @@ using testing::Return;
 using testing::SetArgPointee;
 
 using google::bigtable::v2::ReadRowsRequest;
-using google::bigtable::v2::ReadRowsResponse;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 namespace bigtable = google::cloud::bigtable;
@@ -103,7 +102,7 @@ class ReadRowsParserMockFactory
 
 class RetryPolicyMock : public bigtable::RPCRetryPolicy {
  public:
-  RetryPolicyMock() {}
+  RetryPolicyMock() = default;
   std::unique_ptr<RPCRetryPolicy> clone() const override {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
@@ -122,7 +121,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
-  BackoffPolicyMock() {}
+  BackoffPolicyMock() = default;
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
@@ -213,8 +212,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
   EXPECT_EQ(++it, reader.end());
 }
 
-TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
-  using namespace ::testing;
+TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
@@ -225,7 +223,7 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
     std::string expected_id = "test-id";
     EXPECT_CALL(*client_, ReadRows(_, _))
         .WillOnce(Invoke([expected_id, &stream](grpc::ClientContext* context,
-                                                ReadRowsRequest req) {
+                                                ReadRowsRequest const& req) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context, "google.bigtable.v2.Bigtable.ReadRows"));
           EXPECT_EQ(expected_id, req.app_profile_id());
@@ -760,7 +758,6 @@ TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
 }
 
 TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
-  using namespace ::testing;
   // Every retry should use a new ClientContext object.
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");

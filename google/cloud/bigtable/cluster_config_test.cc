@@ -19,7 +19,7 @@ namespace bigtable = google::cloud::bigtable;
 
 TEST(ClusterConfigTest, Constructor) {
   bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::SSD);
-  auto proto = config.as_proto();
+  auto const& proto = config.as_proto();
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::SSD, proto.default_storage_type());

@@ -17,7 +17,12 @@
 #include <gmock/gmock.h>
 
 namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _h;
+using ::google::cloud::testing_util::chrono_literals::operator"" _min;
+using ::google::cloud::testing_util::chrono_literals::operator"" _s;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ns;
 
 TEST(GcRule, MaxNumVersions) {
   auto proto = bigtable::GcRule::MaxNumVersions(3).as_proto();

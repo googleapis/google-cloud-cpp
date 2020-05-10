@@ -315,6 +315,7 @@ if (BUILD_TESTING)
                     gRPC::grpc
                     protobuf::libprotobuf
                     bigtable_common_options)
+        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

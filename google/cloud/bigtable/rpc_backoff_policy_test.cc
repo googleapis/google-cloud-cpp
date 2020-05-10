@@ -18,7 +18,8 @@
 #include <chrono>
 #include <vector>
 
-namespace bigtable = google::cloud::bigtable;
+namespace bigtable = ::google::cloud::bigtable;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
 namespace {
 /// Create a grpc::Status with a status code for transient errors.
@@ -30,7 +31,6 @@ grpc::Status CreateTransientError() {
 
 /// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
-  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
 
   EXPECT_GE(10_ms, tested.OnCompletion(CreateTransientError()));
@@ -45,7 +45,6 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Clone) {
-  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy original(10_ms, 50_ms);
   auto tested = original.clone();
 
@@ -56,10 +55,10 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
 /// @test Test for testing randomness for 2 objects of
 /// ExponentialBackoffRetryPolicy such that no two clients have same sleep time.
 TEST(ExponentialBackoffRetryPolicy, Randomness) {
-  using namespace google::cloud::testing_util::chrono_literals;
   bigtable::ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
   bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
-  std::vector<int> output1, output2;
+  std::vector<int> output1;
+  std::vector<int> output2;
 
   EXPECT_GE(10_ms, test_object1.OnCompletion(CreateTransientError()));
   EXPECT_GE(10_ms, test_object2.OnCompletion(CreateTransientError()));

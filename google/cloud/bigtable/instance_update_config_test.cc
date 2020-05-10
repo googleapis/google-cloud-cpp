@@ -39,7 +39,7 @@ TEST(InstanceUpdateConfigTest, Constructor) {
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
   bigtable::InstanceUpdateConfig config(std::move(instance));
-  auto proto = config.as_proto();
+  auto const& proto = config.as_proto();
   EXPECT_EQ("projects/my-project/instances/test-instance",
             proto.instance().name());
   EXPECT_EQ("foo bar", proto.instance().display_name());

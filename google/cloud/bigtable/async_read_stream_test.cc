@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <future>
@@ -27,12 +26,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
 namespace btproto = google::bigtable::v2;
-using namespace google::cloud::testing_util::chrono_literals;
 
 /**
  * Implement a single streaming read RPC to test the wrappers.
@@ -109,7 +103,7 @@ class AsyncReadStreamTest : public ::testing::Test {
     }
   }
 
-  void WriteOne(
+  static void WriteOne(
       grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
       int index) {
     google::bigtable::v2::MutateRowsResponse response;
@@ -117,7 +111,7 @@ class AsyncReadStreamTest : public ::testing::Test {
     writer->Write(response, grpc::WriteOptions().set_write_through());
   }
 
-  void WriteLast(
+  static void WriteLast(
       grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
       int index) {
     google::bigtable::v2::MutateRowsResponse response;
@@ -263,10 +257,8 @@ TEST_F(AsyncReadStreamTest, FailImmediately) {
 /// @test Verify that the AsyncReadStream handles a stream with 3 elements.
 TEST_F(AsyncReadStreamTest, Return3) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
-             google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
-                 writer) {
+      [](grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+         grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteLast(writer, 2);
@@ -310,7 +302,7 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
   // client and server threads.
   SimpleBarrier server_barrier;
   impl_.SetCallback(
-      [this, &server_barrier](
+      [&server_barrier](
           grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
           grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
@@ -361,10 +353,8 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
 /// not explicitly signal end-of-stream.
 TEST_F(AsyncReadStreamTest, Return3NoLast) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
-             google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
-                 writer) {
+      [](grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+         grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteOne(writer, 2);
@@ -406,7 +396,7 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   SimpleBarrier client_barrier;
   SimpleBarrier server_barrier;
   impl_.SetCallback(
-      [this, &client_barrier, &server_barrier](
+      [&client_barrier, &server_barrier](
           grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
           grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
@@ -458,7 +448,7 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   SimpleBarrier client_barrier;
   SimpleBarrier server_barrier;
   impl_.SetCallback(
-      [this, &client_barrier, &server_barrier](
+      [&client_barrier, &server_barrier](
           grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
           grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
@@ -518,7 +508,7 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   SimpleBarrier server_sent_responses_barrier;
   SimpleBarrier cancel_done_server_barrier;
   impl_.SetCallback(
-      [this, &server_sent_responses_barrier, &cancel_done_server_barrier](
+      [&server_sent_responses_barrier, &cancel_done_server_barrier](
           grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
           grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
@@ -586,7 +576,7 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
   SimpleBarrier server_started_barrier;
   SimpleBarrier cancel_done_server_barrier;
   impl_.SetCallback(
-      [this, &server_started_barrier, &cancel_done_server_barrier](
+      [&server_started_barrier, &cancel_done_server_barrier](
           grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
           grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
@@ -638,10 +628,8 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
 /// @test Verify that AsyncReadStream works even if Cancel() is misused.
 TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
-             google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
-                 writer) {
+      [](grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+         grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteLast(writer, 2);
@@ -691,10 +679,8 @@ TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
 /// @test Verify that AsyncReadStream works when returning false from OnRead().
 TEST_F(AsyncReadStreamTest, DiscardAfterReturningFalse) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
-             google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
-                 writer) {
+      [](grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+         grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer) {
         for (int i = 0; i != 10; ++i) {
           WriteOne(writer, i);
         }

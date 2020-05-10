@@ -31,10 +31,13 @@ namespace {
 
 namespace btproto = google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
-using namespace ::testing;
-using namespace google::cloud::testing_util::chrono_literals;
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
-using google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::MockCompletionQueue;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::WithParamInterface;
 
 std::size_t MutationSize(SingleRowMutation mut) {
   google::bigtable::v2::MutateRowsRequest::Entry entry;
@@ -64,40 +67,42 @@ struct Exchange {
 };
 
 struct MutationState {
-  MutationState() : admitted(), completed() {}
-
-  bool admitted;
-  bool completed;
+  bool admitted{false};
+  bool completed{false};
   google::cloud::Status completion_status;
 };
 
 class MutationStates {
  public:
-  MutationStates(std::vector<std::shared_ptr<MutationState>> states)
+  explicit MutationStates(std::vector<std::shared_ptr<MutationState>> states)
       : states_(std::move(states)) {}
 
   bool AllAdmitted() {
-    return std::all_of(
-        states_.begin(), states_.end(),
-        [](std::shared_ptr<MutationState> state) { return state->admitted; });
+    return std::all_of(states_.begin(), states_.end(),
+                       [](std::shared_ptr<MutationState> const& state) {
+                         return state->admitted;
+                       });
   }
 
   bool AllCompleted() {
-    return std::all_of(
-        states_.begin(), states_.end(),
-        [](std::shared_ptr<MutationState> state) { return state->completed; });
+    return std::all_of(states_.begin(), states_.end(),
+                       [](std::shared_ptr<MutationState> const& state) {
+                         return state->completed;
+                       });
   }
 
   bool NoneAdmitted() {
-    return std::none_of(
-        states_.begin(), states_.end(),
-        [](std::shared_ptr<MutationState> state) { return state->admitted; });
+    return std::none_of(states_.begin(), states_.end(),
+                        [](std::shared_ptr<MutationState> const& state) {
+                          return state->admitted;
+                        });
   }
 
   bool NoneCompleted() {
-    return std::none_of(
-        states_.begin(), states_.end(),
-        [](std::shared_ptr<MutationState> state) { return state->completed; });
+    return std::none_of(states_.begin(), states_.end(),
+                        [](std::shared_ptr<MutationState> const& state) {
+                          return state->completed;
+                        });
   }
 
   std::vector<std::shared_ptr<MutationState>> states_;

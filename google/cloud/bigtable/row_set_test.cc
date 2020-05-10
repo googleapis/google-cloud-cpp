@@ -65,7 +65,7 @@ TEST(RowSetTest, VariadicConstructor) {
   using R = bigtable::RowRange;
   bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
                            "bar");
-  auto proto = row_set.as_proto();
+  auto const& proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_ranges_size());
   EXPECT_EQ(R::Range("a", "b"), R(proto.row_ranges(0)));
   EXPECT_EQ(R::LeftOpen("k", "m"), R(proto.row_ranges(1)));

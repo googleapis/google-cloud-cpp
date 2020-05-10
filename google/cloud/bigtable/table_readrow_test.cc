@@ -18,18 +18,19 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 
-namespace bigtable = google::cloud::bigtable;
+namespace bigtable = ::google::cloud::bigtable;
+namespace btproto = ::google::bigtable::v2;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 /// Define helper types and functions for this test.
 namespace {
 class TableReadRowTest : public bigtable::testing::TableTestFixture {};
 using bigtable::testing::MockReadRowsReader;
-}  // anonymous namespace
+}  // namespace
 
 TEST_F(TableReadRowTest, ReadRowSimple) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(
       chunks {
         row_key: "r1"
@@ -71,9 +72,6 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
 }
 
 TEST_F(TableReadRowTest, ReadRowMissing) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
   auto stream = google::cloud::internal::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
@@ -97,9 +95,6 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
 }
 
 TEST_F(TableReadRowTest, UnrecoverableFailure) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
   auto stream = google::cloud::internal::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
