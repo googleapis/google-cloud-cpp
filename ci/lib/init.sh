@@ -34,14 +34,6 @@ if ((CI_LIB_INIT_SH__++ != 0)); then
   return 0
 fi # include guard
 
-# Quick sanity check. The path to this script should be in position 0 of the
-# BASH_SOURCE array. The executable script that was first invoked will be in
-# the last position, i.e. index -1.
-if [[ "$(basename "${BASH_SOURCE[0]}")" != "init.sh" ]]; then
-  echo >&2 "Fatal: Unexpected BASH_SOURCE array"
-  exit 1
-fi
-
 function init::repo_root() {
   local dir="$1"
   while [[ ! -f "${dir}/WORKSPACE" ]]; do
@@ -50,7 +42,7 @@ function init::repo_root() {
   echo "${dir}"
 }
 
-PROGRAM_PATH="$(realpath "${BASH_SOURCE[-1]}")"
+PROGRAM_PATH="$(realpath "$0")"
 PROGRAM_NAME="$(basename "${PROGRAM_PATH}")"
 PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
 PROJECT_ROOT="$(init::repo_root "${PROGRAM_DIR}")"

@@ -26,7 +26,7 @@
 if [[ -z "${MODULE_SEARCH_PATH[0]:-}" ]]; then
   echo >&2 \
     "No MODULE_SEARCH_PATH set. " \
-    "Did you forget to source init.sh from ${BASH_SOURCE[-1]}?"
+    "Did you forget to source init.sh, maybe from $0?"
   exit 1
 fi
 
