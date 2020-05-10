@@ -38,9 +38,9 @@ bool IsLeapYear(int year) {
 auto constexpr kMonthsInYear = 12;
 auto constexpr kHoursInDay = 24;
 auto constexpr kMinutesInHour =
-    std::chrono::seconds(std::chrono::minutes(1)).count();
-auto constexpr kSecondsInMinute =
     std::chrono::minutes(std::chrono::hours(1)).count();
+auto constexpr kSecondsInMinute =
+    std::chrono::seconds(std::chrono::minutes(1)).count();
 
 std::chrono::system_clock::time_point ParseDateTime(
     char const*& buffer, std::string const& timestamp) {
