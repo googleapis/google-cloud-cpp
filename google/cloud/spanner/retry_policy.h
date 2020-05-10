@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status.h"
 
 namespace google {
@@ -26,20 +26,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 namespace internal {
-/// Define the gRPC status code semantics for retrying requests.
-struct SafeGrpcRetry {
-  static inline bool IsOk(google::cloud::Status const& status) {
-    return status.ok();
-  }
-  static inline bool IsTransientFailure(google::cloud::Status const& status) {
-    return status.code() == StatusCode::kUnavailable ||
-           status.code() == StatusCode::kResourceExhausted;
-  }
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
-    return !IsOk(status) && !IsTransientFailure(status);
-  }
-};
-
 /// Define the gRPC status code semantics for rerunning transactions.
 struct SafeTransactionRerun {
   static inline bool IsOk(google::cloud::Status const& status) {
@@ -53,21 +39,6 @@ struct SafeTransactionRerun {
   }
 };
 }  // namespace internal
-
-/// The base class for retry policies.
-using RetryPolicy =
-    google::cloud::internal::RetryPolicy<google::cloud::Status,
-                                         internal::SafeGrpcRetry>;
-
-/// A retry policy that limits based on time.
-using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,
-                                                    internal::SafeGrpcRetry>;
-
-/// A retry policy that limits the number of times a request can fail.
-using LimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
-        google::cloud::Status, internal::SafeGrpcRetry>;
 
 /// The base class for transaction rerun policies.
 using TransactionRerunPolicy =

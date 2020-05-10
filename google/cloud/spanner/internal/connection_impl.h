@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H
 
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/session.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>

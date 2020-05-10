@@ -17,7 +17,6 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
-    "backoff_policy.h",
     "backup.h",
     "batch_dml_result.h",
     "bytes.h",

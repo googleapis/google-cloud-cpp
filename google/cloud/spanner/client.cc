@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client.h"
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/transaction.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>

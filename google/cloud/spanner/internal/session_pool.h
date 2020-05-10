@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"

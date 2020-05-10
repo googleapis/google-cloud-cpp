@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
-TEST(TransactionRerunPolicyTest, PermanentFailure) {
-  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(Status()));
-  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(
-      Status(StatusCode::kAborted, "nothing done")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+
+TEST(RetryPolicyTest, PermanentFailure) {
+  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(Status()));
+  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kUnavailable, "try again")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kResourceExhausted, "slow down please")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kDeadlineExceeded, "not enough time")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+      Status(StatusCode::kAborted, "nothing done")));
+  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "uh oh")));
 }
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

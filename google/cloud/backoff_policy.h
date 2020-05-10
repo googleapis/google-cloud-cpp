@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,27 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKOFF_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKOFF_POLICY_H
 
-#include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
-/// The base class for spanner's backoff policies.
+/// The base class for backoff policies.
 using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 
 /// A truncated exponential backoff policy with randomized periods.
 using ExponentialBackoffPolicy =
     google::cloud::internal::ExponentialBackoffPolicy;
 
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKOFF_POLICY_H

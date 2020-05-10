@@ -64,16 +64,14 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 namespace spanner_proto = ::google::spanner::v1;
 
 std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy() {
-  return google::cloud::spanner::LimitedTimeRetryPolicy(
-             std::chrono::minutes(10))
+  return google::cloud::LimitedTimeRetryPolicy(std::chrono::minutes(10))
       .clone();
 }
 
 std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return google::cloud::spanner::ExponentialBackoffPolicy(
-             std::chrono::milliseconds(100), std::chrono::minutes(1),
-             kBackoffScaling)
+  return ExponentialBackoffPolicy(std::chrono::milliseconds(100),
+                                  std::chrono::minutes(1), kBackoffScaling)
       .clone();
 }
 
