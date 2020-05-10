@@ -420,7 +420,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
             return t;
           }));
 
-  FakeClock::now_value = clock_value_1;
+  FakeClock::now_value_ = clock_value_1;
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
   // Call Refresh to obtain the access token for our authorization header.
@@ -431,7 +431,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
   // Advance the clock past the expiration time of the token and then get a
   // new header.
-  FakeClock::now_value = clock_value_2;
+  FakeClock::now_value_ = clock_value_2;
   EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
   authorization_header = credentials.AuthorizationHeader();
   ASSERT_STATUS_OK(authorization_header);
@@ -756,7 +756,7 @@ TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
   auto const clock_value_1 = 10000;
-  FakeClock::now_value = clock_value_1;
+  FakeClock::now_value_ = clock_value_1;
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
 
   auto header = internal::nl::json::parse(components.first);
@@ -865,7 +865,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
       std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
           .time_since_epoch()
           .count(),
-      FakeClock::now_value + expires_in);
+      FakeClock::now_value_ + expires_in);
   EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
 }
 

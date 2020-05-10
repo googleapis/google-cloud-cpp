@@ -278,6 +278,7 @@ if (BUILD_TESTING)
         storage_client_testing
         testing/canonical_errors.h
         testing/mock_client.h
+        testing/mock_fake_clock.cc
         testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
