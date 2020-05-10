@@ -42,10 +42,18 @@ if [[ "$(basename "${BASH_SOURCE[0]}")" != "init.sh" ]]; then
   exit 1
 fi
 
+function init::repo_root() {
+  local dir="$1"
+  while [[ ! -f "${dir}/WORKSPACE" ]]; do
+    dir="$(dirname "$dir")"
+  done
+  echo "${dir}"
+}
+
 PROGRAM_PATH="$(realpath "${BASH_SOURCE[-1]}")"
 PROGRAM_NAME="$(basename "${PROGRAM_PATH}")"
 PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
-PROJECT_ROOT="$(git rev-parse --show-toplevel)"
+PROJECT_ROOT="$(init::repo_root "${PROGRAM_DIR}")"
 
 # Sets the path to the `module` library in PATH so that it can be found when
 # callers use `source module <args>`
