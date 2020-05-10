@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This bash library (even though it doesn't have the .sh extension) will be
+# found when callers type `source module <file>` because init.sh added this
+# directory to the caller's PATH. The <file> argument specified on the `source`
+# line will be passed to this library as '$1'. We'll look for the caller's
+# library by searching the MODULE_SEARCH_PATH array.
+#
+# This library does not use an include guard because it can, and should, be
+# sourced many times. Therefore, this library must not define any global
+# variables or functions.
+
+if [[ -z "${MODULE_SEARCH_PATH[0]:-}" ]]; then
+  echo >&2 \
+    "No MODULE_SEARCH_PATH set. " \
+    "Did you forget to source init.sh, maybe from $0?"
+  exit 1
+fi
+
+for dir in "${MODULE_SEARCH_PATH[@]}"; do
+  if [[ -r "${dir}/$1" ]]; then
+    source "${dir}/$1"
+    return 0
+  fi
+done
+
+echo >&2 "Unable to find module '$1' in search path: ${MODULE_SEARCH_PATH[@]}"
+exit 1

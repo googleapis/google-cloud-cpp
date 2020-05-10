@@ -13,13 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+source module lib/io.sh
+
 run_all_installed_quickstart_programs() {
   CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
   readonly CONFIG_DIRECTORY
   if [[ ! -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" ]]; then
     return 0
   fi
-  source "${PROJECT_ROOT}/ci/colors.sh"
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
   source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
@@ -38,25 +39,25 @@ run_all_installed_quickstart_programs() {
   local errors=""
   for library in $(quickstart_libraries); do
     echo
-    log_yellow "Running ${library}'s quickstart program for ${DISTRO}"
+    io::log_yellow "Running ${library}'s quickstart program for ${DISTRO}"
     local args=()
     while IFS="" read -r line; do
       args+=("${line}")
     done < <(quickstart_arguments "${library}")
     if ! docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
       "/i/${library}/quickstart" "${args[@]}"; then
-      log_red "Error running the quickstart program"
+      io::log_red "Error running the quickstart program"
       errors="${errors} ${library}"
     fi
   done
 
   echo
   if [[ -z "${errors}" ]]; then
-    log_green "All quickstart builds were successful"
+    io::log_green "All quickstart builds were successful"
     return 0
   fi
 
-  log_red "Build failed for ${errors:1}"
+  io::log_red "Build failed for ${errors:1}"
   return 1
 }
 

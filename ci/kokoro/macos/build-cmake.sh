@@ -15,22 +15,22 @@
 
 set -eu
 
-if [[ $# -ne 3 ]]; then
-  echo "Usage: $(basename "$0") <project-root> <source-directory> <binary-directory>"
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $(basename "$0")  <source-directory> <binary-directory>"
   exit 1
 fi
 
-readonly PROJECT_ROOT="$1"
-readonly SOURCE_DIR="$2"
-readonly BINARY_DIR="$3"
+readonly SOURCE_DIR="$1"
+readonly BINARY_DIR="$2"
 
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
-source "${PROJECT_ROOT}/ci/colors.sh"
-
 echo "================================================================"
-log_yellow "Update or install dependencies."
+io::log_yellow "Update or install dependencies."
 
 brew_env=()
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
@@ -39,7 +39,7 @@ fi
 env ${brew_env[@]+"${brew_env[@]}"} brew install libressl
 
 echo "================================================================"
-log_yellow "ccache stats"
+io::log_yellow "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
@@ -52,11 +52,11 @@ cmake_flags=(
 )
 
 echo "================================================================"
-log_yellow "Configure CMake."
+io::log_yellow "Configure CMake."
 cmake "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
 
 echo "================================================================"
-log_yellow "Compiling with ${NCPU} cpus."
+io::log_yellow "Compiling with ${NCPU} cpus."
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 # When user a super-build the tests are hidden in a subdirectory. We can tell
@@ -65,7 +65,7 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
   # If the file is not present, then this is a super build, which automatically
   # run the tests anyway, no need to run them again.
   echo "================================================================"
-  log_yellow "Running unit tests."
+  io::log_yellow "Running unit tests."
   (
     cd "${BINARY_DIR}"
     ctest \
@@ -93,7 +93,7 @@ should_run_integration_tests() {
 if should_run_integration_tests; then
   echo
   echo "================================================================"
-  log_yellow "running integration tests."
+  io::log_yellow "running integration tests."
   (
     source "${INTEGRATION_TESTS_CONFIG}"
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="${TEST_KEY_FILE_JSON}"
@@ -115,12 +115,12 @@ if should_run_integration_tests; then
 fi
 
 echo "================================================================"
-log_yellow "ccache stats"
+io::log_yellow "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
 echo "================================================================"
-log_green "Build finished sucessfully"
+io::log_green "Build finished sucessfully"
 echo "================================================================"
 
 exit 0

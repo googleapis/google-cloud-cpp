@@ -16,6 +16,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 1 ]]; then
   echo "Usage: $(basename "$0") <binary-directory>"
   exit 1
@@ -23,17 +26,9 @@ fi
 
 readonly BINARY_DIR="$1"
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../.."
-    pwd
-  )"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
-
 if [[ "${CHECK_ABI:-}" != "yes" ]]; then
   echo
-  log_yellow "Skipping ABI check as it is disabled for this build."
+  io::log_yellow "Skipping ABI check as it is disabled for this build."
   exit 0
 fi
 
@@ -42,7 +37,7 @@ check_library() {
   local return_status=0
 
   echo
-  log_yellow "Checking ABI for ${library} library."
+  io::log_yellow "Checking ABI for ${library} library."
   libdir="$(pkg-config "${library}" --variable=libdir)"
   includedir="$(pkg-config "${library}" --variable=includedir)"
   new_dump_file="${library}.actual.abi.dump"

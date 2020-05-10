@@ -16,6 +16,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 2 ]]; then
   echo "Usage: $(basename "$0") <source-directory> <binary-directory>"
   exit 1
@@ -24,16 +27,8 @@ fi
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
 
-# This script is supposed to run inside a Docker container, see
-# ci/kokoro/docker/build.sh for the expected setup.  The /v directory is a
-# volume pointing to a (clean-ish) checkout of google-cloud-cpp:
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="/v"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
-
 echo
-log_yellow "Starting docker build with ${NCPU} cores"
+io::log_yellow "Starting docker build with ${NCPU} cores"
 echo
 
 # Run the configure / compile / test cycle inside a docker image.
@@ -41,14 +36,14 @@ echo
 # ci/Dockerfile.* build scripts.
 
 echo "================================================================"
-log_yellow "Verify formatting"
+io::log_yellow "Verify formatting"
 (
   cd "${PROJECT_ROOT}"
   ./ci/check-style.sh
 )
 
 echo "================================================================"
-log_yellow "Verify markdown"
+io::log_yellow "Verify markdown"
 (
   cd "${PROJECT_ROOT}"
   ./ci/check-markdown.sh
@@ -56,13 +51,13 @@ log_yellow "Verify markdown"
 
 if command -v ccache; then
   echo "================================================================"
-  log_yellow "ccache stats"
+  io::log_yellow "ccache stats"
   ccache --show-stats
   ccache --zero-stats
 fi
 
 echo "================================================================"
-log_yellow "Configure CMake"
+io::log_yellow "Configure CMake"
 
 CMAKE_COMMAND="cmake"
 
@@ -120,7 +115,7 @@ ${CMAKE_COMMAND} \
   "-H${SOURCE_DIR}" \
   "-B${BINARY_DIR}"
 echo
-log_yellow "Finished CMake config"
+io::log_yellow "Finished CMake config"
 
 if [[ "${CLANG_TIDY:-}" == "yes" && (\
   "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
@@ -128,7 +123,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # For presubmit builds we only run clang-tidy in the files that have changed
   # w.r.t. the target branch.
   echo
-  log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
+  io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
     grep -E '\.(cc|h)$' |
@@ -137,9 +132,9 @@ fi
 
 echo
 echo "================================================================"
-log_yellow "started build"
+io::log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
-log_yellow "finished build"
+io::log_yellow "finished build"
 
 TEST_JOB_COUNT="${NCPU}"
 if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
@@ -163,12 +158,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # It is Okay to skip the tests in this case because the super build
     # automatically runs them.
     echo
-    log_yellow "Running unit tests"
+    io::log_yellow "Running unit tests"
     echo
     (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
 
     echo
-    log_yellow "Completed unit tests"
+    io::log_yellow "Completed unit tests"
     echo
   fi
 
@@ -183,7 +178,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     success=no
     for attempt in 1 2 3; do
       echo
-      log_yellow "running bigtable integration tests via CTest [${attempt}]"
+      io::log_yellow "running bigtable integration tests via CTest [${attempt}]"
       echo
       # TODO(#441) - when the emulator crashes the tests can take a long time.
       # The slowest test normally finishes in about 6 seconds, 60 seems safe.
@@ -194,12 +189,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       fi
     done
     if [[ "${success}" != "yes" ]]; then
-      log_red "integration tests failed multiple times, aborting tests."
+      io::log_red "integration tests failed multiple times, aborting tests."
       exit 1
     fi
     set -e
     echo
-    log_yellow "running storage integration tests via CTest [${attempt}]"
+    io::log_yellow "running storage integration tests via CTest [${attempt}]"
     echo
     "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
       "${BINARY_DIR}" "${ctest_args[@]}"
@@ -231,9 +226,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
   if should_run_integration_tests; then
     echo "================================================================"
-    log_yellow "Running the integration tests against production"
+    io::log_yellow "Running the integration tests against production"
 
-    # shellcheck disable=SC1091
     source "${INTEGRATION_TESTS_CONFIG}"
     export GOOGLE_APPLICATION_CREDENTIALS
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON
@@ -253,13 +247,13 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       set +e
       echo
       echo "================================================================"
-      log_yellow "Performing cleanup actions."
+      io::log_yellow "Performing cleanup actions."
       # This is normally revoked manually, but in case we exit before that point
       # we try again, ignore any errors.
       revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}" >/dev/null 2>&1
 
       delete_gcloud_config
-      log_yellow "Cleanup actions completed."
+      io::log_yellow "Cleanup actions completed."
       echo "================================================================"
       echo
       set -e
@@ -275,7 +269,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
 
     # Deactivate the recently activated service accounts to prevent accidents.
-    log_normal "Revoke service account after creating the access token."
+    io::log "Revoke service account after creating the access token."
     revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
     # Since we already run multiple integration tests against the emulator we
@@ -287,20 +281,20 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       -L integration-tests-no-emulator "${ctest_args[@]}"
 
     echo "================================================================"
-    log_yellow "Completed the integration tests against production"
+    io::log_yellow "Completed the integration tests against production"
   fi
 fi
 
 # Test the install rule and that the installation works.
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
-  log_yellow "testing install rule"
+  io::log_yellow "testing install rule"
   cmake --build "${BINARY_DIR}" --target install
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
-  log_yellow "Verify installed headers created only expected directories."
+  io::log_yellow "Verify installed headers created only expected directories."
   if comm -23 \
     <(find /var/tmp/staging/include/google/cloud -type d | sort) \
     <(
@@ -324,7 +318,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       echo /var/tmp/staging/include/google/cloud/testing_util
       /bin/true
     ) | grep -q /var/tmp; then
-    log_red "Installed directories do not match expectation."
+    io::log_red "Installed directories do not match expectation."
     echo "Found:"
     find /var/tmp/staging/include/google/cloud -type d | sort
     /bin/false
@@ -340,13 +334,13 @@ fi
 # If document generation is enabled, run it now.
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
-  log_yellow "Generating Doxygen documentation"
+  io::log_yellow "Generating Doxygen documentation"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
 if command -v ccache; then
   echo "================================================================"
-  log_yellow "ccache stats"
+  io::log_yellow "ccache stats"
   ccache --show-stats
   ccache --zero-stats
 fi

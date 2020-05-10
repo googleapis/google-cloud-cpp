@@ -15,6 +15,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 2 ]]; then
   # The arguments are ignored, but required for compatibility with
   # build-in-docker-cmake.sh
@@ -25,13 +28,6 @@ fi
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
 
-# This script is supposed to run inside a Docker container, see
-# ci/kokoro/build.sh for the expected setup.  The /v directory is a volume
-# pointing to a (clean-ish) checkout of google-cloud-cpp:
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="/v"
-fi
-source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
@@ -40,11 +36,11 @@ source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 # ci/Dockerfile.* build scripts.
 
 echo
-log_yellow "compiling quickstart programs"
+io::log_yellow "compiling quickstart programs"
 echo
 
 readonly BAZEL_BIN="/usr/local/bin/bazel"
-log_normal "Using Bazel in ${BAZEL_BIN}"
+io::log "Using Bazel in ${BAZEL_BIN}"
 
 run_vars=()
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
@@ -64,19 +60,19 @@ build_quickstart() {
 
   pushd "${PROJECT_ROOT}/google/cloud/${library}/quickstart" >/dev/null
   trap "popd >/dev/null" RETURN
-  log_normal "capture bazel version"
+  io::log "capture bazel version"
   ${BAZEL_BIN} version
-  log_normal "fetch dependencies for ${library}'s quickstart"
+  io::log "fetch dependencies for ${library}'s quickstart"
   "${PROJECT_ROOT}/ci/retry-command.sh" \
     "${BAZEL_BIN}" fetch -- ...
 
   echo
-  log_yellow "Compiling ${library}'s quickstart"
+  io::log_yellow "Compiling ${library}'s quickstart"
   "${BAZEL_BIN}" build "${bazel_args[@]}" -- ...
 
   if [[ -r "/c/kokoro-run-key.json" ]]; then
     echo
-    log_yellow "Running ${library}'s quickstart."
+    io::log_yellow "Running ${library}'s quickstart."
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
@@ -91,20 +87,20 @@ errors=""
 for library in $(quickstart_libraries); do
   echo
   echo "================================================================"
-  log_yellow "Building ${library}'s quickstart"
+  io::log_yellow "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
-    log_red "Building ${library}'s quickstart failed"
+    io::log_red "Building ${library}'s quickstart failed"
     errors="${errors} ${library}"
   else
-    log_green "Building ${library}'s quickstart was successful"
+    io::log_green "Building ${library}'s quickstart was successful"
   fi
 done
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
-  log_green "All quickstart builds were successful"
+  io::log_green "All quickstart builds were successful"
 else
-  log_red "Build failed for ${errors}"
+  io::log_red "Build failed for ${errors}"
   exit 1
 fi
 

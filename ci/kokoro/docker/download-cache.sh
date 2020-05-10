@@ -15,19 +15,15 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module lib/io.sh
+
 if [[ $# != 3 ]]; then
   echo "Usage: $(basename "$0") <cache-folder> <cache-name> <home-directory>"
   exit 1
 fi
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../.."
-    pwd
-  )"
-fi
 GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
@@ -48,8 +44,8 @@ cache_download_tarball "${CACHE_FOLDER}" "${HOME_DIR}" "${CACHE_NAME}.tar.gz"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
 echo "================================================================"
-log_normal "Extracting build cache"
+io::log "Extracting build cache"
 tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | grep -E -v 'tar:.*in the future'
-log_normal "Extraction completed"
+io::log "Extraction completed"
 
 exit 0

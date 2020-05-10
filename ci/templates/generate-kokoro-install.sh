@@ -53,11 +53,8 @@ BUILD_NAMES=(
 )
 readonly BUILD_NAMES
 
-# shellcheck disable=SC1091
 source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments-functions.sh"
-# shellcheck disable=SC1091
 source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments.sh"
-# shellcheck disable=SC1091
 source "${DESTINATION_ROOT}/ci/etc/kokoro/install/project-config.sh"
 
 generate_dockerfile() {

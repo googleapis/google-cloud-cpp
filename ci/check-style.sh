@@ -16,15 +16,16 @@
 
 set -eu
 
+source "$(dirname "$0")/lib/init.sh"
+source module lib/io.sh
+
 if [[ "${CHECK_STYLE}" != "yes" ]]; then
   echo "Skipping code style check as it is disabled for this build."
   exit 0
 fi
 
-# This script assumes it is running the top-level google-cloud-cpp directory.
-
-readonly BINDIR="$(dirname "$0")"
-source "${BINDIR}/colors.sh"
+# This script must run from the top-level google-cloud-cpp directory.
+cd "${PROJECT_ROOT}"
 
 # This controls the output format from bash's `time` command, which we use
 # below to time blocks of the script. A newline is automatically included.
@@ -34,7 +35,7 @@ problems=""
 printf "%-30s" "Running check-include-guards:"
 time {
   if ! find google/cloud -name '*.h' -print0 |
-    xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"; then
+    xargs -0 awk -f "ci/check-include-guards.gawk"; then
     problems="${problems} include-guards"
   fi
 }
@@ -100,6 +101,7 @@ time {
   if ! git ls-files -z | grep -z '\.sh$' |
     xargs -0 shellcheck \
       --exclude=SC1090 \
+      --exclude=SC1091 \
       --exclude=SC2034 \
       --exclude=SC2153 \
       --exclude=SC2181; then
@@ -152,7 +154,7 @@ fi
 # formatted files in their local git repo so they can diff them and commit the
 # correctly formatted files.
 if [[ -n "${problems}" ]]; then
-  log_red "Detected style problems (${problems:1})"
+  io::log_red "Detected style problems (${problems:1})"
   if [[ "${RUNNING_CI}" != "no" ]]; then
     exit 1
   fi
