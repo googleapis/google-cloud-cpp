@@ -33,8 +33,8 @@ namespace {
 
 namespace btproto = google::bigtable::v2;
 
+using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
 using ::testing::HasSubstr;
