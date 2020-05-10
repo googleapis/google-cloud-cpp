@@ -123,7 +123,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # For presubmit builds we only run clang-tidy in the files that have changed
   # w.r.t. the target branch.
   echo
-  log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
+  io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
     grep -E '\.(cc|h)$' |
