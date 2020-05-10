@@ -183,14 +183,6 @@ int main(int argc, char* argv[]) {
       std::cout << "# Re-using existing database\n";
       database_created = false;
     } else {
-      auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
-      if (emulator.has_value() &&
-          db.status().code() == google::cloud::StatusCode::kNotFound) {
-        // The emulator probably doesn't have the instance, and we don't care
-        // to create it as benchmarking the emulator is a non-goal. So, just
-        // succeed quietly.
-        return 0;
-      }
       std::cerr << "Error creating database: " << db.status() << "\n";
       return 1;
     }
