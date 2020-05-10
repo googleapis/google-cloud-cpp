@@ -381,7 +381,7 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetIamConfiguration_BPO) {
+TEST(PatchBucketRequestTest, DiffSetIamConfigurationBPO) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
   BucketMetadata updated = original;
@@ -400,7 +400,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration_BPO) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetIamConfiguration_UBLA) {
+TEST(PatchBucketRequestTest, DiffSetIamConfigurationUBLA) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
   BucketMetadata updated = original;
@@ -420,7 +420,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration_UBLA) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffResetIamConfiguration_BPO) {
+TEST(PatchBucketRequestTest, DiffResetIamConfigurationBPO) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketIamConfiguration configuration;
   configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
@@ -434,7 +434,7 @@ TEST(PatchBucketRequestTest, DiffResetIamConfiguration_BPO) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffResetIamConfiguration_UBLA) {
+TEST(PatchBucketRequestTest, DiffResetIamConfigurationUBLA) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketIamConfiguration configuration;
   configuration.uniform_bucket_level_access =

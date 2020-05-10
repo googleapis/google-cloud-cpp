@@ -278,6 +278,7 @@ if (BUILD_TESTING)
         storage_client_testing
         testing/canonical_errors.h
         testing/mock_client.h
+        testing/mock_fake_clock.cc
         testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
@@ -412,6 +413,7 @@ if (BUILD_TESTING)
                         CURL::libcurl
                         storage_common_options
                         nlohmann_json)
+            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()

@@ -39,12 +39,10 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 
 class BackoffPolicyMockState {
  public:
-  BackoffPolicyMockState() : num_calls_from_last_clone_(), num_clones_() {}
-
   MOCK_METHOD0(OnCompletion, std::chrono::milliseconds());
 
-  int num_calls_from_last_clone_;
-  int num_clones_;
+  int num_calls_from_last_clone_{0};
+  int num_clones_{0};
 };
 
 // Pretend independent backoff policies, but be only one under the hood.
@@ -80,7 +78,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source);
       }));
   EXPECT_CALL(*raw_source, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
@@ -99,8 +97,8 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(
-          Invoke([](ReadObjectRangeRequest) { return PermanentError(); }));
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return PermanentError(); }));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_FALSE(source);
@@ -117,8 +115,8 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 
   EXPECT_CALL(*raw_client, ReadObject(_))
       .Times(4)
-      .WillRepeatedly(
-          Invoke([](ReadObjectRangeRequest) { return TransientError(); }));
+      .WillRepeatedly(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_FALSE(source);
@@ -135,9 +133,11 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([](ReadObjectRangeRequest) { return TransientError(); }))
-      .WillOnce(Invoke([](ReadObjectRangeRequest) { return TransientError(); }))
-      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest) {
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }))
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }))
+      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source);
       }));
   EXPECT_CALL(*raw_source, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
@@ -157,7 +157,7 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source);
       }));
   EXPECT_CALL(*raw_source, Read(_, _))
@@ -194,16 +194,16 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   EXPECT_EQ(0, num_backoff_policy_called);
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source1);
       }))
-      .WillOnce(Invoke([raw_source2](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source2](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source2);
       }))
-      .WillOnce(Invoke([raw_source3](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source3](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source3);
       }))
-      .WillOnce(Invoke([raw_source4](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source4](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source4);
       }));
   EXPECT_CALL(*raw_source1, Read(_, _)).WillOnce(Return(TransientError()));
@@ -251,13 +251,15 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest) {
+      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source1);
       }))
-      .WillOnce(Invoke([](ReadObjectRangeRequest) { return TransientError(); }))
-      .WillOnce(Invoke([](ReadObjectRangeRequest) { return TransientError(); }))
-      .WillOnce(
-          Invoke([](ReadObjectRangeRequest) { return TransientError(); }));
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }))
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }))
+      .WillOnce(Invoke(
+          [](ReadObjectRangeRequest const&) { return TransientError(); }));
 
   EXPECT_CALL(*raw_source1, Read(_, _))
       .WillOnce(Return(ReadSourceResult{}))
@@ -285,11 +287,11 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest req) {
+      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
         return std::unique_ptr<ObjectReadSource>(raw_source1);
       }))
-      .WillOnce(Invoke([raw_source2](ReadObjectRangeRequest req) {
+      .WillOnce(Invoke([raw_source2](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(5, req.GetOption<ReadLast>().value());
         return std::unique_ptr<ObjectReadSource>(raw_source2);
       }));

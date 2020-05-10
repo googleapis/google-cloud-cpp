@@ -35,9 +35,8 @@ namespace {
 using ::google::cloud::storage::oauth2::Credentials;
 using ::testing::HasSubstr;
 
-StatusCode const STATUS_ERROR_CODE = StatusCode::kUnavailable;
-std::string const STATUS_ERROR_MSG =
-    "FailingCredentials doing its job, failing";
+StatusCode const kStatusErrorCode = StatusCode::kUnavailable;
+std::string const kStatusErrorMsg = "FailingCredentials doing its job, failing";
 
 // We create a credential class that always fails to fetch an access token; this
 // allows us to check that CurlClient methods fail early when their setup steps
@@ -47,7 +46,7 @@ std::string const STATUS_ERROR_MSG =
 class FailingCredentials : public Credentials {
  public:
   StatusOr<std::string> AuthorizationHeader() override {
-    return Status(STATUS_ERROR_CODE, STATUS_ERROR_MSG);
+    return Status(kStatusErrorCode, kStatusErrorMsg);
   }
 };
 
@@ -63,8 +62,8 @@ class CurlClientTest : public ::testing::Test,
       // We know exactly what error to expect, so setup the assertions to be
       // very strict.
       check_status_ = [](Status const& actual) {
-        EXPECT_EQ(STATUS_ERROR_CODE, actual.code());
-        EXPECT_THAT(actual.message(), HasSubstr(STATUS_ERROR_MSG));
+        EXPECT_EQ(kStatusErrorCode, actual.code());
+        EXPECT_THAT(actual.message(), HasSubstr(kStatusErrorMsg));
       };
     } else if (error_type == "libcurl-failure") {
       google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",

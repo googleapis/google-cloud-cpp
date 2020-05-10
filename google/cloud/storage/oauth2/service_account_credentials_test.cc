@@ -61,7 +61,7 @@ constexpr char kExpectedAssertionParam[] =
 // kAltScopeForTest and kSubjectForGrant variables).
 constexpr char kExpectedAssertionWithOptionalArgsParam[] =
     R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wiLCJzdWIiOiJ1c2VyQGZvby5iYXIifQ.D2sZntI1C0yF3LE3R0mssmidj8e9m5VU6UwzIUvDIG6yAxQLDRWK_gEdPW7etJ1xklIDwPEk0WgEsiu9pP89caPig0nK-bih7f1vbpRBTx4Vke07roW3DpFCLXFgaEXhKJYbzoYOJ62H_oBbQISC9qSF841sqEHmbjOqj5rSAR43wJm9H9juDT8apGpDNVCJM5pSo99NprLCvxUXuCBnacEsSQwbbZlLHfmBdyrllJsumx8RgFd22laEHsgPAMTxP-oM2iyf3fBEs2s1Dj7GxdWdpG6D9abJA6Hs8H1HqSwwyEWTXH6v_SPMYGsN1hIMTAWbO7J11bdHdjxo0hO5CA)""";
-constexpr long int kFixedJwtTimestamp = 1530060324;
+constexpr std::time_t kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
 constexpr char kGrantParamEscaped[] =
@@ -349,6 +349,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
 
+  // NOLINTNEXTLINE(google-runtime-int)
   auto make_request_assertion = [&info](long timestamp) {
     return [timestamp, &info](std::string const& p) {
       std::string const prefix =
@@ -419,7 +420,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
             return t;
           }));
 
-  FakeClock::now_value = clock_value_1;
+  FakeClock::now_value_ = clock_value_1;
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
   // Call Refresh to obtain the access token for our authorization header.
@@ -430,7 +431,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
   // Advance the clock past the expiration time of the token and then get a
   // new header.
-  FakeClock::now_value = clock_value_2;
+  FakeClock::now_value_ = clock_value_2;
   EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
   authorization_header = credentials.AuthorizationHeader();
   ASSERT_STATUS_OK(authorization_header);
@@ -755,7 +756,7 @@ TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
   auto const clock_value_1 = 10000;
-  FakeClock::now_value = clock_value_1;
+  FakeClock::now_value_ = clock_value_1;
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
 
   auto header = internal::nl::json::parse(components.first);
@@ -864,7 +865,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
       std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
           .time_since_epoch()
           .count(),
-      FakeClock::now_value + expires_in);
+      FakeClock::now_value_ + expires_in);
   EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
 }
 

@@ -61,7 +61,7 @@ TEST(ObjectStream, ReadMoveConstructor) {
   EXPECT_TRUE(copy.eof());
   EXPECT_EQ(StatusCode::kNotFound, copy.status().code());
 
-  EXPECT_EQ(nullptr, reader.rdbuf());
+  EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
 }
 
@@ -77,7 +77,7 @@ TEST(ObjectStream, ReadMoveAssignment) {
   EXPECT_TRUE(copy.eof());
   EXPECT_EQ(StatusCode::kNotFound, copy.status().code());
 
-  EXPECT_EQ(nullptr, reader.rdbuf());
+  EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
 }
 
@@ -91,7 +91,7 @@ TEST(ObjectStream, WriteMoveConstructor) {
   EXPECT_TRUE(copy.eof());
   EXPECT_EQ(StatusCode::kNotFound, copy.metadata().status().code());
 
-  EXPECT_EQ(nullptr, writer.rdbuf());
+  EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
 }
 
@@ -107,7 +107,7 @@ TEST(ObjectStream, WriteMoveAssignment) {
   EXPECT_TRUE(copy.eof());
   EXPECT_EQ(StatusCode::kNotFound, copy.metadata().status().code());
 
-  EXPECT_EQ(nullptr, writer.rdbuf());
+  EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
 }
 

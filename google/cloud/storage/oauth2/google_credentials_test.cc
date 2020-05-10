@@ -137,8 +137,8 @@ void WriteBase64AsBinary(std::string const& filename, char const* data) {
   os.close();
 }
 
-std::string const AUTHORIZED_USER_CRED_FILENAME = "authorized-user.json";
-std::string const AUTHORIZED_USER_CRED_CONTENTS = R"""({
+std::string const kAuthorizedUserCredFilename = "authorized-user.json";
+std::string const kAuthorizedUserCredContents = R"""({
   "client_id": "test-invalid-test-invalid.apps.googleusercontent.com",
   "client_secret": "invalid-invalid-invalid",
   "refresh_token": "1/test-test-test",
@@ -147,7 +147,7 @@ std::string const AUTHORIZED_USER_CRED_CONTENTS = R"""({
 
 void SetupAuthorizedUserCredentialsFileForTest(std::string const& filename) {
   std::ofstream os(filename);
-  os << AUTHORIZED_USER_CRED_CONTENTS;
+  os << kAuthorizedUserCredContents;
   os.close();
 }
 
@@ -162,7 +162,7 @@ void SetupAuthorizedUserCredentialsFileForTest(std::string const& filename) {
  * make this an integration test.
  */
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupAuthorizedUserCredentialsFileForTest(filename);
 
   // Test that the authorized user credentials are loaded as the default when
@@ -177,7 +177,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupAuthorizedUserCredentialsFileForTest(filename);
   // Test that the authorized user credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
@@ -190,7 +190,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromFilename) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupAuthorizedUserCredentialsFileForTest(filename);
   auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
   ASSERT_STATUS_OK(creds);
@@ -202,7 +202,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromContents) {
   // Test that the authorized user credentials are loaded from a string
   // representing JSON contents.
   auto creds = CreateAuthorizedUserCredentialsFromJsonContents(
-      AUTHORIZED_USER_CRED_CONTENTS);
+      kAuthorizedUserCredContents);
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
@@ -237,8 +237,8 @@ TEST_F(GoogleCredentialsTest,
  * make this an integration test.
  */
 
-std::string const SERVICE_ACCOUNT_CRED_FILENAME = "service-account.json";
-std::string const SERVICE_ACCOUNT_CRED_CONTENTS = R"""({
+std::string const kServiceAccountCredFilename = "service-account.json";
+std::string const kServiceAccountCredContents = R"""({
     "type": "service_account",
     "project_id": "foo-project",
     "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
@@ -253,12 +253,12 @@ std::string const SERVICE_ACCOUNT_CRED_CONTENTS = R"""({
 
 void SetupServiceAccountCredentialsFileForTest(std::string const& filename) {
   std::ofstream os(filename);
-  os << SERVICE_ACCOUNT_CRED_CONTENTS;
+  os << kServiceAccountCredContents;
   os.close();
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
@@ -273,7 +273,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
@@ -287,7 +287,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
-  std::string filename = ::testing::TempDir() + SERVICE_ACCOUNT_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kServiceAccountCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded from a file.
@@ -312,7 +312,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
 
 TEST_F(GoogleCredentialsTest,
        LoadValidServiceAccountCredentialsFromFilenameWithOptionalArgs) {
-  std::string filename = ::testing::TempDir() + SERVICE_ACCOUNT_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kServiceAccountCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded from a file.
@@ -340,7 +340,7 @@ TEST_F(GoogleCredentialsTest,
 
 TEST_F(GoogleCredentialsTest,
        LoadValidServiceAccountCredentialsFromDefaultPathsViaEnvVar) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
@@ -356,7 +356,7 @@ TEST_F(GoogleCredentialsTest,
 
 TEST_F(GoogleCredentialsTest,
        LoadValidServiceAccountCredentialsFromDefaultPathsViaGcloudFile) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
@@ -371,7 +371,7 @@ TEST_F(GoogleCredentialsTest,
 
 TEST_F(GoogleCredentialsTest,
        LoadValidServiceAccountCredentialsFromDefaultPathsWithOptionalArgs) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
@@ -388,7 +388,7 @@ TEST_F(GoogleCredentialsTest,
 TEST_F(
     GoogleCredentialsTest,
     DoNotLoadAuthorizedUserCredentialsFromCreateServiceAccountCredentialsFromDefaultPaths) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + kAuthorizedUserCredFilename;
   SetupAuthorizedUserCredentialsFileForTest(filename);
 
   // Test that the authorized user credentials are loaded as the default when
@@ -418,7 +418,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // Test that the service account credentials are loaded from a string
   // representing JSON contents.
   auto creds = CreateServiceAccountCredentialsFromJsonContents(
-      SERVICE_ACCOUNT_CRED_CONTENTS,
+      kServiceAccountCredContents,
       {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
   ASSERT_STATUS_OK(creds);

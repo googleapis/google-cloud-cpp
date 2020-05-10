@@ -29,6 +29,7 @@ storage_client_testing_hdrs = [
 ]
 
 storage_client_testing_srcs = [
+    "testing/mock_fake_clock.cc",
     "testing/mock_http_request.cc",
     "testing/object_integration_test.cc",
     "testing/random_names.cc",

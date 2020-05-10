@@ -30,9 +30,9 @@ TEST(GenerateMessageBoundaryTest, Simple) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   auto string_generator = [&generator](int n) {
-    static std::string const chars =
+    static std::string const kChars =
         "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    return google::cloud::internal::Sample(generator, n, chars);
+    return google::cloud::internal::Sample(generator, n, kChars);
   };
 
   // The magic constants here are uninteresting. We just want a large message
@@ -44,7 +44,7 @@ TEST(GenerateMessageBoundaryTest, Simple) {
 }
 
 TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
-  static std::string const chars =
+  static std::string const kChars =
       "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
@@ -56,17 +56,17 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
 
   auto g1 = google::cloud::internal::MakeDefaultPRNG();
   std::string message =
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, chars);
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, kChars);
   // Copy the PRNG to obtain the same sequence of random numbers that
   // `generator` will create later.
   g1 = generator;
-  message += google::cloud::internal::Sample(g1, kMatchedStringLength, chars);
+  message += google::cloud::internal::Sample(g1, kMatchedStringLength, kChars);
   g1 = google::cloud::internal::MakeDefaultPRNG();
   message +=
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, chars);
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, kChars);
 
   auto string_generator = [&generator](int n) {
-    return google::cloud::internal::Sample(generator, n, chars);
+    return google::cloud::internal::Sample(generator, n, kChars);
   };
 
   // The initial_size and growth_size parameters are set to

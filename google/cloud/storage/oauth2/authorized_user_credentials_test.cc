@@ -351,7 +351,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
       std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
           .time_since_epoch()
           .count(),
-      FakeClock::now_value + expires_in);
+      FakeClock::now_value_ + expires_in);
   EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
 }
 

@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -45,22 +44,22 @@ using ms = std::chrono::milliseconds;
 class ObjectCopyTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock),
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock_),
         ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                  std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options =
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ =
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
@@ -69,7 +68,7 @@ TEST_F(ObjectCopyTest, CopyObject) {
   auto expected =
       storage::internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, CopyObject(_))
+  EXPECT_CALL(*mock_, CopyObject(_))
       .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.destination_bucket());
         EXPECT_EQ("test-object-name", request.destination_object());
@@ -78,15 +77,15 @@ TEST_F(ObjectCopyTest, CopyObject) {
         return make_status_or(expected);
       }));
   StatusOr<ObjectMetadata> actual =
-      client->CopyObject("source-bucket-name", "source-object-name",
-                         "test-bucket-name", "test-object-name");
+      client_->CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectCopyTest, CopyObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, CopyObject(_)),
+      mock_, EXPECT_CALL(*mock_, CopyObject(_)),
       [](Client& client) {
         return client
             .CopyObject("source-bucket-name", "source-object-name",
@@ -105,7 +104,7 @@ TEST_F(ObjectCopyTest, CopyObjectTooManyFailures) {
 
 TEST_F(ObjectCopyTest, CopyObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, CopyObject(_)),
+      *client_, EXPECT_CALL(*mock_, CopyObject(_)),
       [](Client& client) {
         return client
             .CopyObject("source-bucket-name", "source-object-name",
@@ -141,7 +140,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
   })""";
   auto expected = internal::ObjectMetadataParser::FromString(response).value();
 
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock_, ComposeObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::ComposeObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -154,7 +153,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
         EXPECT_EQ(expected_payload, actual_payload);
         return make_status_or(expected);
       }));
-  auto actual = client->ComposeObject(
+  auto actual = client_->ComposeObject(
       "test-bucket-name", {{"object1", {}, {}}, {"object2", {}, {}}},
       "test-object-name");
   ASSERT_STATUS_OK(actual);
@@ -163,7 +162,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
 
 TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock, EXPECT_CALL(*mock, ComposeObject(_)),
+      mock_, EXPECT_CALL(*mock_, ComposeObject(_)),
       [](Client& client) {
         return client
             .ComposeObject("test-bucket-name",
@@ -183,7 +182,7 @@ TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
 
 TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, ComposeObject(_)),
+      *client_, EXPECT_CALL(*mock_, ComposeObject(_)),
       [](Client& client) {
         return client
             .ComposeObject("test-bucket-name",
@@ -195,7 +194,7 @@ TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
 }
 
 TEST_F(ObjectCopyTest, RewriteObject) {
-  EXPECT_CALL(*mock, RewriteObject(_))
+  EXPECT_CALL(*mock_, RewriteObject(_))
       .WillOnce(
           Return(StatusOr<internal::RewriteObjectResponse>(TransientError())))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
@@ -250,7 +249,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
         })""";
         return internal::RewriteObjectResponse::FromHttpResponse(response);
       }));
-  auto copier = client->RewriteObject(
+  auto copier = client_->RewriteObject(
       "test-source-bucket-name", "test-source-object-name",
       "test-destination-bucket-name", "test-destination-object-name",
       WithObjectMetadata(
@@ -281,7 +280,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
 
 TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::RewriteObjectResponse>(
-      mock, EXPECT_CALL(*mock, RewriteObject(_)),
+      mock_, EXPECT_CALL(*mock_, RewriteObject(_)),
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",
@@ -301,7 +300,7 @@ TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
 
 TEST_F(ObjectCopyTest, RewriteObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::RewriteObjectResponse>(
-      *client, EXPECT_CALL(*mock, RewriteObject(_)),
+      *client_, EXPECT_CALL(*mock_, RewriteObject(_)),
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",

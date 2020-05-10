@@ -31,7 +31,6 @@ using ::google::cloud::internal::make_unique;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -44,22 +43,22 @@ using ms = std::chrono::milliseconds;
 class WriteObjectTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    mock = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock, client_options())
-        .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock),
+    mock_ = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock_, client_options())
+        .WillRepeatedly(ReturnRef(client_options_));
+    client_.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock_),
         ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                  std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
-    client.reset();
-    mock.reset();
+    client_.reset();
+    mock_.reset();
   }
 
-  std::shared_ptr<testing::MockClient> mock;
-  std::unique_ptr<Client> client;
-  ClientOptions client_options =
+  std::shared_ptr<testing::MockClient> mock_;
+  std::unique_ptr<Client> client_;
+  ClientOptions client_options_ =
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
@@ -69,7 +68,7 @@ TEST_F(WriteObjectTest, WriteObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession(_))
       .WillOnce(Invoke([&expected](
                            internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
@@ -96,7 +95,7 @@ TEST_F(WriteObjectTest, WriteObject) {
                 std::move(mock)));
       }));
 
-  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
   stream << "Hello World!";
   stream.Close();
   ObjectMetadata actual = stream.metadata().value();
@@ -104,7 +103,7 @@ TEST_F(WriteObjectTest, WriteObject) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
-  Client client{std::shared_ptr<internal::RawClient>(mock),
+  Client client{std::shared_ptr<internal::RawClient>(mock_),
                 LimitedErrorCountRetryPolicy(2),
                 ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                          std::chrono::milliseconds(1), 2.0)};
@@ -113,7 +112,7 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         TransientError());
   };
-  EXPECT_CALL(*mock, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession(_))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner));
@@ -130,8 +129,8 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         PermanentError());
   };
-  EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
-  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+  EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(Invoke(returner));
+  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.metadata().status().ok());
   EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
@@ -139,22 +138,21 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
-  testing::MockResumableUploadSession* mock_session =
-      new testing::MockResumableUploadSession;
+  auto* mock_session = new testing::MockResumableUploadSession;
   auto returner = [mock_session](internal::ResumableUploadRequest const&) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         std::unique_ptr<internal::ResumableUploadSession>(mock_session));
   };
   std::string const empty;
-  EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
+  EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(Invoke(returner));
   EXPECT_CALL(*mock_session, UploadChunk(_))
       .WillRepeatedly(Return(PermanentError()));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
-  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
 
   // make sure it is actually sent
-  std::vector<char> data(client_options.upload_buffer_size() + 1, 'X');
+  std::vector<char> data(client_options_.upload_buffer_size() + 1, 'X');
   stream.write(data.data(), data.size());
   EXPECT_TRUE(stream.bad());
   stream.Close();

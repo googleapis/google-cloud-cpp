@@ -224,7 +224,7 @@ TEST(ObjectRequestsTest, ReadObjectRange) {
   EXPECT_THAT(actual, HasSubstr("end=1024"));
 }
 
-TEST(ObjectRequestsTest, ReadObjectRange_RequiresRangeHeader) {
+TEST(ObjectRequestsTest, ReadObjectRangeRequiresRangeHeader) {
   EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
                    .RequiresRangeHeader());
   EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
@@ -248,7 +248,7 @@ TEST(ObjectRequestsTest, ReadObjectRange_RequiresRangeHeader) {
                   .RequiresRangeHeader());
 }
 
-TEST(ObjectRequestsTest, ReadObjectRange_RequiresNoCache) {
+TEST(ObjectRequestsTest, ReadObjectRangeRequiresNoCache) {
   EXPECT_FALSE(
       ReadObjectRangeRequest("test-bucket", "test-object").RequiresNoCache());
   EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
@@ -272,7 +272,7 @@ TEST(ObjectRequestsTest, ReadObjectRange_RequiresNoCache) {
                   .RequiresNoCache());
 }
 
-TEST(ObjectRequestsTest, ReadObjectRange_RangeHeader) {
+TEST(ObjectRequestsTest, ReadObjectRangeRangeHeader) {
   EXPECT_EQ("",
             ReadObjectRangeRequest("test-bucket", "test-object").RangeHeader());
   EXPECT_EQ("Range: bytes=0-2047",
@@ -873,7 +873,8 @@ TEST(PatchObjectRequestTest, Builder) {
 }
 
 TEST(ComposeObjectRequestTest, SimpleCompose) {
-  ComposeSourceObject object1{"object1", {}, {}}, object2{"object2", {}, {}};
+  ComposeSourceObject object1{"object1", {}, {}};
+  ComposeSourceObject object2{"object2", {}, {}};
   object1.object_name = "object1";
   object1.generation.emplace(1L);
   object1.if_generation_match.emplace(1L);
