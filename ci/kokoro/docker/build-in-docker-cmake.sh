@@ -201,7 +201,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       "${BINARY_DIR}" "${ctest_args[@]}"
 
     echo
-    io::log_yellow "running storage integration tests via CTest+Emulator"
+    io::log_yellow "running spanner integration tests via CTest+Emulator"
     echo
     "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
       "${BINARY_DIR}" "${ctest_args[@]}"
