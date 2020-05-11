@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+source module etc/integration-tests-config.sh
+source module etc/quickstart-config.sh
 source module lib/io.sh
 
 run_all_installed_quickstart_programs() {
@@ -21,8 +23,6 @@ run_all_installed_quickstart_programs() {
   if [[ ! -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" ]]; then
     return 0
   fi
-  source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-  source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
   local run_args=(
     # Remove the container after running
