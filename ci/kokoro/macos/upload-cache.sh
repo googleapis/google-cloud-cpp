@@ -16,6 +16,8 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
+source module etc/quickstart-config.sh
 source module lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -29,8 +31,6 @@ readonly KOKORO_GFILE_DIR
 
 source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
@@ -55,7 +55,7 @@ if [[ -x "${BAZEL_BIN}" ]]; then
   maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
   "${BAZEL_BIN}" shutdown
 
-  for library in $(quickstart_libraries); do
+  for library in $(quickstart::libraries); do
     cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
     maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
     maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")

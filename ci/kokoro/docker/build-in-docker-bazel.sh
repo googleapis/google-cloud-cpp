@@ -16,6 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
 source module lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -71,7 +72,6 @@ echo "================================================================"
   "${bazel_args[@]}" \
   -- //google/cloud/...:all
 
-readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
@@ -86,8 +86,7 @@ should_run_integration_tests() {
     return 0
   elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
     # auto: only try to run integration tests if the config files are present
-    if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
-      "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+    if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
       "${TEST_KEY_FILE_JSON}" && -r \
       "${TEST_KEY_FILE_P12}" ]]; then
       return 0
@@ -100,8 +99,6 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log "Running the integration tests"
   echo "================================================================"
-
-  source "${INTEGRATION_TESTS_CONFIG}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"

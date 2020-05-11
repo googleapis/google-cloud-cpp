@@ -16,6 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module etc/integration-tests-config.sh
 source module lib/io.sh
 
 if [[ $# -lt 1 ]]; then
@@ -109,7 +110,6 @@ function start_emulator() {
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
-source module "etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 export RUN_SLOW_INTEGRATION_TESTS="instance"
 

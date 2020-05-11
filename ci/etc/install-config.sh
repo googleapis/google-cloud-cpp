@@ -13,7 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+# Make our include guard clean against set -o nounset.
+test -n "${CI_ETC_INSTALL_CONFIG_SH__:-}" || declare -i CI_ETC_INSTALL_CONFIG_SH__=0
+if ((CI_ETC_INSTALL_CONFIG_SH__++ != 0)); then
+  return 0
+fi # include guard
 
 GOOGLE_CLOUD_CPP_BAZEL_VERSION="2.0.0"
 readonly GOOGLE_CLOUD_CPP_BAZEL_VERSION

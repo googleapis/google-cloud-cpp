@@ -16,10 +16,9 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
+source module etc/quickstart-config.sh
 source module lib/io.sh
-
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
 echo
 echo "================================================================"
@@ -96,7 +95,7 @@ build_quickstart() {
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
-    done < <(quickstart_arguments "${library}")
+    done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${BAZEL_BIN}" run "${bazel_args[@]}" "--spawn_strategy=local" \
@@ -105,7 +104,7 @@ build_quickstart() {
 }
 
 errors=""
-for library in $(quickstart_libraries); do
+for library in $(quickstart::libraries); do
   echo
   echo "================================================================"
   io::log_yellow "Building ${library}'s quickstart"

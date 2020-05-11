@@ -16,6 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module etc/integration-tests-config.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"
@@ -31,13 +32,10 @@ shift
 ctest_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
-CMDDIR="$(dirname "$0")"
-readonly CMDDIR
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account-hmac@example.com"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account-sign@example.com"

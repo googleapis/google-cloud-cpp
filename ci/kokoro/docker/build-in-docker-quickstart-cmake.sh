@@ -16,6 +16,8 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
+source module etc/quickstart-config.sh
 source module lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -27,9 +29,6 @@ fi
 
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
-
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
 # Run the "CMake+vcpkg" cycle inside a Docker image. This script is designed to
 # work in the context created by the ci/Dockerfile.* build scripts.
@@ -98,14 +97,14 @@ build_quickstart() {
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
-    done < <(quickstart_arguments "${library}")
+    done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "${binary_dir}/quickstart" "${args[@]}"
   fi
 }
 
 errors=""
-for library in $(quickstart_libraries); do
+for library in $(quickstart::libraries); do
   echo
   echo "================================================================"
   io::log_yellow "Building ${library}'s quickstart"

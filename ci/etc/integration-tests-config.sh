@@ -13,6 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Make our include guard clean against set -o nounset.
+test -n "${CI_ETC_INTEGRATION_TESTS_CONFIG_SH__:-}" || declare -i CI_ETC_INTEGRATION_TESTS_CONFIG_SH__=0
+if ((CI_ETC_INTEGRATION_TESTS_CONFIG_SH__++ != 0)); then
+  return 0
+fi # include guard
+
 #
 # Common configuration parameters.
 #
