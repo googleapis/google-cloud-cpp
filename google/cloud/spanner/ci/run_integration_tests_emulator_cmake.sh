@@ -15,28 +15,27 @@
 
 set -eu
 
+source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module lib/io.sh
+
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"
   exit 1
 fi
 
-BINARY_DIR="$(
+# The first argument is where the build scripts have put the binaries, i.e., the
+# -B argument to the cmake configuration step.
+CMAKE_BINARY_DIR="$(
   cd "${1}"
   pwd
 )"
-readonly BINARY_DIR
+readonly CMAKE_BINARY_DIR
 shift
+
+# Any additional arguments for the ctest invocation.
 ctest_args=("$@")
 
-CMDDIR="$(dirname "$0")"
-readonly CMDDIR
-PROJECT_ROOT="$(
-  cd "${CMDDIR}/../../../.."
-  pwd
-)"
-readonly PROJECT_ROOT
-
-SPANNER_EMULATOR_PID=0
+spanner_emulator_pid=0
 if [[ -z "${CLOUD_SDK_LOCATION:-}" ]]; then
   echo 1>&2 "You must set CLOUD_SDK_LOCATION to find the emulator"
   exit 1
@@ -51,9 +50,9 @@ if [[ ! -x "${SPANNER_EMULATOR_CMD}" ]]; then
 fi
 
 function kill_emulator() {
-  echo -n "Killing Spanner Emulator [${SPANNER_EMULATOR_PID}] "
-  kill "${SPANNER_EMULATOR_PID}" || echo -n "-"
-  wait "${SPANNER_EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
+  echo -n "Killing Spanner Emulator [${spanner_emulator_pid}] "
+  kill "${spanner_emulator_pid}" || echo -n "-"
+  wait "${spanner_emulator_pid}" >/dev/null 2>&1 || echo -n "+"
   echo -n "."
   echo " done."
 }
@@ -103,7 +102,7 @@ function start_emulator() {
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
   "${SPANNER_EMULATOR_CMD}" --host_port localhost:0 >emulator.log 2>&1 </dev/null &
-  SPANNER_EMULATOR_PID=$!
+  spanner_emulator_pid=$!
   local -r emulator_port="$(wait_for_port emulator.log)"
   export SPANNER_EMULATOR_HOST="localhost:${emulator_port}"
 }
@@ -114,7 +113,7 @@ source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 export RUN_SLOW_INTEGRATION_TESTS="instance"
 
-cd "${BINARY_DIR}"
+cd "${CMAKE_BINARY_DIR}"
 start_emulator
 
 ctest -L "spanner-integration-tests" "${ctest_args[@]}"
