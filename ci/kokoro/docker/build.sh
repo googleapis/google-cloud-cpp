@@ -21,8 +21,8 @@ source module lib/io.sh
 
 export CC=gcc
 export CXX=g++
-export DISTRO=ubuntu-install
-export DISTRO_VERSION=18.04
+export DISTRO=fedora-install
+export DISTRO_VERSION=31
 export CMAKE_SOURCE_DIR="."
 
 # By default we run the integration tests *if* all the configuration files
