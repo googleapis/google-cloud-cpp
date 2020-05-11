@@ -55,9 +55,17 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
 
   config.project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  config.instance_id = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID")
-                           .value_or("");
+  auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+  if (!emulator.has_value()) {
+    // When using the emulator it is easier to create an instance each time, and
+    // PickRandomInstance() will do that for us. While we do not want to
+    // benchmark the emulator, we do want to smoke test the benchmarks
+    // themselves, and running them against the emulator is the faster way to do
+    // so.
+    config.instance_id = google::cloud::internal::GetEnv(
+                             "GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID")
+                             .value_or("");
+  }
 
   struct Flag {
     std::string flag_name;

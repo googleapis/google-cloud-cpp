@@ -446,6 +446,9 @@ docker_flags=(
   "--env" "CBT=/usr/local/google-cloud-sdk/bin/cbt"
   "--env" "CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
 
+  # Configure the location of the Cloud SDK.
+  "--env" "CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk"
+
   # Let the Docker image script know what kind of terminal we are using, that
   # produces properly colorized error messages.
   "--env" "TERM=${TERM:-dumb}"

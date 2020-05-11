@@ -59,6 +59,22 @@ class InstanceAdminClientTest : public testing::Test {
             .value_or("");
     run_slow_instance_tests_ =
         run_slow_integration_tests.find("instance") != std::string::npos;
+
+    if (emulator_) {
+      // When running against the emulator the instance might not exist, in that
+      // case we create the instance to run as much of the test as possible:
+      Instance in(project_id_, instance_id_);
+      auto create_instance_request =
+          spanner::CreateInstanceRequestBuilder(
+              in, "projects/" + in.project_id() +
+                      "/instanceConfigs/emulator-config")
+              .Build();
+      StatusOr<google::spanner::admin::instance::v1::Instance> instance =
+          client_.CreateInstance(create_instance_request).get();
+      ASSERT_TRUE(instance ||
+                  instance.status().code() == StatusCode::kAlreadyExists)
+          << " status=" << instance.status();
+    }
   }
   InstanceAdminClient client_;
   bool emulator_;
@@ -94,7 +110,6 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
   Instance in(project_id_, instance_id_);
 
   auto instance = client_.GetInstance(in);
-  if (emulator_ && instance.status().code() == StatusCode::kNotFound) return;
   EXPECT_STATUS_OK(instance);
   EXPECT_THAT(instance->name(), HasSubstr(project_id_));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id_));
@@ -115,13 +130,10 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
-  if (!run_slow_instance_tests_) {
-    GTEST_SKIP();
-  }
-  if (!spanner_testing::CompilerSupportsRegexp()) {
-    // This test (not the code) depends on regexp.
-    GTEST_SKIP();
-  }
+  if (!run_slow_instance_tests_) GTEST_SKIP();
+  // This test (not the code) depends on regexp.
+  if (!spanner_testing::CompilerSupportsRegexp()) GTEST_SKIP();
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string instance_id =
       google::cloud::spanner_testing::RandomInstanceName(generator);
@@ -198,7 +210,7 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 }
 
 TEST_F(InstanceAdminClientTest, InstanceIam) {
-  if (emulator_) return;
+  if (emulator_) GTEST_SKIP();
 
   ASSERT_FALSE(project_id_.empty());
   ASSERT_FALSE(instance_id_.empty());
