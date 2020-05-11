@@ -18,7 +18,7 @@ find_package(googleapis CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_CLIENT_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_testing")
