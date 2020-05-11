@@ -17,6 +17,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/repo-config.sh
 source module lib/io.sh
 
 export BAZEL_CONFIG=""
@@ -56,8 +57,6 @@ else
   echo "the KOKORO_JOB_NAME environment variable."
   exit 1
 fi
-
-source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 
 echo "================================================================"
 io::log_yellow "change working directory to project root."

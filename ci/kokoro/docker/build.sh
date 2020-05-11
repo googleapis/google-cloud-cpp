@@ -17,6 +17,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/repo-config.sh
 source module lib/io.sh
 
 export CC=gcc
@@ -250,7 +251,6 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
 fi
 
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
-source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"

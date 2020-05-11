@@ -13,13 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-quickstart_libraries() {
+# Make our include guard clean against set -o nounset.
+test -n "${CI_ETC_QUICKSTART_CONFIG_SH__:-}" || declare -i CI_ETC_QUICKSTART_CONFIG_SH__=0
+if ((CI_ETC_QUICKSTART_CONFIG_SH__++ != 0)); then
+  return 0
+fi # include guard
+
+function quickstart::libraries() {
   echo "bigtable"
   echo "spanner"
   echo "storage"
 }
 
-quickstart_arguments() {
+function quickstart::arguments() {
   local -r library="$1"
   case "${library}" in
   "bigtable")

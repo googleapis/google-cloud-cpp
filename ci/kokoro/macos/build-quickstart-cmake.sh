@@ -84,7 +84,7 @@ build_quickstart() {
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
-    done < <(quickstart_arguments "${library}")
+    done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${binary_dir}/quickstart" "${args[@]}"
@@ -92,7 +92,7 @@ build_quickstart() {
 }
 
 errors=""
-for library in $(quickstart_libraries); do
+for library in $(quickstart::libraries); do
   echo
   echo "================================================================"
   io::log_yellow "Building ${library}'s quickstart"

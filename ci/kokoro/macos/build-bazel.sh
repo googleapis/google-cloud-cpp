@@ -16,6 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
 source module lib/io.sh
 
 echo
@@ -78,13 +79,11 @@ io::log_yellow "build all targets."
   "${bazel_args[@]}" -- //google/cloud/...:all
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="${CONFIG_DIR}/kokoro-run-key.p12"
 
 should_run_integration_tests() {
-  if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
-    "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+  if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
     "${TEST_KEY_FILE_JSON}" && -r \
     "${TEST_KEY_FILE_P12}" ]]; then
     return 0
@@ -97,7 +96,6 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running integration tests."
 
-  source "${INTEGRATION_TESTS_CONFIG}"
   bazel_args+=(
     # Common configuration
     "--test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"

@@ -17,6 +17,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module etc/integration-tests-config.sh
 source module lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -161,7 +162,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     io::log_yellow "Running unit tests"
     echo
     (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
-
     echo
     io::log_yellow "Completed unit tests"
     echo
@@ -207,7 +207,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
-  readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
   readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
@@ -221,8 +220,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       return 0
     elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
       # auto: only try to run integration tests if the config files are present
-      if [[ -r "${INTEGRATION_TESTS_CONFIG}" && -r \
-        "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
+      if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
         "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r \
         "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ]]; then
         return 0
@@ -235,7 +233,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo "================================================================"
     io::log_yellow "Running the integration tests against production"
 
-    source "${INTEGRATION_TESTS_CONFIG}"
     export GOOGLE_APPLICATION_CREDENTIALS
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12

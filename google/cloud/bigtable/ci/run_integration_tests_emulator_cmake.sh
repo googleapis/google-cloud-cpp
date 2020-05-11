@@ -15,6 +15,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module etc/integration-tests-config.sh
+
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"
   exit 1
@@ -31,18 +34,10 @@ ctest_args=("$@")
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
 
-CMDDIR="$(dirname "$0")"
-readonly CMDDIR
-PROJECT_ROOT="$(
-  cd "${CMDDIR}/../../../.."
-  pwd
-)"
-readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
-source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 
