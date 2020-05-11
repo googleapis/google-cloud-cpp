@@ -334,7 +334,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
   env -C "${PROJECT_ROOT}" \
-    PKG_CONFIG_PATH=/var/tmp/staging/lib/pkgconfig \
+    PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig" \
     ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}"
 fi
 
