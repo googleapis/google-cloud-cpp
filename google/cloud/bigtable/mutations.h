@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H
 
+#include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
@@ -110,6 +111,13 @@ Mutation SetCell(std::string family, ColumnType&& column, std::int64_t value) {
   set_cell.set_value(google::cloud::internal::EncodeBigEndian(value));
   return m;
 }
+
+/**
+ * Create a mutation to set a cell value based on a `bigtable::Cell`.
+ *
+ * These mutations are not idempotent and not retried by default.
+ */
+Mutation SetCell(Cell const& cell);
 
 //@{
 /**

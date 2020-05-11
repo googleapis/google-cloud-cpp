@@ -65,6 +65,16 @@ TEST(MutationsTest, SetCellNumericValue) {
             server_set.op.set_cell().timestamp_micros());
 }
 
+TEST(MutationsTest, SetCellFromBigtableCell) {
+  auto actual = bigtable::SetCell(
+      bigtable::Cell("some_row_key", "family", "col", 1234000, "value"));
+  ASSERT_TRUE(actual.op.has_set_cell());
+  EXPECT_EQ("family", actual.op.set_cell().family_name());
+  EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
+  EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
+  EXPECT_EQ("value", actual.op.set_cell().value());
+}
+
 /// @test Verify that DeleteFromColumn() does not validates inputs.
 TEST(MutationsTest, DeleteFromColumnNoValidation) {
   auto reversed = bigtable::DeleteFromColumn("family", "col", 20_us, 0_us);
