@@ -142,7 +142,7 @@ docker build -t "${INSTALL_RUN_IMAGE}" \
 
 echo "================================================================"
 io::log_yellow "Run quickstart programs."
-source "${PROJECT_ROOT}/ci/etc/kokoro/install/run-installed-programs.sh"
+source "${PROGRAM_DIR}/run-installed-programs.sh"
 
 echo
 io::log_green "Build successful."
