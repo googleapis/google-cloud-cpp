@@ -220,6 +220,29 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
   }
 }
 
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableCommandType function) {
+  auto command = [=](std::vector<std::string> argv) {
+    if (argv.size() != 3 + args.size()) {
+      std::ostringstream os;
+      os << name << " <project-id> <instance-id> <table-id>";
+      char const* sep = " ";
+      for (auto const& a : args) {
+        os << sep << a;
+      }
+      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+    }
+    google::cloud::bigtable::Table table(
+        google::cloud::bigtable::CreateDefaultDataClient(
+            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+        argv[2]);
+    argv.erase(argv.begin(), argv.begin() + 3);
+    function(table, argv);
+  };
+  return {name, command};
+}
+
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       TableAdminCommandType const& function) {

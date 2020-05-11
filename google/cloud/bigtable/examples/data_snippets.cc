@@ -131,7 +131,6 @@ void BulkApply(google::cloud::bigtable::Table table,
 
 void ReadRow(google::cloud::bigtable::Table table,
              std::vector<std::string> const& argv) {
-  //! [read row] [START bigtable_read_error]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string row_key) {
@@ -158,212 +157,7 @@ void ReadRow(google::cloud::bigtable::Table table,
       }
       std::cout << ">\n";
     }
-  }
-  //! [read row] [END bigtable_read_error]
-  (std::move(table), argv.at(0));
-}
-
-void ReadRows(google::cloud::bigtable::Table table,
-              std::vector<std::string> const&) {
-  //! [read rows] [START bigtable_read_range]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table) {
-    // Create the range of rows to read.
-    auto range = cbt::RowRange::Range("key-000010", "key-000020");
-    // Filter the results, only include values from the "col0" column in the
-    // "fam" column family, and only get the latest value.
-    cbt::Filter filter = cbt::Filter::Chain(
-        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
-        cbt::Filter::Latest(1));
-    // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      if (row->cells().size() != 1) {
-        std::ostringstream os;
-        os << "Unexpected number of cells in " << row->row_key();
-        throw std::runtime_error(os.str());
-      }
-      auto const& cell = row->cells().at(0);
-      std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
-    }
-  }
-  //! [read rows] [END bigtable_read_range]
-  (std::move(table));
-}
-
-void ReadRowsWithLimit(google::cloud::bigtable::Table table,
-                       std::vector<std::string> const&) {
-  //! [read rows with limit] [START bigtable_read_filter]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table) {
-    // Create the range of rows to read.
-    auto range = cbt::RowRange::Range("key-000010", "key-000020");
-    // Filter the results, only include values from the "col0" column in the
-    // "fam" column family, and only get the latest value.
-    cbt::Filter filter = cbt::Filter::Chain(
-        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
-        cbt::Filter::Latest(1));
-    // Read and print the first 5 rows in the range.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, 5, filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      if (row->cells().size() != 1) {
-        std::ostringstream os;
-        os << "Unexpected number of cells in " << row->row_key();
-        throw std::runtime_error(os.str());
-      }
-      auto const& cell = row->cells().at(0);
-      std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
-    }
-  }
-  //! [read rows with limit] [END bigtable_read_filter]
-  (std::move(table));
-}
-
-void ReadKeysSet(std::vector<std::string> argv) {
-  if (argv.size() < 4) {
-    throw Usage{
-        "read-keys-set <project-id> <instance-id> <table-id>"
-        " key1 [key2 ...]"};
-  }
-
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-      argv[2]);
-  argv.erase(argv.begin(), argv.begin() + 3);
-
-  // [START bigtable_read_keys_set]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table, std::vector<std::string> const& row_keys) {
-    auto row_set = cbt::RowSet();
-
-    for (auto const& row_key : row_keys) {
-      row_set.Append(row_key);
-    }
-
-    cbt::Filter filter = cbt::Filter::Latest(1);
-    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key() << ":\n";
-      for (auto& cell : row->cells()) {
-        std::cout << "\t" << cell.family_name() << ":"
-                  << cell.column_qualifier() << "    @ "
-                  << cell.timestamp().count() << "us\n"
-                  << "\t\"" << cell.value() << '"' << "\n";
-      }
-    }
-  }
-  // [END bigtable_read_keys_set]
-  (std::move(table), argv);
-}
-
-void ReadRowSetPrefix(google::cloud::bigtable::Table table,
-                      std::vector<std::string> const& argv) {
-  //! [read rowset prefix] [START bigtable_read_prefix]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table, std::string prefix) {
-    auto row_set = cbt::RowSet();
-
-    auto range_prefix = cbt::RowRange::Prefix(prefix);
-    row_set.Append(range_prefix);
-
-    cbt::Filter filter = cbt::Filter::Latest(1);
-    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key() << ":\n";
-      for (cbt::Cell const& cell : row->cells()) {
-        std::cout << "\t" << cell.family_name() << ":"
-                  << cell.column_qualifier() << "    @ "
-                  << cell.timestamp().count() << "us\n"
-                  << "\t\"" << cell.value() << '"' << "\n";
-      }
-    }
-  }
-  //! [read rowset prefix] [END bigtable_read_prefix]
-  (std::move(table), argv.at(0));
-}
-
-void ReadPrefixList(google::cloud::bigtable::Table table,
-                    std::vector<std::string> const& argv) {
-  //! [read prefix list] [START bigtable_read_prefix_list]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table, std::vector<std::string> const& prefix_list) {
-    cbt::Filter filter = cbt::Filter::Latest(1);
-    auto row_set = cbt::RowSet();
-    for (auto const& prefix : prefix_list) {
-      auto row_range_prefix = cbt::RowRange::Prefix(prefix);
-      row_set.Append(row_range_prefix);
-    }
-
-    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key() << ":\n";
-      for (cbt::Cell const& cell : row->cells()) {
-        std::cout << "\t" << cell.family_name() << ":"
-                  << cell.column_qualifier() << "    @ "
-                  << cell.timestamp().count() << "us\n"
-                  << "\t\"" << cell.value() << '"' << "\n";
-      }
-    }
-  }
-  //! [read prefix list] [END bigtable_read_prefix_list]
-  (std::move(table), argv);
-}
-
-void ReadMultipleRanges(std::vector<std::string> argv) {
-  if (argv.size() < 5) {
-    throw Usage{
-        "read-multiple-ranges <project-id> <instance-id> <table-id>"
-        " <begin1> <end1> [<begin2> <end2> ...]"};
-  }
-
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-      argv[2]);
-  argv.erase(argv.begin(), argv.begin() + 3);
-
-  std::vector<std::pair<std::string, std::string>> ranges;
-  while (!argv.empty()) {
-    auto begin = argv.at(0);
-    argv.erase(argv.begin());
-    if (argv.empty()) {
-      throw Usage{"read-multiple-ranges - error: mismatched [begin,end) pair"};
-    }
-    auto end = argv.at(0);
-    argv.erase(argv.begin());
-    ranges.emplace_back(std::make_pair(begin, end));
-  }
-
-  // [START bigtable_read_multiple_ranges]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table,
-     std::vector<std::pair<std::string, std::string>> const& ranges) {
-    auto row_set = cbt::RowSet();
-    for (auto const& range : ranges) {
-      row_set.Append(cbt::RowRange::Range(range.first, range.second));
-    }
-    auto filter = cbt::Filter::Latest(1);
-
-    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key() << ":\n";
-      for (cbt::Cell const& cell : row->cells()) {
-        std::cout << "\t" << cell.family_name() << ":"
-                  << cell.column_qualifier() << "    @ "
-                  << cell.timestamp().count() << "us\n"
-                  << "\t\"" << cell.value() << '"' << "\n";
-      }
-    }
-  }
-  // [END bigtable_read_multiple_ranges]
-  (std::move(table), std::move(ranges));
+  }(std::move(table), argv.at(0));
 }
 
 void CheckAndMutate(google::cloud::bigtable::Table table,
@@ -891,32 +685,6 @@ void WriteConditionally(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
-using TableCommandType = std::function<void(google::cloud::bigtable::Table,
-                                            std::vector<std::string>)>;
-
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableCommandType function) {
-  auto command = [=](std::vector<std::string> argv) {
-    if (argv.size() != 3 + args.size()) {
-      std::ostringstream os;
-      os << name << " <project-id> <instance-id> <table-id>";
-      char const* sep = " ";
-      for (auto const& a : args) {
-        os << sep << a;
-      }
-      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
-    }
-    google::cloud::bigtable::Table table(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-        argv[2]);
-    argv.erase(argv.begin(), argv.begin() + 3);
-    function(table, argv);
-  };
-  return {name, command};
-}
-
 std::string DefaultTablePrefix() { return "tbl-data-"; }
 
 void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
@@ -1034,34 +802,9 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
   ApplyCustomRetry(table, {"apply-custom-retry"});
   std::cout << "Running BulkApply() example" << std::endl;
   BulkApply(table, {});
-  std::cout << "Running ReadRowsWithLimit() example" << std::endl;
-  ReadRowsWithLimit(table, {});
-  std::cout << "Running ReadRows() example" << std::endl;
-  ReadRows(table, {});
 
   std::cout << "\nPopulate data for prefix and row set examples" << std::endl;
   PopulateTableHierarchy(table, {});
-  std::cout << "Running ReadKeySet() example" << std::endl;
-  ReadKeysSet({table.project_id(), table.instance_id(), table.table_id(),
-               "root/0/0/1", "root/0/1/0"});
-  std::cout << "Running ReadRowSetPrefix() example" << std::endl;
-  ReadRowSetPrefix(table, {"root/0/1"});
-  std::cout << "Running ReadPrefixList() example" << std::endl;
-  ReadPrefixList(table, {"root/0/1/", "root/2/1/"});
-  std::cout << "Running ReadMultipleRanges() example [1]" << std::endl;
-  ReadMultipleRanges({table.project_id(), table.instance_id(), table.table_id(),
-                      "root/0/1/", "root/2/1/"});
-  std::cout << "Running ReadMultipleRanges() example [2]" << std::endl;
-  ReadMultipleRanges({table.project_id(), table.instance_id(), table.table_id(),
-                      "root/0/1/", "root/2/1/", "key-000007", "key-000009"});
-  try {
-    std::cout << "Running ReadMultipleRanges() example [3]" << std::endl;
-    ReadMultipleRanges({table.project_id(), table.instance_id(),
-                        table.table_id(), "root/0/1/", "root/2/1/",
-                        "mismatched-begin-end-pair"});
-
-  } catch (std::exception const&) {
-  }
 
   std::cout << "Running SampleRows() example" << std::endl;
   SampleRows(table, {});
@@ -1153,19 +896,13 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
+  using google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {}, Apply),
       MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},
                        ApplyRelaxedIdempotency),
       MakeCommandEntry("apply-custom-retry", {"<row-key>"}, ApplyCustomRetry),
       MakeCommandEntry("bulk-apply", {}, BulkApply),
-      MakeCommandEntry("read-row", {"<row-key>"}, ReadRow),
-      MakeCommandEntry("read-rows", {}, ReadRows),
-      MakeCommandEntry("read-rows-with-limit", {}, ReadRowsWithLimit),
-      {"read-keys-set", ReadKeysSet},
-      MakeCommandEntry("read-rowset-prefix", {"prefix"}, ReadRowSetPrefix),
-      MakeCommandEntry("read-prefix-list", {"[prefixes]"}, ReadPrefixList),
-      {"read-multiple-ranges", ReadMultipleRanges},
       MakeCommandEntry("check-and-mutate", {"<row-key>"}, CheckAndMutate),
       MakeCommandEntry("check-and-mutate-not-present", {"<row-key>"},
                        CheckAndMutateNotPresent),

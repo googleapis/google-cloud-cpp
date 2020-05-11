@@ -94,6 +94,13 @@ class AutoShutdownCQ {
   std::thread th_;
 };
 
+using TableCommandType = std::function<void(google::cloud::bigtable::Table,
+                                            std::vector<std::string>)>;
+
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableCommandType function);
+
 using TableAdminCommandType = std::function<void(
     google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
 
