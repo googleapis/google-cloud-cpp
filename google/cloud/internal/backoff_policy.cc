@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/backoff_policy.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -21,8 +21,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  auto tmp =
-      google::cloud::internal::make_unique<ExponentialBackoffPolicy>(*this);
+  auto tmp = absl::make_unique<ExponentialBackoffPolicy>(*this);
   // Force OnCompletion() to reseed the generator.
   tmp->generator_.reset();
   return std::unique_ptr<BackoffPolicy>(std::move(tmp));

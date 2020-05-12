@@ -147,7 +147,6 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
-    internal/make_unique.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
     internal/port_platform.h
@@ -179,7 +178,7 @@ add_library(
     internal/example_driver.h)
 target_link_libraries(
     google_cloud_cpp_common
-    PUBLIC Threads::Threads
+    PUBLIC absl::memory Threads::Threads
     PRIVATE google_cloud_cpp_common_options)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 target_include_directories(

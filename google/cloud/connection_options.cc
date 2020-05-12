@@ -14,7 +14,6 @@
 
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include <sstream>

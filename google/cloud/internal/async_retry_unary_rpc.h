@@ -17,8 +17,8 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/version.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/empty.pb.h>
 
 namespace google {
@@ -144,8 +144,7 @@ class RetryAsyncUnaryRpc {
   /// The callback to start another iteration of the retry loop.
   static void StartIteration(std::shared_ptr<RetryAsyncUnaryRpc> self,
                              CompletionQueue cq) {
-    auto context =
-        ::google::cloud::internal::make_unique<grpc::ClientContext>();
+    auto context = ::absl::make_unique<grpc::ClientContext>();
 
     cq.MakeUnaryRpc(self->async_call_, self->request_, std::move(context))
         .then([self, cq](future<StatusOr<Response>> fut) {

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/memory/memory.h"
 
 // There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
@@ -70,7 +70,7 @@ void CompletionQueueImpl::CancelAll() {
 }
 
 std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
-  return google::cloud::internal::make_unique<grpc::Alarm>();
+  return absl::make_unique<grpc::Alarm>();
 }
 
 std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(

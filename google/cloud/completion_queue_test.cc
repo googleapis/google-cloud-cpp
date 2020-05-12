@@ -159,7 +159,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
   auto mock_cq = std::make_shared<MockCompletionQueue>();
   CompletionQueue cq(mock_cq);
 
-  auto mock_reader = google::cloud::internal::make_unique<MockTableReader>();
+  auto mock_reader = absl::make_unique<MockTableReader>();
   EXPECT_CALL(*mock_reader, Finish(_, _, _))
       .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
         table->set_name("test-table-name");
@@ -190,8 +190,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
                            grpc::CompletionQueue* cq) {
               return mock_client.AsyncGetTable(context, request, cq);
             },
-            request,
-            google::cloud::internal::make_unique<grpc::ClientContext>())
+            request, absl::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<btadmin::Table>> f) {
             auto table = f.get();
             ASSERT_STATUS_OK(table);
@@ -210,7 +209,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   auto mock_cq = std::make_shared<MockCompletionQueue>();
   CompletionQueue cq(mock_cq);
 
-  auto mock_reader = google::cloud::internal::make_unique<MockRowReader>();
+  auto mock_reader = absl::make_unique<MockRowReader>();
   EXPECT_CALL(*mock_reader, StartCall(_)).Times(1);
   EXPECT_CALL(*mock_reader, Read(_, _)).Times(2);
   EXPECT_CALL(*mock_reader, Finish(_, _)).Times(1);
@@ -239,7 +238,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
                      grpc::CompletionQueue* cq) {
         return mock_client.AsyncReadRows(context, request, cq);
       },
-      request, google::cloud::internal::make_unique<grpc::ClientContext>(),
+      request, absl::make_unique<grpc::ClientContext>(),
       [&on_read_counter](btproto::ReadRowsResponse const&) {
         ++on_read_counter;
         return make_ready_future(true);
@@ -287,8 +286,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
                            grpc::CompletionQueue* cq) {
               return mock_client.AsyncGetTable(context, request, cq);
             },
-            get_table_request,
-            google::cloud::internal::make_unique<grpc::ClientContext>())
+            get_table_request, absl::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<btadmin::Table>> f) {
             EXPECT_EQ(StatusCode::kCancelled, f.get().status().code());
           });
@@ -301,7 +299,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
                      grpc::CompletionQueue* cq) {
         return mock_client.AsyncReadRows(context, request, cq);
       },
-      read_request, google::cloud::internal::make_unique<grpc::ClientContext>(),
+      read_request, absl::make_unique<grpc::ClientContext>(),
       [](btproto::ReadRowsResponse const&) {
         ADD_FAILURE() << "OnReadHandler unexpectedly called";
         return make_ready_future(true);
