@@ -33,17 +33,6 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 
 include(GoogleCloudCppCommon)
 
-if (MSVC)
-    # MSVC warns about using sscanf(), this is a valuable warning, so we do not
-    # want to disable for everything. But for these files the usage is "safe".
-    # This is a relatively obscure feature to add compile flags to just few
-    # sources:
-    set_property(
-        SOURCE value.cc internal/date.cc
-        APPEND_STRING
-        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
-endif ()
-
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     spanner_client

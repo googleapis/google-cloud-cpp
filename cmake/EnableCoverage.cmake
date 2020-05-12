@@ -16,6 +16,7 @@
 
 # For the GCC and Clang compiler families, enable a Coverage build type.
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "^(Clang|GNU)$")
+    include(CheckCXXCompilerFlag)
 
     # But only if the compiler supports the --coverage flag.  Older versions of
     # these compilers did not support it.

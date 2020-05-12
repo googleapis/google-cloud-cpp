@@ -167,7 +167,10 @@ add_library(
     tracing_options.h
     tracing_options.cc
     version.cc
-    version.h)
+    version.h
+    internal/strerror.h
+    internal/strerror.cc
+    internal/diagnostics_push.inc)
 target_link_libraries(
     google_cloud_cpp_common
     PUBLIC Threads::Threads
@@ -180,16 +183,6 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-if (MSVC)
-    # MSVC warns about using sscanf(), this is a valuable warning, so we do not
-    # want to disable for everything. But for these files the usage is "safe".
-    # This is a relatively obscure feature to add compile flags to just one
-    # source:
-    set_property(
-        SOURCE internal/parse_rfc3339.cc
-        APPEND_STRING
-        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
-endif ()
 
 set_target_properties(
     google_cloud_cpp_common

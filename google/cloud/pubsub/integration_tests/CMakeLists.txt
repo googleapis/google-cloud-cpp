@@ -60,17 +60,6 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         add_dependencies(pubsub-client-integration-tests ${target})
     endforeach ()
 
-    if (MSVC)
-        # MSVC warns about using localtime(), this is a valuable warning, so we
-        # do not want to disable for everything. But for these files the usage
-        # is "safe". This is a relatively obscure feature to add compile flags
-        # to just one source:
-        set_property(
-            SOURCE instance_admin_integration_test.cc
-            APPEND_STRING
-            PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
-    endif ()
-
     if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         return()
     endif ()

@@ -30,6 +30,7 @@ std::string DateToString(Date d) {
   return std::string(buf.data());
 }
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 StatusOr<Date> DateFromString(std::string const& s) {
   std::int64_t year;
   int month;
@@ -52,6 +53,7 @@ StatusOr<Date> DateFromString(std::string const& s) {
   }
   return date;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 #include "google/cloud/internal/throw_delegate.h"
 #include <array>
 #include <cctype>
@@ -20,7 +21,6 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-
 namespace {
 [[noreturn]] void ReportError(std::string const& timestamp, char const* msg) {
   std::ostringstream os;
@@ -183,6 +183,7 @@ std::chrono::seconds ParseOffset(char const*& buffer,
   return std::chrono::seconds(0);
 }
 }  // anonymous namespace
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 namespace google {
 namespace cloud {

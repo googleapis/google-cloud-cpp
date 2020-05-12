@@ -77,6 +77,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       /*subject*/ {}};
 }
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source, std::string const& default_token_uri) {
   OpenSSL_add_all_algorithms();
@@ -183,6 +184,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
                                        /*scopes*/ {},
                                        /*subject*/ {}};
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,

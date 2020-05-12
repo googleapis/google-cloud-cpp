@@ -241,16 +241,6 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-if (MSVC)
-    # MSVC warns about using sscanf(), this is a valuable warning, so we do not
-    # want to disable for everything. But for these files the usage is "safe".
-    # This is a relatively obscure feature to add compile flags to just one
-    # source:
-    set_property(
-        SOURCE internal/object_requests.cc
-        APPEND_STRING
-        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
-endif ()
 
 # GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
 # variable may be used without being initialized), in this file. GCC-8.0 no
@@ -260,8 +250,10 @@ endif ()
 # it was fixed. I do not believe we need to be that accurate.
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
                                                 VERSION_LESS 8.0)
-    set_property(SOURCE list_objects_reader.cc APPEND_STRING
-                 PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
+    set_property(
+        SOURCE list_objects_reader.cc
+        APPEND_STRING
+        PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
 endif ()
 
 set_target_properties(

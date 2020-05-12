@@ -14,11 +14,11 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
-#include <cstring>
 #include <ios>
 #include <string>
 
@@ -384,8 +384,8 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
   errno = 0;
   std::int64_t x = {std::strtoll(s.c_str(), &end, 10)};
   if (errno != 0) {
-    auto const err = std::string(std::strerror(errno));
-    return Status(StatusCode::kUnknown, err + ": \"" + s + "\"");
+    return Status(StatusCode::kUnknown,
+                  google::cloud::internal::strerror(errno) + ": \"" + s + "\"");
   }
   if (end == s.c_str()) {
     return Status(StatusCode::kUnknown, "No numeric conversion: \"" + s + "\"");

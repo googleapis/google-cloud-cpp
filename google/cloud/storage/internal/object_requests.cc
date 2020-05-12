@@ -316,6 +316,7 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   return os << "}";
 }
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto loc = response.headers.find(std::string("content-range"));
@@ -370,6 +371,7 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   return ReadObjectRangeResponse{std::move(response.payload), first_byte,
                                  last_byte, object_size};
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
   return os << "ReadObjectRangeResponse={range=" << r.first_byte << "-"
