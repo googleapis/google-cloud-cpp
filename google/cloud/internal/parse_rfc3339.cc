@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/parse_rfc3339.h"
-#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 #include "google/cloud/internal/throw_delegate.h"
 #include <array>
 #include <cctype>
@@ -21,6 +20,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+
 namespace {
 [[noreturn]] void ReportError(std::string const& timestamp, char const* msg) {
   std::ostringstream os;
@@ -42,6 +42,7 @@ auto constexpr kMinutesInHour =
 auto constexpr kSecondsInMinute =
     std::chrono::seconds(std::chrono::minutes(1)).count();
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 std::chrono::system_clock::time_point ParseDateTime(
     char const*& buffer, std::string const& timestamp) {
   // Use std::mktime to compute the number of seconds because RFC 3339 requires
@@ -182,8 +183,9 @@ std::chrono::seconds ParseOffset(char const*& buffer,
   ++buffer;
   return std::chrono::seconds(0);
 }
-}  // anonymous namespace
+
 #include "google/cloud/internal/diagnostics_pop.inc"
+}  // anonymous namespace
 
 namespace google {
 namespace cloud {
