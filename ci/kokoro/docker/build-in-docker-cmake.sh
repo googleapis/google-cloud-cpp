@@ -130,7 +130,8 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # TODO(#3958) - use a simple regular expression like '\.(h|cc)$' when all
   # targets are clang-tidy clean.
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$'
+    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$' |
+    xargs -r echo
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
     grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$' |
     xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
