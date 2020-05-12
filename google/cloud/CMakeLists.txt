@@ -111,7 +111,6 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 # the client library
 add_library(
     google_cloud_cpp_common
-    # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     future.h
     future_generic.h
@@ -216,6 +215,7 @@ if (BUILD_TESTING)
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
+        internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
         internal/utility_test.cc
