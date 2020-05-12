@@ -349,8 +349,8 @@ struct ImplicitlyConvertible {
 };
 
 TEST(OptionalTest, ValueConstructorWithImplicitConversion) {
-  optional<int> i = 123.5;
-  EXPECT_EQ(*i, 123);
+  optional<double> d = 123;
+  EXPECT_NEAR(*d, 123.0, 0.01);
   optional<std::string> x = "hi";
   EXPECT_EQ(*x, "hi");
   optional<std::string> implicit_conversion = ImplicitlyConvertible{};

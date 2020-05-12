@@ -31,7 +31,15 @@ std::string RandomInstanceName(
   auto now = std::chrono::system_clock::now();
   auto time_t = std::chrono::system_clock::to_time_t(now);
   std::string date = "1973-03-01";
-  std::strftime(&date[0], date.size() + 1, "%Y-%m-%d", std::localtime(&time_t));
+  // The standard C++ function to convert time_t to a struct tm is not thread
+  // safe (it holds global storage), use some OS specific stuff here:
+  std::tm tm{};
+#if _WIN32
+  gmtime_s(&tm, &time_t);
+#else
+  gmtime_r(&time_t, &tm);
+#endif  // _WIN32
+  std::strftime(&date[0], date.size() + 1, "%Y-%m-%d", &tm);
   std::string prefix = "temporary-instance-" + date + "-";
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +

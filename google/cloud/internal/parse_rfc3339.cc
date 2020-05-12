@@ -42,6 +42,7 @@ auto constexpr kMinutesInHour =
 auto constexpr kSecondsInMinute =
     std::chrono::seconds(std::chrono::minutes(1)).count();
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 std::chrono::system_clock::time_point ParseDateTime(
     char const*& buffer, std::string const& timestamp) {
   // Use std::mktime to compute the number of seconds because RFC 3339 requires
@@ -182,6 +183,8 @@ std::chrono::seconds ParseOffset(char const*& buffer,
   ++buffer;
   return std::chrono::seconds(0);
 }
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 }  // anonymous namespace
 
 namespace google {

@@ -145,9 +145,9 @@ std::string RandomInstanceId(std::string const& prefix,
     throw std::invalid_argument("prefix too long for RandomInstanceId()");
   }
   auto const suffix_len = kMaxInstanceIdLength - timestamped_prefix.size();
-  return timestamped_prefix +
-         google::cloud::internal::Sample(generator, suffix_len,
-                                         "abcdefhijklmnopqrstuvwxyz0123456789");
+  return timestamped_prefix + google::cloud::internal::Sample(
+                                  generator, static_cast<int>(suffix_len),
+                                  "abcdefhijklmnopqrstuvwxyz0123456789");
 }
 
 std::string RandomClusterId(std::string const& prefix,
@@ -156,15 +156,13 @@ std::string RandomClusterId(std::string const& prefix,
     throw std::invalid_argument("prefix too long for RandomClusterId()");
   }
   auto const suffix_len = kMaxClusterIdLength - prefix.size();
-  return prefix +
-         google::cloud::internal::Sample(generator, suffix_len,
-                                         "abcdefhijklmnopqrstuvwxyz0123456789");
+  return prefix + google::cloud::internal::Sample(
+                      generator, static_cast<int>(suffix_len),
+                      "abcdefhijklmnopqrstuvwxyz0123456789");
 }
 
 void CleanupOldInstances(std::string const& prefix,
                          google::cloud::bigtable::InstanceAdmin admin) {
-  namespace cbt = google::cloud::bigtable;
-
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_instance_id = InstancePrefix(prefix, threshold);
@@ -222,7 +220,7 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
 
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
-    TableCommandType function) {
+    TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     if (argv.size() != 3 + args.size()) {
       std::ostringstream os;

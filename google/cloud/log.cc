@@ -40,7 +40,8 @@ struct Timestamp {
     gmtime_r(&tt, &tm);
 #endif
     auto const ss = tp - std::chrono::system_clock::from_time_t(tt);
-    nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(ss).count();
+    nanos = static_cast<std::int32_t>(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(ss).count());
   }
   std::tm tm;
   std::int32_t nanos;

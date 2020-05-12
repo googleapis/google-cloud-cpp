@@ -95,7 +95,7 @@ ObjectMetadata MockObject(std::string const& object_name, int generation) {
 class ExpectedDeletions {
  public:
   explicit ExpectedDeletions(
-      std::map<std::pair<std::string, int>, Status> expectations)
+      std::map<std::pair<std::string, std::int64_t>, Status> expectations)
       : deletions_(std::move(expectations)) {}
 
   ~ExpectedDeletions() {
@@ -123,7 +123,8 @@ class ExpectedDeletions {
   };
 
  private:
-  Status RemoveExpectation(std::string const& object_name, int generation) {
+  Status RemoveExpectation(std::string const& object_name,
+                           std::int64_t generation) {
     std::lock_guard<std::mutex> lk(mu_);
     auto it = deletions_.find(std::make_pair(object_name, generation));
     if (it == deletions_.end()) {
@@ -137,7 +138,7 @@ class ExpectedDeletions {
     return res;
   }
   std::mutex mu_;
-  std::map<std::pair<std::string, int>, Status> deletions_;
+  std::map<std::pair<std::string, std::int64_t>, Status> deletions_;
 };
 
 class ParallelUploadTest : public ::testing::Test {

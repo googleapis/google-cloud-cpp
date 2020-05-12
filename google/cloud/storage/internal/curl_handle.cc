@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
-#include <string.h>  // NOLINT
 #ifdef _WIN32
 #include <winsock.h>
 #else
@@ -67,6 +67,7 @@ extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
 
 extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
                                     curlsocktype purpose) {
+  auto errno_msg = [] { return google::cloud::internal::strerror(errno); };
   auto* options = reinterpret_cast<CurlHandle::SocketOptions*>(userdata);
   switch (purpose) {
     case CURLSOCKTYPE_IPCXN:
@@ -84,8 +85,7 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
         if (r != 0) {
           GCP_LOG(ERROR) << __func__
                          << "(): setting socket recv buffer size to " << size
-                         << " error=" << ::strerror(errno) << " [" << errno
-                         << "]";
+                         << " error=" << errno_msg() << " [" << errno << "]";
           return CURL_SOCKOPT_ERROR;
         }
       }
@@ -101,8 +101,7 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
         if (r != 0) {
           GCP_LOG(ERROR) << __func__
                          << "(): setting socket send buffer size to " << size
-                         << " error=" << ::strerror(errno) << " [" << errno
-                         << "]";
+                         << " error=" << errno_msg() << " [" << errno << "]";
           return CURL_SOCKOPT_ERROR;
         }
       }

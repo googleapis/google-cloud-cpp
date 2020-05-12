@@ -55,7 +55,7 @@ class ReadResult {
 
   // Returns a zero-based index of the last row returned by the `Rows()`
   // iterator. If no rows have been read yet, returns -1.
-  int CurrentOffset() { return source_->CurrentOffset(); }
+  std::size_t CurrentOffset() { return source_->CurrentOffset(); }
 
   // Returns a value between 0 and 1, inclusive, that indicates the estimated
   // progress in the result set based on the number of rows the server has
