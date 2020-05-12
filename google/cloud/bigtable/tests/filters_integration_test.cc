@@ -19,49 +19,74 @@
 namespace {
 namespace bigtable = google::cloud::bigtable;
 
-class FilterIntegrationTest : public bigtable::testing::TableIntegrationTest {
- protected:
-  /**
-   * Create some complex rows in @p table.
-   *
-   * Create the following rows in @p table, the magic values for the column
-   * families are defined above.
-   *
-   * | Row Key                 | Family  | Column | Contents     |
-   * | :---------------------- | :------ | :----- | :----------- |
-   * | "{prefix}/one-cell"     | family1 | c      | cell @ 3000  |
-   * | "{prefix}/two-cells"    | family1 | c      | cell @ 3000  |
-   * | "{prefix}/two-cells"    | family1 | c2     | cell @ 3000  |
-   * | "{prefix}/many"         | family1 | c      | cell @ 0     |
-   * | "{prefix}/many"         | family1 | c      | cell @ 1000  |
-   * | "{prefix}/many"         | family1 | c      | cell @ 2000  |
-   * | "{prefix}/many"         | family1 | c      | cell @ 3000  |
-   * | "{prefix}/many-columns" | family1 | c0     | cell @ 3000  |
-   * | "{prefix}/many-columns" | family1 | c1     | cell @ 3000  |
-   * | "{prefix}/many-columns" | family1 | c2     | cell @ 3000  |
-   * | "{prefix}/many-columns" | family1 | c3     | cell @ 3000  |
-   * | "{prefix}/complex"      | family1 | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family1 | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family1 | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family1 | col9   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family2 | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family2 | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family2 | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | family2 | col9   | cell @ 3000, 6000 |
-   *
-   */
-  void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
+using FilterIntegrationTest = bigtable::testing::TableIntegrationTest;
+
+/**
+ * Create some complex rows in @p table.
+ *
+ * Create the following rows in @p table, the magic values for the column
+ * families are defined above.
+ *
+ * | Row Key                 | Family  | Column | Contents     |
+ * | :---------------------- | :------ | :----- | :----------- |
+ * | "{prefix}/one-cell"     | family1 | c      | cell @ 3000  |
+ * | "{prefix}/two-cells"    | family1 | c      | cell @ 3000  |
+ * | "{prefix}/two-cells"    | family1 | c2     | cell @ 3000  |
+ * | "{prefix}/many"         | family1 | c      | cell @ 0     |
+ * | "{prefix}/many"         | family1 | c      | cell @ 1000  |
+ * | "{prefix}/many"         | family1 | c      | cell @ 2000  |
+ * | "{prefix}/many"         | family1 | c      | cell @ 3000  |
+ * | "{prefix}/many-columns" | family1 | c0     | cell @ 3000  |
+ * | "{prefix}/many-columns" | family1 | c1     | cell @ 3000  |
+ * | "{prefix}/many-columns" | family1 | c2     | cell @ 3000  |
+ * | "{prefix}/many-columns" | family1 | c3     | cell @ 3000  |
+ * | "{prefix}/complex"      | family1 | col0   | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family1 | col1   | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family1 | ...    | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family1 | col9   | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family2 | col0   | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family2 | col1   | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family2 | ...    | cell @ 3000, 6000 |
+ * | "{prefix}/complex"      | family2 | col9   | cell @ 3000, 6000 |
+ *
+ */
+void CreateComplexRows(bigtable::Table& table, std::string const& prefix) {
+  namespace bt = bigtable;
+  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+
+  bt::BulkMutation mutation;
+  // Prepare a set of rows, with different numbers of cells, columns, and
+  // column families.
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/one-cell", {bt::SetCell("family1", "c", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/two-cells", {bt::SetCell("family1", "c", 3_ms, "foo"),
+                              bt::SetCell("family1", "c2", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many", {bt::SetCell("family1", "c", 0_ms, "foo"),
+                         bt::SetCell("family1", "c", 1_ms, "foo"),
+                         bt::SetCell("family1", "c", 2_ms, "foo"),
+                         bt::SetCell("family1", "c", 3_ms, "foo")}));
+  mutation.emplace_back(bt::SingleRowMutation(
+      prefix + "/many-columns", {bt::SetCell("family1", "c0", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c1", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c2", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c3", 3_ms, "foo")}));
+  // This one is complicated: create a mutation with several families and
+  // columns.
+  bt::SingleRowMutation complex(prefix + "/complex");
+  for (int i = 0; i != 4; ++i) {
+    for (int j = 0; j != 10; ++j) {
+      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
+                                       "col" + std::to_string(j), 3_ms, "foo"));
+      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
+                                       "col" + std::to_string(j), 6_ms, "bar"));
+    }
+  }
+  mutation.emplace_back(std::move(complex));
+  auto failures = table.BulkApply(std::move(mutation));
+  ASSERT_TRUE(failures.empty());
 };
-
-}  // namespace
-
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleMock(&argc, argv);
-  (void)::testing::AddGlobalTestEnvironment(
-      new ::bigtable::testing::TableTestEnvironment);
-
-  return RUN_ALL_TESTS();
-}
 
 TEST_F(FilterIntegrationTest, PassAll) {
   auto table = GetTable();
@@ -284,7 +309,7 @@ TEST_F(FilterIntegrationTest, ValueRange) {
 TEST_F(FilterIntegrationTest, CellsRowLimit) {
   auto table = GetTable();
   std::string const prefix = "cell-row-limit-prefix";
-  CreateComplexRows(table, prefix);
+  ASSERT_NO_FATAL_FAILURE(CreateComplexRows(table, prefix));
 
   auto result = ReadRows(table, bigtable::Filter::CellsRowLimit(3));
 
@@ -306,7 +331,7 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
 TEST_F(FilterIntegrationTest, CellsRowOffset) {
   auto table = GetTable();
   std::string const prefix = "cell-row-offset-prefix";
-  CreateComplexRows(table, prefix);
+  ASSERT_NO_FATAL_FAILURE(CreateComplexRows(table, prefix));
 
   // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
   // the separator and the successor of "/" is "0".
@@ -326,7 +351,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
-  using namespace google::cloud::testing_util::chrono_literals;
+  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
   // TODO(#151) - remove workarounds for emulator bug(s).
   if (UsingCloudBigtableEmulator()) {
     return;
@@ -335,9 +360,9 @@ TEST_F(FilterIntegrationTest, RowSample) {
   auto table = GetTable();
   std::string const prefix = "row-sample-prefix";
 
-  constexpr int row_count = 20000;
+  int constexpr kRowCount = 20000;
   bigtable::BulkMutation bulk;
-  for (int row = 0; row != row_count; ++row) {
+  for (int row = 0; row != kRowCount; ++row) {
     std::string row_key = prefix + "/" + std::to_string(row);
     bulk.emplace_back(bigtable::SingleRowMutation(
         row_key, bigtable::SetCell("family1", "col", 4_ms, "foo")));
@@ -374,16 +399,16 @@ TEST_F(FilterIntegrationTest, RowSample) {
   //
   constexpr double kSampleRate = 0.75;
   constexpr double kAllowedError = 0.05;
-  const std::size_t kMinCount = static_cast<std::size_t>(
-      std::floor((kSampleRate - kAllowedError) * row_count));
-  const std::size_t kMaxCount = static_cast<std::size_t>(
-      std::ceil((kSampleRate + kAllowedError) * row_count));
+  auto const min_count = static_cast<std::size_t>(
+      std::floor((kSampleRate - kAllowedError) * kRowCount));
+  auto const max_count = static_cast<std::size_t>(
+      std::ceil((kSampleRate + kAllowedError) * kRowCount));
 
   // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
   // the separator and the successor of "/" is "0".
   auto result = ReadRows(table, bigtable::Filter::RowSample(kSampleRate));
-  EXPECT_LE(kMinCount, result.size());
-  EXPECT_GE(kMaxCount, result.size());
+  EXPECT_LE(min_count, result.size());
+  EXPECT_GE(max_count, result.size());
 }
 
 TEST_F(FilterIntegrationTest, StripValueTransformer) {
@@ -575,46 +600,12 @@ TEST_F(FilterIntegrationTest, InterleaveFromRange) {
                                              filter_collection.end()));
   CheckEqualUnordered(expected, actual);
 }
-
-namespace {
-
-void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
-                                              std::string const& prefix) {
-  namespace bt = bigtable;
-  using namespace google::cloud::testing_util::chrono_literals;
-
-  bt::BulkMutation mutation;
-  // Prepare a set of rows, with different numbers of cells, columns, and
-  // column families.
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/one-cell", {bt::SetCell("family1", "c", 3_ms, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/two-cells", {bt::SetCell("family1", "c", 3_ms, "foo"),
-                              bt::SetCell("family1", "c2", 3_ms, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many", {bt::SetCell("family1", "c", 0_ms, "foo"),
-                         bt::SetCell("family1", "c", 1_ms, "foo"),
-                         bt::SetCell("family1", "c", 2_ms, "foo"),
-                         bt::SetCell("family1", "c", 3_ms, "foo")}));
-  mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many-columns", {bt::SetCell("family1", "c0", 3_ms, "foo"),
-                                 bt::SetCell("family1", "c1", 3_ms, "foo"),
-                                 bt::SetCell("family1", "c2", 3_ms, "foo"),
-                                 bt::SetCell("family1", "c3", 3_ms, "foo")}));
-  // This one is complicated: create a mutation with several families and
-  // columns.
-  bt::SingleRowMutation complex(prefix + "/complex");
-  for (int i = 0; i != 4; ++i) {
-    for (int j = 0; j != 10; ++j) {
-      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
-                                       "col" + std::to_string(j), 3_ms, "foo"));
-      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
-                                       "col" + std::to_string(j), 6_ms, "bar"));
-    }
-  }
-  mutation.emplace_back(std::move(complex));
-  auto failures = table.BulkApply(std::move(mutation));
-  ASSERT_TRUE(failures.empty());
-}
-
 }  // namespace
+
+int main(int argc, char* argv[]) {
+  ::testing::InitGoogleMock(&argc, argv);
+  (void)::testing::AddGlobalTestEnvironment(
+      new ::bigtable::testing::TableTestEnvironment);
+
+  return RUN_ALL_TESTS();
+}

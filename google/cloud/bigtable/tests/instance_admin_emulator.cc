@@ -262,9 +262,8 @@ class InstanceAdminEmulator final
       if (std::string::npos == cluster.first.find(project_path)) {
         continue;
       }
-      if (return_all_clusters) {
-        *response->add_clusters() = cluster.second;
-      } else if (std::string::npos != cluster.first.find(prefix)) {
+      if (return_all_clusters ||
+          std::string::npos != cluster.first.find(prefix)) {
         *response->add_clusters() = cluster.second;
       }
     }
@@ -483,15 +482,13 @@ class InstanceAdminEmulator final
   std::map<std::string, google::longrunning::Operation> pending_operations_;
   std::map<std::string, btadmin::AppProfile> app_profiles_;
   std::map<std::string, google::iam::v1::Policy> policies_;
-  long counter_ = 0;
+  std::uint64_t counter_ = 0;
 };
 
 class LongRunningEmulator final
     : public google::longrunning::Operations::Service {
  public:
-  explicit LongRunningEmulator() {}
-
-  virtual grpc::Status ListOperations(
+  grpc::Status ListOperations(
       grpc::ServerContext*, google::longrunning::ListOperationsRequest const*,
       google::longrunning::ListOperationsResponse*) override {
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
@@ -519,7 +516,7 @@ class LongRunningEmulator final
 /// The implementation of EmbeddedServer.
 class DefaultEmbeddedServer {
  public:
-  explicit DefaultEmbeddedServer(std::string server_address) {
+  explicit DefaultEmbeddedServer(std::string const& server_address) {
     int port;
     builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
                               &port);

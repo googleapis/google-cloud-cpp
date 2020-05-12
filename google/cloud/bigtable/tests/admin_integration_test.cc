@@ -31,7 +31,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
-  void SetUp() {
+  void SetUp() override {
     if (google::cloud::internal::GetEnv(
             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {
@@ -46,8 +46,6 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
-
-  void TearDown() {}
 
   int CountMatchingTables(std::string const& table_id,
                           std::vector<btadmin::Table> const& tables) {
@@ -71,8 +69,8 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
 
-  int const TABLE_COUNT = 5;
-  for (int index = 0; index < TABLE_COUNT; ++index) {
+  int constexpr kTableCount = 5;
+  for (int index = 0; index < kTableCount; ++index) {
     std::string table_id = RandomTableId();
     auto previous_count = CountMatchingTables(table_id, *previous_table_list);
     ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
@@ -231,8 +229,6 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
 /// @test Verify that `bigtable::TableAdmin` WaitForConsistencyCheck works as
 /// expected.
 TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   // WaitForConsistencyCheck() only makes sense on a replicated table, we need
   // to create an instance with at least 2 clusters to test it.
   auto project_id = bigtable::testing::TableTestEnvironment::project_id();

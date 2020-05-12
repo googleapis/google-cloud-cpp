@@ -18,39 +18,16 @@
 
 namespace {
 namespace bigtable = google::cloud::bigtable;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::std::chrono::duration_cast;
+using ::std::chrono::microseconds;
+using ::std::chrono::milliseconds;
 
-class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
- protected:
-  /// Use Table::Apply() to insert a single row.
-  void Apply(bigtable::Table& table, std::string row_key,
-             std::vector<bigtable::Cell> const& cells);
+using DataIntegrationTest = bigtable::testing::TableIntegrationTest;
 
-  /// Use Table::BulkApply() to insert multiple rows.
-  void BulkApply(bigtable::Table& table,
-                 std::vector<bigtable::Cell> const& cells);
-
-  /// The column families used in this test.
-  std::string const family1 = "family1";
-  std::string const family2 = "family2";
-  std::string const family3 = "family3";
-  std::string const family4 = "family4";
-};
-
-}  // anonymous namespace
-
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleMock(&argc, argv);
-  (void)::testing::AddGlobalTestEnvironment(
-      new ::bigtable::testing::TableTestEnvironment);
-
-  return RUN_ALL_TESTS();
-}
-
-namespace {
-
-void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
-                                std::vector<bigtable::Cell> const& cells) {
-  using namespace std::chrono;
+/// Use Table::Apply() to insert a single row.
+void Apply(bigtable::Table& table, std::string const& row_key,
+           std::vector<bigtable::Cell> const& cells) {
   auto mutation = bigtable::SingleRowMutation(row_key);
   for (auto const& cell : cells) {
     mutation.emplace_back(bigtable::SetCell(
@@ -62,9 +39,9 @@ void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
   ASSERT_STATUS_OK(status);
 }
 
-void DataIntegrationTest::BulkApply(bigtable::Table& table,
-                                    std::vector<bigtable::Cell> const& cells) {
-  using namespace std::chrono;
+/// Use Table::BulkApply() to insert multiple rows.
+void BulkApply(bigtable::Table& table,
+               std::vector<bigtable::Cell> const& cells) {
   std::map<bigtable::RowKeyType, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     auto key = cell.row_key();
@@ -81,19 +58,23 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   auto failures = table.BulkApply(std::move(bulk));
   ASSERT_TRUE(failures.empty());
 }
-}  // anonymous namespace
 
-using namespace google::cloud::testing_util::chrono_literals;
+/// The column families used in this test.
+std::string const kFamily1 = "family1";
+std::string const kFamily2 = "family2";
+std::string const kFamily3 = "family3";
+std::string const kFamily4 = "family4";
 
 TEST_F(DataIntegrationTest, TableApply) {
   auto table = GetTable();
 
   std::string const row_key = "row-key-1";
-  std::vector<bigtable::Cell> created{{row_key, family4, "c0", 1000, "v1000"},
-                                      {row_key, family4, "c1", 2000, "v2000"}};
+  std::vector<bigtable::Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
+                                      {row_key, kFamily4, "c1", 2000, "v2000"}};
   Apply(table, row_key, created);
-  std::vector<bigtable::Cell> expected{{row_key, family4, "c0", 1000, "v1000"},
-                                       {row_key, family4, "c1", 2000, "v2000"}};
+  std::vector<bigtable::Cell> expected{
+      {row_key, kFamily4, "c0", 1000, "v1000"},
+      {row_key, kFamily4, "c1", 2000, "v2000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
@@ -103,24 +84,24 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
   auto table = GetTable();
 
   std::vector<bigtable::Cell> created{
-      {"row-key-1", family4, "c0", 1000, "v1000"},
-      {"row-key-1", family4, "c1", 2000, "v2000"},
-      {"row-key-2", family4, "c0", 1000, "v1000"},
-      {"row-key-2", family4, "c1", 2000, "v2000"},
-      {"row-key-3", family4, "c0", 1000, "v1000"},
-      {"row-key-3", family4, "c1", 2000, "v2000"},
-      {"row-key-4", family4, "c0", 1000, "v1000"},
-      {"row-key-4", family4, "c1", 2000, "v2000"}};
+      {"row-key-1", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-1", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-2", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-2", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-3", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-3", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-4", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-4", kFamily4, "c1", 2000, "v2000"}};
   BulkApply(table, created);
   std::vector<bigtable::Cell> expected{
-      {"row-key-1", family4, "c0", 1000, "v1000"},
-      {"row-key-1", family4, "c1", 2000, "v2000"},
-      {"row-key-2", family4, "c0", 1000, "v1000"},
-      {"row-key-2", family4, "c1", 2000, "v2000"},
-      {"row-key-3", family4, "c0", 1000, "v1000"},
-      {"row-key-3", family4, "c1", 2000, "v2000"},
-      {"row-key-4", family4, "c0", 1000, "v1000"},
-      {"row-key-4", family4, "c1", 2000, "v2000"}};
+      {"row-key-1", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-1", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-2", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-2", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-3", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-3", kFamily4, "c1", 2000, "v2000"},
+      {"row-key-4", kFamily4, "c0", 1000, "v1000"},
+      {"row-key-4", kFamily4, "c1", 2000, "v2000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
@@ -131,13 +112,14 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   auto table = GetTable();
 
   auto mutation = bigtable::SingleRowMutation(
-      row_key, bigtable::SetCell(family4, "c1", 1_ms, "V1000"),
-      bigtable::SetCell(family4, "c2", 2_ms, "V2000"),
-      bigtable::SetCell(family4, "c3", 3_ms, "V3000"));
+      row_key, bigtable::SetCell(kFamily4, "c1", 1_ms, "V1000"),
+      bigtable::SetCell(kFamily4, "c2", 2_ms, "V2000"),
+      bigtable::SetCell(kFamily4, "c3", 3_ms, "V3000"));
   ASSERT_STATUS_OK(table.Apply(std::move(mutation)));
-  std::vector<bigtable::Cell> expected{{row_key, family4, "c1", 1000, "V1000"},
-                                       {row_key, family4, "c2", 2000, "V2000"},
-                                       {row_key, family4, "c3", 3000, "V3000"}};
+  std::vector<bigtable::Cell> expected{
+      {row_key, kFamily4, "c1", 1000, "V1000"},
+      {row_key, kFamily4, "c2", 2000, "V2000"},
+      {row_key, kFamily4, "c3", 3000, "V3000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
@@ -148,10 +130,11 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
-  std::vector<bigtable::Cell> created{{row_key1, family4, "c1", 1000, "v1000"},
-                                      {row_key2, family4, "c2", 2000, "v2000"}};
+  std::vector<bigtable::Cell> created{
+      {row_key1, kFamily4, "c1", 1000, "v1000"},
+      {row_key2, kFamily4, "c2", 2000, "v2000"}};
   std::vector<bigtable::Cell> expected{
-      {row_key1, family4, "c1", 1000, "v1000"}};
+      {row_key1, kFamily4, "c1", 1000, "v1000"}};
 
   CreateCells(table, created);
   auto row_cell = table.ReadRow(row_key1, bigtable::Filter::PassAllFilter());
@@ -166,7 +149,8 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
-  std::vector<bigtable::Cell> created{{row_key1, family4, "c1", 1000, "v1000"}};
+  std::vector<bigtable::Cell> created{
+      {row_key1, kFamily4, "c1", 1000, "v1000"}};
 
   CreateCells(table, created);
   auto row_cell = table.ReadRow(row_key2, bigtable::Filter::PassAllFilter());
@@ -182,10 +166,10 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
   std::string const long_value(1024, 'v');  // a long value
 
   std::vector<bigtable::Cell> created{
-      {row_key1, family4, "c1", 1000, "data1"},
-      {row_key1, family4, "c2", 1000, "data2"},
-      {row_key2, family4, "c1", 1000, ""},
-      {row_key3, family4, "c1", 1000, long_value}};
+      {row_key1, kFamily4, "c1", 1000, "data1"},
+      {row_key1, kFamily4, "c2", 1000, "data2"},
+      {row_key2, kFamily4, "c1", 1000, ""},
+      {row_key3, kFamily4, "c1", 1000, long_value}};
 
   CreateCells(table, created);
 
@@ -219,17 +203,18 @@ TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
 
-  std::vector<bigtable::Cell> created{{row_key1, family4, "c1", 1000, "data1"},
-                                      {row_key1, family4, "c2", 1000, "data2"},
-                                      {row_key2, family4, "c1", 1000, "data3"},
-                                      {row_key3, family4, "c1", 1000, "data4"}};
+  std::vector<bigtable::Cell> created{
+      {row_key1, kFamily4, "c1", 1000, "data1"},
+      {row_key1, kFamily4, "c2", 1000, "data2"},
+      {row_key2, kFamily4, "c1", 1000, "data3"},
+      {row_key3, kFamily4, "c1", 1000, "data4"}};
 
   CreateCells(table, created);
 
   std::vector<bigtable::Cell> expected{
-      {row_key1, family4, "c1", 1000, "data1"},
-      {row_key1, family4, "c2", 1000, "data2"},
-      {row_key2, family4, "c1", 1000, "data3"}};
+      {row_key1, kFamily4, "c1", 1000, "data1"},
+      {row_key1, kFamily4, "c2", 1000, "data2"},
+      {row_key2, kFamily4, "c1", 1000, "data3"}};
 
   // Some equivalent ways of reading just the first two rows
   {
@@ -265,8 +250,9 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
 
-  std::vector<bigtable::Cell> created{{row_key1, family4, "c1", 1000, "data1"},
-                                      {row_key3, family4, "c1", 1000, "data2"}};
+  std::vector<bigtable::Cell> created{
+      {row_key1, kFamily4, "c1", 1000, "data1"},
+      {row_key3, kFamily4, "c1", 1000, "data2"}};
 
   CreateCells(table, created);
 
@@ -307,16 +293,16 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
   auto table = GetTable();
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family4, "c1", 0, "v1000"}};
+  std::vector<bigtable::Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
   CreateCells(table, created);
   auto result = table.CheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("v1000"),
-      {bigtable::SetCell(family4, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family4, "c3", 0_ms, "v3000")});
+      {bigtable::SetCell(kFamily4, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(kFamily4, "c3", 0_ms, "v3000")});
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(bigtable::MutationBranch::kPredicateMatched, *result);
-  std::vector<bigtable::Cell> expected{{key, family4, "c1", 0, "v1000"},
-                                       {key, family4, "c2", 0, "v2000"}};
+  std::vector<bigtable::Cell> expected{{key, kFamily4, "c1", 0, "v1000"},
+                                       {key, kFamily4, "c2", 0, "v2000"}};
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
 }
@@ -325,16 +311,16 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
   auto table = GetTable();
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family4, "c1", 0, "v1000"}};
+  std::vector<bigtable::Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
   CreateCells(table, created);
   auto result = table.CheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("not-there"),
-      {bigtable::SetCell(family4, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family4, "c3", 0_ms, "v3000")});
+      {bigtable::SetCell(kFamily4, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(kFamily4, "c3", 0_ms, "v3000")});
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(bigtable::MutationBranch::kPredicateNotMatched, *result);
-  std::vector<bigtable::Cell> expected{{key, family4, "c1", 0, "v1000"},
-                                       {key, family4, "c3", 0, "v3000"}};
+  std::vector<bigtable::Cell> expected{{key, kFamily4, "c1", 0, "v1000"},
+                                       {key, kFamily4, "c3", 0, "v3000"}};
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
 }
@@ -348,25 +334,25 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
   std::string const add_suffix3 = "-newrecord";
 
   std::vector<bigtable::Cell> created{
-      {row_key1, family1, "column-id1", 1000, "v1000"},
-      {row_key1, family2, "column-id2", 2000, "v2000"},
-      {row_key1, family3, "column-id1", 2000, "v3000"},
-      {row_key1, family1, "column-id3", 2000, "v5000"}};
+      {row_key1, kFamily1, "column-id1", 1000, "v1000"},
+      {row_key1, kFamily2, "column-id2", 2000, "v2000"},
+      {row_key1, kFamily3, "column-id1", 2000, "v3000"},
+      {row_key1, kFamily1, "column-id3", 2000, "v5000"}};
 
   std::vector<bigtable::Cell> expected{
-      {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1},
-      {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2},
-      {row_key1, family3, "column-id3", 2000, add_suffix3}};
+      {row_key1, kFamily1, "column-id1", 1000, "v1000" + add_suffix1},
+      {row_key1, kFamily2, "column-id2", 2000, "v2000" + add_suffix2},
+      {row_key1, kFamily3, "column-id3", 2000, add_suffix3}};
 
   CreateCells(table, created);
   auto result_row =
       table.ReadModifyWriteRow(row_key1,
                                bigtable::ReadModifyWriteRule::AppendValue(
-                                   family1, "column-id1", add_suffix1),
+                                   kFamily1, "column-id1", add_suffix1),
                                bigtable::ReadModifyWriteRule::AppendValue(
-                                   family2, "column-id2", add_suffix2),
+                                   kFamily2, "column-id2", add_suffix2),
                                bigtable::ReadModifyWriteRule::AppendValue(
-                                   family3, "column-id3", add_suffix3));
+                                   kFamily3, "column-id3", add_suffix3));
   ASSERT_STATUS_OK(result_row);
   // Returned cells contains timestamp in microseconds which is
   // not matching with the timestamp in expected cells, So creating
@@ -385,18 +371,18 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
 
   // An initial; big-endian int64 number with value 0.
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
-  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1}};
+  std::vector<bigtable::Cell> created{{key, kFamily1, "c1", 0, v1}};
 
   // The expected values as buffers containing big-endian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
-  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1},
-                                       {key, family1, "c2", 0, e2}};
+  std::vector<bigtable::Cell> expected{{key, kFamily1, "c1", 0, e1},
+                                       {key, kFamily1, "c2", 0, e2}};
 
   CreateCells(table, created);
   auto row = table.ReadModifyWriteRow(
-      key, bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c1", 42),
-      bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c2", 7));
+      key, bigtable::ReadModifyWriteRule::IncrementAmount(kFamily1, "c1", 42),
+      bigtable::ReadModifyWriteRule::IncrementAmount(kFamily1, "c2", 7));
   ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
@@ -411,36 +397,36 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   std::string const key = "row-key";
 
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
-  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1},
-                                      {key, family1, "c3", 0, "start;"},
-                                      {key, family2, "d1", 0, v1},
-                                      {key, family2, "d3", 0, "start;"}};
+  std::vector<bigtable::Cell> created{{key, kFamily1, "c1", 0, v1},
+                                      {key, kFamily1, "c3", 0, "start;"},
+                                      {key, kFamily2, "d1", 0, v1},
+                                      {key, kFamily2, "d3", 0, "start;"}};
 
   // The expected values as buffers containing big-endian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
   std::string e3("\x00\x00\x00\x00\x00\x00\x07\xD0", 8);
   std::string e4("\x00\x00\x00\x00\x00\x00\x0B\xB8", 8);
-  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1},
-                                       {key, family1, "c2", 0, e2},
-                                       {key, family1, "c3", 0, "start;suffix"},
-                                       {key, family1, "c4", 0, "suffix"},
-                                       {key, family2, "d1", 0, e3},
-                                       {key, family2, "d2", 0, e4},
-                                       {key, family2, "d3", 0, "start;suffix"},
-                                       {key, family2, "d4", 0, "suffix"}};
+  std::vector<bigtable::Cell> expected{{key, kFamily1, "c1", 0, e1},
+                                       {key, kFamily1, "c2", 0, e2},
+                                       {key, kFamily1, "c3", 0, "start;suffix"},
+                                       {key, kFamily1, "c4", 0, "suffix"},
+                                       {key, kFamily2, "d1", 0, e3},
+                                       {key, kFamily2, "d2", 0, e4},
+                                       {key, kFamily2, "d3", 0, "start;suffix"},
+                                       {key, kFamily2, "d4", 0, "suffix"}};
 
   CreateCells(table, created);
   using R = bigtable::ReadModifyWriteRule;
   auto row =
-      table.ReadModifyWriteRow(key, R::IncrementAmount(family1, "c1", 42),
-                               R::IncrementAmount(family1, "c2", 7),
-                               R::IncrementAmount(family2, "d1", 2000),
-                               R::IncrementAmount(family2, "d2", 3000),
-                               R::AppendValue(family1, "c3", "suffix"),
-                               R::AppendValue(family1, "c4", "suffix"),
-                               R::AppendValue(family2, "d3", "suffix"),
-                               R::AppendValue(family2, "d4", "suffix"));
+      table.ReadModifyWriteRow(key, R::IncrementAmount(kFamily1, "c1", 42),
+                               R::IncrementAmount(kFamily1, "c2", 7),
+                               R::IncrementAmount(kFamily2, "d1", 2000),
+                               R::IncrementAmount(kFamily2, "d2", 3000),
+                               R::AppendValue(kFamily1, "c3", "suffix"),
+                               R::AppendValue(kFamily1, "c4", "suffix"),
+                               R::AppendValue(kFamily2, "d3", "suffix"),
+                               R::AppendValue(kFamily2, "d4", "suffix"));
   ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
@@ -454,28 +440,29 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
   auto table = GetTable();
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, 42},
-                                      {key, family1, "c3", 0, "start;"},
-                                      {key, family2, "d1", 0, 2},
-                                      {key, family2, "d2", 0, 5012},
-                                      {key, family2, "d3", 0, "start;"}};
+  std::vector<bigtable::Cell> created{{key, kFamily1, "c1", 0, 42},
+                                      {key, kFamily1, "c3", 0, "start;"},
+                                      {key, kFamily2, "d1", 0, 2},
+                                      {key, kFamily2, "d2", 0, 5012},
+                                      {key, kFamily2, "d3", 0, "start;"}};
 
-  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, 40},
-                                       {key, family1, "c2", 0, 7},
-                                       {key, family1, "c3", 0, "start;suffix"},
-                                       {key, family2, "d1", 0, 2002},
-                                       {key, family2, "d2", 0, 9999998012},
-                                       {key, family2, "d3", 0, "start;suffix"}};
+  std::vector<bigtable::Cell> expected{
+      {key, kFamily1, "c1", 0, 40},
+      {key, kFamily1, "c2", 0, 7},
+      {key, kFamily1, "c3", 0, "start;suffix"},
+      {key, kFamily2, "d1", 0, 2002},
+      {key, kFamily2, "d2", 0, 9999998012},
+      {key, kFamily2, "d3", 0, "start;suffix"}};
 
   CreateCells(table, created);
   using R = bigtable::ReadModifyWriteRule;
   auto row =
-      table.ReadModifyWriteRow(key, R::IncrementAmount(family1, "c1", -2),
-                               R::IncrementAmount(family1, "c2", 7),
-                               R::IncrementAmount(family2, "d1", 2000),
-                               R::IncrementAmount(family2, "d2", 9999993000),
-                               R::AppendValue(family1, "c3", "suffix"),
-                               R::AppendValue(family2, "d3", "suffix"));
+      table.ReadModifyWriteRow(key, R::IncrementAmount(kFamily1, "c1", -2),
+                               R::IncrementAmount(kFamily1, "c2", 7),
+                               R::IncrementAmount(kFamily2, "d1", 2000),
+                               R::IncrementAmount(kFamily2, "d2", 9999993000),
+                               R::AppendValue(kFamily1, "c3", "suffix"),
+                               R::AppendValue(kFamily2, "d3", "suffix"));
   ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
@@ -488,23 +475,23 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
 TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   auto table = GetTable();
 
-  // Create BATCH_SIZE * BATCH_COUNT rows.
-  constexpr int BATCH_COUNT = 10;
-  constexpr int BATCH_SIZE = 5000;
-  constexpr int COLUMN_COUNT = 10;
+  // Create kBatchSize * kBatchCount rows.
+  int constexpr kBatchCount = 10;
+  int constexpr kBatchSize = 5000;
+  int constexpr kColumnCount = 10;
   int rowid = 0;
-  for (int batch = 0; batch != BATCH_COUNT; ++batch) {
+  for (int batch = 0; batch != kBatchCount; ++batch) {
     bigtable::BulkMutation bulk;
-    for (int row = 0; row != BATCH_SIZE; ++row) {
+    for (int row = 0; row != kBatchSize; ++row) {
       std::ostringstream os;
       os << "row:" << std::setw(9) << std::setfill('0') << rowid;
 
       // Build a mutation that creates 10 columns.
       bigtable::SingleRowMutation mutation(os.str());
-      for (int col = 0; col != COLUMN_COUNT; ++col) {
+      for (int col = 0; col != kColumnCount; ++col) {
         std::string colid = "c" + std::to_string(col);
         std::string value = colid + "#" + os.str();
-        mutation.emplace_back(bigtable::SetCell(family1, std::move(colid),
+        mutation.emplace_back(bigtable::SetCell(kFamily1, std::move(colid),
                                                 std::chrono::milliseconds(0),
                                                 std::move(value)));
       }
@@ -558,27 +545,25 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   // size (~256MiB). Therefore, the row would not fit in a message if we failed
   // to change the default configuration, but it is not so large that it will
   // fail to work if we miss the overhead estimation.
-  auto const MiB = 1024 * 1024UL;
-  auto const cell_size = 32 * MiB;
-  auto const cell_count = 4;
+  auto constexpr kMib = 1024 * 1024UL;
+  auto constexpr kCellSize = 32 * kMib;
+  auto constexpr kCellCount = 4;
   // Smaller rows than this size are not a good test, they would pass with the
   // default setting, so only accept rows that are at least 10x the default
   // setting of 4 MiB.
-  auto const min_row_size = 10 * 4 * MiB;
+  auto const min_row_size = 10 * 4 * kMib;
   // Larger rows than this size are not a good test, they would fail even if the
   // setting was working.
-  auto const max_row_size = 256 * MiB;
+  auto const max_row_size = 256 * kMib;
 
-  std::string value(cell_size, 'a');
+  std::string value(kCellSize, 'a');
   std::vector<bigtable::Cell> created;
   std::vector<bigtable::Cell> expected;
 
-  for (int i = 0; i < cell_count; i++) {
+  for (int i = 0; i < kCellCount; i++) {
     auto col_qualifier = "c" + std::to_string(i);
-    created.push_back(
-        bigtable::Cell(row_key, family4, col_qualifier, 0, value));
-    expected.push_back(
-        bigtable::Cell(row_key, family4, col_qualifier, 0, value));
+    created.emplace_back(row_key, kFamily4, col_qualifier, 0, value);
+    expected.emplace_back(row_key, kFamily4, col_qualifier, 0, value);
   }
 
   CreateCells(table, created);
@@ -600,4 +585,14 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto actual_ignore_timestamp =
       GetCellsIgnoringTimestamp(result->second.cells());
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}
+
+}  // anonymous namespace
+
+int main(int argc, char* argv[]) {
+  ::testing::InitGoogleMock(&argc, argv);
+  (void)::testing::AddGlobalTestEnvironment(
+      new ::bigtable::testing::TableTestEnvironment);
+
+  return RUN_ALL_TESTS();
 }

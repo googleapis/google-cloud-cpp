@@ -286,7 +286,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id_str = instance_id + "-cl2";
+  std::string const cluster_id = instance_id + "-cl2";
 
   // create instance prerequisites for cluster operations
   auto instance_config = IntegrationTestConfig(
@@ -298,11 +298,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   // create cluster
   auto clusters_before = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_before);
-  ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id_str))
-      << "Cluster (" << cluster_id_str << ") already exists."
+  ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id))
+      << "Cluster (" << cluster_id << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
-  std::string cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
