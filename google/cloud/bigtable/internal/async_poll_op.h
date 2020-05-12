@@ -207,7 +207,9 @@ future<
     StatusOr<typename PollableOperationRequestTraits<Operation>::ResponseType>>
 StartAsyncPollOp(char const* location,
                  std::unique_ptr<PollingPolicy> polling_policy,
+                 // NOLINTNEXTLINE(performance-unnecessary-value-param)
                  MetadataUpdatePolicy metadata_update_policy,
+                 // NOLINTNEXTLINE(performance-unnecessary-value-param)
                  CompletionQueue cq,
                  future<StatusOr<Operation>> operation_future) {
   using Response =
