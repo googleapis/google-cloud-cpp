@@ -111,6 +111,7 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 # the client library
 add_library(
     google_cloud_cpp_common
+    # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     future.h
     future_generic.h
@@ -128,6 +129,9 @@ add_library(
     internal/compiler_info.h
     internal/conjunction.h
     internal/disjunction.h
+    internal/diagnostics_pop.inc
+    internal/diagnostics_push.inc
+    internal/disable_msvc_crt_secure_warnings.inc
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc
@@ -151,6 +155,8 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
+    internal/strerror.cc
+    internal/strerror.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h
@@ -167,10 +173,7 @@ add_library(
     tracing_options.h
     tracing_options.cc
     version.cc
-    version.h
-    internal/strerror.h
-    internal/strerror.cc
-    internal/diagnostics_push.inc)
+    version.h)
 target_link_libraries(
     google_cloud_cpp_common
     PUBLIC Threads::Threads
