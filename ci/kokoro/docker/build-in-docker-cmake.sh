@@ -129,11 +129,13 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   io::log "Running clang-tidy for: "
   # TODO(#3958) - use a simple regular expression like '\.(h|cc)$' when all
   # targets are clang-tidy clean.
+  RE=$(grep -o '^HeaderFilterRegex.*' "${PROJECT_ROOT}/.clang-tidy" |
+    sed -e 's/HeaderFilterRegex: "//' -e 's/"//')
+  RE="(\.cc|${RE}\.h)$"
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$' |
-    xargs -r echo
+    grep -E "${RE}" | xargs -r echo
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$' |
+    grep -E "${RE}" |
     xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
