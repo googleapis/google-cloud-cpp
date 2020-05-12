@@ -99,7 +99,7 @@ using TableCommandType = std::function<void(google::cloud::bigtable::Table,
 
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
-    TableCommandType function);
+    TableCommandType const& function);
 
 using TableAdminCommandType = std::function<void(
     google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;

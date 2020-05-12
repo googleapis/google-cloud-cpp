@@ -163,8 +163,6 @@ std::string RandomClusterId(std::string const& prefix,
 
 void CleanupOldInstances(std::string const& prefix,
                          google::cloud::bigtable::InstanceAdmin admin) {
-  namespace cbt = google::cloud::bigtable;
-
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_instance_id = InstancePrefix(prefix, threshold);
@@ -222,7 +220,7 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
 
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
-    TableCommandType function) {
+    TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     if (argv.size() != 3 + args.size()) {
       std::ostringstream os;
