@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/tuple_filter.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -67,7 +67,7 @@ TEST(TupleFilter, Selective) {
 
 // Test that forwarding rvalues works.
 TEST(TupleFilter, NonCopyable) {
-  std::unique_ptr<int> iptr = google::cloud::internal::make_unique<int>(42);
+  std::unique_ptr<int> iptr = absl::make_unique<int>(42);
   // NOLINTNEXTLINE(google-runtime-int)
   auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
       std::tuple<std::unique_ptr<int>>(std::move(iptr))));
@@ -77,7 +77,7 @@ TEST(TupleFilter, NonCopyable) {
 
 // Test that forwarding references works.
 TEST(TupleFilter, ByReference) {
-  std::unique_ptr<int> iptr = google::cloud::internal::make_unique<int>(42);
+  std::unique_ptr<int> iptr = absl::make_unique<int>(42);
   // This wouldn't work because get<0> returns a std::unique_ptr<int>&:
   // auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
   //     std::tie(iptr)));
@@ -91,7 +91,7 @@ TEST(TupleFilter, ByReference) {
 
 // Test that forwarding references works.
 TEST(TupleFilter, TupleByReference) {
-  std::unique_ptr<int> iptr = google::cloud::internal::make_unique<int>(42);
+  std::unique_ptr<int> iptr = absl::make_unique<int>(42);
   auto t = std::tie(iptr);
   // This wouldn't work because get<0> returns a std::unique_ptr<int>&:
   // auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(

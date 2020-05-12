@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/iam_policy.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/optional.h"
 #include <sstream>
 

@@ -17,8 +17,8 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -50,11 +50,10 @@ class ObjectWriteStreambufIntegrationTest
         client->raw_client()->CreateResumableSession(request);
     ASSERT_STATUS_OK(session);
 
-    ObjectWriteStream writer(
-        google::cloud::internal::make_unique<ObjectWriteStreambuf>(
-            std::move(session).value(),
-            client->raw_client()->client_options().upload_buffer_size(),
-            google::cloud::internal::make_unique<NullHashValidator>()));
+    ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
+        std::move(session).value(),
+        client->raw_client()->client_options().upload_buffer_size(),
+        absl::make_unique<NullHashValidator>()));
 
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);

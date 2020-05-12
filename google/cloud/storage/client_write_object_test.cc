@@ -17,8 +17,8 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,7 +27,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::internal::make_unique;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
@@ -74,7 +73,7 @@ TEST_F(WriteObjectTest, WriteObject) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
 
-        auto mock = make_unique<testing::MockResumableUploadSession>();
+        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
         using internal::ResumableUploadResponse;
         EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
         EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));

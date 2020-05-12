@@ -20,8 +20,8 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/terminate_handler.h"
+#include "absl/memory/memory.h"
 #include <sstream>
 
 namespace google {
@@ -222,7 +222,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
     return Status(StatusCode::kInternal, std::move(os).str());
   }
   return std::unique_ptr<ResumableUploadSession>(
-      google::cloud::internal::make_unique<CurlResumableUploadSession>(
+      absl::make_unique<CurlResumableUploadSession>(
           shared_from_this(), std::move(response->upload_session_url)));
 }
 
@@ -692,9 +692,8 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::RestoreResumableSession(std::string const& session_id) {
-  auto session =
-      google::cloud::internal::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), session_id);
+  auto session = absl::make_unique<CurlResumableUploadSession>(
+      shared_from_this(), session_id);
   auto response = session->ResetSession();
   if (response.status().ok()) {
     return std::unique_ptr<ResumableUploadSession>(std::move(session));

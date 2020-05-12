@@ -75,6 +75,7 @@ cc_library(
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -101,6 +102,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_unit_tests]

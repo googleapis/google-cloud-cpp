@@ -20,9 +20,9 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <type_traits>
@@ -339,7 +339,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
     return 1;
   }
 
-  auto signing_tests_destroyer = google::cloud::internal::make_unique<
+  auto signing_tests_destroyer = absl::make_unique<
       std::map<std::string, google::cloud::storage::internal::nl::json>>();
   google::cloud::storage::signing_tests = signing_tests_destroyer.get();
 
@@ -408,7 +408,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
     }
   }
 
-  auto post_policy_tests_destroyer = google::cloud::internal::make_unique<
+  auto post_policy_tests_destroyer = absl::make_unique<
       std::map<std::string, google::cloud::storage::internal::nl::json>>();
   google::cloud::storage::post_policy_tests = post_policy_tests_destroyer.get();
 

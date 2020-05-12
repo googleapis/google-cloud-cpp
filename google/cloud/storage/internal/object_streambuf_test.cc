@@ -16,8 +16,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -37,8 +37,7 @@ using ::testing::SizeIs;
 
 /// @test Verify that uploading an empty stream creates a single chunk.
 TEST(ObjectWriteStreambufTest, EmptyStream) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -55,17 +54,15 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
   auto response = streambuf.Close();
   EXPECT_STATUS_OK(response);
 }
 
 /// @test Verify that uploading a small stream creates a single chunk.
 TEST(ObjectWriteStreambufTest, SmallStream) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -88,9 +85,8 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
@@ -100,8 +96,7 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
 /// @test Verify that uploading a stream which ends on a upload chunk quantum
 /// works as expected.
 TEST(ObjectWriteStreambufTest, EmptyTrailer) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -136,9 +131,8 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
     return next_byte;
   }));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
@@ -147,8 +141,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
 
 /// @test Verify that a stream sends a single message for large payloads.
 TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -179,9 +172,8 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
     return next_byte;
   }));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), 3 * quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), 3 * quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload_1.data(), payload_1.size());
   streambuf.sputn(payload_2.data(), payload_2.size());
@@ -191,8 +183,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
 
 /// @test Verify that a stream flushes when a full quantum is available.
 TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -229,9 +220,8 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
     return next_byte;
   }));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload_1.data(), payload_1.size());
   streambuf.sputn(payload_2.data(), payload_2.size());
@@ -241,8 +231,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
 
 /// @test Verify that a stream flushes when adding one character at a time.
 TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '*');
@@ -277,9 +266,8 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   }));
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   for (auto const& c : payload) {
     streambuf.sputc(c);
@@ -290,8 +278,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
 
 /// @test verify that bytes not accepted by GCS will be re-uploaded next Flush.
 TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload = std::string(quantum, '*') + "abcde";
@@ -326,9 +313,8 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
   }));
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   std::ostream output(&streambuf);
   output << payload;
@@ -339,8 +325,7 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
 /// @test verify that the upload steam transitions to a bad state if the next
 /// expected byte jumps.
 TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload = std::string(quantum * 2, '*');
@@ -360,9 +345,8 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
   std::string id = "id";
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
   std::ostream output(&streambuf);
   output << payload;
   EXPECT_FALSE(output.good());
@@ -372,8 +356,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
 /// @test verify that the upload steam transitions to a bad state if the next
 /// expected byte decreases.
 TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload = std::string(quantum * 2, '*');
@@ -391,9 +374,8 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
   std::string id = "id";
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
   std::ostream output(&streambuf);
   output << payload;
   EXPECT_FALSE(output.good());
@@ -403,8 +385,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
 /// @test Verify that a stream flushes when mixing operations that add one
 /// character at a time and operations that add buffers.
 TEST(ObjectWriteStreambufTest, MixPutcPutn) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -441,9 +422,8 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
     return next_byte;
   }));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   for (auto const& c : payload_1) {
     streambuf.sputc(c);
@@ -456,16 +436,15 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
 /// @test Verify that a stream created for a finished upload starts out as
 /// closed.
 TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(true));
   auto last_upload_response = make_status_or(ResumableUploadResponse{
       "url-for-test", 0, {}, ResumableUploadResponse::kDone, {}});
   EXPECT_CALL(*mock, last_response).WillOnce(ReturnRef(last_upload_response));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), UploadChunkRequest::kChunkSizeQuantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock),
+                                 UploadChunkRequest::kChunkSizeQuantum,
+                                 absl::make_unique<NullHashValidator>());
   EXPECT_EQ(streambuf.IsOpen(), false);
   StatusOr<ResumableUploadResponse> close_result = streambuf.Close();
   ASSERT_STATUS_OK(close_result);
@@ -474,8 +453,7 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
 
 /// @test Verify that last error status is accessible for small payload.
 TEST(ObjectWriteStreambufTest, ErroneousStream) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -492,9 +470,8 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
@@ -507,8 +484,7 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
 
 /// @test Verify that last error status is accessible for large payloads.
 TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -520,9 +496,8 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
       .WillOnce(
           Return(Status(StatusCode::kInvalidArgument, "Invalid Argument")));
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(session_id));
-  ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum,
-      google::cloud::internal::make_unique<NullHashValidator>());
+  ObjectWriteStreambuf streambuf(std::move(mock), quantum,
+                                 absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload_1.data(), payload_1.size());
   EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())

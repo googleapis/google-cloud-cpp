@@ -171,8 +171,7 @@ class ParallelUploadTest : public ::testing::Test {
       std::string const& object_name, Status status,
       optional<std::string> const& resumable_session_id =
           optional<std::string>()) {
-    auto session = google::cloud::internal::make_unique<
-        testing::MockResumableUploadSession>();
+    auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
@@ -196,8 +195,7 @@ class ParallelUploadTest : public ::testing::Test {
       optional<std::string> const& expected_content = optional<std::string>(),
       optional<std::string> const& resumable_session_id =
           optional<std::string>()) {
-    auto session = google::cloud::internal::make_unique<
-        testing::MockResumableUploadSession>();
+    auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
@@ -238,8 +236,7 @@ class ParallelUploadTest : public ::testing::Test {
       std::string const& object_name,
       optional<std::string> const& resumable_session_id =
           optional<std::string>()) {
-    auto session = google::cloud::internal::make_unique<
-        testing::MockResumableUploadSession>();
+    auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
@@ -362,8 +359,7 @@ auto create_state_read_expectation = [](std::string const& state_object,
     EXPECT_TRUE(req.HasOption<IfGenerationMatch>());
     auto if_gen_match = req.GetOption<IfGenerationMatch>();
     EXPECT_EQ(generation, if_gen_match.value());
-    auto res =
-        google::cloud::internal::make_unique<testing::MockObjectReadSource>();
+    auto res = absl::make_unique<testing::MockObjectReadSource>();
     EXPECT_CALL(*res, Read(_, _))
         .WillOnce(Invoke([state](char* buf, std::size_t n) {
           auto state_str = state.dump();
