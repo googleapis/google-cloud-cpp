@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/strerror.h"
 #include <gmock/gmock.h>
+#include <cerrno>
+#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -22,12 +24,13 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
-using ::testing::Not;
 
 TEST(StrErrorTest, Simple) {
-  auto const actual = ::google::cloud::internal::strerror(ENAMETOOLONG);
-  EXPECT_FALSE(actual.empty());
-  EXPECT_THAT(actual, Not(HasSubstr("Cannot get error message")));
+  auto const actual = ::google::cloud::internal::strerror(EDOM);
+  // In the test we can call `std::strerror()` because the test is single
+  // threaded.
+  std::string expected = std::strerror(EDOM);
+  EXPECT_EQ(actual, expected);
 }
 
 TEST(StrErrorTest, InvalidErrno) {

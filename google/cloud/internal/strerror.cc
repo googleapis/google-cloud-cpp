@@ -15,6 +15,7 @@
 #include "google/cloud/internal/strerror.h"
 #include <cstring>
 #include <sstream>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -22,9 +23,13 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-// Depending on the compilation flags, strerror_r() returns `int` or `char*`,
-// while `strerror_s()` (on WIN32) returns `errno_t`.  Use overload resolution
-// to handle all cases, and SFINAE to avoid the "unused function" warnings.
+// Depending on the platform `strerror_r()` returns
+// - `int` on macOS (and Linux with the XSI compilation flags)
+// - `char*` on Linux with the GNU flags.
+// Meanwhile `strerror_s()` (on WIN32) returns `errno_t`.
+//
+// We use overload resolution to handle all cases, and SFINAE to avoid the
+// "unused function" warnings.
 template <typename T,
           typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
 std::string handle_strerror_r_error(char const* msg, int errnum, T result) {
@@ -35,8 +40,14 @@ std::string handle_strerror_r_error(char const* msg, int errnum, T result) {
   return std::move(os).str();
 }
 
-std::string handle_strerror_r_error(char const* msg, int, char const*) {
-  return msg;
+template <typename T,
+          typename std::enable_if<std::is_pointer<T>::value, int>::type = 0>
+std::string handle_strerror_r_error(char const*, int errnum, T result) {
+  if (result != nullptr) return result;
+  std::ostringstream os;
+  os << "Cannot get error message for errno=" << errnum << ", result=nullptr"
+     << ", errno=" << errno;
+  return std::move(os).str();
 }
 
 }  // namespace
@@ -48,7 +59,6 @@ std::string strerror(int errnum) {
   auto const result = strerror_s(error_msg, sizeof(error_msg) - 1, errnum);
   return handle_strerror_r_error(error_msg, errnum, result);
 #else
-  // NOLINTNE
   auto const result = strerror_r(errnum, error_msg, sizeof(error_msg) - 1);
   return handle_strerror_r_error(error_msg, errnum, result);
 }
