@@ -64,6 +64,6 @@ std::string strerror(int errnum) {
 }
 
 }  // namespace internal
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
+}  // namespace google
