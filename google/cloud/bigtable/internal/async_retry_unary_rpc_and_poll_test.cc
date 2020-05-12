@@ -58,7 +58,9 @@ class AsyncStartPollAfterRetryUnaryRpcTest
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        metadata_update_policy(k_project_id, MetadataParamTypes::PARENT),
+        metadata_update_policy(
+            "projects/" + k_project_id + "/instances/" + k_instance_id,
+            MetadataParamTypes::PARENT),
         client(std::make_shared<testing::MockInstanceAdminClient>()),
         cq_impl(std::make_shared<testing_util::MockCompletionQueue>()),
         cq(cq_impl),
@@ -81,9 +83,12 @@ class AsyncStartPollAfterRetryUnaryRpcTest
                         : grpc::Status::OK;
         }));
     EXPECT_CALL(*client, AsyncCreateCluster(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext*,
+        .WillOnce(Invoke([this](grpc::ClientContext* context,
                                 btproto::CreateClusterRequest const& request,
                                 grpc::CompletionQueue*) {
+          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+              *context,
+              "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster"));
           EXPECT_EQ("my_newly_created_cluster", request.cluster_id());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<
@@ -123,9 +128,11 @@ class AsyncStartPollAfterRetryUnaryRpcTest
           }
         }));
     EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext*,
+        .WillOnce(Invoke([this](grpc::ClientContext* context,
                                 longrunning::GetOperationRequest const& request,
                                 grpc::CompletionQueue*) {
+          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+              *context, "google.longrunning.Operations.GetOperation"));
           EXPECT_EQ("create_cluster_op_1", request.name());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<
