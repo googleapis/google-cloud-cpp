@@ -31,6 +31,11 @@ RUN dnf makecache && \
 RUN wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
 RUN chmod 755 /usr/bin/buildifier
 
+# Install shfmt to automatically format the Shell scripts.
+RUN curl -L -o /usr/local/bin/shfmt \
+    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64" && \
+    chmod 755 /usr/local/bin/shfmt
+
 # Install cmake_format to automatically format the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 # Pin this to an specific version because the formatting changes when the
@@ -42,16 +47,25 @@ RUN pip3 install cmake_format==0.6.8
 # Install black to automatically format the Python files.
 RUN pip3 install black==19.3b0
 
-# Install shfmt to automatically format the Shell scripts.
-RUN curl -L -o /usr/local/bin/shfmt \
-    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64" && \
-    chmod 755 /usr/local/bin/shfmt
-
 # Install the Python modules needed to run the storage testbench
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
     gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
+
+# Install Abseil, remove the downloaded files and the temporary artifacts
+# after a successful build to keep the image smaller (and with fewer layers)
+WORKDIR /var/tmp/build
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+    cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)

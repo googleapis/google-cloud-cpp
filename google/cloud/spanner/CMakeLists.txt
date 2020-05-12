@@ -15,6 +15,7 @@
 # ~~~
 
 find_package(googleapis CONFIG REQUIRED)
+find_package(absl CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
@@ -330,8 +331,12 @@ function (spanner_client_define_tests)
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE spanner_client_testing googleapis-c++::spanner_client
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+            PRIVATE spanner_client_testing
+                    absl::memory
+                    googleapis-c++::spanner_client
+                    google_cloud_cpp_testing
+                    GTest::gmock_main
+                    GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
