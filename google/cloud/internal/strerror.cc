@@ -57,12 +57,11 @@ std::string strerror(int errnum) {
   char error_msg[kMaxErrorMessageLength];
 #ifdef _WIN32
   auto const result = strerror_s(error_msg, sizeof(error_msg) - 1, errnum);
-  return handle_strerror_r_error(error_msg, errnum, result);
 #else
   auto const result = strerror_r(errnum, error_msg, sizeof(error_msg) - 1);
+#endif  // _WIN32
   return handle_strerror_r_error(error_msg, errnum, result);
 }
-#endif  // _WIN32
 
 }  // namespace internal
 }  // namespace internal

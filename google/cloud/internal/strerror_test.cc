@@ -25,6 +25,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 TEST(StrErrorTest, Simple) {
   auto const actual = ::google::cloud::internal::strerror(EDOM);
   // In the test we can call `std::strerror()` because the test is single
@@ -32,6 +33,7 @@ TEST(StrErrorTest, Simple) {
   std::string expected = std::strerror(EDOM);
   EXPECT_EQ(actual, expected);
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(StrErrorTest, InvalidErrno) {
   auto const actual = ::google::cloud::internal::strerror(-123456789);
