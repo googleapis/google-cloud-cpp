@@ -277,7 +277,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
       cq,
       [&actual](Row const& row) {
         auto const& cells = row.cells();
-        actual.reserve(actual.size() + cells.size());
         actual.insert(actual.end(), cells.begin(), cells.end());
         return make_ready_future(true);
       },
