@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"

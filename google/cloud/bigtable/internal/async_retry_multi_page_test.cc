@@ -100,7 +100,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
       : rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         shared_backoff_policy_mock_(
-            google::cloud::internal::make_unique<SharedBackoffPolicyMock>()),
+            absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::MockCompletionQueue),
         cq_(cq_impl_),
         client_(new testing::MockInstanceAdminClient),

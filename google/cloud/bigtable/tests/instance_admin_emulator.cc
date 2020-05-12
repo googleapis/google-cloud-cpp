@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
@@ -52,8 +52,7 @@ class InstanceAdminEmulator final
       stored_instance.set_state(btadmin::Instance::READY);
       response->set_name("create-instance/" + name);
       response->set_done(true);
-      auto contents =
-          google::cloud::internal::make_unique<google::protobuf::Any>();
+      auto contents = absl::make_unique<google::protobuf::Any>();
       contents->PackFrom(stored_instance);
       response->set_allocated_response(contents.release());
 
@@ -159,8 +158,7 @@ class InstanceAdminEmulator final
     }
     response->set_name("update-instance/" + name);
     response->set_done(true);
-    auto contents =
-        google::cloud::internal::make_unique<google::protobuf::Any>();
+    auto contents = absl::make_unique<google::protobuf::Any>();
     contents->PackFrom(stored_instance);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;
@@ -205,8 +203,7 @@ class InstanceAdminEmulator final
       stored_cluster.set_state(btadmin::Cluster::READY);
       response->set_name("create-cluster/" + name);
       response->set_done(true);
-      auto contents =
-          google::cloud::internal::make_unique<google::protobuf::Any>();
+      auto contents = absl::make_unique<google::protobuf::Any>();
       contents->PackFrom(stored_cluster);
       response->set_allocated_response(contents.release());
       return grpc::Status::OK;
@@ -288,8 +285,7 @@ class InstanceAdminEmulator final
     stored_cluster.CopyFrom(*request);
     response->set_name("update-cluster/" + name);
     response->set_done(true);
-    auto contents =
-        google::cloud::internal::make_unique<google::protobuf::Any>();
+    auto contents = absl::make_unique<google::protobuf::Any>();
     contents->PackFrom(stored_cluster);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;
@@ -399,8 +395,7 @@ class InstanceAdminEmulator final
     }
     response->set_name("update-app-profile/" + name);
     response->set_done(true);
-    auto contents =
-        google::cloud::internal::make_unique<google::protobuf::Any>();
+    auto contents = absl::make_unique<google::protobuf::Any>();
     contents->PackFrom(stored_app_profile);
     response->set_allocated_response(contents.release());
     return grpc::Status::OK;

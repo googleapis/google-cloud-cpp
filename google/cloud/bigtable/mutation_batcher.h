@@ -20,8 +20,8 @@
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status.h"
+#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <deque>
 #include <functional>

@@ -112,7 +112,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
       request, app_profile_id_, table_name_);
   mut.MoveTo(request);
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
 
   // Determine if all the mutations are idempotent. The idempotency of the
   // mutations won't change as the retry loop executes, so we can just compute
@@ -179,21 +179,20 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
-                   RowReader::NO_ROWS_LIMIT, std::move(filter),
-                   clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-                   metadata_update_policy_,
-                   google::cloud::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>());
+  return RowReader(
+      client_, app_profile_id_, table_name_, std::move(row_set),
+      RowReader::NO_ROWS_LIMIT, std::move(filter), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), metadata_update_policy_,
+      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
-                   rows_limit, std::move(filter), clone_rpc_retry_policy(),
-                   clone_rpc_backoff_policy(), metadata_update_policy_,
-                   google::cloud::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>());
+  return RowReader(
+      client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
+      std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_,
+      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
 }
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,

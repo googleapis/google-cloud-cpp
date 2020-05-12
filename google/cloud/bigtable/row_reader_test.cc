@@ -17,10 +17,10 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <initializer_list>
@@ -186,7 +186,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
 TEST_F(RowReaderTest, ReadOneRow) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
   {
@@ -215,7 +215,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
 TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
   {
@@ -251,7 +251,7 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
 TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   EXPECT_CALL(*parser, HandleEndOfStreamHook(_)).Times(1);
   {
@@ -282,7 +282,7 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
 TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -314,7 +314,7 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
 TEST_F(RowReaderTest, FailedStreamIsRetried) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -355,7 +355,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
     EXPECT_CALL(*client_, ReadRows(_, _))
@@ -383,7 +383,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
 TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -427,7 +427,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   auto response = bigtable::testing::ReadRowsResponseFromString("chunks {}");
   {
@@ -471,7 +471,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
 TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -518,7 +518,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   {
     testing::InSequence s;
 
@@ -549,7 +549,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
 TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r2"});
   {
     testing::InSequence s;
@@ -602,7 +602,7 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
 TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -644,7 +644,7 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
 TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   {
     testing::InSequence s;
@@ -675,7 +675,7 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
 }
 
 TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   {
@@ -761,7 +761,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   // Every retry should use a new ClientContext object.
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
+  auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
 
   void* previous_context = nullptr;

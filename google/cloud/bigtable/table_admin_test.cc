@@ -17,11 +17,11 @@
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -816,18 +816,16 @@ using MockAsyncCheckConsistencyResponse =
  * expected, with multiple asynchronous calls.
  */
 TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
-  using google::cloud::internal::make_unique;
-
   bigtable::TableAdmin tested(client_, "test-instance");
 
-  auto r1 = make_unique<MockAsyncCheckConsistencyResponse>();
+  auto r1 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r1, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
       }));
-  auto r2 = make_unique<MockAsyncCheckConsistencyResponse>();
+  auto r2 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r2, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
@@ -835,7 +833,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
         response->set_consistent(false);
         *status = grpc::Status::OK;
       }));
-  auto r3 = make_unique<MockAsyncCheckConsistencyResponse>();
+  auto r3 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r3, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
@@ -916,10 +914,8 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
  * one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
-  using google::cloud::internal::make_unique;
-
   bigtable::TableAdmin tested(client_, "test-instance");
-  auto reader = make_unique<MockAsyncCheckConsistencyResponse>();
+  auto reader = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
@@ -973,8 +969,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
         client_(new MockAdminClient) {
     EXPECT_CALL(*client_, project())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
-    table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
-        client_, kInstanceId);
+    table_admin_ =
+        absl::make_unique<bigtable::TableAdmin>(client_, kInstanceId);
   }
 
  protected:

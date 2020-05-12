@@ -124,8 +124,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())
         .WillRepeatedly(::testing::ReturnRef(kInstanceId));
-    table_ = google::cloud::internal::make_unique<bigtable::Table>(client_,
-                                                                   kTableId);
+    table_ = absl::make_unique<bigtable::Table>(client_, kTableId);
   }
 
  protected:

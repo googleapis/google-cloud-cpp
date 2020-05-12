@@ -17,10 +17,10 @@
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -1376,8 +1376,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
         client_(new bigtable::testing::MockInstanceAdminClient) {
     EXPECT_CALL(*client_, project())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
-    instance_admin_ =
-        google::cloud::internal::make_unique<bigtable::InstanceAdmin>(client_);
+    instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(client_);
   }
 
  protected:

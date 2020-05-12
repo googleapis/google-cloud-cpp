@@ -66,6 +66,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_client_unit_tests]
@@ -83,6 +84,7 @@ cc_test(
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
 )

@@ -20,8 +20,8 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

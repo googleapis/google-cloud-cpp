@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -61,7 +61,7 @@ void AsyncRetryBulkApply::StartIterationIfNeeded(CompletionQueue cq) {
     return;
   }
 
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);
