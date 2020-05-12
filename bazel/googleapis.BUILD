@@ -16,10 +16,11 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
-
-# This rule is needed by `google-cloud-cpp-common`. It lets us include headers
-# from googleapis targets using angle brackets like system includes.
+# This build file overlays on top of the BUILD files for the googleapis repo,
+# and it adds a target that lets us include their header files using
+# angle-brackets, thus treating their headers as system includes. This allows
+# us to dial-up the warnings in our own code, without seeing compiler warnings
+# from their headers, which we do not own.
 cc_library(
     name = "googleapis_system_includes",
     includes = [
