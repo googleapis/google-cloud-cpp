@@ -47,12 +47,12 @@ void Apply(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
-void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table,
+void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
                              std::vector<std::string> const& argv) {
   //! [apply relaxed idempotency]
   namespace cbt = google::cloud::bigtable;
-  [](std::string project_id, std::string instance_id, std::string table_id,
-     std::string row_key) {
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& table_id, std::string const& row_key) {
     cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
                                                   cbt::ClientOptions()),
                      table_id, cbt::AlwaysRetryMutationPolicy());
@@ -68,12 +68,12 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table,
   (table.project_id(), table.instance_id(), table.table_id(), argv.at(0));
 }
 
-void ApplyCustomRetry(google::cloud::bigtable::Table table,
+void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
                       std::vector<std::string> const& argv) {
   //! [apply custom retry]
   namespace cbt = google::cloud::bigtable;
-  [](std::string project_id, std::string instance_id, std::string table_id,
-     std::string row_key) {
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& table_id, std::string const& row_key) {
     cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
                                                   cbt::ClientOptions()),
                      table_id, cbt::LimitedErrorCountRetryPolicy(7));
@@ -133,7 +133,7 @@ void ReadRow(google::cloud::bigtable::Table table,
              std::vector<std::string> const& argv) {
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](google::cloud::bigtable::Table table, std::string row_key) {
+  [](google::cloud::bigtable::Table table, std::string const& row_key) {
     // Filter the results, only include the latest value on each cell.
     cbt::Filter filter = cbt::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
@@ -165,7 +165,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table,
   //! [check and mutate]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::string row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
@@ -196,7 +196,7 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
   //! [check and mutate not present]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::string row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the "test-column" column is present,
     // regardless of its value.
     cbt::Filter predicate = cbt::Filter::Chain(
@@ -224,7 +224,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table,
   //! [read modify write]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::string row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
         row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
@@ -257,7 +257,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [delete all cells]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::string row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     google::cloud::Status status =
         table.Apply(cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
 
@@ -271,7 +271,8 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table,
                        std::vector<std::string> const& argv) {
   //! [delete family cells]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::string row_key, std::string family_name) {
+  [](cbt::Table table, std::string const& row_key,
+     std::string const& family_name) {
     // Delete all cells within a family.
     google::cloud::Status status = table.Apply(
         cbt::SingleRowMutation(row_key, cbt::DeleteFromFamily(family_name)));
@@ -286,8 +287,8 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
                                 std::vector<std::string> const& argv) {
   //! [delete selective family cells]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::string row_key, std::string family_name,
-     std::string column_name) {
+  [](cbt::Table table, std::string const& row_key,
+     std::string const& family_name, std::string const& column_name) {
     // Delete selective cell within a family.
     google::cloud::Status status = table.Apply(cbt::SingleRowMutation(
         row_key, cbt::DeleteFromColumn(family_name, column_name)));
@@ -303,7 +304,7 @@ void RowExists(google::cloud::bigtable::Table table,
   //! [row exists]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::string row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     // Filter the results, turn any value into an empty string.
     cbt::Filter filter = cbt::Filter::StripValueTransformer();
 
@@ -322,7 +323,7 @@ void RowExists(google::cloud::bigtable::Table table,
   (std::move(table), argv.at(0));
 }
 
-void MutateDeleteColumns(std::vector<std::string> argv) {
+void MutateDeleteColumns(std::vector<std::string> const& argv) {
   if (argv.size() < 5) {
     // Use the same format as the cbt tool to receive mutations from the
     // command-line.
@@ -331,29 +332,30 @@ void MutateDeleteColumns(std::vector<std::string> argv) {
         " <table-id> key family:column [family:column]"};
   }
 
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-      argv[2]);
-  argv.erase(argv.begin(), argv.begin() + 3);
-
-  auto key = argv.at(0);
-  argv.erase(argv.begin());
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  auto const instance_id = *it++;
+  auto const table_id = *it++;
+  auto const key = *it++;
   std::vector<std::pair<std::string, std::string>> columns;
-  for (auto arg : argv) {
-    auto pos = arg.find_first_of(':');
+  for (; it != argv.cend(); ++it) {
+    auto pos = it->find_first_of(':');
     if (pos == std::string::npos) {
-      throw std::runtime_error("Invalid argument (" + arg +
+      throw std::runtime_error("Invalid argument (" + *it +
                                ") should be in family:column format");
     }
     columns.emplace_back(
-        std::make_pair(arg.substr(0, pos), arg.substr(pos + 1)));
+        std::make_pair(it->substr(0, pos), it->substr(pos + 1)));
   }
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
 
   // [START bigtable_mutate_delete_columns]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::string key,
-     std::vector<std::pair<std::string, std::string>> columns) {
+  [](cbt::Table table, std::string const& key,
+     std::vector<std::pair<std::string, std::string>> const& columns) {
     cbt::SingleRowMutation mutation(key);
     for (auto const& c : columns) {
       mutation.emplace_back(cbt::DeleteFromColumn(c.first, c.second));
@@ -367,10 +369,10 @@ void MutateDeleteColumns(std::vector<std::string> argv) {
 }
 
 void MutateDeleteRows(google::cloud::bigtable::Table table,
-                      std::vector<std::string> argv) {
+                      std::vector<std::string> const& argv) {
   // [START bigtable_mutate_delete_rows]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::vector<std::string> keys) {
+  [](cbt::Table table, std::vector<std::string> const& keys) {
     cbt::BulkMutation mutation;
     for (auto const& row_key : keys) {
       mutation.emplace_back(
@@ -392,7 +394,7 @@ void MutateDeleteRows(google::cloud::bigtable::Table table,
   (std::move(table), std::move(argv));
 }
 
-void MutateDeleteRowsCommand(std::vector<std::string> argv) {
+void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     // Use the same format as the cbt tool to receive mutations from the
     // command-line.
@@ -400,16 +402,20 @@ void MutateDeleteRowsCommand(std::vector<std::string> argv) {
         "mutate-delete-rows <project-id> <instance-id>"
         " <table-id> row-key [row-key...]"};
   }
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  auto const instance_id = *it++;
+  auto const table_id = *it++;
+  std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
-          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-      argv[2]);
-  argv.erase(argv.begin(), argv.begin() + 3);
-  MutateDeleteRows(table, std::move(argv));
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
+  MutateDeleteRows(table, std::move(rows));
 }
 
 void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
-                            std::vector<std::string> argv) {
+                            std::vector<std::string> const& argv) {
   // Fortunately region tags can appear more than once, the segments are merged
   // by the region tag processing tools.
 
@@ -433,16 +439,17 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
     return InsertOrUpdate{family, column, value};
   };
 
-  auto key = argv.at(0);
-  argv.erase(argv.begin());
+  auto it = argv.cbegin();
+  auto const key = *it++;
   std::vector<InsertOrUpdate> mutations;
-  for (auto& a : argv) {
-    mutations.emplace_back(parse(a));
+  for (; it != argv.cend(); ++it) {
+    mutations.emplace_back(parse(*it));
   }
 
   // [START bigtable_insert_update_rows]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, std::string key, std::vector<InsertOrUpdate> inserts) {
+  [](cbt::Table table, std::string const& key,
+     std::vector<InsertOrUpdate> const& inserts) {
     cbt::SingleRowMutation mutation(key);
     for (auto const& mut : inserts) {
       mutation.emplace_back(
@@ -456,7 +463,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
   (std::move(table), key, std::move(mutations));
 }
 
-void MutateInsertUpdateRowsCommand(std::vector<std::string> argv) {
+void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
   if (argv.size() < 5) {
     // Use the same format as the cbt tool to receive mutations from the
     // command-line.
@@ -465,12 +472,16 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> argv) {
         " <table-id> key family:column=value [family:column=value...]"};
   }
 
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  auto const instance_id = *it++;
+  auto const table_id = *it++;
+  std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
-          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-      argv[2]);
-  argv.erase(argv.begin(), argv.begin() + 3);
-  MutateInsertUpdateRows(table, std::move(argv));
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
+  MutateInsertUpdateRows(table, std::move(rows));
 }
 
 void RenameColumn(google::cloud::bigtable::Table table,
@@ -479,8 +490,8 @@ void RenameColumn(google::cloud::bigtable::Table table,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::Status;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::string key, std::string family,
-     std::string old_name, std::string new_name) {
+  [](cbt::Table table, std::string const& key, std::string const& family,
+     std::string const& old_name, std::string const& new_name) {
     StatusOr<std::pair<bool, cbt::Row>> row =
         table.ReadRow(key, cbt::Filter::ColumnName(family, old_name));
 
@@ -895,7 +906,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {}, Apply),

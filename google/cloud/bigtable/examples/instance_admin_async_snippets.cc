@@ -25,13 +25,13 @@ using google::cloud::bigtable::examples::Usage;
 
 void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
-                         std::vector<std::string> argv) {
+                         std::vector<std::string> const& argv) {
   //! [async create instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string zone) {
+     std::string const& instance_id, std::string const& zone) {
     std::string display_name("Put description here");
     std::string cluster_id = instance_id + "-c1";
     cbt::ClusterConfig cluster_config =
@@ -57,13 +57,14 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
-                        std::vector<std::string> argv) {
+                        std::vector<std::string> const& argv) {
   //! [async create cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string cluster_id, std::string zone) {
+     std::string const& instance_id, std::string const& cluster_id,
+     std::string const& zone) {
     cbt::ClusterConfig cluster_config =
         cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
@@ -86,13 +87,13 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncCreateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async create app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string profile_id) {
+     std::string const& instance_id, std::string const& profile_id) {
     cbt::AppProfileConfig config =
         cbt::AppProfileConfig::MultiClusterUseAny(profile_id);
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
@@ -113,13 +114,13 @@ void AsyncCreateAppProfile(
 
 void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                       google::cloud::bigtable::CompletionQueue cq,
-                      std::vector<std::string> argv) {
+                      std::vector<std::string> const& argv) {
   //! [async get instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
         instance_admin.AsyncGetInstance(cq, instance_id);
 
@@ -177,13 +178,13 @@ void AsyncListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                      google::cloud::bigtable::CompletionQueue cq,
-                     std::vector<std::string> argv) {
+                     std::vector<std::string> const& argv) {
   //! [async get cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string cluster_id) {
+     std::string const& instance_id, std::string const& cluster_id) {
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
         instance_admin.AsyncGetCluster(cq, instance_id, cluster_id);
 
@@ -204,13 +205,13 @@ void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
-                        std::vector<std::string> argv) {
+                        std::vector<std::string> const& argv) {
   //! [async get app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string app_profile_id) {
+     std::string const& instance_id, std::string const& app_profile_id) {
     future<void> final =
         instance_admin.AsyncGetAppProfile(cq, instance_id, app_profile_id)
             .then([](future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -231,13 +232,13 @@ void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> argv) {
+                       std::vector<std::string> const& argv) {
   //! [async get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<StatusOr<google::cloud::IamPolicy>> policy_future =
         instance_admin.AsyncGetIamPolicy(cq, instance_id);
 
@@ -259,14 +260,14 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncGetNativeIamPolicy(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async get native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   using google::iam::v1::Policy;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<StatusOr<google::iam::v1::Policy>> policy_future =
         instance_admin.AsyncGetNativeIamPolicy(cq, instance_id);
 
@@ -285,13 +286,13 @@ void AsyncGetNativeIamPolicy(
 
 void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> argv) {
+                       std::vector<std::string> const& argv) {
   //! [async list clusters]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<StatusOr<cbt::ClusterList>> clusters_future =
         instance_admin.AsyncListClusters(cq, instance_id);
 
@@ -358,13 +359,13 @@ void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                           google::cloud::bigtable::CompletionQueue cq,
-                          std::vector<std::string> argv) {
+                          std::vector<std::string> const& argv) {
   //! [async list app_profiles]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>>
         profiles_future = instance_admin.AsyncListAppProfiles(cq, instance_id);
 
@@ -390,13 +391,13 @@ void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
-                         std::vector<std::string> argv) {
+                         std::vector<std::string> const& argv) {
   //! [async update instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     // Chain a AsyncGetInstance() + AsyncUpdateInstance().
     future<void> final =
         instance_admin.AsyncGetInstance(cq, instance_id)
@@ -434,13 +435,13 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
-                        std::vector<std::string> argv) {
+                        std::vector<std::string> const& argv) {
   //! [async update cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string cluster_id) {
+     std::string const& instance_id, std::string const& cluster_id) {
     future<void> final =
         instance_admin.AsyncGetCluster(cq, instance_id, cluster_id)
             .then([instance_admin,
@@ -477,13 +478,13 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncUpdateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async update app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string profile_id) {
+     std::string const& instance_id, std::string const& profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.AsyncUpdateAppProfile(
             cq, instance_id, profile_id,
@@ -506,12 +507,12 @@ void AsyncUpdateAppProfile(
 
 void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
-                         std::vector<std::string> argv) {
+                         std::vector<std::string> const& argv) {
   //! [async-delete-instance] [START bigtable_async_delete_instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id) {
+     std::string const& instance_id) {
     future<google::cloud::Status> status_future =
         instance_admin.AsyncDeleteInstance(instance_id, cq);
 
@@ -525,12 +526,12 @@ void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 
 void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
-                        std::vector<std::string> argv) {
+                        std::vector<std::string> const& argv) {
   //! [async delete cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string cluster_id) {
+     std::string const& instance_id, std::string const& cluster_id) {
     future<google::cloud::Status> status_future =
         instance_admin.AsyncDeleteCluster(cq, instance_id, cluster_id);
 
@@ -545,12 +546,12 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncDeleteAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async delete app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string app_profile_id) {
+     std::string const& instance_id, std::string const& app_profile_id) {
     future<google::cloud::Status> status_future =
         instance_admin.AsyncDeleteAppProfile(cq, instance_id, app_profile_id,
                                              /*ignore_warnings=*/true);
@@ -565,14 +566,15 @@ void AsyncDeleteAppProfile(
 
 void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> argv) {
+                       std::vector<std::string> const& argv) {
   //! [async set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::IamPolicy;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string role, std::string member) {
+     std::string const& instance_id, std::string const& role,
+     std::string const& member) {
     future<StatusOr<IamPolicy>> updated_future =
         instance_admin.AsyncGetIamPolicy(cq, instance_id)
             .then([cq, instance_admin, role, member, instance_id](
@@ -605,14 +607,15 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncSetNativeIamPolicy(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async set native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   using google::iam::v1::Policy;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string instance_id, std::string role, std::string member) {
+     std::string const& instance_id, std::string const& role,
+     std::string const& member) {
     future<StatusOr<google::iam::v1::Policy>> updated_future =
         instance_admin.AsyncGetNativeIamPolicy(cq, instance_id)
             .then([cq, instance_admin, role, member,
@@ -659,13 +662,13 @@ void AsyncSetNativeIamPolicy(
 void AsyncTestIamPermissions(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
-    std::vector<std::string> argv) {
+    std::vector<std::string> const& argv) {
   //! [async test iam permissions]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string resource, std::vector<std::string> permissions) {
+     std::string const& resource, std::vector<std::string> const& permissions) {
     future<StatusOr<std::vector<std::string>>> permissions_future =
         instance_admin.AsyncTestIamPermissions(cq, resource, permissions);
     // Show how to perform additional work while the long running operation
@@ -688,14 +691,15 @@ void AsyncTestIamPermissions(
    {argv.begin() + 1, argv.end()});
 }
 
-void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
+void AsyncTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   if (argv.size() < 2) {
     throw Usage{
         "async-test-iam-permissions <project-id> <resource-id>"
         "<permission> [permission ...]"};
   }
-  auto const project_id = argv[0];
-  argv.erase(argv.begin());
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  std::vector<std::string> extra_args(it, argv.cend());
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });
   google::cloud::bigtable::examples::AutoShutdownCQ shutdown(cq, std::move(th));
@@ -704,7 +708,7 @@ void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
       google::cloud::bigtable::CreateDefaultInstanceAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()));
 
-  AsyncTestIamPermissions(admin, cq, std::move(argv));
+  AsyncTestIamPermissions(admin, cq, std::move(extra_args));
 }
 
 void RunAll(std::vector<std::string> const& argv) {

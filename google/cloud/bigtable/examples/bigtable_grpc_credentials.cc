@@ -22,7 +22,7 @@ namespace {
 
 using google::cloud::bigtable::examples::Usage;
 
-void AccessToken(std::vector<std::string> argv) {
+void AccessToken(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw Usage{"test-access-token: <project-id> <instance-id> <access-token>"};
   }
@@ -32,8 +32,8 @@ void AccessToken(std::vector<std::string> argv) {
   using google::cloud::StatusOr;
 
   //! [test access token]
-  [](std::string project_id, std::string instance_id,
-     std::string access_token) {
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& access_token) {
     auto call_credentials = grpc::AccessTokenCredentials(access_token);
     auto channel_credentials =
         grpc::SslCredentials(grpc::SslCredentialsOptions());
@@ -51,7 +51,7 @@ void AccessToken(std::vector<std::string> argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void JWTAccessToken(std::vector<std::string> argv) {
+void JWTAccessToken(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw Usage{
         "test-jwt-access-token <project-id> <instance-id> "
@@ -62,12 +62,12 @@ void JWTAccessToken(std::vector<std::string> argv) {
   using google::cloud::StatusOr;
 
   //! [test jwt access token]
-  [](std::string project_id, std::string instance_id,
-     std::string service_account_file_json) {
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& service_account_file_json) {
     std::ifstream stream(service_account_file_json);
     if (!stream.is_open()) {
       std::ostringstream os;
-      os << __func__ << "(" << service_account_file_json
+      os << "JWTAccessToken(" << service_account_file_json
          << "): cannot open upload file source";
       throw std::runtime_error(os.str());
     }
@@ -90,7 +90,7 @@ void JWTAccessToken(std::vector<std::string> argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GCECredentials(std::vector<std::string> argv) {
+void GCECredentials(std::vector<std::string> const& argv) {
   if (argv.size() != 2) {
     throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
   }
@@ -99,7 +99,7 @@ void GCECredentials(std::vector<std::string> argv) {
   using google::cloud::StatusOr;
 
   //! [test gce credentials]
-  [](std::string project_id, std::string instance_id) {
+  [](std::string const& project_id, std::string const& instance_id) {
     auto call_credentials = grpc::GoogleComputeEngineCredentials();
     auto channel_credentials =
         grpc::SslCredentials(grpc::SslCredentialsOptions());
@@ -116,7 +116,7 @@ void GCECredentials(std::vector<std::string> argv) {
   (argv.at(0), argv.at(1));
 }
 
-void RunAll(std::vector<std::string> argv) {
+void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
 
   if (!argv.empty()) throw Usage{"auto"};
