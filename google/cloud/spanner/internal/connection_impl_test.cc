@@ -17,8 +17,8 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -52,7 +52,6 @@ namespace {
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
-using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -195,7 +194,7 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
                              "uh-oh in GrpcReader::Finish");
@@ -229,13 +228,13 @@ TEST(ConnectionImplTest, ReadSuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto reader1 = make_unique<MockGrpcReader>();
+  auto reader1 = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*reader1, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader1, Finish())
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  auto reader2 = make_unique<MockGrpcReader>();
+  auto reader2 = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -296,7 +295,7 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto reader1 = make_unique<MockGrpcReader>();
+  auto reader1 = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*reader1, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader1, Finish())
       .WillOnce(
@@ -332,7 +331,7 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
       .Times(AtLeast(2))
       .WillRepeatedly(
           [](grpc::ClientContext&, spanner_proto::ReadRequest const&) {
-            auto reader = make_unique<MockGrpcReader>();
+            auto reader = absl::make_unique<MockGrpcReader>();
             EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
             EXPECT_CALL(*reader, Finish())
                 .WillOnce(Return(
@@ -366,7 +365,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
@@ -421,7 +420,7 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
                              "uh-oh in GrpcReader::Finish");
@@ -453,7 +452,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -513,7 +512,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
@@ -561,8 +560,9 @@ TEST(ConnectionImplTest, QueryOptions) {
     // Calls the 5 Connection::* methods that take SqlParams and ensures that
     // the protos being sent contain the expected options.
     EXPECT_CALL(*mock, ExecuteStreamingSql(_, m))
-        .WillOnce(Return(ByMove(make_unique<NiceMock<MockGrpcReader>>())))
-        .WillOnce(Return(ByMove(make_unique<NiceMock<MockGrpcReader>>())));
+        .WillOnce(Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+        .WillOnce(
+            Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())));
     (void)conn->ExecuteQuery(params);
     (void)conn->ProfileQuery(params);
 
@@ -672,7 +672,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -778,7 +778,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
                              "uh-oh in GrpcReader::Finish");
@@ -935,7 +935,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(
     metadata: {}
     stats: { query_plan { plan_nodes: { index: 42 } } }
@@ -2056,7 +2056,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
     }
     responses[i].add_values()->set_string_value(std::to_string(i));
 
-    readers[i] = make_unique<MockGrpcReader>();
+    readers[i] = absl::make_unique<MockGrpcReader>();
     EXPECT_CALL(*readers[i], Read(_))
         .WillOnce(DoAll(SetArgPointee<0>(responses[i]), Return(true)))
         .WillOnce(Return(false));
@@ -2134,7 +2134,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
             return MakeSessionsResponse({"test-session-name"});
           });
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   auto constexpr kText = R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
@@ -2161,7 +2161,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
                    spanner_proto::BatchCreateSessionsRequest const&) {
         return MakeSessionsResponse({"test-session-name"});
       });
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
@@ -2212,7 +2212,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
                    spanner_proto::BatchCreateSessionsRequest const&) {
         return MakeSessionsResponse({"test-session-name"});
       });
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
@@ -2237,7 +2237,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
                    spanner_proto::BatchCreateSessionsRequest const&) {
         return MakeSessionsResponse({"test-session-name"});
       });
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = absl::make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));

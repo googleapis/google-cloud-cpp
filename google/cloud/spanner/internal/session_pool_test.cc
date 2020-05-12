@@ -18,11 +18,11 @@
 #include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>
@@ -78,9 +78,8 @@ std::shared_ptr<SessionPool> MakeSessionPool(
     std::shared_ptr<SteadyClock> clock = std::make_shared<SteadyClock>()) {
   return MakeSessionPool(
       std::move(db), std::move(stubs), std::move(options), std::move(cq),
-      google::cloud::internal::make_unique<LimitedTimeRetryPolicy>(
-          std::chrono::minutes(10)),
-      google::cloud::internal::make_unique<ExponentialBackoffPolicy>(
+      absl::make_unique<LimitedTimeRetryPolicy>(std::chrono::minutes(10)),
+      absl::make_unique<ExponentialBackoffPolicy>(
           std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0),
       std::move(clock));
 }
@@ -399,7 +398,7 @@ TEST(SessionPool, SessionRefresh) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
-  auto reader = google::cloud::internal::make_unique<
+  auto reader = absl::make_unique<
       StrictMock<MockAsyncResponseReader<spanner_proto::Session>>>();
   EXPECT_CALL(*mock, AsyncGetSession(_, _, _))
       .WillOnce(Invoke([&reader](

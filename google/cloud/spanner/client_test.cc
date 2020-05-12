@@ -20,10 +20,10 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -39,7 +39,6 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::spanner_testing::IsProtoEqual;
@@ -84,7 +83,7 @@ TEST(ClientTest, ReadSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -129,7 +128,7 @@ TEST(ClientTest, ReadFailure) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -172,7 +171,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -217,7 +216,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -311,7 +310,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
 }
 
 TEST(ClientTest, ExecutePartitionedDmlSuccess) {
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow()).WillRepeatedly(Return(Row()));
@@ -405,7 +404,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}};
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -453,7 +452,7 @@ TEST(ClientTest, CommitMutatorRollback) {
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -498,7 +497,7 @@ TEST(ClientTest, CommitMutatorRollbackError) {
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -543,7 +542,7 @@ TEST(ClientTest, CommitMutatorRollbackError) {
 TEST(ClientTest, CommitMutatorException) {
   auto conn = std::make_shared<MockConnection>();
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -866,7 +865,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText0 = R"pb(
     row_type: {
       fields: {
@@ -930,7 +929,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = make_unique<MockResultSetSource>();
+  auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText0 = R"pb(
     row_type: {
       fields: {

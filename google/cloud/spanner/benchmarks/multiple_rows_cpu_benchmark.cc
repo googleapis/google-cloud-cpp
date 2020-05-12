@@ -21,6 +21,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/memory/memory.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <algorithm>
 #include <chrono>
@@ -1580,38 +1581,30 @@ class RunAllExperiment : public Experiment {
 template <typename Trait>
 ExperimentFactory MakeReadFactory() {
   using G = ::google::cloud::internal::DefaultPRNG;
-  return [](G g) {
-    return google::cloud::internal::make_unique<ReadExperiment<Trait>>(g);
-  };
+  return [](G g) { return absl::make_unique<ReadExperiment<Trait>>(g); };
 }
 
 template <typename Trait>
 ExperimentFactory MakeSelectFactory() {
   using G = ::google::cloud::internal::DefaultPRNG;
-  return [](G g) {
-    return google::cloud::internal::make_unique<SelectExperiment<Trait>>(g);
-  };
+  return [](G g) { return absl::make_unique<SelectExperiment<Trait>>(g); };
 }
 
 template <typename Trait>
 ExperimentFactory MakeUpdateFactory() {
   using G = ::google::cloud::internal::DefaultPRNG;
-  return [](G g) {
-    return google::cloud::internal::make_unique<UpdateExperiment<Trait>>(g);
-  };
+  return [](G g) { return absl::make_unique<UpdateExperiment<Trait>>(g); };
 }
 
 template <typename Trait>
 ExperimentFactory MakeMutationFactory() {
   using G = ::google::cloud::internal::DefaultPRNG;
-  return [](G g) {
-    return google::cloud::internal::make_unique<MutationExperiment<Trait>>(g);
-  };
+  return [](G g) { return absl::make_unique<MutationExperiment<Trait>>(g); };
 }
 
 std::map<std::string, ExperimentFactory> AvailableExperiments() {
   auto make_run_all = [](google::cloud::internal::DefaultPRNG g) {
-    return google::cloud::internal::make_unique<RunAllExperiment>(g);
+    return absl::make_unique<RunAllExperiment>(g);
   };
 
   return {

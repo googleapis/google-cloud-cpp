@@ -17,8 +17,8 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -34,7 +34,6 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::protobuf::TextFormat;
@@ -48,7 +47,7 @@ MATCHER_P(IsValidAndEquals, expected,
 
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   Status finish_status(StatusCode::kInvalidArgument, "invalid");
@@ -64,7 +63,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  * failed `Read()`.
  */
 TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -84,7 +83,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   Status finish_status(StatusCode::kCancelled, "cancelled");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
   // The first call to NextRow() yields a row but the second gives an error.
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
   EXPECT_THAT((*reader)->NextRow(),
@@ -95,14 +94,14 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   EXPECT_CALL(*grpc_reader, Read()).WillOnce(Return(response));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
@@ -114,7 +113,7 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
  * type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(metadata: {})pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
@@ -123,7 +122,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(Row{}));
@@ -134,7 +133,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
  * row type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {}
     values: { string_value: "10" })pb";
@@ -145,7 +144,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<Row> row = (*reader)->NextRow();
@@ -160,7 +159,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
  * All of the data is returned in a single Read() from the gRPC reader.
  */
 TEST(PartialResultSetSourceTest, SingleResponse) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -200,7 +199,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -262,7 +261,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
  * reader returns data across multiple Read() calls.
  */
 TEST(PartialResultSetSourceTest, MultipleResponses) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -323,7 +322,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -349,7 +348,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
  * @test Verify the behavior when a response with no values is received.
  */
 TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 3> text{{
       R"pb(
         metadata: {
@@ -378,7 +377,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -395,7 +394,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
  * of chunked and unchunked values.
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -442,7 +441,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -464,7 +463,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
  * values in the response.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 2> text{{
       R"pb(
         metadata: {
@@ -490,7 +489,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -507,7 +506,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
  * with `chunked_value` set.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 2> text{{
       R"pb(
         metadata: {
@@ -535,7 +534,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -551,7 +550,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
  * @test Verify the behavior when `chunked_value` is set in the final response.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 2> text{{
       R"pb(
         metadata: {
@@ -579,7 +578,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -595,7 +594,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
  * chunked (float64/number).
  */
 TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 3> text{{
       R"pb(
         metadata: {
@@ -628,7 +627,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -642,7 +641,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
  * @test Verify the behavior when we get an incomplete Row.
  */
 TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
-  auto grpc_reader = make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   std::array<char const*, 5> text{{
       R"pb(
         metadata: {
@@ -702,7 +701,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = make_unique<grpc::ClientContext>();
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
