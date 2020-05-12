@@ -71,6 +71,7 @@ if (BUILD_TESTING)
                     protobuf::libprotobuf
                     bigtable_common_options)
         add_test(NAME ${target} COMMAND ${target})
+        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 endif ()
 
@@ -92,6 +93,7 @@ foreach (fname ${bigtable_examples})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
+    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 
 # We just know that these tests need to be run against production.

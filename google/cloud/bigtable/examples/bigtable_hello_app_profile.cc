@@ -27,7 +27,7 @@ namespace {
 
 using google::cloud::bigtable::examples::Usage;
 
-void HelloWorldAppProfile(std::vector<std::string> argv) {
+void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
     throw Usage{
         "hello-world-app-profile <project-id> <instance-id>"

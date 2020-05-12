@@ -19,15 +19,14 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
-using google::cloud::bigtable::examples::UsingEmulator;
+using ::google::cloud::bigtable::examples::Usage;
 
-void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string table_id) {
+  [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_id);
     if (!policy) throw std::runtime_error(policy.status().message());
     std::cout << "The IAM Policy for " << table_id << " is\n"
@@ -37,13 +36,13 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), argv.at(0));
 }
 
-void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string table_id, std::string role,
-     std::string member) {
+  [](cbt::TableAdmin admin, std::string const& table_id,
+     std::string const& role, std::string const& member) {
     StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_id);
     if (!current) throw std::runtime_error(current.status().message());
     // This example adds the member to all existing bindings for that role. If
@@ -69,29 +68,31 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void TestIamPermissions(std::vector<std::string> argv) {
+void TestIamPermissions(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     throw Usage{
         "test-iam-permissions <project-id> <instance-id> <resource-id>"
         " <permission> [permission ...]"};
   }
 
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  auto const instance_id = *it++;
+  auto const resource = *it++;
+  std::vector<std::string> const permissions(it, argv.cend());
+
   google::cloud::bigtable::TableAdmin admin(
       google::cloud::bigtable::CreateDefaultAdminClient(
-          argv[0], google::cloud::bigtable::ClientOptions{}),
-      argv[1]);
-
-  std::string resource = argv[2];
-  argv.erase(argv.begin(), argv.begin() + 3);
-  auto permissions = std::move(argv);
+          project_id, google::cloud::bigtable::ClientOptions{}),
+      instance_id);
 
   //! [test iam permissions]
 
   using google::cloud::StatusOr;
   namespace cbt = google::cloud::bigtable;
 
-  [](cbt::TableAdmin admin, std::string resource,
-     std::vector<std::string> permissions) {
+  [](cbt::TableAdmin admin, std::string const& resource,
+     std::vector<std::string> const& permissions) {
     StatusOr<std::vector<std::string>> result =
         admin.TestIamPermissions(resource, permissions);
     if (!result) throw std::runtime_error(result.status().message());
@@ -107,15 +108,16 @@ void TestIamPermissions(std::vector<std::string> argv) {
   (std::move(admin), std::move(resource), std::move(permissions));
 }
 
-void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                        google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> argv) {
+                       std::vector<std::string> const& argv) {
   //! [async get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   using google::iam::v1::Policy;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
+     std::string const& table_id) {
     future<StatusOr<google::iam::v1::Policy>> policy_future =
         admin.AsyncGetIamPolicy(cq, table_id);
 
@@ -132,16 +134,17 @@ void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), std::move(cq), argv.at(0));
 }
 
-void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                        google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> argv) {
+                       std::vector<std::string> const& argv) {
   //! [async set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   using google::iam::v1::Policy;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
-     std::string role, std::string member) {
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
+     std::string const& table_id, std::string const& role,
+     std::string const& member) {
     future<StatusOr<google::iam::v1::Policy>> updated_future =
         admin.AsyncGetIamPolicy(cq, table_id)
             .then([cq, admin, role, member,
@@ -183,15 +186,15 @@ void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), std::move(cq), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void AsyncTestIamPermissions(google::cloud::bigtable::TableAdmin admin,
+void AsyncTestIamPermissions(google::cloud::bigtable::TableAdmin const& admin,
                              google::cloud::bigtable::CompletionQueue cq,
-                             std::vector<std::string> argv) {
+                             std::vector<std::string> const& argv) {
   //! [async test iam permissions]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string resource,
-     std::vector<std::string> permissions) {
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
+     std::string const& resource, std::vector<std::string> const& permissions) {
     future<StatusOr<std::vector<std::string>>> permissions_future =
         admin.AsyncTestIamPermissions(cq, resource, permissions);
     // Show how to perform additional work while the long running operation
@@ -213,15 +216,16 @@ void AsyncTestIamPermissions(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), std::move(cq), argv.at(0), {argv.begin() + 1, argv.end()});
 }
 
-void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
+void AsyncTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   if (argv.size() < 3) {
     throw Usage{
         "async-test-iam-permissions <project-id> <instance-id> <resource-id>"
         "<permission> [permission ...]"};
   }
-  auto const project_id = argv[0];
-  auto const instance_id = argv[1];
-  argv.erase(argv.begin(), argv.begin() + 2);
+  auto it = argv.cbegin();
+  auto const project_id = *it++;
+  auto const instance_id = *it++;
+  std::vector<std::string> const extra_args(it, argv.cend());
 
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });
@@ -232,7 +236,7 @@ void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
           project_id, google::cloud::bigtable::ClientOptions{}),
       instance_id);
 
-  AsyncTestIamPermissions(admin, cq, std::move(argv));
+  AsyncTestIamPermissions(admin, cq, extra_args);
 }
 
 void RunAll(std::vector<std::string> const& argv) {

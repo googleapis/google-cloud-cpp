@@ -46,50 +46,50 @@ void PrepareReadSamples(google::cloud::bigtable::Table table) {
   namespace cbt = google::cloud::bigtable;
   cbt::BulkMutation bulk;
 
-  std::string const kColumnFamilyName = "stats_summary";
-  auto const kTimestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+  std::string const column_family_name = "stats_summary";
+  auto const timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::system_clock::now().time_since_epoch());
 
   bulk.emplace_back(
       cbt::SingleRowMutation("phone#4c410523#20190501",
-                             {cbt::SetCell(kColumnFamilyName, "connected_cell",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "connected_wifi",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "os_build",
-                                           kTimestamp, "PQ2A.190405.003")}));
+                             {cbt::SetCell(column_family_name, "connected_cell",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "connected_wifi",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "os_build",
+                                           timestamp, "PQ2A.190405.003")}));
   bulk.emplace_back(
       cbt::SingleRowMutation("phone#4c410523#20190502",
-                             {cbt::SetCell(kColumnFamilyName, "connected_cell",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "connected_wifi",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "os_build",
-                                           kTimestamp, "PQ2A.190405.003")}));
+                             {cbt::SetCell(column_family_name, "connected_cell",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "connected_wifi",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "os_build",
+                                           timestamp, "PQ2A.190405.003")}));
   bulk.emplace_back(
       cbt::SingleRowMutation("phone#4c410523#20190505",
-                             {cbt::SetCell(kColumnFamilyName, "connected_cell",
-                                           kTimestamp, std::int64_t{0}),
-                              cbt::SetCell(kColumnFamilyName, "connected_wifi",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "os_build",
-                                           kTimestamp, "PQ2A.190406.000")}));
+                             {cbt::SetCell(column_family_name, "connected_cell",
+                                           timestamp, std::int64_t{0}),
+                              cbt::SetCell(column_family_name, "connected_wifi",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "os_build",
+                                           timestamp, "PQ2A.190406.000")}));
   bulk.emplace_back(
       cbt::SingleRowMutation("phone#5c10102#20190501",
-                             {cbt::SetCell(kColumnFamilyName, "connected_cell",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "connected_wifi",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "os_build",
-                                           kTimestamp, "PQ2A.190401.002")}));
+                             {cbt::SetCell(column_family_name, "connected_cell",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "connected_wifi",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "os_build",
+                                           timestamp, "PQ2A.190401.002")}));
   bulk.emplace_back(
       cbt::SingleRowMutation("phone#5c10102#20190502",
-                             {cbt::SetCell(kColumnFamilyName, "connected_cell",
-                                           kTimestamp, std::int64_t{1}),
-                              cbt::SetCell(kColumnFamilyName, "connected_wifi",
-                                           kTimestamp, std::int64_t{0}),
-                              cbt::SetCell(kColumnFamilyName, "os_build",
-                                           kTimestamp, "PQ2A.190406.000")}));
+                             {cbt::SetCell(column_family_name, "connected_cell",
+                                           timestamp, std::int64_t{1}),
+                              cbt::SetCell(column_family_name, "connected_wifi",
+                                           timestamp, std::int64_t{0}),
+                              cbt::SetCell(column_family_name, "os_build",
+                                           timestamp, "PQ2A.190406.000")}));
 
   std::vector<cbt::FailedMutation> failures = table.BulkApply(std::move(bulk));
   if (failures.empty()) {
@@ -206,7 +206,7 @@ void ReadRow(google::cloud::bigtable::Table table,
   //! [START bigtable_reads_row]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](google::cloud::bigtable::Table table, std::string row_key) {
+  [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple =
         table.ReadRow(row_key, cbt::Filter::PassAllFilter());
     if (!tuple) throw std::runtime_error(tuple.status().message());
@@ -225,7 +225,7 @@ void ReadRowPartial(google::cloud::bigtable::Table table,
   //! [read row] [START bigtable_reads_row_partial]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](google::cloud::bigtable::Table table, std::string row_key) {
+  [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple = table.ReadRow(
         row_key, cbt::Filter::ColumnName("stats_summary", "os_build"));
     if (!tuple) throw std::runtime_error(tuple.status().message());
