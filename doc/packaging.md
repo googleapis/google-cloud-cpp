@@ -216,6 +216,25 @@ default pkg-config does not search in these directories.
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 ```
 
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
+```
+
 #### crc32c
 
 The project depends on the Crc32c library, we need to compile this from
@@ -290,6 +309,25 @@ default pkg-config does not search in these directories.
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 ```
 
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
+```
+
 #### crc32c
 
 The project depends on the Crc32c library, we need to compile this from
@@ -361,6 +399,25 @@ are multiple ways to solve this problem, the following steps are one solution:
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf
@@ -475,6 +532,25 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         pkg-config tar wget zlib1g-dev
 ```
 
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
+```
+
 #### Protobuf
 
 We need to install a version of Protobuf that is recent enough to support the
@@ -571,6 +647,25 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         pkg-config tar wget zlib1g-dev
 ```
 
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
+```
+
 #### Protobuf
 
 We need to install a version of Protobuf that is recent enough to support the
@@ -665,6 +760,25 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
         libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf
@@ -787,6 +901,25 @@ sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev li
         protobuf-compiler protobuf-compiler-grpc
 ```
 
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
+```
+
 #### crc32c
 
 The project depends on the Crc32c library, we need to compile this from
@@ -853,6 +986,25 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 \
         pkg-config tar wget zlib1g-dev
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf
@@ -962,6 +1114,25 @@ solution:
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf
@@ -1075,6 +1246,25 @@ solution:
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
+```
+
+#### Abseil
+
+We need a recent version of Abseil.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### Protobuf

@@ -40,6 +40,25 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 # ```
 
+# #### Abseil
+
+# We need a recent version of Abseil.
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
+    tar -xf 20200225.2.tar.gz && \
+    cd abseil-cpp-20200225.2 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out/abseil && \
+    cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+# ```
+
 # #### Protobuf
 
 # We need to install a version of Protobuf that is recent enough to support the
