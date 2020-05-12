@@ -126,8 +126,13 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   echo
   io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
+  io::log "Running clang-tidy for: "
+  # TODO(#3958) - use a simple regular expression like '\.(h|cc)$' when all
+  # targets are clang-tidy clean.
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E '\.(cc|h)$' |
+    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$'
+  git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
+    grep -E '(\.cc|/(bigquery|firestore|pubsub|spanner)/.*\.h)$' |
     xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
