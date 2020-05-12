@@ -22,7 +22,7 @@ licenses(["notice"])  # Apache 2.0
 # us to dial-up the warnings in our own code, without seeing compiler warnings
 # from their headers, which we do not own.
 cc_library(
-    name = "googleapis_system_includes",
+    name = "absl_system_includes",
     includes = [
         ".",
     ],

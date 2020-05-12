@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "absl/memory/memory.h"
+#include <absl/memory/memory.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>

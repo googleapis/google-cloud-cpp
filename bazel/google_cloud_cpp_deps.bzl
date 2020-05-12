@@ -46,6 +46,7 @@ def google_cloud_cpp_deps():
                 "https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz",
             ],
             sha256 = "f41868f7a938605c92936230081175d1eae87f6ea2c248f41077c8f88316f111",
+            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:abseil.BUILD",
         )
 
     # Load a version of googletest that we know works.

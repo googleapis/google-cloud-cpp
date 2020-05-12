@@ -76,6 +76,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//:absl_system_includes",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
