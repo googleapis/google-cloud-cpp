@@ -28,10 +28,11 @@ google_cloud_cpp_common_hdrs = [
     "internal/build_info.h",
     "internal/compiler_info.h",
     "internal/conjunction.h",
-    "internal/disjunction.h",
     "internal/diagnostics_pop.inc",
     "internal/diagnostics_push.inc",
     "internal/disable_msvc_crt_secure_warnings.inc",
+    "internal/disjunction.h",
+    "internal/example_driver.h",
     "internal/filesystem.h",
     "internal/format_time_point.h",
     "internal/future_base.h",
@@ -59,7 +60,6 @@ google_cloud_cpp_common_hdrs = [
     "terminate_handler.h",
     "tracing_options.h",
     "version.h",
-    "internal/example_driver.h",
 ]
 
 google_cloud_cpp_common_srcs = [
@@ -67,6 +67,7 @@ google_cloud_cpp_common_srcs = [
     "iam_policy.cc",
     "internal/backoff_policy.cc",
     "internal/compiler_info.cc",
+    "internal/example_driver.cc",
     "internal/filesystem.cc",
     "internal/format_time_point.cc",
     "internal/future_impl.cc",
@@ -81,5 +82,4 @@ google_cloud_cpp_common_srcs = [
     "terminate_handler.cc",
     "tracing_options.cc",
     "version.cc",
-    "internal/example_driver.cc",
 ]

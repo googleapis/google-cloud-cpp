@@ -17,8 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_benchmarks_unit_tests = [
-    "benchmark_parser_test.cc",
     "benchmark_make_random_test.cc",
     "benchmark_parse_args_test.cc",
+    "benchmark_parser_test.cc",
     "benchmark_utils_test.cc",
 ]

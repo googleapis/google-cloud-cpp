@@ -16,8 +16,8 @@
 
 if (BUILD_TESTING)
 
-    add_library(storage_benchmarks benchmark_utils.cc benchmark_utils.h
-                                   bounded_queue.h)
+    add_library(storage_benchmarks # cmake-format: sort
+                benchmark_utils.cc benchmark_utils.h bounded_queue.h)
     target_link_libraries(
         storage_benchmarks
         PUBLIC storage_client
@@ -72,8 +72,9 @@ if (BUILD_TESTING)
 
     # List the unit tests, then setup the targets and dependencies.
     set(storage_benchmarks_unit_tests
-        benchmark_parser_test.cc benchmark_make_random_test.cc
-        benchmark_parse_args_test.cc benchmark_utils_test.cc)
+        # cmake-format: sort
+        benchmark_make_random_test.cc benchmark_parse_args_test.cc
+        benchmark_parser_test.cc benchmark_utils_test.cc)
 
     foreach (fname ${storage_benchmarks_unit_tests})
         google_cloud_cpp_add_executable(target "storage_benchmarks" "${fname}")

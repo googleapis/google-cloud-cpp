@@ -84,7 +84,7 @@ include(CreateBazelConfig)
 
 # the client library
 add_library(
-    bigtable_client
+    bigtable_client # cmake-format: sort
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -205,7 +205,7 @@ create_bazel_config(bigtable_client)
 
 if (BUILD_TESTING)
     add_library(
-        bigtable_client_testing
+        bigtable_client_testing # cmake-format: sort
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
         testing/inprocess_admin_client.cc
@@ -247,6 +247,7 @@ if (BUILD_TESTING)
 
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_client_unit_tests
+        # cmake-format: sort
         admin_client_test.cc
         app_profile_config_test.cc
         async_list_app_profiles_test.cc
@@ -276,27 +277,27 @@ if (BUILD_TESTING)
         internal/bulk_mutator_test.cc
         internal/google_bytes_traits_test.cc
         internal/prefix_range_end_test.cc
+        metadata_update_policy_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
+        polling_policy_test.cc
+        read_modify_write_rule_test.cc
+        row_range_test.cc
+        row_reader_test.cc
+        row_set_test.cc
+        row_test.cc
+        rpc_backoff_policy_test.cc
+        rpc_retry_policy_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
         table_check_and_mutate_row_test.cc
         table_config_test.cc
+        table_readmodifywriterow_test.cc
         table_readrow_test.cc
         table_readrows_test.cc
         table_sample_row_keys_test.cc
-        table_test.cc
-        table_readmodifywriterow_test.cc
-        read_modify_write_rule_test.cc
-        row_reader_test.cc
-        row_test.cc
-        row_range_test.cc
-        row_set_test.cc
-        rpc_backoff_policy_test.cc
-        metadata_update_policy_test.cc
-        rpc_retry_policy_test.cc
-        polling_policy_test.cc)
+        table_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"

@@ -14,8 +14,8 @@
 # limitations under the License.
 # ~~~
 
-add_library(storage_examples_common storage_examples_common.cc
-                                    storage_examples_common.h)
+add_library(storage_examples_common # cmake-format: sort
+            storage_examples_common.cc storage_examples_common.h)
 target_link_libraries(storage_examples_common storage_client
                       google_cloud_cpp_common)
 

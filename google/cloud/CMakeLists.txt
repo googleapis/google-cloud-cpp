@@ -112,7 +112,7 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library
 add_library(
-    google_cloud_cpp_common
+    google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     future.h
     future_generic.h
@@ -129,10 +129,12 @@ add_library(
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/conjunction.h
-    internal/disjunction.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_msvc_crt_secure_warnings.inc
+    internal/disjunction.h
+    internal/example_driver.cc
+    internal/example_driver.h
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc
@@ -170,12 +172,10 @@ add_library(
     status_or.h
     terminate_handler.cc
     terminate_handler.h
-    tracing_options.h
     tracing_options.cc
+    tracing_options.h
     version.cc
-    version.h
-    internal/example_driver.cc
-    internal/example_driver.h)
+    version.h)
 target_link_libraries(
     google_cloud_cpp_common
     PUBLIC absl::memory Threads::Threads
@@ -308,7 +308,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
 
     # the library
     add_library(
-        google_cloud_cpp_grpc_utils
+        google_cloud_cpp_grpc_utils # cmake-format: sort
         async_operation.h
         background_threads.h
         completion_queue.cc

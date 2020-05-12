@@ -35,7 +35,7 @@ include(GoogleCloudCppCommon)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
-    spanner_client
+    spanner_client # cmake-format: sort
     backoff_policy.h
     backup.cc
     backup.h
@@ -209,7 +209,7 @@ function (spanner_client_define_tests)
     find_package(GTest CONFIG REQUIRED)
 
     add_library(
-        spanner_client_testing
+        spanner_client_testing # cmake-format: sort
         testing/cleanup_stale_instances.cc
         testing/cleanup_stale_instances.h
         testing/compiler_supports_regexp.h

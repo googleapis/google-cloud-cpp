@@ -31,8 +31,8 @@ function (spanner_client_define_benchmarks)
             GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
     )
 
-    add_library(spanner_client_benchmarks benchmarks_config.cc
-                                          benchmarks_config.h)
+    add_library(spanner_client_benchmarks # cmake-format: sort
+                benchmarks_config.cc benchmarks_config.h)
     target_link_libraries(
         spanner_client_benchmarks
         PUBLIC getrusage_flags

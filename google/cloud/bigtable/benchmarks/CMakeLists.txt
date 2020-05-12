@@ -15,7 +15,7 @@
 # ~~~
 
 add_library(
-    bigtable_benchmark_common
+    bigtable_benchmark_common # cmake-format: sort
     benchmark.cc
     benchmark.h
     constants.h
@@ -42,6 +42,7 @@ create_bazel_config(bigtable_benchmark_common YEAR 2020)
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
+        # cmake-format: sort
         bigtable_benchmark_test.cc embedded_server_test.cc
         format_duration_test.cc random_mutation_test.cc setup_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
