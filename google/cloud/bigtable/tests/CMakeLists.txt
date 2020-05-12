@@ -53,6 +53,7 @@ foreach (fname ${bigtable_client_integration_tests})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
+    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 
 add_executable(instance_admin_emulator instance_admin_emulator.cc)
@@ -65,6 +66,7 @@ target_link_libraries(
             gRPC::grpc
             protobuf::libprotobuf
             bigtable_common_options)
+google_cloud_cpp_add_clang_tidy(instance_admin_emulator)
 
 # We just know that these tests need to be run against production.
 set(bigtable_integration_tests_production # cmake-format: sort

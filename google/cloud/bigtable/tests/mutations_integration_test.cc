@@ -19,38 +19,36 @@
 namespace {
 
 namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
-class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
- protected:
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-
-  /**
-   * This function creates Cell by ignoring the timestamp.
-   * In this case Cloud Bigtable will insert the default server
-   * side timestamp for the cells.
-   */
-  void CreateCellsIgnoringTimestamp(bigtable::Table& table,
-                                    std::vector<bigtable::Cell> const& cells) {
-    std::map<bigtable::RowKeyType, bigtable::SingleRowMutation> mutations;
-    for (auto const& cell : cells) {
-      auto key = cell.row_key();
-      auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-      inserted.first->second.emplace_back(bigtable::SetCell(
-          cell.family_name(), cell.column_qualifier(), cell.value()));
-    }
-
-    bigtable::BulkMutation bulk;
-    for (auto& kv : mutations) {
-      bulk.emplace_back(std::move(kv.second));
-    }
-    ASSERT_NE(0, bulk.size());
-    auto failures = table.BulkApply(std::move(bulk));
-    ASSERT_TRUE(failures.empty());
+using MutationIntegrationTest = bigtable::testing::TableIntegrationTest;
+/**
+ * This function creates Cell by ignoring the timestamp.
+ * In this case Cloud Bigtable will insert the default server
+ * side timestamp for the cells.
+ */
+void CreateCellsIgnoringTimestamp(bigtable::Table& table,
+                                  std::vector<bigtable::Cell> const& cells) {
+  std::map<bigtable::RowKeyType, bigtable::SingleRowMutation> mutations;
+  for (auto const& cell : cells) {
+    auto key = cell.row_key();
+    auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
+    inserted.first->second.emplace_back(bigtable::SetCell(
+        cell.family_name(), cell.column_qualifier(), cell.value()));
   }
-};
+
+  bigtable::BulkMutation bulk;
+  for (auto& kv : mutations) {
+    bulk.emplace_back(std::move(kv.second));
+  }
+  ASSERT_NE(0, bulk.size());
+  auto failures = table.BulkApply(std::move(bulk));
+  ASSERT_TRUE(failures.empty());
+}
+
+std::string const kColumnFamily1 = "family1";
+std::string const kColumnFamily2 = "family2";
+std::string const kColumnFamily3 = "family3";
 
 }  // namespace
 
@@ -64,12 +62,12 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id1", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 0, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, kColumnFamily3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   CreateCells(table, created_cells);
@@ -88,12 +86,12 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellNumRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id1", 1000, 2000},
-      {row_key, column_family1, "column_id1", 2000, 3000},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
-      {row_key, column_family2, "column_id3", 1000, 5000},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"}};
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 1000, 2000},
+      {row_key, kColumnFamily1, "column_id1", 2000, 3000},
+      {row_key, kColumnFamily2, "column_id2", 0, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 1000, 5000},
+      {row_key, kColumnFamily3, "column_id1", 2000, "v-c1-0-2"}};
 
   CreateCells(table, created_cells);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -133,21 +131,21 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 0, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, kColumnFamily3, "column_id1", 2000, "v-c1-0-2"},
   };
   std::int64_t server_timestamp = -1;
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", server_timestamp, "v-c-0-0"},
-      {row_key, column_family1, "column_id2", server_timestamp, "v-c-0-1"},
-      {row_key, column_family1, "column_id3", server_timestamp, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", server_timestamp, "v-c0-0-0"},
-      {row_key, column_family2, "column_id3", server_timestamp, "v-c1-0-1"},
-      {row_key, column_family3, "column_id1", server_timestamp, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", server_timestamp, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id2", server_timestamp, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id3", server_timestamp, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", server_timestamp, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id3", server_timestamp, "v-c1-0-1"},
+      {row_key, kColumnFamily3, "column_id1", server_timestamp, "v-c1-0-2"},
   };
 
   CreateCellsIgnoringTimestamp(table, created_cells);
@@ -170,33 +168,33 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumn-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1"},
-      {row_key, column_family2, "column_id2", 3000, "v-c0-0-2"},
-      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3"},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
-      {row_key, column_family2, "column_id2", 2000, "v-c1-0-2"},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id2", 1000, "v-c0-0-1"},
+      {row_key, kColumnFamily2, "column_id2", 3000, "v-c0-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 4000, "v-c0-0-3"},
+      {row_key, kColumnFamily2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c1-0-2"},
+      {row_key, kColumnFamily3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1"},
-      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3"},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 1000, "v-c0-0-1"},
+      {row_key, kColumnFamily2, "column_id2", 4000, "v-c0-0-3"},
+      {row_key, kColumnFamily2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, kColumnFamily3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   // Create records
   CreateCells(table, created_cells);
   // Delete the columns with column identifier as column_id2
   auto status = table.Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
+      row_key, bigtable::DeleteFromColumn(kColumnFamily2, "column_id2", 2000_us,
                                           4000_us)));
   ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -218,22 +216,22 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<bigtable::Cell> created_cells{
-      {key, column_family1, "c1", 1000, "v1"},
-      {key, column_family1, "c2", 1000, "v2"},
-      {key, column_family1, "c3", 2000, "v3"},
-      {key, column_family2, "c2", 1000, "v4"},
-      {key, column_family2, "c2", 3000, "v5"},
-      {key, column_family2, "c2", 4000, "v6"},
-      {key, column_family2, "c3", 1000, "v7"},
-      {key, column_family2, "c2", 2000, "v8"},
-      {key, column_family3, "c1", 2000, "v9"},
+      {key, kColumnFamily1, "c1", 1000, "v1"},
+      {key, kColumnFamily1, "c2", 1000, "v2"},
+      {key, kColumnFamily1, "c3", 2000, "v3"},
+      {key, kColumnFamily2, "c2", 1000, "v4"},
+      {key, kColumnFamily2, "c2", 3000, "v5"},
+      {key, kColumnFamily2, "c2", 4000, "v6"},
+      {key, kColumnFamily2, "c3", 1000, "v7"},
+      {key, kColumnFamily2, "c2", 2000, "v8"},
+      {key, kColumnFamily3, "c1", 2000, "v9"},
   };
 
   CreateCells(table, created_cells);
 
   // Try to delete the columns with an invalid range:
   auto status = table.Apply(bigtable::SingleRowMutation(
-      key, bigtable::DeleteFromColumn(column_family2, "c2", 4000_us, 2000_us)));
+      key, bigtable::DeleteFromColumn(kColumnFamily2, "c2", 4000_us, 2000_us)));
   EXPECT_FALSE(status.ok());
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -254,15 +252,15 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<bigtable::Cell> created_cells{
-      {key, column_family1, "c3", 2000, "v3"},
-      {key, column_family2, "c2", 2000, "v2"},
-      {key, column_family3, "c1", 2000, "v1"},
+      {key, kColumnFamily1, "c3", 2000, "v3"},
+      {key, kColumnFamily2, "c2", 2000, "v2"},
+      {key, kColumnFamily3, "c1", 2000, "v1"},
   };
 
   CreateCells(table, created_cells);
 
   auto status = table.Apply(bigtable::SingleRowMutation(
-      key, bigtable::DeleteFromColumn(column_family2, "c2", 2000_us, 2000_us)));
+      key, bigtable::DeleteFromColumn(kColumnFamily2, "c2", 2000_us, 2000_us)));
   EXPECT_FALSE(status.ok());
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -278,23 +276,23 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnForAll-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id3", 1000, "v-c-0-1"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
   };
 
   // Create records
   CreateCells(table, created_cells);
   // Delete the columns with column identifier column_id3
   auto status = table.Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumn(column_family1, "column_id3")));
+      row_key, bigtable::DeleteFromColumn(kColumnFamily1, "column_id3")));
   ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -311,25 +309,25 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnStartingFrom-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
   CreateCells(table, created_cells);
   // Delete the columns with column identifier column_id1
   auto status = table.Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumnStartingFrom(column_family1,
+      row_key, bigtable::DeleteFromColumnStartingFrom(kColumnFamily1,
                                                       "column_id1", 1000_us)));
   ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -347,18 +345,18 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // Create a vector of cell which will be inserted into bigtable cloud
   std::string const row_key = "DeleteColumnEndingAt-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
@@ -367,7 +365,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // will be deleted
   // Delete the columns with column identifier column_id1
   auto status = table.Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
+      row_key, bigtable::DeleteFromColumnEndingAt(kColumnFamily1, "column_id1",
                                                   2000_us)));
   ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -385,22 +383,22 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteFamily-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
+      {row_key, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key, kColumnFamily1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
   };
 
   // Create records
   CreateCells(table, created_cells);
   // Delete all the records for family
   auto status = table.Apply(bigtable::SingleRowMutation(
-      row_key, bigtable::DeleteFromFamily(column_family1)));
+      row_key, bigtable::DeleteFromFamily(kColumnFamily1)));
   ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -418,15 +416,15 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   std::string const row_key1 = "DeleteRowKey1";
   std::string const row_key2 = "DeleteRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, kColumnFamily1, "column_id1", 0, "v-c-0-0"},
+      {row_key1, kColumnFamily1, "column_id1", 1000, "v-c-0-1"},
+      {row_key1, kColumnFamily2, "column_id3", 2000, "v-c-0-2"},
+      {row_key2, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, kColumnFamily3, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key2, kColumnFamily2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, kColumnFamily3, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records

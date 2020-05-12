@@ -26,7 +26,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
 
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
@@ -35,7 +34,7 @@ class AdminIAMPolicyIntegrationTest
   std::unique_ptr<TableAdmin> table_admin_;
   std::string service_account_;
 
-  void SetUp() {
+  void SetUp() override {
     service_account_ = google::cloud::internal::GetEnv(
                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
@@ -47,8 +46,6 @@ class AdminIAMPolicyIntegrationTest
     table_admin_ = google::cloud::internal::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
-
-  void TearDown() {}
 
   int CountMatchingTables(std::string const& table_id,
                           std::vector<btadmin::Table> const& tables) {
@@ -63,8 +60,6 @@ class AdminIAMPolicyIntegrationTest
 };
 
 TEST_F(AdminIAMPolicyIntegrationTest, AsyncSetGetTestIamAPIsTest) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   std::string const table_id = RandomTableId();
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(

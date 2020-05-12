@@ -21,20 +21,17 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
-class DataAsyncFutureIntegrationTest
-    : public bigtable::testing::TableIntegrationTest {
- protected:
-  std::string const family = "family1";
-};
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using DataAsyncFutureIntegrationTest = bigtable::testing::TableIntegrationTest;
 
-using namespace google::cloud::testing_util::chrono_literals;
+std::string const kFamily = "family1";
 
 TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   auto table = GetTable();
 
   std::string const row_key = "key-000010";
-  std::vector<bigtable::Cell> created{{row_key, family, "cc1", 1000, "v1000"},
-                                      {row_key, family, "cc2", 2000, "v2000"}};
+  std::vector<bigtable::Cell> created{{row_key, kFamily, "cc1", 1000, "v1000"},
+                                      {row_key, kFamily, "cc2", 2000, "v2000"}};
   SingleRowMutation mut(row_key);
   for (auto const& c : created) {
     mut.emplace_back(SetCell(
@@ -56,8 +53,9 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   EXPECT_TRUE(status.ok());
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<bigtable::Cell> expected{{row_key, family, "cc1", 1000, "v1000"},
-                                       {row_key, family, "cc2", 2000, "v2000"}};
+  std::vector<bigtable::Cell> expected{
+      {row_key, kFamily, "cc1", 1000, "v1000"},
+      {row_key, kFamily, "cc2", 2000, "v2000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -74,11 +72,11 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   std::string const row_key2 = "key-000020";
   std::map<std::string, std::vector<bigtable::Cell>> created{
       {row_key1,
-       {{row_key1, family, "cc1", 1000, "vv10"},
-        {row_key1, family, "cc2", 2000, "vv20"}}},
+       {{row_key1, kFamily, "cc1", 1000, "vv10"},
+        {row_key1, kFamily, "cc2", 2000, "vv20"}}},
       {row_key2,
-       {{row_key2, family, "cc1", 3000, "vv30"},
-        {row_key2, family, "cc2", 4000, "vv40"}}}};
+       {{row_key2, kFamily, "cc1", 3000, "vv30"},
+        {row_key2, kFamily, "cc2", 4000, "vv40"}}}};
 
   BulkMutation mut;
   for (auto const& row_cells : created) {
@@ -126,7 +124,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
 
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
+  std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
   CompletionQueue cq;
@@ -134,8 +132,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
 
   auto fut = table.AsyncCheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("v1000"),
-      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq);
+      {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")}, cq);
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -144,8 +142,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   EXPECT_STATUS_OK(status);
   EXPECT_TRUE(status.ok());
 
-  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
-                                       {key, family, "c2", 0, "v2000"}};
+  std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
+                                       {key, kFamily, "c2", 0, "v2000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -160,7 +158,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
 
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
+  std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
   CompletionQueue cq;
@@ -168,8 +166,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
 
   auto fut = table.AsyncCheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("not-there"),
-      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq);
+      {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")}, cq);
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -178,8 +176,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   EXPECT_STATUS_OK(status);
   EXPECT_TRUE(status.ok());
 
-  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
-                                       {key, family, "c3", 0, "v3000"}};
+  std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
+                                       {key, kFamily, "c3", 0, "v3000"}};
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
@@ -277,12 +275,12 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
   promise<Status> stream_status_promise;
   table.AsyncReadRows(
       cq,
-      [&actual](Row row) {
-        std::move(row.cells().begin(), row.cells().end(),
-                  std::back_inserter(actual));
+      [&actual](Row const& row) {
+        auto const& cells = row.cells();
+        actual.insert(actual.end(), cells.begin(), cells.end());
         return make_ready_future(true);
       },
-      [&stream_status_promise](Status stream_status) {
+      [&stream_status_promise](Status const& stream_status) {
         stream_status_promise.set_value(stream_status);
       },
       bigtable::RowSet(bigtable::RowRange::InfiniteRange()),

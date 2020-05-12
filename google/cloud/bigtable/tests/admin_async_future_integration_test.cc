@@ -26,7 +26,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
-using namespace google::cloud::testing_util::chrono_literals;
 
 class AdminAsyncFutureIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
@@ -34,7 +33,7 @@ class AdminAsyncFutureIntegrationTest
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
 
-  void SetUp() {
+  void SetUp() override {
     if (google::cloud::internal::GetEnv(
             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {
@@ -47,8 +46,6 @@ class AdminAsyncFutureIntegrationTest
     table_admin_ = google::cloud::internal::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
-
-  void TearDown() {}
 
   int CountMatchingTables(std::string const& table_id,
                           std::vector<btadmin::Table> const& tables) {
@@ -251,8 +248,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropAllRowsTest) {
 /// @test Verify that `bigtable::TableAdmin` AsyncCheckConsistency works as
 /// expected.
 TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
-  using namespace google::cloud::testing_util::chrono_literals;
-
   std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
   std::string const table_id = RandomTableId();
 
