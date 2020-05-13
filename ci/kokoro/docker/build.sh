@@ -233,9 +233,9 @@ else
 fi
 
 # If RUN_INTEGRATION_TESTS wasn't set in the environment or by one of the
-# builds above, default it to "yes" for kokoro builds and "auto" otherwise.
+# builds above, default it to "yes" for CI builds and "auto" otherwise.
 if [[ -z "${RUN_INTEGRATION_TESTS:-}" ]]; then
-  if [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
+  if [[ "${RUNNING_CI:-}" == "yes" ]]; then
     RUN_INTEGRATION_TESTS="yes"
   else
     RUN_INTEGRATION_TESTS="auto"
