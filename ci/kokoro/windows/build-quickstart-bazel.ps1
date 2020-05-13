@@ -151,7 +151,9 @@ ForEach($library in ("bigtable", "storage", "spanner")) {
         "Compiling quickstart for ${library}"
     bazel $common_flags build ...
     if ($LastExitCode) {
-        throw "bazel test failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Red `
+            "bazel test failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
     }
 
     if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
@@ -160,7 +162,9 @@ ForEach($library in ("bigtable", "storage", "spanner")) {
         bazel $common_flags run "--spawn_strategy=local" `
             ":quickstart" -- $quickstart_args[${library}]
         if ($LastExitCode) {
-            throw "quickstart test for ${library} failed with exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Red `
+                "quickstart test for ${library} failed with exit code ${LastExitCode}."
+            Exit ${LastExitCode}
         }
     }
 

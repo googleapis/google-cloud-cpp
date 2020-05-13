@@ -24,7 +24,9 @@ ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
     }
 }
 if ($missing.count -ge 1) {
-    throw "Aborting build because the ${missing} environment variables are not set."
+    Write-Host -ForegroundColor Red `
+        "Aborting build because the ${missing} environment variables are not set."
+    Exit 1
 }
 
 $binary_dir="cmake-out\msvc-${env:VCPKG_TRIPLET}"
@@ -42,13 +44,15 @@ $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_flags"
 cmake $cmake_flags
 if ($LastExitCode) {
-    throw "cmake config failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "cmake config failed with exit code $LastExitCode"
+    Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling with CMake $env:CONFIG"
 cmake --build "${binary_dir}" --config $env:CONFIG
 if ($LastExitCode) {
-    throw "cmake for 'all' target failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "cmake for 'all' target failed with exit code $LastExitCode"
+    Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running unit tests $env:CONFIG"
@@ -66,14 +70,16 @@ $NCPU=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
 $ctest_flags = @("--output-on-failure", "-j", $NCPU, "-C", $env:CONFIG)
 ctest $ctest_flags -LE integration-tests
 if ($LastExitCode) {
-    throw "ctest failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
+    Exit ${LastExitCode}
 }
 
 if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
     ctest $ctest_flags -L integration-tests
     if ($LastExitCode) {
-        throw "Integration tests failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Red "Integration tests failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 }
 
@@ -107,7 +113,8 @@ if (Integration-Tests-Enabled) {
         -L '(bigtable-integration-tests|storage-integration-tests|spanner-integration-tests|integration-tests-no-emulator)' `
         -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)'
     if ($LastExitCode) {
-        throw "Integration tests failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
     }
     Set-Location "${project_root}"
 }

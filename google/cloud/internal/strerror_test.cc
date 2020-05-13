@@ -34,7 +34,6 @@ TEST(StrErrorTest, Simple) {
   std::string const expected = std::strerror(EDOM);
   EXPECT_EQ(actual, expected);
 }
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(StrErrorTest, InvalidErrno) {
   auto constexpr kInvalidErrno = -1234;
@@ -47,6 +46,7 @@ TEST(StrErrorTest, InvalidErrno) {
   // condition, so we cannot print why this failed.
   EXPECT_THAT(actual, AnyOf(HasSubstr("-1234"), HasSubstr(expected)));
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 }  // namespace internal

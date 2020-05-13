@@ -35,7 +35,7 @@ if ($args.count -eq 1) {
     # strict when run in a CI, but a little more friendly when run by a human.
     $env:RUNNING_CI = "yes"
 } else {
-    throw @"
+    Write-Host -ForegroundColor Red @"
 Aborting build as the build name is not defined.
 If you are invoking this script via the command line use:
 
@@ -44,6 +44,7 @@ $PSCommandPath <build-name>
 If this script is invoked by Kokoro, the CI system is expected to set
 the KOKORO_JOB_NAME environment variable.
 "@
+    Exit 1
 }
 
 $DependencyScriptArgs=@()
@@ -104,7 +105,8 @@ $ScriptLocation = Split-Path $PSCommandPath -Parent
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building dependencies for $BuildName build"
 powershell -exec bypass "${ScriptLocation}/${DependencyScript}" $DependencyScriptArgs
 if ($LastExitCode) {
-    throw "Building dependencies failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "Building dependencies failed with ${LastExitCode}"
+    Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running build script for $BuildName build"
@@ -129,5 +131,6 @@ if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
 }
 
 if ($BuildExitCode) {
-    throw "Build failed with exit code ${BuildExitCode}"
+    Write-Host -ForegroundColor Red "Build failed with exit code ${BuildExitCode}"
+    Exit ${BuildExitCode}
 }

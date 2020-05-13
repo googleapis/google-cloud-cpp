@@ -18,10 +18,14 @@ $ErrorActionPreference = "Stop"
 
 # First check the required environment variables.
 if (-not (Test-Path env:CONFIG)) {
-    throw "Aborting build because the CONFIG environment variable is not set."
+    Write-Host -ForegroundColor Red `
+        "Aborting build because the CONFIG environment variable is not set."
+    Exit 1
 }
 if (-not (Test-Path env:VCPKG_TRIPLET)) {
-    throw "Aborting build because the VCPKG_TRIPLET environment variable is not set."
+    Write-Host -ForegroundColor Red `
+        "Aborting build because the VCPKG_TRIPLET environment variable is not set."
+    Exit 1
 }
 
 $RunningCI = (Test-Path env:RUNNING_CI) -and `
@@ -57,14 +61,17 @@ if (-not (Test-Path ${vcpkg_dir})) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
     git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
     if ($LastExitCode) {
-      throw "vcpkg git setup failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Red `
+            "vcpkg git setup failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 } else {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating vcpkg repository."
     git -C "${vcpkg_dir}" pull
 }
 if (-not (Test-Path "${vcpkg_dir}")) {
-    throw "Missing vcpkg directory (${vcpkg_dir})."
+    Write-Host -ForegroundColor Red "Missing vcpkg directory (${vcpkg_dir})."
+    Exit 1
 }
 Set-Location "${vcpkg_dir}"
 
@@ -96,28 +103,31 @@ if ($RunningCI -and $IsPR -and $HasBuildCache) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bootstrap vcpkg."
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LastExitCode) {
-  throw "Error bootstrapping vcpkg: $LastExitCode"
-  Write-Host -ForegroundColor Red "bootstrap[1] failed"
+  Write-Host -ForegroundColor Red "Error bootstrapping vcpkg: $LastExitCode"
+  Exit ${LastExitCode}
 }
 
 # Integrate installed packages into the build environment.
 .\vcpkg.exe integrate install
 if ($LastExitCode) {
-    throw "vcpkg integrate failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "vcpkg integrate failed with exit code $LastExitCode"
+    Exit ${LastExitCode}
 }
 
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup old vcpkg package versions."
 .\vcpkg.exe remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
-    throw "vcpkg remove --outdated failed with exit code $LastExitCode"
+    Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
+    Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg package versions."
 foreach ($pkg in $packages) {
     .\vcpkg.exe install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
-        throw "vcpkg install $pkg failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Red "vcpkg install $pkg failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 }
 

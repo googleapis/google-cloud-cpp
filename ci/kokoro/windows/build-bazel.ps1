@@ -123,13 +123,15 @@ bazel $common_flags test $test_flags `
   --test_tag_filters=-integration-tests `
   -- //google/cloud/...:all
 if ($LastExitCode) {
-    throw "bazel test failed with exit code ${LastExitCode}."
+    Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
+    Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
 bazel $common_flags build $build_flags -- //google/cloud/...:all
 if ($LastExitCode) {
-    throw "bazel test failed with exit code ${LastExitCode}."
+    Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
+    Exit ${LastExitCode}
 }
 
 function Integration-Tests-Enabled {
@@ -192,7 +194,8 @@ if (Integration-Tests-Enabled) {
         -//google/cloud/storage/examples:storage_service_account_samples `
         -//google/cloud/storage/tests:service_account_integration_test
     if ($LastExitCode) {
-        throw "Integration tests failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
     }
 }
 
