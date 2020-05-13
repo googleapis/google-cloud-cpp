@@ -140,7 +140,7 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  RUN_INTEGRATION_TESTS="no"  # super builds do not support integration tests.
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "ninja" ]]; then
   # Compiling with Ninja can catch bugs that may not be caught using Make.
@@ -175,7 +175,7 @@ elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
   export DISTRO_VERSION=7
   export CMAKE_SOURCE_DIR="super"
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
-  RUN_INTEGRATION_TESTS="no"  # super builds do not support integration tests.
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
   # The oldest version of Clang we actively test is 3.8. There is nothing
@@ -187,7 +187,7 @@ elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
   export CC=clang
   export CXX=clang++
   export CMAKE_SOURCE_DIR="super"
-  RUN_INTEGRATION_TESTS="no"  # super builds do not support integration tests.
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
@@ -220,12 +220,12 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
 elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  RUN_INTEGRATION_TESTS="no"  # quickstart does not support integration tests.
+  RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-bazel.sh"
 elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  RUN_INTEGRATION_TESTS="no"  # quickstart does not support integration tests.
+  RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-cmake.sh"
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
