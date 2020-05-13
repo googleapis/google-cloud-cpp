@@ -52,9 +52,9 @@ cc_library(
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
-        "@com_google_absl//absl/memory",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
+        "@com_google_absl//absl/memory",
     ],
 )
 

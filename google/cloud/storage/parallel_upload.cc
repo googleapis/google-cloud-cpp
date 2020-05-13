@@ -83,11 +83,10 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
       StreamInfo{request.object_name(), (*session)->session_id(), {}, false});
   assert(idx < streams_.size());
   lk.unlock();
-  return ObjectWriteStream(
-      absl::make_unique<ParallelObjectWriteStreambuf>(
-          shared_from_this(), idx, *std::move(session),
-          raw_client.client_options().upload_buffer_size(),
-          CreateHashValidator(request)));
+  return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
+      shared_from_this(), idx, *std::move(session),
+      raw_client.client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {
