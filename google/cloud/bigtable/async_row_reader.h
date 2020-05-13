@@ -145,7 +145,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
         [self](google::bigtable::v2::ReadRowsResponse r) {
           return self->OnDataReceived(std::move(r));
         },
-        [self](Status const& s) { self->OnStreamFinished(s); });
+        [self](Status s) { self->OnStreamFinished(std::move(s)); });
   }
 
   /**
@@ -270,7 +270,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when the whole stream finishes.
-  void OnStreamFinished(Status const& status) {
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  void OnStreamFinished(Status status) {
     // assert(!continue_reading_);
     if (status_.ok()) {
       status_ = std::move(status);
