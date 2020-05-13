@@ -18,41 +18,19 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
-#include <functional>
-#include <map>
-#include <stdexcept>
-#include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace examples {
 
-// TODO(#3624) - refactor this class to -common
-class Usage : public std::runtime_error {
- public:
-  explicit Usage(std::string const& msg) : std::runtime_error(msg) {}
-};
-
-// TODO(#3624) - refactor these types to -common
-using CommandType = std::function<void(std::vector<std::string> const& argv)>;
-using Commands = std::map<std::string, CommandType>;
-
-// TODO(#3624) - refactor this class to -common
-class Example {
- public:
-  explicit Example(std::map<std::string, CommandType> commands);
-
-  int Run(int argc, char const* const argv[]);
-
- private:
-  void PrintUsage(std::string const& cmd, std::string const& msg);
-
-  std::map<std::string, CommandType> commands_;
-  std::string full_usage_;
-};
+using ::google::cloud::internal::CheckEnvironmentVariablesAreSet;
+using ::google::cloud::internal::Commands;
+using ::google::cloud::internal::CommandType;
+using ::google::cloud::internal::Example;
+using ::google::cloud::internal::Usage;
 
 std::string TablePrefix(std::string const& prefix,
                         std::chrono::system_clock::time_point tp);
@@ -73,9 +51,6 @@ std::string RandomClusterId(std::string const& prefix,
 
 bool UsingEmulator();
 bool RunAdminIntegrationTests();
-
-// TODO(#3624) - refactor this function to -common
-void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
 class AutoShutdownCQ {
  public:

@@ -60,6 +60,7 @@ google_cloud_cpp_common_hdrs = [
     "terminate_handler.h",
     "tracing_options.h",
     "version.h",
+    "internal/example_driver.h",
 ]
 
 google_cloud_cpp_common_srcs = [
@@ -81,4 +82,5 @@ google_cloud_cpp_common_srcs = [
     "terminate_handler.cc",
     "tracing_options.cc",
     "version.cc",
+    "internal/example_driver.cc",
 ]

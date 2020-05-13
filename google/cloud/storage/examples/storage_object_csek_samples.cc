@@ -18,7 +18,6 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/getenv.h"
-#include <fstream>
 #include <iostream>
 #include <map>
 #include <sstream>

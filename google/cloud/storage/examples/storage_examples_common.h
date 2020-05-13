@@ -16,46 +16,21 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
-#include <functional>
-#include <map>
-#include <stdexcept>
-#include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace examples {
 
-// TODO(#3624) - refactor this class to -common
-class Usage : public std::runtime_error {
- public:
-  explicit Usage(std::string const& msg) : std::runtime_error(msg) {}
-};
-
-// TODO(#3624) - refactor these types to -common
-using CommandType = std::function<void(std::vector<std::string> const& argv)>;
-using Commands = std::map<std::string, CommandType>;
-
-// TODO(#3624) - refactor this class to -common
-class Example {
- public:
-  explicit Example(std::map<std::string, CommandType> commands);
-
-  int Run(int argc, char const* const argv[]);
-
- private:
-  void PrintUsage(std::string const& cmd, std::string const& msg);
-
-  std::map<std::string, CommandType> commands_;
-  std::string full_usage_;
-};
+using ::google::cloud::internal::CheckEnvironmentVariablesAreSet;
+using ::google::cloud::internal::Commands;
+using ::google::cloud::internal::CommandType;
+using ::google::cloud::internal::Example;
+using ::google::cloud::internal::Usage;
 
 bool UsingTestbench();
-
-// TODO(#3624) - refactor this function to -common
-void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
