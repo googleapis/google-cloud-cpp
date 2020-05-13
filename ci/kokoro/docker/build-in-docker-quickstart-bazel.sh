@@ -62,7 +62,8 @@ build_quickstart() {
   io::log "capture bazel version"
   ${BAZEL_BIN} version
   io::log "fetch dependencies for ${library}'s quickstart"
-  "${PROJECT_ROOT}/ci/retry-command.sh" \
+  # retry up to 3 times with exponential backoff, initial interval 120s
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
     "${BAZEL_BIN}" fetch -- ...
 
   echo

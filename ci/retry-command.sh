@@ -21,27 +21,31 @@ set -eu
 # Bazel, or the Google Cloud SDK fails. To make the CI build more robust, try
 # again when that happens.
 
-if (($# < 1)); then
-  echo "Usage: $(basename "$0") program [arguments]"
+if (($# < 3)); then
+  cat <<EOM
+Usage: $(basename "$0") attempts initial-interval program [arguments]
+
+  Retries <program> up to <attempts> times, with exponential backoff.
+  The initial retry interval is <initial-interval> seconds.
+EOM
   exit 1
 fi
+retries=${1}
+shift
+min_wait=${1}
+shift
 readonly PROGRAM=${1}
 shift
 
-# Initially, wait at least 2 minutes (the times are in seconds), because it
-# makes no sense to try faster. This used to be 180 seconds, but that ends with
-# sleeps close to 10 minutes, and Travis aborts builds that do not output in
-# 10m.
-min_wait=120
 # Do not exit on failures for this loop.
 set +e
-for i in 1 2 3; do
+while (((--retries) > 0)); do
   "${PROGRAM}" "$@"
   if [[ $? -eq 0 ]]; then
     exit 0
   fi
-  # Sleep for a few minutes before trying again.
-  period=$(((RANDOM % 60) + min_wait))
+  # apply +/- 50% jitter to min_wait
+  period=$((min_wait * (50 + (RANDOM % 100)) / 100))
   echo "${PROGRAM} failed; trying again in ${period} seconds."
   sleep ${period}s
   min_wait=$((min_wait * 2))

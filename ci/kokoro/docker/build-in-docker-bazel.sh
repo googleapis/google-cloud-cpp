@@ -53,7 +53,8 @@ fi
 echo "================================================================"
 io::log "Fetching dependencies"
 echo "================================================================"
-"${PROJECT_ROOT}/ci/retry-command.sh" \
+# retry up to 3 times with exponential backoff, initial interval 120s
+"${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
   "${BAZEL_BIN}" fetch -- //google/cloud/...:all
 
 echo "================================================================"

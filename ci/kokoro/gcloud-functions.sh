@@ -68,11 +68,14 @@ cleanup_hmac_service_account() {
   # We can ignore errors here, sometime the account exists, but the bindings
   # are gone (or were never created). The binding is harmless if the account
   # is deleted.
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects remove-iam-policy-binding \
+  # retry up to 5 times with exponential backoff, initial interval 10s
+  "${PROJECT_ROOT}/ci/retry-command.sh" 5 10 \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects remove-iam-policy-binding \
     "${GOOGLE_CLOUD_PROJECT}" \
     --member "serviceAccount:${ACCOUNT}" \
     --role roles/iam.serviceAccountTokenCreator >/dev/null || true
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts delete \
+  "${PROJECT_ROOT}/ci/retry-command.sh" 5 10 \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts delete \
     "${ACCOUNT}" >/dev/null
 }
 
@@ -97,7 +100,9 @@ create_hmac_service_account() {
   local -r EMAIL="${ACCOUNT}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts create "${ACCOUNT}"
   io::log "Grant service account permissions to create HMAC keys."
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
+  # retry up to 5 times with exponential backoff, initial interval 10s
+  "${PROJECT_ROOT}/ci/retry-command.sh" 5 10 \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
     "${GOOGLE_CLOUD_PROJECT}" \
     --member "serviceAccount:${EMAIL}" \
     --role roles/iam.serviceAccountTokenCreator >/dev/null
