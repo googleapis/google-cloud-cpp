@@ -174,7 +174,9 @@ add_library(
     tracing_options.h
     tracing_options.cc
     version.cc
-    version.h)
+    version.h
+    internal/example_driver.cc
+    internal/example_driver.h)
 target_link_libraries(
     google_cloud_cpp_common
     PUBLIC Threads::Threads
@@ -210,6 +212,7 @@ if (BUILD_TESTING)
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
         internal/env_test.cc
+        internal/example_driver_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc

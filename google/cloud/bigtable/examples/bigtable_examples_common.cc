@@ -21,67 +21,6 @@ namespace cloud {
 namespace bigtable {
 namespace examples {
 
-Example::Example(std::map<std::string, CommandType> commands)
-    : commands_(std::move(commands)) {
-  // Force each command to generate its Usage string, so we can provide a good
-  // usage string for the whole program.
-  for (auto const& kv : commands_) {
-    if (kv.first == "auto") continue;
-    try {
-      kv.second({});
-    } catch (Usage const& u) {
-      full_usage_ += "    ";
-      full_usage_ += u.what();
-      full_usage_ += "\n";
-    }
-  }
-}
-
-int Example::Run(int argc, char const* const argv[]) try {
-  bool auto_run =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
-          .value_or("") == "yes";
-  if (argc == 1 && auto_run) {
-    auto entry = commands_.find("auto");
-    if (entry == commands_.end()) {
-      PrintUsage(argv[0], "Requested auto run but there is no 'auto' command");
-      return 1;
-    }
-    entry->second({});
-    return 0;
-  }
-
-  if (argc < 2) {
-    PrintUsage(argv[0], "Missing command");
-    return 1;
-  }
-
-  std::string const command_name = argv[1];
-  auto command = commands_.find(command_name);
-  if (commands_.end() == command) {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
-
-  command->second({argv + 2, argv + argc});
-
-  return 0;
-} catch (Usage const& u) {
-  PrintUsage(argv[0], u.what());
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
-}
-
-void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = cmd.find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << full_usage_ << "\n";
-}
-
 std::string TablePrefix(std::string const& prefix,
                         std::chrono::system_clock::time_point tp) {
   auto as_seconds =
@@ -204,32 +143,19 @@ bool RunAdminIntegrationTests() {
              .value_or("") == "yes";
 }
 
-void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
-  for (auto const& var : vars) {
-    auto const value = google::cloud::internal::GetEnv(var.c_str());
-    if (!value) {
-      throw std::runtime_error("The " + var +
-                               " environment variable is not set");
-    }
-    if (value->empty()) {
-      throw std::runtime_error("The " + var +
-                               " environment variable has an empty value");
-    }
-  }
-}
-
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
-    if (argv.size() != 3 + args.size()) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != 3 + args.size()) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id> <table-id>";
       char const* sep = " ";
       for (auto const& a : args) {
         os << sep << a;
       }
-      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+      throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
         google::cloud::bigtable::CreateDefaultDataClient(
@@ -246,14 +172,15 @@ Commands::value_type MakeCommandEntry(std::string const& name,
                                       TableAdminCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     auto constexpr kFixedArguments = 2;
-    if (argv.size() != args.size() + kFixedArguments) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id>";
       char const* sep = " ";
       for (auto const& a : args) {
         os << sep << a;
       }
-      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+      throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::TableAdmin table(
         google::cloud::bigtable::CreateDefaultAdminClient(
@@ -270,14 +197,15 @@ Commands::value_type MakeCommandEntry(
     InstanceAdminCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     auto constexpr kFixedArguments = 1;
-    if (argv.size() != args.size() + kFixedArguments) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id>";
       char const* sep = " ";
       for (auto const& a : args) {
         os << sep << a;
       }
-      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+      throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::InstanceAdmin instance(
         google::cloud::bigtable::CreateDefaultInstanceAdminClient(
@@ -294,7 +222,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
   auto adapter = [=](std::vector<std::string> argv) {
     std::vector<std::string> const common{"<project-id>", "<instance-id>",
                                           "<table-id>"};
-    if (argv.size() != common.size() + args.size()) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != common.size() + args.size()) {
       std::ostringstream os;
       os << name;
       for (auto const& a : common) {
@@ -323,7 +252,8 @@ Commands::value_type MakeCommandEntry(
     InstanceAdminAsyncCommandType const& command) {
   auto adapter = [=](std::vector<std::string> argv) {
     std::vector<std::string> const common{"<project-id>"};
-    if (argv.size() != common.size() + args.size()) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != common.size() + args.size()) {
       std::ostringstream os;
       os << name;
       for (auto const& a : common) {
@@ -351,7 +281,8 @@ Commands::value_type MakeCommandEntry(
     TableAdminAsyncCommandType const& command) {
   auto adapter = [=](std::vector<std::string> argv) {
     std::vector<std::string> const common{"<project-id>", "<instance-id>"};
-    if (argv.size() != common.size() + args.size()) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != common.size() + args.size()) {
       std::ostringstream os;
       os << name;
       for (auto const& a : common) {
