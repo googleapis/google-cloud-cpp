@@ -25,20 +25,6 @@ namespace {
 using google::cloud::bigtable::examples::Usage;
 using std::chrono::milliseconds;
 
-void MakeColumnMistmatch(
-    size_t call_count,
-    google::cloud::StatusOr<google::cloud::bigtable::Row> const& row) {
-  if (row->cells().size() != call_count) {
-    std::ostringstream os;
-    os << "Unexpected number of cells in " << row->row_key();
-    throw std::runtime_error(os.str());
-  }
-  std::cout << row->row_key();
-  for (auto const& cell : row->cells()) {
-    std::cout << " = [columns :" << cell.value() << "],";
-  }
-  std::cout << "\n";
-}
 void FilterLimitRowSample(google::cloud::bigtable::Table table,
                           std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_row_sample]
@@ -47,11 +33,16 @@ void FilterLimitRowSample(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     // Filter the results, only include rows with a given probability
     cbt::Filter filter = cbt::Filter::RowSample(0.75);
+
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      MakeColumnMistmatch(6, row);
+      std::cout << row->row_key();
+      for (auto const& cell : row->cells()) {
+        std::cout << " = [columns :" << cell.value() << "],";
+      }
+      std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_row_sample]
@@ -72,7 +63,11 @@ void FilterLimitRowRegex(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      MakeColumnMistmatch(6, row);
+      std::cout << row->row_key();
+      for (auto const& cell : row->cells()) {
+        std::cout << " = [columns :" << cell.value() << "],";
+      }
+      std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_row_regex]
@@ -92,7 +87,11 @@ void FilterLimitCellsPerColumn(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      MakeColumnMistmatch(5, row);
+      std::cout << row->row_key();
+      for (auto const& cell : row->cells()) {
+        std::cout << " = [columns :" << cell.value() << "],";
+      }
+      std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_cells_per_col]
@@ -112,7 +111,11 @@ void FilterLimitCellsPerRow(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      MakeColumnMistmatch(2, row);
+      std::cout << row->row_key();
+      for (auto const& cell : row->cells()) {
+        std::cout << " = [columns :" << cell.value() << "],";
+      }
+      std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_cells_per_row]
@@ -131,7 +134,11 @@ void FilterLimitCellsPerRowOfset(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      MakeColumnMistmatch(4, row);
+      std::cout << row->row_key();
+      for (auto const& cell : row->cells()) {
+        std::cout << " = [columns :" << cell.value() << "],";
+      }
+      std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_cells_per_row_offset]
