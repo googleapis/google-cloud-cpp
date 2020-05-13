@@ -330,8 +330,8 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
         absl::make_unique<DefaultPartialResultSetReader>(
             std::move(context), stub->StreamingRead(*context, request));
     if (tracing_enabled) {
-      reader = absl::make_unique<LoggingResultSetReader>(
-          std::move(reader), tracing_options);
+      reader = absl::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                         tracing_options);
     }
     return reader;
   };
@@ -472,14 +472,13 @@ ResultType ConnectionImpl::CommonQueryImpl(
     auto factory = [stub, request, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       request.set_resume_token(resume_token);
-      auto context =
-          absl::make_unique<grpc::ClientContext>();
+      auto context = absl::make_unique<grpc::ClientContext>();
       std::unique_ptr<PartialResultSetReader> reader =
           absl::make_unique<DefaultPartialResultSetReader>(
               std::move(context), stub->ExecuteStreamingSql(*context, request));
       if (tracing_enabled) {
-        reader = absl::make_unique<LoggingResultSetReader>(
-            std::move(reader), tracing_options);
+        reader = absl::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                           tracing_options);
       }
       return reader;
     };
