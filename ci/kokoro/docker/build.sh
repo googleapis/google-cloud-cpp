@@ -26,11 +26,6 @@ export DISTRO=fedora-install
 export DISTRO_VERSION=31
 export CMAKE_SOURCE_DIR="."
 
-# By default we run the integration tests *if* all the configuration files
-# are present. This makes it convenient to run locally, where sometimes we
-# do not have the configuration files and we would rather skip some tests.
-RUN_INTEGRATION_TESTS="auto"
-
 in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
 if [[ $# -ge 1 ]]; then
@@ -63,6 +58,13 @@ else
   exit 1
 fi
 
+# RUN_INTEGRATION_TESTS has three possible values: "yes", "no", and "auto".
+# "auto" runs the integration tests only when the configuration file is present;
+# this makes it convenient to run locally, where we may or may not have the
+# configuration files present and would rather skip some tests than fail.
+#
+# If RUN_INTEGRATION_TESTS is set in the environment, we should generally use
+# that value, but individual builds can override it if necessary.
 if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
   # as errors.
@@ -76,6 +78,7 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export GENERATE_DOCS=yes
   export CLANG_TIDY=yes
   export TEST_INSTALL=yes
+  : "${RUN_INTEGRATION_TESTS:=no}" # Don't run integration tests by default.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO=fedora-install
@@ -84,12 +87,12 @@ elif [[ "${BUILD_NAME}" = "coverage" ]]; then
 elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  RUN_INTEGRATION_TESTS=auto
+  RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  RUN_INTEGRATION_TESTS=auto
+  RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
@@ -97,7 +100,7 @@ elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export CC=clang
   export CXX=clang++
   export GENERATE_DOCS=yes
-  export RUN_INTEGRATION_TESTS=no
+  RUN_INTEGRATION_TESTS="no" # Never run integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
@@ -106,7 +109,6 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="asan"
-  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "msan" ]]; then
   # Compile with the MemorySanitizer enabled.
@@ -115,7 +117,6 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   export DISTRO=fedora-libcxx-msan
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="msan"
-  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
@@ -124,7 +125,6 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="tsan"
-  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
@@ -133,17 +133,14 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="ubsan"
-  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
   export BUILD_TYPE=Release
   export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
-  # Note that the integration tests are run by default. This is the opposite of
-  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
-  export RUN_INTEGRATION_TESTS="no"
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "ninja" ]]; then
   # Compiling with Ninja can catch bugs that may not be caught using Make.
@@ -178,9 +175,7 @@ elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
   export DISTRO_VERSION=7
   export CMAKE_SOURCE_DIR="super"
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
-  # Note that the integration tests are run by default. This is the opposite of
-  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
-  export RUN_INTEGRATION_TESTS="no"
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
   # The oldest version of Clang we actively test is 3.8. There is nothing
@@ -192,9 +187,7 @@ elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
   export CC=clang
   export CXX=clang++
   export CMAKE_SOURCE_DIR="super"
-  # Note that the integration tests are run by default. This is the opposite of
-  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
-  export RUN_INTEGRATION_TESTS="no"
+  RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
@@ -217,6 +210,7 @@ elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]
   if [[ "${BUILD_NAME}" = "update-abi" ]]; then
     export UPDATE_ABI=yes
   fi
+  : "${RUN_INTEGRATION_TESTS:=no}" # Don't run integration tests by default.
 elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export GOOGLE_CLOUD_CPP_CXX_STANDARD=17
   export TEST_INSTALL=yes
@@ -226,15 +220,28 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
 elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-bazel.sh"
 elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-cmake.sh"
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
 fi
+
+# If RUN_INTEGRATION_TESTS wasn't set in the environment or by one of the
+# builds above, default it to "yes" for CI builds and "auto" otherwise.
+if [[ -z "${RUN_INTEGRATION_TESTS:-}" ]]; then
+  if [[ "${RUNNING_CI:-}" == "yes" ]]; then
+    RUN_INTEGRATION_TESTS="yes"
+  else
+    RUN_INTEGRATION_TESTS="auto"
+  fi
+fi
+export RUN_INTEGRATION_TESTS
 
 echo "================================================================"
 io::log_yellow "change working directory to project root."
@@ -548,6 +555,8 @@ if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
   exit_status=$?
 else
+  # Note that only the `clang-tidy` build config contains the token needed
+  # to actually upload the docs, otherwise this has no effect.
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh" "${BRANCH}"
 fi
 
