@@ -234,7 +234,7 @@ fi
 
 # If RUN_INTEGRATION_TESTS wasn't set in the environment or by one of the
 # builds above, default it to "yes" for kokoro builds and "auto" otherwise.
-if [[ -z "${RUN_INTEGRATION_TESTS}" ]]; then
+if [[ -z "${RUN_INTEGRATION_TESTS:-}" ]]; then
   if [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
     RUN_INTEGRATION_TESTS="yes"
   else
@@ -555,6 +555,8 @@ if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
   exit_status=$?
 else
+  # Note that only the `clang-tidy` build config contains the token needed
+  # to actually upload the docs, otherwise this has no effect.
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh" "${BRANCH}"
 fi
 
