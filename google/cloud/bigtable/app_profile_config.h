@@ -49,19 +49,17 @@ class AppProfileConfig {
     return *this;
   }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::CreateAppProfileRequest const& as_proto()
       const& {
     return proto_;
   }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::CreateAppProfileRequest&& as_proto() && {
     return std::move(proto_);
   }
 
  private:
-  AppProfileConfig() : proto_() {}
+  AppProfileConfig() = default;
 
  private:
   google::bigtable::admin::v2::CreateAppProfileRequest proto_;
@@ -70,7 +68,7 @@ class AppProfileConfig {
 /// Build a proto to update an Application Profile configuration.
 class AppProfileUpdateConfig {
  public:
-  AppProfileUpdateConfig() : proto_() {}
+  AppProfileUpdateConfig() = default;
 
   AppProfileUpdateConfig& set_ignore_warnings(bool value) {
     proto_.set_ignore_warnings(value);
@@ -105,13 +103,11 @@ class AppProfileUpdateConfig {
     return *this;
   }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::UpdateAppProfileRequest const& as_proto()
       const& {
     return proto_;
   }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::UpdateAppProfileRequest&& as_proto() && {
     return std::move(proto_);
   }

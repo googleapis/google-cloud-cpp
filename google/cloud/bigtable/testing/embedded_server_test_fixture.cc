@@ -42,14 +42,14 @@ void EmbeddedServerTestFixture::SetUp() {
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
   data_client_ = std::make_shared<InProcessDataClient>(
-      std::move(kProjectId), std::move(kInstanceId), std::move(data_channel));
-  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId);
+      kProjectId_, kInstanceId_, std::move(data_channel));
+  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId_);
 
   std::shared_ptr<grpc::Channel> admin_channel =
       server_->InProcessChannel(channel_arguments);
   admin_client_ = std::make_shared<InProcessAdminClient>(
-      std::move(kProjectId), std::move(admin_channel));
-  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_, kInstanceId);
+      kProjectId_, std::move(admin_channel));
+  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_, kInstanceId_);
 }
 
 void EmbeddedServerTestFixture::TearDown() {

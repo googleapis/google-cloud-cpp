@@ -27,6 +27,7 @@ namespace internal {
 // TODO(#108) - use std::conjunction<> if available.
 /// A metafunction to fold && across a list of types, empty list case.
 template <typename...>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct conjunction : std::true_type {};
 
 /// A metafunction to fold && across a list of types, a list with a single

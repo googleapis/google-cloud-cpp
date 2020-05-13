@@ -26,25 +26,25 @@ namespace testing {
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
-  TableTestFixture() {}
+  TableTestFixture() = default;
 
   std::shared_ptr<MockDataClient> SetupMockClient();
 
-  std::string const kProjectId = "foo-project";
-  std::string const kInstanceId = "bar-instance";
-  std::string const kTableId = "baz-table";
+  std::string const kProjectId_ = "foo-project";
+  std::string const kInstanceId_ = "bar-instance";
+  std::string const kTableId_ = "baz-table";
 
   // These are hardcoded, and not computed, because we want to test the
   // computation.
-  std::string const kInstanceName =
+  std::string const kInstanceName_ =
       "projects/foo-project/instances/bar-instance";
-  std::string const kTableName =
+  std::string const kTableName_ =
       "projects/foo-project/instances/bar-instance/tables/baz-table";
 
-  std::string project_id_ = kProjectId;
-  std::string instance_id_ = kInstanceId;
+  std::string project_id_ = kProjectId_;
+  std::string instance_id_ = kInstanceId_;
   std::shared_ptr<MockDataClient> client_ = SetupMockClient();
-  bigtable::Table table_ = bigtable::Table(client_, kTableId);
+  bigtable::Table table_ = bigtable::Table(client_, kTableId_);
 };
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(

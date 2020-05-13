@@ -205,9 +205,9 @@ class Filter {
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
   static Filter TimestampRange(std::chrono::duration<Rep1, Period1> start,
                                std::chrono::duration<Rep2, Period2> end) {
-    using namespace std::chrono;
-    return TimestampRangeMicros(duration_cast<microseconds>(start).count(),
-                                duration_cast<microseconds>(end).count());
+    return TimestampRangeMicros(
+        std::chrono::duration_cast<std::chrono::microseconds>(start).count(),
+        std::chrono::duration_cast<std::chrono::microseconds>(end).count());
   }
 
   /**
@@ -687,7 +687,7 @@ class Filter {
 
  private:
   /// An empty filter, discards all data.
-  Filter() : filter_() {}
+  Filter() = default;
 
  private:
   google::bigtable::v2::RowFilter filter_;

@@ -59,9 +59,9 @@ class MutationBatcher;
  *
  * Where the project id and instance id come from the @p client parameter.
  */
-inline std::string TableName(std::shared_ptr<DataClient> client,
+inline std::string TableName(std::shared_ptr<DataClient> const& client,
                              std::string const& table_id) {
-  return InstanceName(std::move(client)) + "/tables/" + table_id;
+  return InstanceName(client) + "/tables/" + table_id;
 }
 
 /**
@@ -169,14 +169,14 @@ class Table {
 
   /// A meta function to check if @p P is a valid Policy type.
   template <typename P>
-  struct valid_policy : google::cloud::internal::disjunction<
-                            std::is_base_of<RPCBackoffPolicy, P>,
-                            std::is_base_of<RPCRetryPolicy, P>,
-                            std::is_base_of<IdempotentMutationPolicy, P>> {};
+  struct ValidPolicy : google::cloud::internal::disjunction<
+                           std::is_base_of<RPCBackoffPolicy, P>,
+                           std::is_base_of<RPCRetryPolicy, P>,
+                           std::is_base_of<IdempotentMutationPolicy, P>> {};
 
   /// A meta function to check if all the @p Policies are valid policy types.
   template <typename... Policies>
-  struct valid_policies : internal::conjunction<valid_policy<Policies>...> {};
+  struct ValidPolicies : internal::conjunction<ValidPolicy<Policies>...> {};
 
  public:
   /**
@@ -274,9 +274,10 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies,
-            typename std::enable_if<valid_policies<Policies...>::value,
-                                    int>::type = 0>
+  template <
+      typename... Policies,
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
@@ -337,9 +338,10 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies,
-            typename std::enable_if<valid_policies<Policies...>::value,
-                                    int>::type = 0>
+  template <
+      typename... Policies,
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {

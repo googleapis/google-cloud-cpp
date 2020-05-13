@@ -85,9 +85,10 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
  */
 class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
+  // NOLINTNEXTLINE(google-explicit-constructor)
   ExponentialBackoffPolicy(internal::RPCPolicyParameters defaults);
-  template <typename duration_t1, typename duration_t2>
-  ExponentialBackoffPolicy(duration_t1 initial_delay, duration_t2 maximum_delay)
+  template <typename DurationT1, typename DurationT2>
+  ExponentialBackoffPolicy(DurationT1 initial_delay, DurationT2 maximum_delay)
       : impl_(initial_delay / 2, maximum_delay, 2.0) {}
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;

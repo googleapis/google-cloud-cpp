@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
 /**
  * Defines the interface to control which mutations are idempotent and therefore
  * can be re-tried.
@@ -53,7 +54,7 @@ std::unique_ptr<IdempotentMutationPolicy> DefaultIdempotentMutationPolicy();
  */
 class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
  public:
-  SafeIdempotentMutationPolicy() {}
+  SafeIdempotentMutationPolicy() = default;
 
   std::unique_ptr<IdempotentMutationPolicy> clone() const override;
   bool is_idempotent(google::bigtable::v2::Mutation const&) override;
@@ -73,13 +74,14 @@ class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
  */
 class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
  public:
-  AlwaysRetryMutationPolicy() {}
+  AlwaysRetryMutationPolicy() = default;
 
   std::unique_ptr<IdempotentMutationPolicy> clone() const override;
   bool is_idempotent(google::bigtable::v2::Mutation const&) override;
   bool is_idempotent(
       google::bigtable::v2::CheckAndMutateRowRequest const&) override;
 };
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

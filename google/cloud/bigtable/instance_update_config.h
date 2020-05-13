@@ -31,6 +31,7 @@ using Instance = ::google::bigtable::admin::v2::Instance;
 /// Specify the initial configuration for updating an instance.
 class InstanceUpdateConfig {
  public:
+  // NOLINTNEXTLINE(google-explicit-constructor)
   InstanceUpdateConfig(Instance instance) {
     proto_.mutable_instance()->Swap(&instance);
   }
@@ -38,10 +39,13 @@ class InstanceUpdateConfig {
   //@{
   /// @name Convenient shorthands for the instance types.
   using InstanceType = google::bigtable::admin::v2::Instance::Type;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::Instance::TYPE_UNSPECIFIED;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType PRODUCTION =
       google::bigtable::admin::v2::Instance::PRODUCTION;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType DEVELOPMENT =
       google::bigtable::admin::v2::Instance::DEVELOPMENT;
   //@}
@@ -49,10 +53,13 @@ class InstanceUpdateConfig {
   //@{
   /// @name Convenient shorthands for the instance state.
   using StateType = google::bigtable::admin::v2::Instance::State;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StateType STATE_NOT_KNOWN =
       google::bigtable::admin::v2::Instance::STATE_NOT_KNOWN;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StateType READY =
       google::bigtable::admin::v2::Instance::READY;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StateType CREATING =
       google::bigtable::admin::v2::Instance::CREATING;
   //@}

@@ -133,7 +133,7 @@ class TableIntegrationTest : public ::testing::Test {
   static std::string RandomTableId();
 
   /// Some tests cannot run on the emulator.
-  bool UsingCloudBigtableEmulator() const {
+  static bool UsingCloudBigtableEmulator() {
     return TableTestEnvironment::UsingCloudBigtableEmulator();
   }
 

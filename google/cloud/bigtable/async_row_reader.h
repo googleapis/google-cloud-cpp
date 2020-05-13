@@ -46,6 +46,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
                            AsyncRowReader<RowFunctor, FinishFunctor>> {
  public:
   /// Special value to be used as rows_limit indicating no limit.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
   // Callbacks keep pointers to these objects.
   AsyncRowReader(AsyncRowReader&&) = delete;
@@ -63,11 +64,16 @@ class AsyncRowReader : public std::enable_shared_from_this<
       "RowFunctor should return a future<bool>.");
 
   static std::shared_ptr<AsyncRowReader> Create(
+      // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
       CompletionQueue cq, std::shared_ptr<DataClient> client,
+      // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
+      // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
       FinishFunctor on_finish, RowSet row_set, std::int64_t rows_limit,
+      // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
       Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory) {
     std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
@@ -139,7 +145,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
         [self](google::bigtable::v2::ReadRowsResponse r) {
           return self->OnDataReceived(std::move(r));
         },
-        [self](Status s) { self->OnStreamFinished(std::move(s)); });
+        [self](Status const& s) { self->OnStreamFinished(s); });
   }
 
   /**
@@ -233,7 +239,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when lower layers provide us with a response chunk.
-  future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse response) {
+  future<bool> OnDataReceived(
+      google::bigtable::v2::ReadRowsResponse const& response) {
     // assert(!whole_op_finished_);
     // assert(!continue_reading_);
     // assert(status_.ok());
@@ -263,7 +270,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when the whole stream finishes.
-  void OnStreamFinished(Status status) {
+  void OnStreamFinished(Status const& status) {
     // assert(!continue_reading_);
     if (status_.ok()) {
       status_ = std::move(status);

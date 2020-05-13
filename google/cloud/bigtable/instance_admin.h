@@ -157,6 +157,7 @@ class InstanceAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
+  // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
       : InstanceAdmin(std::move(client)) {

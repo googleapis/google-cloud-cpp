@@ -156,7 +156,7 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
   RowReaderTest()
       : retry_policy_(new RetryPolicyMock),
         backoff_policy_(new BackoffPolicyMock),
-        metadata_update_policy_(kTableName,
+        metadata_update_policy_(kTableName_,
                                 bigtable::MetadataParamTypes::TABLE_NAME),
         parser_factory_(new ReadRowsParserMockFactory) {}
 

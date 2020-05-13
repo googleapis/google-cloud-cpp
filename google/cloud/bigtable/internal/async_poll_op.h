@@ -205,7 +205,9 @@ future<
     StatusOr<typename PollableOperationRequestTraits<Operation>::ResponseType>>
 StartAsyncPollOp(char const* location,
                  std::unique_ptr<PollingPolicy> polling_policy,
+                 // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
                  MetadataUpdatePolicy metadata_update_policy,
+                 // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
                  CompletionQueue cq, Operation operation) {
   auto req = std::shared_ptr<PollAsyncOpFuture<Operation>>(
       new PollAsyncOpFuture<Operation>(location, std::move(polling_policy),

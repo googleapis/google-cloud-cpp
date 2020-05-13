@@ -22,15 +22,20 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
 /// Specify the initial configuration for a new cluster.
 class ClusterConfig {
  public:
   using StorageType = google::bigtable::admin::v2::StorageType;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StorageType STORAGE_TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::STORAGE_TYPE_UNSPECIFIED;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StorageType SSD = google::bigtable::admin::v2::SSD;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StorageType HDD = google::bigtable::admin::v2::HDD;
 
+  // NOLINTNEXTLINE(google-explicit-constructor)
   ClusterConfig(google::bigtable::admin::v2::Cluster cluster)
       : proto_(std::move(cluster)) {}
 
@@ -43,12 +48,10 @@ class ClusterConfig {
 
   std::string const& GetName() { return proto_.name(); }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::Cluster const& as_proto() const& {
     return proto_;
   }
 
-  // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::Cluster&& as_proto() && {
     return std::move(proto_);
   }

@@ -148,8 +148,8 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
   explicit LimitedTimeRetryPolicy(internal::RPCPolicyParameters defaults);
-  template <typename duration_t>
-  explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
+  template <typename DurationT>
+  explicit LimitedTimeRetryPolicy(DurationT maximum_duration)
       : impl_(maximum_duration) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;

@@ -173,6 +173,7 @@ class TableAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
+  // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
       : TableAdmin(std::move(client), std::move(instance_id)) {
@@ -186,19 +187,24 @@ class TableAdmin {
   /// @name Convenience shorthands for the schema views.
   using TableView = google::bigtable::admin::v2::Table::View;
   /// Use the default view as defined for each function.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TableView VIEW_UNSPECIFIED =
       google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
   /// Populate only the name in the responses.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TableView NAME_ONLY =
       google::bigtable::admin::v2::Table::NAME_ONLY;
   /// Populate only the name and the fields related to the table schema.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TableView SCHEMA_VIEW =
       google::bigtable::admin::v2::Table::SCHEMA_VIEW;
   /// Populate only the name and the fields related to the table replication
   /// state.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TableView REPLICATION_VIEW =
       google::bigtable::admin::v2::Table::REPLICATION_VIEW;
   /// Populate all the fields in the response.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TableView FULL = google::bigtable::admin::v2::Table::FULL;
   //@}
 

@@ -167,14 +167,15 @@ Mutation DeleteFromColumn(std::string family, ColumnType&& column,
                           std::chrono::duration<Rep1, Period1> timestamp_begin,
                           std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
-  using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_start_timestamp_micros(
-      duration_cast<microseconds>(timestamp_begin).count());
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp_begin)
+          .count());
   d.mutable_time_range()->set_end_timestamp_micros(
-      duration_cast<microseconds>(timestamp_end).count());
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp_end)
+          .count());
   return m;
 }
 
@@ -212,12 +213,12 @@ Mutation DeleteFromColumnStartingFrom(
     std::string family, ColumnType&& column,
     std::chrono::duration<Rep1, Period1> timestamp_begin) {
   Mutation m;
-  using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_start_timestamp_micros(
-      duration_cast<microseconds>(timestamp_begin).count());
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp_begin)
+          .count());
   return m;
 }
 
@@ -255,12 +256,12 @@ Mutation DeleteFromColumnEndingAt(
     std::string family, ColumnType&& column,
     std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
-  using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
   d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_end_timestamp_micros(
-      duration_cast<microseconds>(timestamp_end).count());
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp_end)
+          .count());
   return m;
 }
 
@@ -296,14 +297,14 @@ class SingleRowMutation {
       typename RowKey,
       typename std::enable_if<std::is_constructible<RowKeyType, RowKey>::value,
                               int>::type = 0>
-  explicit SingleRowMutation(RowKey&& row_key) : request_() {
+  // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
+  explicit SingleRowMutation(RowKey&& row_key) {
     request_.set_row_key(RowKeyType(std::forward<RowKey>(row_key)));
   }
 
   /// Create a row mutation from a initializer list.
   template <typename RowKey>
-  SingleRowMutation(RowKey&& row_key, std::initializer_list<Mutation> list)
-      : request_() {
+  SingleRowMutation(RowKey&& row_key, std::initializer_list<Mutation> list) {
     request_.set_row_key(std::forward<RowKey>(row_key));
     for (auto&& i : list) {
       *request_.add_mutations() = i.op;
@@ -315,7 +316,7 @@ class SingleRowMutation {
       typename RowKey, typename... M,
       typename std::enable_if<std::is_constructible<RowKeyType, RowKey>::value,
                               int>::type = 0>
-  explicit SingleRowMutation(RowKey&& row_key, M&&... m) : request_() {
+  explicit SingleRowMutation(RowKey&& row_key, M&&... m) {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "
@@ -466,11 +467,11 @@ class PermanentMutationFailure : public std::runtime_error {
 class BulkMutation {
  public:
   /// Create an empty set of mutations.
-  BulkMutation() : request_() {}
+  BulkMutation() = default;
 
   /// Create a multi-row mutation from a range of SingleRowMutations.
-  template <typename iterator>
-  BulkMutation(iterator begin, iterator end) {
+  template <typename Iterator>
+  BulkMutation(Iterator begin, Iterator end) {
     static_assert(
         std::is_convertible<decltype(*begin), SingleRowMutation>::value,
         "The iterator value type must be convertible to SingleRowMutation");
@@ -499,6 +500,7 @@ class BulkMutation {
             typename std::enable_if<internal::conjunction<std::is_convertible<
                                         M, SingleRowMutation>...>::value,
                                     int>::type = 0>
+  // NOLINTNEXTLINE(google-explicit-constructor)
   BulkMutation(M&&... m) : BulkMutation() {
     emplace_many(std::forward<M>(m)...);
   }

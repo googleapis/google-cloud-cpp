@@ -39,18 +39,24 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class MetadataParamTypes final {
  public:
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const PARENT;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const NAME;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const RESOURCE;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const TABLE_NAME;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const APP_PROFILE_NAME;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const INSTANCE_NAME;
 
   std::string const& type() const { return type_; }
 
  private:
+  explicit MetadataParamTypes(std::string type) : type_(std::move(type)) {}
   std::string type_;
-  MetadataParamTypes(std::string type) : type_(std::move(type)) {}
 };
 
 inline bool operator==(MetadataParamTypes const& lhs,
@@ -78,6 +84,7 @@ class MetadataUpdatePolicy {
                        MetadataParamTypes const& metadata_param_type);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&&) noexcept = default;
+  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy&&) = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const&) = default;
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const&) = default;
 

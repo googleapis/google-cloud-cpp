@@ -51,14 +51,7 @@ namespace internal {
  */
 class ReadRowsParser {
  public:
-  ReadRowsParser()
-      : row_key_(""),
-        cells_(),
-        cell_first_chunk_(true),
-        cell_(),
-        last_seen_row_key_(""),
-        row_ready_(false),
-        end_of_stream_(false) {}
+  ReadRowsParser() : row_key_(""), last_seen_row_key_("") {}
 
   virtual ~ReadRowsParser() = default;
 
@@ -125,7 +118,7 @@ class ReadRowsParser {
   std::vector<Cell> cells_;
 
   /// Is the next incoming chunk the first in a cell?
-  bool cell_first_chunk_;
+  bool cell_first_chunk_{true};
 
   /// Stores partial fields.
   ParseCell cell_;
@@ -134,10 +127,10 @@ class ReadRowsParser {
   RowKeyType last_seen_row_key_;
 
   /// True iff cells_ make up a complete row.
-  bool row_ready_;
+  bool row_ready_{false};
 
   /// Have we received the end of stream call?
-  bool end_of_stream_;
+  bool end_of_stream_{false};
 };
 
 /// Factory for creating parser instances, defined for testability.

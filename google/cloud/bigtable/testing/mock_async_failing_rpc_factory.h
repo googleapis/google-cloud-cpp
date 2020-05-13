@@ -49,8 +49,8 @@ struct MockAsyncFailingRpcFactory {
                ResponseType>) {}
 
   /// Refactor the boilerplate common to most tests.
-  std::function<SignatureType> Create(std::string expected_request,
-                                      std::string method) {
+  std::function<SignatureType> Create(std::string const& expected_request,
+                                      std::string const& method) {
     return std::function<SignatureType>([expected_request, method, this](
                                             grpc::ClientContext* context,
                                             RequestType const& request,

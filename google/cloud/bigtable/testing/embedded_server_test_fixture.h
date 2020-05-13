@@ -50,11 +50,11 @@ inline void GetClientMetadata(grpc::ServerContext* context,
  */
 class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
  public:
-  BigtableImpl() {}
+  BigtableImpl() = default;
   grpc::Status ReadRows(
       grpc::ServerContext* context,
       google::bigtable::v2::ReadRowsRequest const*,
-      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>*) {
+      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>*) override {
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }
@@ -67,7 +67,7 @@ class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
 class TableAdminImpl final
     : public google::bigtable::admin::v2::BigtableTableAdmin::Service {
  public:
-  TableAdminImpl() {}
+  TableAdminImpl() = default;
 
   grpc::Status CreateTable(
       grpc::ServerContext* context,
@@ -92,24 +92,23 @@ class TableAdminImpl final
 class EmbeddedServerTestFixture : public ::testing::Test {
  protected:
   void StartServer();
-  void SetUp();
-  void TearDown();
+  void SetUp() override;
+  void TearDown() override;
   void ResetChannel();
 
-  std::string const kProjectId = "foo-project";
-  std::string const kInstanceId = "bar-instance";
-  std::string const kTableId = "baz-table";
-  std::string const kClusterId = "test_cluster";
+  std::string const kProjectId_ = "foo-project";
+  std::string const kInstanceId_ = "bar-instance";
+  std::string const kTableId_ = "baz-table";
 
   // These are hardcoded, and not computed, because we want to test the
   // computation.
-  std::string const kInstanceName =
+  std::string const kInstanceName_ =
       "projects/foo-project/instances/bar-instance";
-  std::string const kTableName =
+  std::string const kTableName_ =
       "projects/foo-project/instances/bar-instance/tables/baz-table";
 
-  std::string project_id_ = kProjectId;
-  std::string instance_id_ = kInstanceId;
+  std::string project_id_ = kProjectId_;
+  std::string instance_id_ = kInstanceId_;
   std::shared_ptr<DataClient> data_client_;
   std::shared_ptr<AdminClient> admin_client_;
   std::shared_ptr<bigtable::Table> table_;
