@@ -19,7 +19,6 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <utility>
