@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+find_package(absl CONFIG REQUIRED)
+
 string(CONCAT GOOGLE_CLOUD_CPP_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}" "."
               "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
               "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
@@ -326,7 +328,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         internal/pagination_range.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
-        PUBLIC googleapis-c++::rpc_status_protos google_cloud_cpp_common
+        PUBLIC absl::memory googleapis-c++::rpc_status_protos google_cloud_cpp_common
                gRPC::grpc++ gRPC::grpc
         PRIVATE google_cloud_cpp_common_options)
     google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)

@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
+#include "absl/memory/memory.h"
 #include <sstream>
 
 namespace google {
@@ -43,8 +44,7 @@ TracingOptions DefaultTracingOptions() {
 }
 
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads() {
-  return google::cloud::internal::make_unique<
-      AutomaticallyCreatedBackgroundThreads>();
+  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>();
 }
 
 }  // namespace internal
