@@ -15,6 +15,7 @@
 # ~~~
 
 find_package(googleapis CONFIG REQUIRED)
+find_package(absl CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
@@ -174,8 +175,13 @@ add_library(
     version_info.h)
 target_link_libraries(
     bigtable_client
-    PUBLIC bigtable_protos google_cloud_cpp_common google_cloud_cpp_grpc_utils
-           gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+    PUBLIC absl::memory
+           bigtable_protos
+           google_cloud_cpp_common
+           google_cloud_cpp_grpc_utils
+           gRPC::grpc++
+           gRPC::grpc
+           protobuf::libprotobuf
     PRIVATE bigtable_common_options)
 google_cloud_cpp_add_common_options(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)

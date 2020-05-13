@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+find_package(absl CONFIG REQUIRED)
+
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER
@@ -223,7 +225,8 @@ add_library(
     well_known_parameters.h)
 target_link_libraries(
     storage_client
-    PUBLIC google_cloud_cpp_common
+    PUBLIC absl::memory
+           google_cloud_cpp_common
            nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
