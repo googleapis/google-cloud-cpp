@@ -134,7 +134,7 @@ class AsyncRetryMultiPageFuture {
 
   /// The callback to start another iteration of the retry loop.
   static void StartIteration(std::shared_ptr<AsyncRetryMultiPageFuture> self) {
-    auto context = ::absl::make_unique<grpc::ClientContext>();
+    auto context = absl::make_unique<grpc::ClientContext>();
     self->rpc_retry_policy_->Setup(*context);
     self->rpc_backoff_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);
