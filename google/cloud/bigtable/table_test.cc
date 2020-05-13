@@ -27,22 +27,22 @@ class TableTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 TEST_F(TableTest, ClientProjectId) {
-  EXPECT_EQ(kProjectId_, client_->project_id());
+  EXPECT_EQ(kProjectId, client_->project_id());
 }
 
 TEST_F(TableTest, ClientInstanceId) {
-  EXPECT_EQ(kInstanceId_, client_->instance_id());
+  EXPECT_EQ(kInstanceId, client_->instance_id());
 }
 
 TEST_F(TableTest, StandaloneInstanceName) {
-  EXPECT_EQ(kInstanceName_, bigtable::InstanceName(client_));
+  EXPECT_EQ(kInstanceName, bigtable::InstanceName(client_));
 }
 
 TEST_F(TableTest, StandaloneTableName) {
-  EXPECT_EQ(kTableName_, bigtable::TableName(client_, kTableId_));
+  EXPECT_EQ(kTableName, bigtable::TableName(client_, kTableId));
 }
 
-TEST_F(TableTest, TableName) { EXPECT_EQ(kTableName_, table_.table_name()); }
+TEST_F(TableTest, TableName) { EXPECT_EQ(kTableName, table_.table_name()); }
 
 TEST_F(TableTest, TableConstructor) {
   std::string const other_table_id = "my-table";

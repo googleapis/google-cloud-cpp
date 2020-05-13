@@ -22,6 +22,12 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+char const* const EmbeddedServerTestFixture::kProjectId;
+char const* const EmbeddedServerTestFixture::kInstanceId;
+char const* const EmbeddedServerTestFixture::kTableId;
+char const* const EmbeddedServerTestFixture::kInstanceName;
+char const* const EmbeddedServerTestFixture::kTableName;
+
 void EmbeddedServerTestFixture::StartServer() {
   int port;
   std::string server_address("[::]:0");
@@ -38,18 +44,22 @@ void EmbeddedServerTestFixture::SetUp() {
 
   grpc::ChannelArguments channel_arguments;
   channel_arguments.SetUserAgentPrefix(ClientOptions::UserAgentPrefix());
+  std::string project_id = kProjectId;
+  std::string instance_id = kInstanceId;
+  std::string table_id = kTableId;
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
-  data_client_ = std::make_shared<InProcessDataClient>(
-      kProjectId_, kInstanceId_, std::move(data_channel));
-  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId_);
+  data_client_ = std::make_shared<InProcessDataClient>(project_id, instance_id,
+                                                       std::move(data_channel));
+  table_ = std::make_shared<bigtable::Table>(data_client_, std::move(table_id));
 
   std::shared_ptr<grpc::Channel> admin_channel =
       server_->InProcessChannel(channel_arguments);
   admin_client_ = std::make_shared<InProcessAdminClient>(
-      kProjectId_, std::move(admin_channel));
-  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_, kInstanceId_);
+      std::move(project_id), std::move(admin_channel));
+  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_,
+                                                  std::move(instance_id));
 }
 
 void EmbeddedServerTestFixture::TearDown() {

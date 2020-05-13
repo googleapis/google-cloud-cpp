@@ -96,19 +96,19 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   void TearDown() override;
   void ResetChannel();
 
-  std::string const kProjectId_ = "foo-project";
-  std::string const kInstanceId_ = "bar-instance";
-  std::string const kTableId_ = "baz-table";
+  static auto constexpr kProjectId = "foo-project";
+  static auto constexpr kInstanceId = "bar-instance";
+  static auto constexpr kTableId = "baz-table";
 
   // These are hardcoded, and not computed, because we want to test the
   // computation.
-  std::string const kInstanceName_ =
+  static auto constexpr kInstanceName =
       "projects/foo-project/instances/bar-instance";
-  std::string const kTableName_ =
+  static auto constexpr kTableName =
       "projects/foo-project/instances/bar-instance/tables/baz-table";
 
-  std::string project_id_ = kProjectId_;
-  std::string instance_id_ = kInstanceId_;
+  std::string project_id_ = kProjectId;
+  std::string instance_id_ = kInstanceId;
   std::shared_ptr<DataClient> data_client_;
   std::shared_ptr<AdminClient> admin_client_;
   std::shared_ptr<bigtable::Table> table_;

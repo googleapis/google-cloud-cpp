@@ -21,6 +21,12 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+char const* const TableTestFixture::kProjectId;
+char const* const TableTestFixture::kInstanceId;
+char const* const TableTestFixture::kTableId;
+char const* const TableTestFixture::kInstanceName;
+char const* const TableTestFixture::kTableName;
+
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string const& repr) {
   google::bigtable::v2::ReadRowsResponse response;
