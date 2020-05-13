@@ -24,7 +24,9 @@ ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
     }
 }
 if ($missing.count -ge 1) {
-    throw "Aborting build because the ${missing} environment variables are not set."
+    Write-Host -ForegroundColor Red `
+        "Aborting build because the ${missing} environment variables are not set."
+    Exit 1
 }
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
@@ -74,13 +76,15 @@ ForEach($library in ("bigtable", "storage", "spanner")) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_flags"
     cmake $cmake_flags
     if ($LastExitCode) {
-        throw "cmake config failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Red "cmake config failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling with CMake $env:CONFIG"
     cmake --build "${binary_dir}" --config $env:CONFIG
     if ($LastExitCode) {
-        throw "cmake for 'all' target failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Red "cmake for 'all' target failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
     }
 
     if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
@@ -89,7 +93,9 @@ ForEach($library in ("bigtable", "storage", "spanner")) {
         Set-Location "${binary_dir}"
         .\quickstart.exe $quickstart_args[${library}]
         if ($LastExitCode) {
-            throw "quickstart test for ${library} failed with exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Red `
+                "quickstart test for ${library} failed with exit code ${LastExitCode}."
+                Exit ${LastExitCode}
         }
     }
 }
