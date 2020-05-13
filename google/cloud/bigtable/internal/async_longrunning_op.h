@@ -135,21 +135,11 @@ template <typename Client, typename Response>
 future<StatusOr<Response>> StartAsyncLongrunningOp(
     char const* location, std::unique_ptr<PollingPolicy> polling_policy,
     MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
-    CompletionQueue cq,
-    future<StatusOr<google::longrunning::Operation>> operation) {
-  return StartAsyncPollOp(
-             location, std::move(polling_policy),
-             std::move(metadata_update_policy), std::move(cq),
-             operation.then(
-                 [client](future<StatusOr<google::longrunning::Operation>> fut)
-                     -> StatusOr<AsyncLongrunningOperation<Client, Response>> {
-                   auto operation = fut.get();
-                   if (operation) {
-                     return AsyncLongrunningOperation<Client, Response>(
-                         std::move(client), *std::move(operation));
-                   }
-                   return operation.status();
-                 }))
+    CompletionQueue cq, google::longrunning::Operation operation) {
+  return StartAsyncPollOp(location, std::move(polling_policy),
+                          std::move(metadata_update_policy), std::move(cq),
+                          AsyncLongrunningOperation<Client, Response>(
+                              std::move(client), std::move(operation)))
       .then([](future<StatusOr<StatusOr<Response>>> fut) -> StatusOr<Response> {
         auto res = fut.get();
         if (!res) {

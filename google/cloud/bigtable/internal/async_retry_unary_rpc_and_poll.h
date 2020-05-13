@@ -83,12 +83,33 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
   };
   CallWrapper wrapper{std::move(metadata_update_policy), std::move(async_call)};
 
-  return StartAsyncLongrunningOp<Client, Response>(
-      location, std::move(polling_policy), metadata_update_policy, client, cq,
-      google::cloud::internal::StartRetryAsyncUnaryRpc(
-          cq, location, std::move(rpc_retry_policy),
-          std::move(rpc_backoff_policy), idempotent_policy.is_idempotent(),
-          std::move(wrapper), std::move(request)));
+  auto op_future = google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
+      idempotent_policy.is_idempotent(), std::move(wrapper),
+      std::move(request));
+
+  struct ContinuationWrapper {
+    future<StatusOr<Response>> operator()(
+        future<StatusOr<google::longrunning::Operation>> op_fut) {
+      auto maybe_op = op_fut.get();
+      if (!maybe_op) {
+        return google::cloud::make_ready_future<StatusOr<Response>>(
+            maybe_op.status());
+      }
+      std::string const policy_id = "operations/" + maybe_op->name();
+      return StartAsyncLongrunningOp<Client, Response>(
+          location, std::move(polling_policy),
+          MetadataUpdatePolicy(policy_id, MetadataParamTypes::NAME), client, cq,
+          *std::move(maybe_op));
+    }
+
+    char const* location;
+    std::unique_ptr<PollingPolicy> polling_policy;
+    std::shared_ptr<Client> client;
+    CompletionQueue cq;
+  };
+  return op_future.then(ContinuationWrapper{location, std::move(polling_policy),
+                                            std::move(client), std::move(cq)});
 }
 
 }  // namespace internal
