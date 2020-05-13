@@ -173,7 +173,7 @@ class TableAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
-  // NOLINTNEXTLINE(BOGUS,performance-unnecessary-value-param)
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
       : TableAdmin(std::move(client), std::move(instance_id)) {
