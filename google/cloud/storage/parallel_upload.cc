@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/parallel_upload.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -83,7 +84,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
   assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(
-      google::cloud::internal::make_unique<ParallelObjectWriteStreambuf>(
+      absl::make_unique<ParallelObjectWriteStreambuf>(
           shared_from_this(), idx, *std::move(session),
           raw_client.client_options().upload_buffer_size(),
           CreateHashValidator(request)));
