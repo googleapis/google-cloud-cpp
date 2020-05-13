@@ -21,7 +21,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <limits>
 
 namespace google {
@@ -244,8 +244,7 @@ class StatusOnlyResultSetSource : public internal::ResultSourceInterface {
 template <typename ResultType>
 ResultType MakeStatusOnlyResult(Status status) {
   return ResultType(
-      google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-          std::move(status)));
+      absl::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
 class DmlResultSetSource : public internal::ResultSourceInterface {
@@ -326,17 +325,17 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
   auto factory = [stub, request, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
     request.set_resume_token(resume_token);
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    auto context = absl::make_unique<grpc::ClientContext>();
     std::unique_ptr<PartialResultSetReader> reader =
-        google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+        absl::make_unique<DefaultPartialResultSetReader>(
             std::move(context), stub->StreamingRead(*context, request));
     if (tracing_enabled) {
-      reader = google::cloud::internal::make_unique<LoggingResultSetReader>(
+      reader = absl::make_unique<LoggingResultSetReader>(
           std::move(reader), tracing_options);
     }
     return reader;
   };
-  auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
+  auto rpc = absl::make_unique<PartialResultSetResume>(
       std::move(factory), Idempotency::kIdempotent,
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
@@ -474,17 +473,17 @@ ResultType ConnectionImpl::CommonQueryImpl(
                     tracing_options](std::string const& resume_token) mutable {
       request.set_resume_token(resume_token);
       auto context =
-          google::cloud::internal::make_unique<grpc::ClientContext>();
+          absl::make_unique<grpc::ClientContext>();
       std::unique_ptr<PartialResultSetReader> reader =
-          google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+          absl::make_unique<DefaultPartialResultSetReader>(
               std::move(context), stub->ExecuteStreamingSql(*context, request));
       if (tracing_enabled) {
-        reader = google::cloud::internal::make_unique<LoggingResultSetReader>(
+        reader = absl::make_unique<LoggingResultSetReader>(
             std::move(reader), tracing_options);
       }
       return reader;
     };
-    auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
+    auto rpc = absl::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent, retry_policy->clone(),
         backoff_policy->clone());
 
