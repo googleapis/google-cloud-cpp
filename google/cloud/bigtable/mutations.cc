@@ -32,6 +32,16 @@ Mutation DeleteFromRow() {
   return m;
 }
 
+Mutation SetCell(Cell const& cell) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(cell.family_name());
+  set_cell.set_column_qualifier(cell.column_qualifier());
+  set_cell.set_timestamp_micros(cell.timestamp().count());
+  set_cell.set_value(cell.value());
+  return m;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
