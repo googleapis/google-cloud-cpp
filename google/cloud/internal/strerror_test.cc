@@ -23,6 +23,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::testing::AnyOf;
 using ::testing::HasSubstr;
 
 #include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
@@ -30,15 +31,21 @@ TEST(StrErrorTest, Simple) {
   auto const actual = ::google::cloud::internal::strerror(EDOM);
   // In the test we can call `std::strerror()` because the test is single
   // threaded.
-  std::string expected = std::strerror(EDOM);
+  std::string const expected = std::strerror(EDOM);
   EXPECT_EQ(actual, expected);
 }
 #include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(StrErrorTest, InvalidErrno) {
-  auto const actual = ::google::cloud::internal::strerror(-123456789);
+  auto constexpr kInvalidErrno = -1234;
+  auto const actual = ::google::cloud::internal::strerror(kInvalidErrno);
   EXPECT_FALSE(actual.empty());
-  EXPECT_THAT(actual, HasSubstr("-123456789"));
+  // In the test we can call `std::strerror()` because the test is single
+  // threaded.
+  std::string const expected = std::strerror(kInvalidErrno);
+  // On Windows the library returns `Unknown Error` instead of an error
+  // condition, so we cannot print why this failed.
+  EXPECT_THAT(actual, AnyOf(HasSubstr("-1234"), HasSubstr(expected)));
 }
 
 }  // namespace
