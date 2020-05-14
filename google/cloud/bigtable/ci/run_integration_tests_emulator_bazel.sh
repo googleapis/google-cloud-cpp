@@ -46,9 +46,9 @@ production_only_targets=(
 # `start_emulators` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
 # environment variables that it sets.
-pushd "${HOME}"
+pushd "${HOME}" >/dev/null
 start_emulators
-popd
+popd >/dev/null
 
 excluded_targets=(
   # This test can only run against production, *and* needs dynamically created
