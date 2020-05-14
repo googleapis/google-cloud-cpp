@@ -49,7 +49,7 @@ PROJECT_ROOT="$(init::repo_root "${PROGRAM_DIR}")"
 
 # Sets the path to the `module` library in PATH so that it can be found when
 # callers use `source module <args>`
-if [[ ! "$PATH" =~ "${PROJECT_ROOT}/ci/lib" ]]; then
+if [[ ! "$PATH" =~ ${PROJECT_ROOT}/ci/lib ]]; then
   # Changing PATH invalidates the Bazel cache, while this script runs at most
   # once when called by a single script, it might be loaded again by a child
   # script.
