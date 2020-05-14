@@ -18,7 +18,7 @@
 # not build all of the tests.
 if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     add_library(
-        google_cloud_cpp_testing
+        google_cloud_cpp_testing # cmake-format: sort
         assert_ok.cc
         assert_ok.h
         capture_log_lines_backend.cc
@@ -38,8 +38,9 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
-    set(google_cloud_cpp_testing_unit_tests assert_ok_test.cc
-                                            scoped_environment_test.cc)
+    set(google_cloud_cpp_testing_unit_tests
+        # cmake-format: sort
+        assert_ok_test.cc scoped_environment_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
@@ -60,7 +61,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     find_package(googleapis)
     add_library(
-        google_cloud_cpp_testing_grpc
+        google_cloud_cpp_testing_grpc # cmake-format: sort
         is_proto_equal.cc is_proto_equal.h mock_async_response_reader.h
         mock_completion_queue.h)
     target_link_libraries(
@@ -70,7 +71,8 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     create_bazel_config(google_cloud_cpp_testing_grpc YEAR 2020)
 
-    set(google_cloud_cpp_testing_grpc_unit_tests is_proto_equal_test.cc)
+    set(google_cloud_cpp_testing_grpc_unit_tests # cmake-format: sort
+                                                 is_proto_equal_test.cc)
 
     export_list_to_bazel("google_cloud_cpp_testing_grpc_unit_tests.bzl"
                          "google_cloud_cpp_testing_grpc_unit_tests" YEAR 2020)

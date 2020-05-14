@@ -65,7 +65,7 @@ find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(
-    storage_client
+    storage_client # cmake-format: sort
     bucket_access_control.cc
     bucket_access_control.h
     bucket_metadata.cc
@@ -270,7 +270,7 @@ create_bazel_config(storage_client)
 
 if (BUILD_TESTING)
     add_library(
-        storage_client_testing
+        storage_client_testing # cmake-format: sort
         testing/canonical_errors.h
         testing/mock_client.h
         testing/mock_fake_clock.cc

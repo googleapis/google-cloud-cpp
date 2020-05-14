@@ -14,8 +14,8 @@
 # limitations under the License.
 # ~~~
 
-add_library(bigtable_examples_common bigtable_examples_common.cc
-                                     bigtable_examples_common.h)
+add_library(bigtable_examples_common # cmake-format: sort
+            bigtable_examples_common.cc bigtable_examples_common.h)
 target_link_libraries(
     bigtable_examples_common
     bigtable_client
