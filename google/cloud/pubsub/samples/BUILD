@@ -18,6 +18,32 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples_common_srcs")
+
+cc_library(
+    name = "pubsub_samples_common",
+    srcs = pubsub_samples_common_srcs,
+    hdrs = pubsub_samples_common_hdrs,
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/pubsub:pubsub_client",
+    ],
+)
+
+load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":pubsub_samples_common",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/pubsub:pubsub_client",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in pubsub_samples_unit_tests]
+
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
 load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
@@ -30,6 +56,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
         "pubsub-integration-tests",
     ],
     deps = [
+        ":pubsub_samples_common",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
         "@com_google_googletest//:gtest_main",
@@ -40,6 +67,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        ":pubsub_samples_common",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
