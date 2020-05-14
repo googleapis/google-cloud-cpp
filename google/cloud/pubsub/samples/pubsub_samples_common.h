@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXAMPLES_PUBSUB_EXAMPLES_COMMON_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXAMPLES_PUBSUB_EXAMPLES_COMMON_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 
 #include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/pubsub/subscriber_client.h"
@@ -42,4 +42,4 @@ google::cloud::internal::Commands::value_type CreateSubscriberCommand(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXAMPLES_PUBSUB_EXAMPLES_COMMON_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
