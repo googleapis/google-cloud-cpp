@@ -22,11 +22,16 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-char const* const EmbeddedServerTestFixture::kProjectId;
-char const* const EmbeddedServerTestFixture::kInstanceId;
-char const* const EmbeddedServerTestFixture::kTableId;
-char const* const EmbeddedServerTestFixture::kInstanceName;
-char const* const EmbeddedServerTestFixture::kTableName;
+char const EmbeddedServerTestFixture::kProjectId[] = "foo-project";
+char const EmbeddedServerTestFixture::kInstanceId[] = "bar-instance";
+char const EmbeddedServerTestFixture::kTableId[] = "baz-table";
+
+// These are hardcoded, and not computed, because we want to test the
+// computation.
+char const EmbeddedServerTestFixture::kInstanceName[] =
+    "projects/foo-project/instances/bar-instance";
+char const EmbeddedServerTestFixture::kTableName[] =
+    "projects/foo-project/instances/bar-instance/tables/baz-table";
 
 void EmbeddedServerTestFixture::StartServer() {
   int port;

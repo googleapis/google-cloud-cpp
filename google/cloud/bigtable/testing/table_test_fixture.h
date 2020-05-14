@@ -30,16 +30,11 @@ class TableTestFixture : public ::testing::Test {
 
   std::shared_ptr<MockDataClient> SetupMockClient();
 
-  static auto constexpr kProjectId = "foo-project";
-  static auto constexpr kInstanceId = "bar-instance";
-  static auto constexpr kTableId = "baz-table";
-
-  // These are hardcoded, and not computed, because we want to test the
-  // computation.
-  static auto constexpr kInstanceName =
-      "projects/foo-project/instances/bar-instance";
-  static auto constexpr kTableName =
-      "projects/foo-project/instances/bar-instance/tables/baz-table";
+  static char const kProjectId[];
+  static char const kInstanceId[];
+  static char const kTableId[];
+  static char const kInstanceName[];
+  static char const kTableName[];
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
