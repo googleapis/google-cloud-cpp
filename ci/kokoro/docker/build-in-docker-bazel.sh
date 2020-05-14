@@ -101,6 +101,91 @@ if should_run_integration_tests; then
   io::log "Running the integration tests"
   echo "================================================================"
 
+  bazel_args+=(
+    # Common configuration
+    "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
+    "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+    "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+
+    # Bigtable
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
+    "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+
+    # Storage
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
+
+    # Spanner
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
+  )
+
+  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  # TODO(#441) - remove the for loops below.
+  # Sometimes the integration tests manage to crash the Bigtable emulator.
+  # Manually restarting the build clears up the problem, but that is just a
+  # waste of everybody's time. Use a (short) timeout to run the test and try
+  # 3 times.
+  set +e
+  success=no
+  for attempt in 1 2 3; do
+    echo
+    io::log_yellow "running bigtable integration tests via Bazel+Emulator [${attempt}]"
+    echo
+    # TODO(#441) - when the emulator crashes the tests can take a long time.
+    # The slowest test normally finishes in about 10 seconds, 100 seems safe.
+    if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+      "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=100; then
+      success=yes
+      break
+    fi
+  done
+  if [[ "${success}" != "yes" ]]; then
+    io::log_red "integration tests failed multiple times, aborting tests."
+    exit 1
+  fi
+  set -e
+
+  # These targets depend on the value of
+  # GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT which changes on each
+  # run and would dirty the cache for all the other tests if included in
+  # ${bazel_args[@]}
+  hmac_service_account_targets=(
+    "//google/cloud/storage/examples:storage_service_account_samples"
+    "//google/cloud/storage/tests:service_account_integration_test"
+  )
+  # This target depends on the value of
+  # GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN which changes on each run and
+  # would dirty the cache for all the other tests if included in
+  # ${bazel_args[@]}
+  access_token_targets=(
+    "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  )
+  excluded_targets=()
+  for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
+    excluded_targets+=("-${t}")
+  done
+
+  # Run the integration tests using Bazel to drive them. Some of the tests and
+  # examples require environment variables with dynamic values, we run them
+  # below to avoid invalidating the cached test results for all the other tests.
+  "${BAZEL_BIN}" test \
+    "${bazel_args[@]}" \
+    "--test_tag_filters=storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
+    -- //google/cloud/...:all "${excluded_targets[@]}"
+
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
   source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
@@ -173,68 +258,6 @@ if should_run_integration_tests; then
   # Deactivate the recently activated service accounts to prevent accidents.
   io::log "Revoke service account after creating the access token."
   revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
-
-  bazel_args+=(
-    # Common configuration
-    "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
-    "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
-    "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
-
-    # Bigtable
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
-    "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
-
-    # Storage
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
-
-    # Spanner
-    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
-    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
-  )
-
-  BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
-  readonly BAZEL_BIN_DIR
-
-  # These targets depend on the value of
-  # GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT which changes on each
-  # run and would dirty the cache for all the other tests if included in
-  # ${bazel_args[@]}
-  hmac_service_account_targets=(
-    "//google/cloud/storage/examples:storage_service_account_samples"
-    "//google/cloud/storage/tests:service_account_integration_test"
-  )
-  # This target depends on the value of
-  # GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN which changes on each run and
-  # would dirty the cache for all the other tests if included in
-  # ${bazel_args[@]}
-  access_token_targets=(
-    "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
-  )
-  excluded_targets=()
-  for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
-    excluded_targets+=("-${t}")
-  done
-
-  # Run the integration tests using Bazel to drive them. Some of the tests and
-  # examples require environment variables with dynamic values, we run them
-  # below to avoid invalidating the cached test results for all the other tests.
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
-    -- //google/cloud/...:all "${excluded_targets[@]}"
 
   # Run the integration tests that need an access token.
   for target in "${access_token_targets[@]}"; do
