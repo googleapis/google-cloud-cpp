@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,26 +24,22 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 ObjectReadStream CreateReader() {
-  using google::cloud::internal::make_unique;
   std::shared_ptr<internal::RawClient> client;
   internal::ReadObjectRangeRequest request("test-bucket", "test-object");
 
-  auto buf = make_unique<internal::ObjectReadStreambuf>(
+  auto buf = absl::make_unique<internal::ObjectReadStreambuf>(
       request, Status(StatusCode::kNotFound, "test-message"));
   return ObjectReadStream(std::move(buf));
 }
 
 ObjectWriteStream CreateWriter() {
-  auto session = google::cloud::internal::make_unique<
-      internal::ResumableUploadSessionError>(
+  auto session = absl::make_unique<internal::ResumableUploadSessionError>(
       Status(StatusCode::kNotFound, "test-message"));
 
-  auto validator =
-      google::cloud::internal::make_unique<internal::NullHashValidator>();
+  auto validator = absl::make_unique<internal::NullHashValidator>();
 
-  ObjectWriteStream writer(
-      google::cloud::internal::make_unique<internal::ObjectWriteStreambuf>(
-          std::move(session), 0, std::move(validator)));
+  ObjectWriteStream writer(absl::make_unique<internal::ObjectWriteStreambuf>(
+      std::move(session), 0, std::move(validator)));
   writer.setstate(std::ios::badbit | std::ios::eofbit);
   writer.Close();
   return writer;

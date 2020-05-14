@@ -85,7 +85,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
-  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  auto reader = absl::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
         // Initialize a value to make sure it is carried all the way back to
@@ -137,7 +137,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;
-  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  auto reader = absl::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](google::protobuf::Empty*, grpc::Status* status,
                           void*) { *status = grpc::Status::OK; }));
@@ -184,7 +184,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
-  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  auto reader = absl::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::Table*, grpc::Status* status, void*) {
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
@@ -239,11 +239,11 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
     *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
-  auto r1 = google::cloud::internal::make_unique<ReaderType>();
+  auto r1 = absl::make_unique<ReaderType>();
   EXPECT_CALL(*r1, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
-  auto r2 = google::cloud::internal::make_unique<ReaderType>();
+  auto r2 = absl::make_unique<ReaderType>();
   EXPECT_CALL(*r2, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
-  auto r3 = google::cloud::internal::make_unique<ReaderType>();
+  auto r3 = absl::make_unique<ReaderType>();
   EXPECT_CALL(*r3, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
 
   EXPECT_CALL(mock, AsyncGetTable(_, _, _))
@@ -315,7 +315,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
   MockStub mock;
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;
-  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  auto reader = absl::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(
           Invoke([](google::protobuf::Empty*, grpc::Status* status, void*) {

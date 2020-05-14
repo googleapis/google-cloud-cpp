@@ -64,10 +64,10 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         client(std::make_shared<testing::MockInstanceAdminClient>()),
         cq_impl(std::make_shared<testing_util::MockCompletionQueue>()),
         cq(cq_impl),
-        create_cluster_reader(google::cloud::internal::make_unique<
-                              MockAsyncLongrunningOpReader>()),
-        get_operation_reader(google::cloud::internal::make_unique<
-                             MockAsyncLongrunningOpReader>()) {
+        create_cluster_reader(
+            absl::make_unique<MockAsyncLongrunningOpReader>()),
+        get_operation_reader(
+            absl::make_unique<MockAsyncLongrunningOpReader>()) {
     EXPECT_CALL(*client, project())
         .WillRepeatedly(::testing::ReturnRef(k_project_id));
   }
@@ -113,16 +113,14 @@ class AsyncStartPollAfterRetryUnaryRpcTest
           }
           response->set_done(true);
           if (polling_error_code != grpc::StatusCode::OK) {
-            auto error =
-                google::cloud::internal::make_unique<google::rpc::Status>();
+            auto error = absl::make_unique<google::rpc::Status>();
             error->set_code(polling_error_code);
             error->set_message("something is broken");
             response->set_allocated_error(error.release());
           } else {
             btproto::Cluster response_content;
             response_content.set_name("my_newly_created_cluster");
-            auto any =
-                google::cloud::internal::make_unique<google::protobuf::Any>();
+            auto any = absl::make_unique<google::protobuf::Any>();
             any->PackFrom(response_content);
             response->set_allocated_response(any.release());
           }

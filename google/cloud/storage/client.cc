@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
+#include "absl/memory/memory.h"
 #include <openssl/md5.h>
 #include <fstream>
 #include <thread>
@@ -51,13 +51,13 @@ ObjectReadStream Client::ReadObjectImpl(
   auto source = raw_client_->ReadObject(request);
   if (!source) {
     ObjectReadStream error_stream(
-        google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+        absl::make_unique<internal::ObjectReadStreambuf>(
             request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
-  auto stream = ObjectReadStream(
-      google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+  auto stream =
+      ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source)));
   (void)stream.peek();
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -74,22 +74,20 @@ ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
   auto session = raw_client_->CreateResumableSession(request);
   if (!session) {
-    auto error = google::cloud::internal::make_unique<
-        internal ::ResumableUploadSessionError>(std::move(session).status());
+    auto error = absl::make_unique<internal ::ResumableUploadSessionError>(
+        std::move(session).status());
 
-    ObjectWriteStream error_stream(google::cloud::internal::make_unique<
-                                   internal::ObjectWriteStreambuf>(
-        std::move(error), 0,
-        google::cloud::internal::make_unique<internal::NullHashValidator>()));
+    ObjectWriteStream error_stream(
+        absl::make_unique<internal::ObjectWriteStreambuf>(
+            std::move(error), 0,
+            absl::make_unique<internal::NullHashValidator>()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
   }
-  return ObjectWriteStream(
-      google::cloud::internal::make_unique<internal::ObjectWriteStreambuf>(
-          *std::move(session),
-          raw_client_->client_options().upload_buffer_size(),
-          internal::CreateHashValidator(request)));
+  return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
+      *std::move(session), raw_client_->client_options().upload_buffer_size(),
+      internal::CreateHashValidator(request)));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {

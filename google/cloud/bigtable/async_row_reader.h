@@ -122,7 +122,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     }
     parser_ = parser_factory_->Create();
 
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    auto context = absl::make_unique<grpc::ClientContext>();
     rpc_retry_policy_->Setup(*context);
     rpc_backoff_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);

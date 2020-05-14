@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <vector>
 
@@ -147,7 +147,7 @@ class ReadRowsParserFactory {
 
   /// Returns a newly created parser instance.
   virtual std::unique_ptr<ReadRowsParser> Create() {
-    return google::cloud::internal::make_unique<ReadRowsParser>();
+    return absl::make_unique<ReadRowsParser>();
   }
 };
 }  // namespace internal

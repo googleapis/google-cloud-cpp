@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -39,8 +40,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
 
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = google::cloud::internal::make_unique<Client>(
-        MakeConnection(GetDatabase()));
+    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
   }
 
   void SetUp() override {

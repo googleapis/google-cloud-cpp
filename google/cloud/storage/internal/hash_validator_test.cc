@@ -16,8 +16,8 @@
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -151,9 +151,8 @@ TEST(Crc32cHashValidator, MultipleHashes) {
 }
 
 TEST(CompositeHashValidator, Empty) {
-  CompositeValidator validator(
-      google::cloud::internal::make_unique<Crc32cHashValidator>(),
-      google::cloud::internal::make_unique<MD5HashValidator>());
+  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
+                               absl::make_unique<MD5HashValidator>());
   validator.ProcessHeader("x-goog-hash",
                           "crc32c=" + kEmptyStringCrc32cChecksum);
   validator.ProcessHeader("x-goog-hash", "md5=" + kEmptyStringMD5Hash);
@@ -166,9 +165,8 @@ TEST(CompositeHashValidator, Empty) {
 }
 
 TEST(CompositeHashValidator, Simple) {
-  CompositeValidator validator(
-      google::cloud::internal::make_unique<Crc32cHashValidator>(),
-      google::cloud::internal::make_unique<MD5HashValidator>());
+  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
+                               absl::make_unique<MD5HashValidator>());
   UpdateValidator(validator, "The quick");
   UpdateValidator(validator, " brown");
   UpdateValidator(validator, " fox jumps over the lazy dog");
@@ -183,9 +181,8 @@ TEST(CompositeHashValidator, Simple) {
 }
 
 TEST(CompositeHashValidator, ProcessMetadata) {
-  CompositeValidator validator(
-      google::cloud::internal::make_unique<Crc32cHashValidator>(),
-      google::cloud::internal::make_unique<MD5HashValidator>());
+  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
+                               absl::make_unique<MD5HashValidator>());
   UpdateValidator(validator, "The quick");
   UpdateValidator(validator, " brown");
   UpdateValidator(validator, " fox jumps over the lazy dog");
@@ -205,9 +202,8 @@ TEST(CompositeHashValidator, ProcessMetadata) {
 }
 
 TEST(CompositeHashValidator, Missing) {
-  CompositeValidator validator(
-      google::cloud::internal::make_unique<Crc32cHashValidator>(),
-      google::cloud::internal::make_unique<MD5HashValidator>());
+  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
+                               absl::make_unique<MD5HashValidator>());
   UpdateValidator(validator, "The quick");
   UpdateValidator(validator, " brown");
   UpdateValidator(validator, " fox jumps over the lazy dog");

@@ -15,10 +15,10 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -43,7 +43,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
         bigtable::CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
-    table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
+    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 

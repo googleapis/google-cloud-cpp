@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <algorithm>
 #include <cctype>
@@ -128,7 +128,7 @@ std::string TableTestEnvironment::RandomInstanceId() {
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
-  table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
+  table_admin_ = absl::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),

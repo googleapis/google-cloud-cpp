@@ -15,9 +15,9 @@
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -48,8 +48,7 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 
 /// @test Verify that transient failures are handled as expected.
 TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -202,8 +201,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
 
 /// @test Verify that a permanent error on UploadChunk results in a failure.
 TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -237,8 +235,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
 
 /// @test Verify that a permanent error on ResetSession results in a failure.
 TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -279,8 +276,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
 
 /// @test Verify that too many transients on ResetSession results in a failure.
 TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -347,8 +343,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
 
 /// @test Verify that too many transients on ResetSession result in a failure.
 TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -408,8 +403,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
 /// @test Verify that transients (or elapsed time) from different chunks do not
 /// accumulate.
 TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -546,8 +540,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
 /// @test Verify that a permanent error on UploadFinalChunk results in a
 /// failure.
 TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -586,8 +579,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
 /// @test Verify that too many transients on UploadFinalChunk result in a
 /// failure.
 TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
@@ -655,8 +647,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
 }
 
 TEST(RetryResumableUploadSession, Done) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done()).WillOnce(Return(true));
 
   RetryResumableUploadSession session(
@@ -666,8 +657,7 @@ TEST(RetryResumableUploadSession, Done) {
 }
 
 TEST(RetryResumableUploadSession, LastResponse) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   StatusOr<ResumableUploadResponse> const last_response(ResumableUploadResponse{
       "url", 1, {}, ResumableUploadResponse::kDone, {}});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
@@ -681,8 +671,7 @@ TEST(RetryResumableUploadSession, LastResponse) {
 }
 
 TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
@@ -697,8 +686,7 @@ TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
 }
 
 TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
@@ -712,8 +700,7 @@ TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
 }
 
 TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
       TestBackoffPolicy());
@@ -726,8 +713,7 @@ TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
 
 /// @test Verify that transient failures which move next_bytes are handled
 TEST_F(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(std::string(quantum, 'X') +
@@ -891,8 +877,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
 
 /// @test Verify that erroneous server behavior (uncommitting data) is handled.
 TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(std::string(quantum, 'X'));
@@ -981,8 +966,7 @@ TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
 
 /// @test Verify that retry exhaustion following a short write fails.
 TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(std::string(quantum * 2, 'X'));
@@ -1044,8 +1028,7 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
 
 /// @test Verify that short writes are retried.
 TEST_F(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(std::string(quantum * 2, 'X'));

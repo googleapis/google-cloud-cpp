@@ -13,15 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/idempotency_policy.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::unique_ptr<IdempotencyPolicy> AlwaysRetryIdempotencyPolicy::clone() const {
-  return google::cloud::internal::make_unique<AlwaysRetryIdempotencyPolicy>(
-      *this);
+  return absl::make_unique<AlwaysRetryIdempotencyPolicy>(*this);
 }
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
@@ -240,7 +239,7 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
 }
 
 std::unique_ptr<IdempotencyPolicy> StrictIdempotencyPolicy::clone() const {
-  return google::cloud::internal::make_unique<StrictIdempotencyPolicy>(*this);
+  return absl::make_unique<StrictIdempotencyPolicy>(*this);
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(

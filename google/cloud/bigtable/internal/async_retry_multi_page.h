@@ -21,7 +21,7 @@
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -134,8 +134,7 @@ class AsyncRetryMultiPageFuture {
 
   /// The callback to start another iteration of the retry loop.
   static void StartIteration(std::shared_ptr<AsyncRetryMultiPageFuture> self) {
-    auto context =
-        ::google::cloud::internal::make_unique<grpc::ClientContext>();
+    auto context = absl::make_unique<grpc::ClientContext>();
     self->rpc_retry_policy_->Setup(*context);
     self->rpc_backoff_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);

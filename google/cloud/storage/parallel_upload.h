@@ -21,8 +21,8 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
+#include "absl/memory/memory.h"
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>

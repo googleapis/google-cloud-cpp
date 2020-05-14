@@ -14,10 +14,10 @@
 
 #include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -58,8 +58,7 @@ class LoggingResumableUploadSessionTest : public ::testing::Test {
 };
 
 TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
@@ -78,8 +77,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
 }
 
 TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
@@ -101,8 +99,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   EXPECT_CALL(*mock, ResetSession()).WillOnce(Invoke([&]() {
     return StatusOr<ResumableUploadResponse>(
@@ -119,8 +116,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Invoke([&]() {
     return 512 * 1024U;
@@ -135,8 +131,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
       "upload url", 1, {}, ResumableUploadResponse::kInProgress, {}});
@@ -152,8 +147,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(
       Status(StatusCode::kFailedPrecondition, "something bad"));

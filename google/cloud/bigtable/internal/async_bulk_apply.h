@@ -22,7 +22,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

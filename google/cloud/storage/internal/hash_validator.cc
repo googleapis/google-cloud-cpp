@@ -16,7 +16,7 @@
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -55,23 +55,23 @@ HashValidator::Result CompositeValidator::Finish() && {
 std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
                                                    bool disable_crc32c) {
   if (disable_md5 && disable_crc32c) {
-    return google::cloud::internal::make_unique<NullHashValidator>();
+    return absl::make_unique<NullHashValidator>();
   }
   if (disable_md5) {
-    return google::cloud::internal::make_unique<Crc32cHashValidator>();
+    return absl::make_unique<Crc32cHashValidator>();
   }
   if (disable_crc32c) {
-    return google::cloud::internal::make_unique<MD5HashValidator>();
+    return absl::make_unique<MD5HashValidator>();
   }
-  return google::cloud::internal::make_unique<CompositeValidator>(
-      google::cloud::internal::make_unique<Crc32cHashValidator>(),
-      google::cloud::internal::make_unique<MD5HashValidator>());
+  return absl::make_unique<CompositeValidator>(
+      absl::make_unique<Crc32cHashValidator>(),
+      absl::make_unique<MD5HashValidator>());
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) {
-    return google::cloud::internal::make_unique<NullHashValidator>();
+    return absl::make_unique<NullHashValidator>();
   }
   auto disable_md5 = request.HasOption<DisableMD5Hash>() &&
                      request.GetOption<DisableMD5Hash>().value();

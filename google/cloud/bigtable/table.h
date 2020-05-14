@@ -686,8 +686,7 @@ class Table {
         AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
         std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
         metadata_update_policy_,
-        google::cloud::internal::make_unique<
-            bigtable::internal::ReadRowsParserFactory>());
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
   /**
@@ -730,8 +729,7 @@ class Table {
         std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
         clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
         metadata_update_policy_,
-        google::cloud::internal::make_unique<
-            bigtable::internal::ReadRowsParserFactory>());
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
   /**

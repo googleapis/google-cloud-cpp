@@ -16,7 +16,7 @@
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/memory/memory.h"
 #include <sstream>
 #include <thread>
 
@@ -350,7 +350,7 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
   }
 
   return std::unique_ptr<ResumableUploadSession>(
-      google::cloud::internal::make_unique<RetryResumableUploadSession>(
+      absl::make_unique<RetryResumableUploadSession>(
           std::move(result).value(), std::move(retry_policy),
           std::move(backoff_policy)));
 }

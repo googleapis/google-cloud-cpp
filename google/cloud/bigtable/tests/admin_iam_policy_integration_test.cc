@@ -43,7 +43,7 @@ class AdminIAMPolicyIntegrationTest
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
         testing::TableTestEnvironment::project_id(), ClientOptions());
-    table_admin_ = google::cloud::internal::make_unique<TableAdmin>(
+    table_admin_ = absl::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
 

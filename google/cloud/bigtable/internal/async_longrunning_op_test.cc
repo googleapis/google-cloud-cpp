@@ -49,7 +49,7 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
   response.set_done(true);
   google::bigtable::v2::SampleRowKeysResponse response_content;
   response_content.set_row_key("test_response");
-  auto any = google::cloud::internal::make_unique<google::protobuf::Any>();
+  auto any = absl::make_unique<google::protobuf::Any>();
   any->PackFrom(response_content);
   response.set_allocated_response(any.release());
 }
@@ -63,8 +63,7 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto cq_impl = std::make_shared<MockCompletionQueue>();
   bigtable::CompletionQueue cq(cq_impl);
 
-  auto longrunning_reader =
-      google::cloud::internal::make_unique<MockAsyncLongrunningOpReader>();
+  auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish(_, _, _))
       .WillOnce(Invoke([success](google::longrunning::Operation* response,
                                  grpc::Status* status, void*) {
@@ -128,8 +127,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
       : client_(std::make_shared<testing::MockAdminClient>()),
         cq_impl_(std::make_shared<MockCompletionQueue>()),
         cq_(cq_impl_),
-        longrunning_reader_(google::cloud::internal::make_unique<
-                            MockAsyncLongrunningOpReader>()),
+        longrunning_reader_(absl::make_unique<MockAsyncLongrunningOpReader>()),
         context_(new grpc::ClientContext) {}
 
   /**
@@ -221,8 +219,7 @@ TEST_F(AsyncLongrunningOperationTest, FinishedFailure) {
         status = grpc::Status();
         response.set_name("test_operation_id");
         response.set_done(true);
-        auto error =
-            google::cloud::internal::make_unique<google::rpc::Status>();
+        auto error = absl::make_unique<google::rpc::Status>();
         error->set_code(grpc::StatusCode::PERMISSION_DENIED);
         error->set_message("something is broken");
         response.set_allocated_error(error.release());

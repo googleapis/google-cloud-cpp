@@ -38,7 +38,9 @@ cc_library(
     name = "google_cloud_cpp_common",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
-    deps = [],
+    deps = [
+        "@com_google_absl//absl/memory",
+    ],
 )
 
 load(
@@ -56,6 +58,7 @@ load(
     deps = [
         ":google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
@@ -91,6 +94,7 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
         ":google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/memory",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
         "@com_google_googletest//:gtest_main",

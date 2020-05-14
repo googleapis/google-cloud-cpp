@@ -228,7 +228,8 @@ if (BUILD_TESTING)
         testing/validate_metadata.h)
     target_link_libraries(
         bigtable_client_testing
-        PUBLIC bigtable_client
+        PUBLIC absl::memory
+               bigtable_client
                bigtable_protos
                google_cloud_cpp_common
                google_cloud_cpp_grpc_utils
@@ -309,7 +310,8 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "bigtable" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE bigtable_client_testing
+            PRIVATE absl::memory
+                    bigtable_client_testing
                     bigtable_client
                     bigtable_protos
                     google_cloud_cpp_testing

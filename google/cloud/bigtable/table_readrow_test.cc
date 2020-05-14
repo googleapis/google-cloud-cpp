@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 
 namespace bigtable = ::google::cloud::bigtable;
 namespace btproto = ::google::bigtable::v2;
@@ -42,7 +42,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       }
 )");
 
-  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>(
+  auto stream = absl::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
@@ -72,7 +72,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
 }
 
 TEST_F(TableReadRowTest, ReadRowMissing) {
-  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>(
+  auto stream = absl::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -95,7 +95,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
 }
 
 TEST_F(TableReadRowTest, UnrecoverableFailure) {
-  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>(
+  auto stream = absl::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
   EXPECT_CALL(*stream, Finish())

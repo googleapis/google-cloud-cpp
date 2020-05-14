@@ -288,8 +288,8 @@ if (BUILD_TESTING)
         testing/temp_file.h)
     target_link_libraries(
         storage_client_testing
-        PUBLIC storage_client nlohmann_json GTest::gmock_main GTest::gmock
-               GTest::gtest
+        PUBLIC absl::memory storage_client nlohmann_json GTest::gmock_main
+               GTest::gmock GTest::gtest
         PRIVATE storage_common_options)
     google_cloud_cpp_add_common_options(storage_client_testing)
     google_cloud_cpp_add_clang_tidy(storage_client_testing)
@@ -399,7 +399,8 @@ if (BUILD_TESTING)
         if (BUILD_TESTING)
             target_link_libraries(
                 ${target}
-                PRIVATE storage_client_testing
+                PRIVATE absl::memory
+                        storage_client_testing
                         google_cloud_cpp_testing
                         storage_client
                         GTest::gmock_main

@@ -19,9 +19,9 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <cmath>
 
@@ -45,8 +45,7 @@ class RpcFailureThresholdTest : public ::testing::Test {
 
     auto database_id = spanner_testing::RandomDatabaseName(generator_);
 
-    db_ = google::cloud::internal::make_unique<Database>(
-        project_id, *instance_id, database_id);
+    db_ = absl::make_unique<Database>(project_id, *instance_id, database_id);
 
     std::cout << "Creating database [" << database_id << "] and table "
               << std::flush;

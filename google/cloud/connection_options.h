@@ -205,8 +205,7 @@ class ConnectionOptions {
   ConnectionOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq) {
     background_threads_factory_ = [cq] {
-      return google::cloud::internal::make_unique<
-          internal::CustomerSuppliedBackgroundThreads>(cq);
+      return absl::make_unique<internal::CustomerSuppliedBackgroundThreads>(cq);
     };
     return *this;
   }

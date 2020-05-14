@@ -15,10 +15,10 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -55,8 +55,7 @@ class InstanceAdminAsyncFutureIntegrationTest : public ::testing::Test {
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
         project_id_, bigtable::ClientOptions());
     instance_admin_ =
-        google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
-            instance_admin_client);
+        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
 
  protected:
