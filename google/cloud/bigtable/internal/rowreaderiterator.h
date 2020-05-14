@@ -51,8 +51,8 @@ class RowReaderIterator {
   using reference = value_type&;
   //@}
 
-  RowReaderIterator(RowReader* owner);
-  RowReaderIterator();
+  explicit RowReaderIterator(RowReader* owner);
+  RowReaderIterator() = default;
 
   RowReaderIterator& operator++();
   RowReaderIterator operator++(int) {
@@ -77,7 +77,7 @@ class RowReaderIterator {
 
   void Advance();
   /// nullptr indicates end()
-  RowReader* owner_;
+  RowReader* owner_{};
   /// Current value of the iterator.
   StatusOr<Row> row_;
 };

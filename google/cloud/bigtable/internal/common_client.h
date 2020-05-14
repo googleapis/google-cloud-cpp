@@ -53,7 +53,7 @@ class CommonClient {
   using ChannelPtr = std::shared_ptr<grpc::Channel>;
   //@}
 
-  CommonClient(bigtable::ClientOptions options)
+  explicit CommonClient(bigtable::ClientOptions options)
       : options_(std::move(options)), current_index_(0) {}
 
   /**

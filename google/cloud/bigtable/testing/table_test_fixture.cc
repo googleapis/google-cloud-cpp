@@ -21,6 +21,17 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+char const TableTestFixture::kProjectId[] = "foo-project";
+char const TableTestFixture::kInstanceId[] = "bar-instance";
+char const TableTestFixture::kTableId[] = "baz-table";
+
+// These are hardcoded, and not computed, because we want to test the
+// computation.
+char const TableTestFixture::kInstanceName[] =
+    "projects/foo-project/instances/bar-instance";
+char const TableTestFixture::kTableName[] =
+    "projects/foo-project/instances/bar-instance/tables/baz-table";
+
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string const& repr) {
   google::bigtable::v2::ReadRowsResponse response;

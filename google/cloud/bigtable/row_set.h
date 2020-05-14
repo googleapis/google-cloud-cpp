@@ -32,7 +32,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 class RowSet {
  public:
   /// Create an empty set.
-  RowSet() {}
+  RowSet() = default;
 
   RowSet(RowSet&&) noexcept = default;
   RowSet& operator=(RowSet&&) noexcept = default;
@@ -40,7 +40,7 @@ class RowSet {
   RowSet& operator=(RowSet const&) = default;
 
   template <typename... Arg>
-  RowSet(Arg&&... a) {
+  RowSet(Arg&&... a) {  // NOLINT(google-explicit-constructor)
     AppendAll(std::forward<Arg&&>(a)...);
   }
 

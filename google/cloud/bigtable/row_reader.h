@@ -47,6 +47,7 @@ class RowReader {
    * Zero is used as a magic value that means "get all rows" in the
    * Cloud Bigtable RPC protocol.
    */
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
   RowReader(std::shared_ptr<DataClient> client, std::string table_name,

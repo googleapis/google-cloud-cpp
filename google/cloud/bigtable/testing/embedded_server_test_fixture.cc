@@ -22,6 +22,17 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+char const EmbeddedServerTestFixture::kProjectId[] = "foo-project";
+char const EmbeddedServerTestFixture::kInstanceId[] = "bar-instance";
+char const EmbeddedServerTestFixture::kTableId[] = "baz-table";
+
+// These are hardcoded, and not computed, because we want to test the
+// computation.
+char const EmbeddedServerTestFixture::kInstanceName[] =
+    "projects/foo-project/instances/bar-instance";
+char const EmbeddedServerTestFixture::kTableName[] =
+    "projects/foo-project/instances/bar-instance/tables/baz-table";
+
 void EmbeddedServerTestFixture::StartServer() {
   int port;
   std::string server_address("[::]:0");
@@ -38,18 +49,22 @@ void EmbeddedServerTestFixture::SetUp() {
 
   grpc::ChannelArguments channel_arguments;
   channel_arguments.SetUserAgentPrefix(ClientOptions::UserAgentPrefix());
+  std::string project_id = kProjectId;
+  std::string instance_id = kInstanceId;
+  std::string table_id = kTableId;
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
-  data_client_ = std::make_shared<InProcessDataClient>(
-      std::move(kProjectId), std::move(kInstanceId), std::move(data_channel));
-  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId);
+  data_client_ = std::make_shared<InProcessDataClient>(project_id, instance_id,
+                                                       std::move(data_channel));
+  table_ = std::make_shared<bigtable::Table>(data_client_, std::move(table_id));
 
   std::shared_ptr<grpc::Channel> admin_channel =
       server_->InProcessChannel(channel_arguments);
   admin_client_ = std::make_shared<InProcessAdminClient>(
-      std::move(kProjectId), std::move(admin_channel));
-  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_, kInstanceId);
+      std::move(project_id), std::move(admin_channel));
+  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_,
+                                                  std::move(instance_id));
 }
 
 void EmbeddedServerTestFixture::TearDown() {

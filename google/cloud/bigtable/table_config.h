@@ -44,8 +44,10 @@ class TableConfig {
 
   using TimestampGranularity =
       ::google::bigtable::admin::v2::Table::TimestampGranularity;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TimestampGranularity MILLIS =
       ::google::bigtable::admin::v2::Table::MILLIS;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static TimestampGranularity TIMESTAMP_GRANULARITY_UNSPECIFIED =
       ::google::bigtable::admin::v2::Table::TIMESTAMP_GRANULARITY_UNSPECIFIED;
 

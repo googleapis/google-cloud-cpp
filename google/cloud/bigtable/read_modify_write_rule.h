@@ -77,7 +77,7 @@ class ReadModifyWriteRule {
    *
    * Empty operations are not usable, so this constructor is private.
    */
-  ReadModifyWriteRule() {}
+  ReadModifyWriteRule() = default;
 
  private:
   google::bigtable::v2::ReadModifyWriteRule rule_;

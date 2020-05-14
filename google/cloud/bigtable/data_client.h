@@ -185,7 +185,7 @@ std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
  * Compute the full path of the instance associated with the client, i.e.,
  * `projects/instances/<client->project_id()>/instances/<client->instance_id()>`
  */
-inline std::string InstanceName(std::shared_ptr<DataClient> client) {
+inline std::string InstanceName(std::shared_ptr<DataClient> const& client) {
   return "projects/" + client->project_id() + "/instances/" +
          client->instance_id();
 }

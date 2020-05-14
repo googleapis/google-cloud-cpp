@@ -38,7 +38,8 @@ namespace testing {
 template <typename Response, typename Request>
 class MockResponseReader : public grpc::ClientReaderInterface<Response> {
  public:
-  MockResponseReader(std::string method) : method_(std::move(method)) {}
+  explicit MockResponseReader(std::string method)
+      : method_(std::move(method)) {}
   MOCK_METHOD0(WaitForInitialMetadata, void());
   MOCK_METHOD0(Finish, grpc::Status());
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));

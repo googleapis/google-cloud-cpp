@@ -42,11 +42,7 @@ TEST_F(TableTest, StandaloneTableName) {
   EXPECT_EQ(kTableName, bigtable::TableName(client_, kTableId));
 }
 
-TEST_F(TableTest, TableName) {
-  // clang-format: you are drunk, placing this short function in a single line
-  // is not nice.
-  EXPECT_EQ(kTableName, table_.table_name());
-}
+TEST_F(TableTest, TableName) { EXPECT_EQ(kTableName, table_.table_name()); }
 
 TEST_F(TableTest, TableConstructor) {
   std::string const other_table_id = "my-table";

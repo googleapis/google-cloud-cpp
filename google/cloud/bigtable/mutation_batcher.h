@@ -209,10 +209,10 @@ class MutationBatcher {
    * another attempt before invoking callbacks for the previous one.
    */
   struct Batch {
-    Batch() : num_mutations(), requests_size() {}
+    Batch() = default;
 
-    size_t num_mutations;
-    size_t requests_size;
+    size_t num_mutations{};
+    size_t requests_size{};
     BulkMutation requests;
     std::vector<MutationData> mutation_data;
   };

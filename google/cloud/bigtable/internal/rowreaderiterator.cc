@@ -25,8 +25,6 @@ RowReaderIterator::RowReaderIterator(RowReader* owner) : owner_(owner) {
   Advance();
 }
 
-RowReaderIterator::RowReaderIterator() : owner_() {}
-
 // Defined here because it needs to see the definition of RowReader
 RowReaderIterator& RowReaderIterator::operator++() {
   if (owner_ == nullptr) {

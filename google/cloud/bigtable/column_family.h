@@ -123,10 +123,10 @@ class GcRule {
                       std::is_convertible<GcRuleTypes, GcRule>...>::value,
                   "The arguments to Union must be convertible to GcRule");
     GcRule tmp;
-    auto& union_ = *tmp.gc_rule_.mutable_union_();
+    auto& gc_rule_union = *tmp.gc_rule_.mutable_union_();
     std::initializer_list<GcRule> list{std::forward<GcRuleTypes>(gc_rules)...};
     for (GcRule const& rule : list) {
-      *union_.add_rules() = rule.as_proto();
+      *gc_rule_union.add_rules() = rule.as_proto();
     }
     return tmp;
   }
@@ -150,7 +150,7 @@ class GcRule {
   //@}
 
  private:
-  GcRule() {}
+  GcRule() = default;
 
  private:
   google::bigtable::admin::v2::GcRule gc_rule_;
@@ -217,7 +217,7 @@ class ColumnFamilyModification {
   //@}
 
  private:
-  ColumnFamilyModification() {}
+  ColumnFamilyModification() = default;
 
  private:
   ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification mod_;

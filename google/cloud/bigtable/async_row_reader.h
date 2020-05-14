@@ -46,6 +46,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
                            AsyncRowReader<RowFunctor, FinishFunctor>> {
  public:
   /// Special value to be used as rows_limit indicating no limit.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
   // Callbacks keep pointers to these objects.
   AsyncRowReader(AsyncRowReader&&) = delete;
@@ -63,11 +64,16 @@ class AsyncRowReader : public std::enable_shared_from_this<
       "RowFunctor should return a future<bool>.");
 
   static std::shared_ptr<AsyncRowReader> Create(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       CompletionQueue cq, std::shared_ptr<DataClient> client,
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       FinishFunctor on_finish, RowSet row_set, std::int64_t rows_limit,
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory) {
     std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
@@ -233,7 +239,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when lower layers provide us with a response chunk.
-  future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse response) {
+  future<bool> OnDataReceived(
+      google::bigtable::v2::ReadRowsResponse const& response) {
     // assert(!whole_op_finished_);
     // assert(!continue_reading_);
     // assert(status_.ok());
@@ -263,6 +270,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when the whole stream finishes.
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   void OnStreamFinished(Status status) {
     // assert(!continue_reading_);
     if (status_.ok()) {

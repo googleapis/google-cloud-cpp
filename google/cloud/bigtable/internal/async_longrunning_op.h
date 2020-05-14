@@ -40,7 +40,7 @@ class AsyncLongrunningOperation {
       : client_(std::move(client)), operation_(std::move(operation)) {}
 
   AsyncLongrunningOperation(AsyncLongrunningOperation const&) = delete;
-  AsyncLongrunningOperation(AsyncLongrunningOperation&&) = default;
+  AsyncLongrunningOperation(AsyncLongrunningOperation&&) noexcept = default;
 
   // The semantics of the value returned by the future is as follows:
   // - outer status is the attempt's status (e.g. couldn't reach CBT)
@@ -97,15 +97,14 @@ class AsyncLongrunningOperation {
       return optional<StatusOr<Response>>(
           Status(static_cast<StatusCode>(operation_.error().code()),
                  operation_.error().message()));
-    } else {
-      Response res;
-      if (!operation_.response().UnpackTo(&res)) {
-        return optional<StatusOr<Response>>(
-            Status(StatusCode::kInternal,
-                   "Longrunning operation's result didn't parse."));
-      }
-      return optional<StatusOr<Response>>(std::move(res));
     }
+    Response res;
+    if (!operation_.response().UnpackTo(&res)) {
+      return optional<StatusOr<Response>>(
+          Status(StatusCode::kInternal,
+                 "Longrunning operation's result didn't parse."));
+    }
+    return optional<StatusOr<Response>>(std::move(res));
   }
 
   std::shared_ptr<Client> client_;
