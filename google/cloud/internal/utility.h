@@ -27,8 +27,8 @@ namespace internal {
 
 // Reimplementation of C++14 `std::integer_sequence`.
 template <class T, T... I>
-struct integer_sequence {
-  typedef T value_type;
+struct integer_sequence {  // NOLINT(readability-identifier-naming)
+  using value_type = T;
   static std::size_t constexpr size() noexcept { return sizeof...(I); }
 };
 

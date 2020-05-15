@@ -42,7 +42,8 @@ namespace internal {
  */
 class IosFlagsSaver final {
  public:
-  IosFlagsSaver(std::ios_base& ios) : ios_(ios), flags_(ios_.flags()) {}
+  explicit IosFlagsSaver(std::ios_base& ios)
+      : ios_(ios), flags_(ios_.flags()) {}
   ~IosFlagsSaver() { ios_.setf(flags_); }
 
  private:

@@ -45,7 +45,7 @@ namespace internal {
  * A continuation object will hold both the callable and the state to call it
  * with, the implementation of `.then()` takes care of those details.
  */
-class continuation_base {
+class continuation_base {  // NOLINT(readability-identifier-naming)
  public:
   virtual ~continuation_base() = default;
 
@@ -66,13 +66,11 @@ class continuation_base {
  *   on a future invalidates the future for further use. The shared state does
  *   not record that state change.
  */
-class future_shared_state_base {
+class future_shared_state_base {  // NOLINT(readability-identifier-naming)
  public:
   future_shared_state_base() : future_shared_state_base([] {}) {}
   explicit future_shared_state_base(std::function<void()> cancellation_callback)
-      : mu_(),
-        cv_(),
-        current_state_(state::not_ready),
+      : current_state_(state::not_ready),
         cancellation_callback_(std::move(cancellation_callback)) {}
   /// Return true if the shared state has a value or an exception.
   bool is_ready() const {
@@ -288,9 +286,9 @@ class future_shared_state_base {
   mutable std::mutex mu_;
   std::condition_variable cv_;
   enum class state {
-    not_ready,
-    has_exception,
-    has_value,
+    not_ready,      // NOLINT(readability-identifier-naming)
+    has_exception,  // NOLINT(readability-identifier-naming)
+    has_value,      // NOLINT(readability-identifier-naming)
   };
   state current_state_;
   std::exception_ptr exception_;
@@ -334,6 +332,7 @@ template <typename T>
 class future_shared_state final : private future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base(), buffer_() {}
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit future_shared_state(std::function<void()> cancellation_callback)
       : future_shared_state_base(std::move(cancellation_callback)), buffer_() {}
   ~future_shared_state() {
@@ -472,7 +471,7 @@ class future_shared_state final : private future_shared_state_base {
 template <>
 class future_shared_state<void> final : private future_shared_state_base {
  public:
-  future_shared_state() : future_shared_state_base() {}
+  future_shared_state() = default;
   explicit future_shared_state(std::function<void()> cancellation_callback)
       : future_shared_state_base(std::move(cancellation_callback)) {}
 
@@ -662,6 +661,7 @@ void continuation_execute_delegate(
  *   `is_invocable<Functor, future_shared_state<R>>` requirement.
  */
 template <typename Functor, typename R>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct continuation : public continuation_base {
   using result_t = typename continuation_helper<Functor, R>::result_t;
   using input_shared_state_t = future_shared_state<R>;
@@ -718,6 +718,7 @@ struct continuation : public continuation_base {
  *   `is_invocable<Functor, future_shared_state<R>>` requirement.
  */
 template <typename Functor, typename T>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct unwrapping_continuation : public continuation_base {
   using R = typename unwrapping_continuation_helper<Functor, T>::result_t;
   using input_shared_state_t = future_shared_state<T>;

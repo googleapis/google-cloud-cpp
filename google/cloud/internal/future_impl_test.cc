@@ -532,11 +532,11 @@ TEST(FutureImplObservable, NeverSet) {
   {
     future_shared_state<Observable> shared_state;
     EXPECT_FALSE(shared_state.is_ready());
-    EXPECT_EQ(0, Observable::default_constructor);
-    EXPECT_EQ(0, Observable::destructor);
+    EXPECT_EQ(0, Observable::default_constructor());
+    EXPECT_EQ(0, Observable::destructor());
   }
-  EXPECT_EQ(0, Observable::default_constructor);
-  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::default_constructor());
+  EXPECT_EQ(0, Observable::destructor());
 }
 
 TEST(FutureImplObservable, SetValue) {
@@ -546,38 +546,38 @@ TEST(FutureImplObservable, SetValue) {
     EXPECT_FALSE(shared_state.is_ready());
 
     shared_state.set_value(Observable("set value"));
-    EXPECT_EQ(0, Observable::default_constructor);
-    EXPECT_EQ(1, Observable::value_constructor);
-    EXPECT_EQ(0, Observable::copy_constructor);
-    EXPECT_EQ(1, Observable::move_constructor);
-    EXPECT_EQ(0, Observable::copy_assignment);
-    EXPECT_EQ(0, Observable::move_assignment);
-    EXPECT_EQ(1, Observable::destructor);
+    EXPECT_EQ(0, Observable::default_constructor());
+    EXPECT_EQ(1, Observable::value_constructor());
+    EXPECT_EQ(0, Observable::copy_constructor());
+    EXPECT_EQ(1, Observable::move_constructor());
+    EXPECT_EQ(0, Observable::copy_assignment());
+    EXPECT_EQ(0, Observable::move_assignment());
+    EXPECT_EQ(1, Observable::destructor());
     {
       Observable value = shared_state.get();
-      EXPECT_EQ(0, Observable::default_constructor);
-      EXPECT_EQ(1, Observable::value_constructor);
-      EXPECT_EQ(0, Observable::copy_constructor);
-      EXPECT_EQ(2, Observable::move_constructor);
-      EXPECT_EQ(0, Observable::copy_assignment);
-      EXPECT_EQ(0, Observable::move_assignment);
-      EXPECT_EQ(1, Observable::destructor);
+      EXPECT_EQ(0, Observable::default_constructor());
+      EXPECT_EQ(1, Observable::value_constructor());
+      EXPECT_EQ(0, Observable::copy_constructor());
+      EXPECT_EQ(2, Observable::move_constructor());
+      EXPECT_EQ(0, Observable::copy_assignment());
+      EXPECT_EQ(0, Observable::move_assignment());
+      EXPECT_EQ(1, Observable::destructor());
     }
-    EXPECT_EQ(0, Observable::default_constructor);
-    EXPECT_EQ(1, Observable::value_constructor);
-    EXPECT_EQ(0, Observable::copy_constructor);
-    EXPECT_EQ(2, Observable::move_constructor);
-    EXPECT_EQ(0, Observable::copy_assignment);
-    EXPECT_EQ(0, Observable::move_assignment);
-    EXPECT_EQ(2, Observable::destructor);
+    EXPECT_EQ(0, Observable::default_constructor());
+    EXPECT_EQ(1, Observable::value_constructor());
+    EXPECT_EQ(0, Observable::copy_constructor());
+    EXPECT_EQ(2, Observable::move_constructor());
+    EXPECT_EQ(0, Observable::copy_assignment());
+    EXPECT_EQ(0, Observable::move_assignment());
+    EXPECT_EQ(2, Observable::destructor());
   }
-  EXPECT_EQ(0, Observable::default_constructor);
-  EXPECT_EQ(1, Observable::value_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
-  EXPECT_EQ(2, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(3, Observable::destructor);
+  EXPECT_EQ(0, Observable::default_constructor());
+  EXPECT_EQ(1, Observable::value_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
+  EXPECT_EQ(2, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(3, Observable::destructor());
 }
 
 }  // namespace

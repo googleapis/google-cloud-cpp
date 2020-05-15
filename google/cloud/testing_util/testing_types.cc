@@ -19,13 +19,13 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-int Observable::default_constructor = 0;
-int Observable::value_constructor = 0;
-int Observable::copy_constructor = 0;
-int Observable::move_constructor = 0;
-int Observable::copy_assignment = 0;
-int Observable::move_assignment = 0;
-int Observable::destructor = 0;
+int Observable::default_constructor_ = 0;
+int Observable::value_constructor_ = 0;
+int Observable::copy_constructor_ = 0;
+int Observable::move_constructor_ = 0;
+int Observable::copy_assignment_ = 0;
+int Observable::move_assignment_ = 0;
+int Observable::destructor_ = 0;
 
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS

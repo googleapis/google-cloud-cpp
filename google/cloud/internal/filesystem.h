@@ -25,39 +25,39 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 enum class file_type {
-  none = 0,
-  not_found,
-  regular,
-  directory,
-  symlink,
-  block,
-  character,
-  fifo,
-  socket,
-  unknown,
+  none = 0,   // NOLINT(readability-identifier-naming)
+  not_found,  // NOLINT(readability-identifier-naming)
+  regular,    // NOLINT(readability-identifier-naming)
+  directory,  // NOLINT(readability-identifier-naming)
+  symlink,    // NOLINT(readability-identifier-naming)
+  block,      // NOLINT(readability-identifier-naming)
+  character,  // NOLINT(readability-identifier-naming)
+  fifo,       // NOLINT(readability-identifier-naming)
+  socket,     // NOLINT(readability-identifier-naming)
+  unknown,    // NOLINT(readability-identifier-naming)
 };
 
 enum class perms {
-  none = 0,
-  owner_read = 0400,
-  owner_write = 0200,
-  owner_exec = 0100,
-  owner_all = 0700,
-  group_read = 0040,
-  group_write = 0020,
-  group_exec = 0010,
-  group_all = 0070,
-  others_read = 0004,
-  others_write = 0002,
-  others_exec = 0001,
-  others_all = 0007,
-  all = 0777,
-  set_uid = 04000,
-  set_gid = 02000,
-  sticky_bit = 01000,
-  mask = 07777,
+  none = 0,             // NOLINT(readability-identifier-naming)
+  owner_read = 0400,    // NOLINT(readability-identifier-naming)
+  owner_write = 0200,   // NOLINT(readability-identifier-naming)
+  owner_exec = 0100,    // NOLINT(readability-identifier-naming)
+  owner_all = 0700,     // NOLINT(readability-identifier-naming)
+  group_read = 0040,    // NOLINT(readability-identifier-naming)
+  group_write = 0020,   // NOLINT(readability-identifier-naming)
+  group_exec = 0010,    // NOLINT(readability-identifier-naming)
+  group_all = 0070,     // NOLINT(readability-identifier-naming)
+  others_read = 0004,   // NOLINT(readability-identifier-naming)
+  others_write = 0002,  // NOLINT(readability-identifier-naming)
+  others_exec = 0001,   // NOLINT(readability-identifier-naming)
+  others_all = 0007,    // NOLINT(readability-identifier-naming)
+  all = 0777,           // NOLINT(readability-identifier-naming)
+  set_uid = 04000,      // NOLINT(readability-identifier-naming)
+  set_gid = 02000,      // NOLINT(readability-identifier-naming)
+  sticky_bit = 01000,   // NOLINT(readability-identifier-naming)
+  mask = 07777,         // NOLINT(readability-identifier-naming)
 
-  unknown = 0xFFFF,
+  unknown = 0xFFFF,  // NOLINT(readability-identifier-naming)
 };
 
 inline perms operator&(perms lhs, perms rhs) {
@@ -100,7 +100,7 @@ inline perms operator^=(perms& lhs, perms rhs) {
  *
  * Implement the C++17 `std::filesystem::file_status` class.
  */
-class file_status {
+class file_status {  // NOLINT(readability-identifier-naming)
  public:
   file_status() noexcept : file_status(file_type::none) {}
   explicit file_status(file_type type, perms permissions = perms::unknown)
