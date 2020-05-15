@@ -138,8 +138,7 @@ option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 
-# Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS, use a
-# function to create a scope for the temporary variables.
+# Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS.
 string(
     CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS_EXPRESSION
            "GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY OR "
