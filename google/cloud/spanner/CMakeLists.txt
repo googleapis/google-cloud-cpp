@@ -240,6 +240,7 @@ function (spanner_client_define_tests)
                google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                GTest::gtest)
     create_bazel_config(spanner_client_testing YEAR "2019")
+    google_cloud_cpp_add_common_options(spanner_client_testing)
     google_cloud_cpp_add_clang_tidy(spanner_client_testing)
 
     target_include_directories(

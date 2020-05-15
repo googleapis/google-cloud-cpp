@@ -31,10 +31,9 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         scoped_environment.h
         testing_types.cc
         testing_types.h)
-    target_link_libraries(
-        google_cloud_cpp_testing
-        PUBLIC google_cloud_cpp_common GTest::gmock
-        PRIVATE google_cloud_cpp_common_options)
+    target_link_libraries(google_cloud_cpp_testing
+                          PUBLIC google_cloud_cpp_common GTest::gmock)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
@@ -49,10 +48,9 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
         google_cloud_cpp_add_executable(target "common_testing" "${fname}")
         target_link_libraries(
-            ${target}
-            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
-                    GTest::gmock_main GTest::gmock GTest::gtest
-                    google_cloud_cpp_common_options)
+            ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                              GTest::gmock_main GTest::gmock GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -65,9 +63,9 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         is_proto_equal.cc is_proto_equal.h mock_async_response_reader.h
         mock_completion_queue.h)
     target_link_libraries(
-        google_cloud_cpp_testing_grpc
-        PUBLIC google_cloud_cpp_common protobuf::libprotobuf GTest::gmock
-        PRIVATE google_cloud_cpp_common_options)
+        google_cloud_cpp_testing_grpc PUBLIC google_cloud_cpp_common
+                                             protobuf::libprotobuf GTest::gmock)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
 
     create_bazel_config(google_cloud_cpp_testing_grpc YEAR 2020)
 
@@ -87,8 +85,8 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
                     protobuf::libprotobuf
                     GTest::gmock_main
                     GTest::gmock
-                    GTest::gtest
-                    google_cloud_cpp_common_options)
+                    GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

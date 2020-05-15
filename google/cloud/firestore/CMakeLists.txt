@@ -28,16 +28,6 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
-# Define an interface library, i.e., a library that really has no sources, and
-# add public target options to it.  The targets then use the library via
-# target_link_libraries(target PRIVATE firestore_common_options), which
-# implicitly adds the options to those targets, but does *not* add the options
-# to any targets that depend on them.  This is a CMake idiom to add options to
-# targets without having to painfully set special variables, it also allows
-# users to add more common options without having to touch the code.
-add_library(firestore_common_options INTERFACE)
-google_cloud_cpp_add_common_options(firestore_common_options)
-
 # Enable unit tests
 include(CTest)
 
@@ -46,7 +36,7 @@ include(CreateBazelConfig)
 
 # the client library
 add_library(firestore_client field_path.cc field_path.h)
-target_link_libraries(firestore_client PRIVATE firestore_common_options)
+target_link_libraries(firestore_client)
 google_cloud_cpp_add_common_options(firestore_client)
 google_cloud_cpp_add_clang_tidy(firestore_client)
 target_include_directories(
@@ -80,7 +70,8 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "firestore" "${fname}")
         target_link_libraries(
             ${target} PRIVATE firestore_client GTest::gmock_main GTest::gmock
-                              GTest::gtest firestore_common_options)
+                              GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -104,7 +95,7 @@ install(EXPORT firestore-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
 
 install(
-    TARGETS firestore_client firestore_common_options
+    TARGETS firestore_client
     EXPORT firestore-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

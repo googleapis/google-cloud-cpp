@@ -61,12 +61,12 @@ foreach (fname ${storage_client_integration_tests})
                 GTest::gtest
                 CURL::libcurl
                 Threads::Threads
-                nlohmann_json
-                storage_common_options)
+                nlohmann_json)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
+    google_cloud_cpp_add_common_options(${target})
     google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 

@@ -24,8 +24,8 @@ target_link_libraries(
     google_cloud_cpp_grpc_utils
     gRPC::grpc++
     gRPC::grpc
-    protobuf::libprotobuf
-    bigtable_common_options)
+    protobuf::libprotobuf)
+google_cloud_cpp_add_common_options(bigtable_examples_common)
 
 set(bigtable_examples
     # cmake-format: sort
@@ -69,9 +69,9 @@ if (BUILD_TESTING)
                     GTest::gtest
                     gRPC::grpc++
                     gRPC::grpc
-                    protobuf::libprotobuf
-                    bigtable_common_options)
+                    protobuf::libprotobuf)
         add_test(NAME ${target} COMMAND ${target})
+        google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 endif ()
@@ -87,13 +87,13 @@ foreach (fname ${bigtable_examples})
                 google_cloud_cpp_grpc_utils
                 gRPC::grpc++
                 gRPC::grpc
-                protobuf::libprotobuf
-                bigtable_common_options)
+                protobuf::libprotobuf)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
+    google_cloud_cpp_add_common_options(${target})
     google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 

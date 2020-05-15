@@ -41,27 +41,6 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
-# Define an interface library, i.e., a library that really has no sources, and
-# add public target options to it.  The targets then use the library via
-# target_link_libraries(target PRIVATE bigtable_common_options), which
-# implicitly adds the options to those targets, but does *not* add the options
-# to any targets that depend on them.  This is a CMake idiom to add options to
-# targets without having to painfully set special variables, it also allows
-# users to add more common options without having to touch the code.
-add_library(bigtable_common_options INTERFACE)
-google_cloud_cpp_add_common_options(bigtable_common_options)
-if (MSVC)
-    # We turn off 4996 because some protobuf types derive from std::iterator,
-    # turn off the warnings about this being deprecated in C++17.
-    #
-    # We turn off 4244 because protobuf headers convert from `std::size_t` to
-    # `RepeatedPtrField< T>::size_type`, which is really `int` and that may
-    # cause loss of data. There is nothing we can do to fix protobuf, so just
-    # silence the warning for now. The code in protobuf seems safe because a
-    # repeated field cannot hold more than `MAX_INT` elements.
-    target_compile_options(bigtable_common_options INTERFACE /wd4996 /wd4244)
-endif ()
-
 # Configure the location of proto files, particulary the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
      "${PROJECT_SOURCE_DIR}")
@@ -181,8 +160,7 @@ target_link_libraries(
            google_cloud_cpp_grpc_utils
            gRPC::grpc++
            gRPC::grpc
-           protobuf::libprotobuf
-    PRIVATE bigtable_common_options)
+           protobuf::libprotobuf)
 google_cloud_cpp_add_common_options(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)
 target_include_directories(
@@ -238,8 +216,7 @@ if (BUILD_TESTING)
                GTest::gtest
                gRPC::grpc++
                gRPC::grpc
-               protobuf::libprotobuf
-        PRIVATE bigtable_common_options)
+               protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(bigtable_client_testing)
     google_cloud_cpp_add_clang_tidy(bigtable_client_testing)
 
@@ -323,8 +300,8 @@ if (BUILD_TESTING)
                     GTest::gtest
                     gRPC::grpc++
                     gRPC::grpc
-                    protobuf::libprotobuf
-                    bigtable_common_options)
+                    protobuf::libprotobuf)
+        google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -358,7 +335,7 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS bigtable_protos bigtable_common_options
+    TARGETS bigtable_protos
     EXPORT bigtable-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -370,7 +347,7 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS bigtable_protos bigtable_common_options
+    TARGETS bigtable_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
