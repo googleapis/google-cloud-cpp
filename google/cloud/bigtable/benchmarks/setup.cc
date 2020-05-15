@@ -26,6 +26,7 @@
 
 /// Supporting types and functions to implement `BenchmarkSetup`
 namespace {
+#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 std::string FormattedStartTime() {
   auto start = std::chrono::system_clock::now();
   std::time_t start_c = std::chrono::system_clock::to_time_t(start);
@@ -35,6 +36,7 @@ std::string FormattedStartTime() {
   formatted[s] = '\0';
   return formatted;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::string FormattedAnnotations() {
   std::string notes = google::cloud::bigtable::version_string() + ";" +

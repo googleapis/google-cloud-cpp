@@ -97,7 +97,7 @@ std::vector<int> BulkMutatorState::OnRead(
       res.push_back(annotation.original_index);
       continue;
     }
-    auto& original = *mutations_.mutable_entries(index);
+    auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
     if (SafeGrpcRetry::IsTransientFailure(code) && annotation.is_idempotent) {
       // Retryable requests are saved in the pending mutations, along with the

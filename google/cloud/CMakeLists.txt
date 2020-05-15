@@ -44,16 +44,6 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
-# Define an interface library, i.e., a library that really has no sources, and
-# add public target options to it.  The targets then use the library via
-# target_link_libraries(target PRIVATE bigtable_common_options), which
-# implicitly adds the options to those targets, but does *not* add the options
-# to any targets that depend on them.  This is a CMake idiom to add options to
-# targets without having to painfully set special variables, it also allows
-# users to add more common options without having to touch the code.
-add_library(google_cloud_cpp_common_options INTERFACE)
-google_cloud_cpp_add_common_options(google_cloud_cpp_common_options)
-
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
 function (google_cloud_cpp_initialize_git_head var)
@@ -176,10 +166,9 @@ add_library(
     tracing_options.h
     version.cc
     version.h)
-target_link_libraries(
-    google_cloud_cpp_common
-    PUBLIC absl::memory Threads::Threads
-    PRIVATE google_cloud_cpp_common_options)
+target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory
+                                                     Threads::Threads)
+google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common
@@ -237,10 +226,9 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
-            ${target}
-            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
-                    GTest::gmock_main GTest::gmock GTest::gtest
-                    google_cloud_cpp_common_options)
+            ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                              GTest::gmock_main GTest::gmock GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -256,7 +244,7 @@ install(EXPORT google_cloud_cpp_common-targets
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
+    TARGETS google_cloud_cpp_common
     EXPORT google_cloud_cpp_common-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -268,7 +256,7 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
+    TARGETS google_cloud_cpp_common
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
@@ -331,8 +319,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC absl::memory googleapis-c++::rpc_status_protos
-               google_cloud_cpp_common gRPC::grpc++ gRPC::grpc
-        PRIVATE google_cloud_cpp_common_options)
+               google_cloud_cpp_common gRPC::grpc++ gRPC::grpc)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
     google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
     target_include_directories(
         google_cloud_cpp_grpc_utils
@@ -378,8 +366,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
                         GTest::gmock
                         GTest::gtest
                         gRPC::grpc++
-                        gRPC::grpc
-                        google_cloud_cpp_common_options)
+                        gRPC::grpc)
+            google_cloud_cpp_add_common_options(${target})
             google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")

@@ -18,6 +18,7 @@ add_library(storage_examples_common # cmake-format: sort
             storage_examples_common.cc storage_examples_common.h)
 target_link_libraries(storage_examples_common storage_client
                       google_cloud_cpp_common)
+google_cloud_cpp_add_common_options(storage_examples_common)
 
 set(storage_examples
     # cmake-format: sort
@@ -74,9 +75,9 @@ if (BUILD_TESTING)
                     google_cloud_cpp_common
                     GTest::gmock_main
                     GTest::gmock
-                    GTest::gtest
-                    storage_common_options)
+                    GTest::gtest)
         add_test(NAME ${target} COMMAND ${target})
+        google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 endif ()
@@ -85,12 +86,13 @@ foreach (fname ${storage_examples})
     google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
     target_link_libraries(
         ${target} PRIVATE storage_examples_common storage_client
-                          google_cloud_cpp_common storage_common_options)
+                          google_cloud_cpp_common)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
+    google_cloud_cpp_add_common_options(${target})
     google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
 

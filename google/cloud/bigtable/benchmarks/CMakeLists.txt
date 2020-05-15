@@ -33,8 +33,8 @@ target_link_libraries(
     google_cloud_cpp_grpc_utils
     gRPC::grpc++
     gRPC::grpc
-    protobuf::libprotobuf
-    bigtable_common_options)
+    protobuf::libprotobuf)
+google_cloud_cpp_add_common_options(bigtable_benchmark_common)
 
 include(CreateBazelConfig)
 create_bazel_config(bigtable_benchmark_common YEAR 2020)
@@ -56,7 +56,6 @@ if (BUILD_TESTING)
                     bigtable_client
                     bigtable_client_testing
                     bigtable_protos
-                    bigtable_common_options
                     google_cloud_cpp_testing
                     google_cloud_cpp_common
                     google_cloud_cpp_grpc_utils
@@ -66,6 +65,7 @@ if (BUILD_TESTING)
                     gRPC::grpc++
                     gRPC::grpc
                     protobuf::libprotobuf)
+        google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -87,11 +87,11 @@ foreach (fname ${bigtable_benchmark_programs})
         PRIVATE bigtable_benchmark_common
                 bigtable_client
                 bigtable_protos
-                bigtable_common_options
                 google_cloud_cpp_grpc_utils
                 gRPC::grpc++
                 gRPC::grpc
                 protobuf::libprotobuf)
+    google_cloud_cpp_add_common_options(${target})
     if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(

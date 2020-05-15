@@ -46,16 +46,6 @@ configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-# Define an interface library, i.e., a library that really has no sources, and
-# add public target options to it.  The targets then use the library via
-# target_link_libraries(target PRIVATE storage_common_options), which implicitly
-# adds the options to those targets, but does *not* add the options to any
-# targets that depend on them.  This is a CMake idiom to add options to targets
-# without having to painfully set special variables, it also allows users to add
-# more common options without having to touch the code.
-add_library(storage_common_options INTERFACE)
-google_cloud_cpp_add_common_options(storage_common_options)
-
 # Enable unit tests
 include(CTest)
 
@@ -233,8 +223,7 @@ target_link_libraries(
            Threads::Threads
            OpenSSL::SSL
            OpenSSL::Crypto
-           ZLIB::ZLIB
-    PRIVATE storage_common_options)
+           ZLIB::ZLIB)
 google_cloud_cpp_add_common_options(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
 target_include_directories(
@@ -289,8 +278,7 @@ if (BUILD_TESTING)
     target_link_libraries(
         storage_client_testing
         PUBLIC absl::memory storage_client nlohmann_json GTest::gmock_main
-               GTest::gmock GTest::gtest
-        PRIVATE storage_common_options)
+               GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(storage_client_testing)
     google_cloud_cpp_add_clang_tidy(storage_client_testing)
     target_include_directories(
@@ -407,8 +395,8 @@ if (BUILD_TESTING)
                         GTest::gmock
                         GTest::gtest
                         CURL::libcurl
-                        storage_common_options
                         nlohmann_json)
+            google_cloud_cpp_add_common_options(${target})
             google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
@@ -435,7 +423,7 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS storage_common_options nlohmann_json
+    TARGETS nlohmann_json
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

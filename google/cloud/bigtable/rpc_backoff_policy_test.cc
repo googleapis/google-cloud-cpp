@@ -57,8 +57,8 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
 TEST(ExponentialBackoffRetryPolicy, Randomness) {
   bigtable::ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
   bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
-  std::vector<int> output1;
-  std::vector<int> output2;
+  std::vector<std::chrono::milliseconds::rep> output1;
+  std::vector<std::chrono::milliseconds::rep> output2;
 
   EXPECT_GE(10_ms, test_object1.OnCompletion(CreateTransientError()));
   EXPECT_GE(10_ms, test_object2.OnCompletion(CreateTransientError()));
