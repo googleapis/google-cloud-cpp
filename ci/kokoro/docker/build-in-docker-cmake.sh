@@ -118,6 +118,11 @@ ${CMAKE_COMMAND} \
 echo
 io::log_yellow "Finished CMake config"
 
+if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
+  io::log_yellow "clang-tidy config:"
+  clang-tidy -dump-config
+fi
+
 if [[ "${CLANG_TIDY:-}" == "yes" && (\
   "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
   "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
