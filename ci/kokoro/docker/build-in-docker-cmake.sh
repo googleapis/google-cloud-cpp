@@ -133,9 +133,10 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
     sed -e 's/HeaderFilterRegex: "//' -e 's/"//')
   RE="(\.cc|${RE}\.h)$"
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E "${RE}" | xargs -r echo
+    grep -E "${RE}" | grep -v 'google/cloud/bigtable/benchmarks/' |
+    xargs -r echo
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E "${RE}" |
+    grep -E "${RE}" | grep -v 'google/cloud/bigtable/benchmarks/' |
     xargs -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
