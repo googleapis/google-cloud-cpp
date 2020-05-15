@@ -34,7 +34,7 @@ class future_shared_state;
 
 /// Compute the return type for a `future<T>::then()`
 template <typename FunctorReturn>
-struct unwrap_then {
+struct unwrap_then {  // NOLINT(readability-identifier-naming)
   using type = FunctorReturn;
   using requires_unwrap_t = std::false_type;
 };
@@ -48,7 +48,7 @@ struct unwrap_then<future<U>> {
 
 /// Specialize the `unwrap_then<>` for functors that return `future<U>`
 template <typename U>
-struct unwrap_internal {
+struct unwrap_internal {  // NOLINT(readability-identifier-naming)
   using type = U;
   using requires_unwrap_t = std::false_type;
 };
@@ -93,7 +93,7 @@ template <
     typename std::enable_if<
         is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
         int>::type = 0>
-struct continuation_helper {
+struct continuation_helper {  // NOLINT(readability-identifier-naming)
   /// The type returned by calling the functor with the given future type.
   using functor_result_t =
       invoke_result_t<Functor, std::shared_ptr<future_shared_state<T>>>;
@@ -144,6 +144,7 @@ template <
     typename std::enable_if<
         is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
         int>::type = 0>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct unwrapping_continuation_helper {
   /// The type returned by calling the functor with the given future type.
   using functor_result_t =
@@ -182,7 +183,7 @@ struct unwrapping_continuation_helper {
 template <typename Functor, typename T,
           typename std::enable_if<is_invocable<Functor, future<T>>::value,
                                   int>::type = 0>
-struct then_helper {
+struct then_helper {  // NOLINT(readability-identifier-naming)
   /// The type returned by the functor
   using functor_result_t = invoke_result_t<Functor, future<T>>;
 
@@ -203,7 +204,7 @@ struct then_helper {
 };
 
 template <typename T, typename U>
-struct make_ready_helper {
+struct make_ready_helper {  // NOLINT(readability-identifier-naming)
   using type = typename std::decay<T>::type;
 };
 
@@ -216,7 +217,7 @@ struct make_ready_helper<T, std::reference_wrapper<X>> {
  * Compute the return type of make_ready_future<T>.
  */
 template <typename T>
-struct make_ready_return {
+struct make_ready_return {  // NOLINT(readability-identifier-naming)
   using type =
       typename make_ready_helper<T, typename std::decay<T>::type>::type;
 };

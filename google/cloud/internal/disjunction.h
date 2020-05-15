@@ -26,6 +26,7 @@ namespace internal {
 /// A metafunction that folds || across a list of types, the specialization for
 /// an empty list.
 template <typename...>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct disjunction : std::false_type {};
 
 /// A metafunction that folds || across a list of types, the specialization for

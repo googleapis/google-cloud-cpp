@@ -194,30 +194,31 @@ class RetryAsyncUnaryRpc {
  *     retryable error, but the request is non-idempotent, or (d) the
  *     retry policy is expired.
  */
-template <typename RPCBackoffPolicy, typename RPCRetryPolicy,
-          typename AsyncCallType, typename RequestType,
-          typename async_call_t = typename std::decay<AsyncCallType>::type,
-          typename request_t = typename std::decay<RequestType>::type,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  async_call_t, grpc::ClientContext*, request_t const&,
-                  grpc::CompletionQueue*>::value,
-              int>::type = 0>
-future<StatusOr<typename AsyncCallResponseType<async_call_t, request_t>::type>>
+template <
+    typename RPCBackoffPolicy, typename RPCRetryPolicy, typename AsyncCallType,
+    typename RequestType,
+    typename AsyncCallT = typename std::decay<AsyncCallType>::type,
+    typename RequestT = typename std::decay<RequestType>::type,
+    typename std::enable_if<google::cloud::internal::is_invocable<
+                                AsyncCallT, grpc::ClientContext*,
+                                RequestT const&, grpc::CompletionQueue*>::value,
+                            int>::type = 0>
+future<StatusOr<typename AsyncCallResponseType<AsyncCallT, RequestT>::type>>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
 StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                         bool is_idempotent, AsyncCallType&& async_call,
                         RequestType&& request) {
-  return RetryAsyncUnaryRpc<RPCBackoffPolicy, RPCRetryPolicy, async_call_t,
-                            request_t>::Start(std::move(cq), location,
-                                              std::move(rpc_retry_policy),
-                                              std::move(rpc_backoff_policy),
-                                              is_idempotent,
-                                              std::forward<AsyncCallType>(
-                                                  async_call),
-                                              std::forward<RequestType>(
-                                                  request));
+  return RetryAsyncUnaryRpc<RPCBackoffPolicy, RPCRetryPolicy, AsyncCallT,
+                            RequestT>::Start(std::move(cq), location,
+                                             std::move(rpc_retry_policy),
+                                             std::move(rpc_backoff_policy),
+                                             is_idempotent,
+                                             std::forward<AsyncCallType>(
+                                                 async_call),
+                                             std::forward<RequestType>(
+                                                 request));
 }
 
 }  // namespace internal

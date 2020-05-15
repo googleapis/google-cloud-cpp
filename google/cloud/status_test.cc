@@ -14,7 +14,6 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
-#include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
 
 namespace google {

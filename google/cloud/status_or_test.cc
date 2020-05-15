@@ -186,7 +186,7 @@ using testing_util::Observable;
 TEST(StatusOrObservableTest, NoDefaultConstruction) {
   Observable::reset_counters();
   StatusOr<Observable> other;
-  EXPECT_EQ(0, Observable::default_constructor);
+  EXPECT_EQ(0, Observable::default_constructor());
   EXPECT_FALSE(other.ok());
 }
 
@@ -195,11 +195,11 @@ TEST(StatusOrObservableTest, Copy) {
   Observable::reset_counters();
   StatusOr<Observable> other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
-  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::move_constructor());
 
   Observable::reset_counters();
   StatusOr<Observable> copy(other);
-  EXPECT_EQ(1, Observable::copy_constructor);
+  EXPECT_EQ(1, Observable::copy_constructor());
   EXPECT_STATUS_OK(copy);
   EXPECT_STATUS_OK(other);
   EXPECT_EQ("foo", copy->str());
@@ -210,11 +210,11 @@ TEST(StatusOrObservableTest, MoveCopy) {
   Observable::reset_counters();
   StatusOr<Observable> other(Observable("foo"));
   EXPECT_EQ("foo", other.value().str());
-  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::move_constructor());
 
   Observable::reset_counters();
   StatusOr<Observable> copy(std::move(other));
-  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::move_constructor());
   EXPECT_STATUS_OK(copy);
   EXPECT_EQ("foo", copy->str());
   EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
@@ -232,11 +232,11 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueNoValue) {
   assigned = std::move(other);
   EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -252,11 +252,11 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueValue) {
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("moved-out", other->str());
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(1, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(1, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -270,11 +270,11 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueT) {
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("moved-out", other.str());  // NOLINT(bugprone-use-after-move)
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(1, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(1, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -288,11 +288,11 @@ TEST(StatusOrObservableTest, MoveAssignmentValueNoValue) {
   assigned = std::move(other);
   EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
-  EXPECT_EQ(1, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(1, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -306,11 +306,11 @@ TEST(StatusOrObservableTest, MoveAssignmentValueValue) {
   assigned = std::move(other);
   EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(1, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(1, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("moved-out", other->str());
 }
@@ -324,11 +324,11 @@ TEST(StatusOrObservableTest, MoveAssignmentValueT) {
   Observable::reset_counters();
   assigned = std::move(other);
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(1, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(1, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("moved-out", other.str());  // NOLINT(bugprone-use-after-move)
 }
@@ -344,11 +344,11 @@ TEST(StatusOrObservableTest, CopyAssignmentNoValueNoValue) {
   assigned = other;
   EXPECT_FALSE(other.ok());
   EXPECT_FALSE(assigned.ok());
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A copy-assigned status calls the right assignments and destructors.
@@ -364,11 +364,11 @@ TEST(StatusOrObservableTest, CopyAssignmentNoValueValue) {
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other->str());
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(1, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(1, Observable::copy_constructor());
 }
 
 /// @test A copy-assigned status calls the right assignments and destructors.
@@ -382,11 +382,11 @@ TEST(StatusOrObservableTest, CopyAssignmentNoValueT) {
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other.str());
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(1, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(1, Observable::copy_constructor());
 }
 
 /// @test A copy-assigned status calls the right assignments and destructors.
@@ -400,11 +400,11 @@ TEST(StatusOrObservableTest, CopyAssignmentValueNoValue) {
   assigned = other;
   EXPECT_FALSE(other.ok());
   EXPECT_FALSE(assigned.ok());
-  EXPECT_EQ(1, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(0, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(1, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
 }
 
 /// @test A copy-assigned status calls the right assignments and destructors.
@@ -418,11 +418,11 @@ TEST(StatusOrObservableTest, CopyAssignmentValueValue) {
   assigned = other;
   EXPECT_STATUS_OK(other);
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(1, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(1, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other->str());
 }
@@ -436,11 +436,11 @@ TEST(StatusOrObservableTest, CopyAssignmentValueT) {
   Observable::reset_counters();
   assigned = other;
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(0, Observable::destructor);
-  EXPECT_EQ(0, Observable::move_assignment);
-  EXPECT_EQ(1, Observable::copy_assignment);
-  EXPECT_EQ(0, Observable::move_constructor);
-  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(1, Observable::copy_assignment());
+  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other.str());
 }

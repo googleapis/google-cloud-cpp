@@ -138,6 +138,7 @@ class AsyncReadStreamImpl
   template <typename AsyncFunctionType, typename Request>
   void Start(AsyncFunctionType&& async_call, Request const& request,
              std::unique_ptr<grpc::ClientContext> context,
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
              std::shared_ptr<CompletionQueueImpl> cq) {
     // An adapter to call OnStart() via the completion queue.
     class NotifyStart final : public AsyncGrpcOperation {
@@ -326,14 +327,14 @@ template <
     typename Response, typename OnReadHandler, typename OnFinishHandler,
     typename std::enable_if<
         google::cloud::internal::is_invocable<OnReadHandler, Response>::value,
-        int>::type on_read_is_invocable_with_response = 0,
+        int>::type OnReadIsInvocableWithResponse = 0,
     typename std::enable_if<
         std::is_same<future<bool>, google::cloud::internal::invoke_result_t<
                                        OnReadHandler, Response>>::value,
-        int>::type on_read_returns_future_bool = 0,
+        int>::type OnReadReturnsFutureBool = 0,
     typename std::enable_if<
         google::cloud::internal::is_invocable<OnFinishHandler, Status>::value,
-        int>::type on_finish_is_invocable_with_status = 0>
+        int>::type OnFinishIsInvocableWithStatus = 0>
 inline std::shared_ptr<
     AsyncReadStreamImpl<Response, OnReadHandler, OnFinishHandler>>
 MakeAsyncReadStreamImpl(OnReadHandler&& on_read, OnFinishHandler&& on_finish) {

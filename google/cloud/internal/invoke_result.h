@@ -63,7 +63,7 @@ using void_t = void;
  *     specialization.
  */
 template <typename T>
-struct invoke_impl {
+struct invoke_impl {  // NOLINT(readability-identifier-naming)
   /**
    * Determine the result type of calling `f(ArgTypes...)`
    *
@@ -139,7 +139,7 @@ auto invoker_function(F&& f, ArgTypes&&... a)
 
 // The default (failure) SFINAE branch for `invoke_result_impl`.
 template <typename AlwaysVoid, typename, typename...>
-struct invoke_result_impl {};
+struct invoke_result_impl {};  // NOLINT(readability-identifier-naming)
 
 /**
  * The implementation details for `invoke_result<>`.
@@ -176,6 +176,7 @@ struct invoke_result_impl<decltype(void(invoker_function(
  *     about `std::invoke_result` and `std::result_of` (deprecated in C++17).
  */
 template <typename F, typename... ArgTypes>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct invoke_result : public invoke_result_impl<void, F, ArgTypes...> {};
 
 /// Implement the C++17 `std::invoke_result_t<>` meta-function.
@@ -184,6 +185,7 @@ using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
 
 // The default (failure) SFINAE branch for `is_invocable_impl`.
 template <typename AlwaysVoid, typename, typename...>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct is_invocable_impl : public std::false_type {};
 
 template <typename F, typename... ArgTypes>
@@ -202,6 +204,7 @@ struct is_invocable_impl<decltype(void(invoker_function(
  * @tparam ArgTypes the type of the arguments.
  */
 template <typename F, typename... ArgTypes>
+// NOLINTNEXTLINE(readability-identifier-naming)
 struct is_invocable : public is_invocable_impl<void, F, ArgTypes...> {};
 
 }  // namespace internal

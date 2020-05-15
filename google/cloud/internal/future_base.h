@@ -31,7 +31,7 @@ namespace internal {
  * @tparam T
  */
 template <typename T>
-class future_base {
+class future_base {  // NOLINT(readability-identifier-naming)
  public:
   future_base() noexcept = default;
   future_base(future_base&&) noexcept = default;
@@ -147,7 +147,7 @@ class future_base {
 };
 
 template <typename T>
-class promise_base {
+class promise_base {  // NOLINT(readability-identifier-naming)
  public:
   explicit promise_base(std::function<void()> cancellation_callback)
       : shared_state_(
