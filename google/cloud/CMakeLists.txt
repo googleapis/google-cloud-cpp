@@ -343,8 +343,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     set_target_properties(
         google_cloud_cpp_grpc_utils
-        PROPERTIES VERSION ${GRPC_UTILS_VERSION}
-                   SOVERSION ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
+        PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+                   SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
