@@ -65,8 +65,8 @@ CMAKE_COMMAND="cmake"
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
 
-# Explicitly enable the gRPC plugin for GCS.
-cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON" )
+# Explicitly disable the gRPC plugin for GCS.
+cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF" )
 
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=("-DBUILD_TESTING=OFF")
