@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 
