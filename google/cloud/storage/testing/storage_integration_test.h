@@ -59,7 +59,7 @@ class StorageIntegrationTest : public ::testing::Test {
 
   static bool UsingTestbench();
 
-  bool UsingGrpc() const;
+  static bool UsingGrpc();
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();

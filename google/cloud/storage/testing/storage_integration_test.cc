@@ -148,7 +148,7 @@ bool StorageIntegrationTest::UsingTestbench() {
       .has_value();
 }
 
-bool StorageIntegrationTest::UsingGrpc() const {
+bool StorageIntegrationTest::UsingGrpc() {
   return UseGrpcForMedia() || UseGrpcForMetadata();
 }
 

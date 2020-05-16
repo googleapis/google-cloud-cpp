@@ -25,10 +25,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::AnyOf;
 using ::testing::Eq;
-using ::testing::HasSubstr;
 
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
