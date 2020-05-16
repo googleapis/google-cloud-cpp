@@ -22,7 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "absl/make_unique.h"
+#include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "absl/make_unique.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {

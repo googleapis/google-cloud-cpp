@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/make_unique.h"
+#include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
 
 namespace google {
