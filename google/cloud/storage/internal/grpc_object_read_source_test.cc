@@ -29,7 +29,6 @@ namespace {
 
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 

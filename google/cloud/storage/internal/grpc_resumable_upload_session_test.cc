@@ -117,7 +117,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
         EXPECT_CALL(*writer, Write(_, _))
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
-                          grpc::WriteOptions) {
+                          grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
               EXPECT_EQ(0, r.write_offset());
@@ -125,7 +125,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
               return true;
             })
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
-                          grpc::WriteOptions) {
+                          grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
               EXPECT_EQ(size, r.write_offset());

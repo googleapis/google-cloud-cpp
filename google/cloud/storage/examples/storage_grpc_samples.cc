@@ -18,7 +18,7 @@
 namespace {
 
 //! [grpc-read-write]
-void GrpcReadWrite(std::string bucket_name) {
+void GrpcReadWrite(std::string const& bucket_name) {
   namespace gcs = google::cloud::storage;
   auto const text = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -84,7 +84,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"grpc-client-with-project", GrpcClientWithProjectCommand},
   };
 
-  static std::string const usage_msg = [&argv, &commands] {
+  static std::string const kUsageMsg = [&argv, &commands] {
     auto last_slash = argv[0].find_last_of("/\\");
     auto program = argv[0].substr(last_slash + 1);
     std::string usage;
@@ -106,7 +106,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   }();
 
   if (argv.size() < 2) {
-    std::cerr << "Missing command argument\n" << usage_msg << "\n";
+    std::cerr << "Missing command argument\n" << kUsageMsg << "\n";
     return 1;
   }
   std::string command_name = argv[1];
@@ -116,7 +116,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   auto command = commands.find(command_name);
   if (commands.end() == command) {
     std::cerr << "Unknown command " << command_name << "\n"
-              << usage_msg << "\n";
+              << kUsageMsg << "\n";
     return 1;
   }
 

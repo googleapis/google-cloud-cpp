@@ -29,7 +29,7 @@ namespace {
 namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
 
-TEST(GrpcClientFromProto, Bucket_AllFields) {
+TEST(GrpcClientFromProto, BucketAllFields) {
   storage_proto::Bucket input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
 # TODO(b/137665304) - convert acl() field.
@@ -89,7 +89,7 @@ TEST(GrpcClientFromProto, Bucket_AllFields) {
   EXPECT_EQ(actual, *expected);
 }
 
-TEST(GrpcClientFromProto, Object_Simple) {
+TEST(GrpcClientFromProto, ObjectSimple) {
   storage_proto::Object input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     acl: {
@@ -207,7 +207,7 @@ TEST(GrpcClientFromProto, Object_Simple) {
   EXPECT_EQ(actual, *expected);
 }
 
-TEST(GrpcClientFromProto, Crc32c_Roundtrip) {
+TEST(GrpcClientFromProto, Crc32cRoundtrip) {
   std::string const values[] = {
       "AAAAAA==",
       "ImIEBA==",
@@ -221,7 +221,7 @@ TEST(GrpcClientFromProto, Crc32c_Roundtrip) {
   }
 }
 
-TEST(GrpcClientFromProto, MD5_Roundtrip) {
+TEST(GrpcClientFromProto, MD5Roundtrip) {
   std::string const values[] = {
       "1B2M2Y8AsgTpgAmY7PhCfg==",
       "nhB9nTcrtoJr2B01QqQZ1g==",
@@ -234,7 +234,7 @@ TEST(GrpcClientFromProto, MD5_Roundtrip) {
   }
 }
 
-TEST(GrpcClientFromProto, ObjectAccessControl_Simple) {
+TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
   google::storage::v1::ObjectAccessControl input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
@@ -346,7 +346,7 @@ TEST(GrpcClientToProto, BucketMetadata) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, CreateBucketRequest_Simple) {
+TEST(GrpcClientToProto, CreateBucketRequestSimple) {
   storage_proto::InsertBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     project: "test-project-id"
@@ -367,7 +367,7 @@ TEST(GrpcClientToProto, CreateBucketRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, CreateBucketRequest_AllOptions) {
+TEST(GrpcClientToProto, CreateBucketRequestAllOptions) {
   storage_proto::InsertBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     predefined_acl: BUCKET_ACL_PRIVATE
@@ -399,7 +399,7 @@ TEST(GrpcClientToProto, CreateBucketRequest_AllOptions) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ListBucketsRequest_Simple) {
+TEST(GrpcClientToProto, ListBucketsRequestSimple) {
   storage_proto::ListBucketsRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     project: "test-project-id"
@@ -412,7 +412,7 @@ TEST(GrpcClientToProto, ListBucketsRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ListBucketsRequest_AllFields) {
+TEST(GrpcClientToProto, ListBucketsRequestAllFields) {
   storage_proto::ListBucketsRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     max_results: 42
@@ -438,7 +438,7 @@ TEST(GrpcClientToProto, ListBucketsRequest_AllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, GetBucketRequest_Simple) {
+TEST(GrpcClientToProto, GetBucketRequestSimple) {
   storage_proto::GetBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -451,7 +451,7 @@ TEST(GrpcClientToProto, GetBucketRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, GetBucketRequest_AllFields) {
+TEST(GrpcClientToProto, GetBucketRequestAllFields) {
   storage_proto::GetBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -474,7 +474,7 @@ TEST(GrpcClientToProto, GetBucketRequest_AllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, DeleteBucketRequest_Simple) {
+TEST(GrpcClientToProto, DeleteBucketRequestSimple) {
   storage_proto::DeleteBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -487,7 +487,7 @@ TEST(GrpcClientToProto, DeleteBucketRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, DeleteBucketRequest_AllFields) {
+TEST(GrpcClientToProto, DeleteBucketRequestAllFields) {
   storage_proto::DeleteBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -510,7 +510,7 @@ TEST(GrpcClientToProto, DeleteBucketRequest_AllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ObjectAccessControl_Simple) {
+TEST(GrpcClientToProto, ObjectAccessControlSimple) {
   auto acl = ObjectAccessControlParser::FromString(R"""({
      "role": "test-role",
      "etag": "test-etag",
@@ -553,7 +553,7 @@ TEST(GrpcClientToProto, ObjectAccessControl_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ObjectAccessControl_MinimalFields) {
+TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
   ObjectAccessControl acl;
   acl.set_role("test-role");
   acl.set_entity("test-entity");
@@ -572,7 +572,7 @@ TEST(GrpcClientToProto, ObjectAccessControl_MinimalFields) {
   EXPECT_TRUE(diff.Compare(expected, actual)) << delta;
 }
 
-TEST(GrpcClientToProto, InsertObjectMediaRequest_Simple) {
+TEST(GrpcClientToProto, InsertObjectMediaRequestSimple) {
   storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -594,7 +594,7 @@ TEST(GrpcClientToProto, InsertObjectMediaRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, InsertObjectMediaRequest_AllOptions) {
+TEST(GrpcClientToProto, InsertObjectMediaRequestAllOptions) {
   storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -638,7 +638,7 @@ TEST(GrpcClientToProto, InsertObjectMediaRequest_AllOptions) {
       )pb",
       &expected));
 
-  char const kContents[] = "The quick brown fox jumps over the lazy dog";
+  auto constexpr kContents = "The quick brown fox jumps over the lazy dog";
 
   InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
                                    kContents);
@@ -657,7 +657,7 @@ TEST(GrpcClientToProto, InsertObjectMediaRequest_AllOptions) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, InsertObjectMediaRequest_WithObjectMetadata) {
+TEST(GrpcClientToProto, InsertObjectMediaRequestWithObjectMetadata) {
   storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -687,7 +687,7 @@ TEST(GrpcClientToProto, InsertObjectMediaRequest_WithObjectMetadata) {
       )pb",
       &expected));
 
-  char const kContents[] = "The quick brown fox jumps over the lazy dog";
+  auto constexpr kContents = "The quick brown fox jumps over the lazy dog";
 
   std::vector<ObjectAccessControl> acls{
       ObjectAccessControl().set_role("test-role1").set_entity("test-entity1"),
@@ -713,7 +713,7 @@ TEST(GrpcClientToProto, InsertObjectMediaRequest_WithObjectMetadata) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, DeleteObjectRequest_Simple) {
+TEST(GrpcClientToProto, DeleteObjectRequestSimple) {
   storage_proto::DeleteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -727,7 +727,7 @@ TEST(GrpcClientToProto, DeleteObjectRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, DeleteObjectRequest_AllFields) {
+TEST(GrpcClientToProto, DeleteObjectRequestAllFields) {
   storage_proto::DeleteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
@@ -755,7 +755,7 @@ TEST(GrpcClientToProto, DeleteObjectRequest_AllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ResumableUploadRequest_Simple) {
+TEST(GrpcClientToProto, ResumableUploadRequestSimple) {
   google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
@@ -772,7 +772,7 @@ TEST(GrpcClientToProto, ResumableUploadRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ResumableUploadRequest_AllFields) {
+TEST(GrpcClientToProto, ResumableUploadRequestAllFields) {
   google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
@@ -828,7 +828,7 @@ TEST(GrpcClientToProto, ResumableUploadRequest_AllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ResumableUploadRequest_WithObjectMetadataFields) {
+TEST(GrpcClientToProto, ResumableUploadRequestWithObjectMetadataFields) {
   google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
@@ -874,7 +874,7 @@ TEST(GrpcClientToProto, ResumableUploadRequest_WithObjectMetadataFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, QueryResumableUploadRequest_Simple) {
+TEST(GrpcClientToProto, QueryResumableUploadRequestSimple) {
   google::storage::v1::QueryWriteStatusRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -888,7 +888,7 @@ TEST(GrpcClientToProto, QueryResumableUploadRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ReadObjectRangeRequest_Simple) {
+TEST(GrpcClientToProto, ReadObjectRangeRequestSimple) {
   google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -902,7 +902,7 @@ TEST(GrpcClientToProto, ReadObjectRangeRequest_Simple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientToProto, ReadObjectRangeRequest_AllFields) {
+TEST(GrpcClientToProto, ReadObjectRangeRequestAllFields) {
   google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(

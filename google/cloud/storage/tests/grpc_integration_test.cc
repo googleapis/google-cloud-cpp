@@ -37,12 +37,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
-
 class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  std::string project_id() {
+  static std::string project_id() {
     return google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
         .value_or("test-project");
   }
