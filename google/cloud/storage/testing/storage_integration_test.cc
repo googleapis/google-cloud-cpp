@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/storage/testing/random_names.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {
@@ -56,12 +56,14 @@ StorageIntegrationTest::MakeIntegrationTestClient(
     initial_delay = std::chrono::milliseconds(10);
   }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMetadata()) {
     return Client(std::make_shared<internal::GrpcClient>(*options), *backoff);
   }
   if (UseGrpcForMedia()) {
     return Client(std::make_shared<internal::HybridClient>(*options), *backoff);
   }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
   auto idempotency =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
@@ -103,21 +105,12 @@ std::string StorageIntegrationTest::MakeRandomBucketName(std::string prefix) {
   static_assert(kMaxBucketNameLength > sizeof(kPrefix),
                 "The bucket prefix is too long");
   if (prefix.empty()) prefix = kPrefix;
-  prefix = prefix.substr(0, (std::min)(kMaxPrefixLength, prefix.size()));
+  prefix = prefix.substr(0, kMaxBucketNameLength);
   std::size_t const max_random_characters =
       kMaxBucketNameLength - prefix.size();
   return prefix + google::cloud::internal::Sample(
                       generator_, static_cast<int>(max_random_characters),
                       "abcdefghijklmnopqrstuvwxyz012456789");
-}
-
-std::string StorageIntegrationTest::MakeRandomBucketName() {
-  // The total length of this bucket name must be <= 63 characters,
-  char constexpr kPrefix[] = "gcs-cpp-test-bucket-";  // NOLINT
-  auto constexpr kMaxBucketNameLength = 63;
-  static_assert(kMaxBucketNameLength > sizeof(kPrefix),
-                "The bucket prefix is too long");
-  return storage::testing::MakeRandomBucketName(generator_, kPrefix);
 }
 
 std::string StorageIntegrationTest::MakeRandomObjectName() {

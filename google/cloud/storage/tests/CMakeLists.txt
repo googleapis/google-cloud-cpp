@@ -88,22 +88,21 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     add_executable(grpc_integration_test grpc_integration_test.cc)
     target_link_libraries(
         grpc_integration_test
-        PRIVATE storage_client
-                storage_client_grpc
-                storage_client_testing
+        PRIVATE storage_client_testing
+                storage_client
                 google_cloud_cpp_testing
                 google_cloud_cpp_common
-                googleapis-c++::storage_protos
-                gRPC::grpc++
-                gRPC::grpc
-                protobuf::libprotobuf
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
                 CURL::libcurl
                 Threads::Threads
-                nlohmann_json
-                storage_common_options)
+                nlohmann_json)
+    google_cloud_cpp_add_common_options(grpc_integration_test)
+    google_cloud_cpp_add_clang_tidy(grpc_integration_test)
+    set_tests_properties(
+            grpc_integration_test PROPERTIES LABELS
+            "integration-tests;integration-tests-no-emulator")
 endif ()
 
 include(CreateBazelConfig)

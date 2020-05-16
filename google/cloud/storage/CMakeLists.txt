@@ -291,15 +291,17 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                Threads::Threads
                OpenSSL::SSL
                OpenSSL::Crypto
-               ZLIB::ZLIB
-        PRIVATE storage_common_options)
+               ZLIB::ZLIB)
+    google_cloud_cpp_add_common_options(storage_client_grpc)
+    google_cloud_cpp_add_clang_tidy(storage_client_grpc)
     target_include_directories(
-        storage_client
+        storage_client_grpc
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_grpc
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    target_compile_definitions(storage_client_grpc GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
         storage_client_grpc
             PROPERTIES
@@ -308,16 +310,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
     create_bazel_config(storage_client_grpc)
-    google_cloud_cpp_add_clang_tidy(storage_client_grpc)
+else ()
+    add_library(storage_client_grpc INTERFACE)
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
 if (BUILD_TESTING)
-    set(storage_client_testing_dependencies
-        storage_client nlohmann_json GTest::gmock_main GTest::gmock
-        GTest::gtest)
-    if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-        list(APPEND storage_client_testing_dependencies storage_client_grpc)
-    endif ()
     add_library(
         storage_client_testing # cmake-format: sort
         testing/canonical_errors.h
@@ -337,7 +334,10 @@ if (BUILD_TESTING)
         testing/temp_file.h)
     target_link_libraries(
         storage_client_testing
-        PUBLIC absl::memory storage_client nlohmann_json GTest::gmock_main
+        PUBLIC absl::memory
+            storage_client_grpc
+            storage_client
+            nlohmann_json GTest::gmock_main
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(storage_client_testing)
     google_cloud_cpp_add_clang_tidy(storage_client_testing)
@@ -348,7 +348,6 @@ if (BUILD_TESTING)
                $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
     create_bazel_config(storage_client_testing)
 
     # List the unit tests, then setup the targets and dependencies.
@@ -444,25 +443,23 @@ if (BUILD_TESTING)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
-        if (BUILD_TESTING)
-            target_link_libraries(
-                ${target}
-                PRIVATE absl::memory
-                        storage_client_testing
-                        google_cloud_cpp_testing
-                        storage_client
-                        GTest::gmock_main
-                        GTest::gmock
-                        GTest::gtest
-                        CURL::libcurl
-                        nlohmann_json)
-            google_cloud_cpp_add_common_options(${target})
-            google_cloud_cpp_add_clang_tidy(${target})
-            if (MSVC)
-                target_compile_options(${target} PRIVATE "/bigobj")
-            endif ()
-            add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(
+            ${target}
+            PRIVATE absl::memory
+                    storage_client_testing
+                    google_cloud_cpp_testing
+                    storage_client
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    CURL::libcurl
+                    nlohmann_json)
+        google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
+        add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
