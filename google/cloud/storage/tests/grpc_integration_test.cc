@@ -14,16 +14,13 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -38,6 +35,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
+// actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:

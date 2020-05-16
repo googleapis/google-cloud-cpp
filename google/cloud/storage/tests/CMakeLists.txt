@@ -22,6 +22,7 @@ set(storage_client_integration_tests
     curl_resumable_upload_session_integration_test.cc
     curl_sign_blob_integration_test.cc
     error_injection_integration_test.cc
+    grpc_integration_test.cc
     key_file_integration_test.cc
     object_basic_crud_integration_test.cc
     object_checksum_integration_test.cc
@@ -71,8 +72,11 @@ foreach (fname ${storage_client_integration_tests})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (fname # cmake-format: sort
-               key_file_integration_test.cc signed_url_integration_test.cc)
+foreach (
+    fname
+    # cmake-format: sort
+    grpc_integration_test.cc key_file_integration_test.cc
+    signed_url_integration_test.cc)
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
@@ -81,30 +85,6 @@ endforeach ()
 
 target_link_libraries(storage_error_injection_integration_test
                       PRIVATE ${CMAKE_DL_LIBS})
-
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    find_package(gRPC REQUIRED)
-    find_package(googleapis CONFIG REQUIRED)
-    google_cloud_cpp_add_executable(target "storage" grpc_integration_test.cc)
-    target_link_libraries(
-        ${target}
-        PRIVATE storage_client_testing
-                storage_client
-                google_cloud_cpp_testing
-                google_cloud_cpp_common
-                GTest::gmock_main
-                GTest::gmock
-                GTest::gtest
-                CURL::libcurl
-                Threads::Threads
-                nlohmann_json)
-    google_cloud_cpp_add_common_options(${target})
-    google_cloud_cpp_add_clang_tidy(${target})
-    add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(
-        ${target} PROPERTIES LABELS
-                             "integration-tests;integration-tests-no-emulator")
-endif ()
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"

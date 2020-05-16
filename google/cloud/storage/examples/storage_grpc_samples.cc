@@ -19,6 +19,7 @@
 namespace {
 namespace examples = ::google::cloud::storage::examples;
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 //! [grpc-read-write]
 void GrpcReadWrite(std::string const& bucket_name) {
   namespace gcs = google::cloud::storage;
@@ -48,6 +49,9 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             << ",md5=" << object->md5_hash() << "\n";
 }
 //! [grpc-read-write]
+#else
+void GrpcReadWrite(std::string const& bucket_name) {}
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 void GrpcReadWriteCommand(std::vector<std::string> argv) {
   if (argv.size() != 1 || argv[0] == "--help") {
@@ -56,6 +60,7 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
   GrpcReadWrite(argv[0]);
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = google::cloud::storage;
@@ -66,6 +71,9 @@ void GrpcClientWithProject(std::string project_id) {
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";
 }
 //! [grpc-client-with-project]
+#else
+void GrpcClientWithProject(std::string const&) {}
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
   if (argv.size() != 1 || argv[0] == "--help") {

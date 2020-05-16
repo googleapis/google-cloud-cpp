@@ -38,6 +38,28 @@ cc_library(
 )
 
 load(":storage_client.bzl", "storage_client_hdrs", "storage_client_srcs")
+load(":storage_client_grpc.bzl", "storage_client_grpc_hdrs", "storage_client_grpc_srcs")
+
+cc_library(
+    name = "storage_client_grpc",
+    srcs = storage_client_grpc_srcs,
+    hdrs = storage_client_grpc_hdrs,
+    copts = select({
+        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "//conditions:default": [],
+    }),
+    deps = [
+        ":nlohmann_json",
+        ":storage_client",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@com_github_curl_curl//:curl",
+        "@com_github_google_crc32c//:crc32c",
+        "@com_google_googleapis//google/storage/v1:storage_cc_grpc",
+        "@com_google_googleapis//google/storage/v1:storage_cc_proto",
+    ],
+)
 
 cc_library(
     name = "storage_client",
@@ -71,6 +93,7 @@ cc_library(
     deps = [
         ":nlohmann_json",
         ":storage_client",
+        ":storage_client_grpc",
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -106,3 +129,30 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_unit_tests]
+
+load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    copts = select({
+        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
+    }),
+    deps = [
+        ":nlohmann_json",
+        ":storage_client",
+        ":storage_client_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@com_github_curl_curl//:curl",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in storage_client_grpc_unit_tests]
