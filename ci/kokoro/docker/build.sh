@@ -323,8 +323,7 @@ else
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
-  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]] &&
-  [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]]; then
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   io::log_yellow "Uploading updated base image for ${DISTRO}."
   # Do not stop the build on a failure to update the cache.
