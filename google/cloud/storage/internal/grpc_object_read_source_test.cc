@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/make_unique.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -72,7 +72,7 @@ class MockMediaReader : public grpc::ClientReaderInterface<
 };
 
 TEST(GrpcObjectReadSource, Simple) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   EXPECT_CALL(*mock, Read(_))
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("0123456789");
@@ -106,7 +106,7 @@ TEST(GrpcObjectReadSource, Simple) {
 }
 
 TEST(GrpcObjectReadSource, EmptyWithError) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   EXPECT_CALL(*mock, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish())
       .WillOnce(
@@ -127,7 +127,7 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
 }
 
 TEST(GrpcObjectReadSource, DataWithError) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   EXPECT_CALL(*mock, Read(_))
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("0123456789");
@@ -160,7 +160,7 @@ TEST(GrpcObjectReadSource, DataWithError) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBuffer) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   auto const trailer_size = 1024;
   std::string const expected_1 = "0123456789";
   std::string const expected_2(trailer_size, 'A');
@@ -200,7 +200,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBufferMany) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   std::string const contents = "0123456789";
   EXPECT_CALL(*mock, Read(_))
       .WillOnce([&contents](storage_proto::GetObjectMediaResponse* response) {
@@ -242,7 +242,7 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 }
 
 TEST(GrpcObjectReadSource, PreserveChecksums) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   std::string const expected_md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
   std::string const expected_crc32c = "ImIEBA==";
   EXPECT_CALL(*mock, Read(_))
@@ -293,7 +293,7 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
 }
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   EXPECT_CALL(*mock, Read(_))
       .WillOnce(Return(true))
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
@@ -333,7 +333,7 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
 }
 
 TEST(GrpcObjectReadSource, HandleExtraRead) {
-  auto mock = google::cloud::internal::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockMediaReader>();
   EXPECT_CALL(*mock, Read(_))
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content(

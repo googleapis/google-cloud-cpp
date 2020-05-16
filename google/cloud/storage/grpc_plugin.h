@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_GRPC_PLUGIN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_GRPC_PLUGIN_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {

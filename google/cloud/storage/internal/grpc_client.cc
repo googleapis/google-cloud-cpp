@@ -13,17 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/log.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>

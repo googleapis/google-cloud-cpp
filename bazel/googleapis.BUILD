@@ -51,8 +51,8 @@ cc_library(
         ".",
     ],
     deps = [
-        "@com_github_grpc_grpc//:grpc++",
         ":storage_cc_grpc",
         ":storage_cc_proto",
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )

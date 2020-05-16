@@ -101,8 +101,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     google_cloud_cpp_add_common_options(grpc_integration_test)
     google_cloud_cpp_add_clang_tidy(grpc_integration_test)
     set_tests_properties(
-            grpc_integration_test PROPERTIES LABELS
-            "integration-tests;integration-tests-no-emulator")
+        grpc_integration_test
+        PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
 endif ()
 
 include(CreateBazelConfig)

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/make_unique.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -64,8 +64,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
   EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, CreateUploadWriter(_, _))
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
-        auto writer =
-            google::cloud::internal::make_unique<MockGrpcUploadWriter>();
+        auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
         EXPECT_CALL(*writer, Write(_, _))
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
@@ -114,8 +113,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, CreateUploadWriter(_, _))
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
-        auto writer =
-            google::cloud::internal::make_unique<MockGrpcUploadWriter>();
+        auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
         EXPECT_CALL(*writer, Write(_, _))
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,

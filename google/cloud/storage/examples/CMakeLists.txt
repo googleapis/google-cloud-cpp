@@ -113,7 +113,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     add_executable(storage_grpc_samples storage_grpc_samples.cc)
     target_link_libraries(
         storage_grpc_samples
-        PUBLIC $<$<BOOL:GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC>:storage_client_grpc>
-             storage_client
+        PUBLIC
+            $<$<BOOL:GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC>:storage_client_grpc>
+            storage_client
         PRIVATE storage_common_options)
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)

@@ -66,7 +66,7 @@ CMAKE_COMMAND="cmake"
 declare -a cmake_extra_flags
 
 # Explicitly disable the gRPC plugin for GCS.
-cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF" )
+cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF")
 
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=("-DBUILD_TESTING=OFF")
@@ -310,9 +310,9 @@ fi
 # RUN_INTEGRATION_TESTS=auto (the default set by the calling script) only tries
 # to run the integration tests if the configuration files are available.
 readonly INTEGRATION_TESTS_CONFIG="/c/test-configuration.sh"
-if [[ "${RUN_INTEGRATION_TESTS:-no}" == "yes" || \
-      ( "${RUN_INTEGRATION_TESTS:-no}" == "auto" && \
-        -r "${INTEGRATION_TESTS_CONFIG}" ) ]]; then
+if [[ "${RUN_INTEGRATION_TESTS:-no}" == "yes" || (\
+  "${RUN_INTEGRATION_TESTS:-no}" == "auto" && -r \
+  "${INTEGRATION_TESTS_CONFIG}") ]]; then
   echo "================================================================"
   echo "Running the GCS + gRPC integration tests $(date)"
   echo "================================================================"

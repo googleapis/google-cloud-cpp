@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
-#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/grpc_error_delegate.h"
 
 namespace google {
 namespace cloud {

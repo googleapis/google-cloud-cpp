@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/make_unique.h"
+#include "absl/make_unique.h"
 #include <crc32c/crc32c.h>
 
 namespace google {
@@ -168,7 +168,7 @@ void GrpcResumableUploadSession::CreateUploadWriter() {
     return;
   }
   // TODO(b/...) - set the timeout
-  upload_context_ = google::cloud::internal::make_unique<grpc::ClientContext>();
+  upload_context_ = absl::make_unique<grpc::ClientContext>();
   google::storage::v1::InsertObjectRequest request;
   request.set_upload_id(session_id_);
   upload_writer_ =

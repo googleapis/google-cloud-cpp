@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {

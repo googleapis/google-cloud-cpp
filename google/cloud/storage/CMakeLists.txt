@@ -301,10 +301,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_grpc
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-    target_compile_definitions(storage_client_grpc GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
+    target_compile_definitions(storage_client_grpc
+                               GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
         storage_client_grpc
-            PROPERTIES
+        PROPERTIES
             VERSION
             ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
             SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
@@ -335,10 +336,12 @@ if (BUILD_TESTING)
     target_link_libraries(
         storage_client_testing
         PUBLIC absl::memory
-            storage_client_grpc
-            storage_client
-            nlohmann_json GTest::gmock_main
-               GTest::gmock GTest::gtest)
+               storage_client_grpc
+               storage_client
+               nlohmann_json
+               GTest::gmock_main
+               GTest::gmock
+               GTest::gtest)
     google_cloud_cpp_add_common_options(storage_client_testing)
     google_cloud_cpp_add_clang_tidy(storage_client_testing)
     target_include_directories(
