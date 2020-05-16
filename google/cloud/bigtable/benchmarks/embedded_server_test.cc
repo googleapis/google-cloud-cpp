@@ -20,7 +20,7 @@
 #include <thread>
 
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::benchmarks;
+using bigtable::benchmarks::CreateEmbeddedServer;
 using std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {

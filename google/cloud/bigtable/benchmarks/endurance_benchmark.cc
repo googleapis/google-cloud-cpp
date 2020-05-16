@@ -56,10 +56,17 @@
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::benchmarks;
+using bigtable::benchmarks::Benchmark;
+using bigtable::benchmarks::BenchmarkResult;
+using bigtable::benchmarks::FormatDuration;
+using bigtable::benchmarks::kColumnFamily;
+using bigtable::benchmarks::kNumFields;
+using bigtable::benchmarks::MakeBenchmarkSetup;
+using bigtable::benchmarks::MakeRandomMutation;
+using bigtable::benchmarks::OperationResult;
 
 /// Run an iteration of the test, returns the number of operations.
-google::cloud::StatusOr<long> RunBenchmark(
+google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
     std::string const& table_id, std::chrono::seconds test_duration);
 
@@ -79,6 +86,7 @@ int main(int argc, char* argv[]) {
   // Start the threads running the latency test.
   std::cout << "# Running Endurance Benchmark:\n";
   auto latency_test_start = std::chrono::steady_clock::now();
+  // NOLINTNEXTLINE(google-runtime-int)
   std::vector<std::future<google::cloud::StatusOr<long>>> tasks;
   for (int i = 0; i != setup->thread_count(); ++i) {
     auto launch_policy = std::launch::async;
@@ -92,7 +100,7 @@ int main(int argc, char* argv[]) {
   }
 
   // Wait for the threads and combine all the results.
-  long combined = 0;
+  long combined = 0;  // NOLINT(google-runtime-int)
   int count = 0;
   for (auto& future : tasks) {
     auto result = future.get();
@@ -106,7 +114,7 @@ int main(int argc, char* argv[]) {
   }
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::steady_clock::now() - latency_test_start);
-  auto throughput = 1000.0 * combined / elapsed.count();
+  auto throughput = 1000.0 * static_cast<double>(combined) / elapsed.count();
   std::cout << "# DONE. Elapsed=" << FormatDuration(elapsed)
             << ", Ops=" << combined << ", Throughput: " << throughput
             << " ops/sec\n";
@@ -116,6 +124,7 @@ int main(int argc, char* argv[]) {
 }
 
 namespace {
+
 OperationResult RunOneApply(bigtable::Table& table, Benchmark const& benchmark,
                             google::cloud::internal::DefaultPRNG& generator) {
   auto row_key = benchmark.MakeRandomKey(generator);
@@ -142,13 +151,14 @@ OperationResult RunOneReadRow(bigtable::Table& table,
   return Benchmark::TimeOperation(std::move(op));
 }
 
-google::cloud::StatusOr<long> RunBenchmark(
+google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
     std::string const& table_id, std::chrono::seconds test_duration) {
   BenchmarkResult partial = {};
 
   auto data_client = benchmark.MakeDataClient();
-  bigtable::Table table(std::move(data_client), app_profile_id, table_id);
+  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
+                        table_id);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
@@ -178,8 +188,9 @@ google::cloud::StatusOr<long> RunBenchmark(
   partial.elapsed =
       std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
   std::ostringstream msg;
-  benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
+  Benchmark::PrintLatencyResult(msg, "long", "Partial::Op", partial);
   std::cout << msg.str() << std::flush;
+  // NOLINTNEXTLINE(google-runtime-int)
   return static_cast<long>(partial.operations.size());
 }
 

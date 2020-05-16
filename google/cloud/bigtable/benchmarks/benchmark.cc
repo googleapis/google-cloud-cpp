@@ -27,8 +27,9 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
-Benchmark::Benchmark(BenchmarkSetup const& setup)
-    : setup_(setup),
+
+Benchmark::Benchmark(BenchmarkSetup setup)
+    : setup_(std::move(setup)),
       key_width_(KeyWidth()),
       client_options_(grpc::InsecureChannelCredentials()) {
   if (setup_.use_embedded_server()) {
@@ -96,9 +97,9 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
   auto table_size = setup_.table_size();
-  long shard_start = 0;
+  long shard_start = 0;  // NOLINT(google-runtime-int)
   for (int i = 0; i != kPopulateShardCount; ++i) {
-    long end =
+    long end =  // NOLINT(google-runtime-int)
         std::min(table_size, shard_start + table_size / kPopulateShardCount);
     tasks.emplace_back(std::async(std::launch::async,
                                   &Benchmark::PopulateTableShard, this,
@@ -133,11 +134,12 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
 
 std::string Benchmark::MakeRandomKey(
     google::cloud::internal::DefaultPRNG& gen) const {
+  // NOLINTNEXTLINE(google-runtime-int)
   std::uniform_int_distribution<long> prng_user(0, setup_.table_size() - 1);
   return MakeKey(prng_user(gen));
 }
 
-std::string Benchmark::MakeKey(long id) const {
+std::string Benchmark::MakeKey(long id) const {  // NOLINT(google-runtime-int)
   std::ostringstream os;
   os << "user" << std::setw(key_width_) << std::setfill('0') << id;
   return os.str();
@@ -145,7 +147,7 @@ std::string Benchmark::MakeKey(long id) const {
 
 void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
                                       std::string const& phase,
-                                      BenchmarkResult const& result) const {
+                                      BenchmarkResult const& result) {
   auto row_throughput = 1000 * result.row_count / result.elapsed.count();
   os << "# " << phase << " row throughput=" << row_throughput << " rows/s\n";
   auto ops_throughput =
@@ -156,7 +158,7 @@ void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
 void Benchmark::PrintLatencyResult(std::ostream& os,
                                    std::string const& test_name,
                                    std::string const& operation,
-                                   BenchmarkResult& result) const {
+                                   BenchmarkResult& result) {
   if (result.operations.empty()) {
     os << "# Test=" << test_name << ", " << operation << " no results\n";
     return;
@@ -171,8 +173,8 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
      << " Throughput = " << ops_throughput << " ops/s, Latency: ";
   char const* sep = "";
   for (double p : kResultPercentiles) {
-    auto index =
-        static_cast<std::size_t>(std::round((nsamples - 1) * p / 100.0));
+    auto index = static_cast<std::size_t>(
+        std::round(static_cast<double>(nsamples - 1) * p / 100.0));
     auto i = result.operations.begin();
     std::advance(i, index);
     os << sep << "p" << std::setprecision(3) << p << "=" << std::setprecision(2)
@@ -203,8 +205,8 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
   os << test_name << "," << setup_.start_time() << "," << op_name << ","
      << measurement << "," << nsamples;
   for (double p : kResultPercentiles) {
-    auto index =
-        static_cast<std::size_t>(std::round((nsamples - 1) * p / 100.0));
+    auto index = static_cast<std::size_t>(
+        std::round(static_cast<double>(nsamples - 1) * p / 100.0));
     auto i = result.operations.begin();
     std::advance(i, index);
     os << "," << i->latency.count();
@@ -253,7 +255,8 @@ int Benchmark::read_rows_count() const {
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
-    bigtable::Table& table, long begin, long end) {
+    bigtable::Table& table, long begin,  // NOLINT(google-runtime-int)
+    long end) {                          // NOLINT(google-runtime-int)
   auto start = std::chrono::steady_clock::now();
   BenchmarkResult result{};
   result.row_count = 0;
@@ -262,11 +265,12 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
   int bulk_size = 0;
   bigtable::BulkMutation bulk;
 
+  // NOLINTNEXTLINE(google-runtime-int)
   long progress_period = (end - begin) / kPopulateShardProgressMarks;
   if (progress_period == 0) {
     progress_period = (end - begin);
   }
-  for (long idx = begin; idx != end; ++idx) {
+  for (long idx = begin; idx != end; ++idx) {  // NOLINT(google-runtime-int)
     bigtable::SingleRowMutation mutation(MakeKey(idx));
     std::vector<bigtable::Mutation> columns;
     for (int f = 0; f != kNumFields; ++f) {
@@ -287,7 +291,7 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
       bulk = {};
       bulk_size = 0;
     }
-    long count = idx - begin + 1;
+    long count = idx - begin + 1;  // NOLINT(google-runtime-int)
     if (count % progress_period == 0) {
       std::cout << "." << std::flush;
     }
@@ -318,24 +322,22 @@ int Benchmark::KeyWidth() const {
 }
 
 std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
-  using namespace std::chrono;
-
   auto nanos = duration.ns;
   // For sub-microsecond ranges just print the number of nanoseconds.
-  if (nanos < microseconds(1)) {
+  if (nanos < std::chrono::microseconds(1)) {
     return os << nanos.count() << "ns";
   }
   // For sub-millisecond values print 123.456us, that is the number of
   // microseconds.  Formatting with iostreams is not hard, but resetting them
   // back is super tedious, so just use std::snprintf().
-  if (nanos < milliseconds(1)) {
+  if (nanos < std::chrono::milliseconds(1)) {
     char buf[32];
     std::snprintf(buf, sizeof(buf), "%.03fus", nanos.count() / 1000.0);
     return os << buf;
   }
   // For sub-second values print 123.456ms, that is, the number of milliseconds.
-  if (nanos < seconds(1)) {
-    auto us = duration_cast<microseconds>(nanos);
+  if (nanos < std::chrono::seconds(1)) {
+    auto us = std::chrono::duration_cast<std::chrono::microseconds>(nanos);
     char buf[32];
     std::snprintf(buf, sizeof(buf), "%.03fms", us.count() / 1000.0);
     return os << buf;
@@ -343,17 +345,17 @@ std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
 
   // In general, print something like 12h34m56.789s, though we omit the hours,
   // minutes, or seconds if they are 0.
-  auto hh = duration_cast<hours>(duration.ns);
+  auto hh = std::chrono::duration_cast<std::chrono::hours>(duration.ns);
   if (hh.count() != 0) {
     os << hh.count() << "h";
   }
   nanos = nanos - hh;
-  auto mm = duration_cast<minutes>(nanos);
+  auto mm = std::chrono::duration_cast<std::chrono::minutes>(nanos);
   if (mm.count() != 0) {
     os << mm.count() << "m";
   }
   nanos = nanos - mm;
-  auto ms = duration_cast<milliseconds>(nanos);
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(nanos);
   if (ms.count() == 0) {
     return os;
   }

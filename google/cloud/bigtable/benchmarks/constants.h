@@ -28,7 +28,7 @@ namespace benchmarks {
  * Most of these were requirements in the original bugs (#189, #196).
  */
 /// The size of the table.
-constexpr long kDefaultTableSize = 10000000;
+constexpr long kDefaultTableSize = 10000000;  // NOLINT(google-runtime-int)
 
 /// The name of the column family used in the benchmark.
 constexpr char kColumnFamily[] = "cf";
@@ -40,7 +40,7 @@ constexpr int kNumFields = 10;
 constexpr int kFieldSize = 100;
 
 /// The size of each BulkApply request.
-constexpr long kBulkSize = 1000;
+constexpr long kBulkSize = 1000;  // NOLINT(google-runtime-int)
 
 /// The number of threads running the latency test.
 constexpr int kDefaultThreads = 8;

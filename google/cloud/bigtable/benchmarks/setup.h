@@ -36,7 +36,7 @@ struct BenchmarkSetupData {
   std::string app_profile_id;
   std::string table_id;
   int thread_count;
-  long table_size;
+  long table_size;  // NOLINT(google-runtime-int)
   std::chrono::seconds test_duration;
   bool use_embedded_server;
 
@@ -63,7 +63,9 @@ class BenchmarkSetup {
   /// The randomly generated table id for the benchmark.
   std::string const& table_id() const { return setup_data_.table_id; }
 
-  long table_size() const { return setup_data_.table_size; }
+  long table_size() const {  // NOLINT(google-runtime-int)
+    return setup_data_.table_size;
+  }
   int thread_count() const { return setup_data_.thread_count; }
   std::chrono::seconds test_duration() const {
     return setup_data_.test_duration;

@@ -37,7 +37,7 @@ struct OperationResult {
 struct BenchmarkResult {
   std::chrono::milliseconds elapsed;
   std::deque<OperationResult> operations;
-  long row_count;
+  long row_count;  // NOLINT(google-runtime-int)
 };
 
 /**
@@ -45,7 +45,7 @@ struct BenchmarkResult {
  */
 class Benchmark {
  public:
-  explicit Benchmark(BenchmarkSetup const& setup);
+  explicit Benchmark(BenchmarkSetup setup);
   ~Benchmark();
 
   Benchmark(Benchmark const&) = delete;
@@ -67,7 +67,7 @@ class Benchmark {
   std::string MakeRandomKey(google::cloud::internal::DefaultPRNG& gen) const;
 
   /// Return the key for row @p id.
-  std::string MakeKey(long id) const;
+  std::string MakeKey(long id) const;  // NOLINT(google-runtime-int)
 
   /// Measure the time to compute an operation.
   template <typename Operation>
@@ -81,14 +81,15 @@ class Benchmark {
   }
 
   /// Print the result of a throughput test in human readable form.
-  void PrintThroughputResult(std::ostream& os, std::string const& test_name,
-                             std::string const& phase,
-                             BenchmarkResult const& result) const;
+  static void PrintThroughputResult(std::ostream& os,
+                                    std::string const& test_name,
+                                    std::string const& phase,
+                                    BenchmarkResult const& result);
 
   /// Print the result of a latency test in human readable form.
-  void PrintLatencyResult(std::ostream& os, std::string const& test_name,
-                          std::string const& operation,
-                          BenchmarkResult& result) const;
+  static void PrintLatencyResult(std::ostream& os, std::string const& test_name,
+                                 std::string const& operation,
+                                 BenchmarkResult& result);
 
   /// Return the header for CSV results.
   static std::string ResultsCsvHeader();
@@ -119,7 +120,8 @@ class Benchmark {
  private:
   /// Populate the table rows in the range [@p begin, @p end)
   google::cloud::StatusOr<BenchmarkResult> PopulateTableShard(
-      bigtable::Table& table, long begin, long end);
+      bigtable::Table& table, long begin,  // NOLINT(google-runtime-int)
+      long end);                           // NOLINT(google-runtime-int)
 
   /**
    * Return how much space to reserve for digits if the table has @p table_size
@@ -138,7 +140,7 @@ class Benchmark {
 /// Helper class to pretty print durations.
 struct FormatDuration {
   template <typename Rep, typename Period>
-  FormatDuration(std::chrono::duration<Rep, Period> d)
+  explicit FormatDuration(std::chrono::duration<Rep, Period> d)
       : ns(std::chrono::duration_cast<std::chrono::nanoseconds>(d)) {}
   std::chrono::nanoseconds ns;
 };

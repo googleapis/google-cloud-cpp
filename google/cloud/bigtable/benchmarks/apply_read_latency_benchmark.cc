@@ -73,8 +73,16 @@
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
+
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::benchmarks;
+using bigtable::benchmarks::Benchmark;
+using bigtable::benchmarks::BenchmarkResult;
+using bigtable::benchmarks::FormatDuration;
+using bigtable::benchmarks::kColumnFamily;
+using bigtable::benchmarks::kNumFields;
+using bigtable::benchmarks::MakeBenchmarkSetup;
+using bigtable::benchmarks::MakeRandomMutation;
+using bigtable::benchmarks::OperationResult;
 
 struct LatencyBenchmarkResult {
   BenchmarkResult apply_results;
@@ -111,8 +119,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  benchmark.PrintThroughputResult(std::cout, "perf", "Upload",
-                                  *populate_results);
+  Benchmark::PrintThroughputResult(std::cout, "perf", "Upload",
+                                   *populate_results);
 
   auto data_client = benchmark.MakeDataClient();
   // Start the threads running the latency test.
@@ -163,10 +171,10 @@ int main(int argc, char* argv[]) {
             << ", Ops=" << combined.apply_results.operations.size()
             << ", Rows=" << combined.apply_results.row_count << "\n";
 
-  benchmark.PrintLatencyResult(std::cout, "perf", "Apply()",
-                               combined.apply_results);
-  benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()",
-                               combined.read_results);
+  Benchmark::PrintLatencyResult(std::cout, "perf", "Apply()",
+                                combined.apply_results);
+  Benchmark::PrintLatencyResult(std::cout, "perf", "ReadRow()",
+                                combined.read_results);
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
@@ -211,7 +219,8 @@ google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
   LatencyBenchmarkResult result = {};
 
   auto data_client = benchmark.MakeDataClient();
-  bigtable::Table table(std::move(data_client), app_profile_id, table_id);
+  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
+                        table_id);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);
