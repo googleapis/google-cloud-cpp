@@ -23,6 +23,7 @@
 namespace {
 
 using google::cloud::bigtable::examples::Usage;
+using std::chrono::microseconds;
 using std::chrono::milliseconds;
 
 void FilterLimitRowSample(google::cloud::bigtable::Table table,
@@ -38,9 +39,10 @@ void FilterLimitRowSample(google::cloud::bigtable::Table table,
     for (StatusOr<cbt::Row> const& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
       for (auto const& cell : row->cells()) {
-        std::cout << " = [columns :" << cell.value() << "],";
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
       }
       std::cout << "\n";
     }
@@ -63,9 +65,10 @@ void FilterLimitRowRegex(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
       for (auto const& cell : row->cells()) {
-        std::cout << " = [columns :" << cell.value() << "],";
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
       }
       std::cout << "\n";
     }
@@ -87,9 +90,10 @@ void FilterLimitCellsPerColumn(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
       for (auto const& cell : row->cells()) {
-        std::cout << " = [columns :" << cell.value() << "],";
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
       }
       std::cout << "\n";
     }
@@ -111,9 +115,10 @@ void FilterLimitCellsPerRow(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
       for (auto const& cell : row->cells()) {
-        std::cout << " = [columns :" << cell.value() << "],";
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
       }
       std::cout << "\n";
     }
@@ -134,14 +139,312 @@ void FilterLimitCellsPerRowOfset(google::cloud::bigtable::Table table,
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
-      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
       for (auto const& cell : row->cells()) {
-        std::cout << " = [columns :" << cell.value() << "],";
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
       }
       std::cout << "\n";
     }
   }
   //! [END bigtable_filters_limit_cells_per_row_offset]
+  (std::move(table));
+}
+
+void FilterLimitColFamilyRegex(google::cloud::bigtable::Table table,
+                               std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_col_family_regex]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::FamilyRegex("fam-1.*");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_col_family_regex]
+  (std::move(table));
+}
+
+void FilterLimitColQualifierRegex(google::cloud::bigtable::Table table,
+                                  std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_col_qualifier_regex]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::ColumnRegex("col-[a,b].*$");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_col_qualifier_regex]
+  (std::move(table));
+}
+
+void FilterLimitColRange(google::cloud::bigtable::Table table,
+                         std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_col_range]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::ColumnRange("fam-0", "col-a", "col-c");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_col_range]
+  (std::move(table));
+}
+
+void FilterLimitValueRange(google::cloud::bigtable::Table table,
+                           std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_value_range]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::ValueRange("value-0", "value-2");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_value_range]
+  (std::move(table));
+}
+
+void FilterLimitValueRegex(google::cloud::bigtable::Table table,
+                           std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_value_regex]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::ValueRegex("value-0.*");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_value_regex]
+  (std::move(table));
+}
+
+void FilterLimitTimestampRange(google::cloud::bigtable::Table table,
+                               std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_timestamp_range]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter =
+        cbt::Filter::TimestampRange(microseconds(1000), milliseconds(2));
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_timestamp_range]
+  (std::move(table));
+}
+
+void FilterLimitBlockAll(google::cloud::bigtable::Table table,
+                         std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_block_all]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000000", "key-000050");
+    cbt::Filter filter = cbt::Filter::BlockAllFilter();
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key();
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_block_all]
+  (std::move(table));
+}
+
+void FilterLimitPassAll(google::cloud::bigtable::Table table,
+                        std::vector<std::string> const&) {
+  //! [START bigtable_filters_limit_pass_all]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::PassAllFilter();
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_limit_pass_all]
+  (std::move(table));
+}
+
+void FilterModifyStripValue(google::cloud::bigtable::Table table,
+                            std::vector<std::string> const&) {
+  //! [START bigtable_filters_modify_strip_value]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::StripValueTransformer();
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_modify_strip_value]
+  (std::move(table));
+}
+
+void FilterModifyApplyLabel(google::cloud::bigtable::Table table,
+                            std::vector<std::string> const&) {
+  //! [START bigtable_filters_modify_apply_label]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::ApplyLabelTransformer("label-value");
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value()
+                  << ", label(";
+        for (auto const& label : cell.labels()) {
+          std::cout << label << ",";
+        }
+        std::cout << ")],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_modify_apply_label]
+  (std::move(table));
+}
+
+void FilterComposingChain(google::cloud::bigtable::Table table,
+                          std::vector<std::string> const&) {
+  //! [START bigtable_filters_composing_chain]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::Chain(cbt::Filter::Latest(1),
+                                            cbt::Filter::FamilyRegex("fam-0"));
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_composing_chain]
+  (std::move(table));
+}
+
+void FilterComposingInterleave(google::cloud::bigtable::Table table,
+                               std::vector<std::string> const&) {
+  //! [START bigtable_filters_composing_interleave]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000011", "key-000015");
+    cbt::Filter filter = cbt::Filter::Interleave(
+        cbt::Filter::FamilyRegex("fam-1"), cbt::Filter::ColumnRegex("col-c"));
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value() << "],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_composing_interleave]
   (std::move(table));
 }
 
@@ -155,7 +458,7 @@ void InsertTestData(google::cloud::bigtable::Table table,
   // the actual examples during the CI builds.
   namespace cbt = google::cloud::bigtable;
   cbt::BulkMutation bulk;
-  for (int i = 0; i != 100; ++i) {
+  for (int i = 0; i != 50; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
     // this can result in poor performance in a production application.
     // Since rows are stored in sorted order by key, sequential keys can
@@ -168,18 +471,20 @@ void InsertTestData(google::cloud::bigtable::Table table,
     char buf[32];
     snprintf(buf, sizeof(buf), "key-%06d", i);
     cbt::SingleRowMutation mutation(buf);
-    mutation.emplace_back(cbt::SetCell("fam", "col0", milliseconds(1000),
-                                       "value0-0-" + std::to_string(i)));
-    mutation.emplace_back(cbt::SetCell("fam", "col0", milliseconds(2000),
-                                       "value0-1-" + std::to_string(i)));
-    mutation.emplace_back(cbt::SetCell("fam", "col1", milliseconds(1000),
-                                       "value1-0-" + std::to_string(i)));
-    mutation.emplace_back(cbt::SetCell("fam", "col2", milliseconds(1000),
-                                       "value2-0-" + std::to_string(i)));
-    mutation.emplace_back(cbt::SetCell("fam", "col2", milliseconds(2000),
-                                       "value2-1-" + std::to_string(i)));
-    mutation.emplace_back(cbt::SetCell("fam", "col2", milliseconds(3000),
-                                       "value2-2-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-a", milliseconds(1),
+                                       "value-0-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-a", milliseconds(2),
+                                       "value-1-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-b", milliseconds(1),
+                                       "value-0-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-c", milliseconds(1),
+                                       "value-0-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-c", milliseconds(2),
+                                       "value-1-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-0", "col-c", milliseconds(3),
+                                       "value-2-" + std::to_string(i)));
+    mutation.emplace_back(cbt::SetCell("fam-1", "col-a", milliseconds(1),
+                                       "value-0-" + std::to_string(i)));
     bulk.emplace_back(std::move(mutation));
   }
   auto failures = table.BulkApply(std::move(bulk));
@@ -225,8 +530,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto table_id = examples::RandomTableId(DefaultTablePrefix(), generator);
   auto schema = admin.CreateTable(
-      table_id,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+      table_id, cbt::TableConfig({{"fam-0", cbt::GcRule::MaxNumVersions(10)},
+                                  {"fam-1", cbt::GcRule::MaxNumVersions(10)}},
+                                 {}));
   if (!schema) throw std::runtime_error(schema.status().message());
 
   google::cloud::bigtable::Table table(
@@ -248,6 +554,31 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "Running FilterLimitCellsPerRowOffset() example [5]"
             << std::endl;
   FilterLimitCellsPerRowOfset(table, {});
+  std::cout << "Running FilterLimitColFamilyRegex() example [6]" << std::endl;
+  FilterLimitColFamilyRegex(table, {});
+  std::cout << "Running FilterLimitColQualifierRegex() example [7]"
+            << std::endl;
+  FilterLimitColQualifierRegex(table, {});
+  std::cout << "Running FilterLimitColRange() example [8]" << std::endl;
+  FilterLimitColRange(table, {});
+  std::cout << "Running FilterLimitValueRange() example [9]" << std::endl;
+  FilterLimitValueRange(table, {});
+  std::cout << "Running FilterLimitValueRegex() example [10]" << std::endl;
+  FilterLimitValueRegex(table, {});
+  std::cout << "Running FilterLimitTimestampRange() example [11]" << std::endl;
+  FilterLimitTimestampRange(table, {});
+  std::cout << "Running FilterLimitBlockAll() example [12]" << std::endl;
+  FilterLimitBlockAll(table, {});
+  std::cout << "Running FilterLimitPassAll() example [13]" << std::endl;
+  FilterLimitPassAll(table, {});
+  std::cout << "Running FilterModifyStripValue() example [14]" << std::endl;
+  FilterModifyStripValue(table, {});
+  std::cout << "Running FilterModifyApplyLabel() example [15]" << std::endl;
+  FilterModifyApplyLabel(table, {});
+  std::cout << "Running FilterComposingChain() example [16]" << std::endl;
+  FilterComposingChain(table, {});
+  std::cout << "Running FilterComposingInterleave() example [17]" << std::endl;
+  FilterComposingInterleave(table, {});
   admin.DeleteTable(table_id);
 }
 
@@ -265,6 +596,24 @@ int main(int argc, char* argv[]) {
                        FilterLimitCellsPerRow),
       MakeCommandEntry("filter-limit-cells-per-row-offset", {},
                        FilterLimitCellsPerRowOfset),
+      MakeCommandEntry("filters-limit-col-family-regex", {},
+                       FilterLimitColFamilyRegex),
+      MakeCommandEntry("filters-limit-col-qualifier-regex", {},
+                       FilterLimitColQualifierRegex),
+      MakeCommandEntry("filters-limit-col-range", {}, FilterLimitColRange),
+      MakeCommandEntry("filters-limit-value-range", {}, FilterLimitValueRange),
+      MakeCommandEntry("filters-limit-value-regex", {}, FilterLimitValueRegex),
+      MakeCommandEntry("filters-limit-timestamp-range", {},
+                       FilterLimitTimestampRange),
+      MakeCommandEntry("filters-limit-block-all", {}, FilterLimitBlockAll),
+      MakeCommandEntry("filters-limit-pass-all", {}, FilterLimitPassAll),
+      MakeCommandEntry("filters-modify-strip-value", {},
+                       FilterModifyStripValue),
+      MakeCommandEntry("filters-modify-apply-label", {},
+                       FilterModifyApplyLabel),
+      MakeCommandEntry("filters-composing-chain", {}, FilterComposingChain),
+      MakeCommandEntry("filters-composing-interleave", {},
+                       FilterComposingInterleave),
       {"auto", RunAll},
   };
 
