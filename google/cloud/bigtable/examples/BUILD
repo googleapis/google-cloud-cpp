@@ -43,6 +43,7 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_examples_unit_tests]

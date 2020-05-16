@@ -19,6 +19,7 @@
 //! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/crash_handler.h"
 #include <chrono>
 #include <sstream>
 
@@ -95,6 +96,7 @@ void BulkApply(google::cloud::bigtable::Table table,
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
     for (int i = 0; i != 5000; ++i) {
+      /* if (i == 123) throw std::runtime_error("xxx jgm"); */
       // Note: This example uses sequential numeric IDs for simplicity, but
       // this can result in poor performance in a production application.
       // Since rows are stored in sorted order by key, sequential keys can
@@ -911,6 +913,8 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
+  google::cloud::testing_util::InstallCrashHandler(argv[0]);
+
   using google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {}, Apply),

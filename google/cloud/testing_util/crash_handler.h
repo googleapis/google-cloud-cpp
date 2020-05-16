@@ -28,8 +28,10 @@ namespace testing_util {
  * This function should only be called once in any process. It should be called
  * from `main()` so it can be passed the path to the binary, `argv[0]`.
  *
- * @see https://github.com/abseil/abseil-cpp/blob/master/absl/debugging/symbolize.h
- * @see https://github.com/abseil/abseil-cpp/blob/master/absl/debugging/failure_signal_handler.h
+ * @see
+ * https://github.com/abseil/abseil-cpp/blob/master/absl/debugging/symbolize.h
+ * @see
+ * https://github.com/abseil/abseil-cpp/blob/master/absl/debugging/failure_signal_handler.h
  */
 void InstallCrashHandler(char const* argv0);
 

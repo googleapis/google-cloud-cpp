@@ -22,6 +22,7 @@ if (BUILD_TESTING)
         bigtable_client
         bigtable_protos
         google_cloud_cpp_common
+        google_cloud_cpp_testing
         google_cloud_cpp_grpc_utils
         gRPC::grpc++
         gRPC::grpc

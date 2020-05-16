@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/crash_handler.h"
 #include <iostream>
 
 namespace {
@@ -163,6 +164,8 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // namespace
 
 int main(int argc, char* argv[]) {
+  google::cloud::testing_util::InstallCrashHandler(argv[0]);
+
   google::cloud::bigtable::examples::Example example({
       {"auto", RunAll},
       {"hello-world", BigtableHelloWorld},
