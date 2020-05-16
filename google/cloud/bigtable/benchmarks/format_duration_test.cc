@@ -15,8 +15,13 @@
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::bigtable::benchmarks;
-using namespace std::chrono;
+using ::google::cloud::bigtable::benchmarks::FormatDuration;
+using ::std::chrono::hours;
+using ::std::chrono::microseconds;
+using ::std::chrono::milliseconds;
+using ::std::chrono::minutes;
+using ::std::chrono::nanoseconds;
+using ::std::chrono::seconds;
 
 TEST(BenchmarksFormatDuration, NanoSeconds) {
   std::ostringstream os;

@@ -48,13 +48,13 @@ std::string FormattedAnnotations() {
 }
 
 std::string MakeRandomTableId(std::string const& prefix) {
-  static std::string const table_id_chars(
+  static std::string const kTableIdChars(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   return prefix + "-" +
          google::cloud::internal::Sample(
              gen, google::cloud::bigtable::benchmarks::kTableIdRandomLetters,
-             table_id_chars);
+             kTableIdChars);
 }
 }  // anonymous namespace
 
@@ -63,7 +63,7 @@ namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 BenchmarkSetup::BenchmarkSetup(BenchmarkSetupData setup_data)
-    : setup_data_(setup_data) {}
+    : setup_data_(std::move(setup_data)) {}
 
 google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
     std::string const& prefix, int& argc, char* argv[]) {
@@ -142,7 +142,7 @@ google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
   if (argc == 1) {
     return BenchmarkSetup{setup_data};
   }
-  long seconds = std::stol(shift());
+  long seconds = std::stol(shift());  // NOLINT(google-runtime-int)
   if (seconds <= 0) {
     return usage("test-duration-seconds should be > 0");
   }

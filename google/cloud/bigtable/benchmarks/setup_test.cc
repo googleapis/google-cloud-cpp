@@ -17,7 +17,11 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::bigtable::benchmarks;
+using ::google::cloud::bigtable::benchmarks::kDefaultTableSize;
+using ::google::cloud::bigtable::benchmarks::kDefaultTestDuration;
+using ::google::cloud::bigtable::benchmarks::kDefaultThreads;
+using ::google::cloud::bigtable::benchmarks::kTableIdRandomLetters;
+using ::google::cloud::bigtable::benchmarks::MakeBenchmarkSetup;
 using ::testing::HasSubstr;
 
 namespace {

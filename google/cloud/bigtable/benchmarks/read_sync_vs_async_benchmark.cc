@@ -82,8 +82,14 @@
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
+
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::benchmarks;
+using bigtable::benchmarks::Benchmark;
+using bigtable::benchmarks::BenchmarkResult;
+using bigtable::benchmarks::FormatDuration;
+using bigtable::benchmarks::kColumnFamily;
+using bigtable::benchmarks::MakeBenchmarkSetup;
+using bigtable::benchmarks::OperationResult;
 
 /// Run an iteration of the test.
 google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
@@ -150,8 +156,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  benchmark.PrintThroughputResult(std::cout, "perf", "Upload",
-                                  *populate_results);
+  Benchmark::PrintThroughputResult(std::cout, "perf", "Upload",
+                                   *populate_results);
 
   google::cloud::CompletionQueue cq;
   std::vector<std::thread> cq_threads;
@@ -207,9 +213,9 @@ int main(int argc, char* argv[]) {
             << ", Ops=" << sync_results.operations.size()
             << ", Rows=" << sync_results.row_count << "\n";
 
-  benchmark.PrintLatencyResult(std::cout, "perf", "AsyncReadRow()",
-                               async_results);
-  benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()", sync_results);
+  Benchmark::PrintLatencyResult(std::cout, "perf", "AsyncReadRow()",
+                                async_results);
+  Benchmark::PrintLatencyResult(std::cout, "perf", "ReadRow()", sync_results);
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
@@ -231,7 +237,7 @@ int main(int argc, char* argv[]) {
 namespace {
 
 void AsyncBenchmark::ActivateCompletionQueue() {
-  cq_threads_.push_back(std::thread([this] { cq_.Run(); }));
+  cq_threads_.emplace_back(std::thread([this] { cq_.Run(); }));
 }
 
 BenchmarkResult AsyncBenchmark::Run(std::chrono::seconds test_duration,

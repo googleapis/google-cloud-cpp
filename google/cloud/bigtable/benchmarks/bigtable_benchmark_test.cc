@@ -17,8 +17,12 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud::bigtable::benchmarks;
-using testing::HasSubstr;
+using ::google::cloud::bigtable::benchmarks::Benchmark;
+using ::google::cloud::bigtable::benchmarks::BenchmarkResult;
+using ::google::cloud::bigtable::benchmarks::kBulkSize;
+using ::google::cloud::bigtable::benchmarks::MakeBenchmarkSetup;
+using ::google::cloud::bigtable::benchmarks::OperationResult;
+using ::testing::HasSubstr;
 
 namespace {
 char arg0[] = "program";
@@ -109,7 +113,7 @@ TEST(BenchmarkTest, PrintThroughputResult) {
   result.operations.resize(3450);
 
   std::ostringstream os;
-  bm.PrintThroughputResult(os, "foo", "bar", result);
+  Benchmark::PrintThroughputResult(os, "foo", "bar", result);
   std::string output = os.str();
 
   // We do not want a change detector test, so the following assertions are
@@ -140,7 +144,7 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   });
 
   std::ostringstream os;
-  bm.PrintLatencyResult(os, "foo", "bar", result);
+  Benchmark::PrintLatencyResult(os, "foo", "bar", result);
   std::string output = os.str();
 
   // We do not want a change detector test, so the following assertions are
@@ -174,7 +178,7 @@ TEST(BenchmarkTest, PrintCsv) {
                            std::chrono::microseconds(++count * 100)};
   });
 
-  std::string header = bm.ResultsCsvHeader();
+  std::string header = Benchmark::ResultsCsvHeader();
   auto const field_count = std::count(header.begin(), header.end(), ',');
 
   std::ostringstream os;

@@ -57,15 +57,20 @@
 /// Helper functions and types for the scan_throughput_benchmark.
 namespace {
 namespace bigtable = google::cloud::bigtable;
-using namespace bigtable::benchmarks;
+using bigtable::benchmarks::Benchmark;
+using bigtable::benchmarks::BenchmarkResult;
+using bigtable::benchmarks::FormatDuration;
+using bigtable::benchmarks::kColumnFamily;
 
 constexpr int kScanSizes[] = {100, 1000, 10000};
 
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size, std::string app_profile_id,
-                             std::string const& table_id, long scan_size,
+                             long table_size,  // NOLINT(google-runtime-int)
+                             std::string app_profile_id,
+                             std::string const& table_id,
+                             long scan_size,  // NOLINT(google-runtime-int)
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
 
@@ -81,8 +86,8 @@ int main(int argc, char* argv[]) {
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
   auto populate_results = benchmark.PopulateTable();
-  benchmark.PrintThroughputResult(std::cout, "scant", "Upload",
-                                  *populate_results);
+  Benchmark::PrintThroughputResult(std::cout, "scant", "Upload",
+                                   *populate_results);
 
   auto data_client = benchmark.MakeDataClient();
   std::map<std::string, BenchmarkResult> results_by_size;
@@ -99,7 +104,7 @@ int main(int argc, char* argv[]) {
               << ", Ops=" << combined.operations.size()
               << ", Rows=" << combined.row_count << "\n";
     auto op_name = "Scan(" + std::to_string(scan_size) + ")";
-    benchmark.PrintLatencyResult(std::cout, "scant", op_name, combined);
+    Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
     results_by_size[op_name] = std::move(combined);
   }
 
@@ -117,16 +122,21 @@ int main(int argc, char* argv[]) {
 }
 
 namespace {
+
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size, std::string app_profile_id,
-                             std::string const& table_id, long scan_size,
+                             long table_size,  // NOLINT(google-runtime-int)
+                             std::string app_profile_id,
+                             std::string const& table_id,
+                             long scan_size,  // NOLINT(google-runtime-int)
                              std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
 
-  bigtable::Table table(std::move(data_client), app_profile_id, table_id);
+  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
+                        table_id);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
+  // NOLINTNEXTLINE(google-runtime-int)
   std::uniform_int_distribution<long> prng(0, table_size - scan_size - 1);
 
   auto test_start = std::chrono::steady_clock::now();
@@ -134,7 +144,7 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
     auto range =
         bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)));
 
-    long count = 0;
+    long count = 0;  // NOLINT(google-runtime-int)
     auto op = [&count, &table, &scan_size, &range]() -> google::cloud::Status {
       auto reader =
           table.ReadRows(bigtable::RowSet(std::move(range)), scan_size,
