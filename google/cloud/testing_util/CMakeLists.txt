@@ -24,6 +24,8 @@ if (BUILD_TESTING)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
+        crash_handler.cc
+        crash_handler.h
         example_driver.cc
         example_driver.h
         expect_exception.h
@@ -32,15 +34,17 @@ if (BUILD_TESTING)
         scoped_environment.h
         testing_types.cc
         testing_types.h)
-    target_link_libraries(google_cloud_cpp_testing
-                          PUBLIC google_cloud_cpp_common GTest::gmock)
+    target_link_libraries(
+        google_cloud_cpp_testing
+        PUBLIC absl::symbolize absl::failure_signal_handler
+               google_cloud_cpp_common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
-        assert_ok_test.cc example_driver_test.cc scoped_environment_test.cc)
+        assert_ok_test.cc crash_handler_test.cc example_driver_test.cc scoped_environment_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
