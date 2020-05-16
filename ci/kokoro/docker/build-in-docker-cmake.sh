@@ -65,8 +65,12 @@ CMAKE_COMMAND="cmake"
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
 
-# Explicitly disable the gRPC plugin for GCS.
-cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF")
+# TODO(#4143) - Only clang-tidy compiles the GCS+gRPC plugin for now.
+if [[ "${BUILD_NAME}" == "clang-tidy" ]]; then
+  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON")
+else
+  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF")
+fi
 
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=("-DBUILD_TESTING=OFF")
