@@ -66,7 +66,7 @@ CMAKE_COMMAND="cmake"
 declare -a cmake_extra_flags
 
 # TODO(#4143) - Only clang-tidy compiles the GCS+gRPC plugin for now.
-if [[ "${BUILD_NAME}" == "clang-tidy" ]]; then
+if [[ "${BUILD_NAME}" == "clang-tidy" || "${BUILD_NAME}" == "coverage" ]]; then
   cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON")
 else
   cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=OFF")
