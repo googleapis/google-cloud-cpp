@@ -50,7 +50,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 }
 //! [grpc-read-write]
 #else
-void GrpcReadWrite(std::string const& bucket_name) {}
+void GrpcReadWrite(std::string const&) {}
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 void GrpcReadWriteCommand(std::vector<std::string> argv) {
