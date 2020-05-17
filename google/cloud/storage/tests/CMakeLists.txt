@@ -85,9 +85,9 @@ target_link_libraries(storage_error_injection_integration_test
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
     find_package(googleapis CONFIG REQUIRED)
-    add_executable(grpc_integration_test grpc_integration_test.cc)
+    google_cloud_cpp_add_executable(target "storage" grpc_integration_test.cc)
     target_link_libraries(
-        grpc_integration_test
+        ${target}
         PRIVATE storage_client_testing
                 storage_client
                 google_cloud_cpp_testing
@@ -98,11 +98,12 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                 CURL::libcurl
                 Threads::Threads
                 nlohmann_json)
-    google_cloud_cpp_add_common_options(grpc_integration_test)
-    google_cloud_cpp_add_clang_tidy(grpc_integration_test)
+    google_cloud_cpp_add_common_options(${target})
+    google_cloud_cpp_add_clang_tidy(${target})
+    add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
-        grpc_integration_test
-        PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
+        ${target} PROPERTIES LABELS
+                             "integration-tests;integration-tests-no-emulator")
 endif ()
 
 include(CreateBazelConfig)

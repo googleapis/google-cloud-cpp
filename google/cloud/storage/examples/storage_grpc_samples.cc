@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace {
+namespace examples = ::google::cloud::storage::examples;
 
 //! [grpc-read-write]
 void GrpcReadWrite(std::string const& bucket_name) {
@@ -30,9 +32,9 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
   //! [grpc-default-client]
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
+  //! [grpc-default-client]
 
   auto object = client->InsertObject(bucket_name, "lorem.txt", text);
-  //! [grpc-default-client]
   if (!object) throw std::runtime_error(object.status().message());
 
   auto input = client->ReadObject(bucket_name, "lorem.txt",
@@ -48,8 +50,8 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 //! [grpc-read-write]
 
 void GrpcReadWriteCommand(std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw std::runtime_error("grpc-read-write <bucket-name>");
+  if (argv.size() != 1 || argv[0] == "--help") {
+    throw examples::Usage("grpc-read-write <bucket-name>");
   }
   GrpcReadWrite(argv[0]);
 }
@@ -66,98 +68,38 @@ void GrpcClientWithProject(std::string project_id) {
 //! [grpc-client-with-project]
 
 void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw std::runtime_error("grpc-client-with-project <project-id>");
+  if (argv.size() != 1 || argv[0] == "--help") {
+    throw examples::Usage("grpc-client-with-project <project-id>");
   }
   GrpcClientWithProject(argv[0]);
 }
 
-void RunAll(std::vector<std::string> const&);
+void AutoRun(std::vector<std::string> const& argv) {
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto bucket_name = google::cloud::internal::GetEnv(
+                         "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                         .value();
 
-int RunOneCommand(std::vector<std::string> argv) {
-  using CommandType = std::function<void(std::vector<std::string> const&)>;
-  using CommandMap = std::map<std::string, CommandType>;
+  std::cout << "Running GrpcReadWrite() example" << std::endl;
+  GrpcReadWriteCommand({bucket_name});
 
-  CommandMap commands = {
-      {"auto", RunAll},
-      {"grpc-read-write", GrpcReadWriteCommand},
-      {"grpc-client-with-project", GrpcClientWithProjectCommand},
-  };
-
-  static std::string const kUsageMsg = [&argv, &commands] {
-    auto last_slash = argv[0].find_last_of("/\\");
-    auto program = argv[0].substr(last_slash + 1);
-    std::string usage;
-    usage += "Usage: ";
-    usage += program;
-    usage += " <command> [arguments]\n\n";
-    usage += "Commands:\n";
-    for (auto const& kv : commands) {
-      if (kv.first == "auto") continue;
-      try {
-        kv.second({});
-      } catch (std::exception const& ex) {
-        usage += "    ";
-        usage += ex.what();
-        usage += "\n";
-      }
-    }
-    return usage;
-  }();
-
-  if (argv.size() < 2) {
-    std::cerr << "Missing command argument\n" << kUsageMsg << "\n";
-    return 1;
-  }
-  std::string command_name = argv[1];
-  argv.erase(argv.begin());  // remove the program name from the list.
-  argv.erase(argv.begin());  // remove the command name from the list.
-
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    std::cerr << "Unknown command " << command_name << "\n"
-              << kUsageMsg << "\n";
-    return 1;
-  }
-
-  // Run the command.
-  command->second(argv);
-  return 0;
-}
-
-void RunAll(std::vector<std::string> const&) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  if (project_id.empty()) {
-    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
-  }
-  auto bucket_name =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BUCKET_NAME")
-          .value_or("");
-  if (bucket_name.empty()) {
-    throw std::runtime_error(
-        "GOOGLE_CLOUD_CPP_BUCKET_NAME is not set or is empty");
-  }
-
-  RunOneCommand({"", "grpc-read-write", bucket_name});
-  RunOneCommand({"", "grpc-client-with-project", project_id});
-}
-
-bool AutoRun() {
-  return google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
-             .value_or("") == "yes";
+  std::cout << "Running GrpcReadWrite() example" << std::endl;
+  GrpcClientWithProjectCommand({project_id});
 }
 
 }  // namespace
 
-int main(int ac, char* av[]) try {
-  if (AutoRun()) {
-    RunAll({});
-    return 0;
-  }
-
-  return RunOneCommand({av, av + ac});
-} catch (std::exception const& ex) {
-  std::cerr << ex.what() << "\n";
-  return 1;
+int main(int argc, char* argv[]) {
+  examples::Example example({
+      {"grpc-read-write", GrpcReadWriteCommand},
+      {"grpc-client-with-project", GrpcClientWithProjectCommand},
+      {"auto", AutoRun},
+  });
+  return example.Run(argc, argv);
 }

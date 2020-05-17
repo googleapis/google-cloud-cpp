@@ -82,11 +82,17 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-foreach (fname ${storage_examples})
+# TODO(#4143) - this example should always be in the list to support Bazel
+set(storage_examples_grpc)
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    list(APPEND storage_examples_grpc storage_grpc_samples.cc)
+endif ()
+
+foreach (fname ${storage_examples} ${storage_examples_grpc})
     google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
     target_link_libraries(
-        ${target} PRIVATE storage_examples_common storage_client
-                          google_cloud_cpp_common)
+        ${target} PRIVATE storage_examples_common storage_client_grpc
+                          storage_client google_cloud_cpp_common)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     set_tests_properties(
@@ -97,24 +103,13 @@ foreach (fname ${storage_examples})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (
-    fname
+set(storage_integration_tests_production
     # cmake-format: sort
-    storage_policy_doc_samples.cc storage_signed_url_v2_samples.cc
-    storage_signed_url_v4_samples.cc)
+    ${storage_examples_grpc} storage_policy_doc_samples.cc
+    storage_signed_url_v2_samples.cc storage_signed_url_v4_samples.cc)
+foreach (fname ${storage_integration_tests_production})
     google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")
-    google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
-
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    add_executable(storage_grpc_samples storage_grpc_samples.cc)
-    target_link_libraries(
-        storage_grpc_samples
-        PUBLIC
-            $<$<BOOL:GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC>:storage_client_grpc>
-            storage_client
-        PRIVATE storage_common_options)
-endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)

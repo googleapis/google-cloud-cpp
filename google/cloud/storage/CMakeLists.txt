@@ -305,7 +305,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     target_compile_options(storage_client_grpc
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     target_compile_definitions(storage_client_grpc
-                               GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
+                               PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
         storage_client_grpc
         PROPERTIES
@@ -500,8 +500,9 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                         GTest::gmock
                         GTest::gtest
                         CURL::libcurl
-                        storage_common_options
                         nlohmann_json)
+            google_cloud_cpp_add_common_options(${target})
+            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()
