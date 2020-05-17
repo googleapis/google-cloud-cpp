@@ -39,7 +39,7 @@ class future final : private internal::future_base<T> {
 
   // workaround Apple Clang-7xx series bug, if we use `= default` here, the
   // compiler believes there is no default constructor defined. :shrug:
-  future() noexcept = default;
+  future() noexcept {}  // NOLINT(modernize-use-equals-default)
 
   /**
    * Creates a new future that unwraps @p rhs.
