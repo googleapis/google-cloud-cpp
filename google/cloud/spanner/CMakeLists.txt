@@ -15,7 +15,10 @@
 # ~~~
 
 find_package(googleapis CONFIG REQUIRED)
+# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
+set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
+unset(FPHSA_NAME_MISMATCHED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
