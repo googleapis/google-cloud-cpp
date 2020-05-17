@@ -122,13 +122,16 @@ class StatusOr final {
     return *this;
   }
 
-  StatusOr(StatusOr&& rhs) noexcept : status_(std::move(rhs.status_)) {
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StatusOr(StatusOr&& rhs) noexcept(noexcept(T(std::move(*rhs))))
+      : status_(std::move(rhs.status_)) {
     if (status_.ok()) {
       new (&value_) T(std::move(*rhs));
     }
   }
 
-  StatusOr& operator=(StatusOr&& rhs) noexcept {
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StatusOr& operator=(StatusOr&& rhs) noexcept(noexcept(T(std::move(*rhs)))) {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
