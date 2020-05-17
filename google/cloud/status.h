@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
  */
 class Status {
  public:
-  Status() : code_(StatusCode::kOk) {}
+  Status() = default;
 
   explicit Status(StatusCode status_code, std::string message)
       : code_(status_code), message_(std::move(message)) {}
@@ -73,7 +73,7 @@ class Status {
   std::string const& message() const { return message_; }
 
  private:
-  StatusCode code_;
+  StatusCode code_{StatusCode::kOk};
   std::string message_;
 };
 

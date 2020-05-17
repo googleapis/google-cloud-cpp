@@ -39,7 +39,7 @@ class future final : private internal::future_base<T> {
 
   // workaround Apple Clang-7xx series bug, if we use `= default` here, the
   // compiler believes there is no default constructor defined. :shrug:
-  future() noexcept {}
+  future() noexcept = default;
 
   /**
    * Creates a new future that unwraps @p rhs.
@@ -56,6 +56,7 @@ class future final : private internal::future_base<T> {
    *   dynamically allocated, and the allocator (which might be the default
    *   `operator new`) may raise.
    */
+  // NOLINTNEXTLINE(google-explicit-constructor)
   future(future<future<T>>&& rhs) noexcept(false);
 
   /**
@@ -133,8 +134,11 @@ template <typename T>
 class promise final : private internal::promise_base<T> {
  public:
   /// Creates a promise with an unsatisfied shared state.
-  promise(std::function<void()> cancellation_callback = [] {})
-      : internal::promise_base<T>(cancellation_callback) {}
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  promise(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
+      std::function<void()> cancellation_callback = [] {})
+      : internal::promise_base<T>(std::move(cancellation_callback)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
   promise(promise&&) noexcept = default;

@@ -118,16 +118,17 @@ class StatusOr final {
    *     the program terminates via `google::cloud::Terminate()`
    */
   StatusOr& operator=(Status status) {
-    return *this = StatusOr(std::move(status));
+    *this = StatusOr(std::move(status));
+    return *this;
   }
 
-  StatusOr(StatusOr&& rhs) : status_(std::move(rhs.status_)) {
+  StatusOr(StatusOr&& rhs) noexcept : status_(std::move(rhs.status_)) {
     if (status_.ok()) {
       new (&value_) T(std::move(*rhs));
     }
   }
 
-  StatusOr& operator=(StatusOr&& rhs) {
+  StatusOr& operator=(StatusOr&& rhs) noexcept {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
@@ -192,7 +193,7 @@ class StatusOr final {
   // cv-qualified version of StatusOr<T>, so we need to apply std::decay<> to
   // it first.
   template <typename U = T>
-  typename std::enable_if<
+  typename std::enable_if<  // NOLINT(misc-unconventional-assign-operator)
       !std::is_same<StatusOr, typename std::decay<U>::type>::value,
       StatusOr>::type&
   operator=(U&& rhs) {
@@ -220,10 +221,10 @@ class StatusOr final {
    * @throws only if `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T&& rhs) : status_() { new (&value_) T(std::move(rhs)); }
+  StatusOr(T&& rhs) { new (&value_) T(std::move(rhs)); }
 
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T const& rhs) : status_() { new (&value_) T(rhs); }
+  StatusOr(T const& rhs) { new (&value_) T(rhs); }
 
   bool ok() const { return status_.ok(); }
   explicit operator bool() const { return status_.ok(); }
