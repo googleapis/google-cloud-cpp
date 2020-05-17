@@ -228,7 +228,7 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   static_assert(kMaxBuffersize % kChunkSize == 0, "Broken test configuration");
 
   auto send_in_chunks = [bucket_name, object_name, &stub,
-                         this](int desired_size) {
+                         this](int desired_size, std::int64_t chunk_size) {
     grpc::ClientContext context;
     google::storage::v1::Object object;
     auto stream = stub->InsertObject(&context, &object);
@@ -240,15 +240,15 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
     resource.set_name(object_name);
 
     std::uint64_t offset = 0;
-    auto data = MakeRandomData(kChunkSize);
+    auto data = MakeRandomData(chunk_size);
     request.mutable_checksummed_data()->mutable_crc32c()->set_value(
         crc32c::Crc32c(data));
     request.mutable_checksummed_data()->set_content(std::move(data));
     request.set_write_offset(offset);
     (void)stream->Write(request, grpc::WriteOptions().set_write_through());
 
-    offset += kChunkSize;
-    data = MakeRandomData(desired_size - kChunkSize);
+    offset += chunk_size;
+    data = MakeRandomData(desired_size - chunk_size);
     request.clear_insert_object_spec();
     request.mutable_checksummed_data()->mutable_crc32c()->set_value(
         crc32c::Crc32c(data));
@@ -262,13 +262,13 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   };
 
   // This creates a stream of exactly kMaxBufferSize
-  auto status = send_in_chunks(kMaxBuffersize);
+  auto status = send_in_chunks(kMaxBuffersize, kChunkSize);
   ASSERT_STATUS_OK(status);
 
-  status = send_in_chunks(kMaxBuffersize + kChunkSize);
+  status = send_in_chunks(kMaxBuffersize + kChunkSize, kChunkSize);
   EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
 
-  status = send_in_chunks(kMaxBuffersize + 2 * kChunkSize);
+  status = send_in_chunks(kMaxBuffersize + 2 * kChunkSize, kChunkSize);
   EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
 
   auto delete_object_status = client->DeleteObject(bucket_name, object_name);
