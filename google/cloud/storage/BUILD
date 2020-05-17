@@ -44,6 +44,7 @@ cc_library(
     name = "storage_client_grpc",
     srcs = storage_client_grpc_srcs,
     hdrs = storage_client_grpc_hdrs,
+    defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
