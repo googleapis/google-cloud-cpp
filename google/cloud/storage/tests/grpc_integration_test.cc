@@ -25,7 +25,6 @@
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
-#include <cstdlib>
 #include <vector>
 
 namespace google {
@@ -162,6 +161,7 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 /// @test Verify that NOT_FOUND is returned for missing objects
 TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto client = Client::CreateDefaultClient();
@@ -277,6 +277,8 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   auto delete_bucket_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 TEST_F(GrpcIntegrationTest, InsertLarge) {
   auto client = MakeIntegrationTestClient();
