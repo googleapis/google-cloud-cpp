@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
@@ -40,10 +41,17 @@ namespace {
 class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  static std::string project_id() {
-    return google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
-        .value_or("test-project");
+  void SetUp() override {
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
   }
+  std::string project_id() const { return project_id_; }
+
+ private:
+  std::string project_id_;
+  testing_util::ScopedEnvironment grpc_config_{
+      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "metadata"};
 };
 
 TEST_F(GrpcIntegrationTest, BucketCRUD) {
@@ -155,58 +163,6 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-/// @test Reproduce the problems documented in b/146782749
-TEST_F(GrpcIntegrationTest, ReproMissingAcl) {
-  auto client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
-  auto bucket_metadata = client->CreateBucketForProject(
-      bucket_name, project_id(), BucketMetadata());
-  ASSERT_STATUS_OK(bucket_metadata);
-
-  auto object_name = MakeRandomObjectName();
-
-  auto channel = grpc::CreateChannel("storage.googleapis.com",
-                                     grpc::GoogleDefaultCredentials());
-  auto stub = google::storage::v1::Storage::NewStub(channel);
-  grpc::ClientContext context;
-
-  google::storage::v1::Object response;
-  auto stream = stub->InsertObject(&context, &response);
-  google::storage::v1::InsertObjectRequest request;
-
-  auto& object_spec = *request.mutable_insert_object_spec();
-  object_spec.set_projection(google::storage::v1::CommonEnums::FULL);
-
-  auto& resource = *object_spec.mutable_resource();
-  resource.set_bucket(bucket_name);
-  resource.set_name(object_name);
-
-  auto contents = LoremIpsum();
-  request.set_write_offset(0);
-  request.mutable_checksummed_data()->set_content(contents);
-  request.mutable_checksummed_data()->mutable_crc32c()->set_value(
-      crc32c::Crc32c(contents));
-  request.set_finish_write(true);
-  ASSERT_TRUE(stream->Write(request, grpc::WriteOptions().set_last_message()));
-  auto status = stream->Finish();
-  ASSERT_TRUE(status.ok());
-
-  // TODO(b/146782749) this should be a EXPECT_FALSE().
-  EXPECT_TRUE(response.acl().empty()) << "Empty ACL with a FULL projection";
-
-  std::cout << "Request = " << request.DebugString() << "\n\n";
-  std::cout << "Response = " << response.DebugString() << "\n";
-
-  auto delete_object_status = client->DeleteObject(
-      bucket_name, object_name, Generation(response.generation()));
-  EXPECT_STATUS_OK(delete_object_status);
-
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
-  EXPECT_STATUS_OK(delete_bucket_status);
-}
-
 /// @test Verify that NOT_FOUND is returned for missing objects
 TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto client = Client::CreateDefaultClient();
@@ -238,24 +194,21 @@ TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto status = stream->Finish();
   ASSERT_EQ(grpc::StatusCode::NOT_FOUND, status.error_code())
       << "message = " << status.error_message();
-
-  std::cout << "Request = " << request.DebugString() << "\n\n";
-  std::cout << "Response = " << response.DebugString() << "\n";
-
   auto delete_bucket_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
 /**
- * @test Verify that 4MiB buffers result in an error
+ * @test Verify that buffers over 4MiB in size result in an error
  *
- * The gRPC API returns kResourceExhausted for messages larger than 4MiB, this
- * is a test to verify this is the behavior, and justifies adding additional
- * complexity in the code to break large InsertObject() requests into multiple
- * messages.
+ * The gRPC API returns kResourceExhausted for streams larger than 4MiB, this
+ * is a test to verify this is the behavior. There is a lot of extra complexity
+ * in the code to perform resumable uploads which break large InsertObject()
+ * requests into multiple streams. It would be unfortunate if that was
+ * unjustified.
  */
 TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
-  if (!UsingGrpc()) return;
+  if (!UsingGrpc()) GTEST_SKIP();
 
   auto client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -271,43 +224,56 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
                                      grpc::GoogleDefaultCredentials());
   auto stub = google::storage::v1::Storage::NewStub(channel);
 
-  grpc::ClientContext context;
-  google::storage::v1::Object object;
-  auto stream = stub->InsertObject(&context, &object);
-  auto const max_buffer_size = 4 * 1024 * 1024LL;
-  auto const chunk_size = 256 * 1024L;
-  static_assert(max_buffer_size % chunk_size == 0, "Broken test configuration");
+  auto constexpr kMaxBuffersize = 4 * 1024 * 1024LL;
+  auto constexpr kChunkSize = 256 * 1024L;
+  static_assert(kMaxBuffersize % kChunkSize == 0, "Broken test configuration");
 
-  google::storage::v1::InsertObjectRequest request;
-  auto& spec = *request.mutable_insert_object_spec();
-  auto& resource = *spec.mutable_resource();
-  resource.set_bucket(bucket_name);
-  resource.set_name(object_name);
-  spec.mutable_if_generation_match()->set_value(0);
+  auto send_in_chunks = [bucket_name, object_name, &stub,
+                         this](int desired_size) {
+    grpc::ClientContext context;
+    google::storage::v1::Object object;
+    auto stream = stub->InsertObject(&context, &object);
 
-  std::int64_t offset = 0;
-  auto send_chunk = [&stream, &request, &offset, this](int desired_size) {
-    auto data = MakeRandomData(desired_size);
+    google::storage::v1::InsertObjectRequest request;
+    auto& spec = *request.mutable_insert_object_spec();
+    auto& resource = *spec.mutable_resource();
+    resource.set_bucket(bucket_name);
+    resource.set_name(object_name);
+
+    std::uint64_t offset = 0;
+    auto data = MakeRandomData(kChunkSize);
     request.mutable_checksummed_data()->mutable_crc32c()->set_value(
         crc32c::Crc32c(data));
     request.mutable_checksummed_data()->set_content(std::move(data));
     request.set_write_offset(offset);
-    offset += desired_size;
-    return stream->Write(request);
+    (void)stream->Write(request, grpc::WriteOptions().set_write_through());
+
+    offset += kChunkSize;
+    data = MakeRandomData(desired_size - kChunkSize);
+    request.clear_insert_object_spec();
+    request.mutable_checksummed_data()->mutable_crc32c()->set_value(
+        crc32c::Crc32c(data));
+    request.mutable_checksummed_data()->set_content(std::move(data));
+    request.set_write_offset(offset);
+    request.set_finish_write(true);
+    (void)stream->Write(
+        request, grpc::WriteOptions().set_write_through().set_last_message());
+
+    return google::cloud::MakeStatusFromRpcError(stream->Finish());
   };
 
-  bool success = send_chunk(max_buffer_size - chunk_size);
-  ASSERT_TRUE(success);
-  request.clear_insert_object_spec();
+  // This creates a stream of exactly kMaxBufferSize
+  auto status = send_in_chunks(kMaxBuffersize);
+  ASSERT_STATUS_OK(status);
 
-  success = send_chunk(max_buffer_size - chunk_size);
-  ASSERT_TRUE(success);
-  success = send_chunk(max_buffer_size);
-  EXPECT_TRUE(success);
-  success = send_chunk(max_buffer_size + chunk_size);
-  EXPECT_FALSE(success);
-  auto status = google::cloud::MakeStatusFromRpcError(stream->Finish());
+  status = send_in_chunks(kMaxBuffersize + kChunkSize);
   EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
+
+  status = send_in_chunks(kMaxBuffersize + 2 * kChunkSize);
+  EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
+
+  auto delete_object_status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(delete_object_status);
 
   auto delete_bucket_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
