@@ -227,8 +227,8 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   auto constexpr kChunkSize = 256 * 1024L;
   static_assert(kMaxBuffersize % kChunkSize == 0, "Broken test configuration");
 
-  auto send_in_chunks = [bucket_name, object_name, &stub,
-                         this](int desired_size, std::int64_t chunk_size) {
+  auto send_in_chunks = [bucket_name, object_name, &stub, this](
+                            int desired_size, std::int64_t chunk_size) {
     grpc::ClientContext context;
     google::storage::v1::Object object;
     auto stream = stub->InsertObject(&context, &object);

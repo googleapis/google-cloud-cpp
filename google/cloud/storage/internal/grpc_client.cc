@@ -897,7 +897,7 @@ google::storage::v1::ListBucketsRequest GrpcClient::ToProto(
     // The maximum page size is 1,000 anyway, if this cast
     // fails the request was invalid (but it can mask errors)
     r.set_max_results(static_cast<google::protobuf::int32>(
-      request.GetOption<MaxResults>().value()));
+        request.GetOption<MaxResults>().value()));
   }
   r.set_page_token(request.page_token());
   r.set_project(request.project_id());
