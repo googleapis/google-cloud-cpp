@@ -103,7 +103,8 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 }  // anonymous namespace
 
 TEST_F(ThreadIntegrationTest, Unshared) {
-  std::string bucket_name = MakeRandomBucketName();
+  std::string bucket_name =
+      MakeRandomBucketName(/*prefix=*/"cloud-cpp-testing-");
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -183,7 +184,8 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
 
-  std::string bucket_name = MakeRandomBucketName();
+  std::string bucket_name =
+      MakeRandomBucketName(/*prefix=*/"cloud-cpp-testing-");
 
   auto id = LogSink::Instance().AddBackend(log_backend);
   StatusOr<BucketMetadata> meta = client.CreateBucketForProject(

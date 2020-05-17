@@ -25,6 +25,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::testing::AnyOf;
+using ::testing::Eq;
+
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
@@ -179,12 +182,15 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   EXPECT_FALSE(os.IsOpen());
   EXPECT_EQ(session_id, os.resumable_session_id());
   ASSERT_STATUS_OK(os.metadata());
-  ObjectMetadata meta = os.metadata().value();
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name_, meta.bucket());
-  if (UsingTestbench()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  // TODO(b/146890058) - gRPC does not return the object metadata.
+  if (!UsingGrpc()) {
+    ObjectMetadata meta = os.metadata().value();
+    EXPECT_EQ(object_name, meta.name());
+    EXPECT_EQ(bucket_name_, meta.bucket());
+    if (UsingTestbench()) {
+      EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+      EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    }
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -215,7 +221,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
+  // TODO(b/146800819) - accept both errors for now.
+  EXPECT_THAT(
+      os.metadata().status().code(),
+      AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
+      << " status=" << os.metadata().status();
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -253,6 +263,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
+  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
   auto constexpr kMiB = 1024 * 1024L;
   auto constexpr kChunkSize = 2 * kMiB;
 
@@ -288,6 +299,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
+  if (UsingGrpc()) GTEST_SKIP();
   auto constexpr kQuantum = 256 * 1024L;
   size_t constexpr kChunkSize = 2 * kQuantum;
 
@@ -325,7 +337,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
-  if (UsingTestbench()) GTEST_SKIP();
+  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

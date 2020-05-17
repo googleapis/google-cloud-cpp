@@ -65,6 +65,8 @@ inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
 }
 
 namespace internal {
+class GrpcClient;
+
 /**
  * Defines common code to both `BucketAccessControl` and `ObjectAccessControl`.
  *
@@ -128,6 +130,8 @@ class AccessControlCommon {
                               nl::json const& json);
 
  private:
+  friend class GrpcClient;
+
   std::string bucket_;
   std::string domain_;
   std::string email_;

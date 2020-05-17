@@ -40,7 +40,7 @@ class StorageIntegrationTest : public ::testing::Test {
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
   static std::unique_ptr<RetryPolicy> TestRetryPolicy();
 
-  std::string MakeRandomBucketName();
+  std::string MakeRandomBucketName(std::string prefix = {});
   std::string MakeRandomObjectName();
   std::string MakeRandomFilename();
 
@@ -58,6 +58,8 @@ class StorageIntegrationTest : public ::testing::Test {
   std::string MakeRandomData(std::size_t desired_size);
 
   static bool UsingTestbench();
+
+  static bool UsingGrpc();
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();

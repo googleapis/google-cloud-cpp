@@ -251,6 +251,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -271,6 +273,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -296,6 +300,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -322,6 +328,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -344,6 +352,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -365,6 +375,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -385,6 +397,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -439,6 +453,8 @@ TEST_P(ObjectInsertIntegrationTest,
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
+  // TODO(b/146782749) - enable this test once the gRPC server is fixed
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

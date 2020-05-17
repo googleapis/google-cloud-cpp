@@ -22,10 +22,19 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::ElementsAre;
+
 TEST(Sha256Hash, HexEncodeEmpty) { EXPECT_EQ("", HexEncode({})); }
 
 TEST(Sha256Hash, HexEncodeBasic) {
   EXPECT_EQ("0001ff7f10", HexEncode({0x00, 0x01, 0xFF, 0x7F, 0x10}));
+}
+
+TEST(Sha256Hash, HexDecodeEmpty) { EXPECT_TRUE(HexDecode({}).empty()); }
+
+TEST(Sha256Hash, HexDecodeBasic) {
+  EXPECT_THAT(HexDecode("0001ff7f10"),
+              ElementsAre(0x00, 0x01, 0xFF, 0x7F, 0x10));
 }
 
 TEST(Sha256Hash, Empty) {

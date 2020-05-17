@@ -35,6 +35,9 @@ std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes);
 /// Return @p bytes encoded as a lowercase hexadecimal string.
 std::string HexEncode(std::vector<std::uint8_t> const& bytes);
 
+/// Parse @p str as a hex-encoded string.
+std::vector<std::uint8_t> HexDecode(std::string const& str);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

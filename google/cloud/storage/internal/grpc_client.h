@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,39 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
 
-#include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
-#include "google/cloud/storage/retry_policy.h"
-#include "google/cloud/storage/version.h"
+#include <google/storage/v1/storage.grpc.pb.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/**
- * Decorates a `RawClient` to retry each operation.
- */
-class RetryClient : public RawClient,
-                    public std::enable_shared_from_this<RetryClient> {
+
+class GrpcClient : public RawClient,
+                   public std::enable_shared_from_this<GrpcClient> {
  public:
-  struct DefaultPolicies {};
+  explicit GrpcClient(ClientOptions options);
+  ~GrpcClient() override = default;
 
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       DefaultPolicies unused);
+  /// The gRPC server rejects messages that are larger than 4 MiB.
+  static std::size_t constexpr kMaxInsertObjectWriteRequestSize =
+      4 * 1024 * 1024L;
 
-  template <typename... Policies>
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       Policies&&... policies)
-      : RetryClient(std::move(client), DefaultPolicies{}) {
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
-
-  ~RetryClient() override = default;
+  //@{
+  /// @name Implement the ResumableSession operations.
+  // Note that these member functions are not inherited from RawClient, they are
+  // called only by `GrpcResumableUploadSession`, because the retry loop for
+  // them is very different from the standard retry loop. Also note that these
+  // are virtual functions only because we need to override them in the unit
+  // tests.
+  using UploadWriter =
+      grpc::ClientWriterInterface<google::storage::v1::InsertObjectRequest>;
+  virtual std::unique_ptr<UploadWriter> CreateUploadWriter(
+      grpc::ClientContext&, google::storage::v1::Object&);
+  virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const&);
+  //@}
 
   ClientOptions const& client_options() const override;
 
@@ -79,9 +82,6 @@ class RetryClient : public RawClient,
   StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
 
-  /// Call ReadObject() but do not wrap the result in a RetryObjectReadSource.
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectNotWrapped(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&);
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
 
@@ -98,7 +98,7 @@ class RetryClient : public RawClient,
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
-      std::string const& request) override;
+      std::string const& upload_id) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -159,33 +159,51 @@ class RetryClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  std::shared_ptr<RawClient> client() const { return client_; }
+  static BucketMetadata FromProto(google::storage::v1::Bucket bucket);
+  static ObjectMetadata FromProto(google::storage::v1::Object object);
+
+  static google::storage::v1::ObjectAccessControl ToProto(
+      ObjectAccessControl const& acl);
+  static ObjectAccessControl FromProto(
+      google::storage::v1::ObjectAccessControl acl);
+
+  static google::storage::v1::CommonEnums::Projection ToProto(
+      Projection const& p);
+  static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(
+      PredefinedAcl const& acl);
+  static google::storage::v1::CommonEnums::PredefinedObjectAcl ToProtoObject(
+      PredefinedAcl const& acl);
+  static google::storage::v1::CommonEnums::PredefinedObjectAcl ToProto(
+      PredefinedDefaultObjectAcl const& acl);
+  static google::storage::v1::Bucket ToProto(BucketMetadata const& metadata);
+  static google::storage::v1::InsertBucketRequest ToProto(
+      CreateBucketRequest const& request);
+  static google::storage::v1::ListBucketsRequest ToProto(
+      ListBucketsRequest const& request);
+  static google::storage::v1::GetBucketRequest ToProto(
+      GetBucketMetadataRequest const& request);
+  static google::storage::v1::DeleteBucketRequest ToProto(
+      DeleteBucketRequest const& request);
+
+  static google::storage::v1::InsertObjectRequest ToProto(
+      InsertObjectMediaRequest const& request);
+  static google::storage::v1::DeleteObjectRequest ToProto(
+      DeleteObjectRequest const& request);
+  static google::storage::v1::StartResumableWriteRequest ToProto(
+      ResumableUploadRequest const& request);
+  static google::storage::v1::QueryWriteStatusRequest ToProto(
+      QueryResumableUploadRequest const& request);
+  static google::storage::v1::GetObjectMediaRequest ToProto(
+      ReadObjectRangeRequest const& request);
+
+  static std::string Crc32cFromProto(google::protobuf::UInt32Value const&);
+  static std::uint32_t Crc32cToProto(std::string const&);
+  static std::string MD5FromProto(std::string const&);
+  static std::string MD5ToProto(std::string const&);
 
  private:
-  void Apply(RetryPolicy const& policy) {
-    retry_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(BackoffPolicy const& policy) {
-    backoff_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(IdempotencyPolicy const& policy) {
-    idempotency_policy_ = policy.clone();
-  }
-
-  void ApplyPolicies() {}
-
-  template <typename P, typename... Policies>
-  void ApplyPolicies(P&& head, Policies&&... policies) {
-    Apply(std::forward<P>(head));
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
-
-  std::shared_ptr<RawClient> client_;
-  std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_;
+  ClientOptions options_;
+  std::shared_ptr<google::storage::v1::Storage::Stub> stub_;
 };
 
 }  // namespace internal
@@ -194,4 +212,4 @@ class RetryClient : public RawClient,
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H

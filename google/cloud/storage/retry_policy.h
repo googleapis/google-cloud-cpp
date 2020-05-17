@@ -30,6 +30,7 @@ struct StatusTraits {
   static bool IsPermanentFailure(Status const& status) {
     return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kInternal &&
+           status.code() != StatusCode::kResourceExhausted &&
            status.code() != StatusCode::kUnavailable;
   }
 };

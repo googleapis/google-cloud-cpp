@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,39 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
 
-#include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
-#include "google/cloud/storage/retry_policy.h"
-#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/**
- * Decorates a `RawClient` to retry each operation.
- */
-class RetryClient : public RawClient,
-                    public std::enable_shared_from_this<RetryClient> {
+
+class HybridClient : public RawClient {
  public:
-  struct DefaultPolicies {};
-
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       DefaultPolicies unused);
-
-  template <typename... Policies>
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       Policies&&... policies)
-      : RetryClient(std::move(client), DefaultPolicies{}) {
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
-
-  ~RetryClient() override = default;
+  explicit HybridClient(ClientOptions options);
+  ~HybridClient() override = default;
 
   ClientOptions const& client_options() const override;
 
@@ -79,9 +63,6 @@ class RetryClient : public RawClient,
   StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
 
-  /// Call ReadObject() but do not wrap the result in a RetryObjectReadSource.
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectNotWrapped(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&);
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
 
@@ -98,7 +79,7 @@ class RetryClient : public RawClient,
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
-      std::string const& request) override;
+      std::string const& upload_id) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -159,33 +140,9 @@ class RetryClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  std::shared_ptr<RawClient> client() const { return client_; }
-
  private:
-  void Apply(RetryPolicy const& policy) {
-    retry_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(BackoffPolicy const& policy) {
-    backoff_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(IdempotencyPolicy const& policy) {
-    idempotency_policy_ = policy.clone();
-  }
-
-  void ApplyPolicies() {}
-
-  template <typename P, typename... Policies>
-  void ApplyPolicies(P&& head, Policies&&... policies) {
-    Apply(std::forward<P>(head));
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
-
-  std::shared_ptr<RawClient> client_;
-  std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_;
+  std::shared_ptr<GrpcClient> grpc_;
+  std::shared_ptr<CurlClient> curl_;
 };
 
 }  // namespace internal
@@ -194,4 +151,4 @@ class RetryClient : public RawClient,
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H

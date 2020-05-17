@@ -27,6 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ObjectAccessControlParser;
+class GrpcClient;
 }  // namespace internal
 
 /**
@@ -87,6 +88,7 @@ class ObjectAccessControl : private internal::AccessControlCommon {
 
  private:
   friend struct internal::ObjectAccessControlParser;
+  friend class internal::GrpcClient;
 
   std::int64_t generation_;
   std::string object_;
