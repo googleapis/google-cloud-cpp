@@ -122,7 +122,7 @@ ${CMAKE_COMMAND} \
 echo
 io::log_yellow "Finished CMake config"
 
-if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
+if [[ "${CLANG_TIDY:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
   io::log_yellow "clang-tidy config:"
   clang-tidy -dump-config
 fi
