@@ -177,30 +177,31 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 enum class Severity : int {
   /// Use this level for messages that indicate the code is entering and leaving
   /// functions.
-  GCP_LS_TRACE,
+  GCP_LS_TRACE,  // NOLINT(readability-identifier-naming)
   /// Use this level for debug messages that should not be present in
   /// production.
   GCP_LS_DEBUG,
   /// Informational messages, such as normal progress.
-  GCP_LS_INFO,
+  GCP_LS_INFO,  // NOLINT(readability-identifier-naming)
   /// Informational messages, such as unusual, but expected conditions.
-  GCP_LS_NOTICE,
+  GCP_LS_NOTICE,  // NOLINT(readability-identifier-naming)
   /// An indication of problems, users may need to take action.
-  GCP_LS_WARNING,
+  GCP_LS_WARNING,  // NOLINT(readability-identifier-naming)
   /// An error has been detected.  Do not use for normal conditions, such as
   /// remote servers disconnecting.
-  GCP_LS_ERROR,
+  GCP_LS_ERROR,  // NOLINT(readability-identifier-naming)
   /// The system is in a critical state, such as running out of local resources.
-  GCP_LS_CRITICAL,
+  GCP_LS_CRITICAL,  // NOLINT(readability-identifier-naming)
   /// The system is at risk of immediate failure.
-  GCP_LS_ALERT,
+  GCP_LS_ALERT,  // NOLINT(readability-identifier-naming)
   /// The system is about to crash or terminate.
-  GCP_LS_FATAL,
+  GCP_LS_FATAL,  // NOLINT(readability-identifier-naming)
   /// The highest possible severity level.
-  GCP_LS_HIGHEST = int(GCP_LS_FATAL),
+  GCP_LS_HIGHEST = int(GCP_LS_FATAL),  // NOLINT(readability-identifier-naming)
   /// The lowest possible severity level.
-  GCP_LS_LOWEST = int(GCP_LS_TRACE),
+  GCP_LS_LOWEST = int(GCP_LS_TRACE),  // NOLINT(readability-identifier-naming)
   /// The lowest level that is enabled at compile-time.
+  // NOLINTNEXTLINE(readability-identifier-naming)
   GCP_LS_LOWEST_ENABLED = int(GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED),
 };
 
@@ -296,7 +297,9 @@ class LogSink {
     return static_cast<Severity>(minimum_severity_.load());
   }
 
+  // NOLINTNEXTLINE(google-runtime-int)
   long AddBackend(std::shared_ptr<LogBackend> backend);
+  // NOLINTNEXTLINE(google-runtime-int)
   void RemoveBackend(long id);
   void ClearBackends();
   std::size_t BackendCount() const;
@@ -317,14 +320,17 @@ class LogSink {
  private:
   void EnableStdClogImpl();
   void DisableStdClogImpl();
+  // NOLINTNEXTLINE(google-runtime-int)
   long AddBackendImpl(std::shared_ptr<LogBackend> backend);
+  // NOLINTNEXTLINE(google-runtime-int)
   void RemoveBackendImpl(long id);
 
   std::atomic<bool> empty_;
   std::atomic<int> minimum_severity_;
   std::mutex mutable mu_;
-  long next_id_;
-  long clog_backend_id_;
+  long next_id_{0};          // NOLINT(google-runtime-int)
+  long clog_backend_id_{0};  // NOLINT(google-runtime-int)
+  // NOLINTNEXTLINE(google-runtime-int)
   std::map<long, std::shared_ptr<LogBackend>> backends_;
 };
 
@@ -347,11 +353,11 @@ struct NullStream {
 /**
  * Define the class to capture a log message.
  *
- * @tparam compile_time_enabled this represents whether the severity has been
+ * @tparam CompileTimeEnabled this represents whether the severity has been
  *   disabled at compile-time. The class is specialized for `false` to minimize
  *   the run-time impact of (and, in practice, completely elide) disabled logs.
  */
-template <bool compile_time_enabled>
+template <bool CompileTimeEnabled>
 class Logger {
  public:
   Logger(Severity severity, char const* function, char const* filename,
@@ -412,8 +418,10 @@ class Logger<false> {
    * @name Provide trivial implementations that meet the generic `Logger<bool>`
    * interface.
    */
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   constexpr bool enabled() const { return false; }
   void LogTo(LogSink&) {}
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   NullStream Stream() { return NullStream(); }
   //@}
 };

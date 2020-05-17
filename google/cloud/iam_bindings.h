@@ -37,6 +37,7 @@ class IamBindings {
  public:
   IamBindings() = default;
 
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit IamBindings(std::vector<IamBinding> bindings) {
     for (auto& it : bindings) {
       bindings_.insert({std::move(it.role()), std::move(it.members())});

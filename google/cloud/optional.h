@@ -50,19 +50,19 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * TODO(#687) - replace with absl::optional<> or std::optional<> when possible.
  */
 template <typename T>
-class optional {
+class optional {  // NOLINT(readability-identifier-naming)
  private:
   template <typename T1, typename U1>
   using AllowImplicit = typename std::is_convertible<U1&&, T1>;
 
  public:
-  optional() : buffer_{}, has_value_(false) {}
+  optional() : buffer_{} {}
   optional(optional const& rhs) : has_value_(rhs.has_value_) {
     if (has_value_) {
       new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
     }
   }
-  optional(optional&& rhs) : has_value_(rhs.has_value_) {
+  optional(optional&& rhs) noexcept : has_value_(rhs.has_value_) {
     if (has_value_) {
       new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
     }
@@ -73,7 +73,8 @@ class optional {
                     std::is_constructible<T, U&&>::value &&
                     AllowImplicit<T, U>::value,
                 int>::type = 0>
-  optional(U&& x) : has_value_(true) {
+  // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
+  optional(U&& x) : has_value_(true) {  // NOLINT(google-explicit-constructor)
     new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(x));
   }
   template <typename U = T,
@@ -82,6 +83,7 @@ class optional {
                     std::is_constructible<T, U&&>::value &&
                     !AllowImplicit<T, U>::value,
                 int>::type = 0>
+  // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
   explicit optional(U&& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(x));
   }
@@ -133,7 +135,7 @@ class optional {
   // cv-qualified version of optional<T>, so we need to apply std::decay<> to
   // it first.
   template <typename U = T>
-  typename std::enable_if<
+  typename std::enable_if<  // NOLINT(misc-unconventional-assign-operator)
       !std::is_same<optional, typename std::decay<U>::type>::value,
       optional>::type&
   operator=(U&& rhs) {
@@ -227,7 +229,7 @@ class optional {
   // either.
   using aligned_storage_t = std::aligned_storage<sizeof(T), alignof(T)>;
   typename aligned_storage_t::type buffer_;
-  bool has_value_;
+  bool has_value_{false};
 };
 
 template <typename T>
