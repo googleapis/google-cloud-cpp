@@ -107,10 +107,12 @@ void BulkApply(google::cloud::bigtable::Table table,
       char buf[32];
       snprintf(buf, sizeof(buf), "key-%06d", i);
       cbt::SingleRowMutation mutation(buf);
-      mutation.emplace_back(
-          cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
-      mutation.emplace_back(
-          cbt::SetCell("fam", "col1", "value1-" + std::to_string(i)));
+      mutation.emplace_back(cbt::SetCell("fam", "col0",
+                                         /*std::chrono::milliseconds(0),*/
+                                         "value0-" + std::to_string(i)));
+      mutation.emplace_back(cbt::SetCell("fam", "col1",
+                                         /*std::chrono::milliseconds(0),*/
+                                         "value1-" + std::to_string(i)));
       bulk.emplace_back(std::move(mutation));
     }
     std::vector<cbt::FailedMutation> failures =

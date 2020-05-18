@@ -136,4 +136,9 @@ if should_run_integration_tests; then
     -//google/cloud/storage/examples:storage_service_account_samples \
     -//google/cloud/storage/tests:service_account_integration_test
 
+  # TODO(coryan) - DEBUG DO NOT MERGE
+  "${BAZEL_BIN}" test \
+    "${bazel_args[@]}" --runs_per_test=100 \
+    -- //google/cloud/bigtable:data_snippets
+
 fi
