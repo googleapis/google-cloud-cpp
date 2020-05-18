@@ -112,6 +112,23 @@ TEST(StorageExamplesCommon, CommandUsage) {
   EXPECT_EQ(2, test_calls);
 }
 
+TEST(StorageExamplesCommon, CommandError) {
+  int test_calls = 0;
+  Example example({
+      {"test",
+       [&](std::vector<std::string> const& args) {
+         ++test_calls;
+         if (args.empty()) throw Usage("test-usage");
+         if (args[0] == "--help") throw Usage("usage with --help");
+         throw std::runtime_error("some problem");
+       }},
+  });
+  char const* argv[] = {"argv0", "test", "a0"};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  EXPECT_THROW(example.Run(argc, argv), std::runtime_error);
+  EXPECT_EQ(2, test_calls);
+}
+
 TEST(ExampleDriverTest, CheckEnvironmentVariablesNormal) {
   google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "a");
   google::cloud::testing_util::ScopedEnvironment test_b("TEST_B", "b");
