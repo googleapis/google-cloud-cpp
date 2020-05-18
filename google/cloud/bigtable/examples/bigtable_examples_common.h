@@ -26,11 +26,11 @@ namespace cloud {
 namespace bigtable {
 namespace examples {
 
-using ::google::cloud::internal::CheckEnvironmentVariablesAreSet;
-using ::google::cloud::internal::Commands;
-using ::google::cloud::internal::CommandType;
-using ::google::cloud::internal::Example;
-using ::google::cloud::internal::Usage;
+using ::google::cloud::testing_util::CheckEnvironmentVariablesAreSet;
+using ::google::cloud::testing_util::Commands;
+using ::google::cloud::testing_util::CommandType;
+using ::google::cloud::testing_util::Example;
+using ::google::cloud::testing_util::Usage;
 
 std::string TablePrefix(std::string const& prefix,
                         std::chrono::system_clock::time_point tp);

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
+namespace testing_util {
 
 /// Report errors parsing the command-line.
 class Usage : public std::runtime_error {
@@ -88,7 +88,7 @@ class Example {
 /// Verify that a list of environment variables are set or throw.
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
-}  // namespace internal
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

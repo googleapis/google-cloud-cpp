@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
+namespace testing_util {
 namespace {
 
 using ::testing::HasSubstr;
@@ -160,7 +160,7 @@ TEST(ExampleDriverTest, CheckEnvironmentVariablesSetEmpty) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

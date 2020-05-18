@@ -149,7 +149,7 @@ void DeleteSubscription(google::cloud::pubsub::SubscriberClient client,
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::internal;
+  namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -190,9 +190,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 }  // namespace
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
-  using ::google::cloud::internal::Example;
   using ::google::cloud::pubsub::examples::CreatePublisherCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
+  using ::google::cloud::testing_util::Example;
 
   Example example({
       CreatePublisherCommand("create-topic", {"project-id", "topic-id"},
