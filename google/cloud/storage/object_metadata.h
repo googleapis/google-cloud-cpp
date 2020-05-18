@@ -86,7 +86,7 @@ inline bool operator>=(CustomerEncryption const& lhs,
  */
 class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
  public:
-  ObjectMetadata() : generation_(0), size_(0) {}
+  ObjectMetadata() = default;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.

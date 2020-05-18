@@ -962,16 +962,16 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
   };
   // These defaults were obtained by experiments summarized in
   // https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-566237128
-  MaxStreams const k_default_max_streams(64);
-  MinStreamSize const k_default_min_stream_size(32 * 1024 * 1024);
+  MaxStreams const default_max_streams(64);
+  MinStreamSize const default_min_stream_size(32 * 1024 * 1024);
 
   std::uintmax_t const min_stream_size =
       (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
                                         options)
-                                        .value_or(k_default_min_stream_size)
+                                        .value_or(default_min_stream_size)
                                         .value());
   auto const max_streams = ExtractFirstOccurenceOfType<MaxStreams>(options)
-                               .value_or(k_default_max_streams)
+                               .value_or(default_max_streams)
                                .value();
 
   std::size_t const wanted_num_streams =
