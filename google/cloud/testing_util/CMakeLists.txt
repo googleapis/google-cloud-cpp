@@ -14,9 +14,8 @@
 # limitations under the License.
 # ~~~
 
-# We check this separately. A library may wish to use the testing util lib but
-# not build all of the tests.
-if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+# We check this separately.
+if (BUILD_TESTING)
     add_library(
         google_cloud_cpp_testing # cmake-format: sort
         assert_ok.cc

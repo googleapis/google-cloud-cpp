@@ -120,10 +120,6 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS)
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
-       "Install the testing utilities." OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
-
 include(CMakeDependentOption)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY "Enable building the BigQuery library."
