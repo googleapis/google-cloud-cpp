@@ -25,7 +25,7 @@ namespace {
 using ::testing::HasSubstr;
 
 TEST(PubSubSamplesCommon, PublisherCommand) {
-  using ::google::cloud::internal::Usage;
+  using ::google::cloud::testing_util::Usage;
 
   // Pretend we are using the emulator to avoid loading the default
   // credentials from $HOME, which do not exist when running with Bazel.
@@ -56,7 +56,7 @@ TEST(PubSubSamplesCommon, PublisherCommand) {
 }
 
 TEST(PubSubSamplesCommon, SubscriberCommand) {
-  using ::google::cloud::internal::Usage;
+  using ::google::cloud::testing_util::Usage;
 
   // Pretend we are using the emulator to avoid loading the default
   // credentials from $HOME, which do not exist when running with Bazel.

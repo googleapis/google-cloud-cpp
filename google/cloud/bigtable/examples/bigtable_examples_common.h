@@ -18,19 +18,19 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace examples {
 
-using ::google::cloud::internal::CheckEnvironmentVariablesAreSet;
-using ::google::cloud::internal::Commands;
-using ::google::cloud::internal::CommandType;
-using ::google::cloud::internal::Example;
-using ::google::cloud::internal::Usage;
+using ::google::cloud::testing_util::CheckEnvironmentVariablesAreSet;
+using ::google::cloud::testing_util::Commands;
+using ::google::cloud::testing_util::CommandType;
+using ::google::cloud::testing_util::Example;
+using ::google::cloud::testing_util::Usage;
 
 std::string TablePrefix(std::string const& prefix,
                         std::chrono::system_clock::time_point tp);

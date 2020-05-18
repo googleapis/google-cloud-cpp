@@ -14,9 +14,8 @@
 # limitations under the License.
 # ~~~
 
-# We check this separately. A library may wish to use the testing util lib but
-# not build all of the tests.
-if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+# We check this separately.
+if (BUILD_TESTING)
     add_library(
         google_cloud_cpp_testing # cmake-format: sort
         assert_ok.cc
@@ -25,6 +24,8 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
+        example_driver.cc
+        example_driver.h
         expect_exception.h
         expect_future_error.h
         scoped_environment.cc
@@ -39,7 +40,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
-        assert_ok_test.cc scoped_environment_test.cc)
+        assert_ok_test.cc example_driver_test.cc scoped_environment_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
@@ -134,14 +135,14 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Testing Utilities used by the Google Cloud C++ Client Libraries.")
 
-    # Create and install the pkg-config files. First for testing_utils:
+    # Create and install the pkg-config files. First for testing_util:
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing")
     set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                    "google_cloud_cpp_testing.pc" @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing.pc"
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-    # Then for testing_utils_grpc:
+    # Then for testing_grpc:
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing_grpc")
     set(GOOGLE_CLOUD_CPP_PC_REQUIRES
         "google_cloud_cpp_testing google_cloud_cpp_common")

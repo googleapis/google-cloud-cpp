@@ -16,19 +16,19 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace examples {
 
-using ::google::cloud::internal::CheckEnvironmentVariablesAreSet;
-using ::google::cloud::internal::Commands;
-using ::google::cloud::internal::CommandType;
-using ::google::cloud::internal::Example;
-using ::google::cloud::internal::Usage;
+using ::google::cloud::testing_util::CheckEnvironmentVariablesAreSet;
+using ::google::cloud::testing_util::Commands;
+using ::google::cloud::testing_util::CommandType;
+using ::google::cloud::testing_util::Example;
+using ::google::cloud::testing_util::Usage;
 
 bool UsingTestbench();
 

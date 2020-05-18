@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H
 
 #include "google/cloud/internal/port_platform.h"
 #include "google/cloud/version.h"
@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
+namespace testing_util {
 
 /// Report errors parsing the command-line.
 class Usage : public std::runtime_error {
@@ -88,10 +88,10 @@ class Example {
 /// Verify that a list of environment variables are set or throw.
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
-}  // namespace internal
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H

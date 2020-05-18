@@ -20,7 +20,7 @@ namespace cloud {
 namespace pubsub {
 namespace examples {
 
-google::cloud::internal::Commands::value_type CreatePublisherCommand(
+google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     PublisherCommand const& command) {
   auto adapter = [=](std::vector<std::string> const& argv) {
@@ -31,17 +31,17 @@ google::cloud::internal::Commands::value_type CreatePublisherCommand(
       for (auto const& a : arg_names) {
         os << " <" << a << ">";
       }
-      throw google::cloud::internal::Usage{std::move(os).str()};
+      throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
     google::cloud::pubsub::PublisherClient client(
         google::cloud::pubsub::MakePublisherConnection());
     command(std::move(client), std::move(argv));
   };
-  return google::cloud::internal::Commands::value_type{name,
-                                                       std::move(adapter)};
+  return google::cloud::testing_util::Commands::value_type{name,
+                                                           std::move(adapter)};
 }
 
-google::cloud::internal::Commands::value_type CreateSubscriberCommand(
+google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     SubscriberCommand const& command) {
   auto adapter = [=](std::vector<std::string> const& argv) {
@@ -52,14 +52,14 @@ google::cloud::internal::Commands::value_type CreateSubscriberCommand(
       for (auto const& a : arg_names) {
         os << " <" << a << ">";
       }
-      throw google::cloud::internal::Usage{std::move(os).str()};
+      throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
     google::cloud::pubsub::SubscriberClient client(
         google::cloud::pubsub::MakeSubscriberConnection());
     command(std::move(client), std::move(argv));
   };
-  return google::cloud::internal::Commands::value_type{name,
-                                                       std::move(adapter)};
+  return google::cloud::testing_util::Commands::value_type{name,
+                                                           std::move(adapter)};
 }
 
 }  // namespace examples

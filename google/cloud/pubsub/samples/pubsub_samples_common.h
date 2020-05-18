@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/pubsub/subscriber_client.h"
-#include "google/cloud/internal/example_driver.h"
+#include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
 namespace cloud {
@@ -29,11 +29,11 @@ using PublisherCommand = std::function<void(
 using SubscriberCommand = std::function<void(
     google::cloud::pubsub::SubscriberClient, std::vector<std::string> const&)>;
 
-google::cloud::internal::Commands::value_type CreatePublisherCommand(
+google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     PublisherCommand const& command);
 
-google::cloud::internal::Commands::value_type CreateSubscriberCommand(
+google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     SubscriberCommand const& command);
 

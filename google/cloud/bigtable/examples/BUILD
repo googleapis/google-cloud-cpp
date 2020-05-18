@@ -26,6 +26,7 @@ cc_library(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
     ],

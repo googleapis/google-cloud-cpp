@@ -25,6 +25,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
     ],
 )
 
@@ -57,6 +58,7 @@ load(":storage_examples.bzl", "storage_examples")
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples]

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/example_driver.h"
+#include "google/cloud/testing_util/example_driver.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
 
@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
+namespace testing_util {
 
 Example::Example(std::map<std::string, CommandType> commands)
     : commands_(std::move(commands)) {
@@ -97,7 +97,7 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
   }
 }
 
-}  // namespace internal
+}  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
