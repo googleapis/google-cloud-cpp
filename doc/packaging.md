@@ -263,9 +263,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -356,9 +356,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -498,9 +498,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -614,9 +614,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -729,9 +729,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -859,9 +859,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -948,9 +948,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -1070,9 +1070,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -1198,9 +1198,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -1345,9 +1345,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.9.0.tar.gz && \
-    tar -xf v0.9.0.tar.gz && \
-    cd cpp-cmakefiles-0.9.0 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
+    tar -xf v0.10.0.tar.gz && \
+    cd cpp-cmakefiles-0.10.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
