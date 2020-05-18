@@ -139,13 +139,18 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
   io::log "Running clang-tidy for: "
-  # TODO(#3958) - use a simple regular expression like '\.(h|cc)$' when all
-  # targets are clang-tidy clean.
+  # TODO(#3958) - Combine these two invocations of "xargs clang-tidy" into a
+  # single one using a simple regular expression like '\.(h|cc)$' when all
+  # targets are clang-tidy clean. Until then, we format all changed .cc files,
+  # followed by all changed .h files that also match the HeaderFilterRegex from
+  # the .clang-tidy file.
+  git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
+    grep -E "\.cc$" | grep -v 'google/cloud/bigtable/benchmarks/' |
+    xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
   RE=$(grep -o '^HeaderFilterRegex.*' "${PROJECT_ROOT}/.clang-tidy" |
     sed -e 's/HeaderFilterRegex: "//' -e 's/"//')
-  RE="(\.cc|${RE}\.h)$"
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E "${RE}" | grep -v 'google/cloud/bigtable/benchmarks/' |
+    grep -E "\.h$" | grep -E "${RE}" | grep -v 'google/cloud/bigtable/benchmarks/' |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
