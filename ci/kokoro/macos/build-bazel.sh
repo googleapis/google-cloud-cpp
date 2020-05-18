@@ -139,6 +139,6 @@ if should_run_integration_tests; then
   # TODO(coryan) - DEBUG DO NOT MERGE
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" --runs_per_test=100 \
-    -- //google/cloud/bigtable:data_snippets
+    -- //google/cloud/bigtable/examples:data_snippets
 
 fi
