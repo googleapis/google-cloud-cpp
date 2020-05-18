@@ -32,9 +32,9 @@ using ::google::cloud::testing_util::IsProtoEqual;
 TEST(GrpcClientFromProto, BucketAllFields) {
   storage_proto::Bucket input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-# TODO(b/137665304) - convert acl() field.
-# TODO(b/137666290) - convert default_object_acl() field.
-# TODO(b/137665068) - convert lifecycle
+# TODO(#4174) - convert acl() field.
+# TODO(#4173) - convert default_object_acl() field.
+# TODO(#4165) - convert lifecycle
     time_created: {
       seconds: 1565194924
       nanos: 123456789
@@ -43,7 +43,7 @@ TEST(GrpcClientFromProto, BucketAllFields) {
     name: "test-bucket"
     project_number: 123456
     metageneration: 1234567
-# TODO(b/137663603) - convert cors() field.
+# TODO(#4169) - convert cors() field.
     location: "test-location"
     storage_class: "test-storage-class"
     etag: "test-etag"
@@ -54,13 +54,13 @@ TEST(GrpcClientFromProto, BucketAllFields) {
     default_event_based_hold: true
     labels: { key: "test-key-1" value: "test-value-1" }
     labels: { key: "test-key-2" value: "test-value-2" }
-# TODO(b/137664907) - convert website() field.
-# TODO(b/137665070) - convert versioning() field.
-# TODO(b/137663316) - convert logging() field.
-# TODO(b/137663320) - convert owner() field.
-# TODO(b/137663319) - convert encryption() field.
-# TODO(b/137665065) - convert billing() field.
-# TODO(b/137665069) - convert retention_policy() field.
+# TODO(#4168) - convert website() field.
+# TODO(#4167) - convert versioning() field.
+# TODO(#4172) - convert logging() field.
+# TODO(#4170) - convert owner() field.
+# TODO(#4171) - convert encryption() field.
+# TODO(#4164) - convert billing() field.
+# TODO(#4166) - convert retention_policy() field.
 )""",
                                                             &input));
 
@@ -99,7 +99,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     content_encoding: "test-content-encoding"
     content_disposition: "test-content-disposition"
     cache_control: "test-cache-control"
-# TODO(b/137666290) - convert acl() field.
+# TODO(#4217) - convert acl() field.
     content_language: "test-content-language"
     metageneration: 42
     time_deleted: {
@@ -338,7 +338,7 @@ TEST(GrpcClientToProto, BucketMetadata) {
   storage_proto::Bucket expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     name: "test-bucket"
-# TODO(b/137739543) - convert the other fields.
+# TODO(#4173) - convert the other fields.
 )""",
                                                             &expected));
 
@@ -352,7 +352,7 @@ TEST(GrpcClientToProto, CreateBucketRequestSimple) {
     project: "test-project-id"
     bucket: {
       name: "test-bucket"
-# TODO(b/137739543) - convert the other fields.
+# TODO(#4173) - convert the other fields.
     }
 )""",
                                                             &expected));
@@ -376,7 +376,7 @@ TEST(GrpcClientToProto, CreateBucketRequestAllOptions) {
     projection: FULL
     bucket: {
       name: "test-bucket"
-# TODO(b/137739543) - convert the other fields.
+# TODO(#4173) - convert the other fields.
     }
     common_request_params: {
       quota_user: "test-quota-user"

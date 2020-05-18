@@ -467,7 +467,7 @@ void SetCommonParameters(GrpcRequest& request, StorageRequest const& req) {
     request.mutable_common_request_params()->set_quota_user(
         req.template GetOption<QuotaUser>().value());
   }
-  // TODO(b/139062142) - what do we do with FieldMask, as the representation for
+  // TODO(#4215) - what do we do with FieldMask, as the representation for
   // `fields` is different.
 }
 
@@ -632,9 +632,9 @@ std::chrono::system_clock::time_point AsChronoTimepoint(
 
 BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   BucketMetadata metadata;
-  // TODO(b/137665304) - convert acl() field.
-  // TODO(b/137666290) - convert default_object_acl() field.
-  // TODO(b/137665068) - convert lifecycle
+  // TODO(#4174) - convert acl() field.
+  // TODO(#4173) - convert default_object_acl() field.
+  // TODO(#4165) - convert lifecycle
   if (bucket.has_time_created()) {
     metadata.time_created_ = AsChronoTimepoint(bucket.time_created());
   }
@@ -649,7 +649,7 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   }
   metadata.project_number_ = bucket.project_number();
   metadata.metageneration_ = bucket.metageneration();
-  // TODO(b/137663603) - convert cors() field.
+  // TODO(#4169) - convert cors() field.
   metadata.location_ = std::move(*bucket.mutable_location());
   metadata.storage_class_ = std::move(*bucket.mutable_storage_class());
   metadata.etag_ = std::move(*bucket.mutable_etag());
@@ -660,13 +660,13 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   for (auto& kv : *bucket.mutable_labels()) {
     metadata.labels_.emplace(std::make_pair(kv.first, std::move(kv.second)));
   }
-  // TODO(b/137664907) - convert website() field.
-  // TODO(b/137665070) - convert versioning() field.
-  // TODO(b/137663316) - convert logging() field.
-  // TODO(b/137663320) - convert owner() field.
-  // TODO(b/137663319) - convert encryption() field.
-  // TODO(b/137665065) - convert billing() field.
-  // TODO(b/137665069) - convert retention_policy() field.
+  // TODO(#4168) - convert website() field.
+  // TODO(#4167) - convert versioning() field.
+  // TODO(#4172) - convert logging() field.
+  // TODO(#4170) - convert owner() field.
+  // TODO(#4171) - convert encryption() field.
+  // TODO(#4164) - convert billing() field.
+  // TODO(#4166) - convert retention_policy() field.
 
   return metadata;
 }
@@ -873,7 +873,7 @@ google::storage::v1::Bucket GrpcClient::ToProto(
     BucketMetadata const& metadata) {
   google::storage::v1::Bucket bucket;
   bucket.set_name(metadata.name());
-  // TODO(b/137739543) - convert the other fields.
+  // TODO(#4173) - convert the other fields.
   return bucket;
 }
 
@@ -948,9 +948,9 @@ google::storage::v1::InsertObjectRequest GrpcClient::ToProto(
   r.set_write_offset(0);
 
   auto& checksums = *r.mutable_object_checksums();
-  // TODO(b/137859833) - use the crc32c value in the request options.
+  // TODO(#4156) - use the crc32c value in the request options.
   checksums.mutable_crc32c()->set_value(crc32c::Crc32c(request.contents()));
-  // TODO(b/137863755) - use the MD5 hash value in the request options.
+  // TODO(#4157) - use the MD5 hash value in the request options.
   checksums.set_md5_hash(MD5ToProto(ComputeMD5Hash(request.contents())));
 
   return r;

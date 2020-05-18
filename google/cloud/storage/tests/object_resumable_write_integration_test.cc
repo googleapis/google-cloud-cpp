@@ -221,7 +221,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());
-  // TODO(b/146800819) - accept both errors for now.
+  // The GCS server returns a different error code depending on the
+  // protocol (REST vs. gRPC) used
   EXPECT_THAT(
       os.metadata().status().code(),
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))

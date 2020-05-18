@@ -319,7 +319,8 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
   // condition should fail because the object already exists.
   StatusOr<ObjectMetadata> upload = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
-  // TODO(b/146800819) - accept both errors for now.
+  // The GCS server returns a different error code depending on the protocol
+  // (REST vs. gRPC) used
   EXPECT_THAT(upload.status().code(), AnyOf(Eq(StatusCode::kFailedPrecondition),
                                             Eq(StatusCode::kAborted)))
       << " upload.status=" << upload.status();

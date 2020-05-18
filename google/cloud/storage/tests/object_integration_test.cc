@@ -510,7 +510,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   testing_util::ExpectException<std::ios::failure>(
       [&] { os.Close(); },
       [&](std::ios::failure const&) {
-        // TODO(b/146800819) - accept both errors for now.
+        // The GCS server returns a different error code depending on the
+        // protocol (REST vs. gRPC) used
         EXPECT_THAT(os.metadata().status().code(),
                     AnyOf(Eq(StatusCode::kFailedPrecondition),
                           Eq(StatusCode::kAborted)))
@@ -545,7 +546,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
   // This operation should fail because the object already exists.
   os.Close();
   EXPECT_TRUE(os.bad());
-  // TODO(b/146800819) - accept both errors for now.
+  // The GCS server returns a different error code depending on the
+  // protocol (REST vs. gRPC) used
   EXPECT_THAT(
       os.metadata().status().code(),
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
