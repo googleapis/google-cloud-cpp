@@ -35,7 +35,8 @@ StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes);
 class PolicyDocumentRequest {
  public:
   PolicyDocumentRequest() = default;
-  PolicyDocumentRequest(PolicyDocument document) : document_(document) {}
+  explicit PolicyDocumentRequest(PolicyDocument document)
+      : document_(std::move(document)) {}
 
   PolicyDocument const& policy_document() const { return document_; }
 
@@ -76,8 +77,8 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r);
 
 class PolicyDocumentV4Request {
  public:
-  PolicyDocumentV4Request() : scheme_("https"), virtual_host_name_() {}
-  PolicyDocumentV4Request(PolicyDocumentV4 document)
+  PolicyDocumentV4Request() : scheme_("https") {}
+  explicit PolicyDocumentV4Request(PolicyDocumentV4 document)
       : PolicyDocumentV4Request() {
     document_ = std::move(document);
   }
@@ -142,7 +143,7 @@ class PolicyDocumentV4Request {
   std::vector<std::pair<std::string, std::string>> extension_fields_;
   optional<std::string> bucket_bound_domain_;
   std::string scheme_;
-  bool virtual_host_name_;
+  bool virtual_host_name_{false};
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);

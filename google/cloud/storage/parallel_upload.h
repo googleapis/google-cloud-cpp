@@ -42,6 +42,7 @@ inline namespace STORAGE_CLIENT_NS {
  */
 class MaxStreams {
  public:
+  // NOLINTNEXTLINE(google-explicit-constructor)
   MaxStreams(std::size_t value) : value_(value) {}
   std::size_t value() const { return value_; }
 
@@ -58,6 +59,7 @@ class MaxStreams {
  */
 class MinStreamSize {
  public:
+  // NOLINTNEXTLINE(google-explicit-constructor)
   MinStreamSize(std::uintmax_t value) : value_(value) {}
   std::uintmax_t value() const { return value_; }
 
@@ -114,8 +116,9 @@ class ParallelUploadExtraPersistentState {
 
   template <typename... Options>
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string bucket_name,
-      std::string object_name, std::string prefix, Options&&... options);
+      Client client, std::string file_name, std::string const& bucket_name,
+      std::string const& object_name, std::string const& prefix,
+      Options&&... options);
 };
 
 class ParallelObjectWriteStreambuf;
@@ -237,6 +240,7 @@ class ParallelUploadStateImpl
   std::string resumable_session_id_;
 };
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 static char const* kSessionIdPrefix = "ParUpl:";
 
 struct ComposeManyApplyHelper {
@@ -256,15 +260,16 @@ struct ComposeManyApplyHelper {
 
 class SetOptionsApplyHelper {
  public:
-  SetOptionsApplyHelper(ResumableUploadRequest& request) : request(request) {}
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  SetOptionsApplyHelper(ResumableUploadRequest& request) : request_(request) {}
 
   template <typename... Options>
   void operator()(Options&&... options) const {
-    request.set_multiple_options(std::forward<Options>(options)...);
+    request_.set_multiple_options(std::forward<Options>(options)...);
   }
 
  private:
-  ResumableUploadRequest& request;
+  ResumableUploadRequest& request_;
 };
 
 struct ReadObjectApplyHelper {
@@ -374,8 +379,9 @@ class ParallelUploadFileShard {
 
   template <typename... Options>
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string bucket_name,
-      std::string object_name, std::string prefix, Options&&... options);
+      Client client, std::string file_name, std::string const& bucket_name,
+      std::string const& object_name, std::string const& prefix,
+      Options&&... options);
 };
 
 /**
@@ -460,8 +466,9 @@ class NonResumableParallelUploadState {
   friend class NonResumableParallelObjectWriteStreambuf;
   template <typename... Options>
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string bucket_name,
-      std::string object_name, std::string prefix, Options&&... options);
+      Client client, std::string file_name, std::string const& bucket_name,
+      std::string const& object_name, std::string const& prefix,
+      Options&&... options);
 };
 
 /**
@@ -583,8 +590,9 @@ class ResumableParallelUploadState {
   friend class ResumableParallelObjectWriteStreambuf;
   template <typename... Options>
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string bucket_name,
-      std::string object_name, std::string prefix, Options&&... options);
+      Client client, std::string file_name, std::string const& bucket_name,
+      std::string const& object_name, std::string const& prefix,
+      Options&&... options);
 };
 
 /**
@@ -614,7 +622,7 @@ template <typename... Options,
           typename std::enable_if<
               NotAmong<typename std::decay<Options>::type...>::template TPred<
                   UseResumableUploadSession>::value,
-              int>::type enable_if_not_resumable = 0>
+              int>::type EnableIfNotResumable = 0>
 StatusOr<NonResumableParallelUploadState> PrepareParallelUpload(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
@@ -629,7 +637,7 @@ template <typename... Options,
           typename std::enable_if<
               Among<typename std::decay<Options>::type...>::template TPred<
                   UseResumableUploadSession>::value,
-              int>::type enable_if_resumable = 0>
+              int>::type EnableIfResumable = 0>
 StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
@@ -728,8 +736,8 @@ NonResumableParallelUploadState::Create(Client client,
 
 template <typename... Options>
 std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
-    Client client, std::string const& bucket_name,
-    std::tuple<Options...> const& options) {
+    Client client,  // NOLINT(performance-unnecessary-value-param)
+    std::string const& bucket_name, std::tuple<Options...> const& options) {
   using internal::StaticTupleFilter;
   auto delete_options =
       StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(options);
@@ -745,9 +753,10 @@ std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
 
 template <typename... Options>
 Composer ResumableParallelUploadState::CreateComposer(
-    Client client, std::string const& bucket_name,
-    std::string const& object_name, std::int64_t expected_generation,
-    std::string const& prefix, std::tuple<Options...> const& options) {
+    Client client,  // NOLINT(performance-unnecessary-value-param)
+    std::string const& bucket_name, std::string const& object_name,
+    std::int64_t expected_generation, std::string const& prefix,
+    std::tuple<Options...> const& options) {
   auto compose_options = std::tuple_cat(
       StaticTupleFilter<
           Among<DestinationPredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser,
@@ -814,7 +823,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
       StaticTupleFilter<
           Among<ContentEncoding, ContentType, DisableCrc32cChecksum,
                 DisableMD5Hash, EncryptionKey, KmsKeyName, PredefinedAcl,
-                UserProject, WithObjectMetadata>::TPred>(std::move(options)),
+                UserProject, WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
   auto& raw_client = *client.raw_client_;
   for (std::size_t i = 0; i < num_shards; ++i) {
@@ -872,7 +881,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   auto read_options = std::tuple_cat(
       StaticTupleFilter<Among<DisableCrc32cChecksum, DisableMD5Hash,
                               EncryptionKey, Generation, UserProject>::TPred>(
-          std::move(options)),
+          options),
       std::make_tuple(IfGenerationMatch(state_and_gen->second)));
 
   auto state_stream = google::cloud::internal::apply(
@@ -953,16 +962,16 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
   };
   // These defaults were obtained by experiments summarized in
   // https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-566237128
-  MaxStreams const kDefaultMaxStreams(64);
-  MinStreamSize const kDefaultMinStreamSize(32 * 1024 * 1024);
+  MaxStreams const default_max_streams(64);
+  MinStreamSize const default_min_stream_size(32 * 1024 * 1024);
 
   std::uintmax_t const min_stream_size =
       (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
                                         options)
-                                        .value_or(kDefaultMinStreamSize)
+                                        .value_or(default_min_stream_size)
                                         .value());
   auto const max_streams = ExtractFirstOccurenceOfType<MaxStreams>(options)
-                               .value_or(kDefaultMaxStreams)
+                               .value_or(default_max_streams)
                                .value();
 
   std::size_t const wanted_num_streams =
@@ -1052,8 +1061,10 @@ struct PrepareParallelUploadApplyHelper {
  */
 template <typename... Options>
 StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-    Client client, std::string file_name, std::string bucket_name,
-    std::string object_name, std::string prefix, Options&&... options) {
+    Client client,  // NOLINT(performance-unnecessary-value-param)
+    std::string file_name, std::string const& bucket_name,
+    std::string const& object_name, std::string const& prefix,
+    Options&&... options) {
   std::error_code size_err;
   auto file_size = google::cloud::internal::file_size(file_name, size_err);
   if (size_err) {

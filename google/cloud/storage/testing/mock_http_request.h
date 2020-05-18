@@ -62,6 +62,7 @@ class MockHttpRequest {
 class MockHttpRequestBuilder {
  public:
   explicit MockHttpRequestBuilder(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
       std::string url, std::shared_ptr<internal::CurlHandleFactory>) {
     mock_->Constructor(std::move(url));
   }
@@ -92,24 +93,32 @@ class MockHttpRequestBuilder {
     mock_->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");
   }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   MockHttpRequest BuildRequest() { return mock_->BuildRequest(); }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void AddUserAgentPrefix(std::string const& prefix) {
     mock_->AddUserAgentPrefix(prefix);
   }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void AddHeader(std::string const& header) { mock_->AddHeader(header); }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void AddQueryParameter(std::string const& key, std::string const& value) {
     mock_->AddQueryParameter(key, value);
   }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void SetMethod(std::string const& method) { mock_->SetMethod(method); }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void SetDebugLogging(bool enable) { mock_->SetDebugLogging(enable); }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   std::string UserAgentSuffix() { return mock_->UserAgentSuffix(); }
 
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   std::unique_ptr<char[]> MakeEscapedString(std::string const& tmp) {
     return mock_->MakeEscapedString(tmp);
   }

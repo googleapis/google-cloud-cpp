@@ -38,7 +38,7 @@ template <typename Derived, typename... Options>
 class GenericHmacKeyRequest : public GenericRequest<Derived, Options...> {
  public:
   GenericHmacKeyRequest() = default;
-  GenericHmacKeyRequest(std::string project_id)
+  explicit GenericHmacKeyRequest(std::string project_id)
       : project_id_(std::move(project_id)) {}
 
   std::string const& project_id() const { return project_id_; }

@@ -41,7 +41,7 @@ using StreamMaker = std::function<std::unique_ptr<grpc::ClientReaderInterface<
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
   explicit GrpcObjectReadSource(StreamMaker const& maker)
-      : context_(), stream_(maker(context_)) {}
+      : stream_(maker(context_)) {}
 
   ~GrpcObjectReadSource() override;
 

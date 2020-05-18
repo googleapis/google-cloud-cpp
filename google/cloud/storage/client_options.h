@@ -66,7 +66,7 @@ class ChannelOptions {
 class ClientOptions {
  public:
   explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
-      : ClientOptions(credentials, {}) {}
+      : ClientOptions(std::move(credentials), {}) {}
   ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                 ChannelOptions channel_options);
 

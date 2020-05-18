@@ -39,6 +39,7 @@
 #undef NLOHMANN_JSON_HPP
 #undef NLOHMANN_JSON_FWD_HPP
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 #define nlohmann google_cloud_storage_internal_nlohmann_3_4_0
 #include "google/cloud/storage/internal/nlohmann_json.hpp"
 

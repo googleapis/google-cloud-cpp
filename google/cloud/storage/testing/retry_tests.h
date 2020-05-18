@@ -239,7 +239,7 @@ void TooManyFailuresStatusTest(
 template <typename ReturnType, typename F>
 void PermanentFailureStatusTest(
     Client& client, ::testing::internal::TypedExpectation<F>& oncall,
-    std::function<Status(Client& client)> tested_operation,
+    std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
   using ::google::cloud::storage::testing::canonical_errors::PermanentError;
   using ::testing::HasSubstr;

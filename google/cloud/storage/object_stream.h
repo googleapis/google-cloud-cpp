@@ -96,7 +96,7 @@ class ObjectReadStream : public std::basic_istream<char> {
   /// Closes the stream (if necessary).
   ~ObjectReadStream() override;
 
-  bool IsOpen() const { return (bool)buf_ && buf_->IsOpen(); }
+  bool IsOpen() const { return static_cast<bool>(buf_) && buf_->IsOpen(); }
 
   /**
    * Terminate the download, possibly before completing it.

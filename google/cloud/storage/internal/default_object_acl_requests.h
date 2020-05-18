@@ -28,11 +28,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
 /// Represents a request to call the `DefaultObjectAccessControls: list` API.
 class ListDefaultObjectAclRequest
     : public GenericRequest<ListDefaultObjectAclRequest, UserProject> {
  public:
-  ListDefaultObjectAclRequest() : GenericRequest() {}
+  ListDefaultObjectAclRequest() = default;
   explicit ListDefaultObjectAclRequest(std::string bucket)
       : bucket_name_(std::move(bucket)) {}
 
@@ -115,9 +116,9 @@ class GenericChangeDefaultObjectAclRequest
  public:
   GenericChangeDefaultObjectAclRequest() = default;
 
-  explicit GenericChangeDefaultObjectAclRequest(std::string bucket,
-                                                std::string entity,
-                                                std::string role)
+  explicit GenericChangeDefaultObjectAclRequest(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
+      std::string bucket, std::string entity, std::string role)
       : GenericDefaultObjectAclRequest<Derived>(std::move(bucket),
                                                 std::move(entity)),
         role_(std::move(role)) {}

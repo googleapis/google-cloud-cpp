@@ -80,8 +80,8 @@ class ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
-  explicit ComputeEngineCredentials(std::string const& service_account_email)
-      : clock_(), service_account_email_(service_account_email) {}
+  explicit ComputeEngineCredentials(std::string service_account_email)
+      : clock_(), service_account_email_(std::move(service_account_email)) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);

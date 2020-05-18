@@ -86,7 +86,7 @@ inline bool operator>=(CustomerEncryption const& lhs,
  */
 class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
  public:
-  ObjectMetadata() : component_count_(0), generation_(0), size_(0) {}
+  ObjectMetadata() = default;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
@@ -243,22 +243,22 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::vector<ObjectAccessControl> acl_;
   std::string bucket_;
   std::string cache_control_;
-  std::int32_t component_count_;
+  std::int32_t component_count_{0};
   std::string content_disposition_;
   std::string content_encoding_;
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
   google::cloud::optional<CustomerEncryption> customer_encryption_;
-  bool event_based_hold_ = false;
-  std::int64_t generation_;
+  bool event_based_hold_{false};
+  std::int64_t generation_{0};
   std::string kms_key_name_;
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
   std::chrono::system_clock::time_point retention_expiration_time_;
-  std::uint64_t size_;
-  bool temporary_hold_ = false;
+  std::uint64_t size_{0};
+  bool temporary_hold_{false};
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
 };
@@ -279,7 +279,7 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
  */
 class ObjectMetadataPatchBuilder {
  public:
-  ObjectMetadataPatchBuilder() : metadata_subpatch_dirty_(false) {}
+  ObjectMetadataPatchBuilder() = default;
 
   std::string BuildPatch() const;
 
@@ -315,7 +315,7 @@ class ObjectMetadataPatchBuilder {
 
  private:
   internal::PatchBuilder impl_;
-  bool metadata_subpatch_dirty_;
+  bool metadata_subpatch_dirty_{false};
   internal::PatchBuilder metadata_subpatch_;
 };
 

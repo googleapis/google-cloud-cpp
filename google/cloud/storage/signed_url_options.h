@@ -220,7 +220,7 @@ struct VirtualHostname : public internal::ComplexOption<VirtualHostname, bool> {
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   VirtualHostname() = default;
-  char const* option_name() const { return "virtual-hostname"; }
+  static char const* option_name() { return "virtual-hostname"; }
 };
 
 /**
@@ -235,7 +235,7 @@ struct BucketBoundHostname
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   BucketBoundHostname() = default;
-  char const* option_name() const { return "domain-named-bucket"; }
+  static char const* option_name() { return "domain-named-bucket"; }
 };
 
 /// Use the specified scheme (e.g. "http") in a V4 signed URL.
@@ -244,7 +244,7 @@ struct Scheme : public internal::ComplexOption<Scheme, std::string> {
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   Scheme() = default;
-  char const* option_name() const { return "scheme"; }
+  static char const* option_name() { return "scheme"; }
 };
 
 /**

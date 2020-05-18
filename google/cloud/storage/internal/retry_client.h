@@ -38,6 +38,7 @@ class RetryClient : public RawClient,
                        DefaultPolicies unused);
 
   template <typename... Policies>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit RetryClient(std::shared_ptr<RawClient> client,
                        Policies&&... policies)
       : RetryClient(std::move(client), DefaultPolicies{}) {
