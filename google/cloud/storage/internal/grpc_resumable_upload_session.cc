@@ -118,8 +118,8 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
   request.mutable_checksummed_data()->set_content(trailer);
   request.mutable_checksummed_data()->mutable_crc32c()->set_value(
       crc32c::Crc32c(trailer));
-  // TODO(b/137859833) - compute the crc32c value inline and set it here
-  // TODO(b/137863755) - compute the MD5 hash value and set it here
+  // TODO(#4156) - compute the crc32c value inline and set it here
+  // TODO(#4157) - compute the MD5 hash value and set it here
   auto success =
       upload_writer_->Write(request, grpc::WriteOptions().set_last_message());
   if (!success) {
@@ -167,7 +167,7 @@ void GrpcResumableUploadSession::CreateUploadWriter() {
   if (upload_writer_) {
     return;
   }
-  // TODO(b/...) - set the timeout
+  // TODO(#4216) - set the timeout
   upload_context_ = absl::make_unique<grpc::ClientContext>();
   google::storage::v1::InsertObjectRequest request;
   request.set_upload_id(session_id_);

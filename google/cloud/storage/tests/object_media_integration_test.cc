@@ -409,9 +409,9 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   EXPECT_STATUS_OK(status);
 }
 
-/// @test Read the last chunk of an object by setting ReadLasst option.
+/// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
-  // TODO(b/146888259) - enable this test once the gRPC server is fixed
+  // TODO(#4219) - implement support for `gcs::ReadLast`
   if (UsingGrpc()) GTEST_SKIP();
 
   StatusOr<Client> client = MakeIntegrationTestClient();
