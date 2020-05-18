@@ -411,9 +411,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
 
 /// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
-  // TODO(#4219) - implement support for `gcs::ReadLast`
-  if (UsingGrpc()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
