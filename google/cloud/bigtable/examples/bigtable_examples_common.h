@@ -18,8 +18,8 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
 namespace cloud {

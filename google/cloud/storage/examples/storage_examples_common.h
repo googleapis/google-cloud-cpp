@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
 namespace cloud {

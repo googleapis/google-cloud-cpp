@@ -126,8 +126,6 @@ add_library(
     internal/diagnostics_push.inc
     internal/disable_msvc_crt_secure_warnings.inc
     internal/disjunction.h
-    internal/example_driver.cc
-    internal/example_driver.h
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc
@@ -203,7 +201,6 @@ if (BUILD_TESTING)
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
         internal/env_test.cc
-        internal/example_driver_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H
 
 #include "google/cloud/internal/port_platform.h"
 #include "google/cloud/version.h"
@@ -94,4 +94,4 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXAMPLE_DRIVER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H

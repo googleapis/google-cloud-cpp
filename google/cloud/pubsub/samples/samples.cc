@@ -15,10 +15,10 @@
 #include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscriber_client.h"
-#include "google/cloud/internal/example_driver.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/testing_util/example_driver.h"
 #include <tuple>
 #include <utility>
 
