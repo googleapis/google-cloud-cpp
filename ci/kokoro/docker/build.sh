@@ -202,6 +202,9 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
+elif [[ "${BUILD_NAME}" = "no-gcs-grpc" ]]; then
+  # Compiling with Ninja can catch bugs that may not be caught using Make.
+  export USE_NINJA=yes
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes
