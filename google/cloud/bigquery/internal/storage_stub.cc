@@ -17,7 +17,7 @@
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/stream_reader.h"
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
@@ -37,9 +37,9 @@ constexpr auto kRoutingHeader = "x-goog-request-params";
 
 namespace bigquerystorage_proto = ::google::cloud::bigquery::storage::v1beta1;
 
+using ::google::cloud::MakeStatusFromRpcError;
 using ::google::cloud::optional;
 using ::google::cloud::StatusOr;
-using ::google::cloud::grpc_utils::MakeStatusFromRpcError;
 
 // An implementation of StreamReader for gRPC unary-streaming methods.
 template <class T>

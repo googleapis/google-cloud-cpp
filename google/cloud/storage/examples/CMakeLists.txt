@@ -30,6 +30,7 @@ set(storage_examples
     storage_bucket_samples.cc
     storage_default_object_acl_samples.cc
     storage_event_based_hold_samples.cc
+    storage_grpc_samples.cc
     storage_lifecycle_management_samples.cc
     storage_notification_samples.cc
     storage_object_acl_samples.cc
@@ -82,13 +83,7 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# TODO(#4143) - this example should always be in the list to support Bazel
-set(storage_examples_grpc)
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    list(APPEND storage_examples_grpc storage_grpc_samples.cc)
-endif ()
-
-foreach (fname ${storage_examples} ${storage_examples_grpc})
+foreach (fname ${storage_examples})
     google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
     target_link_libraries(
         ${target} PRIVATE storage_examples_common storage_client_grpc
@@ -105,7 +100,7 @@ endforeach ()
 # We just know that these tests need to be run against production.
 set(storage_integration_tests_production
     # cmake-format: sort
-    ${storage_examples_grpc} storage_policy_doc_samples.cc
+    storage_grpc_samples.cc storage_policy_doc_samples.cc
     storage_signed_url_v2_samples.cc storage_signed_url_v4_samples.cc)
 foreach (fname ${storage_integration_tests_production})
     google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")

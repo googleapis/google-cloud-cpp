@@ -14,21 +14,17 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
-#include <cstdlib>
 #include <vector>
 
 namespace google {
@@ -38,6 +34,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
+// actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
@@ -163,6 +161,7 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 /// @test Verify that NOT_FOUND is returned for missing objects
 TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto client = Client::CreateDefaultClient();
@@ -228,8 +227,8 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   auto constexpr kChunkSize = 256 * 1024L;
   static_assert(kMaxBuffersize % kChunkSize == 0, "Broken test configuration");
 
-  auto send_in_chunks = [bucket_name, object_name, &stub,
-                         this](int desired_size) {
+  auto send_in_chunks = [bucket_name, object_name, &stub, this](
+                            int desired_size, std::int64_t chunk_size) {
     grpc::ClientContext context;
     google::storage::v1::Object object;
     auto stream = stub->InsertObject(&context, &object);
@@ -241,15 +240,15 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
     resource.set_name(object_name);
 
     std::uint64_t offset = 0;
-    auto data = MakeRandomData(kChunkSize);
+    auto data = MakeRandomData(chunk_size);
     request.mutable_checksummed_data()->mutable_crc32c()->set_value(
         crc32c::Crc32c(data));
     request.mutable_checksummed_data()->set_content(std::move(data));
     request.set_write_offset(offset);
     (void)stream->Write(request, grpc::WriteOptions().set_write_through());
 
-    offset += kChunkSize;
-    data = MakeRandomData(desired_size - kChunkSize);
+    offset += chunk_size;
+    data = MakeRandomData(desired_size - chunk_size);
     request.clear_insert_object_spec();
     request.mutable_checksummed_data()->mutable_crc32c()->set_value(
         crc32c::Crc32c(data));
@@ -263,13 +262,13 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   };
 
   // This creates a stream of exactly kMaxBufferSize
-  auto status = send_in_chunks(kMaxBuffersize);
+  auto status = send_in_chunks(kMaxBuffersize, kChunkSize);
   ASSERT_STATUS_OK(status);
 
-  status = send_in_chunks(kMaxBuffersize + kChunkSize);
+  status = send_in_chunks(kMaxBuffersize + kChunkSize, kChunkSize);
   EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
 
-  status = send_in_chunks(kMaxBuffersize + 2 * kChunkSize);
+  status = send_in_chunks(kMaxBuffersize + 2 * kChunkSize, kChunkSize);
   EXPECT_EQ(StatusCode::kResourceExhausted, status.code());
 
   auto delete_object_status = client->DeleteObject(bucket_name, object_name);
@@ -278,6 +277,8 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   auto delete_bucket_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 TEST_F(GrpcIntegrationTest, InsertLarge) {
   auto client = MakeIntegrationTestClient();
