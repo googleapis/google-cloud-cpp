@@ -149,9 +149,13 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
   RE=$(grep -o '^HeaderFilterRegex.*' "${PROJECT_ROOT}/.clang-tidy" |
     sed -e 's/HeaderFilterRegex: "//' -e 's/"//')
+
+  # We disable the misc-unused-using-decls check because it produces false
+  # positives when run on headers. For more details, see issue #4230.
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
     grep -E "\.h$" | grep -E "${RE}" |
-    xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
+    xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
+      -checks="-misc-unused-using-decls"
 fi
 
 echo
