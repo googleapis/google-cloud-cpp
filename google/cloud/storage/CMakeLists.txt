@@ -478,17 +478,14 @@ endif ()
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     if (BUILD_TESTING)
         set(storage_client_grpc_unit_tests
+            # cmake-format: sort
+            internal/grpc_client_failures_test.cc
             internal/grpc_client_test.cc
             internal/grpc_object_read_source_test.cc
             internal/grpc_resumable_upload_session_test.cc)
 
         foreach (fname ${storage_client_grpc_unit_tests})
-            string(REPLACE "/" "_" target ${fname})
-            string(REPLACE ".cc" "" target ${target})
-            add_executable(${target} ${fname})
-            if (MSVC)
-                target_compile_options(${target} PRIVATE "/bigobj")
-            endif ()
+            google_cloud_cpp_add_executable(target "storage" "${fname}")
             target_link_libraries(
                 ${target}
                 PRIVATE storage_client_grpc
