@@ -145,12 +145,12 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # followed by all changed .h files that also match the HeaderFilterRegex from
   # the .clang-tidy file.
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E "\.cc$" | grep -v 'google/cloud/bigtable/benchmarks/' |
+    grep -E "\.cc$" |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
   RE=$(grep -o '^HeaderFilterRegex.*' "${PROJECT_ROOT}/.clang-tidy" |
     sed -e 's/HeaderFilterRegex: "//' -e 's/"//')
   git diff --name-only "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}" |
-    grep -E "\.h$" | grep -E "${RE}" | grep -v 'google/cloud/bigtable/benchmarks/' |
+    grep -E "\.h$" | grep -E "${RE}" |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
 fi
 
