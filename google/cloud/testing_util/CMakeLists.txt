@@ -135,14 +135,14 @@ if (BUILD_TESTING)
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Testing Utilities used by the Google Cloud C++ Client Libraries.")
 
-    # Create and install the pkg-config files. First for testing_utils:
+    # Create and install the pkg-config files. First for testing_util:
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing")
     set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                    "google_cloud_cpp_testing.pc" @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing.pc"
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-    # Then for testing_utils_grpc:
+    # Then for testing_grpc:
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing_grpc")
     set(GOOGLE_CLOUD_CPP_PC_REQUIRES
         "google_cloud_cpp_testing google_cloud_cpp_common")
