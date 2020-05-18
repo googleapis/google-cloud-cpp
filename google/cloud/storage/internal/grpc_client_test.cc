@@ -16,7 +16,6 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -566,10 +565,7 @@ TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
      )""",
                                                             &expected));
 
-  std::string delta;
-  google::protobuf::util::MessageDifferencer diff;
-  diff.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(diff.Compare(expected, actual)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientToProto, InsertObjectMediaRequestSimple) {
