@@ -44,6 +44,7 @@ class NativeExpression {
    *     expression for error reporting, e.g. a file name and a position in the
    *     file.
    */
+  // NOLINTNEXTLINE(google-explicit-constructor)
   NativeExpression(std::string expression, std::string title = "",
                    std::string description = "", std::string location = "");
   ~NativeExpression();

@@ -66,8 +66,6 @@ HashValidator::Result MD5HashValidator::Finish() && {
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
 
-Crc32cHashValidator::Crc32cHashValidator() : current_(0) {}
-
 void Crc32cHashValidator::Update(char const* buf, std::size_t n) {
   current_ =
       crc32c::Extend(current_, reinterpret_cast<std::uint8_t const*>(buf), n);

@@ -23,6 +23,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
 /// Common attributes for requests about objects.
 template <typename Derived, typename... Parameters>
 class GenericObjectRequest : public GenericRequest<Derived, Parameters...> {
@@ -35,12 +36,14 @@ class GenericObjectRequest : public GenericRequest<Derived, Parameters...> {
         object_name_(std::move(object_name)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Derived& set_bucket_name(std::string bucket_name) {
     bucket_name_ = std::move(bucket_name);
     return *static_cast<Derived*>(this);
   }
 
   std::string const& object_name() const { return object_name_; }
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Derived& set_object_name(std::string object_name) {
     object_name_ = std::move(object_name);
     return *static_cast<Derived*>(this);

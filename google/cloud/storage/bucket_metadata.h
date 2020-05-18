@@ -42,10 +42,11 @@ class GrpcClient;
  *     information on "Requester Pays" billing.
  */
 struct BucketBilling {
-  BucketBilling() : requester_pays(false) {}
+  BucketBilling() = default;
+  // NOLINTNEXTLINE(google-explicit-constructor)
   BucketBilling(bool v) : requester_pays(v) {}
 
-  bool requester_pays;
+  bool requester_pays{false};
 };
 
 inline bool operator==(BucketBilling const& lhs, BucketBilling const& rhs) {
@@ -53,7 +54,7 @@ inline bool operator==(BucketBilling const& lhs, BucketBilling const& rhs) {
 }
 
 inline bool operator<(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return lhs.requester_pays < rhs.requester_pays;
+  return !lhs.requester_pays && rhs.requester_pays;
 }
 
 inline bool operator!=(BucketBilling const& lhs, BucketBilling const& rhs) {
@@ -427,10 +428,10 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs);
  *     information on "Requester Pays" billing.
  */
 struct BucketVersioning {
-  BucketVersioning() : enabled(true) {}
+  BucketVersioning() = default;
   explicit BucketVersioning(bool flag) : enabled(flag) {}
 
-  bool enabled;
+  bool enabled{true};
 };
 
 inline bool operator==(BucketVersioning const& lhs,
@@ -440,7 +441,7 @@ inline bool operator==(BucketVersioning const& lhs,
 
 inline bool operator<(BucketVersioning const& lhs,
                       BucketVersioning const& rhs) {
-  return lhs.enabled < rhs.enabled;
+  return !lhs.enabled && rhs.enabled;
 }
 
 inline bool operator!=(BucketVersioning const& lhs,
@@ -750,7 +751,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return logging_;
   }
   BucketMetadata& set_logging(BucketLogging v) {
-    logging_ = v;
+    logging_ = std::move(v);
     return *this;
   }
   BucketMetadata& reset_logging() {
@@ -879,7 +880,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string location_;
   std::string location_type_;
   google::cloud::optional<BucketLogging> logging_;
-  std::int64_t project_number_;
+  std::int64_t project_number_{0};
   google::cloud::optional<BucketRetentionPolicy> retention_policy_;
   google::cloud::optional<BucketVersioning> versioning_;
   google::cloud::optional<BucketWebsite> website_;
@@ -901,7 +902,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
  */
 class BucketMetadataPatchBuilder {
  public:
-  BucketMetadataPatchBuilder() : labels_subpatch_dirty_(false) {}
+  BucketMetadataPatchBuilder() = default;
 
   std::string BuildPatch() const;
 
@@ -976,9 +977,10 @@ class BucketMetadataPatchBuilder {
 
  private:
   internal::PatchBuilder impl_;
-  bool labels_subpatch_dirty_;
+  bool labels_subpatch_dirty_{false};
   internal::PatchBuilder labels_subpatch_;
 };
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

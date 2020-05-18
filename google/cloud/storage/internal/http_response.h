@@ -70,7 +70,7 @@ enum HttpStatusCode {
  * Contains the results of a HTTP request.
  */
 struct HttpResponse {
-  long status_code;
+  long status_code;  // NOLINT(google-runtime-int)
   std::string payload;
   std::multimap<std::string, std::string> headers;
 };

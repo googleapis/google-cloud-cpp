@@ -38,7 +38,7 @@ struct NotificationMetadataParser {
 class ListNotificationsRequest
     : public GenericRequest<ListNotificationsRequest, UserProject> {
  public:
-  ListNotificationsRequest() : GenericRequest() {}
+  ListNotificationsRequest() = default;
   explicit ListNotificationsRequest(std::string bucket)
       : bucket_name_(std::move(bucket)) {}
 

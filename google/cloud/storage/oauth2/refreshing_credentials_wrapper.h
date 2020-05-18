@@ -27,6 +27,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
+
 /**
  * Wrapper for refreshable parts of a Credentials object.
  */
@@ -42,13 +43,13 @@ class RefreshingCredentialsWrapper {
       std::chrono::system_clock::time_point now,
       RefreshFunctor refresh_fn) const {
     if (IsValid(now)) {
-      return temporary_token.token;
+      return temporary_token_.token;
     }
 
     StatusOr<TemporaryToken> new_token = refresh_fn();
     if (new_token) {
-      temporary_token = *std::move(new_token);
-      return temporary_token.token;
+      temporary_token_ = *std::move(new_token);
+      return temporary_token_.token;
     }
     return new_token.status();
   }
@@ -75,7 +76,7 @@ class RefreshingCredentialsWrapper {
   bool IsValid(std::chrono::system_clock::time_point now) const;
 
  private:
-  mutable TemporaryToken temporary_token;
+  mutable TemporaryToken temporary_token_;
 };
 
 }  // namespace oauth2

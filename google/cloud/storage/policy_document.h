@@ -32,8 +32,9 @@ inline namespace STORAGE_CLIENT_NS {
 class PolicyDocumentCondition {
  public:
   PolicyDocumentCondition() = default;
+  // NOLINTNEXTLINE(google-explicit-constructor)
   PolicyDocumentCondition(std::vector<std::string> elements)
-      : elements_(elements) {}
+      : elements_(std::move(elements)) {}
 
   std::vector<std::string> const& elements() const { return elements_; }
 

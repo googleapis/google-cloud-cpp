@@ -49,8 +49,7 @@ class SignBlobRequest
   explicit SignBlobRequest(std::string service_account,
                            std::string base64_encoded_blob,
                            std::vector<std::string> delegates)
-      : GenericRequestBase(),
-        service_account_(std::move(service_account)),
+      : service_account_(std::move(service_account)),
         base64_encoded_blob_(std::move(base64_encoded_blob)),
         delegates_(std::move(delegates)) {}
 

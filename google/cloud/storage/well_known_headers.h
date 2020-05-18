@@ -264,7 +264,9 @@ template <typename Generator>
 static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
   constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
 
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr auto minchar = (std::numeric_limits<char>::min)();
+  // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr auto maxchar = (std::numeric_limits<char>::max)();
   std::uniform_int_distribution<int> uni(minchar, maxchar);
   std::string key(static_cast<std::size_t>(kKeySize), ' ');

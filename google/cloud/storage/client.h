@@ -746,7 +746,7 @@ class Client {
    */
   template <typename... Options>
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
-      std::string const& bucket_name, NativeIamPolicy iam_policy,
+      std::string const& bucket_name, NativeIamPolicy const& iam_policy,
       Options&&... options) {
     internal::SetNativeBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -3241,6 +3241,7 @@ class ScopedDeleter {
  public:
   // The actual deletion depends on local's types in a very non-trivial way,
   // so we abstract this away by providing the function to delete one object.
+  // NOLINTNEXTLINE(google-explicit-constructor)
   ScopedDeleter(std::function<Status(std::string, std::int64_t)> delete_fun);
   ScopedDeleter(ScopedDeleter const&) = delete;
   ScopedDeleter& operator=(ScopedDeleter const&) = delete;
@@ -3365,7 +3366,7 @@ StatusOr<ObjectMetadata> ComposeMany(
   auto to_source_objects = [](std::vector<ObjectMetadata> objects) {
     std::vector<ComposeSourceObject> sources(objects.size());
     std::transform(objects.begin(), objects.end(), sources.begin(),
-                   [](ObjectMetadata m) {
+                   [](ObjectMetadata const& m) {
                      return ComposeSourceObject{m.name(), m.generation(), {}};
                    });
     return sources;

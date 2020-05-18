@@ -30,6 +30,7 @@ namespace oauth2 {
  * We currently only support RSA with SHA-256, but use this enum for
  * readability and easy addition of support for other algorithms.
  */
+// NOLINTNEXTLINE(readability-identifier-naming)
 enum class JwtSigningAlgorithms { RS256 };
 
 /// The max lifetime in seconds of an access token.

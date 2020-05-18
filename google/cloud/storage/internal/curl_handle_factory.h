@@ -66,7 +66,7 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 class DefaultCurlHandleFactory : public CurlHandleFactory {
  public:
   DefaultCurlHandleFactory() = default;
-  DefaultCurlHandleFactory(ChannelOptions options)
+  explicit DefaultCurlHandleFactory(ChannelOptions options)
       : options_(std::move(options)) {}
 
   CurlPtr CreateHandle() override;

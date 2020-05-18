@@ -116,7 +116,7 @@ class InsertObjectMediaRequest
           MD5HashValue, PredefinedAcl, Projection, UserProject,
           WithObjectMetadata> {
  public:
-  InsertObjectMediaRequest() : GenericObjectRequest(), contents_() {}
+  InsertObjectMediaRequest() = default;
 
   explicit InsertObjectMediaRequest(std::string bucket_name,
                                     std::string object_name,
@@ -379,16 +379,12 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
                      std::string payload)
-      : GenericRequest(),
-        upload_session_url_(std::move(upload_session_url)),
+      : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
-        payload_(std::move(payload)),
-        source_size_(0),
-        last_chunk_(false) {}
+        payload_(std::move(payload)) {}
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
                      std::string payload, std::uint64_t source_size)
-      : GenericRequest(),
-        upload_session_url_(std::move(upload_session_url)),
+      : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)),
         source_size_(source_size),
@@ -435,7 +431,7 @@ class QueryResumableUploadRequest
  public:
   QueryResumableUploadRequest() = default;
   explicit QueryResumableUploadRequest(std::string upload_session_url)
-      : GenericRequest(), upload_session_url_(std::move(upload_session_url)) {}
+      : upload_session_url_(std::move(upload_session_url)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
 

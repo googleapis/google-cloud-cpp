@@ -51,7 +51,7 @@ class MD5HashValidator : public HashValidator {
  */
 class Crc32cHashValidator : public HashValidator {
  public:
-  Crc32cHashValidator();
+  Crc32cHashValidator() = default;
 
   Crc32cHashValidator(Crc32cHashValidator const&) = delete;
   Crc32cHashValidator& operator=(Crc32cHashValidator const&) = delete;
@@ -63,7 +63,7 @@ class Crc32cHashValidator : public HashValidator {
   Result Finish() && override;
 
  private:
-  std::uint32_t current_;
+  std::uint32_t current_{0};
   std::string received_hash_;
 };
 

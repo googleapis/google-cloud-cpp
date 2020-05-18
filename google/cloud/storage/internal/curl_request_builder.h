@@ -104,9 +104,11 @@ class CurlRequestBuilder {
   /// Adds one of the well-known encryption header groups to the request.
   CurlRequestBuilder& AddOption(EncryptionKey const& p) {
     if (p.has_value()) {
-      AddHeader(std::string(p.prefix()) + "algorithm: " + p.value().algorithm);
-      AddHeader(std::string(p.prefix()) + "key: " + p.value().key);
-      AddHeader(std::string(p.prefix()) + "key-sha256: " + p.value().sha256);
+      AddHeader(std::string(EncryptionKey::prefix()) +
+                "algorithm: " + p.value().algorithm);
+      AddHeader(std::string(EncryptionKey::prefix()) + "key: " + p.value().key);
+      AddHeader(std::string(EncryptionKey::prefix()) +
+                "key-sha256: " + p.value().sha256);
     }
     return *this;
   }
@@ -114,9 +116,12 @@ class CurlRequestBuilder {
   /// Adds one of the well-known encryption header groups to the request.
   CurlRequestBuilder& AddOption(SourceEncryptionKey const& p) {
     if (p.has_value()) {
-      AddHeader(std::string(p.prefix()) + "Algorithm: " + p.value().algorithm);
-      AddHeader(std::string(p.prefix()) + "Key: " + p.value().key);
-      AddHeader(std::string(p.prefix()) + "Key-Sha256: " + p.value().sha256);
+      AddHeader(std::string(SourceEncryptionKey::prefix()) +
+                "Algorithm: " + p.value().algorithm);
+      AddHeader(std::string(SourceEncryptionKey::prefix()) +
+                "Key: " + p.value().key);
+      AddHeader(std::string(SourceEncryptionKey::prefix()) +
+                "Key-Sha256: " + p.value().sha256);
     }
     return *this;
   }

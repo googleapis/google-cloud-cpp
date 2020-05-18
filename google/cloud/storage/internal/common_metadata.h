@@ -75,7 +75,7 @@ class GrpcClient;
 template <typename Derived>
 class CommonMetadata {
  public:
-  CommonMetadata() : metageneration_(0), owner_() {}
+  CommonMetadata() = default;
 
   static Status ParseFromJson(CommonMetadata<Derived>& result,
                               internal::nl::json const& json) {
@@ -110,6 +110,7 @@ class CommonMetadata {
   std::int64_t metageneration() const { return metageneration_; }
 
   std::string const& name() const { return name_; }
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
   void set_name(std::string value) { name_ = std::move(value); }
 
   bool has_owner() const { return owner_.has_value(); }
@@ -118,6 +119,7 @@ class CommonMetadata {
   std::string const& self_link() const { return self_link_; }
 
   std::string const& storage_class() const { return storage_class_; }
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
   void set_storage_class(std::string value) {
     storage_class_ = std::move(value);
   }
@@ -134,7 +136,7 @@ class CommonMetadata {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  std::int64_t metageneration_;
+  std::int64_t metageneration_{0};
   std::string name_;
   google::cloud::optional<Owner> owner_;
   std::string self_link_;

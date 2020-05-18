@@ -37,7 +37,7 @@ struct ReadRangeData {
  * excludes the `end` byte.
  */
 struct ReadRange : public internal::ComplexOption<ReadRange, ReadRangeData> {
-  ReadRange() : ComplexOption() {}
+  ReadRange() = default;
   explicit ReadRange(std::int64_t begin, std::int64_t end)
       : ComplexOption(ReadRangeData{begin, end}) {}
   static char const* name() { return "read-range"; }

@@ -37,7 +37,7 @@ struct BucketAccessControlParser {
 class ListBucketAclRequest
     : public GenericRequest<ListBucketAclRequest, UserProject> {
  public:
-  ListBucketAclRequest() : GenericRequest() {}
+  ListBucketAclRequest() = default;
   explicit ListBucketAclRequest(std::string bucket)
       : bucket_name_(std::move(bucket)) {}
 
@@ -115,6 +115,7 @@ class GenericChangeBucketAclRequest : public GenericBucketAclRequest<Derived> {
  public:
   GenericChangeBucketAclRequest() = default;
 
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit GenericChangeBucketAclRequest(std::string bucket, std::string entity,
                                          std::string role)
       : GenericBucketAclRequest<Derived>(std::move(bucket), std::move(entity)),

@@ -120,7 +120,7 @@ class ResumableUploadSessionError : public ResumableUploadSession {
                               std::string id)
       : last_response_(std::move(status)),
         next_expected_byte_(next_expected_byte),
-        id_(id) {}
+        id_(std::move(id)) {}
 
   ~ResumableUploadSessionError() override = default;
 
