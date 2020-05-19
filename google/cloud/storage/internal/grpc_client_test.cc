@@ -940,6 +940,21 @@ TEST(GrpcClientToProto, ReadObjectRangeRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientToProto, ReadObjectRangeRequestReadLast) {
+  google::storage::v1::GetObjectMediaRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "test-bucket" object: "test-object" read_offset: -2001
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(ReadLast(2000));
+
+  auto const actual = GrpcClient::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
