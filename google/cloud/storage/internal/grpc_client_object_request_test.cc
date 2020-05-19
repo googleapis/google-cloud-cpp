@@ -404,7 +404,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
   google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "test-bucket" object: "test-object" read_offset: -2001
+        bucket: "test-bucket" object: "test-object" read_offset: -2000
       )pb",
       &expected));
 

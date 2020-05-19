@@ -1025,7 +1025,7 @@ google::storage::v1::GetObjectMediaRequest GrpcClient::ToProto(
   }
   if (request.HasOption<ReadLast>()) {
     auto const offset = request.GetOption<ReadLast>().value();
-    r.set_read_offset(-(offset + 1));
+    r.set_read_offset(-offset);
   }
   if (request.HasOption<ReadFromOffset>()) {
     auto const offset = request.GetOption<ReadFromOffset>().value();
