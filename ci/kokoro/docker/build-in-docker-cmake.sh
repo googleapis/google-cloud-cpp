@@ -308,6 +308,11 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # libraries will tag all their tests as "integration-tests-no-emulator",
     # that is fine too. As long as we do not repeat all the tests we are
     # winning.
+    if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
+      # TODO(#4234) - the Bigtable tests are only enabled on the coverage
+      #   builds because they consume too much quota.
+      ctest_args+=(-E bigtable)
+    fi
     env -C "${BINARY_DIR}" ctest \
       -L integration-tests-no-emulator "${ctest_args[@]}"
 
