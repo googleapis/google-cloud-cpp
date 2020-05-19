@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/crash_handler.h"
 #include <fstream>
 #include <sstream>
 
@@ -145,6 +146,8 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
+  google::cloud::testing_util::InstallCrashHandler(argv[0]);
+
   google::cloud::bigtable::examples::Commands commands = {
       {"test-access-token", AccessToken},
       {"test-jwt-access-token", JWTAccessToken},

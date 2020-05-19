@@ -20,6 +20,7 @@
 //! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/crash_handler.h"
 #include <chrono>
 #include <sstream>
 
@@ -406,6 +407,8 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
+  google::cloud::testing_util::InstallCrashHandler(argv[0]);
+
   using google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("read-row", {"<row-key>"}, ReadRow),

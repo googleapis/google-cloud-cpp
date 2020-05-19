@@ -125,7 +125,7 @@ TEST(StorageExamplesCommon, CommandError) {
   });
   char const* argv[] = {"argv0", "test", "a0"};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  EXPECT_EQ(example.Run(argc, argv), 1);
+  EXPECT_THROW(example.Run(argc, argv), std::runtime_error);
   EXPECT_EQ(2, test_calls);
 }
 

@@ -24,6 +24,8 @@ cc_library(
     hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
+        "@com_google_absl//absl/debugging:failure_signal_handler",
+        "@com_google_absl//absl/debugging:symbolize",
         "@com_google_googletest//:gtest_main",
     ],
 )
