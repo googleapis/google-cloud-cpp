@@ -288,7 +288,7 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
-if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
+if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     find_package(gRPC)
 
     # the library
