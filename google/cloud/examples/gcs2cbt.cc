@@ -46,8 +46,8 @@ namespace {
  *
  * TODO() - make the separator configurable.
  */
-std::vector<std::string> ParseLine(long lineno, std::string const& line,
-                                   char separator);
+std::vector<std::string> ParseLine(long lineno,  // NOLINT(google-runtime-int)
+                                   std::string const& line, char separator);
 
 struct Options {
   char separator;
@@ -196,7 +196,8 @@ int main(int argc, char* argv[]) try {
 }
 
 namespace {
-std::vector<std::string> ParseLine(long lineno, std::string const& line,
+std::vector<std::string> ParseLine(long lineno,  // NOLINT(google-runtime-int)
+                                   std::string const& line,
                                    char separator) try {
   std::vector<std::string> result;
 

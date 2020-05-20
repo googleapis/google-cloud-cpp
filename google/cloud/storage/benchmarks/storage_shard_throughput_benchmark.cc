@@ -87,7 +87,7 @@ struct IterationResult {
 using TestResult = std::vector<IterationResult>;
 
 std::vector<std::string> CreateAllObjects(
-    gcs::Client client, google::cloud::internal::DefaultPRNG& gen,
+    gcs::Client const& client, google::cloud::internal::DefaultPRNG& gen,
     std::string const& bucket_name, Options const& options);
 
 IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
@@ -157,19 +157,20 @@ int main(int argc, char* argv[]) {
   std::vector<std::string> const object_names =
       CreateAllObjects(client, generator, bucket_name, *options);
 
-  double MiBs_sum = 0.0;
+  double mi_bs_sum = 0.0;
+  // NOLINTNEXTLINE(google-runtime-int)
   for (long i = 0; i != options->iteration_count; ++i) {
     auto const r =
         RunOneIteration(generator, *options, bucket_name, object_names);
     std::cout << r.bytes << ',' << r.elapsed.count() << std::endl;
-    auto const MiB = r.bytes / gcs_bm::kMiB;
-    auto const MiBs =
-        MiB * (1.0 * decltype(r.elapsed)::period::den) / r.elapsed.count();
-    MiBs_sum += MiBs;
+    auto const mi_b = r.bytes / gcs_bm::kMiB;
+    auto const mi_bs =
+        mi_b * (1.0 * decltype(r.elapsed)::period::den) / r.elapsed.count();
+    mi_bs_sum += mi_bs;
   }
 
-  auto const MiBs_avg = MiBs_sum / options->iteration_count;
-  std::cout << "# Average Bandwidth (MiB/s): " << MiBs_avg << "\n";
+  auto const mi_bs_avg = mi_bs_sum / options->iteration_count;
+  std::cout << "# Average Bandwidth (MiB/s): " << mi_bs_avg << "\n";
 
   gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
 
@@ -186,7 +187,8 @@ int main(int argc, char* argv[]) {
 namespace {
 
 void CreateGroup(gcs::Client client, std::string const& bucket_name,
-                 Options const& options, std::vector<std::string> group) {
+                 Options const& options,
+                 std::vector<std::string> const& group) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
@@ -205,7 +207,7 @@ void CreateGroup(gcs::Client client, std::string const& bucket_name,
 }
 
 std::vector<std::string> CreateAllObjects(
-    gcs::Client client, google::cloud::internal::DefaultPRNG& gen,
+    gcs::Client const& client, google::cloud::internal::DefaultPRNG& gen,
     std::string const& bucket_name, Options const& options) {
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
@@ -217,6 +219,7 @@ std::vector<std::string> CreateAllObjects(
   // Generate the list of object names.
   std::vector<std::string> object_names;
   object_names.reserve(options.object_count);
+  // NOLINTNEXTLINE(google-runtime-int)
   for (long c = 0; c != options.object_count; ++c) {
     object_names.emplace_back(gcs_bm::MakeRandomObjectName(gen));
   }
@@ -285,6 +288,7 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
 
   auto const download_start = std::chrono::steady_clock::now();
   std::int64_t total_bytes = 0;
+  // NOLINTNEXTLINE(google-runtime-int)
   for (long i = 0; i != options.iteration_size; ++i) {
     auto const object = object_generator(generator);
     auto const chunk = chunk_generator(generator);

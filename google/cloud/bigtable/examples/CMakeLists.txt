@@ -28,6 +28,7 @@ if (BUILD_TESTING)
         gRPC::grpc
         protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(bigtable_examples_common)
+    google_cloud_cpp_add_clang_tidy(bigtable_examples_common)
 
     set(bigtable_examples
         # cmake-format: sort

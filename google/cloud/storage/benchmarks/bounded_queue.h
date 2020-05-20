@@ -29,7 +29,7 @@ class BoundedQueue {
  public:
   BoundedQueue() : BoundedQueue(512, 1024) {}
   explicit BoundedQueue(std::size_t lwm, std::size_t hwm)
-      : lwm_(lwm), hwm_(hwm), is_shutdown_(false) {}
+      : lwm_(lwm), hwm_(hwm) {}
 
   void Shutdown() {
     std::unique_lock<std::mutex> lk(mu_);

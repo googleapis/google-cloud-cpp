@@ -90,11 +90,12 @@ struct Options {
   std::int64_t maximum_object_size = 256 * gcs_bm::kMiB;
   std::int64_t minimum_chunk_size = 128 * gcs_bm::kKiB;
   std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
-  long minimum_sample_count = 0;
+  long minimum_sample_count = 0;  // NOLINT(google-runtime-int)
+  // NOLINTNEXTLINE(google-runtime-int)
   long maximum_sample_count = std::numeric_limits<long>::max();
 };
 
-enum OpType { OP_UPLOAD, OP_DOWNLOAD };
+enum OpType { kOpUpload, kOpDownload };
 struct IterationResult {
   OpType op;
   std::uint64_t object_size;
@@ -202,9 +203,9 @@ int main(int argc, char* argv[]) {
 namespace {
 char const* ToString(OpType type) {
   switch (type) {
-    case OP_DOWNLOAD:
+    case kOpDownload:
       return "DOWNLOAD";
-    case OP_UPLOAD:
+    case kOpUpload:
       return "UPLOAD";
   }
   return nullptr;  // silence g++ error.
@@ -271,14 +272,14 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   gcs_bm::SimpleTimer timer;
   // This obviously depends on the size of the objects, but a good estimate for
   // the upload + download bandwidth is 250MiB/s.
-  constexpr long expected_bandwidth = 250 * gcs_bm::kMiB;
+  constexpr auto kExpectedBandwidth = 250 * gcs_bm::kMiB;
   auto const median_size =
       (options.minimum_object_size + options.minimum_object_size) / 2;
-  auto const objects_per_second = median_size / expected_bandwidth;
+  auto const objects_per_second = median_size / kExpectedBandwidth;
   TestResults results;
   results.reserve(options.duration.count() * objects_per_second);
 
-  long iteration_count = 0;
+  long iteration_count = 0;  // NOLINT(google-runtime-int)
   for (auto start = std::chrono::steady_clock::now();
        iteration_count < options.maximum_sample_count &&
        (iteration_count < options.minimum_sample_count || start < deadline);
@@ -309,7 +310,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
 
     auto object_metadata = writer.metadata();
     results.emplace_back(IterationResult{
-        OP_UPLOAD, object_size, chunk_size, download_buffer_size, enable_crc,
+        kOpUpload, object_size, chunk_size, download_buffer_size, enable_crc,
         enable_md5, timer.elapsed_time(), timer.cpu_time(),
         object_metadata.status().code(), progress.GetAccumulatedProgress()});
 
@@ -331,7 +332,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     }
     timer.Stop();
     results.emplace_back(IterationResult{
-        OP_DOWNLOAD, object_size, chunk_size, upload_buffer_size, enable_crc,
+        kOpDownload, object_size, chunk_size, upload_buffer_size, enable_crc,
         enable_md5, timer.elapsed_time(), timer.cpu_time(),
         reader.status().code(), progress.GetAccumulatedProgress()});
 

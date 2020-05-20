@@ -93,18 +93,19 @@ struct Options {
   std::int64_t maximum_object_size = 8 * gcs_bm::kGiB;
   std::int64_t minimum_num_shards = 1;
   std::int64_t maximum_num_shards = 128;
-  long minimum_sample_count = 0;
+  long minimum_sample_count = 0;  // NOLINT(google-runtime-int)
+  // NOLINTNEXTLINE(google-runtime-int)
   long maximum_sample_count = std::numeric_limits<long>::max();
 };
 
 StatusOr<std::string> CreateTempFile(
     std::string const& directory,
     google::cloud::internal::DefaultPRNG& generator, std::uintmax_t size_left) {
-  std::size_t const kSingleBufSize = 4 * 1024 * 1024;
+  std::size_t const single_buf_size = 4 * 1024 * 1024;
   auto const file_name = directory + (directory.empty() ? "" : "/") +
                          gcs_bm::MakeRandomFileName(generator);
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, kSingleBufSize);
+  std::string random_data = gcs_bm::MakeRandomData(generator, single_buf_size);
 
   std::ofstream file(file_name, std::ios::binary | std::ios::trunc);
   if (!file.good()) {
@@ -147,7 +148,7 @@ Status PerformUpload(gcs::Client& client, std::string const& file_name,
 }
 
 StatusOr<std::chrono::milliseconds> TimeSingleUpload(
-    gcs::Client& client, std::string global_prefix,
+    gcs::Client& client, std::string const& global_prefix,
     std::string const& bucket_name, std::size_t num_shards,
     std::string const& file_name) {
   using std::chrono::milliseconds;

@@ -39,6 +39,7 @@ if (BUILD_TESTING)
         PUBLIC absl::symbolize absl::failure_signal_handler
                google_cloud_cpp_common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
+    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_testing)
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
@@ -57,6 +58,7 @@ if (BUILD_TESTING)
             ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
                               GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -72,6 +74,7 @@ if (BUILD_TESTING)
         google_cloud_cpp_testing_grpc PUBLIC google_cloud_cpp_common
                                              protobuf::libprotobuf GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
+    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_testing_grpc)
 
     create_bazel_config(google_cloud_cpp_testing_grpc YEAR 2020)
 
@@ -93,6 +96,7 @@ if (BUILD_TESTING)
                     GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

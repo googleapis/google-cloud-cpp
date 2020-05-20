@@ -20,6 +20,7 @@ if (BUILD_TESTING)
                 benchmark_utils.cc benchmark_utils.h bounded_queue.h)
     target_link_libraries(storage_benchmarks PUBLIC storage_client)
     google_cloud_cpp_add_common_options(storage_benchmarks)
+    google_cloud_cpp_add_clang_tidy(storage_benchmarks)
 
     include(CheckCXXSymbolExists)
     check_cxx_symbol_exists(getrusage sys/resource.h
@@ -58,6 +59,7 @@ if (BUILD_TESTING)
                     Threads::Threads
                     nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
+        google_cloud_cpp_add_clang_tidy(${target})
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target} PROPERTIES LABELS
@@ -91,6 +93,7 @@ if (BUILD_TESTING)
                         CURL::libcurl
                         nlohmann_json)
             google_cloud_cpp_add_common_options(${target})
+            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()
