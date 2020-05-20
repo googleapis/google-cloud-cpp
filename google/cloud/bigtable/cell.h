@@ -144,7 +144,9 @@ class Cell {
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
-  CellValueType const& value() const { return value_; }
+  CellValueType const& value() const& { return value_; }
+  /// Return the contents of this cell.
+  CellValueType&& value() && { return std::move(value_); }
 
   /**
    * Interpret the value as a big-endian encoded `T` and return it.
