@@ -671,6 +671,22 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   return metadata;
 }
 
+CustomerEncryption GrpcClient::FromProto(
+    google::storage::v1::Object::CustomerEncryption rhs) {
+  CustomerEncryption result;
+  result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
+  result.key_sha256 = std::move(*rhs.mutable_key_sha256());
+  return result;
+}
+
+google::storage::v1::Object::CustomerEncryption GrpcClient::ToProto(
+    CustomerEncryption rhs) {
+  google::storage::v1::Object::CustomerEncryption result;
+  result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
+  result.set_key_sha256(std::move(rhs.key_sha256));
+  return result;
+}
+
 ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   ObjectMetadata metadata;
   metadata.etag_ = std::move(*object.mutable_etag());
@@ -709,12 +725,8 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
     metadata.crc32c_ = Crc32cFromProto(object.crc32c());
   }
   if (object.has_customer_encryption()) {
-    CustomerEncryption e;
-    e.encryption_algorithm = std::move(
-        *object.mutable_customer_encryption()->mutable_encryption_algorithm());
-    e.key_sha256 =
-        std::move(*object.mutable_customer_encryption()->mutable_key_sha256());
-    metadata.customer_encryption_ = std::move(e);
+    metadata.customer_encryption_ =
+        FromProto(std::move(*object.mutable_customer_encryption()));
   }
   if (object.has_event_based_hold()) {
     metadata.event_based_hold_ = object.event_based_hold().value();

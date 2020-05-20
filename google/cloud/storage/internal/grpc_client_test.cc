@@ -206,6 +206,21 @@ TEST(GrpcClientFromProto, ObjectSimple) {
   EXPECT_EQ(actual, *expected);
 }
 
+TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
+  auto constexpr kText = R"pb(
+    encryption_algorithm: "test-encryption-algorithm"
+    key_sha256: "test-key-sha256"
+  )pb";
+  google::storage::v1::Object::CustomerEncryption start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected =
+      CustomerEncryption{"test-encryption-algorithm", "test-key-sha256"};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
 TEST(GrpcClientFromProto, Crc32cRoundtrip) {
   std::string const values[] = {
       "AAAAAA==",
