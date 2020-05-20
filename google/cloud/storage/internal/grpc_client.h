@@ -160,6 +160,12 @@ class GrpcClient : public RawClient,
       DeleteNotificationRequest const&) override;
 
   static BucketMetadata FromProto(google::storage::v1::Bucket bucket);
+
+  static google::storage::v1::Object::CustomerEncryption ToProto(
+      CustomerEncryption rhs);
+  static CustomerEncryption FromProto(
+      google::storage::v1::Object::CustomerEncryption rhs);
+
   static ObjectMetadata FromProto(google::storage::v1::Object object);
 
   static google::storage::v1::ObjectAccessControl ToProto(
