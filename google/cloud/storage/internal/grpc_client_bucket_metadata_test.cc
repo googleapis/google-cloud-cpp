@@ -28,6 +28,93 @@ namespace {
 namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
 
+TEST(GrpcClientBucketMetadata, BucketAccessControlFrom) {
+  auto constexpr kText = R"pb(
+    role: "test-role"
+    etag: "test-etag"
+    id: "test-id"
+    bucket: "test-bucket"
+    entity: "test-entity"
+    entity_id: "test-entity-id"
+    email: "test-email"
+    domain: "test-domain"
+    project_team: { project_number: "test-project-number" team: "test-team" }
+  )pb";
+  google::storage::v1::BucketAccessControl input;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
+
+  auto const expected = BucketAccessControlParser::FromString(R"""({
+     "role": "test-role",
+     "etag": "test-etag",
+     "id": "test-id",
+     "kind": "storage#bucketAccessControl",
+     "bucket": "test-bucket",
+     "entity": "test-entity",
+     "entityId": "test-entity-id",
+     "email": "test-email",
+     "domain": "test-domain",
+     "projectTeam": {
+       "projectNumber": "test-project-number",
+       "team": "test-team"
+     }
+  })""");
+  ASSERT_STATUS_OK(expected);
+
+  auto actual = GrpcClient::FromProto(input);
+  EXPECT_EQ(*expected, actual);
+}
+
+TEST(GrpcClientBucketMetadata, BucketAccessControlToProto) {
+  auto acl = BucketAccessControlParser::FromString(R"""({
+     "role": "test-role",
+     "etag": "test-etag",
+     "id": "test-id",
+     "kind": "storage#bucketAccessControl",
+     "bucket": "test-bucket",
+     "entity": "test-entity",
+     "entityId": "test-entity-id",
+     "email": "test-email",
+     "domain": "test-domain",
+     "projectTeam": {
+       "projectNumber": "test-project-number",
+       "team": "test-team"
+     }
+  })""");
+  ASSERT_STATUS_OK(acl);
+  auto actual = GrpcClient::ToProto(*acl);
+
+  auto constexpr kText = R"pb(
+    role: "test-role"
+    etag: "test-etag"
+    id: "test-id"
+    bucket: "test-bucket"
+    entity: "test-entity"
+    entity_id: "test-entity-id"
+    email: "test-email"
+    domain: "test-domain"
+    project_team: { project_number: "test-project-number" team: "test-team" }
+  )pb";
+  google::storage::v1::BucketAccessControl expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
+
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketMetadata, BucketAccessControlMinimalFields) {
+  BucketAccessControl acl;
+  acl.set_role("test-role");
+  acl.set_entity("test-entity");
+  auto actual = GrpcClient::ToProto(acl);
+
+  google::storage::v1::BucketAccessControl expected;
+  auto constexpr kText = R"pb(
+    role: "test-role" entity: "test-entity"
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
+
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcClientBucketMetadata, BucketAllFields) {
   storage_proto::Bucket input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(

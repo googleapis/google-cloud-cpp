@@ -81,6 +81,7 @@ class BucketAccessControl : private internal::AccessControlCommon {
   }
 
   friend struct internal::BucketAccessControlParser;
+  friend class internal::GrpcClient;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);
