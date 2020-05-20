@@ -117,7 +117,7 @@ Mutation SetCell(std::string family, ColumnType&& column, std::int64_t value) {
  *
  * These mutations are not idempotent and not retried by default.
  */
-Mutation SetCell(Cell const& cell);
+Mutation SetCell(Cell cell);
 
 //@{
 /**
