@@ -405,7 +405,8 @@ function (googleapis_cpp_install_pc target)
         " libcares")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
-    configure_file("cmake/config.pc.in" "${target}.pc" @ONLY)
+    configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "${target}.pc"
+                   @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 endfunction ()
@@ -445,13 +446,14 @@ string(
            " zlib"
            " libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("cmake/config.pc.in" "googleapis.pc" @ONLY)
+configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "googleapis.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
-configure_file("cmake/config.cmake.in" "googleapis-config.cmake" @ONLY)
-configure_file("cmake/config-version.cmake.in"
+configure_file("${CMAKE_CURRENT_LIST_DIR}/config.cmake.in"
+               "googleapis-config.cmake" @ONLY)
+configure_file("${CMAKE_CURRENT_LIST_DIR}/config-version.cmake.in"
                "googleapis-config-version.cmake" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"

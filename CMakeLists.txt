@@ -148,7 +148,7 @@ cmake_dependent_option(
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
-    include(GoogleApisProtos)
+    add_subdirectory(external/googleapis)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
