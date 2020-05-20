@@ -24,12 +24,11 @@
 # actual proto files.
 
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/googleapis/CMakeLists.txt"
-    DESTINATION "${CMAKE_BINARY_DIR}/external/googleapis-src")
-file(COPY
-    "${CMAKE_CURRENT_LIST_DIR}/googleapis/config.cmake.in"
-    "${CMAKE_CURRENT_LIST_DIR}/googleapis/config.pc.in"
-    "${CMAKE_CURRENT_LIST_DIR}/googleapis/config-version.cmake.in"
+     DESTINATION "${CMAKE_BINARY_DIR}/external/googleapis-src")
+file(
+    COPY "${CMAKE_CURRENT_LIST_DIR}/googleapis/config.cmake.in"
+         "${CMAKE_CURRENT_LIST_DIR}/googleapis/config.pc.in"
+         "${CMAKE_CURRENT_LIST_DIR}/googleapis/config-version.cmake.in"
     DESTINATION "${CMAKE_BINARY_DIR}/external/googleapis-src/cmake")
 
 add_subdirectory("${CMAKE_BINARY_DIR}/external/googleapis-src")
-

@@ -17,11 +17,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 string(
-    CONCAT GOOGLE_APIS_CPP_PROTOS_VERSION
-           "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
-           "."
-           "${GOOGLE_CLOUD_CPP_VERSION_MINOR}"
-           "."
+    CONCAT GOOGLE_APIS_CPP_PROTOS_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
+           "." "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
            "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
 # Give application developers a hook to configure the version and hash

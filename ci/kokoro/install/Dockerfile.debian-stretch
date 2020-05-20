@@ -111,21 +111,6 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
     ldconfig
 # ```
 
-# #### googleapis
-
-# We need a recent version of the Google Cloud Platform proto C++ libraries:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.10.0.tar.gz && \
-    tar -xf v0.10.0.tar.gz && \
-    cd cpp-cmakefiles-0.10.0 && \
-    cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
 FROM devtools AS install
 ARG NCPU=4
 ARG DISTRO="distro-name"
