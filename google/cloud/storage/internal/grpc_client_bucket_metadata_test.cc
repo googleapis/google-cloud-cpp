@@ -192,6 +192,46 @@ TEST(GrpcClientBucketMetadata, BucketMetadata) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketMetadata, BucketBillingRoundtrip) {
+  auto constexpr kText = R"pb(
+    requester_pays: true
+  )pb";
+  google::storage::v1::Bucket::Billing start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = BucketBilling{true};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketVersioningRoundtrip) {
+  auto constexpr kText = R"pb(
+    enabled: true
+  )pb";
+  google::storage::v1::Bucket::Versioning start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = BucketVersioning{true};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketWebsiteRoundtrip) {
+  auto constexpr kText = R"pb(
+    main_page_suffix: "index.html"
+    not_found_page: "404.html"
+  )pb";
+  google::storage::v1::Bucket::Website start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = BucketWebsite{"index.html", "404.html"};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

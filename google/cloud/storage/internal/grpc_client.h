@@ -178,6 +178,17 @@ class GrpcClient : public RawClient,
   static BucketAccessControl FromProto(
       google::storage::v1::BucketAccessControl acl);
 
+  static google::storage::v1::Bucket::Billing ToProto(BucketBilling const&);
+  static BucketBilling FromProto(google::storage::v1::Bucket::Billing const&);
+
+  static google::storage::v1::Bucket::Versioning ToProto(
+      BucketVersioning const&);
+  static BucketVersioning FromProto(
+      google::storage::v1::Bucket::Versioning const&);
+
+  static google::storage::v1::Bucket::Website ToProto(BucketWebsite);
+  static BucketWebsite FromProto(google::storage::v1::Bucket::Website);
+
   static google::storage::v1::CommonEnums::Projection ToProto(
       Projection const& p);
   static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(
