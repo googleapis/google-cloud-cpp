@@ -40,8 +40,7 @@ $project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_dir = "cmake-out\vcpkg"
 $packages = @("zlib", "openssl",
               "protobuf", "c-ares", "benchmark",
-              "grpc", "gtest", "crc32c", "curl",
-              "googleapis")
+              "grpc", "gtest", "crc32c", "curl")
 $vcpkg_flags=@(
     "--triplet", "${env:VCPKG_TRIPLET}")
 if ($args.count -ge 1) {
