@@ -24,6 +24,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
+#include "absl/algorithm/container.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -641,6 +642,18 @@ std::chrono::system_clock::time_point AsChronoTimepoint(
              std::chrono::nanoseconds(ts.nanos()));
 }
 
+google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
+    std::chrono::system_clock::time_point tp) {
+  auto d = tp.time_since_epoch();
+  using std::chrono::duration_cast;
+  auto seconds = duration_cast<std::chrono::seconds>(d);
+  auto nanos = duration_cast<std::chrono::nanoseconds>(d - seconds);
+  google::protobuf::Timestamp ts;
+  ts.set_seconds(seconds.count());
+  ts.set_nanos(nanos.count());
+  return ts;
+}
+
 BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   BucketMetadata metadata;
   // TODO(#4174) - convert acl() field.
@@ -864,6 +877,107 @@ BucketBilling GrpcClient::FromProto(
     google::storage::v1::Bucket::Billing const& rhs) {
   BucketBilling result;
   result.requester_pays = rhs.requester_pays();
+  return result;
+}
+
+google::storage::v1::Bucket::Cors GrpcClient::ToProto(CorsEntry const& rhs) {
+  google::storage::v1::Bucket::Cors result;
+  for (auto const& v : rhs.origin) {
+    result.add_origin(v);
+  }
+  for (auto const& v : rhs.method) {
+    result.add_method(v);
+  }
+  for (auto const& v : rhs.response_header) {
+    result.add_response_header(v);
+  }
+  if (rhs.max_age_seconds.has_value()) {
+    result.set_max_age_seconds(*rhs.max_age_seconds);
+  }
+  return result;
+}
+
+CorsEntry GrpcClient::FromProto(google::storage::v1::Bucket::Cors const& rhs) {
+  CorsEntry result;
+  absl::c_copy(rhs.origin(), std::back_inserter(result.origin));
+  absl::c_copy(rhs.method(), std::back_inserter(result.method));
+  absl::c_copy(rhs.response_header(),
+               std::back_inserter(result.response_header));
+  result.max_age_seconds = rhs.max_age_seconds();
+  return result;
+}
+
+google::storage::v1::Bucket::Encryption GrpcClient::ToProto(
+    BucketEncryption const& rhs) {
+  google::storage::v1::Bucket::Encryption result;
+  result.set_default_kms_key_name(rhs.default_kms_key_name);
+  return result;
+}
+
+BucketEncryption GrpcClient::FromProto(
+    google::storage::v1::Bucket::Encryption const& rhs) {
+  BucketEncryption result;
+  result.default_kms_key_name = rhs.default_kms_key_name();
+  return result;
+}
+
+google::storage::v1::Bucket::IamConfiguration GrpcClient::ToProto(
+    BucketIamConfiguration const& rhs) {
+  google::storage::v1::Bucket::IamConfiguration result;
+  if (rhs.uniform_bucket_level_access.has_value()) {
+    auto& ubla = *result.mutable_uniform_bucket_level_access();
+    *ubla.mutable_locked_time() = ChronoTimepointToProtoTimestamp(
+        rhs.uniform_bucket_level_access->locked_time);
+    ubla.set_enabled(rhs.uniform_bucket_level_access->enabled);
+  }
+  return result;
+}
+
+BucketIamConfiguration GrpcClient::FromProto(
+    google::storage::v1::Bucket::IamConfiguration const& rhs) {
+  BucketIamConfiguration result;
+  if (rhs.has_uniform_bucket_level_access()) {
+    UniformBucketLevelAccess ubla;
+    ubla.enabled = rhs.uniform_bucket_level_access().enabled();
+    ubla.locked_time =
+        AsChronoTimepoint(rhs.uniform_bucket_level_access().locked_time());
+    result.uniform_bucket_level_access = std::move(ubla);
+  }
+  return result;
+}
+
+google::storage::v1::Bucket::Logging GrpcClient::ToProto(
+    BucketLogging const& rhs) {
+  google::storage::v1::Bucket::Logging result;
+  result.set_log_bucket(rhs.log_bucket);
+  result.set_log_object_prefix(rhs.log_object_prefix);
+  return result;
+}
+
+BucketLogging GrpcClient::FromProto(
+    google::storage::v1::Bucket::Logging const& rhs) {
+  BucketLogging result;
+  result.log_bucket = rhs.log_bucket();
+  result.log_object_prefix = rhs.log_object_prefix();
+  return result;
+}
+
+google::storage::v1::Bucket::RetentionPolicy GrpcClient::ToProto(
+    BucketRetentionPolicy const& rhs) {
+  google::storage::v1::Bucket::RetentionPolicy result;
+  *result.mutable_effective_time() =
+      ChronoTimepointToProtoTimestamp(rhs.effective_time);
+  result.set_is_locked(rhs.is_locked);
+  result.set_retention_period(rhs.retention_period.count());
+  return result;
+}
+
+BucketRetentionPolicy GrpcClient::FromProto(
+    google::storage::v1::Bucket::RetentionPolicy const& rhs) {
+  BucketRetentionPolicy result;
+  result.effective_time = AsChronoTimepoint(rhs.effective_time());
+  result.is_locked = rhs.is_locked();
+  result.retention_period = std::chrono::seconds(rhs.retention_period());
   return result;
 }
 
