@@ -17,13 +17,26 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
+#include <fstream>
 
 namespace google {
 namespace cloud {
 namespace storage {
+namespace testing {
+class ClientTester {
+ public:
+  static StatusOr<ObjectMetadata> UploadStreamResumable(
+      Client& client, std::istream& source,
+      internal::ResumableUploadRequest const& request) {
+    return client.UploadStreamResumable(source, request);
+  }
+};
+}  // namespace testing
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
@@ -58,7 +71,9 @@ class WriteObjectTest : public ::testing::Test {
   std::shared_ptr<testing::MockClient> mock_;
   std::unique_ptr<Client> client_;
   ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
+      ClientOptions(oauth2::CreateAnonymousCredentials())
+          .SetUploadBufferSize(2 *
+                               internal::UploadChunkRequest::kChunkSizeQuantum);
 };
 
 TEST_F(WriteObjectTest, WriteObject) {
@@ -158,6 +173,155 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   EXPECT_FALSE(stream.metadata());
   EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
       << ", status=" << stream.metadata().status();
+}
+
+// A std::filebuf which allows to learn about seekpos calls.
+class MockFilebuf : public std::filebuf {
+ public:
+  MOCK_METHOD1(SeekoffEvent, void(std::streamoff));
+
+ protected:
+  std::streampos seekoff(std::streamoff off, std::ios_base::seekdir way,
+                         std::ios_base::openmode which) override {
+    SeekoffEvent(off);
+    return std::filebuf::seekoff(off, way, which);
+  }
+};
+
+class MockFilebufStream : public std::ifstream {
+ public:
+  explicit MockFilebufStream(std::string const& s) {
+    buf_.open(s.c_str(), std::ios_base::in);
+    init(&buf_);
+    clear();
+    std::cout << "OPEN? " << buf_.is_open() << std::endl;
+  }
+
+ private:
+  MockFilebuf buf_;
+};
+
+TEST_F(WriteObjectTest, UploadStreamResumable) {
+  auto const quantum = internal::UploadChunkRequest::kChunkSizeQuantum;
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  google::cloud::storage::testing::TempFile temp_file(
+      google::cloud::storage::testing::MakeRandomData(rng, 2 * quantum + 10));
+
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
+
+  // Simulate situation when a quantum has already been uploaded.
+  std::size_t bytes_written = quantum;
+  EXPECT_CALL(*mock_, CreateResumableSession(_))
+      .WillOnce(Invoke([&expected, &bytes_written](
+                           internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+
+        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte())
+            .WillRepeatedly(
+                Invoke([&bytes_written]() { return bytes_written; }));
+
+        EXPECT_CALL(*mock, UploadChunk(_))
+            .WillRepeatedly(Invoke([&bytes_written](std::string const& data) {
+              bytes_written += data.size();
+              return make_status_or(
+                  ResumableUploadResponse{"fake-url",
+                                          bytes_written,
+                                          {},
+                                          ResumableUploadResponse::kInProgress,
+                                          {}});
+            }));
+        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+            .WillOnce(Invoke([expected, &bytes_written](std::string const& data,
+                                                        size_t size) {
+              bytes_written += data.size();
+              EXPECT_EQ(bytes_written, size);
+              return make_status_or(ResumableUploadResponse{
+                  "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});
+            }));
+
+        return make_status_or(
+            std::unique_ptr<internal ::ResumableUploadSession>(
+                std::move(mock)));
+      }));
+
+  MockFilebuf filebuf;
+  // Don't expect any seekoff events
+  EXPECT_CALL(filebuf, SeekoffEvent(_))
+      .WillOnce(
+          Invoke([quantum](std::streamoff off) { EXPECT_EQ(quantum, off); }));
+  ASSERT_NE(nullptr, filebuf.open(temp_file.name().c_str(), std::ios_base::in));
+  std::istream stream(&filebuf);
+
+  ASSERT_TRUE(stream);
+  auto res = testing::ClientTester::UploadStreamResumable(
+      *client_, stream,
+      internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(expected, *res);
+}
+
+TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  google::cloud::storage::testing::TempFile temp_file(
+      google::cloud::storage::testing::MakeRandomData(
+          rng, 2 * internal::UploadChunkRequest::kChunkSizeQuantum + 10));
+
+  std::size_t bytes_written = 0;
+  EXPECT_CALL(*mock_, CreateResumableSession(_))
+      .WillOnce(Invoke([&bytes_written](
+                           internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+
+        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte())
+            .WillOnce(Return(0))
+            .WillOnce(Return(0))
+            .WillOnce(Return(0))
+            .WillOnce(Return(0))
+            .WillOnce(Return(0))
+            .WillOnce(Return(524288))
+            .WillRepeatedly(Return(524287));  // start lying
+        EXPECT_CALL(*mock, UploadChunk(_))
+            .WillRepeatedly(Invoke([&bytes_written](std::string const& data) {
+              bytes_written += data.size();
+              return make_status_or(
+                  ResumableUploadResponse{"fake-url",
+                                          bytes_written,
+                                          {},
+                                          ResumableUploadResponse::kInProgress,
+                                          {}});
+            }));
+
+        return make_status_or(
+            std::unique_ptr<internal ::ResumableUploadSession>(
+                std::move(mock)));
+      }));
+
+  MockFilebuf filebuf;
+  // Don't expect any seekoff events
+  EXPECT_CALL(filebuf, SeekoffEvent(_)).WillOnce(Invoke([](std::streamoff off) {
+    EXPECT_EQ(0, off);
+  }));
+  ASSERT_NE(nullptr, filebuf.open(temp_file.name().c_str(), std::ios_base::in));
+  std::istream stream(&filebuf);
+
+  ASSERT_TRUE(stream);
+  auto res = testing::ClientTester::UploadStreamResumable(
+      *client_, stream,
+      internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), ::testing::HasSubstr("This is a bug"));
 }
 
 }  // namespace

@@ -42,6 +42,9 @@
 namespace google {
 namespace cloud {
 namespace storage {
+namespace testing {
+class ClientTester;
+}  // namespace testing
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class NonResumableParallelUploadState;
@@ -3096,6 +3099,7 @@ class Client {
 
   friend class internal::NonResumableParallelUploadState;
   friend class internal::ResumableParallelUploadState;
+  friend class testing::ClientTester;
 };
 
 /**

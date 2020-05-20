@@ -153,6 +153,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   }
 
   auto session = std::move(*session_status);
+  source.seekg(session->next_expected_byte(), std::ios::beg);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
@@ -172,7 +173,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     auto source_size = session->next_expected_byte() + gcount;
     buffer.resize(gcount);
 
-    auto expected = session->next_expected_byte() + gcount - 1;
+    auto expected = session->next_expected_byte() + gcount;
     if (final_chunk) {
       upload_response = session->UploadFinalChunk(buffer, source_size);
     } else {
@@ -182,10 +183,14 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       return std::move(upload_response).status();
     }
     if (session->next_expected_byte() != expected) {
-      GCP_LOG(WARNING) << "unexpected last committed byte "
-                       << " expected=" << expected
-                       << " got=" << session->next_expected_byte();
-      source.seekg(session->next_expected_byte(), std::ios::beg);
+      // Defensive programming: unless there is a bug, this should be dead code.
+      return Status(
+          StatusCode::kInternal,
+          "Unexpected last committed byte expected=" +
+              std::to_string(expected) +
+              " got=" + std::to_string(session->next_expected_byte()) +
+              ". This is a bug, please report it at "
+              "https://github.com/googleapis/google-cloud-cpp/issues/new");
     }
   }
 
