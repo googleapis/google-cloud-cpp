@@ -288,8 +288,8 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
-if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
-    find_package(googleapis)
+if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+    find_package(gRPC)
 
     # the library
     add_library(
@@ -433,8 +433,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
 
     add_subdirectory(samples)

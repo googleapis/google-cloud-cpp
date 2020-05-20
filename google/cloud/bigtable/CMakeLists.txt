@@ -14,7 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(googleapis CONFIG REQUIRED)
 # TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
 set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)

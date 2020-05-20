@@ -334,7 +334,16 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
     <(
       echo /var/tmp/staging/include/google/cloud
       echo /var/tmp/staging/include/google/cloud/bigquery
+      echo /var/tmp/staging/include/google/cloud/bigquery/connection
+      echo /var/tmp/staging/include/google/cloud/bigquery/connection/v1beta1
+      echo /var/tmp/staging/include/google/cloud/bigquery/datatransfer
+      echo /var/tmp/staging/include/google/cloud/bigquery/datatransfer/v1
       echo /var/tmp/staging/include/google/cloud/bigquery/internal
+      echo /var/tmp/staging/include/google/cloud/bigquery/logging
+      echo /var/tmp/staging/include/google/cloud/bigquery/logging/v1
+      echo /var/tmp/staging/include/google/cloud/bigquery/storage
+      echo /var/tmp/staging/include/google/cloud/bigquery/storage/v1beta1
+      echo /var/tmp/staging/include/google/cloud/bigquery/v2
       echo /var/tmp/staging/include/google/cloud/bigtable
       echo /var/tmp/staging/include/google/cloud/bigtable/internal
       echo /var/tmp/staging/include/google/cloud/firestore

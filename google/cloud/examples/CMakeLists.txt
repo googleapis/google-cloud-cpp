@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(googleapis CONFIG REQUIRED)
-
 # Pick the right MSVC runtime libraries.
 include(SelectMSVCRuntime)
 

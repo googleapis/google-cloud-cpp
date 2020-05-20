@@ -134,19 +134,22 @@ option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 
-# Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS.
+# Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
-    CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS_EXPRESSION
+    CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION
            "GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY OR "
            "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE OR "
            "GOOGLE_CLOUD_CPP_ENABLE_SPANNER OR "
            "GOOGLE_CLOUD_CPP_ENABLE_PUBSUB")
 
 cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
-    "Enable building the gRPC utilities library." ON
-    "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS_EXPRESSION}" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
+    GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
+    ON "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION}" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+
+if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
+    add_subdirectory(external/googleapis)
+endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
