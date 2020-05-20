@@ -229,6 +229,17 @@ StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
     ReadObjectRangeRequest const& request) {
+  // With the REST API this condition was detected by the server as an error,
+  // generally we prefer the server to detect errors because its answers are
+  // authoritative. In this case, the server cannot: with gRPC '0' is the same
+  // as "not set" and the server would send back the full file, which was
+  // unlikely to be the customer's intent.
+  if (request.HasOption<ReadLast>() &&
+      request.GetOption<ReadLast>().value() == 0) {
+    return Status(
+        StatusCode::kOutOfRange,
+        "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
+  }
   auto const proto_request = ToProto(request);
   auto create_stream = [&proto_request, this](grpc::ClientContext& context) {
     return stub_->GetObjectMedia(&context, proto_request);
@@ -1025,7 +1036,7 @@ google::storage::v1::GetObjectMediaRequest GrpcClient::ToProto(
   }
   if (request.HasOption<ReadLast>()) {
     auto const offset = request.GetOption<ReadLast>().value();
-    r.set_read_offset(-(offset + 1));
+    r.set_read_offset(-offset);
   }
   if (request.HasOption<ReadFromOffset>()) {
     auto const offset = request.GetOption<ReadFromOffset>().value();

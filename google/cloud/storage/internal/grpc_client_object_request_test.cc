@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -404,7 +406,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
   google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "test-bucket" object: "test-object" read_offset: -2001
+        bucket: "test-bucket" object: "test-object" read_offset: -2000
       )pb",
       &expected));
 
@@ -413,6 +415,27 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
 
   auto const actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
+  google::storage::v1::GetObjectMediaRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(ReadLast(0));
+
+  auto const actual = GrpcClient::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+
+  testing_util::ScopedEnvironment grpc_endpoint{
+      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_ENDPOINT", "locahost:1"};
+  GrpcClient client{ClientOptions{oauth2::CreateAnonymousCredentials()}};
+  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client.ReadObject(req);
+  EXPECT_EQ(reader.status().code(), StatusCode::kOutOfRange);
 }
 
 }  // namespace
