@@ -136,9 +136,6 @@ if (BUILD_TESTING)
                                      include/google/cloud/testing_util)
 
     # Setup global variables used in the following *.in files.
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
     set(GOOGLE_CLOUD_CPP_PC_NAME
         "Google Cloud C++ Client Library Testing Utilities")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
