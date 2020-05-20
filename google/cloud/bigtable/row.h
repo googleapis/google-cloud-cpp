@@ -43,7 +43,9 @@ class Row {
   RowKeyType const& row_key() const { return row_key_; }
 
   /// Return all cells.
-  std::vector<Cell> const& cells() const { return cells_; }
+  std::vector<Cell> const& cells() const& { return cells_; }
+  /// Return all cells.
+  std::vector<Cell>&& cells() && { return std::move(cells_); }
 
  private:
   RowKeyType row_key_;
