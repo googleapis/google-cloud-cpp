@@ -266,8 +266,6 @@ create_bazel_config(storage_client)
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
-    find_package(googleapis REQUIRED)
-    # The gRPC "plug-in" for the client library.
     add_library(
         storage_client_grpc
         grpc_plugin.cc

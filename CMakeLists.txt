@@ -148,6 +148,9 @@ cmake_dependent_option(
     "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS_EXPRESSION}" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
 
+# XXX
+include(GoogleApisProtos)
+
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)

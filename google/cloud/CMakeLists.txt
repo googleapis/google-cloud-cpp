@@ -289,7 +289,7 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
-    find_package(googleapis)
+    find_package(gRPC)
 
     # the library
     add_library(

@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(googleapis CONFIG REQUIRED)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")

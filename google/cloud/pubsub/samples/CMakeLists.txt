@@ -15,6 +15,7 @@
 # ~~~
 
 function (pubsub_client_define_samples)
+    find_package(gRPC)
     add_library(pubsub_samples_common # cmake-format: sort
                 pubsub_samples_common.cc pubsub_samples_common.h)
     target_link_libraries(

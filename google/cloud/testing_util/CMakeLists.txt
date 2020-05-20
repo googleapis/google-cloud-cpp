@@ -65,7 +65,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 
-    find_package(googleapis)
+    find_package(ProtobufWithTargets REQUIRED)
     add_library(
         google_cloud_cpp_testing_grpc # cmake-format: sort
         is_proto_equal.cc is_proto_equal.h mock_async_response_reader.h
