@@ -173,6 +173,11 @@ class GrpcClient : public RawClient,
   static ObjectAccessControl FromProto(
       google::storage::v1::ObjectAccessControl acl);
 
+  static google::storage::v1::BucketAccessControl ToProto(
+      BucketAccessControl const& acl);
+  static BucketAccessControl FromProto(
+      google::storage::v1::BucketAccessControl acl);
+
   static google::storage::v1::CommonEnums::Projection ToProto(
       Projection const& p);
   static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(

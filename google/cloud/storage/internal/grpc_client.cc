@@ -811,6 +811,48 @@ ObjectAccessControl GrpcClient::FromProto(
   return result;
 }
 
+google::storage::v1::BucketAccessControl GrpcClient::ToProto(
+    BucketAccessControl const& acl) {
+  google::storage::v1::BucketAccessControl result;
+  result.set_role(acl.role());
+  result.set_etag(acl.etag());
+  result.set_id(acl.id());
+  result.set_bucket(acl.bucket());
+  result.set_entity(acl.entity());
+  result.set_entity_id(acl.entity_id());
+  result.set_email(acl.email());
+  result.set_domain(acl.domain());
+  if (acl.has_project_team()) {
+    result.mutable_project_team()->set_project_number(
+        acl.project_team().project_number);
+    result.mutable_project_team()->set_team(acl.project_team().team);
+  }
+  return result;
+}
+
+BucketAccessControl GrpcClient::FromProto(
+    google::storage::v1::BucketAccessControl acl) {
+  BucketAccessControl result;
+  result.bucket_ = std::move(*acl.mutable_bucket());
+  result.domain_ = std::move(*acl.mutable_domain());
+  result.email_ = std::move(*acl.mutable_email());
+  result.entity_ = std::move(*acl.mutable_entity());
+  result.entity_id_ = std::move(*acl.mutable_entity_id());
+  result.etag_ = std::move(*acl.mutable_etag());
+  result.id_ = std::move(*acl.mutable_id());
+  result.kind_ = "storage#bucketAccessControl";
+  if (acl.has_project_team()) {
+    result.project_team_ = ProjectTeam{
+        std::move(*acl.mutable_project_team()->mutable_project_number()),
+        std::move(*acl.mutable_project_team()->mutable_team()),
+    };
+  }
+  result.role_ = std::move(*acl.mutable_role());
+  result.self_link_.clear();
+
+  return result;
+}
+
 google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
     Projection const& p) {
   if (p.value() == Projection::NoAcl().value()) {
