@@ -20,6 +20,7 @@ if (BUILD_TESTING)
     target_link_libraries(storage_examples_common storage_client
                           google_cloud_cpp_common)
     google_cloud_cpp_add_common_options(storage_examples_common)
+    google_cloud_cpp_add_clang_tidy(storage_examples_common)
 
     set(storage_examples
         # cmake-format: sort

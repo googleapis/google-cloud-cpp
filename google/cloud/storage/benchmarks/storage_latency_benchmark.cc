@@ -67,14 +67,14 @@ struct Options {
   std::string region;
   std::chrono::seconds duration = std::chrono::seconds(60);
   std::int64_t object_size = gcs_bm::kMiB;
-  long object_count = 1000;
+  long object_count = 1000;  // NOLINT(google-runtime-int)
   int thread_count = 1;
   bool enable_connection_pool = false;
   bool enable_xml_api = false;
   std::string project_id;
 };
 
-enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_DELETE, OP_LAST };
+enum OpType { kOpRead, kOpWrite, kOpCreate, kOpDelete, kOpLast };
 struct IterationResult {
   OpType op;
   bool success;
@@ -86,10 +86,10 @@ char const* ToString(OpType type);
 void PrintResult(TestResult const& result);
 
 std::vector<std::string> CreateAllObjects(
-    gcs::Client client, google::cloud::internal::DefaultPRNG& gen,
+    gcs::Client const& client, google::cloud::internal::DefaultPRNG& gen,
     std::string const& bucket_name, Options const& options);
 
-void RunTest(gcs::Client client, std::string const& bucket_name,
+void RunTest(gcs::Client const& client, std::string const& bucket_name,
              Options const& options,
              std::vector<std::string> const& object_names);
 
@@ -171,11 +171,12 @@ int main(int argc, char* argv[]) {
 
 namespace {
 char const* ToString(OpType type) {
-  static char const* kOpTypeNames[] = {"READ", "WRITE", "CREATE", "DELETE",
-                                       "LAST"};
-  static_assert(OP_LAST + 1 == (sizeof(kOpTypeNames) / sizeof(kOpTypeNames[0])),
-                "Mismatched size for OpType names array");
-  return kOpTypeNames[type];
+  static char const* op_type_names[] = {"READ", "WRITE", "CREATE", "DELETE",
+                                        "LAST"};
+  static_assert(
+      kOpLast + 1 == (sizeof(op_type_names) / sizeof(op_type_names[0])),
+      "Mismatched size for OpType names array");
+  return op_type_names[type];
 }
 
 void PrintResult(TestResult const& result) {
@@ -208,7 +209,7 @@ IterationResult CreateOnce(gcs::Client const& client,
                            std::string const& data_chunk,
                            Options const& options) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_CREATE);
+                     kOpCreate);
 }
 
 IterationResult WriteOnce(gcs::Client const& client,
@@ -217,7 +218,7 @@ IterationResult WriteOnce(gcs::Client const& client,
                           std::string const& data_chunk,
                           Options const& options) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_WRITE);
+                     kOpWrite);
 }
 
 IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
@@ -239,11 +240,12 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   auto elapsed = std::chrono::steady_clock::now() - start;
   using std::chrono::milliseconds;
   auto ms = std::chrono::duration_cast<milliseconds>(elapsed);
-  return IterationResult{OP_READ, (total_size == options.object_size), ms};
+  return IterationResult{kOpRead, (total_size == options.object_size), ms};
 }
 
-TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
-                       Options const& options, std::vector<std::string> group) {
+TestResult CreateGroup(gcs::Client const& client,
+                       std::string const& bucket_name, Options const& options,
+                       std::vector<std::string> const& group) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
@@ -258,7 +260,7 @@ TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
 }
 
 std::vector<std::string> CreateAllObjects(
-    gcs::Client client, google::cloud::internal::DefaultPRNG& gen,
+    gcs::Client const& client, google::cloud::internal::DefaultPRNG& gen,
     std::string const& bucket_name, Options const& options) {
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
@@ -271,6 +273,7 @@ std::vector<std::string> CreateAllObjects(
   // Generate the list of object names.
   std::vector<std::string> object_names;
   object_names.reserve(options.object_count);
+  // NOLINTNEXTLINE(google-runtime-int)
   for (long c = 0; c != options.object_count; ++c) {
     object_names.emplace_back(gcs_bm::MakeRandomObjectName(gen));
   }
@@ -335,7 +338,7 @@ TestResult RunTestThread(gcs::Client const& client,
   return result;
 }
 
-void RunTest(gcs::Client client, std::string const& bucket_name,
+void RunTest(gcs::Client const& client, std::string const& bucket_name,
              Options const& options,
              std::vector<std::string> const& object_names) {
   std::vector<std::future<TestResult>> tasks;
@@ -362,7 +365,7 @@ google::cloud::StatusOr<TestResult> DeleteGroup(
     auto elapsed = std::chrono::steady_clock::now() - start;
     using std::chrono::milliseconds;
     auto ms = std::chrono::duration_cast<milliseconds>(elapsed);
-    result.emplace_back(IterationResult{OP_DELETE, true, ms});
+    result.emplace_back(IterationResult{kOpDelete, true, ms});
   }
   return result;
 }

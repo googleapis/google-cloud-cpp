@@ -33,7 +33,7 @@ bool EndsWith(std::string const& val, std::string const& suffix) {
 // This parser does not validate the input fully, but it is good enough for our
 // purposes.
 std::int64_t ParseSize(std::string const& val) {
-  long s = std::stol(val);
+  long s = std::stol(val);  // NOLINT(google-runtime-int)
   if (EndsWith(val, "TiB")) {
     return s * kTiB;
   }
@@ -64,7 +64,7 @@ std::int64_t ParseSize(std::string const& val) {
 // This parser does not validate the input fully, but it is good enough for our
 // purposes.
 std::chrono::seconds ParseDuration(std::string const& val) {
-  long s = std::stol(val);
+  long s = std::stol(val);  // NOLINT(google-runtime-int)
   if (EndsWith(val, "h")) {
     return s * std::chrono::seconds(std::chrono::hours(1));
   }
@@ -84,11 +84,8 @@ google::cloud::optional<bool> ParseBoolean(std::string const& val) {
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
                  [](char x) { return static_cast<char>(std::tolower(x)); });
-  if (lower == "true") {
-    return true;
-  } else if (lower == "false") {
-    return false;
-  }
+  if (lower == "true") return true;
+  if (lower == "false") return false;
   return {};
 }
 
@@ -170,12 +167,13 @@ void SimpleTimer::Start() {
 }
 
 void SimpleTimer::Stop() {
-  using namespace std::chrono;
-  elapsed_time_ = duration_cast<microseconds>(steady_clock::now() - start_);
+  elapsed_time_ = std::chrono::duration_cast<std::chrono::microseconds>(
+      std::chrono::steady_clock::now() - start_);
 
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   auto as_usec = [](timeval const& tv) {
-    return microseconds(seconds(tv.tv_sec)) + microseconds(tv.tv_usec);
+    return std::chrono::microseconds(std::chrono::seconds(tv.tv_sec)) +
+           std::chrono::microseconds(tv.tv_usec);
   };
 
   struct rusage now {};
@@ -274,7 +272,7 @@ std::string FormatSize(std::uintmax_t size) {
 }
 
 void DeleteAllObjects(google::cloud::storage::Client client,
-                      std::string bucket_name, int thread_count) {
+                      std::string const& bucket_name, int thread_count) {
   using WorkQueue = BoundedQueue<google::cloud::storage::ObjectMetadata>;
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;

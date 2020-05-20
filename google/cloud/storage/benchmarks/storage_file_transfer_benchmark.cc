@@ -135,11 +135,11 @@ int main(int argc, char* argv[]) {
     double gbps = options->file_size * 8.0 / upload_elapsed.count();
     auto ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(upload_elapsed);
-    auto MiBs =
+    auto mi_bs =
         (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
     std::cout << "FileUpload," << options->file_size << ','
               << upload_elapsed.count() << ',' << gbps << ',' << ms.count()
-              << ',' << MiBs << ',' << object_metadata.status().code() << "\n";
+              << ',' << mi_bs << ',' << object_metadata.status().code() << "\n";
     if (!object_metadata) {
       std::cout << "# Error in FileUpload: " << object_metadata.status()
                 << "\n";
@@ -156,10 +156,10 @@ int main(int argc, char* argv[]) {
     gbps = options->file_size * 8.0 / download_elapsed.count();
     ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(download_elapsed);
-    MiBs = (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
+    mi_bs = (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
     std::cout << "FileDownload," << options->file_size << ','
               << download_elapsed.count() << ',' << gbps << ',' << ms.count()
-              << ',' << MiBs << ',' << object_metadata.status().code() << "\n";
+              << ',' << mi_bs << ',' << object_metadata.status().code() << "\n";
 
     (void)client.DeleteObject(object_metadata->bucket(),
                               object_metadata->name(),

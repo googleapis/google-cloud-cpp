@@ -128,7 +128,7 @@ class ProgressReporter {
 std::string FormatSize(std::uintmax_t size);
 
 void DeleteAllObjects(google::cloud::storage::Client client,
-                      std::string bucket_name, int thread_count);
+                      std::string const& bucket_name, int thread_count);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
