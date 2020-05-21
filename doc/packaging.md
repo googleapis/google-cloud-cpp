@@ -435,8 +435,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -536,8 +545,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -636,8 +654,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -751,8 +778,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -932,8 +968,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1045,8 +1090,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1177,8 +1231,17 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     tar -xf v1.29.1.tar.gz && \
     cd grpc-1.29.1 && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
