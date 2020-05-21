@@ -161,6 +161,19 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
+TEST(GrpcClientFromProto, OwnerRoundtrip) {
+  auto constexpr kText = R"pb(
+    entity: "test-entity" entity_id: "test-entity-id"
+  )pb";
+  google::storage::v1::Owner start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = Owner{"test-entity", "test-entity-id"};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
 TEST(GrpcClientFromProto, Crc32cRoundtrip) {
   std::string const values[] = {
       "AAAAAA==",

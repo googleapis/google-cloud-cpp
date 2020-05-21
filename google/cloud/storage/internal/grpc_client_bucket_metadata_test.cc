@@ -115,81 +115,149 @@ TEST(GrpcClientBucketMetadata, BucketAccessControlMinimalFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientBucketMetadata, BucketAllFields) {
+TEST(GrpcClientBucketMetadata, BucketAllFieldsRoundtrip) {
   storage_proto::Bucket input;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-# TODO(#4174) - convert acl() field.
-# TODO(#4173) - convert default_object_acl() field.
-# TODO(#4165) - convert lifecycle
-    time_created: {
-      seconds: 1565194924
-      nanos: 123456789
-    }
+  auto constexpr kText = R"pb(
+    acl: { role: "test-role1" entity: "test-entity1" }
+    acl: { role: "test-role2" entity: "test-entity2" }
+    default_object_acl: { role: "test-role3" entity: "test-entity3" }
+    default_object_acl: { role: "test-role4" entity: "test-entity4" }
+    # TODO(#4165) - convert lifecycle
+    time_created: { seconds: 1565194924 nanos: 123456000 }
     id: "test-bucket-id"
     name: "test-bucket"
     project_number: 123456
     metageneration: 1234567
-# TODO(#4169) - convert cors() field.
+    cors: {
+      origin: "test-origin-0"
+      origin: "test-origin-1"
+      method: "GET"
+      method: "PUT"
+      response_header: "test-header-0"
+      response_header: "test-header-1"
+      max_age_seconds: 1800
+    }
+    cors: {
+      origin: "test-origin-2"
+      origin: "test-origin-3"
+      method: "POST"
+      response_header: "test-header-3"
+      max_age_seconds: 3600
+    }
     location: "test-location"
     storage_class: "test-storage-class"
     etag: "test-etag"
-    updated: {
-      seconds: 1565194924
-      nanos: 123456789
-    }
+    updated: { seconds: 1565194924 nanos: 123456000 }
     default_event_based_hold: true
     labels: { key: "test-key-1" value: "test-value-1" }
     labels: { key: "test-key-2" value: "test-value-2" }
-# TODO(#4168) - convert website() field.
-# TODO(#4167) - convert versioning() field.
-# TODO(#4172) - convert logging() field.
-# TODO(#4170) - convert owner() field.
-# TODO(#4171) - convert encryption() field.
-# TODO(#4164) - convert billing() field.
-# TODO(#4166) - convert retention_policy() field.
-)""",
-                                                            &input));
+    website { main_page_suffix: "index.html" not_found_page: "404.html" }
+    versioning { enabled: true }
+    logging {
+      log_bucket: "test-log-bucket"
+      log_object_prefix: "test-log-object-prefix"
+    }
+    owner { entity: "test-entity" entity_id: "test-entity-id" }
+    encryption { default_kms_key_name: "test-default-kms-key-name" }
+    billing { requester_pays: true }
+    retention_policy {
+      effective_time { seconds: 1565194924 nanos: 123456000 }
+      is_locked: true
+      retention_period: 86400
+    }
+    location_type: "regional"
+    iam_configuration {
+      uniform_bucket_level_access {
+        enabled: true
+        locked_time { seconds: 1565194924 nanos: 123456000 }
+      }
+    }
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
   // To get the dates in RFC-3339 format I used:
   //     date --rfc-3339=seconds --date=@1565194924
-  auto expected = BucketMetadataParser::FromString(R"""({
-    "timeCreated": "2019-08-07T16:22:04.123456789Z",
+  auto const expected = BucketMetadataParser::FromString(R"""({
+    "acl": [{
+      "kind": "storage#bucketAccessControl",
+      "role": "test-role1",
+      "entity": "test-entity1"
+    }, {
+      "kind": "storage#bucketAccessControl",
+      "role": "test-role2",
+      "entity": "test-entity2"
+    }],
+    "defaultObjectAcl": [{
+      "kind": "storage#objectAccessControl",
+      "role": "test-role3",
+      "entity": "test-entity3"
+    }, {
+      "kind": "storage#objectAccessControl",
+      "role": "test-role4",
+      "entity": "test-entity4"
+    }],
+    "timeCreated": "2019-08-07T16:22:04.123456000Z",
     "id": "test-bucket-id",
     "kind": "storage#bucket",
     "name": "test-bucket",
     "projectNumber": 123456,
-    "metageneration": 1234567,
+    "metageneration": "1234567",
+    "cors": [{
+      "origin": ["test-origin-0", "test-origin-1"],
+      "method": ["GET", "PUT"],
+      "responseHeader": ["test-header-0", "test-header-1"],
+      "maxAgeSeconds": 1800
+    }, {
+      "origin": ["test-origin-2", "test-origin-3"],
+      "method": ["POST"],
+      "responseHeader": ["test-header-3"],
+      "maxAgeSeconds": 3600
+    }],
     "location": "test-location",
     "storageClass": "test-storage-class",
     "etag": "test-etag",
-    "updated": "2019-08-07T16:22:04.123456789Z",
+    "updated": "2019-08-07T16:22:04.123456000Z",
     "defaultEventBasedHold": true,
     "labels": {
         "test-key-1": "test-value-1",
         "test-key-2": "test-value-2"
+    },
+    "website": {
+      "mainPageSuffix": "index.html",
+      "notFoundPage": "404.html"
+    },
+    "versioning": { "enabled": true },
+    "logging": {
+      "logBucket": "test-log-bucket",
+      "logObjectPrefix": "test-log-object-prefix"
+    },
+    "owner": { "entity": "test-entity", "entityId": "test-entity-id" },
+    "encryption": { "defaultKmsKeyName": "test-default-kms-key-name" },
+    "billing": { "requesterPays": true },
+    "retentionPolicy": {
+      "effectiveTime": "2019-08-07T16:22:04.123456000Z",
+      "isLocked": true,
+      "retentionPeriod": 86400
+    },
+    "locationType": "regional",
+    "iamConfiguration": {
+      "uniformBucketLevelAccess": {
+        "enabled": true,
+        "lockedTime": "2019-08-07T16:22:04.123456000Z"
+      }
     }
 })""");
-  EXPECT_STATUS_OK(expected);
+  ASSERT_STATUS_OK(expected);
 
-  auto actual = GrpcClient::FromProto(input);
-  EXPECT_EQ(actual, *expected);
-}
+  auto const middle = GrpcClient::FromProto(input);
+  EXPECT_EQ(middle, *expected);
 
-TEST(GrpcClientBucketMetadata, BucketMetadata) {
-  auto input = BucketMetadataParser::FromString(R"""({
-    "name": "test-bucket"
-})""");
-  EXPECT_STATUS_OK(input);
+  auto const p1 = GrpcClient::ToProto(middle);
+  auto const p2 = GrpcClient::ToProto(*expected);
+  EXPECT_THAT(p1, IsProtoEqual(p2));
 
-  storage_proto::Bucket expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-    name: "test-bucket"
-# TODO(#4173) - convert the other fields.
-)""",
-                                                            &expected));
-
-  auto actual = GrpcClient::ToProto(*input);
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto const actual = GrpcClient::ToProto(middle);
+  EXPECT_THAT(actual, IsProtoEqual(input));
 }
 
 TEST(GrpcClientBucketMetadata, BucketBillingRoundtrip) {

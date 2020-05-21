@@ -656,24 +656,26 @@ google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
 
 BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   BucketMetadata metadata;
-  // TODO(#4174) - convert acl() field.
-  // TODO(#4173) - convert default_object_acl() field.
+  metadata.kind_ = "storage#bucket";
+  // These are sorted as the fields in the proto, to make them easier to find
+  // in the future.
+  for (auto& v : *bucket.mutable_acl()) {
+    metadata.acl_.push_back(FromProto(std::move(v)));
+  }
+  for (auto& v : *bucket.mutable_default_object_acl()) {
+    metadata.default_acl_.push_back(FromProto(std::move(v)));
+  }
   // TODO(#4165) - convert lifecycle
   if (bucket.has_time_created()) {
     metadata.time_created_ = AsChronoTimepoint(bucket.time_created());
   }
   metadata.id_ = std::move(*bucket.mutable_id());
-  metadata.kind_ = "storage#bucket";
   metadata.name_ = std::move(*bucket.mutable_name());
-  if (bucket.has_owner()) {
-    Owner o;
-    o.entity = std::move(*bucket.mutable_owner()->mutable_entity());
-    o.entity_id = std::move(*bucket.mutable_owner()->mutable_entity_id());
-    metadata.owner_ = std::move(o);
-  }
   metadata.project_number_ = bucket.project_number();
   metadata.metageneration_ = bucket.metageneration();
-  // TODO(#4169) - convert cors() field.
+  for (auto& v : *bucket.mutable_cors()) {
+    metadata.cors_.push_back(FromProto(std::move(v)));
+  }
   metadata.location_ = std::move(*bucket.mutable_location());
   metadata.storage_class_ = std::move(*bucket.mutable_storage_class());
   metadata.etag_ = std::move(*bucket.mutable_etag());
@@ -684,14 +686,33 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   for (auto& kv : *bucket.mutable_labels()) {
     metadata.labels_.emplace(std::make_pair(kv.first, std::move(kv.second)));
   }
-  // TODO(#4168) - convert website() field.
-  // TODO(#4167) - convert versioning() field.
-  // TODO(#4172) - convert logging() field.
-  // TODO(#4170) - convert owner() field.
-  // TODO(#4171) - convert encryption() field.
-  // TODO(#4164) - convert billing() field.
-  // TODO(#4166) - convert retention_policy() field.
-
+  if (bucket.has_website()) {
+    metadata.website_ = FromProto(std::move(*bucket.mutable_website()));
+  }
+  if (bucket.has_versioning()) {
+    metadata.versioning_ = FromProto(std::move(*bucket.mutable_versioning()));
+  }
+  if (bucket.has_logging()) {
+    metadata.logging_ = FromProto(std::move(*bucket.mutable_logging()));
+  }
+  if (bucket.has_owner()) {
+    metadata.owner_ = FromProto(std::move(*bucket.mutable_owner()));
+  }
+  if (bucket.has_encryption()) {
+    metadata.encryption_ = FromProto(std::move(*bucket.mutable_encryption()));
+  }
+  if (bucket.has_billing()) {
+    metadata.billing_ = FromProto(std::move(*bucket.mutable_billing()));
+  }
+  if (bucket.has_retention_policy()) {
+    metadata.retention_policy_ =
+        FromProto(std::move(*bucket.mutable_retention_policy()));
+  }
+  metadata.location_type_ = std::move(*bucket.mutable_location_type());
+  if (bucket.has_iam_configuration()) {
+    metadata.iam_configuration_ =
+        FromProto(std::move(*bucket.mutable_iam_configuration()));
+  }
   return metadata;
 }
 
@@ -719,10 +740,7 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   metadata.metageneration_ = object.metageneration();
   metadata.name_ = std::move(*object.mutable_name());
   if (object.has_owner()) {
-    Owner o;
-    o.entity = std::move(*object.mutable_owner()->mutable_entity());
-    o.entity_id = std::move(*object.mutable_owner()->mutable_entity_id());
-    metadata.owner_ = std::move(o);
+    metadata.owner_ = FromProto(*object.mutable_owner());
   }
   metadata.storage_class_ = std::move(*object.mutable_storage_class());
   if (object.has_time_created()) {
@@ -1009,6 +1027,20 @@ BucketWebsite GrpcClient::FromProto(google::storage::v1::Bucket::Website rhs) {
   return result;
 }
 
+google::storage::v1::Owner GrpcClient::ToProto(Owner rhs) {
+  google::storage::v1::Owner result;
+  *result.mutable_entity() = std::move(rhs.entity);
+  *result.mutable_entity_id() = std::move(rhs.entity_id);
+  return result;
+}
+
+Owner GrpcClient::FromProto(google::storage::v1::Owner rhs) {
+  Owner result;
+  result.entity = std::move(*rhs.mutable_entity());
+  result.entity_id = std::move(*rhs.mutable_entity_id());
+  return result;
+}
+
 google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
     Projection const& p) {
   if (p.value() == Projection::NoAcl().value()) {
@@ -1093,8 +1125,58 @@ google::storage::v1::CommonEnums::PredefinedObjectAcl GrpcClient::ToProto(
 google::storage::v1::Bucket GrpcClient::ToProto(
     BucketMetadata const& metadata) {
   google::storage::v1::Bucket bucket;
+  // These are in the order of the proto fields, to make it easier to find them
+  // later.
+  for (auto const& v : metadata.acl()) {
+    *bucket.add_acl() = ToProto(v);
+  }
+  for (auto const& v : metadata.default_acl()) {
+    *bucket.add_default_object_acl() = ToProto(v);
+  }
+  // TODO(#4165) - convert lifecycle
+  *bucket.mutable_time_created() =
+      ChronoTimepointToProtoTimestamp(metadata.time_created());
+  bucket.set_id(metadata.id());
   bucket.set_name(metadata.name());
-  // TODO(#4173) - convert the other fields.
+  bucket.set_project_number(metadata.project_number());
+  bucket.set_metageneration(metadata.metageneration());
+  for (auto const& v : metadata.cors()) {
+    *bucket.add_cors() = ToProto(v);
+  }
+  bucket.set_location(metadata.location());
+  bucket.set_storage_class(metadata.storage_class());
+  bucket.set_etag(metadata.etag());
+  *bucket.mutable_updated() =
+      ChronoTimepointToProtoTimestamp(metadata.updated());
+  bucket.set_default_event_based_hold(metadata.default_event_based_hold());
+  for (auto const& kv : metadata.labels()) {
+    (*bucket.mutable_labels())[kv.first] = kv.second;
+  }
+  if (metadata.has_website()) {
+    *bucket.mutable_website() = ToProto(metadata.website());
+  }
+  if (metadata.has_versioning()) {
+    *bucket.mutable_versioning() = ToProto(*metadata.versioning());
+  }
+  if (metadata.has_logging()) {
+    *bucket.mutable_logging() = ToProto(metadata.logging());
+  }
+  if (metadata.has_owner()) {
+    *bucket.mutable_owner() = ToProto(metadata.owner());
+  }
+  if (metadata.has_encryption()) {
+    *bucket.mutable_encryption() = ToProto(metadata.encryption());
+  }
+  if (metadata.has_billing()) {
+    *bucket.mutable_billing() = ToProto(metadata.billing());
+  }
+  if (metadata.has_retention_policy()) {
+    *bucket.mutable_retention_policy() = ToProto(metadata.retention_policy());
+  }
+  bucket.set_location_type(metadata.location_type());
+  if (metadata.has_iam_configuration()) {
+    *bucket.mutable_iam_configuration() = ToProto(metadata.iam_configuration());
+  }
   return bucket;
 }
 

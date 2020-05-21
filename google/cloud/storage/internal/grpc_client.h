@@ -210,6 +210,9 @@ class GrpcClient : public RawClient,
   static google::storage::v1::Bucket::Website ToProto(BucketWebsite);
   static BucketWebsite FromProto(google::storage::v1::Bucket::Website);
 
+  static google::storage::v1::Owner ToProto(Owner);
+  static Owner FromProto(google::storage::v1::Owner);
+
   static google::storage::v1::CommonEnums::Projection ToProto(
       Projection const& p);
   static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(
