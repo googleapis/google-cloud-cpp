@@ -139,6 +139,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   echo
   io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
+  ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target google-cloud-cpp-protos
   # TODO(#3958) - Combine these two invocations of "xargs clang-tidy" into a
   # single one using a simple regular expression like '\.(h|cc)$' when all
   # targets are clang-tidy clean. Until then, we check all changed .cc files,
