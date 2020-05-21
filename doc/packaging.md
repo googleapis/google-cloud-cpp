@@ -438,6 +438,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -548,6 +549,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -657,6 +659,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -781,6 +784,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -971,6 +975,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -1093,6 +1098,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
@@ -1234,6 +1240,7 @@ wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
