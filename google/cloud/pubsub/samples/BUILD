@@ -54,7 +54,6 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     srcs = [test],
     tags = [
         "integration-test",
-        "pubsub-integration-tests",
     ],
     deps = [
         ":pubsub_samples_common",

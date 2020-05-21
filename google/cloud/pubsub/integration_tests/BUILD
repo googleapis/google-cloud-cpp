@@ -25,7 +25,6 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     srcs = [test],
     tags = [
         "integration-test",
-        "pubsub-integration-tests",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -40,7 +39,6 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     srcs = [test],
     tags = [
         "integration-test",
-        "pubsub-integration-tests",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",

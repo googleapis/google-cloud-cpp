@@ -92,11 +92,8 @@ if (BUILD_TESTING)
                     protobuf::libprotobuf)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target}
-            PROPERTIES
-                LABELS
-                "integration-test;integration-test-emulator;bigtable-integration-tests"
-        )
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-emulator")
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()

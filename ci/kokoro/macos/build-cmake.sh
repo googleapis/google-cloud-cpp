@@ -106,7 +106,7 @@ if should_run_integration_tests; then
       cd "${BINARY_DIR}"
     fi
     ctest \
-      -L '(bigtable-integration-tests|storage-integration-tests|spanner-integration-tests|integration-test-production)' \
+      -L 'integration-test-production' \
       -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)' \
       --output-on-failure -j "${NCPU}"
   )

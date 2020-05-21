@@ -44,7 +44,6 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     }),
     tags = [
         "integration-test",
-        "storage-integration-tests",
     ],
     deps = [
         ":storage_benchmarks",

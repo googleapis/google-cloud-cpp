@@ -130,7 +130,7 @@ if should_run_integration_tests; then
 
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,spanner-integration-tests" \
+    "--test_tag_filters=integration-test" \
     -- //google/cloud/...:all \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
     -//google/cloud/storage/examples:storage_service_account_samples \

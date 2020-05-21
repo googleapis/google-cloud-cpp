@@ -26,7 +26,6 @@ load(
     timeout = "long",
     srcs = [test],
     tags = [
-        "bigtable-integration-tests",
         "integration-test",
     ],
     deps = [

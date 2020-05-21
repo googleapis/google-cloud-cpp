@@ -51,7 +51,6 @@ load(":storage_examples.bzl", "storage_examples")
     srcs = [test],
     tags = [
         "integration-test",
-        "storage-integration-tests",
     ],
     deps = [
         ":storage_examples_common",

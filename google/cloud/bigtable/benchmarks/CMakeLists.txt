@@ -98,10 +98,7 @@ foreach (fname ${bigtable_benchmark_programs})
     if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target}
-            PROPERTIES
-                LABELS
-                "integration-test;integration-test-emulator;bigtable-integration-tests"
-        )
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-emulator")
     endif ()
 endforeach ()

@@ -183,7 +183,7 @@ if should_run_integration_tests; then
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
+    "--test_tag_filters=integration-test" \
     -- //google/cloud/...:all "${excluded_targets[@]}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.

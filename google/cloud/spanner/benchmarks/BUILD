@@ -39,7 +39,6 @@ cc_library(
     srcs = [test],
     tags = [
         "integration-test",
-        "spanner-integration-tests",
     ],
     deps = [
         ":spanner_client_benchmarks",
