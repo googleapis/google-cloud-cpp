@@ -173,7 +173,13 @@ if should_run_integration_tests; then
   access_token_targets=(
     "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
   )
-  excluded_targets=()
+  excluded_targets=(
+    # The Bigtable integrations that use the emulator *and* production were
+    # already run by the "run_integration_tests_emulator_bazel.sh" script that
+    # was called above. The one exception is the bigtable_grpc_credentials
+    # test, which requires an access token and will be run separately.
+    "-//google/cloud/bigtable/..."
+  )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
   done
