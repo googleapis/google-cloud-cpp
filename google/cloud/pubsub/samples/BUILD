@@ -53,7 +53,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "pubsub-integration-tests",
     ],
     deps = [

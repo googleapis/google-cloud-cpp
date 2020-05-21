@@ -50,7 +50,7 @@ load(":storage_examples.bzl", "storage_examples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "storage-integration-tests",
     ],
     deps = [

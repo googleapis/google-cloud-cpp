@@ -91,10 +91,9 @@ if (BUILD_TESTING)
                     gRPC::grpc
                     protobuf::libprotobuf)
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-tests;bigtable-integration-tests")
+                                 "integration-test;bigtable-integration-tests")
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
@@ -107,7 +106,7 @@ if (BUILD_TESTING)
     foreach (fname ${bigtable_examples_production})
         google_cloud_cpp_set_target_name(target "bigtable_examples" "${fname}")
         set_tests_properties(
-            ${target}
-            PROPERTIES LABELS "integration-tests;integration-test-production")
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-production")
     endforeach ()
 endif ()

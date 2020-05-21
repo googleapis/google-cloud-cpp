@@ -66,7 +66,7 @@ foreach (fname ${storage_client_integration_tests})
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;storage-integration-tests")
+                             "integration-test;storage-integration-tests")
     google_cloud_cpp_add_common_options(${target})
     google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
@@ -80,7 +80,7 @@ foreach (
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;integration-test-production")
+                             "integration-test;integration-test-production")
 endforeach ()
 
 target_link_libraries(storage_error_injection_integration_test

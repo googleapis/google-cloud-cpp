@@ -23,7 +23,7 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "spanner-integration-tests",
     ],
     deps = [

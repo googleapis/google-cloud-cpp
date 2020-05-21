@@ -90,10 +90,9 @@ if (BUILD_TESTING)
             PRIVATE storage_examples_common storage_client_grpc storage_client
                     google_cloud_cpp_common google_cloud_cpp_testing)
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-tests;storage-integration-tests")
+                                 "integration-test;storage-integration-tests")
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
@@ -106,7 +105,7 @@ if (BUILD_TESTING)
     foreach (fname ${storage_integration_tests_production})
         google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
         set_tests_properties(
-            ${target}
-            PROPERTIES LABELS "integration-tests;integration-test-production")
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-production")
     endforeach ()
 endif ()

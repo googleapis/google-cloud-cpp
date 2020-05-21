@@ -187,7 +187,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     io::log_yellow "Running unit tests"
     echo
-    (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
+    (cd "${BINARY_DIR}" && ctest "-LE" "integration-test" "${ctest_args[@]}")
     echo
     io::log_yellow "Completed unit tests"
     echo

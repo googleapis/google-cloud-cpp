@@ -61,7 +61,7 @@ echo "================================================================"
 io::log "Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
   -- //google/cloud/...:all
 
 echo "================================================================"

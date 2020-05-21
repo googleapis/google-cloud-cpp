@@ -38,7 +38,7 @@ cc_library(
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "spanner-integration-tests",
     ],
     deps = [

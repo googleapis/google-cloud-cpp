@@ -70,7 +70,7 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
   (
     cd "${BINARY_DIR}"
     ctest \
-      -LE integration-tests \
+      -LE integration-test \
       --output-on-failure -j "${NCPU}"
   )
   echo "================================================================"

@@ -39,7 +39,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
     }),
     tags = [
         "bigtable-integration-tests",
-        "integration-tests",
+        "integration-test",
     ],
     deps = [
         ":bigtable_benchmark_common",

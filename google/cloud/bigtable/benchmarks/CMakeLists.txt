@@ -99,6 +99,6 @@ foreach (fname ${bigtable_benchmark_programs})
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-tests;bigtable-integration-tests")
+                                 "integration-test;bigtable-integration-tests")
     endif ()
 endforeach ()

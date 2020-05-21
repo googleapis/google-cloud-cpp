@@ -26,7 +26,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "spanner-integration-tests",
     ],
     deps = [

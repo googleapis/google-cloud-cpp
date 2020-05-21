@@ -33,7 +33,7 @@ load(
         ],
     }),
     tags = [
-        "integration-tests",
+        "integration-test",
         "storage-integration-tests",
     ],
     deps = [

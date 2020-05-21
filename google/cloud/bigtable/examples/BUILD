@@ -55,7 +55,7 @@ load(":bigtable_examples.bzl", "bigtable_examples")
     srcs = [test],
     tags = [
         "bigtable-integration-tests",
-        "integration-tests",
+        "integration-test",
     ],
     deps = [
         ":bigtable_examples_common",

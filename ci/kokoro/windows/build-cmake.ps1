@@ -68,7 +68,7 @@ if (Test-Path env:RUNNING_CI) {
 $NCPU=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
 
 $ctest_flags = @("--output-on-failure", "-j", $NCPU, "-C", $env:CONFIG)
-ctest $ctest_flags -LE integration-tests
+ctest $ctest_flags -LE integration-test
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -76,7 +76,7 @@ if ($LastExitCode) {
 
 if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    ctest $ctest_flags -L integration-tests
+    ctest $ctest_flags -L integration-test
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "Integration tests failed with exit code $LastExitCode"
         Exit ${LastExitCode}

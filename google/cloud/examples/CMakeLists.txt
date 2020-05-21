@@ -26,5 +26,5 @@ if (BUILD_TESTING)
     add_test(NAME gcs2cbt COMMAND gcs2cbt)
     set_tests_properties(
         gcs2cbt PROPERTIES LABELS
-                           "integration-tests;integration-test-production")
+                           "integration-test;integration-test-production")
 endif ()

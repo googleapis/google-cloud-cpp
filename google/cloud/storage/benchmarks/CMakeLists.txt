@@ -63,7 +63,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-tests;storage-integration-tests")
+                                 "integration-test;storage-integration-tests")
     endforeach ()
 
     export_list_to_bazel("storage_benchmark_programs.bzl"

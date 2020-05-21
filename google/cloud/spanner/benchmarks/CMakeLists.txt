@@ -90,7 +90,7 @@ function (spanner_client_define_benchmarks)
         # label them as tests.
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-tests;spanner-integration-tests")
+                                 "integration-test;spanner-integration-tests")
     endforeach ()
 endfunction ()
 

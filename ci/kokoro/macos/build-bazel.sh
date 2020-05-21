@@ -69,7 +69,7 @@ echo
 echo "================================================================"
 io::log_yellow "build and run unit tests."
 "${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
   -- //google/cloud/...:all
 
 echo

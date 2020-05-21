@@ -24,7 +24,7 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "pubsub-integration-tests",
     ],
     deps = [
@@ -39,7 +39,7 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     tags = [
-        "integration-tests",
+        "integration-test",
         "pubsub-integration-tests",
     ],
     deps = [

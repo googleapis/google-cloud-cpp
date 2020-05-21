@@ -43,7 +43,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
         "//conditions:default": ["-lpthread"],
     }),
     tags = [
-        "integration-tests",
+        "integration-test",
         "storage-integration-tests",
     ],
     deps = [
