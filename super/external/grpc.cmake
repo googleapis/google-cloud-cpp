@@ -15,6 +15,7 @@
 # ~~~
 
 include(ExternalProjectHelper)
+include(external/abseil)
 include(external/c-ares)
 include(external/ssl)
 include(external/protobuf)
@@ -45,10 +46,11 @@ if (NOT TARGET grpc-project)
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DgRPC_BUILD_TESTS=OFF
-                   -DgRPC_ZLIB_PROVIDER=package
-                   -DgRPC_SSL_PROVIDER=package
+                   -DgRPC_ABSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
+                   -DgRPC_SSL_PROVIDER=package
+                   -DgRPC_ZLIB_PROVIDER=package
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
