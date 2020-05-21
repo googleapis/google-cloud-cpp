@@ -80,7 +80,7 @@ foreach (
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;integration-tests-no-emulator")
+                             "integration-tests;integration-test-production")
 endforeach ()
 
 target_link_libraries(storage_error_injection_integration_test

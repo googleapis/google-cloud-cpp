@@ -72,5 +72,5 @@ foreach (fname ${bigtable_integration_tests_production})
     google_cloud_cpp_set_target_name(target "bigtable" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;integration-tests-no-emulator")
+                             "integration-tests;integration-test-production")
 endforeach ()

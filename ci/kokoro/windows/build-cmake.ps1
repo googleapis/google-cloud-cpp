@@ -110,7 +110,7 @@ if (Integration-Tests-Enabled) {
     Set-Location "${project_root}"
     Set-Location "${binary_dir}"
     ctest $ctest_flags `
-        -L '(bigtable-integration-tests|storage-integration-tests|spanner-integration-tests|integration-tests-no-emulator)' `
+        -L '(bigtable-integration-tests|storage-integration-tests|spanner-integration-tests|integration-test-production)' `
         -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)'
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."

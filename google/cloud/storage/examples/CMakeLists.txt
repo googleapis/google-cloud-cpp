@@ -107,6 +107,6 @@ if (BUILD_TESTING)
         google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
         set_tests_properties(
             ${target}
-            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
+            PROPERTIES LABELS "integration-tests;integration-test-production")
     endforeach ()
 endif ()

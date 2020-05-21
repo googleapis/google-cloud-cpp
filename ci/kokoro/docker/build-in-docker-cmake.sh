@@ -304,7 +304,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     # Since we already run multiple integration tests against the emulator we
     # only need to run the tests here that cannot use the emulator. Some
-    # libraries will tag all their tests as "integration-tests-no-emulator",
+    # libraries will tag all their tests as "integration-test-production",
     # that is fine too. As long as we do not repeat all the tests we are
     # winning.
     if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
@@ -313,7 +313,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       ctest_args+=(-E bigtable)
     fi
     env -C "${BINARY_DIR}" ctest \
-      -L integration-tests-no-emulator "${ctest_args[@]}"
+      -L integration-test-production "${ctest_args[@]}"
 
     echo "================================================================"
     io::log_yellow "Completed the integration tests against production"

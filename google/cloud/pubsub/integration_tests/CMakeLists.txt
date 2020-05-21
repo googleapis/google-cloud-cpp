@@ -56,7 +56,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target}
-            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
+            PROPERTIES LABELS "integration-tests;integration-test-production")
         add_dependencies(pubsub-client-integration-tests ${target})
     endforeach ()
 
@@ -73,7 +73,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target}
-            PROPERTIES LABELS "integration-tests;integration-tests-no-emulator")
+            PROPERTIES LABELS "integration-tests;integration-test-production")
     endforeach ()
 endfunction ()
 
