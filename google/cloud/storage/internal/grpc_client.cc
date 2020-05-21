@@ -853,6 +853,48 @@ BucketAccessControl GrpcClient::FromProto(
   return result;
 }
 
+google::storage::v1::Bucket::Billing GrpcClient::ToProto(
+    BucketBilling const& rhs) {
+  google::storage::v1::Bucket::Billing result;
+  result.set_requester_pays(rhs.requester_pays);
+  return result;
+}
+
+BucketBilling GrpcClient::FromProto(
+    google::storage::v1::Bucket::Billing const& rhs) {
+  BucketBilling result;
+  result.requester_pays = rhs.requester_pays();
+  return result;
+}
+
+google::storage::v1::Bucket::Versioning GrpcClient::ToProto(
+    BucketVersioning const& rhs) {
+  google::storage::v1::Bucket::Versioning result;
+  result.set_enabled(rhs.enabled);
+  return result;
+}
+
+BucketVersioning GrpcClient::FromProto(
+    google::storage::v1::Bucket::Versioning const& rhs) {
+  BucketVersioning result;
+  result.enabled = rhs.enabled();
+  return result;
+}
+
+google::storage::v1::Bucket::Website GrpcClient::ToProto(BucketWebsite rhs) {
+  google::storage::v1::Bucket::Website result;
+  result.set_main_page_suffix(std::move(rhs.main_page_suffix));
+  result.set_not_found_page(std::move(rhs.not_found_page));
+  return result;
+}
+
+BucketWebsite GrpcClient::FromProto(google::storage::v1::Bucket::Website rhs) {
+  BucketWebsite result;
+  result.main_page_suffix = std::move(*rhs.mutable_main_page_suffix());
+  result.not_found_page = std::move(*rhs.mutable_not_found_page());
+  return result;
+}
+
 google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
     Projection const& p) {
   if (p.value() == Projection::NoAcl().value()) {
