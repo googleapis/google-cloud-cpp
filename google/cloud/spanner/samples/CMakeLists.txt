@@ -44,8 +44,11 @@ function (spanner_client_define_samples)
     foreach (fname ${spanner_client_integration_samples})
         google_cloud_cpp_set_target_name(target "spanner" "${fname}")
         set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;spanner-integration-tests")
+            ${target}
+            PROPERTIES
+                LABELS
+                "integration-test;integration-test-emulator;spanner-integration-tests"
+        )
     endforeach ()
 endfunction ()
 

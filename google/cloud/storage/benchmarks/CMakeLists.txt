@@ -62,8 +62,11 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_clang_tidy(${target})
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;storage-integration-tests")
+            ${target}
+            PROPERTIES
+                LABELS
+                "integration-test;integration-test-emulator;storage-integration-tests"
+        )
     endforeach ()
 
     export_list_to_bazel("storage_benchmark_programs.bzl"

@@ -39,7 +39,9 @@ function (bigquery_client_define_samples)
 
     foreach (fname ${bigquery_client_integration_samples})
         google_cloud_cpp_set_target_name(target "bigquery" "${fname}")
-        set_tests_properties(${target} PROPERTIES LABELS "integration-test")
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-production")
     endforeach ()
 endfunction ()
 

@@ -56,7 +56,7 @@ if [[ -x "google/cloud/storage/examples/storage_bucket_samples" ]]; then
     "${GOOGLE_CLOUD_PROJECT}" >/dev/null
 fi
 
-ctest -L "storage-integration-tests" "${ctest_args[@]}"
+ctest -R "^storage_" "${ctest_args[@]}"
 exit_status=$?
 
 kill_testbench

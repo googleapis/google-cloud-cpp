@@ -91,8 +91,11 @@ if (BUILD_TESTING)
                     google_cloud_cpp_common google_cloud_cpp_testing)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;storage-integration-tests")
+            ${target}
+            PROPERTIES
+                LABELS
+                "integration-test;integration-test-emulator;storage-integration-tests"
+        )
         google_cloud_cpp_add_common_options(${target})
         google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()

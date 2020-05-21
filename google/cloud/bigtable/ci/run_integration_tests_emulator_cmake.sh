@@ -44,7 +44,7 @@ export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 cd "${BINARY_DIR}"
 start_emulators
 
-ctest -L "bigtable-integration-tests" "${ctest_args[@]}"
+ctest -R "^bigtable_" "${ctest_args[@]}"
 exit_status=$?
 
 kill_emulators

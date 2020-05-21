@@ -40,7 +40,7 @@ production_only_targets=(
   "//google/cloud/bigtable/tests:admin_iam_policy_integration_test"
 )
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
-  --test_tag_filters="bigtable-integration-tests" -- \
+  --test_tag_filters="integration-test" -- \
   "${production_only_targets[@]}"
 
 # `start_emulators` creates unsightly *.log files in the current directory
@@ -64,8 +64,8 @@ done
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
   --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TEST=yes" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
-  --test_tag_filters="bigtable-integration-tests" -- \
-  "//google/cloud/...:all" \
+  --test_tag_filters="integration-test" -- \
+  "//google/cloud/bigtable/...:all" \
   "${excluded_targets[@]}"
 exit_status=$?
 
