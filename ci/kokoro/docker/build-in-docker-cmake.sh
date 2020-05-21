@@ -187,7 +187,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     io::log_yellow "Running unit tests"
     echo
-    (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
+    (cd "${BINARY_DIR}" && ctest "-LE" "integration-test" "${ctest_args[@]}")
     echo
     io::log_yellow "Completed unit tests"
     echo
@@ -209,7 +209,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       # TODO(#441) - when the emulator crashes the tests can take a long time.
       # The slowest test normally finishes in about 6 seconds, 60 seems safe.
       if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-        "${BINARY_DIR}" "${ctest_args[@]}" --timeout 60; then
+        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator --timeout 60; then
         success=yes
         break
       fi
@@ -224,13 +224,13 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     io::log_yellow "running storage integration tests via CTest+Emulator"
     echo
     "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-      "${BINARY_DIR}" "${ctest_args[@]}"
+      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
 
     echo
     io::log_yellow "running spanner integration tests via CTest+Emulator"
     echo
     "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-      "${BINARY_DIR}" "${ctest_args[@]}"
+      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
   fi
 
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
@@ -304,16 +304,16 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     # Since we already run multiple integration tests against the emulator we
     # only need to run the tests here that cannot use the emulator. Some
-    # libraries will tag all their tests as "integration-tests-no-emulator",
+    # libraries will tag all their tests as "integration-test-production",
     # that is fine too. As long as we do not repeat all the tests we are
     # winning.
     if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
       # TODO(#4234) - the Bigtable tests are only enabled on the coverage
       #   builds because they consume too much quota.
-      ctest_args+=(-E bigtable)
+      ctest_args+=(-E "^bigtable_")
     fi
-    env -C "${BINARY_DIR}" ctest \
-      -L integration-tests-no-emulator "${ctest_args[@]}"
+    env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+      -L integration-test-production
 
     echo "================================================================"
     io::log_yellow "Completed the integration tests against production"

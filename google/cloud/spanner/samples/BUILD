@@ -26,8 +26,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
-        "spanner-integration-tests",
+        "integration-test",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",

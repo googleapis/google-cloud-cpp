@@ -116,7 +116,7 @@ export RUN_SLOW_INTEGRATION_TESTS="instance"
 cd "${CMAKE_BINARY_DIR}"
 start_emulator
 
-ctest -L "spanner-integration-tests" "${ctest_args[@]}"
+ctest -R "^spanner_" "${ctest_args[@]}"
 exit_status=$?
 
 kill_emulator

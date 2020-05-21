@@ -38,8 +38,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
         "//conditions:default": ["-lpthread"],
     }),
     tags = [
-        "bigtable-integration-tests",
-        "integration-tests",
+        "integration-test",
     ],
     deps = [
         ":bigtable_benchmark_common",

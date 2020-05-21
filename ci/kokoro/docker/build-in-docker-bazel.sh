@@ -61,7 +61,7 @@ echo "================================================================"
 io::log "Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
   -- //google/cloud/...:all
 
 echo "================================================================"
@@ -173,7 +173,13 @@ if should_run_integration_tests; then
   access_token_targets=(
     "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
   )
-  excluded_targets=()
+  excluded_targets=(
+    # The Bigtable integrations that use the emulator *and* production were
+    # already run by the "run_integration_tests_emulator_bazel.sh" script that
+    # was called above. The one exception is the bigtable_grpc_credentials
+    # test, which requires an access token and will be run separately.
+    "-//google/cloud/bigtable/..."
+  )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
   done
@@ -183,7 +189,7 @@ if should_run_integration_tests; then
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--test_tag_filters=storage-integration-tests,pubsub-integration-tests,spanner-integration-tests" \
+    "--test_tag_filters=integration-test" \
     -- //google/cloud/...:all "${excluded_targets[@]}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.

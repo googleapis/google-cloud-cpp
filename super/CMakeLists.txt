@@ -81,7 +81,7 @@ ExternalProject_Add(
         ${CMAKE_CTEST_COMMAND}
         --output-on-failure
         -LE
-        integration-tests
+        integration-test
         --
         -j
         "${NCPU}"

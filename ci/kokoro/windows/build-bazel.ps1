@@ -120,7 +120,7 @@ ForEach($_ in (1, 2, 3)) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling and running unit tests"
 bazel $common_flags test $test_flags `
-  --test_tag_filters=-integration-tests `
+  --test_tag_filters=-integration-test `
   -- //google/cloud/...:all
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
@@ -188,7 +188,7 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
     )
     bazel $common_flags test $test_flags $integration_flags `
-        "--test_tag_filters=bigtable-integration-tests,storage-integration-tests,spanner-integration-tests" `
+        "--test_tag_filters=integration-test" `
         -- //google/cloud/...:all `
         -//google/cloud/bigtable/examples:bigtable_grpc_credentials `
         -//google/cloud/storage/examples:storage_service_account_samples `

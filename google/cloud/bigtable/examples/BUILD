@@ -54,8 +54,7 @@ load(":bigtable_examples.bzl", "bigtable_examples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     tags = [
-        "bigtable-integration-tests",
-        "integration-tests",
+        "integration-test",
     ],
     deps = [
         ":bigtable_examples_common",

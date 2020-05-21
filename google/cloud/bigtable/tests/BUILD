@@ -26,8 +26,7 @@ load(
     timeout = "long",
     srcs = [test],
     tags = [
-        "bigtable-integration-tests",
-        "integration-tests",
+        "integration-test",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",

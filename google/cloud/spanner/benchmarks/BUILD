@@ -38,8 +38,7 @@ cc_library(
     timeout = "long",
     srcs = [test],
     tags = [
-        "integration-tests",
-        "spanner-integration-tests",
+        "integration-test",
     ],
     deps = [
         ":spanner_client_benchmarks",

@@ -51,7 +51,7 @@ foreach (fname ${bigtable_client_integration_tests})
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;bigtable-integration-tests")
+                             "integration-test;integration-test-emulator")
     google_cloud_cpp_add_common_options(${target})
     google_cloud_cpp_add_clang_tidy(${target})
 endforeach ()
@@ -72,5 +72,5 @@ foreach (fname ${bigtable_integration_tests_production})
     google_cloud_cpp_set_target_name(target "bigtable" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;integration-tests-no-emulator")
+                             "integration-test;integration-test-production")
 endforeach ()

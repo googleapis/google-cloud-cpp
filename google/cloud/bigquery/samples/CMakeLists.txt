@@ -39,7 +39,13 @@ function (bigquery_client_define_samples)
 
     foreach (fname ${bigquery_client_integration_samples})
         google_cloud_cpp_set_target_name(target "bigquery" "${fname}")
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+        # These tests are intended to be integration tests, but they don't yet
+        # work against an emulator or production. Until they work, we'll add the
+        # 'integration-test' label so they can be excluded from certain test
+        # patterns (e.g., `ctest -LE integration-test`), but we're not adding
+        # the 'integration-test-production' or 'integration-test-emulator'
+        # labels until they work.
+        set_tests_properties(${target} PROPERTIES LABELS "integration-test")
     endforeach ()
 endfunction ()
 

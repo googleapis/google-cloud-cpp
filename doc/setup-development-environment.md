@@ -78,7 +78,7 @@ You may need to clone and compile the code as described [here](setup-cmake-envir
 Run the tests using:
 
 ```console
-env -C cmake-out/home ctest --output-on-failure -LE integration-tests
+env -C cmake-out/home ctest --output-on-failure -LE integration-test
 ```
 
 Run the Google Cloud Storage integration tests:

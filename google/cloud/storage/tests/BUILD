@@ -33,8 +33,7 @@ load(
         ],
     }),
     tags = [
-        "integration-tests",
-        "storage-integration-tests",
+        "integration-test",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
