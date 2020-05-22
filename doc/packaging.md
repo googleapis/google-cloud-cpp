@@ -432,11 +432,21 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -533,11 +543,21 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -633,11 +653,21 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -748,11 +778,21 @@ Cloud Platform proto files. We can install gRPC from source using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -879,8 +919,8 @@ prevent you from compiling against openssl-1.1.0.
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 \
-        pkg-config tar wget zlib1g-dev
+        libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config tar wget \
+        zlib1g-dev
 ```
 
 #### Abseil
@@ -922,6 +962,21 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.13, while Debian Stretch
+distributes c-ares-1.12. Manually install a newer version:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
+    tar -xf cares-1_14_0.tar.gz && \
+    cd c-ares-cares-1_14_0 && \
+    ./buildconf && ./configure && make -j ${NCPU:-4} && \
+sudo make install && \
+sudo ldconfig
+```
+
 #### gRPC
 
 To install gRPC we first need to configure pkg-config to find the version of
@@ -929,11 +984,21 @@ Protobuf we just installed in `/usr/local`:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1042,11 +1107,21 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1174,11 +1249,21 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
-    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
