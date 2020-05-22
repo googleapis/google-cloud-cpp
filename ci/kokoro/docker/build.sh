@@ -174,7 +174,7 @@ elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
   export DISTRO=centos
   export DISTRO_VERSION=7
   export CMAKE_SOURCE_DIR="super"
-  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
+  export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
@@ -187,6 +187,7 @@ elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
   export CC=clang
   export CXX=clang++
   export CMAKE_SOURCE_DIR="super"
+  export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
