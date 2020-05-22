@@ -919,8 +919,8 @@ prevent you from compiling against openssl-1.1.0.
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 \
-        pkg-config tar wget zlib1g-dev
+        libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config tar wget \
+        zlib1g-dev
 ```
 
 #### Abseil
@@ -959,6 +959,21 @@ wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.13, while Debian Stretch
+distributes c-ares-1.12. Manually install a newer version:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
+    tar -xf cares-1_14_0.tar.gz && \
+    cd c-ares-cares-1_14_0 && \
+    ./buildconf && ./configure && make -j ${NCPU:-4} && \
+sudo make install && \
 sudo ldconfig
 ```
 
