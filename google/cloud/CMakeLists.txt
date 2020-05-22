@@ -170,7 +170,6 @@ add_library(
 target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory
                                                      Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
-google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -229,7 +228,6 @@ if (BUILD_TESTING)
             ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
                               GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -318,7 +316,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         PUBLIC absl::memory googleapis-c++::rpc_status_protos
                google_cloud_cpp_common gRPC::grpc++ gRPC::grpc)
     google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
-    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
     target_include_directories(
         google_cloud_cpp_grpc_utils
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -365,7 +362,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         gRPC::grpc++
                         gRPC::grpc)
             google_cloud_cpp_add_common_options(${target})
-            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()

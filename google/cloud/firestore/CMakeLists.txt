@@ -38,7 +38,6 @@ include(CreateBazelConfig)
 add_library(firestore_client field_path.cc field_path.h)
 target_link_libraries(firestore_client)
 google_cloud_cpp_add_common_options(firestore_client)
-google_cloud_cpp_add_clang_tidy(firestore_client)
 target_include_directories(
     firestore_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -55,7 +54,6 @@ set_target_properties(
 add_library(firestore::client ALIAS firestore_client)
 
 create_bazel_config(firestore_client)
-google_cloud_cpp_add_clang_tidy(firestore_client)
 
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
@@ -72,7 +70,6 @@ if (BUILD_TESTING)
             ${target} PRIVATE firestore_client GTest::gmock_main GTest::gmock
                               GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

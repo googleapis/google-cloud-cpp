@@ -27,7 +27,6 @@ function (pubsub_client_define_samples)
         gRPC::grpc
         protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(pubsub_samples_common)
-    google_cloud_cpp_add_clang_tidy(pubsub_samples_common)
     create_bazel_config(pubsub_samples_common YEAR 2020)
 
     set(pubsub_samples_unit_tests # cmake-format: sort
@@ -50,7 +49,6 @@ function (pubsub_client_define_samples)
                     protobuf::libprotobuf)
         add_test(NAME ${target} COMMAND ${target})
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     export_list_to_bazel("pubsub_samples_unit_tests.bzl"
@@ -79,7 +77,6 @@ function (pubsub_client_define_samples)
                     google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     foreach (fname ${pubsub_client_integration_samples})

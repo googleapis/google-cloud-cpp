@@ -28,7 +28,6 @@ if (BUILD_TESTING)
         gRPC::grpc
         protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(bigtable_examples_common)
-    google_cloud_cpp_add_clang_tidy(bigtable_examples_common)
 
     set(bigtable_examples
         # cmake-format: sort
@@ -74,7 +73,6 @@ if (BUILD_TESTING)
                     protobuf::libprotobuf)
         add_test(NAME ${target} COMMAND ${target})
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     foreach (fname ${bigtable_examples})
@@ -95,7 +93,6 @@ if (BUILD_TESTING)
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     # We just know that these tests need to be run against production.

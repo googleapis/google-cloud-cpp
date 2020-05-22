@@ -232,7 +232,6 @@ target_link_libraries(
            OpenSSL::Crypto
            ZLIB::ZLIB)
 google_cloud_cpp_add_common_options(storage_client)
-google_cloud_cpp_add_clang_tidy(storage_client)
 target_include_directories(
     storage_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -294,7 +293,6 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                OpenSSL::Crypto
                ZLIB::ZLIB)
     google_cloud_cpp_add_common_options(storage_client_grpc)
-    google_cloud_cpp_add_clang_tidy(storage_client_grpc)
     target_include_directories(
         storage_client_grpc
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -344,7 +342,6 @@ if (BUILD_TESTING)
                GTest::gmock
                GTest::gtest)
     google_cloud_cpp_add_common_options(storage_client_testing)
-    google_cloud_cpp_add_clang_tidy(storage_client_testing)
     target_include_directories(
         storage_client_testing
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -459,7 +456,6 @@ if (BUILD_TESTING)
                     CURL::libcurl
                     nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -500,7 +496,6 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                         CURL::libcurl
                         nlohmann_json)
             google_cloud_cpp_add_common_options(${target})
-            google_cloud_cpp_add_clang_tidy(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()

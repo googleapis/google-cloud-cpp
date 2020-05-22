@@ -115,14 +115,7 @@ else ()
     endif ()
 endif ()
 
-function (google_cloud_cpp_add_clang_tidy target)
-    if (GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM AND GOOGLE_CLOUD_CPP_CLANG_TIDY)
-        set_target_properties(
-            ${target} PROPERTIES CXX_CLANG_TIDY
-                                 "${GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM}")
-    endif ()
-endfunction ()
-
+#
 # google_cloud_cpp_install_headers : install all the headers in a target
 #
 # Find all the headers in @p target and install them at @p destination,
