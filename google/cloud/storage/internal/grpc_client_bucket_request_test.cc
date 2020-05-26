@@ -30,14 +30,15 @@ using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(GrpcClientBucketRequest, CreateBucketRequestSimple) {
   storage_proto::InsertBucketRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+  auto constexpr kText = R"pb(
     project: "test-project-id"
     bucket: {
       name: "test-bucket"
-# TODO(#4173) - convert the other fields.
+      time_created {}
+      updated {}
     }
-)""",
-                                                            &expected));
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
 
   auto metadata = BucketMetadataParser::FromString(R"""({
     "name": "test-bucket"
@@ -51,21 +52,22 @@ TEST(GrpcClientBucketRequest, CreateBucketRequestSimple) {
 
 TEST(GrpcClientBucketRequest, CreateBucketRequestAllOptions) {
   storage_proto::InsertBucketRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+  auto constexpr kText = R"pb(
     predefined_acl: BUCKET_ACL_PRIVATE
     predefined_default_object_acl: OBJECT_ACL_PRIVATE
     project: "test-project-id"
     projection: FULL
     bucket: {
       name: "test-bucket"
-# TODO(#4173) - convert the other fields.
+      time_created {}
+      updated {}
     }
     common_request_params: {
       quota_user: "test-quota-user"
       user_project: "test-user-project"
     }
-)""",
-                                                            &expected));
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
 
   auto metadata = BucketMetadataParser::FromString(R"""({
     "name": "test-bucket"
