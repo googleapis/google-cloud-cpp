@@ -181,6 +181,27 @@ class GrpcClient : public RawClient,
   static google::storage::v1::Bucket::Billing ToProto(BucketBilling const&);
   static BucketBilling FromProto(google::storage::v1::Bucket::Billing const&);
 
+  static google::storage::v1::Bucket::Cors ToProto(CorsEntry const&);
+  static CorsEntry FromProto(google::storage::v1::Bucket::Cors const&);
+
+  static google::storage::v1::Bucket::Encryption ToProto(
+      BucketEncryption const&);
+  static BucketEncryption FromProto(
+      google::storage::v1::Bucket::Encryption const&);
+
+  static google::storage::v1::Bucket::IamConfiguration ToProto(
+      BucketIamConfiguration const&);
+  static BucketIamConfiguration FromProto(
+      google::storage::v1::Bucket::IamConfiguration const&);
+
+  static google::storage::v1::Bucket::Logging ToProto(BucketLogging const&);
+  static BucketLogging FromProto(google::storage::v1::Bucket::Logging const&);
+
+  static google::storage::v1::Bucket::RetentionPolicy ToProto(
+      BucketRetentionPolicy const&);
+  static BucketRetentionPolicy FromProto(
+      google::storage::v1::Bucket::RetentionPolicy const&);
+
   static google::storage::v1::Bucket::Versioning ToProto(
       BucketVersioning const&);
   static BucketVersioning FromProto(

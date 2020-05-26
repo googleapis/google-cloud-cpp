@@ -205,6 +205,96 @@ TEST(GrpcClientBucketMetadata, BucketBillingRoundtrip) {
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
+TEST(GrpcClientBucketMetadata, BucketCorsRoundtrip) {
+  auto constexpr kText = R"pb(
+    origin: "test-origin-1"
+    origin: "test-origin-2"
+    method: "GET"
+    method: "PUT"
+    response_header: "test-header-1"
+    response_header: "test-header-2"
+    max_age_seconds: 3600
+  )pb";
+  google::storage::v1::Bucket::Cors start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = CorsEntry{3600,
+                                  {"GET", "PUT"},
+                                  {"test-origin-1", "test-origin-2"},
+                                  {"test-header-1", "test-header-2"}};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketEncryptionRoundtrip) {
+  auto constexpr kText = R"pb(
+    default_kms_key_name: "projects/test-p/locations/us/keyRings/test-kr/cryptoKeys/test-key"
+  )pb";
+  google::storage::v1::Bucket::Encryption start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = BucketEncryption{
+      "projects/test-p/locations/us/keyRings/test-kr/cryptoKeys/test-key"};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketIamConfigurationRoundtrip) {
+  auto constexpr kText = R"pb(
+    uniform_bucket_level_access {
+      enabled: true
+      locked_time { seconds: 1234 nanos: 5678000 }
+    }
+  )pb";
+  google::storage::v1::Bucket::IamConfiguration start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto tp = std::chrono::system_clock::time_point{} +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(
+                std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
+  auto const expected =
+      BucketIamConfiguration{{}, UniformBucketLevelAccess{true, tp}};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketLoggingRoundtrip) {
+  auto constexpr kText = R"pb(
+    log_bucket: "test-bucket-name"
+    log_object_prefix: "test-object-prefix/"
+  )pb";
+  google::storage::v1::Bucket::Logging start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected =
+      BucketLogging{"test-bucket-name", "test-object-prefix/"};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketRetentionPolicyRoundtrip) {
+  auto constexpr kText = R"pb(
+    retention_period: 3600
+    effective_time { seconds: 1234 nanos: 5678000 }
+    is_locked: true
+  )pb";
+  google::storage::v1::Bucket::RetentionPolicy start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto tp = std::chrono::system_clock::time_point{} +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(
+                std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
+  auto const expected =
+      BucketRetentionPolicy{std::chrono::seconds(3600), tp, true};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
 TEST(GrpcClientBucketMetadata, BucketVersioningRoundtrip) {
   auto constexpr kText = R"pb(
     enabled: true
