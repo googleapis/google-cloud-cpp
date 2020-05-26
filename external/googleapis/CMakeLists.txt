@@ -16,11 +16,6 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-string(
-    CONCAT GOOGLE_APIS_CPP_PROTOS_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
-           "." "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
-           "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
-
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
@@ -170,7 +165,7 @@ function (googleapis_cpp_set_version_and_alias short_name)
     add_dependencies("googleapis_cpp_${short_name}" googleapis_download)
     set_target_properties(
         "googleapis_cpp_${short_name}"
-        PROPERTIES VERSION "${GOOGLE_APIS_CPP_PROTOS_VERSION}"
+        PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                    SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
     add_library("googleapis-c++::${short_name}" ALIAS
                 "googleapis_cpp_${short_name}")
