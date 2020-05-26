@@ -665,7 +665,9 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   for (auto& v : *bucket.mutable_default_object_acl()) {
     metadata.default_acl_.push_back(FromProto(std::move(v)));
   }
-  // TODO(#4165) - convert lifecycle
+  if (bucket.has_lifecycle()) {
+    metadata.lifecycle_ = FromProto(std::move(*bucket.mutable_lifecycle()));
+  }
   if (bucket.has_time_created()) {
     metadata.time_created_ = AsChronoTimepoint(bucket.time_created());
   }
@@ -1027,6 +1029,110 @@ BucketWebsite GrpcClient::FromProto(google::storage::v1::Bucket::Website rhs) {
   return result;
 }
 
+google::storage::v1::Bucket::Lifecycle::Rule::Action GrpcClient::ToProto(
+    LifecycleRuleAction rhs) {
+  google::storage::v1::Bucket::Lifecycle::Rule::Action result;
+  result.set_type(std::move(rhs.type));
+  result.set_storage_class(std::move(rhs.storage_class));
+  return result;
+}
+
+LifecycleRuleAction GrpcClient::FromProto(
+    google::storage::v1::Bucket::Lifecycle::Rule::Action rhs) {
+  LifecycleRuleAction result;
+  result.type = std::move(*rhs.mutable_type());
+  result.storage_class = std::move(*rhs.mutable_storage_class());
+  return result;
+}
+
+google::storage::v1::Bucket::Lifecycle::Rule::Condition GrpcClient::ToProto(
+    LifecycleRuleCondition rhs) {
+  google::storage::v1::Bucket::Lifecycle::Rule::Condition result;
+  if (rhs.age.has_value()) {
+    result.set_age(*rhs.age);
+  }
+  if (rhs.created_before.has_value()) {
+    *result.mutable_created_before() =
+        ChronoTimepointToProtoTimestamp(*rhs.created_before);
+  }
+  if (rhs.is_live.has_value()) {
+    result.mutable_is_live()->set_value(*rhs.is_live);
+  }
+  if (rhs.num_newer_versions.has_value()) {
+    result.set_num_newer_versions(*rhs.num_newer_versions);
+  }
+  if (rhs.matches_storage_class.has_value()) {
+    for (auto& v : *rhs.matches_storage_class) {
+      *result.add_matches_storage_class() = std::move(v);
+    }
+  }
+  return result;
+}
+
+LifecycleRuleCondition GrpcClient::FromProto(
+    google::storage::v1::Bucket::Lifecycle::Rule::Condition rhs) {
+  LifecycleRuleCondition result;
+  if (rhs.age() != 0) {
+    result.age = rhs.age();
+  }
+  if (rhs.has_created_before()) {
+    result.created_before = AsChronoTimepoint(rhs.created_before());
+  }
+  if (rhs.has_is_live()) {
+    result.is_live = rhs.is_live().value();
+  }
+  if (rhs.num_newer_versions() != 0) {
+    result.num_newer_versions = rhs.num_newer_versions();
+  }
+  if (rhs.matches_storage_class_size() != 0) {
+    std::vector<std::string> tmp;
+    for (auto& v : *rhs.mutable_matches_storage_class()) {
+      tmp.push_back(std::move(v));
+    }
+    result.matches_storage_class = std::move(tmp);
+  }
+  return result;
+}
+
+google::storage::v1::Bucket::Lifecycle::Rule GrpcClient::ToProto(
+    LifecycleRule rhs) {
+  google::storage::v1::Bucket::Lifecycle::Rule result;
+  *result.mutable_action() = ToProto(std::move(rhs.action_));
+  *result.mutable_condition() = ToProto(std::move(rhs.condition_));
+  return result;
+}
+
+LifecycleRule GrpcClient::FromProto(
+    google::storage::v1::Bucket::Lifecycle::Rule rhs) {
+  LifecycleRuleAction action;
+  LifecycleRuleCondition condition;
+  if (rhs.has_action()) {
+    action = FromProto(std::move(*rhs.mutable_action()));
+  }
+  if (rhs.has_condition()) {
+    condition = FromProto(std::move(*rhs.mutable_condition()));
+  }
+  return LifecycleRule(std::move(condition), std::move(action));
+}
+
+google::storage::v1::Bucket::Lifecycle GrpcClient::ToProto(
+    BucketLifecycle rhs) {
+  google::storage::v1::Bucket::Lifecycle result;
+  for (auto& v : rhs.rule) {
+    *result.add_rule() = ToProto(std::move(v));
+  }
+  return result;
+}
+
+BucketLifecycle GrpcClient::FromProto(
+    google::storage::v1::Bucket::Lifecycle rhs) {
+  BucketLifecycle result;
+  for (auto& v : *rhs.mutable_rule()) {
+    result.rule.push_back(FromProto(std::move(v)));
+  }
+  return result;
+}
+
 google::storage::v1::Owner GrpcClient::ToProto(Owner rhs) {
   google::storage::v1::Owner result;
   *result.mutable_entity() = std::move(rhs.entity);
@@ -1133,7 +1239,9 @@ google::storage::v1::Bucket GrpcClient::ToProto(
   for (auto const& v : metadata.default_acl()) {
     *bucket.add_default_object_acl() = ToProto(v);
   }
-  // TODO(#4165) - convert lifecycle
+  if (metadata.has_lifecycle()) {
+    *bucket.mutable_lifecycle() = ToProto(metadata.lifecycle());
+  }
   *bucket.mutable_time_created() =
       ChronoTimepointToProtoTimestamp(metadata.time_created());
   bucket.set_id(metadata.id());

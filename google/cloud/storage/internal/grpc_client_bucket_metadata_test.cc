@@ -27,6 +27,7 @@ namespace {
 
 namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::ElementsAreArray;
 
 TEST(GrpcClientBucketMetadata, BucketAccessControlFrom) {
   auto constexpr kText = R"pb(
@@ -122,7 +123,24 @@ TEST(GrpcClientBucketMetadata, BucketAllFieldsRoundtrip) {
     acl: { role: "test-role2" entity: "test-entity2" }
     default_object_acl: { role: "test-role3" entity: "test-entity3" }
     default_object_acl: { role: "test-role4" entity: "test-entity4" }
-    # TODO(#4165) - convert lifecycle
+    lifecycle {
+      rule {
+        action { type: "Delete" }
+        condition {
+          age: 90
+          is_live: { value: false }
+          matches_storage_class: "NEARLINE"
+        }
+      }
+      rule {
+        action { type: "SetStorageClass" storage_class: "NEARLINE" }
+        condition {
+          age: 7
+          is_live: { value: true }
+          matches_storage_class: "STANDARD"
+        }
+      }
+    }
     time_created: { seconds: 1565194924 nanos: 123456000 }
     id: "test-bucket-id"
     name: "test-bucket"
@@ -196,6 +214,24 @@ TEST(GrpcClientBucketMetadata, BucketAllFieldsRoundtrip) {
       "role": "test-role4",
       "entity": "test-entity4"
     }],
+    "lifecycle": {
+      "rule": [{
+        "action": { "type": "Delete" },
+        "condition": {
+          "age": 90,
+          "isLive": false,
+          "matchesStorageClass": "NEARLINE"
+        }
+      },
+      {
+        "action": { "type": "SetStorageClass", "storageClass": "NEARLINE" },
+        "condition": {
+          "age": 7,
+          "isLive": true,
+          "matchesStorageClass": "STANDARD"
+        }
+      }]
+    },
     "timeCreated": "2019-08-07T16:22:04.123456000Z",
     "id": "test-bucket-id",
     "kind": "storage#bucket",
@@ -386,6 +422,101 @@ TEST(GrpcClientBucketMetadata, BucketWebsiteRoundtrip) {
   auto const expected = BucketWebsite{"index.html", "404.html"};
   auto const middle = GrpcClient::FromProto(start);
   EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, LifecycleRuleActionRoundtrip) {
+  auto constexpr kText = R"pb(
+    type: "SetStorageClass" storage_class: "COLDLINE"
+  )pb";
+  google::storage::v1::Bucket::Lifecycle::Rule::Action start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = LifecycleRule::SetStorageClass("COLDLINE");
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, LifecycleRuleConditionRoundtrip) {
+  auto constexpr kText = R"pb(
+    age: 7
+    created_before { seconds: 86400 nanos: 123456000 }
+    is_live: { value: true }
+    num_newer_versions: 3
+    matches_storage_class: "STANDARD"
+    matches_storage_class: "NEARLINE"
+  )pb";
+  google::storage::v1::Bucket::Lifecycle::Rule::Condition start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = LifecycleRule::ConditionConjunction(
+      LifecycleRule::MaxAge(7),
+      LifecycleRule::CreatedBefore("1970-01-02T00:00:00.123456Z"),
+      LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
+      LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}));
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, LifecycleRuleRoundtrip) {
+  auto constexpr kText = R"pb(
+    action { type: "Delete" }
+    condition {
+      age: 7
+      created_before { seconds: 86400 nanos: 123456000 }
+      is_live: { value: true }
+      num_newer_versions: 3
+      matches_storage_class: "STANDARD"
+      matches_storage_class: "NEARLINE"
+    }
+  )pb";
+  google::storage::v1::Bucket::Lifecycle::Rule start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = LifecycleRule(
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(7),
+          LifecycleRule::CreatedBefore("1970-01-02T00:00:00.123456Z"),
+          LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
+          LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"})),
+      LifecycleRule::Delete());
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcClientBucketMetadata, BucketLifecycleRoundtrip) {
+  auto constexpr kText = R"pb(
+    rule {
+      action { type: "SetStorageClass" storage_class: "NEARLINE" }
+      condition {
+        age: 7
+        is_live: { value: true }
+        matches_storage_class: "STANDARD"
+      }
+    }
+    rule {
+      action { type: "Delete" }
+      condition { age: 180 matches_storage_class: "NEARLINE" }
+    }
+  )pb";
+  google::storage::v1::Bucket::Lifecycle start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = BucketLifecycle{{
+      LifecycleRule(LifecycleRule::ConditionConjunction(
+                        LifecycleRule::MaxAge(7), LifecycleRule::IsLive(true),
+                        LifecycleRule::MatchesStorageClassStandard()),
+                    LifecycleRule::SetStorageClassNearline()),
+      LifecycleRule(LifecycleRule::ConditionConjunction(
+                        LifecycleRule::MaxAge(180),
+                        LifecycleRule::MatchesStorageClassNearline()),
+                    LifecycleRule::Delete()),
+  }};
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_THAT(expected.rule, ElementsAreArray(middle.rule));
   auto const end = GrpcClient::ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }

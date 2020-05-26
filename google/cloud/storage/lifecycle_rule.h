@@ -31,6 +31,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct LifecycleRuleParser;
+class GrpcClient;
 }  // namespace internal
 
 /// Implement a wrapper for Lifecycle Rules actions.
@@ -279,6 +280,7 @@ class LifecycleRule {
 
  private:
   friend struct internal::LifecycleRuleParser;
+  friend class internal::GrpcClient;
 
   LifecycleRule() = default;
 
