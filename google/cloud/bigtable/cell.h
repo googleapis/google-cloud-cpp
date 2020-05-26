@@ -28,7 +28,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class Cell;
-class Mutation;
+struct Mutation;
 Mutation SetCell(Cell);
 
 /**
