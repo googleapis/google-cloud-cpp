@@ -23,6 +23,9 @@ project(google-cloud-cpp CXX C)
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 1)
 set(GOOGLE_CLOUD_CPP_VERSION_MINOR 14)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
+string(CONCAT GOOGLE_CLOUD_CPP_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
+              ".${GOOGLE_CLOUD_CPP_VERSION_MINOR}"
+              ".${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
 # Configure the Compiler options, we use C++11 features by default.
 set(GOOGLE_CLOUD_CPP_CXX_STANDARD
