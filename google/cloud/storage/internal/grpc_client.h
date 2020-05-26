@@ -210,6 +210,19 @@ class GrpcClient : public RawClient,
   static google::storage::v1::Bucket::Website ToProto(BucketWebsite);
   static BucketWebsite FromProto(google::storage::v1::Bucket::Website);
 
+  static google::storage::v1::Bucket::Lifecycle::Rule::Action ToProto(
+      LifecycleRuleAction);
+  static LifecycleRuleAction FromProto(
+      google::storage::v1::Bucket::Lifecycle::Rule::Action);
+  static google::storage::v1::Bucket::Lifecycle::Rule::Condition ToProto(
+      LifecycleRuleCondition);
+  static LifecycleRuleCondition FromProto(
+      google::storage::v1::Bucket::Lifecycle::Rule::Condition);
+  static google::storage::v1::Bucket::Lifecycle::Rule ToProto(LifecycleRule);
+  static LifecycleRule FromProto(google::storage::v1::Bucket::Lifecycle::Rule);
+  static google::storage::v1::Bucket::Lifecycle ToProto(BucketLifecycle);
+  static BucketLifecycle FromProto(google::storage::v1::Bucket::Lifecycle);
+
   static google::storage::v1::Owner ToProto(Owner);
   static Owner FromProto(google::storage::v1::Owner);
 
