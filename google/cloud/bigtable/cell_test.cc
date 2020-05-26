@@ -70,3 +70,23 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(value, *decoded);
 }
+
+/// @test Verify Cell rvalue-ref accessors.
+TEST(CellTest, RValueRefAccessors) {
+  std::string row_key = "row";
+  std::string family_name = "family";
+  std::string column_qualifier = "column";
+  std::int64_t timestamp = 42;
+  std::string value = "value";
+
+  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
+
+  static_assert(
+      !std::is_lvalue_reference<decltype(bigtable::Cell(cell).value())>::value,
+      "Member function `value` is expected to return a value from an r-value "
+      "reference to row.");
+
+  std::string moved_value = std::move(cell).value();
+
+  EXPECT_EQ(value, moved_value);
+}
