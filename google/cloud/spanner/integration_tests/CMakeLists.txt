@@ -48,7 +48,6 @@ function (spanner_client_define_integration_tests)
             PRIVATE googleapis-c++::spanner_client spanner_client_testing
                     google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                     GTest::gtest)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of

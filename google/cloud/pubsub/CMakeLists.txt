@@ -57,7 +57,6 @@ target_link_libraries(
     pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                          googleapis-c++::pubsub_protos)
 google_cloud_cpp_add_common_options(pubsub_client)
-google_cloud_cpp_add_clang_tidy(pubsub_client)
 set_target_properties(
     pubsub_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                              SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
@@ -97,7 +96,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
                     google_cloud_cpp_testing_grpc GTest::gmock_main
                     GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
 
         # With googletest it is relatively easy to exceed the default number of
         # sections (~65,000) in a single .obj file. Add the /bigobj option to

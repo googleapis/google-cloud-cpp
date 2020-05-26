@@ -52,7 +52,6 @@ target_link_libraries(
     bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                            googleapis-c++::cloud_bigquery_protos)
 google_cloud_cpp_add_common_options(bigquery_client)
-google_cloud_cpp_add_clang_tidy(bigquery_client)
 set_target_properties(
     bigquery_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                                SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
@@ -83,7 +82,6 @@ function (bigquery_client_define_tests)
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
                GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(bigquery_client_testing)
-    google_cloud_cpp_add_clang_tidy(bigquery_client_testing)
     create_bazel_config(bigquery_client_testing YEAR "2019")
     target_include_directories(
         bigquery_client_testing
@@ -113,7 +111,6 @@ function (bigquery_client_define_tests)
                     google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
 
         # With googletest it is relatively easy to exceed the default number of
         # sections (~65,000) in a single .obj file. Add the /bigobj option to

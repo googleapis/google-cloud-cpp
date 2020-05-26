@@ -164,7 +164,6 @@ target_link_libraries(
            gRPC::grpc
            protobuf::libprotobuf)
 google_cloud_cpp_add_common_options(bigtable_client)
-google_cloud_cpp_add_clang_tidy(bigtable_client)
 target_include_directories(
     bigtable_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -220,7 +219,6 @@ if (BUILD_TESTING)
                gRPC::grpc
                protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(bigtable_client_testing)
-    google_cloud_cpp_add_clang_tidy(bigtable_client_testing)
 
     create_bazel_config(bigtable_client_testing)
 
@@ -304,7 +302,6 @@ if (BUILD_TESTING)
                     gRPC::grpc
                     protobuf::libprotobuf)
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

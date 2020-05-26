@@ -122,7 +122,6 @@ ${CMAKE_COMMAND} \
   ${CMAKE_FLAGS:-} \
   "-H${SOURCE_DIR}" \
   "-B${BINARY_DIR}"
-echo
 io::log_yellow "Finished CMake config"
 
 if [[ "${CLANG_TIDY:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
@@ -133,31 +132,24 @@ fi
 if [[ "${CLANG_TIDY:-}" == "yes" && (\
   "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
   "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
-  # For presubmit builds we only run clang-tidy in the files that have changed
+  # For presubmit builds we only run clang-tidy on the files that have changed
   # w.r.t. the target branch.
   TARGET_BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}"
-  echo
-  io::log_yellow "Running clang-tidy on presubmit build, only changed files are tested."
+  io::log_yellow "Build clang-tidy prerequisites"
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target google-cloud-cpp-protos
-  # TODO(#3958) - Combine these two invocations of "xargs clang-tidy" into a
-  # single one using a simple regular expression like '\.(h|cc)$' when all
-  # targets are clang-tidy clean. Until then, we check all changed .cc files,
-  # followed by all changed files that match the HeaderFilterRegex from the
-  # .clang-tidy file.
-  SOURCE_FILTER_REGEX='google/cloud/.*\.cc$'
-  git diff --name-only "${TARGET_BRANCH}" | grep -E "${SOURCE_FILTER_REGEX}" |
-    xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}"
-  # We disable the misc-unused-using-decls check because it produces false
-  # positives when run on headers. For more details, see issue #4230.
+  io::log_yellow "Run clang-tidy on changed files in a presubmit build"
   HEADER_FILTER_REGEX=$(clang-tidy -dump-config |
     sed -n "s/HeaderFilterRegex: *'\([^']*\)'/\1/p")
-  git diff --name-only "${TARGET_BRANCH}" | grep -E "${HEADER_FILTER_REGEX}" |
+  SOURCE_FILTER_REGEX='google/cloud/.*\.cc$'
+  # We disable the misc-unused-using-decls check because it produces false
+  # positives when run on headers. For more details, see issue #4230.
+  git diff --name-only "${TARGET_BRANCH}" |
+    grep -E "(${HEADER_FILTER_REGEX})|(${SOURCE_FILTER_REGEX})" |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
       -checks="-misc-unused-using-decls"
 fi
 
-echo
 echo "================================================================"
 io::log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"

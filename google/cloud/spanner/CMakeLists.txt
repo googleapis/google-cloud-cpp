@@ -169,7 +169,6 @@ set_target_properties(
 target_compile_options(spanner_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-google_cloud_cpp_add_clang_tidy(spanner_client)
 google_cloud_cpp_add_common_options(spanner_client)
 
 add_library(googleapis-c++::spanner_client ALIAS spanner_client)
@@ -243,7 +242,6 @@ function (spanner_client_define_tests)
                GTest::gtest)
     create_bazel_config(spanner_client_testing YEAR "2019")
     google_cloud_cpp_add_common_options(spanner_client_testing)
-    google_cloud_cpp_add_clang_tidy(spanner_client_testing)
 
     target_include_directories(
         spanner_client_testing
@@ -331,7 +329,6 @@ function (spanner_client_define_tests)
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
@@ -371,7 +368,6 @@ function (spanner_client_define_benchmarks)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client
                                                 benchmark::benchmark_main)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         add_dependencies(spanner-client-benchmarks ${target})

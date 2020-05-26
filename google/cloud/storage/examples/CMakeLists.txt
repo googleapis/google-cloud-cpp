@@ -20,7 +20,6 @@ if (BUILD_TESTING)
     target_link_libraries(storage_examples_common storage_client
                           google_cloud_cpp_common)
     google_cloud_cpp_add_common_options(storage_examples_common)
-    google_cloud_cpp_add_clang_tidy(storage_examples_common)
 
     set(storage_examples
         # cmake-format: sort
@@ -80,7 +79,6 @@ if (BUILD_TESTING)
                     GTest::gtest)
         add_test(NAME ${target} COMMAND ${target})
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     foreach (fname ${storage_examples})
@@ -94,7 +92,6 @@ if (BUILD_TESTING)
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
         google_cloud_cpp_add_common_options(${target})
-        google_cloud_cpp_add_clang_tidy(${target})
     endforeach ()
 
     # We just know that these tests need to be run against production.

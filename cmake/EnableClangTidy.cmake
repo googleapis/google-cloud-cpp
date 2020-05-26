@@ -34,5 +34,8 @@ else ()
     else ()
         message(
             STATUS "clang-tidy found: ${GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM}")
+        if (GOOGLE_CLOUD_CPP_CLANG_TIDY)
+            set(CMAKE_CXX_CLANG_TIDY "${GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM}")
+        endif ()
     endif ()
 endif ()

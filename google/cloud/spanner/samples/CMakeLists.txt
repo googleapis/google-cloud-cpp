@@ -31,7 +31,6 @@ function (spanner_client_define_samples)
     foreach (fname ${spanner_client_integration_samples}
                    ${spanner_client_unit_samples})
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
