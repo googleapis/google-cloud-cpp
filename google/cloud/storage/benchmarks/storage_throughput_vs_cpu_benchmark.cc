@@ -25,6 +25,7 @@
 namespace {
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
+using gcs_bm::ApiName;
 
 char const kDescription[] = R"""(
 A throughput vs. CPU benchmark for the Google Cloud Storage C++ client library.
@@ -90,9 +91,8 @@ struct Options {
   std::int64_t maximum_object_size = 256 * gcs_bm::kMiB;
   std::int64_t minimum_chunk_size = 128 * gcs_bm::kKiB;
   std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
-  long minimum_sample_count = 0;  // NOLINT(google-runtime-int)
-  // NOLINTNEXTLINE(google-runtime-int)
-  long maximum_sample_count = std::numeric_limits<long>::max();
+  std::int32_t minimum_sample_count = 0;
+  std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
 };
 
 enum OpType { kOpUpload, kOpDownload };
@@ -103,6 +103,7 @@ struct IterationResult {
   std::uint64_t buffer_size;
   bool crc_enabled;
   bool md5_enabled;
+  ApiName api;
   std::chrono::microseconds elapsed_time;
   std::chrono::microseconds cpu_time;
   google::cloud::StatusCode status;
@@ -231,9 +232,9 @@ std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
             << rhs.chunk_size << ',' << rhs.buffer_size << ','
             << rhs.crc_enabled << ',' << rhs.md5_enabled << ','
-            << rhs.elapsed_time.count() << ',' << rhs.cpu_time.count() << ','
-            << rhs.status << ',' << rhs.progress << ','
-            << google::cloud::storage::version_string();
+            << gcs_bm::ToString(rhs.api) << ',' << rhs.elapsed_time.count()
+            << ',' << rhs.cpu_time.count() << ',' << rhs.status << ','
+            << rhs.progress << ',' << google::cloud::storage::version_string();
 }
 
 void PrintResults(TestResults const& results) {
@@ -279,7 +280,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   TestResults results;
   results.reserve(options.duration.count() * objects_per_second);
 
-  long iteration_count = 0;  // NOLINT(google-runtime-int)
+  std::int32_t iteration_count = 0;
   for (auto start = std::chrono::steady_clock::now();
        iteration_count < options.maximum_sample_count &&
        (iteration_count < options.minimum_sample_count || start < deadline);
@@ -311,8 +312,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_metadata = writer.metadata();
     results.emplace_back(IterationResult{
         kOpUpload, object_size, chunk_size, download_buffer_size, enable_crc,
-        enable_md5, timer.elapsed_time(), timer.cpu_time(),
-        object_metadata.status().code(), progress.GetAccumulatedProgress()});
+        enable_md5, gcs_bm::ApiName::kApiJson, timer.elapsed_time(),
+        timer.cpu_time(), object_metadata.status().code(),
+        progress.GetAccumulatedProgress()});
 
     if (!object_metadata) {
       continue;
@@ -333,8 +335,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     timer.Stop();
     results.emplace_back(IterationResult{
         kOpDownload, object_size, chunk_size, upload_buffer_size, enable_crc,
-        enable_md5, timer.elapsed_time(), timer.cpu_time(),
-        reader.status().code(), progress.GetAccumulatedProgress()});
+        enable_md5, gcs_bm::ApiName::kApiJson, timer.elapsed_time(),
+        timer.cpu_time(), reader.status().code(),
+        progress.GetAccumulatedProgress()});
 
     auto status =
         client.DeleteObject(object_metadata->bucket(), object_metadata->name(),
