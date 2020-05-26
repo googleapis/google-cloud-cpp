@@ -35,3 +35,21 @@ TEST(RowTest, RowInstantiation) {
   EXPECT_EQ(2, two_cells_row.cells().size());
   EXPECT_EQ(std::next(two_cells_row.cells().begin())->value(), cell2.value());
 }
+
+TEST(RowTest, MoveOverload) {
+  std::string row_key = "row";
+  bigtable::Cell cell(row_key, "family", "column", 42, "value");
+  bigtable::Row row(row_key, {cell});
+
+  static_assert(
+      !std::is_lvalue_reference<decltype(std::move(row).cells())>::value,
+      "Member function `cells` is expected to return a value from an r-value "
+      "reference to row.");
+
+  std::vector<bigtable::Cell> moved_cells = std::move(row).cells();
+  EXPECT_EQ(1U, moved_cells.size());
+  EXPECT_EQ("family", moved_cells[0].family_name());
+  EXPECT_EQ("column", moved_cells[0].column_qualifier());
+  EXPECT_EQ(42, moved_cells[0].timestamp().count());
+  EXPECT_EQ("value", moved_cells[0].value());
+}
