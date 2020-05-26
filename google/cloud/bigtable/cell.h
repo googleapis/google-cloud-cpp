@@ -27,6 +27,10 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class Cell;
+class Mutation;
+Mutation SetCell(Cell);
+
 /**
  * Defines the type for column qualifiers.
  *
@@ -169,6 +173,8 @@ class Cell {
   std::int64_t timestamp_;
   CellValueType value_;
   std::vector<std::string> labels_;
+
+  friend Mutation SetCell(Cell);
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
