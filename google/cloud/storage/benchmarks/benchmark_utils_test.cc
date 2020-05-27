@@ -21,23 +21,6 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
-TEST(ProgressReporterTest, Trivial) {
-  ProgressReporter rep;
-  rep.Start();
-  std::this_thread::sleep_for(std::chrono::milliseconds(2));
-  rep.Advance(5);
-  std::this_thread::sleep_for(std::chrono::milliseconds(3));
-  rep.Advance(7);
-  auto res = rep.GetAccumulatedProgress();
-  EXPECT_EQ(3U, res.size());
-  EXPECT_EQ(0, res[0].bytes);
-  EXPECT_EQ(0, res[0].elapsed.count());
-  EXPECT_EQ(5, res[1].bytes);
-  EXPECT_LE(2000, res[1].elapsed.count());
-  EXPECT_EQ(7, res[2].bytes);
-  EXPECT_LE(3000, res[2].elapsed.count());
-}
-
 TEST(FormatSize, Basic) {
   EXPECT_EQ("1023.0B", FormatSize(1023));
   EXPECT_EQ("1.0KiB", FormatSize(kKiB));
