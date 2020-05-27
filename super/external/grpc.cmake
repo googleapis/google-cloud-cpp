@@ -46,6 +46,7 @@ if (NOT TARGET grpc-project)
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DgRPC_BUILD_TESTS=OFF
+                   -DgRPC_BUILD_CSHARP_EXT=OFF
                    -DgRPC_ABSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
