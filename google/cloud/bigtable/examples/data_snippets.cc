@@ -120,9 +120,10 @@ void BulkApply(google::cloud::bigtable::Table table,
       std::cout << "All mutations applied successfully\n";
       return;
     }
-    // The table was created with the default `SafeIdempotentMutationPolicy` and
-    // without custom retry logic provided, as mutations are not idempotent,
-    // those that fail during the `BulkApply` will remain in a failed state.
+    // By default, the `table` object uses the `SafeIdempotentMutationPolicy`
+    // which does not retry if any of the mutations fails and are
+    // not-idempotent. In this example we simply print such failures, if any,
+    // and ignore them otherwise.
     std::cerr << "The following mutations failed and were not retried:\n";
     for (auto const& f : failures) {
       std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
