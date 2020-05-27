@@ -38,7 +38,7 @@ StatusOr<google::cloud::storage::Client> DefaultGrpcClient() {
   return DefaultGrpcClient(*std::move(options));
 }
 
-StatusOr<google::cloud::storage::Client> DefaultGrpcClient(
+google::cloud::storage::Client DefaultGrpcClient(
     google::cloud::storage::ClientOptions options) {
   if (UseGrpcForMetadata()) {
     return storage::Client(
