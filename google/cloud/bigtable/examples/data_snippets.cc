@@ -120,11 +120,14 @@ void BulkApply(google::cloud::bigtable::Table table,
       std::cout << "All mutations applied successfully\n";
       return;
     }
-    std::cerr << "The following mutations failed:\n";
+    // By default, the `table` object uses the `SafeIdempotentMutationPolicy`
+    // which does not retry if any of the mutations fails and are
+    // not-idempotent. In this example we simply print such failures, if any,
+    // and ignore them otherwise.
+    std::cerr << "The following mutations failed and were not retried:\n";
     for (auto const& f : failures) {
       std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
     }
-    throw std::runtime_error(failures.front().status().message());
   }
   //! [bulk apply] [END bigtable_mutate_insert_rows]
   (std::move(table));
@@ -808,6 +811,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
   MutateInsertUpdateRows(table, {"mix-match-01", "fam:col0=value0-2"});
   std::cout << "Running RenameColumn() example" << std::endl;
   RenameColumn(table, {"mix-match-01", "fam", "col0", "new-name"});
+
   std::cout << "\nPreparing data for multiple examples" << std::endl;
   InsertTestData(table, {});
   std::cout << "Running Apply() example" << std::endl;
