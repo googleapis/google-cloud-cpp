@@ -107,24 +107,6 @@ class SimpleTimer {
   std::string annotations_;
 };
 
-/**
- * A small class to accumulate time-points with progress.
- */
-class ProgressReporter {
- public:
-  struct TimePoint {
-    std::uint64_t bytes;
-    std::chrono::microseconds elapsed;
-  };
-  void Start();
-  void Advance(size_t progress);
-  std::vector<TimePoint> const& GetAccumulatedProgress() const;
-
- private:
-  std::chrono::steady_clock::time_point start_;
-  std::vector<TimePoint> progress_;
-};
-
 std::string FormatSize(std::uintmax_t size);
 
 void DeleteAllObjects(google::cloud::storage::Client client,
