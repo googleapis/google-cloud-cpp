@@ -507,9 +507,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
     std::cerr <<
         R"""(
 # WARNING
-# Your platform does not support per-thread usage metricsand you have enabled
-# multiple threads, the CPU usage results will not be usable. See getrusage(2)
-# for more information.
+# Your platform does not support per-thread usage metrics and you have enabled
+# multiple threads, so the CPU usage results will not be usable. See
+# getrusage(2) for more information.
 # END WARNING
 #
 )""";
