@@ -15,12 +15,6 @@
 # ~~~
 
 if (BUILD_TESTING)
-    # TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl
-    # release
-    set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
-    find_package(absl CONFIG REQUIRED)
-    unset(FPHSA_NAME_MISMATCHED)
-
     add_library(storage_benchmarks # cmake-format: sort
                 benchmark_utils.cc benchmark_utils.h bounded_queue.h)
     target_link_libraries(storage_benchmarks PUBLIC storage_client)
@@ -61,8 +55,7 @@ if (BUILD_TESTING)
                     google_cloud_cpp_common
                     CURL::libcurl
                     Threads::Threads
-                    nlohmann_json
-                    absl::strings)
+                    nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
