@@ -15,7 +15,6 @@
 # ~~~
 
 if (BUILD_TESTING)
-
     add_library(storage_benchmarks # cmake-format: sort
                 benchmark_utils.cc benchmark_utils.h bounded_queue.h)
     target_link_libraries(storage_benchmarks PUBLIC storage_client)

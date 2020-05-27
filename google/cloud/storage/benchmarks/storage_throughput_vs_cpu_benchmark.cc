@@ -19,7 +19,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <future>
-#include <iomanip>
 #include <sstream>
 
 namespace {
@@ -93,6 +92,8 @@ struct Options {
   std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
   std::int32_t minimum_sample_count = 0;
   std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
+  std::vector<ApiName> enabled_apis = {gcs_bm::ApiName::kApiJson,
+                                       gcs_bm::ApiName::kApiXml};
 };
 
 enum OpType { kOpUpload, kOpDownload };
@@ -142,17 +143,7 @@ int main(int argc, char* argv[]) {
 
   auto bucket_name =
       gcs_bm::MakeRandomBucketName(generator, "bm-throughput-vs-cpu-");
-  auto meta =
-      client
-          .CreateBucket(bucket_name,
-                        gcs::BucketMetadata()
-                            .set_storage_class(gcs::storage_class::Standard())
-                            .set_location(options->region),
-                        gcs::PredefinedAcl("private"),
-                        gcs::PredefinedDefaultObjectAcl("projectPrivate"),
-                        gcs::Projection("full"))
-          .value();
-  std::cout << "# Running test on bucket: " << meta.name() << "\n";
+  std::cout << "# Running test on bucket: " << bucket_name << "\n";
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -176,10 +167,36 @@ int main(int argc, char* argv[]) {
             << "\n# Min Chunk Size (KiB): "
             << options->minimum_chunk_size / gcs_bm::kKiB
             << "\n# Max Chunk Size (KiB): "
-            << options->maximum_chunk_size / gcs_bm::kKiB << std::boolalpha
+            << options->maximum_chunk_size / gcs_bm::kKiB
+            << "\n# Minimum Sample Count: " << options->minimum_sample_count
+            << "\n# Maximum Sample Count: " << options->maximum_sample_count
+            << "\n# Enabled APIs: " <<
+      [&options] {
+        std::string s;
+        char const* sep = "";
+        for (auto a : options->enabled_apis) {
+          s += sep;
+          s += gcs_bm::ToString(a);
+          sep = ",";
+        }
+        return s;
+      }()
             << "\n# Build info: " << notes << "\n";
-  // Make this immediately visible in the console, helps with debugging.
+  // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
+
+  auto meta =
+      client.CreateBucket(bucket_name,
+                          gcs::BucketMetadata()
+                              .set_storage_class(gcs::storage_class::Standard())
+                              .set_location(options->region),
+                          gcs::PredefinedAcl("private"),
+                          gcs::PredefinedDefaultObjectAcl("projectPrivate"),
+                          gcs::Projection("full"));
+  if (!meta) {
+    std::cerr << "Error creating bucket: " << meta.status() << "\n";
+    return 1;
+  }
 
   std::vector<std::future<TestResults>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
@@ -268,6 +285,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   std::bernoulli_distribution crc_generator;
   std::bernoulli_distribution md5_generator;
 
+  std::uniform_int_distribution<std::size_t> api_generator(
+      0, options.enabled_apis.size() - 1);
+
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
   gcs_bm::SimpleTimer timer;
@@ -290,13 +310,31 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto chunk_size = chunk_generator(generator);
     bool enable_crc = crc_generator(generator);
     bool enable_md5 = md5_generator(generator);
+    auto const api = options.enabled_apis[api_generator(generator)];
+    auto xml_write_selector = gcs::Fields();
+    auto json_read_selector = gcs::IfGenerationNotMatch();
+
+    switch (api) {
+      case gcs_bm::ApiName::kApiXml:
+        // For writes (uploads) the default is JSON, but if the application is
+        // not interested in any fields on the metadata the library can switch
+        // to XML and does.
+        xml_write_selector = gcs::Fields("");
+        break;
+
+      case gcs_bm::ApiName::kApiJson:
+        // For reads (downloads) the default is XML, unless the application is
+        // using features that only JSON supports, like `IfGenerationNotMatch`.
+        json_read_selector = gcs::IfGenerationNotMatch(1);
+        break;
+    }
 
     gcs_bm::ProgressReporter progress;
     timer.Start();
     progress.Start();
-    auto writer = client.WriteObject(bucket_name, object_name,
-                                     gcs::DisableCrc32cChecksum(!enable_crc),
-                                     gcs::DisableMD5Hash(!enable_md5));
+    auto writer = client.WriteObject(
+        bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
+        gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
     for (std::size_t offset = 0; offset < object_size; offset += chunk_size) {
       auto len = chunk_size;
       if (offset + len > object_size) {
@@ -312,9 +350,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_metadata = writer.metadata();
     results.emplace_back(IterationResult{
         kOpUpload, object_size, chunk_size, download_buffer_size, enable_crc,
-        enable_md5, gcs_bm::ApiName::kApiJson, timer.elapsed_time(),
-        timer.cpu_time(), object_metadata.status().code(),
-        progress.GetAccumulatedProgress()});
+        enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
+        object_metadata.status().code(), progress.GetAccumulatedProgress()});
 
     if (!object_metadata) {
       continue;
@@ -326,7 +363,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
         client.ReadObject(object_metadata->bucket(), object_metadata->name(),
                           gcs::Generation(object_metadata->generation()),
                           gcs::DisableCrc32cChecksum(!enable_crc),
-                          gcs::DisableMD5Hash(!enable_md5));
+                          gcs::DisableMD5Hash(!enable_md5), json_read_selector);
     progress.Advance(0);
     std::vector<char> buffer(chunk_size);
     for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
@@ -335,9 +372,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     timer.Stop();
     results.emplace_back(IterationResult{
         kOpDownload, object_size, chunk_size, upload_buffer_size, enable_crc,
-        enable_md5, gcs_bm::ApiName::kApiJson, timer.elapsed_time(),
-        timer.cpu_time(), reader.status().code(),
-        progress.GetAccumulatedProgress()});
+        enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
+        reader.status().code(), progress.GetAccumulatedProgress()});
 
     auto status =
         client.DeleteObject(object_metadata->bucket(), object_metadata->name(),
@@ -400,6 +436,22 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&options](std::string const& val) {
          options.maximum_sample_count = std::stol(val);
        }},
+      {"--enabled-apis", "enable a subset of the APIs for the test",
+       [&options](std::string const& val) {
+         std::map<std::string, gcs_bm::ApiName> const names{
+             {"JSON", gcs_bm::ApiName::kApiJson},
+             {"XML", gcs_bm::ApiName::kApiXml},
+         };
+         std::vector<ApiName> apis;
+         std::istringstream is(val);
+         std::string token;
+         while (std::getline(is, token, ',')) {
+           auto const l = names.find(std::string(token));
+           if (l == names.end()) continue;  // Ignore errors for now
+           apis.push_back(l->second);
+         }
+         options.enabled_apis = std::move(apis);
+       }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
 
@@ -412,51 +464,61 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
     std::cout << kDescription << "\n";
   }
 
+  auto make_status = [](std::ostringstream& os) {
+    auto const code = google::cloud::StatusCode::kInvalidArgument;
+    return google::cloud::Status{code, std::move(os).str()};
+  };
+
   if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return make_status(os);
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
   }
   if (options.region.empty()) {
     std::ostringstream os;
-    os << "Missing value for --region option" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    os << "Missing value for --region option\n" << usage << "\n";
+    return make_status(os);
   }
 
   if (options.minimum_object_size > options.maximum_object_size) {
     std::ostringstream os;
     os << "Invalid range for object size [" << options.minimum_object_size
        << ',' << options.maximum_object_size << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return make_status(os);
   }
   if (options.minimum_chunk_size > options.maximum_chunk_size) {
     std::ostringstream os;
     os << "Invalid range for chunk size [" << options.minimum_chunk_size << ','
        << options.maximum_chunk_size << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return make_status(os);
   }
   if (options.minimum_sample_count > options.maximum_sample_count) {
     std::ostringstream os;
     os << "Invalid range for sample range [" << options.minimum_sample_count
        << ',' << options.maximum_sample_count << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return make_status(os);
   }
 
   if (!gcs_bm::SimpleTimer::SupportPerThreadUsage() &&
       options.thread_count > 1) {
+    std::cerr <<
+        R"""(
+# WARNING
+# Your platform does not support per-thread usage metrics and you have enabled
+# multiple threads, so the CPU usage results will not be usable. See
+# getrusage(2) for more information.
+# END WARNING
+#
+)""";
+  }
+
+  if (options.enabled_apis.empty()) {
     std::ostringstream os;
-    os << "Your platform does not support per-thread usage metrics"
-          " (see getrusage(2)). Running more than one thread is not supported.";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    os << "No APIs configured for benchmark.";
+    return make_status(os);
   }
 
   return options;
