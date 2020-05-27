@@ -315,6 +315,16 @@ void DeleteAllObjects(google::cloud::storage::Client client,
             << "ms\n";
 }
 
+char const* ToString(ApiName api) {
+  switch (api) {
+    case ApiName::kApiJson:
+      return "JSON";
+    case ApiName::kApiXml:
+      return "XML";
+  }
+  return "";
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

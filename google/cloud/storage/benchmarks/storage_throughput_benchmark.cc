@@ -25,6 +25,7 @@
 namespace {
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
+using gcs_bm::ApiName;
 
 char const kDescription[] = R"""(
 A throughput benchmark for the Google Cloud Storage C++ client library.
@@ -89,7 +90,6 @@ struct Options {
 };
 
 enum class OpType { kOpRead, kOpWrite, kOpCreate };
-enum class ApiName { kApiJson, kApiXml };
 struct IterationResult {
   OpType op;
   ApiName api;
@@ -99,7 +99,6 @@ struct IterationResult {
 using TestResult = std::vector<IterationResult>;
 
 char const* ToString(OpType type);
-char const* ToString(ApiName api);
 void PrintResult(TestResult const& result);
 
 std::vector<std::string> CreateAllObjects(
@@ -233,20 +232,10 @@ char const* ToString(OpType type) {
   return "";
 }
 
-char const* ToString(ApiName api) {
-  switch (api) {
-    case ApiName::kApiJson:
-      return "JSON";
-    case ApiName::kApiXml:
-      return "XML";
-  }
-  return "";
-}
-
 void PrintResult(TestResult const& result) {
   for (auto const& r : result) {
-    std::cout << ToString(r.op) << ',' << ToString(r.api) << ',' << r.bytes
-              << ',' << r.elapsed.count() << "\n";
+    std::cout << ToString(r.op) << ',' << gcs_bm::ToString(r.api) << ','
+              << r.bytes << ',' << r.elapsed.count() << "\n";
   }
 }
 
