@@ -51,7 +51,7 @@ StatusOr<google::cloud::storage::Client> DefaultGrpcClient();
  * @warning this is an experimental feature, and subject to change without
  *     notice.
  */
-StatusOr<google::cloud::storage::Client> DefaultGrpcClient(
+google::cloud::storage::Client DefaultGrpcClient(
     google::cloud::storage::ClientOptions options);
 
 }  // namespace STORAGE_CLIENT_NS
