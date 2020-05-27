@@ -1103,7 +1103,8 @@ class Client {
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
-   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
+   *   `UseResumableUploadSession`, `UserProject`, `WithObjectMetadata` and
+   *   `UploadContentLength`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -3035,7 +3036,7 @@ class Client {
                                           Options&&... options) {
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, request);
+    return UploadFileResumable(file_name, std::move(request));
   }
 
   // The version of UploadFile() where UseResumableUploadSession is *not* one of
@@ -3055,7 +3056,7 @@ class Client {
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, request);
+    return UploadFileResumable(file_name, std::move(request));
   }
 
   bool UseSimpleUpload(std::string const& file_name) const;
@@ -3064,8 +3065,7 @@ class Client {
       std::string const& file_name, internal::InsertObjectMediaRequest request);
 
   StatusOr<ObjectMetadata> UploadFileResumable(
-      std::string const& file_name,
-      internal::ResumableUploadRequest const& request);
+      std::string const& file_name, internal::ResumableUploadRequest request);
 
   StatusOr<ObjectMetadata> UploadStreamResumable(
       std::istream& source, internal::ResumableUploadRequest const& request);

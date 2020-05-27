@@ -117,7 +117,7 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
 
 StatusOr<ObjectMetadata> Client::UploadFileResumable(
     std::string const& file_name,
-    google::cloud::storage::internal::ResumableUploadRequest const& request) {
+    google::cloud::storage::internal::ResumableUploadRequest request) {
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {
     GCP_LOG(WARNING) << "Trying to upload " << file_name
@@ -132,8 +132,14 @@ This is often a problem because:
 Consider using Client::WriteObject() instead. You may also need to disable data
 integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 )""";
+  } else {
+    std::error_code size_err;
+    auto file_size = google::cloud::internal::file_size(file_name, size_err);
+    if (size_err) {
+      return Status(StatusCode::kNotFound, size_err.message());
+    }
+    request.set_option(UploadContentLength(file_size));
   }
-
   std::ifstream source(file_name, std::ios::binary);
   if (!source.is_open()) {
     std::ostringstream os;

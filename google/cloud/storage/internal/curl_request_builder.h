@@ -93,6 +93,20 @@ class CurlRequestBuilder {
     return *this;
   }
 
+  /// Adds one of the well-known headers to the request.
+  template <typename P, typename V,
+            typename Enabled = typename std::enable_if<
+                std::is_arithmetic<V>::value, void>::type>
+  CurlRequestBuilder& AddOption(WellKnownHeader<P, V> const& p) {
+    if (p.has_value()) {
+      std::string header = p.header_name();
+      header += ": ";
+      header += std::to_string(p.value());
+      AddHeader(header);
+    }
+    return *this;
+  }
+
   /// Adds a custom header to the request.
   CurlRequestBuilder& AddOption(CustomHeader const& p) {
     if (p.has_value()) {

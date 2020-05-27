@@ -361,7 +361,7 @@ class ResumableUploadRequest
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
-          UserProject, WithObjectMetadata> {
+          UserProject, WithObjectMetadata, UploadContentLength> {
  public:
   ResumableUploadRequest() = default;
 
