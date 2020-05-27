@@ -304,6 +304,8 @@ char const* ToString(ApiName api) {
       return "JSON";
     case ApiName::kApiXml:
       return "XML";
+    case ApiName::kApiGrpc:
+      return "GRPC";
   }
   return "";
 }

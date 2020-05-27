@@ -112,7 +112,9 @@ std::string FormatSize(std::uintmax_t size);
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count);
 
-enum class ApiName { kApiJson, kApiXml };
+// Technically gRPC is not a different API, just the JSON API over a different
+// protocol, but it is easier to represent it as such in the benchmark.
+enum class ApiName { kApiJson, kApiXml, kApiGrpc };
 char const* ToString(ApiName api);
 
 }  // namespace storage_benchmarks
