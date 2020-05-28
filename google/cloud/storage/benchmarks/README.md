@@ -20,10 +20,12 @@ example:
 cmake -Hsuper -B.build/si -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-cpp
+cmake --build .build/si --target project-dependencies
 cmake -H. -B.build/release -GNinja \
   -DCMAKE_BUILD_TYPE=Release -GNinja \
   -DCMAKE_PREFIX_PATH=$HOME/local-cpp \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
+cmake --build .build/release
 ```
 
 ## Running the Benchmarks

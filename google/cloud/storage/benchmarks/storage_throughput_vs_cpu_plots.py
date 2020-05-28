@@ -59,6 +59,21 @@ print(data.head())
 print(data.describe())
 
 # %%
+# These are the recommended settings for high-performance, we test all of them
+# but want to simplify the summary.
+subset = data[data["Crc32cEnabled"] & (data["MD5Enabled"] == 0)]
+
+# %%
+print("")
+print("Throughput Summary")
+print(subset.groupby(["Op", "ApiName"])["MiBs"].describe().unstack(1))
+
+# %%
+print("")
+print("Latency Summary")
+print(subset.groupby(["Op", "ApiName"])["ElapsedSeconds"].describe().unstack(1))
+
+# %%
 # Runs with small uploads/downloads look better with log scale.
 use_y_log10 = max(data["MiB"]) <= 8.0
 
