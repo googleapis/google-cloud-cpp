@@ -277,7 +277,11 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
     row_future
         .then([](future<StatusOr<cbt::Row>> f) {
           auto row = f.get();
-          if (!row) throw std::runtime_error(row.status().message());
+          // By default, the `table` object uses the
+          // `SafeIdempotentMutationPolicy` which does not retry if the modify
+          // fails and is not idempotent. In this example we simply print such
+          // failures, if any, and ignore them otherwise.
+          if (!row) std::cout << "Failed to append " << row->row_key() << "\n";
           std::cout << "Successfully appended to " << row->row_key() << "\n";
         })
         .get();  // block to simplify example.
