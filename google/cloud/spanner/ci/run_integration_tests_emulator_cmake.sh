@@ -111,7 +111,7 @@ function start_emulator() {
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
-export RUN_SLOW_INTEGRATION_TESTS="instance"
+export GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance,backup"
 
 cd "${CMAKE_BINARY_DIR}"
 start_emulator
