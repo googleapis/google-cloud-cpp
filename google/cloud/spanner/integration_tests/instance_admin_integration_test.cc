@@ -55,7 +55,8 @@ class InstanceAdminClientTest : public testing::Test {
             "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
             .value_or("");
     auto const run_slow_integration_tests =
-        google::cloud::internal::GetEnv("ENABLE_SPANNER_SLOW_INTEGRATION_TESTS")
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
             .value_or("");
     run_slow_instance_tests_ =
         run_slow_integration_tests.find("instance") != std::string::npos;

@@ -56,7 +56,8 @@ class BackupTest : public testing::Test {
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     auto const run_slow_integration_tests =
-        google::cloud::internal::GetEnv("ENABLE_SPANNER_SLOW_INTEGRATION_TESTS")
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
             .value_or("");
     run_slow_backup_tests_ =
         run_slow_integration_tests.find("backup") != std::string::npos;

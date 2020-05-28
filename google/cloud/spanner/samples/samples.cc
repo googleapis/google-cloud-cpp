@@ -2700,7 +2700,8 @@ int RunOneCommand(std::vector<std::string> argv) {
 
 void RunAll(bool emulator) {
   auto const run_slow_integration_tests =
-      google::cloud::internal::GetEnv("ENABLE_SPANNER_SLOW_INTEGRATION_TESTS")
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
           .value_or("");
   auto const run_slow_backup_tests =
       run_slow_integration_tests.find("backup") != std::string::npos;
