@@ -266,6 +266,27 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already. Expect its lenght
+  // to be 3 bytes.
+  auto os =
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+                          NewResumableUploadSession(), UploadContentLength(3));
+
+  // Write much more than 3 bytes.
+  std::ostringstream expected;
+  WriteRandomLines(os, expected);
+
+  os.Close();
+  auto meta = os.metadata();
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+}
+
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

@@ -324,6 +324,55 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   EXPECT_THAT(res.status().message(), ::testing::HasSubstr("This is a bug"));
 }
 
+TEST_F(WriteObjectTest, UploadFile) {
+  auto const quantum = internal::UploadChunkRequest::kChunkSizeQuantum;
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  std::uintmax_t const file_size = 10;
+  google::cloud::storage::testing::TempFile temp_file(
+      google::cloud::storage::testing::MakeRandomData(rng, file_size));
+
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
+
+  // Simulate situation when a quantum has already been uploaded.
+  std::size_t bytes_written = quantum;
+  EXPECT_CALL(*mock_, CreateResumableSession(_))
+      .WillOnce(Invoke([&expected, &bytes_written, file_size](
+                           internal::ResumableUploadRequest const& request) {
+        EXPECT_TRUE(request.HasOption<UploadContentLength>());
+        EXPECT_EQ(file_size, request.GetOption<UploadContentLength>().value());
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+
+        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte())
+            .WillRepeatedly(
+                Invoke([&bytes_written]() { return bytes_written; }));
+        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+            .WillOnce(Invoke([expected, &bytes_written](std::string const& data,
+                                                        size_t size) {
+              bytes_written += data.size();
+              EXPECT_EQ(bytes_written, size);
+              return make_status_or(ResumableUploadResponse{
+                  "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});
+            }));
+
+        return make_status_or(
+            std::unique_ptr<internal ::ResumableUploadSession>(
+                std::move(mock)));
+      }));
+
+  auto res =
+      client_->UploadFile(temp_file.name(), "test-bucket-name",
+                          "test-object-name", UseResumableUploadSession());
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(expected, *res);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -168,6 +168,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   builder.AddOption(request.template GetOption<IfMatchEtag>());
   builder.AddOption(request.template GetOption<IfNoneMatchEtag>());
   builder.AddOption(request.template GetOption<QuotaUser>());
+  builder.AddOption(request.template GetOption<UploadContentLength>());
   SetupBuilderUserIp(builder, request);
 
   builder.AddQueryParameter("uploadType", "resumable");

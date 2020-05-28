@@ -723,6 +723,12 @@ class GcsBucket(object):
         upload["next_byte"] = next_byte
         response_payload = ""
         if final_chunk and next_byte >= total:
+            expected_bytes = upload["expected_bytes"]
+            if expected_bytes is not None and expected_bytes != total:
+                raise error_response.ErrorResponse(
+                    "X-Upload-Content-Length"
+                    "validation failed. Expected=%d, got %d." % (expected_bytes, total)
+                )
             upload["done"] = True
             object_name = upload.get("object_name")
             object_path, blob = testbench_utils.get_object(
