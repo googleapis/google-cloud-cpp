@@ -92,12 +92,15 @@ docker_flags+=(
 )
 
 echo -n "Uploading code coverage to codecov.io..."
+# This controls the output format from bash's `time` command.
+readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container. Save the log
 # to a file because it can be very large (multiple MiB in size).
-sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-  "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
-exit_status=$?
-echo "DONE"
+time {
+  sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
+    "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
+  exit_status=$?
+}
 
 if [[ ${exit_status} != 0 ]]; then
   # Only print the log if there is an error.
