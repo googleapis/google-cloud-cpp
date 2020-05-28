@@ -604,6 +604,7 @@ google::cloud::StatusOr<Options> SelfTest() {
       "self-test",
       "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
       "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+      "--bucket-prefix=cloud-cpp-testing-ci-",
       thread_count_arg,
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
@@ -612,6 +613,7 @@ google::cloud::StatusOr<Options> SelfTest() {
       "--duration=1s",
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
+      "--enabled-apis=JSON",
   });
 }
 
