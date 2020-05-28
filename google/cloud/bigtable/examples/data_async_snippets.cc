@@ -89,12 +89,15 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
             std::cout << "All the mutations were successful\n";
             return;
           }
-          std::cerr << "The following mutations failed:\n";
+          // By default, the `table` object uses the
+          // `SafeIdempotentMutationPolicy` which does not retry if any of the
+          // mutations fails and are not idempotent. In this example we simply
+          // print such failures, if any, and ignore them otherwise.
+          std::cerr << "The following mutations failed and were not retried:\n";
           for (auto const& f : failures) {
             std::cerr << "index[" << f.original_index() << "]=" << f.status()
                       << "\n";
           }
-          throw std::runtime_error(failures.front().status().message());
         })
         .get();  // block to simplify the example
   }
