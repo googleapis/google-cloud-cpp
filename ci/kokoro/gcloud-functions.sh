@@ -58,7 +58,11 @@ create_gcloud_config() {
       create --no-activate "${GCLOUD_CONFIG}" >/dev/null
   fi
   if [[ -n "${GOOGLE_CLOUD_PROJECT:-}" ]]; then
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" config set project "${GOOGLE_CLOUD_PROJECT}"
+    # At this point, we haven't yet activated our service account, but we also
+    # don't want this config setting to use any default account that may
+    # already exist on the machine, so we explicitly set `--account=""` to
+    # avoid using incidental gcloud accounts.
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" --account="" config set project "${GOOGLE_CLOUD_PROJECT}"
   fi
 }
 

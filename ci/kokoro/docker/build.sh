@@ -373,6 +373,13 @@ mkdir -p "${BUILD_HOME}"
 
 # We use an array for the flags so they are easier to document.
 docker_flags=(
+  # Our docker containers don't need network-level isolation from the host,
+  # because we can run our builds directly on the host anyway. Additionally,
+  # some hosts have non-trivial networking configurations that the container
+  # should also use (DNS caches, etc). Therefore, our containers will directly
+  # use the host network.
+  "--net" "host"
+
   # Enable ptrace as it is needed by s
   "--cap-add" "SYS_PTRACE"
 
