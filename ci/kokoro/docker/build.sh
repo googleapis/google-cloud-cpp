@@ -58,6 +58,13 @@ else
   exit 1
 fi
 
+# This variable can optionally hold a comma-separated list of words indicating
+# which of Spanner's really slow integration tests we want to enable. For
+# example, "instance", or "backup", or "instance,backup". These tests can be
+# quite slow and so we sometimes selectively enable them. By default, none are
+# run.
+export ENABLE_SPANNER_SLOW_INTEGRATION_TESTS
+
 # RUN_INTEGRATION_TESTS has three possible values: "yes", "no", and "auto".
 # "auto" runs the integration tests only when the configuration file is present;
 # this makes it convenient to run locally, where we may or may not have the
@@ -88,6 +95,7 @@ elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
+  ENABLE_SPANNER_SLOW_INTEGRATION_TESTS="instance,backup"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO=ubuntu
@@ -442,6 +450,9 @@ docker_flags=(
   # The Bigtable Admin integration tests can only run in nightly builds, the
   # quota (as in calls per day) is too restrictive to run more often.
   "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+
+  # These tests are quite slow, so we only enable them in certain builds.
+  "--env" "ENABLE_SPANNER_SLOW_INTEGRATION_TESTS=${ENABLE_SPANNER_SLOW_INTEGRATION_TESTS:-}"
 
   # If set, run the scripts to generate Doxygen docs. Note that the scripts
   # to upload said docs are not part of the build, they run afterwards on
