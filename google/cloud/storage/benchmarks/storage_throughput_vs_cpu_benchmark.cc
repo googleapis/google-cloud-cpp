@@ -105,7 +105,7 @@ struct Options {
   };
 };
 
-enum OpType { kOpUpload, kOpDownload };
+enum OpType { kOpWrite, kOpRead0, kOpRead1, kOpRead2 };
 struct IterationResult {
   OpType op;
   std::uint64_t object_size;
@@ -229,10 +229,14 @@ int main(int argc, char* argv[]) {
 namespace {
 char const* ToString(OpType type) {
   switch (type) {
-    case kOpDownload:
-      return "DOWNLOAD";
-    case kOpUpload:
-      return "UPLOAD";
+    case kOpRead0:
+      return "READ[0]";
+    case kOpRead1:
+      return "READ[1]";
+    case kOpRead2:
+      return "READ[2]";
+    case kOpWrite:
+      return "WRITE";
   }
   return nullptr;  // silence g++ error.
 }
@@ -246,7 +250,7 @@ std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
 }
 
 void PrintHeader() {
-  std::cout << "OpName,ObjectSize,ChunkSize,BufferSize"
+  std::cout << "Op,ObjectSize,ChunkSize,BufferSize"
             << ",Crc32cEnabled,MD5Enabled,ApiName"
             << ",ElapsedTimeUs,CpuTimeUs,Status\n";
 }
@@ -352,10 +356,10 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     timer.Stop();
 
     auto object_metadata = writer.metadata();
-    results.emplace_back(IterationResult{
-        kOpUpload, object_size, chunk_size, download_buffer_size, enable_crc,
-        enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
-        object_metadata.status().code()});
+    results.emplace_back(
+        IterationResult{kOpWrite, object_size, chunk_size, upload_buffer_size,
+                        enable_crc, enable_md5, api, timer.elapsed_time(),
+                        timer.cpu_time(), object_metadata.status().code()});
 
     if (!object_metadata) {
       if (options.thread_count == 1) {
@@ -365,33 +369,35 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
       continue;
     }
 
-    timer.Start();
-    auto reader = client->ReadObject(
-        bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
-        gcs::DisableMD5Hash(!enable_md5), json_read_selector);
-    std::vector<char> buffer(chunk_size);
-    for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
-         num_read += reader.gcount()) {
-    }
-    timer.Stop();
-    results.emplace_back(IterationResult{
-        kOpDownload, object_size, chunk_size, upload_buffer_size, enable_crc,
-        enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
-        reader.status().code()});
+    for (auto op : {kOpRead0, kOpRead1, kOpRead2}) {
+      timer.Start();
+      auto reader = client->ReadObject(
+          bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
+          gcs::DisableMD5Hash(!enable_md5), json_read_selector);
+      std::vector<char> buffer(chunk_size);
+      for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
+           num_read += reader.gcount()) {
+      }
+      timer.Stop();
+      results.emplace_back(
+          IterationResult{op, object_size, chunk_size, download_buffer_size,
+                          enable_crc, enable_md5, api, timer.elapsed_time(),
+                          timer.cpu_time(), reader.status().code()});
 
-    auto status = client->DeleteObject(bucket_name, object_name);
-
-    if (options.thread_count == 1) {
-      // Immediately print the results, this makes it easier to debug problems.
-      PrintResults(results);
-      results.clear();
-      if (!reader.status().ok()) {
+      if (options.thread_count == 1 && !reader.status().ok()) {
         std::cerr << "# status=" << reader.status() << "\n"
                   << "# metadata=" << *object_metadata << "\n"
                   << "# json_read_selector=" << json_read_selector.has_value()
                   << "\n";
       }
     }
+    if (options.thread_count == 1) {
+      // Immediately print the results, this makes it easier to debug problems.
+      PrintResults(results);
+      results.clear();
+    }
+
+    auto status = client->DeleteObject(bucket_name, object_name);
   }
   return results;
 }

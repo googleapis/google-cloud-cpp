@@ -65,7 +65,7 @@ use_y_log10 = max(data["MiB"]) <= 8.0
 # %%
 # A common facet for all plots
 facet = p9.facet_grid(
-    "OpName ~ Crc32cEnabled + MD5Enabled", labeller="label_both", scales="free_y"
+    "Op ~ Crc32cEnabled + MD5Enabled", labeller="label_both", scales="free_y"
 )
 
 # %%
