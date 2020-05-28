@@ -514,6 +514,13 @@ if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}" ]]; then
   docker_flags+=("--env" "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}")
 fi
 
+# Optionally allow the docker container to use the host's networking in order
+# to take advantage of potentially non-trivial network configurations (e.g.,
+# DNS cache) that might be a PITA to duplicate within the container itself.
+if [[ -n "${DOCKER_USE_HOST_NETWORK:-}" ]]; then
+  docker_flags+=("--net" "host")
+fi
+
 # When running on Travis the build gets a tty, and docker can produce nicer
 # output in that case, but on Kokoro the script does not get a tty, and Docker
 # terminates the program if we pass the `-it` flag in that case.
