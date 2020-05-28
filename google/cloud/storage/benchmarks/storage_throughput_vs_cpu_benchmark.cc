@@ -137,9 +137,7 @@ int main(int argc, char* argv[]) {
   }
   gcs::Client client(*std::move(client_options));
 
-  google::cloud::internal::DefaultPRNG generator =
-      google::cloud::internal::MakeDefaultPRNG();
-
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name =
       gcs_bm::MakeRandomBucketName(generator, "bm-throughput-vs-cpu-");
   std::cout << "# Running test on bucket: " << bucket_name << "\n";
@@ -245,10 +243,8 @@ void PrintResults(TestResults const& results) {
 }
 
 TestResults RunThread(Options const& options, std::string const& bucket_name) {
-  google::cloud::internal::DefaultPRNG generator =
-      google::cloud::internal::MakeDefaultPRNG();
-  auto contents =
-      gcs_bm::MakeRandomData(generator, options.maximum_object_size);
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto contents = gcs_bm::MakeRandomData(generator, options.maximum_chunk_size);
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
   if (!client_options) {
@@ -321,7 +317,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
       if (offset + len > object_size) {
         len = object_size - offset;
       }
-      writer.write(contents.data() + offset, len);
+      writer.write(contents.data(), len);
     }
     writer.Close();
     timer.Stop();
