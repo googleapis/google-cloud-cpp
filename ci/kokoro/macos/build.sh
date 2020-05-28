@@ -24,12 +24,6 @@ export BAZEL_CONFIG=""
 export RUN_INTEGRATION_TESTS="no"
 driver_script="ci/kokoro/macos/build-bazel.sh"
 
-# Set it to "no" for any value other than "yes".
-if [[ "${RUN_SLOW_INTEGRATION_TESTS:-}" != "yes" ]]; then
-  RUN_SLOW_INTEGRATION_TESTS="no"
-fi
-export RUN_SLOW_INTEGRATION_TESTS
-
 if [[ $# -eq 1 ]]; then
   export BUILD_NAME="${1}"
 elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
