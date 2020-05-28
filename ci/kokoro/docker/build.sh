@@ -506,6 +506,13 @@ docker_flags=(
   "--rm"
 )
 
+# Some machines have complex host network configurations that we want to shared
+# with the running docker container. Setting this environment variable tells
+# the docker container to use the host network rather than a bridge network.
+if [[ -n "${DOCKER_USE_HOST_NETWORK:-}" ]]; then
+  docker_flags+=(--net host)
+fi
+
 if [[ -n "${KOKORO_JOB_TYPE:-}" ]]; then
   docker_flags+=("--env" "KOKORO_JOB_TYPE=${KOKORO_JOB_TYPE:-}")
 fi

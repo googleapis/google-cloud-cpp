@@ -197,12 +197,12 @@ if should_run_integration_tests; then
   source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 
   trap delete_gcloud_config EXIT
+  activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
   create_gcloud_config
 
   echo
   echo "================================================================"
   io::log "Delete any stale service account used in HMAC key tests."
-  activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
   cleanup_stale_hmac_service_accounts
 
   echo
