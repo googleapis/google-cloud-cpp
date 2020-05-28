@@ -33,7 +33,7 @@ def load_throughput_vs_cpu_output(file):
     df["KiB"] = df.ObjectSize / 1024
     df["ElapsedSeconds"] = df.ElapsedTimeUs / 1_000_000
     df["MiBs"] = df.MiB / df.ElapsedSeconds
-    df["CpuNanosPerByte"] = (df.CpuTimeUs * 1_1000) / df.ObjectSize
+    df["CpuNanosPerByte"] = (df.CpuTimeUs * 1_000) / df.ObjectSize
     return df
 
 
@@ -59,17 +59,45 @@ print(data.head())
 print(data.describe())
 
 # %%
-(
-    p9.ggplot(data=data, mapping=p9.aes(x="KiB", y="ElapsedSeconds", color="ApiName"))
+# Runs with small uploads/downloads look better with log scale.
+use_y_log10 = max(data["MiB"]) <= 8.0
+
+# %%
+# A common facet for all plots
+facet = p9.facet_grid(
+    "OpName ~ Crc32cEnabled + MD5Enabled", labeller="label_both", scales="free_y"
+)
+
+# %%
+plot = (
+    p9.ggplot(data=data, mapping=p9.aes(x="MiB", y="ElapsedSeconds", color="ApiName"))
     + p9.geom_point()
-    + p9.facet_grid("OpName ~ Crc32cEnabled + MD5Enabled", labeller="label_both")
-    + p9.scale_y_log10()
-).save(args.output_prefix + ".elapsed-vs-size.png")
+    + facet
+)
+(plot + p9.scale_y_log10() if use_y_log10 else plot).save(
+    args.output_prefix + ".elapsed-vs-size.png"
+)
+
+# %%
+plot = (
+    p9.ggplot(data=data, mapping=p9.aes(x="MiB", y="CpuNanosPerByte", color="ApiName"))
+    + p9.geom_point()
+    + facet
+)
+(plot + p9.scale_y_log10() if use_y_log10 else plot).save(
+    args.output_prefix + ".cpu-vs-size.png"
+)
 
 # %%
 (
-    p9.ggplot(data=data, mapping=p9.aes(x="KiB", y="CpuNanosPerByte", color="ApiName"))
+    p9.ggplot(data=data, mapping=p9.aes(x="MiB", y="MiBs", color="ApiName"))
     + p9.geom_point()
-    + p9.facet_grid("OpName ~ Crc32cEnabled + MD5Enabled", labeller="label_both")
-    + p9.scale_y_log10()
-).save(args.output_prefix + ".cpu-vs-size.png")
+    + facet
+).save(args.output_prefix + ".tp-vs-size.png")
+
+# %%
+(
+    p9.ggplot(data=data, mapping=p9.aes(x="ApiName", y="MiBs", color="ApiName"))
+    + p9.geom_boxplot()
+    + facet
+).save(args.output_prefix + ".tp-vs-api.png")
