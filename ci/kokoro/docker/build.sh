@@ -373,13 +373,6 @@ mkdir -p "${BUILD_HOME}"
 
 # We use an array for the flags so they are easier to document.
 docker_flags=(
-  # Our docker containers don't need network-level isolation from the host,
-  # because we can run our builds directly on the host anyway. Additionally,
-  # some hosts have non-trivial networking configurations that the container
-  # should also use (DNS caches, etc). Therefore, our containers will directly
-  # use the host network.
-  "--net" "host"
-
   # Enable ptrace as it is needed by s
   "--cap-add" "SYS_PTRACE"
 
@@ -519,6 +512,13 @@ fi
 
 if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}" ]]; then
   docker_flags+=("--env" "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}")
+fi
+
+# Optionally allow the docker container to use the host's networking in order
+# to take advantage of potentially non-trivial network configurations (e.g.,
+# DNS cache) that might be a PITA to duplicate within the container itself.
+if [[ -n "${DOCKER_USE_HOST_NETWORK:-}" ]]; then
+  docker_flags+=("--net" "host")
 fi
 
 # When running on Travis the build gets a tty, and docker can produce nicer
