@@ -111,11 +111,11 @@ struct Options {
   };
 };
 
-enum OpType { kOpWrite, kOpRead0, kOpRead1, kOpRead2 };
+enum OpType { kOpWrite, kOpInsert, kOpRead0, kOpRead1, kOpRead2 };
 struct IterationResult {
   OpType op;
-  std::uint64_t object_size;
-  std::uint64_t app_buffer_size;
+  std::int64_t object_size;
+  std::int64_t app_buffer_size;
   std::uint64_t lib_buffer_size;
   bool crc_enabled;
   bool md5_enabled;
@@ -254,6 +254,8 @@ char const* ToString(OpType type) {
       return "READ[2]";
     case kOpWrite:
       return "WRITE";
+    case kOpInsert:
+      return "INSERT";
   }
   return nullptr;  // silence g++ error.
 }
@@ -301,17 +303,18 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   gcs::Client grpc_client(rest_client);
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRP
 
-  std::uniform_int_distribution<std::uint64_t> size_generator(
+  std::uniform_int_distribution<std::int64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::uint64_t> write_size_generator(
+  std::uniform_int_distribution<std::int64_t> write_size_generator(
       options.minimum_write_size / options.write_quantum,
       options.maximum_write_size / options.write_quantum);
-  std::uniform_int_distribution<std::uint64_t> read_size_generator(
+  std::uniform_int_distribution<std::int64_t> read_size_generator(
       options.minimum_read_size / options.read_quantum,
       options.maximum_read_size / options.read_quantum);
 
   std::bernoulli_distribution crc_generator;
   std::bernoulli_distribution md5_generator;
+  std::bernoulli_distribution use_insert;
 
   std::uniform_int_distribution<std::size_t> api_generator(
       0, options.enabled_apis.size() - 1);
@@ -363,25 +366,44 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
         break;
     }
 
-    timer.Start();
-    auto writer = client->WriteObject(
-        bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
-        gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
-    for (std::size_t offset = 0; offset < object_size; offset += write_size) {
-      auto len = write_size;
-      if (offset + len > object_size) {
-        len = object_size - offset;
+    auto perform_upload = [&options, &contents, client, bucket_name,
+                           object_name, object_size, write_size, enable_crc,
+                           enable_md5, xml_write_selector](bool prefer_insert) {
+      // When the object is relatively small using `ObjectInsert` might be more
+      // efficient. Randomly select about 1/2 of the small writes to use
+      // ObjectInsert()
+      if (object_size < options.maximum_write_size && prefer_insert) {
+        std::string data = contents.substr(0, object_size);
+        auto object_metadata = client->InsertObject(
+            bucket_name, object_name, std::move(data),
+            gcs::DisableCrc32cChecksum(!enable_crc),
+            gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
+        return std::make_pair(kOpInsert, std::move(object_metadata));
       }
-      writer.write(contents.data(), len);
-    }
-    writer.Close();
+      auto writer = client->WriteObject(
+          bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
+          gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
+      for (std::int64_t offset = 0; offset < object_size;
+           offset += write_size) {
+        auto len = write_size;
+        if (offset + len > object_size) {
+          len = object_size - offset;
+        }
+        writer.write(contents.data(), len);
+      }
+      writer.Close();
+      return std::make_pair(kOpWrite, writer.metadata());
+    };
+
+    timer.Start();
+    auto upload_result = perform_upload(use_insert(generator));
     timer.Stop();
 
-    auto object_metadata = writer.metadata();
-    results.emplace_back(
-        IterationResult{kOpWrite, object_size, write_size, upload_buffer_size,
-                        enable_crc, enable_md5, api, timer.elapsed_time(),
-                        timer.cpu_time(), object_metadata.status().code()});
+    auto object_metadata = std::move(upload_result.second);
+    results.emplace_back(IterationResult{
+        upload_result.first, object_size, write_size, upload_buffer_size,
+        enable_crc, enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
+        object_metadata.status().code()});
 
     if (!object_metadata) {
       if (options.thread_count == 1) {
