@@ -34,7 +34,7 @@ if (NOT TARGET grpc-project)
     include(ExternalProject)
     ExternalProject_Add(
         grpc-project
-        DEPENDS c-ares-project protobuf-project ssl-project
+        DEPENDS c-ares-project protobuf-project ssl-project abseil-cpp-project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/grpc"
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
