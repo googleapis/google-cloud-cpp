@@ -19,6 +19,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_split.h"
 #include <future>
 #include <sstream>
 
@@ -460,9 +461,7 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
              {"GRPC", gcs_bm::ApiName::kApiGrpc},
          };
          std::vector<ApiName> apis;
-         std::istringstream is(val);
-         std::string token;
-         while (std::getline(is, token, ',')) {
+         for (auto& token : absl::StrSplit(val, ',')) {
            auto const l = names.find(std::string(token));
            if (l == names.end()) continue;  // Ignore errors for now
            apis.push_back(l->second);
