@@ -92,8 +92,12 @@ struct Options {
   int thread_count = 1;
   std::int64_t minimum_object_size = 32 * gcs_bm::kMiB;
   std::int64_t maximum_object_size = 256 * gcs_bm::kMiB;
-  std::int64_t minimum_chunk_size = 128 * gcs_bm::kKiB;
-  std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
+  std::int64_t minimum_write_size = 16 * gcs_bm::kMiB;
+  std::int64_t maximum_write_size = 64 * gcs_bm::kMiB;
+  std::int64_t write_quantum = 256 * gcs_bm::kKiB;
+  std::int64_t minimum_read_size = 4 * gcs_bm::kMiB;
+  std::int64_t maximum_read_size = 8 * gcs_bm::kMiB;
+  std::int64_t read_quantum = 1 * gcs_bm::kMiB;
   std::int32_t minimum_sample_count = 0;
   std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
   std::vector<ApiName> enabled_apis = {
@@ -109,8 +113,8 @@ enum OpType { kOpWrite, kOpRead0, kOpRead1, kOpRead2 };
 struct IterationResult {
   OpType op;
   std::uint64_t object_size;
-  std::uint64_t chunk_size;
-  std::uint64_t buffer_size;
+  std::uint64_t app_buffer_size;
+  std::uint64_t lib_buffer_size;
   bool crc_enabled;
   bool md5_enabled;
   ApiName api;
@@ -150,14 +154,13 @@ int main(int argc, char* argv[]) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name =
       gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
-  std::cout << "# Running test on bucket: " << bucket_name << "\n";
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  std::cout << "# Start time: "
+  std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
             << "\n# Region: " << options->region
@@ -165,16 +168,28 @@ int main(int argc, char* argv[]) {
             << "\n# Thread Count: " << options->thread_count
             << "\n# Min Object Size: " << options->minimum_object_size
             << "\n# Max Object Size: " << options->maximum_object_size
-            << "\n# Min Chunk Size: " << options->minimum_chunk_size
-            << "\n# Max Chunk Size: " << options->maximum_chunk_size
+            << "\n# Min Write Size: " << options->minimum_write_size
+            << "\n# Max Write Size: " << options->maximum_write_size
+            << "\n# Write Quantum: " << options->write_quantum
+            << "\n# Min Read Size: " << options->minimum_read_size
+            << "\n# Max Read Size: " << options->maximum_read_size
+            << "\n# Read Quantum: " << options->read_quantum
             << "\n# Min Object Size (MiB): "
             << options->minimum_object_size / gcs_bm::kMiB
             << "\n# Max Object Size (MiB): "
             << options->maximum_object_size / gcs_bm::kMiB
-            << "\n# Min Chunk Size (KiB): "
-            << options->minimum_chunk_size / gcs_bm::kKiB
-            << "\n# Max Chunk Size (KiB): "
-            << options->maximum_chunk_size / gcs_bm::kKiB
+            << "\n# Min Write Size (KiB): "
+            << options->minimum_write_size / gcs_bm::kKiB
+            << "\n# Max Write Size (KiB): "
+            << options->maximum_write_size / gcs_bm::kKiB
+            << "\n# Write Quantum (KiB): "
+            << options->write_quantum / gcs_bm::kKiB
+            << "\n# Min Read Size (KiB): "
+            << options->minimum_read_size / gcs_bm::kKiB
+            << "\n# Max Read Size (KiB): "
+            << options->maximum_read_size / gcs_bm::kKiB
+            << "\n# Read Quantum (KiB): "
+            << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
             << "\n# Enabled APIs: " <<
@@ -243,14 +258,14 @@ char const* ToString(OpType type) {
 
 std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
-            << rhs.chunk_size << ',' << rhs.buffer_size << ','
+            << rhs.app_buffer_size << ',' << rhs.lib_buffer_size << ','
             << rhs.crc_enabled << ',' << rhs.md5_enabled << ','
             << gcs_bm::ToString(rhs.api) << ',' << rhs.elapsed_time.count()
             << ',' << rhs.cpu_time.count() << ',' << rhs.status;
 }
 
 void PrintHeader() {
-  std::cout << "Op,ObjectSize,ChunkSize,BufferSize"
+  std::cout << "Op,ObjectSize,AppBufferSize,LibBufferSize"
             << ",Crc32cEnabled,MD5Enabled,ApiName"
             << ",ElapsedTimeUs,CpuTimeUs,Status\n";
 }
@@ -264,7 +279,7 @@ void PrintResults(TestResults const& results) {
 
 TestResults RunThread(Options const& options, std::string const& bucket_name) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto contents = gcs_bm::MakeRandomData(generator, options.maximum_chunk_size);
+  auto contents = gcs_bm::MakeRandomData(generator, options.maximum_write_size);
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
   if (!client_options) {
@@ -286,8 +301,12 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
 
   std::uniform_int_distribution<std::uint64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::uint64_t> chunk_generator(
-      options.minimum_chunk_size, options.maximum_chunk_size);
+  std::uniform_int_distribution<std::uint64_t> write_size_generator(
+      options.minimum_write_size / options.write_quantum,
+      options.maximum_write_size / options.write_quantum);
+  std::uniform_int_distribution<std::uint64_t> read_size_generator(
+      options.minimum_read_size / options.read_quantum,
+      options.maximum_read_size / options.read_quantum);
 
   std::bernoulli_distribution crc_generator;
   std::bernoulli_distribution md5_generator;
@@ -314,7 +333,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
        start = std::chrono::steady_clock::now(), ++iteration_count) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
     auto object_size = size_generator(generator);
-    auto chunk_size = chunk_generator(generator);
+    auto write_size = options.write_quantum * write_size_generator(generator);
+    auto read_size = options.read_quantum * read_size_generator(generator);
     bool enable_crc = crc_generator(generator);
     bool enable_md5 = md5_generator(generator);
     auto const api = options.enabled_apis[api_generator(generator)];
@@ -345,8 +365,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto writer = client->WriteObject(
         bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
         gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
-    for (std::size_t offset = 0; offset < object_size; offset += chunk_size) {
-      auto len = chunk_size;
+    for (std::size_t offset = 0; offset < object_size; offset += write_size) {
+      auto len = write_size;
       if (offset + len > object_size) {
         len = object_size - offset;
       }
@@ -357,7 +377,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
 
     auto object_metadata = writer.metadata();
     results.emplace_back(
-        IterationResult{kOpWrite, object_size, chunk_size, upload_buffer_size,
+        IterationResult{kOpWrite, object_size, write_size, upload_buffer_size,
                         enable_crc, enable_md5, api, timer.elapsed_time(),
                         timer.cpu_time(), object_metadata.status().code()});
 
@@ -374,13 +394,13 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
       auto reader = client->ReadObject(
           bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
           gcs::DisableMD5Hash(!enable_md5), json_read_selector);
-      std::vector<char> buffer(chunk_size);
+      std::vector<char> buffer(read_size);
       for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
            num_read += reader.gcount()) {
       }
       timer.Stop();
       results.emplace_back(
-          IterationResult{op, object_size, chunk_size, download_buffer_size,
+          IterationResult{op, object_size, read_size, download_buffer_size,
                           enable_crc, enable_md5, api, timer.elapsed_time(),
                           timer.cpu_time(), reader.status().code()});
 
@@ -422,21 +442,41 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
        }},
-      {"--minimum-object-size", "configure the minimum object size in the test",
+      {"--minimum-object-size", "configure the minimum object size",
        [&options](std::string const& val) {
          options.minimum_object_size = gcs_bm::ParseSize(val);
        }},
-      {"--maximum-object-size", "configure the maximum object size in the test",
+      {"--maximum-object-size", "configure the maximum object size",
        [&options](std::string const& val) {
          options.maximum_object_size = gcs_bm::ParseSize(val);
        }},
-      {"--minimum-chunk-size", "configure the minimum chunk size in the test",
+      {"--minimum-write-size",
+       "configure the minimum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.minimum_chunk_size = gcs_bm::ParseSize(val);
+         options.minimum_write_size = gcs_bm::ParseSize(val);
        }},
-      {"--maximum-chunk-size", "configure the maximum chunk size in the test",
+      {"--maximum-write-size",
+       "configure the maximum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.maximum_chunk_size = gcs_bm::ParseSize(val);
+         options.maximum_write_size = gcs_bm::ParseSize(val);
+       }},
+      {"--read-quantum", "quantize the buffer sizes for read() calls",
+       [&options](std::string const& val) {
+         options.read_quantum = gcs_bm::ParseSize(val);
+       }},
+      {"--minimum-read-size",
+       "configure the minimum buffer size for read() calls",
+       [&options](std::string const& val) {
+         options.minimum_read_size = gcs_bm::ParseSize(val);
+       }},
+      {"--maximum-read-size",
+       "configure the maximum buffer size for read() calls",
+       [&options](std::string const& val) {
+         options.maximum_read_size = gcs_bm::ParseSize(val);
+       }},
+      {"--read-quantum", "quantize the buffer sizes for read() calls",
+       [&options](std::string const& val) {
+         options.read_quantum = gcs_bm::ParseSize(val);
        }},
       {"--duration", "continue the test for at least this amount of time",
        [&options](std::string const& val) {
@@ -506,12 +546,35 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        << ',' << options.maximum_object_size << "]";
     return make_status(os);
   }
-  if (options.minimum_chunk_size > options.maximum_chunk_size) {
+
+  if (options.minimum_write_size > options.maximum_write_size) {
     std::ostringstream os;
-    os << "Invalid range for chunk size [" << options.minimum_chunk_size << ','
-       << options.maximum_chunk_size << "]";
+    os << "Invalid range for write size [" << options.minimum_write_size << ','
+       << options.maximum_write_size << "]";
     return make_status(os);
   }
+  if (options.write_quantum <= 0 ||
+      options.write_quantum > options.minimum_write_size) {
+    std::ostringstream os;
+    os << "Invalid value for write quantum should be in the [0,"
+       << options.minimum_write_size << "] range";
+    return make_status(os);
+  }
+
+  if (options.minimum_read_size > options.maximum_read_size) {
+    std::ostringstream os;
+    os << "Invalid range for read size [" << options.minimum_read_size << ','
+       << options.maximum_read_size << "]";
+    return make_status(os);
+  }
+  if (options.read_quantum <= 0 ||
+      options.read_quantum > options.minimum_read_size) {
+    std::ostringstream os;
+    os << "Invalid value for read quantum should be in the [0,"
+       << options.minimum_read_size << "] range";
+    return make_status(os);
+  }
+
   if (options.minimum_sample_count > options.maximum_sample_count) {
     std::ostringstream os;
     os << "Invalid range for sample range [" << options.minimum_sample_count
@@ -574,12 +637,44 @@ google::cloud::StatusOr<Options> SelfTest() {
     if (options) return self_test_error;
   }
   {
-    // Chunk size range is validated
+    // Write buffer size range is validated
     auto options = ParseArgsDefault({
         "self-test",
         "--region=r",
-        "--minimum-chunk-size=8",
-        "--maximum-chunk-size=4",
+        "--minimum-write-size=8",
+        "--maximum-write-size=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Write size quantum is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-write-size=4",
+        "--maximum-write-size=8",
+        "--write-quantum=5",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Read buffer size range is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-read-size=8",
+        "--maximum-read-size=4",
+    });
+    if (options) return self_test_error;
+  }
+  {
+    // Read size quantum is validated
+    auto options = ParseArgsDefault({
+        "self-test",
+        "--region=r",
+        "--minimum-read-size=4",
+        "--maximum-read-size=8",
+        "--read-quantum=5",
     });
     if (options) return self_test_error;
   }
@@ -588,8 +683,8 @@ google::cloud::StatusOr<Options> SelfTest() {
     auto options = ParseArgsDefault({
         "self-test",
         "--region=r",
-        "--minimum-sample-size=8",
-        "--maximum-sample-size=4",
+        "--minimum-sample-count=8",
+        "--maximum-sample-count=4",
     });
     if (options) return self_test_error;
   }
@@ -614,8 +709,12 @@ google::cloud::StatusOr<Options> SelfTest() {
       thread_count_arg,
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
-      "--minimum-chunk-size=1KiB",
-      "--maximum-chunk-size=2KiB",
+      "--minimum-write-size=16KiB",
+      "--maximum-write-size=128KiB",
+      "--write-quantum=16KiB",
+      "--minimum-read-size=16KiB",
+      "--maximum-read-size=128KiB",
+      "--read-quantum=16KiB",
       "--duration=1s",
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
