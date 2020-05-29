@@ -558,7 +558,7 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
       options.write_quantum > options.minimum_write_size) {
     std::ostringstream os;
     os << "Invalid value for --write-quantum (" << options.write_quantum
-       << "), it should be in the [0," << options.minimum_write_size
+       << "), it should be in the [1," << options.minimum_write_size
        << "] range";
     return make_status(os);
   }
@@ -573,7 +573,7 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
       options.read_quantum > options.minimum_read_size) {
     std::ostringstream os;
     os << "Invalid value for --read-quantum (" << options.read_quantum
-       << "), it should be in the [0," << options.minimum_read_size
+       << "), it should be in the [1," << options.minimum_read_size
        << "] range";
     return make_status(os);
   }
