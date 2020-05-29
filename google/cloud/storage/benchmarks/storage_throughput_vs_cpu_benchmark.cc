@@ -54,8 +54,9 @@ this loop (see below for the conditions to stop the loop):
 
 - Select a random size, between two values configured in the command line of the
   object to upload.
-- Select a random chunk size, between two values configured in the command line,
-  the data is uploaded in chunks of this size.
+- The application buffer sizes for `read()` and `write()` calls are also
+  selected at random. These sizes are quantized, and the quantum can be
+  configured in the command-line.
 - Select, at random, the protocol / API used to perform the test, could be XML,
   JSON, or gRPC.
 - Select, at random, if the client library will perform CRC32C and/or MD5 hashes
@@ -63,11 +64,11 @@ this loop (see below for the conditions to stop the loop):
 - Upload an object of the selected size, choosing the name of the object at
   random.
 - Once the object is fully uploaded, the program captures the object size, the
-  chunk size, the elapsed time (in microseconds), the CPU time (in microseconds)
-  used during the upload, and the status code for the upload.
+  write buffer size, the elapsed time (in microseconds), the CPU time
+  (in microseconds) used during the upload, and the status code for the upload.
 - Then the program downloads the same object, and captures the object size, the
-  chunk size, the elapsed time (in microseconds), the CPU time (in microseconds)
-  used during the download, and the status code for the download.
+  read buffer size, the elapsed time (in microseconds), the CPU time (in
+  microseconds) used during the download, and the status code for the download.
 - The program then deletes this object and starts another iteration.
 
 The loop stops when any of the following conditions are met:
@@ -460,9 +461,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&options](std::string const& val) {
          options.maximum_write_size = gcs_bm::ParseSize(val);
        }},
-      {"--read-quantum", "quantize the buffer sizes for read() calls",
+      {"--write-quantum", "quantize the buffer sizes for write() calls",
        [&options](std::string const& val) {
-         options.read_quantum = gcs_bm::ParseSize(val);
+         options.write_quantum = gcs_bm::ParseSize(val);
        }},
       {"--minimum-read-size",
        "configure the minimum buffer size for read() calls",
@@ -556,8 +557,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   if (options.write_quantum <= 0 ||
       options.write_quantum > options.minimum_write_size) {
     std::ostringstream os;
-    os << "Invalid value for write quantum should be in the [0,"
-       << options.minimum_write_size << "] range";
+    os << "Invalid value for --write-quantum (" << options.write_quantum
+       << "), it should be in the [0," << options.minimum_write_size
+       << "] range";
     return make_status(os);
   }
 
@@ -570,8 +572,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   if (options.read_quantum <= 0 ||
       options.read_quantum > options.minimum_read_size) {
     std::ostringstream os;
-    os << "Invalid value for read quantum should be in the [0,"
-       << options.minimum_read_size << "] range";
+    os << "Invalid value for --read-quantum (" << options.read_quantum
+       << "), it should be in the [0," << options.minimum_read_size
+       << "] range";
     return make_status(os);
   }
 
