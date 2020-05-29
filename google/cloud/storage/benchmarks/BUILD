@@ -54,6 +54,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_google_absl//absl/strings",
     ],
 ) for test in storage_benchmark_programs]
 
