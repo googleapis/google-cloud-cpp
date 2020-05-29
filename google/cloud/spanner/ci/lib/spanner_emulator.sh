@@ -17,7 +17,7 @@
 test -n "${GOOGLE_CLOUD_SPANNER_CI_LIB_SPANNER_EMULATOR_SH__:-}" || declare -i GOOGLE_CLOUD_SPANNER_CI_LIB_SPANNER_EMULATOR_SH__=0
 if ((GOOGLE_CLOUD_SPANNER_CI_LIB_SPANNER_EMULATOR_SH__++ != 0)); then
   return 0
-fi # include guard 
+fi # include guard
 
 source module lib/io.sh
 
@@ -79,7 +79,7 @@ function spanner_emulator::start() {
 
 # Kills the running emulator.
 function spanner_emulator::kill() {
-  if (( "${SPANNER_EMULATOR_PID}" > 0 )); then
+  if (("${SPANNER_EMULATOR_PID}" > 0)); then
     echo -n "Killing Spanner Emulator [${SPANNER_EMULATOR_PID}] "
     kill "${SPANNER_EMULATOR_PID}" || echo -n "-"
     wait "${SPANNER_EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
@@ -88,4 +88,3 @@ function spanner_emulator::kill() {
     SPANNER_EMULATOR_PID=0
   fi
 }
-
