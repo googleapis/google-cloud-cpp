@@ -14,8 +14,10 @@
 
 #include "google/cloud/testing_util/assert_ok.h"
 
-namespace testing {
-namespace internal {
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace testing_util {
 
 // A unary predicate-formatter for google::cloud::Status.
 testing::AssertionResult IsOkPredFormat(char const* expr,
@@ -27,5 +29,7 @@ testing::AssertionResult IsOkPredFormat(char const* expr,
          << "Value of: " << expr << "\nExpected: is OK\nActual: " << status;
 }
 
-}  // namespace internal
-}  // namespace testing
+}  // namespace testing_util
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
