@@ -449,6 +449,39 @@ void FilterComposingInterleave(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
+void FilterComposingCondition(google::cloud::bigtable::Table table,
+                              std::vector<std::string> const&) {
+  //! [START bigtable_filters_composing_condition]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000000", "key-000005");
+    cbt::Filter filter = cbt::Filter::Condition(
+        cbt::Filter::Chain(cbt::Filter::FamilyRegex("fam-0"),
+                           cbt::Filter::ColumnRegex("col-a")),
+        cbt::Filter::ApplyLabelTransformer("condition"),
+        cbt::Filter::StripValueTransformer());
+    // Read and print the rows.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << row->row_key() << " = ";
+      for (auto const& cell : row->cells()) {
+        std::cout << "[" << cell.family_name() << ", "
+                  << cell.column_qualifier() << ", " << cell.value()
+                  << ", label(";
+        for (auto const& label : cell.labels()) {
+          std::cout << label << ",";
+        }
+        std::cout << ")],";
+      }
+      std::cout << "\n";
+    }
+  }
+  //! [END bigtable_filters_composing_condition]
+  (std::move(table));
+}
+
 // This command just generates data suitable for other examples to run. This
 // code is not extracted into the documentation.
 void InsertTestData(google::cloud::bigtable::Table table,
@@ -580,6 +613,8 @@ void RunAll(std::vector<std::string> const& argv) {
   FilterComposingChain(table, {});
   std::cout << "Running FilterComposingInterleave() example [17]" << std::endl;
   FilterComposingInterleave(table, {});
+  std::cout << "Running FilterComposingCondition() example [18]" << std::endl;
+  FilterComposingCondition(table, {});
   admin.DeleteTable(table_id);
 }
 
@@ -617,6 +652,8 @@ int main(int argc, char* argv[]) {
       MakeCommandEntry("filters-composing-chain", {}, FilterComposingChain),
       MakeCommandEntry("filters-composing-interleave", {},
                        FilterComposingInterleave),
+      MakeCommandEntry("filters-composing-condition", {},
+                       FilterComposingCondition),
       {"auto", RunAll},
   };
 
