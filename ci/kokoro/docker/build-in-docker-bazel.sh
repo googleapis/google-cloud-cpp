@@ -41,17 +41,7 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 echo "================================================================"
 
-bazel_args=(
-  # Sets the test timeouts for small, medium, large, and enormous tests as
-  # defined by the test's "size" attribute (or "timeout") in its BUILD file. A
-  # value of -1 means to use bazel's default. Here we want to increase the
-  # "large" test timeout from 15 to 25 min (the argument is in seconds).
-  # See: https://docs.bazel.build/versions/master/be/common-definitions.html
-  "--test_timeout=-1,-1,1500,-1"
-  "--test_output=errors"
-  "--verbose_failures=true"
-  "--keep_going"
-)
+bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
   bazel_args+=("--runs_per_test=${RUNS_PER_TEST}")
 fi
