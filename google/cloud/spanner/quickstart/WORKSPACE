@@ -12,28 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This WORKSPACE shows how to use google-cloud-cpp-spanner from a larger Bazel project."""
+# A minimal WORKSPACE file showing how to use the Google Cloud Spanner C++
+# client library in Bazel-based projects.
+workspace(name = "com_github_googleapis_google_cloud_cpp_spanner_quickstart")
 
-workspace(name = "google_cloud_cpp_spanner_quickstart")
-
-# Add the necessary Starlark functions to fetch google-cloud-cpp-spanner.
+# Add the necessary Starlark functions to fetch google-cloud-cpp.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Fetch the Cloud Spanner C++ library.
+# Fetch the Google Cloud C++ libraries.
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
-    name = "com_github_googleapis_google_cloud_cpp_spanner",
-    sha256 = "841d8d675d0bb51717bfc42c42d679617b6542358a01c007df6b897fec208060",
-    strip_prefix = "google-cloud-cpp-spanner-1.2.0",
-    url = "https://github.com/googleapis/google-cloud-cpp-spanner/archive/v1.2.0.tar.gz",
+    name = "com_github_googleapis_google_cloud_cpp",
+    sha256 = "839b2d4dcb36a671734dac6b30ea8c298bbeaafcf7a45ee4a7d7aa5986b16569",
+    strip_prefix = "google-cloud-cpp-1.14.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.14.0.tar.gz",
 )
 
-# Call a function to load the Cloud Spanner C++ library's direct dependencies.
-load("@com_github_googleapis_google_cloud_cpp_spanner//bazel:google_cloud_cpp_spanner_deps.bzl", "google_cloud_cpp_spanner_deps")
+# Load indirect dependencies due to
+#     https://github.com/bazelbuild/bazel/issues/1943
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
-google_cloud_cpp_spanner_deps()
+google_cloud_cpp_deps()
 
-# (optional) Only generate C++ from the protos.
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 switched_rules_by_language(
@@ -41,12 +41,6 @@ switched_rules_by_language(
     cc = True,
     grpc = True,
 )
-
-# Load indirect dependencies due to
-#     https://github.com/bazelbuild/bazel/issues/1943
-load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_common_deps.bzl", "google_cloud_cpp_common_deps")
-
-google_cloud_cpp_common_deps()
 
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
