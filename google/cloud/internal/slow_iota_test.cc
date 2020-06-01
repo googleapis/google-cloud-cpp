@@ -43,7 +43,7 @@ class SlowIota {
         period_(std::chrono::duration_cast<std::chrono::microseconds>(period)),
         counter_limit_(count) {}
 
-  SlowIota(SlowIota&& rhs) noexcept = default;
+  SlowIota(SlowIota&&) noexcept = default;
 
   //@{
   /**
