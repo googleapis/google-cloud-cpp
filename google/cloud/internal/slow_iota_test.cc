@@ -100,42 +100,44 @@ TEST(SlowIota, Background) {
     struct Holder {
       SlowIota source;
       std::vector<int> results;
-      promise<absl::variant<std::vector<int>, Status>> done;
 
-      void start() {
-        source.next().then(
-            [this](future<absl::variant<int, Status>> f) { on_next(f.get()); });
+      void start(promise<absl::variant<std::vector<int>, Status>> done) {
+        struct OnNext {
+          Holder* self;
+          promise<absl::variant<std::vector<int>, Status>> done;
+          void operator()(future<absl::variant<int, Status>> f) { self->on_next(f.get(), std::move(done)); }
+        };
+        source.next().then(OnNext{this, std::move(done)});
       }
-      void on_next(absl::variant<int, Status> v) {
+      void on_next(absl::variant<int, Status> v,  promise<absl::variant<std::vector<int>, Status>> done) {
         struct Visitor {
           Holder* self;
-          void operator()(int v) const {
+          promise<absl::variant<std::vector<int>, Status>> done;
+          void operator()(int v) {
             self->results.push_back(v);
-            self->start();
+            self->start(std::move(done));
           }
-          void operator()(Status s) const {
+          void operator()(Status s) {
             if (s.ok()) {
-              self->done.set_value(std::move(self->results));
+              done.set_value(std::move(self->results));
             } else {
-              self->done.set_value(std::move(s));
+              done.set_value(std::move(s));
             }
           }
         };
-        absl::visit(Visitor{this}, v);
+        absl::visit(Visitor{this, std::move(done)}, v);
       }
     };
-    auto holder = std::make_shared<Holder>(Holder{std::move(iota), {}, {}});
-    holder->start();
+
+    auto holder = std::make_shared<Holder>(Holder{std::move(iota), {}});
+    promise<absl::variant<std::vector<int>, Status>> done;
+    auto f = done.get_future();
+    holder->start(std::move(done));
     // This is an idiom to extend the lifetime of `holder` until the (returned)
     // future is satisfied.  The (returned) future owns the lambda, which owns
     // `holder`. When the returned future is satisfied the lambda is called,
     // then deleted, and that deletes `holder`.
-    // If the returned future is abandoned, then owner->promise is still around,
-    // it owns the shared state which owns the lambda, which owns `holder` which
-    // owns the promise.
-    // This is a cycle, but it clears itself when the background operation
-    // terminates.
-    return holder->done.get_future().then(
+    return f.then(
         [holder](future<absl::variant<std::vector<int>, Status>> f) {
           return f.get();
         });
