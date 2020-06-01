@@ -115,7 +115,7 @@ send the PR for review against `master` You need to:
 
 - Update the version numbers in the top-level `CMakeLists.txt` file.
 - Run the cmake configuration step, this will update the different
-  `version_info.sh` files.
+  `version_info.h` files.
 - Update the version number and SHA256 checksums in the
   `google/cloud/*/quickstart/WORKSPACE` files to point to the *just-released*
   version.
