@@ -1,6 +1,81 @@
 # Changelog
 
-## v1.14.0 - TBD
+## v1.15.0 - TBD
+
+## v1.14.0 - 2020-06
+
+### General Notices
+
+* This is the first release that includes the Spanner library, which previously
+  lived at github.com/googleapis/google-cloud-cpp-spanner. All future releases
+  of the Spanner library will be from this repo, and the other repo will be
+  archived.
+* In this release we take a dependency on the [Abseil]
+  (https://github.com/abseil/abseil-cpp) C++ library.
+* In this release we _dropped_ our dependency on
+  https://github.com/googleapis/cpp-cmakefiles.
+
+### Bigtable
+
+* feat: more bigtable data filter samples (#4315)
+* fix: flake in bigtable AsyncReadModifyWrite example (#4296)
+* feat: add rvalue reference overloads to `Row` (#4239)
+* feat: add rvalue reference overloads to `Cell` (#4240)
+* feat: avoid copies in `SetCell(Cell)` (#4241)
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* feat: add absl crash handler support for bigtable examples (#4150)
+* fix: reduce flakiness in macos/cmake-super build (#4148)
+* feat: more bigtable data filter samples (#4141)
+* fix: warning options exported in library interface (#4134)
+* fix: proper routing headers for longrunning ops (#4099)
+* feat: add bigtable data filter samples (#4069)
+* feat: overload SetCell() for bigtable::Cell (#4086)
+* fix: bigtable's random_mutation_test missing from build (#4058)
+* chore: bigtable, storage quickstarts use top-level build targets (#4050)
+
+### Storage
+
+* feat: support X-Upload-Content-Length header (#4284)
+* feat(storage/benchmarks): measure ObjectInsert() (#4314)
+* feat(storage/benchmarks): quantize app buffers (#4307)
+* feat(storage/benchmarks): measure warm downloads (#4299)
+* feat(storage/benchmarks): more and better plots (#4294)
+* feat(storage/benchmark): use the GCS+gRPC plugin (#4291)
+* feat(storage/benchmark): a script to plot results (#4289)
+* feat(storage/benchmark): reduce random data size (#4287)
+* feat: support XML vs. JSON in throughput_vs_cpu_benchmark (#4277)
+* feat: DefaultGrpcClient(Options) cannot fail (#4278)
+* fix: fix off-by-one in uploading streams to GCS (#4250)
+* feat: proto conversions for BucketAccessControl (#4247)
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* fix: GCS+gRPC use the documented behavior for ReadLast (#4237)
+* feat: test GrpcClient error reporting (#4232)
+* feat: implement To/FromProto for CustomerEncryption (#4242)
+* feat: implement ReadLast option for GCS+gRPC plugin (#4229)
+* fix: MSVC+CMake builds with GCS+gRPC disabled (#4221)
+* feat: Bazel always compiles GCS+gRPC plugin (#4155)
+* feat: run GCS+gRPC plugin tests for coverage build (#4149)
+* feat: enable GCS+gRPC on clang-tidy build (#4145)
+* feat: import GCS+gRPC plugin (#4140)
+* fix: warning options exported in library interface (#4134)
+* fix: C2593 'operator =' is ambiguous (#4059)
+* chore: bigtable, storage quickstarts use top-level build targets (#4050)
+
+### :star2: Spanner
+
+* This is the first release of this repo that contains the Cloud Spanner C++
+  Client Library. Previously, this library lived in a separate repo
+  (https://github.com/googleapis/google-cloud-cpp-spanner). That old repo will
+  be archived, and all future Cloud Spanner C++ Client Library releases will
+  come from this repo.
+
+### Common libraries
+
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* fix: warning options exported in library interface (#4134)
+* fix: use correct variable for SOVERSION (#4131)
+* fix: Windows CI scripts sometimes masked the exit code (#4105)
+* fix: strerror test on Windows (#4104)
 
 ## v1.13.0 - 2020-05
 
