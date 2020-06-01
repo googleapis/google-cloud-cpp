@@ -86,7 +86,6 @@ TEST(CellTest, RValueRefAccessors) {
       "Member function `value` is expected to return a value from an r-value "
       "reference to row.");
 
-  std::string moved_value = std::move(cell).value();
-
+  auto moved_value = std::move(cell).value();
   EXPECT_EQ(value, moved_value);
 }
