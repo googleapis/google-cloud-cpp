@@ -49,7 +49,7 @@ load(
 )
 
 [cc_test(
-    name = "google_cloud_cpp_common_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],

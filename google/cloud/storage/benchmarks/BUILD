@@ -61,7 +61,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 
 [cc_test(
-    name = "storage_benchmark_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],

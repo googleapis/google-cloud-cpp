@@ -19,7 +19,7 @@ licenses(["notice"])  # Apache 2.0
 load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests")
 
 [cc_test(
-    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
     tags = [

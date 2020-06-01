@@ -108,7 +108,7 @@ cc_library(
 load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 
 [cc_test(
-    name = "storage_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,

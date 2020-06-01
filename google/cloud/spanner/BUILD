@@ -68,7 +68,7 @@ cc_library(
 load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 
 [cc_test(
-    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         ":spanner_client",
@@ -85,7 +85,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
 
 [cc_test(
-    name = "spanner_client_" + benchmark.replace("/", "_").replace(".cc", ""),
+    name = benchmark.replace("/", "_").replace(".cc", ""),
     srcs = [benchmark],
     tags = ["benchmark"],
     deps = [

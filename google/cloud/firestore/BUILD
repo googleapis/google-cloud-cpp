@@ -28,7 +28,7 @@ cc_library(
 load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
 
 [cc_test(
-    name = "firestore_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],

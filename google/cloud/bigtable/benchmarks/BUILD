@@ -50,7 +50,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
 
 [cc_test(
-    name = "bigtable_benchmark_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],

@@ -57,7 +57,7 @@ cc_library(
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 
 [cc_test(
-    name = "bigtable_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         ":bigtable_client",
@@ -72,7 +72,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 ) for test in bigtable_client_unit_tests]
 
 cc_test(
-    name = "bigtable_client_internal_readrowsparser_test",
+    name = "internal_readrowsparser_test",
     srcs = [
         "internal/readrowsparser_acceptance_tests.inc",
         "internal/readrowsparser_test.cc",
