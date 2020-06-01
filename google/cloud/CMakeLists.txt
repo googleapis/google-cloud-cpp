@@ -26,7 +26,8 @@ configure_file(internal/version_info.h.in
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
-set(DOXYGEN_PREDEFINED "GOOGLE_ªCLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED
+    "GOOGLE_ªCLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/README.md"
     "*/google/cloud/internal/*"
@@ -221,9 +222,9 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
-                absl::variant
-                              GTest::gmock_main GTest::gmock GTest::gtest)
+            ${target}
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -354,7 +355,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         google_cloud_cpp_testing
                         google_cloud_cpp_common
                         googleapis-c++::bigtable_protos
-                    absl::variant
+                        absl::variant
                         GTest::gmock_main
                         GTest::gmock
                         GTest::gtest
