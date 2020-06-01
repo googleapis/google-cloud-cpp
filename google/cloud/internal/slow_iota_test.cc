@@ -105,11 +105,14 @@ TEST(SlowIota, Background) {
         struct OnNext {
           Holder* self;
           promise<absl::variant<std::vector<int>, Status>> done;
-          void operator()(future<absl::variant<int, Status>> f) { self->on_next(f.get(), std::move(done)); }
+          void operator()(future<absl::variant<int, Status>> f) {
+            self->on_next(f.get(), std::move(done));
+          }
         };
         source.next().then(OnNext{this, std::move(done)});
       }
-      void on_next(absl::variant<int, Status> v,  promise<absl::variant<std::vector<int>, Status>> done) {
+      void on_next(absl::variant<int, Status> v,
+                   promise<absl::variant<std::vector<int>, Status>> done) {
         struct Visitor {
           Holder* self;
           promise<absl::variant<std::vector<int>, Status>> done;
@@ -137,10 +140,9 @@ TEST(SlowIota, Background) {
     // future is satisfied.  The (returned) future owns the lambda, which owns
     // `holder`. When the returned future is satisfied the lambda is called,
     // then deleted, and that deletes `holder`.
-    return f.then(
-        [holder](future<absl::variant<std::vector<int>, Status>> f) {
-          return f.get();
-        });
+    return f.then([holder](future<absl::variant<std::vector<int>, Status>> f) {
+      return f.get();
+    });
   };
 
   auto results = background_accumulate(std::move(iota)).get();
