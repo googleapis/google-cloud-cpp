@@ -1,6 +1,64 @@
 # Changelog
 
-## v1.14.0 - TBD
+## v1.15.0 - TBD
+
+## v1.14.0 - 2020-06
+
+### General Notices
+
+* This is the first release that includes the Spanner library, which previously
+  lived at github.com/googleapis/google-cloud-cpp-spanner. All future releases
+  of the Spanner library will be from this repo, and the other repo will be
+  archived.
+* In this release we take a dependency on the [Abseil]
+  (https://github.com/abseil/abseil-cpp) C++ library.
+* In this release we _dropped_ our dependency on
+  https://github.com/googleapis/cpp-cmakefiles. We moved the CMake rules to
+  compile and install the googleapis protos into this repo in the
+  `external/googleapis/` directory.
+
+### Bigtable
+
+* feat: more bigtable data filter samples (#4315)
+* feat: add rvalue reference overloads to `Row` (#4239)
+* feat: implemented an efficient `SetCell(Cell)` overload to copy an existing cell to a mutation
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* feat: add absl crash handler support for bigtable examples (#4150)
+* feat: more bigtable data filter samples (#4141)
+* fix: warning options exported in library interface (#4134)
+* fix: proper routing headers for longrunning ops (#4099)
+* feat: add bigtable data filter samples (#4069)
+* fix: bigtable's random_mutation_test missing from build (#4058)
+* chore: bigtable, storage quickstarts use top-level build targets (#4050)
+
+### Storage
+
+* feat: support X-Upload-Content-Length header (#4284)
+* feat(storage/benchmark): cleanup storage benchmarks
+* feat(storage/benchmark): support GCS+gRPC plugin in storage benchmarks
+* feat: **EXPERIMENTAL** introduced an optional gRPC plugin to the GCS client library.
+* feat: support XML vs. JSON in throughput_vs_cpu_benchmark (#4277)
+* fix: fix off-by-one in uploading streams to GCS (#4250)
+* feat: proto conversions for BucketAccessControl (#4247)
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* feat: implement To/FromProto for CustomerEncryption (#4242)
+* fix: warning options exported in library interface (#4134)
+* fix: C2593 'operator =' is ambiguous (#4059)
+* chore: bigtable, storage quickstarts use top-level build targets (#4050)
+
+### :star2: Spanner
+
+* This is the first release of this repo that contains the Cloud Spanner C++
+  Client Library. Previously, this library lived in a separate repo
+  (https://github.com/googleapis/google-cloud-cpp-spanner). That old repo will
+  be archived, and all future Cloud Spanner C++ Client Library releases will
+  come from this repo.
+
+### Common libraries
+
+* feat: remove dep on cpp-cmakefiles, integrating the CMake rules into this repo (#4245)
+* fix: warning options exported in library interface (#4134)
+* fix: use correct variable for SOVERSION (#4131)
 
 ## v1.13.0 - 2020-05
 
