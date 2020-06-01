@@ -18,8 +18,8 @@ release notes.
 
 ### Update CHANGELOG.md
 
-Update `CHANGELOG.md` based on the release notes for Bigtable, Storage, and the
-common libraries:
+Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
+Spanner, and the common libraries:
 
 ```bash
 # Summarize the output of this into CHANGELOG.md under the Bigtable header
@@ -33,6 +33,13 @@ git log --no-merges --format="format:* %s" \
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/storage
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the Spanner header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
+    upstream/master -- google/cloud/spanner
 ```
 
 ```bash
@@ -83,11 +90,9 @@ specified repo.
 
 ### Publish the release
 
-Review the new release in the GitHub web UI. Ask your colleagues to review the
-release notes too. There should be few/no edits needed at this point since the
-release notes were already reviewed in step 1.
-
-If everything looks OK, uncheck the pre-release checkbox and publish.
+Review the new release in the GitHub web UI (the link to the pre-release will
+be output from the `release.sh` script that was run in the previous step). If
+everything looks OK, uncheck the pre-release checkbox and publish.
 
 ## Generate and upload the documentation to googleapis.dev
 
