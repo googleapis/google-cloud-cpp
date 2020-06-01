@@ -13,7 +13,9 @@
 * In this release we take a dependency on the [Abseil]
   (https://github.com/abseil/abseil-cpp) C++ library.
 * In this release we _dropped_ our dependency on
-  https://github.com/googleapis/cpp-cmakefiles.
+  https://github.com/googleapis/cpp-cmakefiles. We moved the CMake rules to
+  compile and install the googleapis protos into this repo in the
+  `external/googleapis/` directory.
 
 ### Bigtable
 
