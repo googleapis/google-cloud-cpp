@@ -104,6 +104,7 @@ doxygen documentation to the staging bucket for googleapis.dev hosting. The
 uploaded documentation will generally be live in an hour at the following URLs:
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
+* https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
 
 ## Bump the version numbers in `master`
