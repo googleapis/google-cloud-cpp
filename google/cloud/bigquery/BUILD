@@ -46,7 +46,7 @@ cc_library(
 load(":bigquery_client_unit_tests.bzl", "bigquery_client_unit_tests")
 
 [cc_test(
-    name = "bigquery_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         ":bigquery_client",
