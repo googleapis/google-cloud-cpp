@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 namespace {
 
 /**
@@ -166,7 +166,7 @@ future<absl::variant<int, google::cloud::Status>> SlowIota::next() {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
