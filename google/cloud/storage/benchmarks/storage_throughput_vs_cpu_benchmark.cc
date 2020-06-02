@@ -19,6 +19,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include <future>
 #include <set>
@@ -165,26 +166,13 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  auto join_apis = [](std::vector<ApiName> const& apis) {
-    std::string s;
-    char const* sep = "";
-    for (auto a : apis) {
-      s += sep;
-      s += gcs_bm::ToString(a);
-      sep = ",";
+  struct Formatter {
+    void operator()(std::string* out, ApiName api) const {
+      out->append(gcs_bm::ToString(api));
     }
-    return s;
-  };
-
-  auto join_bool = [](std::vector<bool> const& v) {
-    std::string r;
-    char const* sep = "";
-    for (auto b : v) {
-      r += sep;
-      r += b ? "true" : "false";
-      sep = ",";
+    void operator()(std::string* out, bool b) const {
+      out->append(b ? "true" : "false");
     }
-    return r;
   };
 
   std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
@@ -219,9 +207,12 @@ int main(int argc, char* argv[]) {
             << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
-            << "\n# Enabled APIs: " << join_apis(options->enabled_apis)
-            << "\n# Enabled CRC32C: " << join_bool(options->enabled_crc32c)
-            << "\n# Enabled MD5: " << join_bool(options->enabled_md5)
+            << "\n# Enabled APIs: "
+            << absl::StrJoin(options->enabled_apis, ",", Formatter{})
+            << "\n# Enabled CRC32C: "
+            << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
+            << "\n# Enabled MD5: "
+            << absl::StrJoin(options->enabled_md5, ",", Formatter{})
             << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
