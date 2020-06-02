@@ -33,9 +33,9 @@ namespace testing_util {
  * @tparam E the error type for the source
  */
 template <class T, typename E>
-class MockSource {
+class FakeSource {
  public:
-  MockSource(std::deque<T> values, E status)
+  FakeSource(std::deque<T> values, E status)
       : values_(std::move(values)), status_(std::move(status)) {}
 
   //@{
