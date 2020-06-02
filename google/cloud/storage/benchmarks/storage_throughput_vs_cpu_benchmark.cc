@@ -465,9 +465,11 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   auto parse_checksums = [](std::string const& val) -> std::vector<bool> {
     if (val == "enabled") {
       return {true};
-    } else if (val == "disabled") {
+    }
+    if (val == "disabled") {
       return {false};
-    } else if (val == "random") {
+    }
+    if (val == "random") {
       return {false, true};
     }
     return {};
