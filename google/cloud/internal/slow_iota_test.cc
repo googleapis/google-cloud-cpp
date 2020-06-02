@@ -14,7 +14,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/random.h"
+#include "google/cloud/internal/source_accumulators.h"
 #include "absl/types/variant.h"
 #include <gmock/gmock.h>
 #include <deque>
@@ -95,57 +95,7 @@ TEST(SlowIota, Background) {
   auto constexpr kTestPeriod = std::chrono::microseconds(10);
   SlowIota iota(pool.cq(), kTestCount, kTestPeriod);
 
-  // TODO(#...) - this moves to a generic, standalone function.
-  auto background_accumulate = [](SlowIota iota) {
-    struct Holder {
-      SlowIota source;
-      std::vector<int> results;
-
-      void start(promise<absl::variant<std::vector<int>, Status>> done) {
-        struct OnNext {
-          Holder* self;
-          promise<absl::variant<std::vector<int>, Status>> done;
-          void operator()(future<absl::variant<int, Status>> f) {
-            self->on_next(f.get(), std::move(done));
-          }
-        };
-        source.next().then(OnNext{this, std::move(done)});
-      }
-      void on_next(absl::variant<int, Status> v,
-                   promise<absl::variant<std::vector<int>, Status>> done) {
-        struct Visitor {
-          Holder* self;
-          promise<absl::variant<std::vector<int>, Status>> done;
-          void operator()(int v) {
-            self->results.push_back(v);
-            self->start(std::move(done));
-          }
-          void operator()(Status s) {
-            if (s.ok()) {
-              done.set_value(std::move(self->results));
-            } else {
-              done.set_value(std::move(s));
-            }
-          }
-        };
-        absl::visit(Visitor{this, std::move(done)}, v);
-      }
-    };
-
-    auto holder = std::make_shared<Holder>(Holder{std::move(iota), {}});
-    promise<absl::variant<std::vector<int>, Status>> done;
-    auto f = done.get_future();
-    holder->start(std::move(done));
-    // This is an idiom to extend the lifetime of `holder` until the (returned)
-    // future is satisfied.  The (returned) future owns the lambda, which owns
-    // `holder`. When the returned future is satisfied the lambda is called,
-    // then deleted, and that deletes `holder`.
-    return f.then([holder](future<absl::variant<std::vector<int>, Status>> f) {
-      return f.get();
-    });
-  };
-
-  auto results = background_accumulate(std::move(iota)).get();
+  auto results = accumulate_all(std::move(iota)).get();
   ASSERT_EQ(results.index(), 0) << ", status=" << absl::get<1>(results);
   EXPECT_THAT(absl::get<0>(results), ElementsAre(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
 

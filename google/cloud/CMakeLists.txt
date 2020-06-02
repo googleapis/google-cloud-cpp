@@ -144,6 +144,7 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
+    internal/source_accumulators.h
     internal/strerror.cc
     internal/strerror.h
     internal/throw_delegate.cc
@@ -163,7 +164,7 @@ add_library(
     tracing_options.h
     version.cc
     version.h)
-target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory
+target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory absl::variant
                                                      Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
@@ -203,6 +204,7 @@ if (BUILD_TESTING)
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
+        internal/source_accumulators_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
