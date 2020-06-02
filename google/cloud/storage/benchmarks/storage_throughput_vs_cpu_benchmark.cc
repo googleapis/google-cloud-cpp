@@ -21,6 +21,7 @@
 #include "google/cloud/internal/random.h"
 #include "absl/strings/str_split.h"
 #include <future>
+#include <set>
 #include <sstream>
 
 namespace {
@@ -109,6 +110,8 @@ struct Options {
       gcs_bm::ApiName::kApiGrpc,
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   };
+  std::vector<bool> enable_crc32c = {false, true};
+  std::vector<bool> enable_md5 = {false, true};
 };
 
 enum OpType { kOpWrite, kOpInsert, kOpRead0, kOpRead1, kOpRead2 };
@@ -162,6 +165,28 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
+  auto join_apis = [](std::vector<ApiName> const& apis) {
+    std::string s;
+    char const* sep = "";
+    for (auto a : apis) {
+      s += sep;
+      s += gcs_bm::ToString(a);
+      sep = ",";
+    }
+    return s;
+  };
+
+  auto join_bool = [](std::vector<bool> const& v) {
+    std::string r;
+    char const* sep = "";
+    for (auto b : v) {
+      r += sep;
+      r += b ? "true" : "false";
+      sep = ",";
+    }
+    return r;
+  };
+
   std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
@@ -194,17 +219,9 @@ int main(int argc, char* argv[]) {
             << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
-            << "\n# Enabled APIs: " <<
-      [&options] {
-        std::string s;
-        char const* sep = "";
-        for (auto a : options->enabled_apis) {
-          s += sep;
-          s += gcs_bm::ToString(a);
-          sep = ",";
-        }
-        return s;
-      }()
+            << "\n# Enabled APIs: " << join_apis(options->enabled_apis)
+            << "\n# Enabled CRC32C: " << join_bool(options->enable_crc32c)
+            << "\n# Enabled MD5: " << join_bool(options->enable_md5)
             << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
@@ -312,8 +329,10 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
       options.minimum_read_size / options.read_quantum,
       options.maximum_read_size / options.read_quantum);
 
-  std::bernoulli_distribution crc_generator;
-  std::bernoulli_distribution md5_generator;
+  std::uniform_int_distribution<std::size_t> crc32c_generator(
+      0, options.enable_crc32c.size() - 1);
+  std::uniform_int_distribution<std::size_t> md5_generator(
+      0, options.enable_crc32c.size() - 1);
   std::bernoulli_distribution use_insert;
 
   std::uniform_int_distribution<std::size_t> api_generator(
@@ -340,8 +359,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_size = size_generator(generator);
     auto write_size = options.write_quantum * write_size_generator(generator);
     auto read_size = options.read_quantum * read_size_generator(generator);
-    bool enable_crc = crc_generator(generator);
-    bool enable_md5 = md5_generator(generator);
+    bool const enable_crc = options.enable_crc32c[crc32c_generator(generator)];
+    bool const enable_md5 = options.enable_md5[md5_generator(generator)];
     auto const api = options.enabled_apis[api_generator(generator)];
     auto xml_write_selector = gcs::Fields();
     auto json_read_selector = gcs::IfGenerationNotMatch();
@@ -523,13 +542,36 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
              {"XML", gcs_bm::ApiName::kApiXml},
              {"GRPC", gcs_bm::ApiName::kApiGrpc},
          };
-         std::vector<ApiName> apis;
+         options.enabled_apis.clear();
+         std::set<ApiName> apis;
          for (auto& token : absl::StrSplit(val, ',')) {
            auto const l = names.find(std::string(token));
-           if (l == names.end()) continue;  // Ignore errors for now
-           apis.push_back(l->second);
+           if (l == names.end()) return;
+           apis.insert(l->second);
          }
-         options.enabled_apis = std::move(apis);
+         options.enabled_apis = {apis.begin(), apis.end()};
+       }},
+      {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
+       [&options](std::string const& val) {
+         options.enable_crc32c.clear();
+         std::set<bool> crc32c;
+         for (auto& token : absl::StrSplit(val, ',')) {
+           auto const v = gcs_bm::ParseBoolean(std::string(token));
+           if (!v.has_value()) return;
+           crc32c.insert(*v);
+         }
+         options.enable_crc32c = {crc32c.begin(), crc32c.end()};
+       }},
+      {"--enabled-md5", "run with MD5 enabled, disabled, or both",
+       [&options](std::string const& val) {
+         options.enable_md5.clear();
+         std::set<bool> md5;
+         for (auto& token : absl::StrSplit(val, ',')) {
+           auto const v = gcs_bm::ParseBoolean(std::string(token));
+           if (!v.has_value()) return;
+           md5.insert(*v);
+         }
+         options.enable_md5 = {md5.begin(), md5.end()};
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
@@ -625,6 +667,18 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
     return make_status(os);
   }
 
+  if (options.enable_crc32c.empty()) {
+    std::ostringstream os;
+    os << "No CRC32C settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.enable_md5.empty()) {
+    std::ostringstream os;
+    os << "No MD5 settings configured for benchmark.";
+    return make_status(os);
+  }
+
   return options;
 }
 
@@ -713,6 +767,37 @@ google::cloud::StatusOr<Options> SelfTest() {
     if (options) return self_test_error;
   }
 
+  // Enabled APIs are validated
+  std::cerr << "enabled-apis" << std::endl;
+  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-apis="})) {
+    return self_test_error;
+  }
+  // Enabled APIs are validated
+  if (ParseArgsDefault(
+          {"self-test", "--region=r", "--enabled-apis=JSON,XML,INVALID"})) {
+    return self_test_error;
+  }
+
+  // Enabled CRC32C settings are validated
+  std::cerr << "enabled-crc32c" << std::endl;
+  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-crc32c="})) {
+    return self_test_error;
+  }
+  if (ParseArgsDefault(
+          {"self-test", "--region=r", "--enabled-crc32c=true,false,INVALID"})) {
+    return self_test_error;
+  }
+
+  // Enabled CRC32C settings are validated
+  std::cerr << "enabled-md5" << std::endl;
+  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-md5="})) {
+    return self_test_error;
+  }
+  if (ParseArgsDefault(
+          {"self-test", "--region=r", "--enabled-md5=true,false,INVALID"})) {
+    return self_test_error;
+  }
+
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
     auto const value = GetEnv(var).value_or("");
@@ -742,7 +827,9 @@ google::cloud::StatusOr<Options> SelfTest() {
       "--duration=1s",
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
-      "--enabled-apis=JSON",
+      "--enabled-apis=JSON,GRPC,XML",
+      "--enabled-crc32c=false,true",
+      "--enabled-md5=false,true",
   });
 }
 
