@@ -110,8 +110,8 @@ struct Options {
       gcs_bm::ApiName::kApiGrpc,
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   };
-  std::vector<bool> enable_crc32c = {false, true};
-  std::vector<bool> enable_md5 = {false, true};
+  std::vector<bool> enabled_crc32c = {false, true};
+  std::vector<bool> enabled_md5 = {false, true};
 };
 
 enum OpType { kOpWrite, kOpInsert, kOpRead0, kOpRead1, kOpRead2 };
@@ -220,8 +220,8 @@ int main(int argc, char* argv[]) {
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
             << "\n# Enabled APIs: " << join_apis(options->enabled_apis)
-            << "\n# Enabled CRC32C: " << join_bool(options->enable_crc32c)
-            << "\n# Enabled MD5: " << join_bool(options->enable_md5)
+            << "\n# Enabled CRC32C: " << join_bool(options->enabled_crc32c)
+            << "\n# Enabled MD5: " << join_bool(options->enabled_md5)
             << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
@@ -330,9 +330,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
       options.maximum_read_size / options.read_quantum);
 
   std::uniform_int_distribution<std::size_t> crc32c_generator(
-      0, options.enable_crc32c.size() - 1);
+      0, options.enabled_crc32c.size() - 1);
   std::uniform_int_distribution<std::size_t> md5_generator(
-      0, options.enable_crc32c.size() - 1);
+      0, options.enabled_crc32c.size() - 1);
   std::bernoulli_distribution use_insert;
 
   std::uniform_int_distribution<std::size_t> api_generator(
@@ -359,8 +359,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_size = size_generator(generator);
     auto write_size = options.write_quantum * write_size_generator(generator);
     auto read_size = options.read_quantum * read_size_generator(generator);
-    bool const enable_crc = options.enable_crc32c[crc32c_generator(generator)];
-    bool const enable_md5 = options.enable_md5[md5_generator(generator)];
+    bool const enable_crc = options.enabled_crc32c[crc32c_generator(generator)];
+    bool const enable_md5 = options.enabled_md5[md5_generator(generator)];
     auto const api = options.enabled_apis[api_generator(generator)];
     auto xml_write_selector = gcs::Fields();
     auto json_read_selector = gcs::IfGenerationNotMatch();
@@ -470,6 +470,18 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   Options options;
   bool wants_help = false;
   bool wants_description = false;
+
+  auto parse_checksums = [](std::string const& val) -> std::vector<bool> {
+    if (val == "enabled") {
+      return {true};
+    } else if (val == "disabled") {
+      return {false};
+    } else if (val == "random") {
+      return {false, true};
+    }
+    return {};
+  };
+
   std::vector<gcs_bm::OptionDescriptor> desc{
       {"--help", "print usage information",
        [&wants_help](std::string const&) { wants_help = true; }},
@@ -552,26 +564,12 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
          options.enabled_apis = {apis.begin(), apis.end()};
        }},
       {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
-       [&options](std::string const& val) {
-         options.enable_crc32c.clear();
-         std::set<bool> crc32c;
-         for (auto& token : absl::StrSplit(val, ',')) {
-           auto const v = gcs_bm::ParseBoolean(std::string(token));
-           if (!v.has_value()) return;
-           crc32c.insert(*v);
-         }
-         options.enable_crc32c = {crc32c.begin(), crc32c.end()};
+       [&options, &parse_checksums](std::string const& val) {
+         options.enabled_crc32c = parse_checksums(val);
        }},
       {"--enabled-md5", "run with MD5 enabled, disabled, or both",
-       [&options](std::string const& val) {
-         options.enable_md5.clear();
-         std::set<bool> md5;
-         for (auto& token : absl::StrSplit(val, ',')) {
-           auto const v = gcs_bm::ParseBoolean(std::string(token));
-           if (!v.has_value()) return;
-           md5.insert(*v);
-         }
-         options.enable_md5 = {md5.begin(), md5.end()};
+       [&options, &parse_checksums](std::string const& val) {
+         options.enabled_md5 = parse_checksums(val);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
@@ -667,13 +665,13 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
     return make_status(os);
   }
 
-  if (options.enable_crc32c.empty()) {
+  if (options.enabled_crc32c.empty()) {
     std::ostringstream os;
     os << "No CRC32C settings configured for benchmark.";
     return make_status(os);
   }
 
-  if (options.enable_md5.empty()) {
+  if (options.enabled_md5.empty()) {
     std::ostringstream os;
     os << "No MD5 settings configured for benchmark.";
     return make_status(os);
@@ -783,18 +781,16 @@ google::cloud::StatusOr<Options> SelfTest() {
   if (ParseArgsDefault({"self-test", "--region=r", "--enabled-crc32c="})) {
     return self_test_error;
   }
-  if (ParseArgsDefault(
-          {"self-test", "--region=r", "--enabled-crc32c=true,false,INVALID"})) {
-    return self_test_error;
-  }
 
   // Enabled CRC32C settings are validated
   std::cerr << "enabled-md5" << std::endl;
   if (ParseArgsDefault({"self-test", "--region=r", "--enabled-md5="})) {
     return self_test_error;
   }
-  if (ParseArgsDefault(
-          {"self-test", "--region=r", "--enabled-md5=true,false,INVALID"})) {
+  if (!ParseArgsDefault({"self-test", "--region=r", "--enabled-md5=random"})) {
+    return self_test_error;
+  }
+  if (!ParseArgsDefault({"self-test", "--region=r", "--enabled-md5=enabled"})) {
     return self_test_error;
   }
 
@@ -828,8 +824,8 @@ google::cloud::StatusOr<Options> SelfTest() {
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
       "--enabled-apis=JSON,GRPC,XML",
-      "--enabled-crc32c=false,true",
-      "--enabled-md5=false,true",
+      "--enabled-crc32c=enabled",
+      "--enabled-md5=disabled",
   });
 }
 
