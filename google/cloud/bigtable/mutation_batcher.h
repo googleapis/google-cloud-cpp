@@ -93,6 +93,8 @@ class MutationBatcher {
         num_requests_pending_(),
         cur_batch_(std::make_shared<Batch>()) {}
 
+  virtual ~MutationBatcher() = default;
+
   /**
    * Asynchronously apply mutation.
    *
@@ -155,6 +157,11 @@ class MutationBatcher {
    *     the returned future is already satisfied.
    */
   future<void> AsyncWaitForNoPendingRequests();
+
+ protected:
+  // Wrap calling underlying operation in a virtual function to ease testing.
+  virtual future<std::vector<FailedMutation>> AsyncBulkApplyImpl(
+      Table& table, BulkMutation&& mut, CompletionQueue& cq);
 
  private:
   using CompletionPromise = promise<Status>;

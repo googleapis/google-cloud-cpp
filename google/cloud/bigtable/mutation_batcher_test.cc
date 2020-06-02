@@ -199,6 +199,8 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
     cq_impl_->SimulateCompletion(false);
     // state == FINISHING
     cq_impl_->SimulateCompletion(true);
+    // RunAsync
+    cq_impl_->SimulateCompletion(true);
   }
 
   void OpenStream() {
@@ -212,6 +214,8 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
     // state == PROCESSING
     cq_impl_->SimulateCompletion(false);
     // state == FINISHING
+    cq_impl_->SimulateCompletion(true);
+    // RunAsync
     cq_impl_->SimulateCompletion(true);
   }
 
@@ -662,6 +666,81 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);
+}
+
+TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
+  class ApplyInterceptingBatcher : public MutationBatcher {
+   public:
+    explicit ApplyInterceptingBatcher(Table table)
+        : MutationBatcher(std::move(table)) {}
+
+    void SetOnBulkApply(std::function<void()> cb) {
+      on_bulk_apply_ = std::move(cb);
+    }
+
+   protected:
+    future<std::vector<FailedMutation>> AsyncBulkApplyImpl(
+        Table& table, BulkMutation&& mut, CompletionQueue& cq) override {
+      auto res = MutationBatcher::AsyncBulkApplyImpl(table, std::move(mut), cq);
+      on_bulk_apply_();
+      return res;
+    }
+
+   private:
+    std::function<void()> on_bulk_apply_;
+  };
+
+  auto* batcher_raw_ptr = new ApplyInterceptingBatcher(table_);
+  batcher_.reset(batcher_raw_ptr);
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+
+  auto* reader =
+      new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
+  EXPECT_CALL(*reader, Read(_, _))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {
+        auto& e = *r->add_entries();
+        e.set_index(0);
+        e.mutable_status()->set_code(grpc::StatusCode::OK);
+      }))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse*, void*) {}));
+  EXPECT_CALL(*reader, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+  EXPECT_CALL(*reader, StartCall(_)).Times(1);
+  batcher_raw_ptr->SetOnBulkApply([this] {
+    // Simulate completion queue finishing this stream before contol is
+    // returned from AsyncBulkApplyImpl
+    std::async([this] {
+      cq_impl_->SimulateCompletion(true);
+      // state == PROCESSING
+      cq_impl_->SimulateCompletion(true);
+      // state == PROCESSING, 1 read
+      cq_impl_->SimulateCompletion(false);
+      // state == FINISHING
+      cq_impl_->SimulateCompletion(true);
+    }).get();
+  });
+
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
+      .WillOnce(Invoke([reader](grpc::ClientContext*,
+                                btproto::MutateRowsRequest const&,
+                                grpc::CompletionQueue*) {
+        return std::unique_ptr<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
+            reader);
+      }));
+
+  auto state = Apply(mutations[0]);
+  EXPECT_TRUE(state->admitted);
+  EXPECT_FALSE(state->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  // RunAsync
+  cq_impl_->SimulateCompletion(true);
+
+  EXPECT_TRUE(state->completed);
+  EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
 }  // namespace

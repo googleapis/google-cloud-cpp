@@ -135,6 +135,11 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
              options_.max_mutations_per_batch;
 }
 
+future<std::vector<FailedMutation>> MutationBatcher::AsyncBulkApplyImpl(
+    Table& table, BulkMutation&& mut, CompletionQueue& cq) {
+  return table.AsyncBulkApply(std::move(mut), cq);
+}
+
 bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
   if (cur_batch_->num_mutations > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
@@ -142,10 +147,26 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
 
     auto batch = std::make_shared<Batch>();
     cur_batch_.swap(batch);
-    table_.AsyncBulkApply(std::move(batch->requests), cq)
+    AsyncBulkApplyImpl(table_, std::move(batch->requests), cq)
         .then([this, cq,
                batch](future<std::vector<FailedMutation>> failed) mutable {
-          OnBulkApplyDone(std::move(cq), std::move(*batch), failed.get());
+          // Calling OnBulkApplyDone here might lead to a deadlock if the
+          // underlying operation completes very quickly, yielding the outer
+          // `.then()` call synchronous. The deadlock would occur because the
+          // mutex is held here and OnBulkApplyDone would try to reacquire it.
+          //
+          // We're not using a lambda here because in C++11 that would mean
+          // copying the `failed` vector.
+          struct Functor {
+            void operator()(CompletionQueue& cq) {
+              self->OnBulkApplyDone(cq, std::move(*batch), std::move(failed));
+            }
+
+            MutationBatcher* self;
+            std::shared_ptr<Batch> batch;
+            std::vector<FailedMutation> failed;
+          };
+          cq.RunAsync(Functor{this, std::move(batch), failed.get()});
         });
     return true;
   }
