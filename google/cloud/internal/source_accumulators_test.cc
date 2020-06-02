@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/source_accumulators.h"
 #include "google/cloud/status.h"
-#include "google/cloud/testing_util/mock_sources.h"
+#include "google/cloud/testing_util/fake_source.h"
 #include <gmock/gmock.h>
 
 namespace google {

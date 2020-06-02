@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_SOURCES_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_SOURCES_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_SOURCE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_SOURCE_H
 
 #include "google/cloud/future.h"
 #include "absl/types/variant.h"
@@ -76,4 +76,4 @@ class FakeSource {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_SOURCES_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_SOURCE_H
