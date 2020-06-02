@@ -59,6 +59,7 @@ load(
         ":google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/types:variant",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
