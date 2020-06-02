@@ -221,8 +221,9 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
-                              GTest::gmock_main GTest::gmock GTest::gtest)
+            ${target}
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -336,7 +337,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             grpc_error_delegate_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
-            internal/pagination_range_test.cc)
+            internal/pagination_range_test.cc
+            internal/slow_iota_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
@@ -352,6 +354,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         google_cloud_cpp_testing
                         google_cloud_cpp_common
                         googleapis-c++::bigtable_protos
+                        absl::variant
                         GTest::gmock_main
                         GTest::gmock
                         GTest::gtest
