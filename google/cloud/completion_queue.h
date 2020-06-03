@@ -177,14 +177,17 @@ class CompletionQueue {
             typename std::enable_if<
                 internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0>
   void RunAsync(Functor&& functor) {
+    auto impl = impl_;
     MakeRelativeTimer(std::chrono::seconds(0))
-        .then([this, functor](
-                  future<StatusOr<std::chrono::system_clock::time_point>>) {
-          // We intentionally ignore the status here; the functor is always
-          // called, even after a call to `CancelAll`.
-          CompletionQueue cq(impl_);
-          functor(cq);
-        });
+        .then(
+            [impl, functor](
+                future<
+                    StatusOr<std::chrono::system_clock::time_point>>) mutable {
+              // We intentionally ignore the status here; the functor is always
+              // called, even after a call to `CancelAll`.
+              CompletionQueue cq(impl);
+              functor(cq);
+            });
   }
 
  private:
