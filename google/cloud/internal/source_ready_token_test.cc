@@ -72,8 +72,8 @@ TEST(ReadyTokenFlowControlTest, TokenManip) {
   invalid = std::move(token);
   EXPECT_TRUE(invalid.valid());
   EXPECT_TRUE(static_cast<bool>(invalid));
-  EXPECT_FALSE(token.valid()); // NOLINT(bugprone-use-after-move)
-  EXPECT_FALSE(static_cast<bool>(token)); // NOLINT
+  EXPECT_FALSE(token.valid());             // NOLINT(bugprone-use-after-move)
+  EXPECT_FALSE(static_cast<bool>(token));  // NOLINT(bugprone-use-after-move)
 
   ReadyToken copy(std::move(invalid));
   EXPECT_TRUE(copy.valid());
