@@ -328,6 +328,22 @@ TEST(CompletionQueueTest, RunAsync) {
   runner.join();
 }
 
+TEST(CompletionQueueTest, RunAsyncCompletionQueueDestroyed) {
+  auto cq_impl = std::make_shared<MockCompletionQueue>();
+
+  std::promise<void> done_promise;
+  {
+    CompletionQueue cq(cq_impl);
+    cq.RunAsync([&done_promise](CompletionQueue& cq) {
+      done_promise.set_value();
+      cq.Shutdown();
+    });
+  }
+  cq_impl->SimulateCompletion(true);
+
+  done_promise.get_future().get();
+}
+
 // Sets up a timer that reschedules itself and verifies we can shut down
 // cleanly whether we call `CancelAll()` on the queue first or not.
 namespace {
