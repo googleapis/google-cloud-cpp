@@ -1,12 +1,11 @@
 # For an overview of the syntax of this file, see
 # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
-name: CI
+name: PR
 
-# This workflow triggers only on pushes (merges) to the master branch. This
-# workflow does not trigger on PRs. See pr.yml for that workflow.
+# This workflow triggers only on Pull Requests to the master branch
 on:
-  push:
+  pull_request:
     branches: 
       - master
 
@@ -28,6 +27,7 @@ jobs:
         path: ~/.cache/bazel
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.base_ref }}
           ${{ runner.os }}-${{ env.cache-name }}-master
           ${{ runner.os }}-${{ env.cache-name }}-
 
