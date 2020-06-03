@@ -16,6 +16,7 @@
 #include <gmock/gmock.h>
 #include <future>
 #include <thread>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -46,6 +47,43 @@ TEST(ReadyTokenFlowControlTest, Basic) {
     ASSERT_TRUE(tokens[kOutstanding + i].is_ready());
     EXPECT_TRUE(tested.Release(tokens[kOutstanding + i].get()));
   }
+}
+
+TEST(ReadyTokenFlowControlTest, Assignment) {
+  auto constexpr kOutstanding = 3;
+  ReadyTokenFlowControl original(kOutstanding);
+  EXPECT_EQ(original.max_outstanding(), kOutstanding);
+  auto copy = std::move(original);
+  EXPECT_EQ(copy.max_outstanding(), kOutstanding);
+  original = ReadyTokenFlowControl(2 * kOutstanding);
+  EXPECT_EQ(original.max_outstanding(), 2 * kOutstanding);
+}
+
+TEST(ReadyTokenFlowControlTest, TokenManip) {
+  auto constexpr kOutstanding = 3;
+  ReadyTokenFlowControl original(kOutstanding);
+
+  auto token = original.Acquire().get();
+  EXPECT_TRUE(token.valid());
+  EXPECT_TRUE(static_cast<bool>(token));
+  ReadyToken invalid;
+  EXPECT_FALSE(invalid.valid());
+  EXPECT_FALSE(static_cast<bool>(invalid));
+  invalid = std::move(token);
+  EXPECT_TRUE(invalid.valid());
+  EXPECT_TRUE(static_cast<bool>(invalid));
+  EXPECT_FALSE(token.valid()); // NOLINT(bugprone-use-after-move)
+  EXPECT_FALSE(static_cast<bool>(token)); // NOLINT
+
+  ReadyToken copy(std::move(invalid));
+  EXPECT_TRUE(copy.valid());
+  EXPECT_TRUE(static_cast<bool>(copy));
+
+  original.Release(std::move(copy));
+  EXPECT_FALSE(std::is_copy_assignable<ReadyToken>::value);
+  EXPECT_TRUE(std::is_move_assignable<ReadyToken>::value);
+  EXPECT_FALSE(std::is_copy_constructible<ReadyToken>::value);
+  EXPECT_TRUE(std::is_move_constructible<ReadyToken>::value);
 }
 
 TEST(ReadyTokenFlowControlTest, Threaded) {
