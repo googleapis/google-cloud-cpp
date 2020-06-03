@@ -23,5 +23,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build the code
-      run: bazel test --test_tag_filters=-integration-test ... 
+      run: bazel test --test_tag_filters=-integration-test ...
 
