@@ -35,8 +35,8 @@ includes detailed instructions on how to compile the library for use in your
 application. You can fetch the source from [GitHub][github-link] as normal:
 
 @code{.sh}
-git clone https://github.com/googleapis/google-cloud-cpp-spanner.git
-cd google-cloud-cpp-spanner/google/cloud/spanner/quickstart
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/spanner/quickstart
 @endcode
 
 @par Example: Hello World
@@ -157,8 +157,8 @@ period between retries.
 [concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 [gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
-[github-link]: https://github.com/googleapis/google-cloud-cpp-spanner 'GitHub Repository'
-[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp-spanner/blob/master/google/cloud/spanner/quickstart
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp-common/blob/master/google/cloud/status_or.h
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
 
 */

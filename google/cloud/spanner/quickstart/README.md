@@ -1,4 +1,4 @@
-# HOWTO: using google-cloud-cpp-spanner in your project
+# HOWTO: using the Cloud Spanner C++ client in your project
 
 This directory contains small examples showing how to use the Cloud Spanner C++
 client library in your own project. These instructions assume that you have
@@ -36,7 +36,7 @@ https://cloud.google.com/docs/authentication/production
 2. Compile this example using Bazel:
 
    ```bash
-   cd $HOME/google-cloud-cpp-spanner/quickstart
+   cd $HOME/google-cloud-cpp/quickstart
    bazel build ...
    ```
 
@@ -60,7 +60,7 @@ If you are using Windows or macOS there are additional instructions at the end o
 
    ```bash
    cd $HOME/vcpkg
-   ./vcpkg install google-cloud-cpp-spanner
+   ./vcpkg install google-cloud-cpp
    ```
 
 3. Configure CMake, if necessary, configure the directory where you installed the dependencies:

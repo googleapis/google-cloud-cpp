@@ -187,7 +187,6 @@ installing `google-cloud-cpp` itself:
 
 ```console
 > vcpkg.exe install google-cloud-cpp:x64-windows-static
-> vcpkg.exe install --recurse google-cloud-cpp-common[test]:x64-windows-static
 > vcpkg.exe integrate install
 ```
 

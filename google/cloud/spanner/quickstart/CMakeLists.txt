@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# This CMake file shows how to use `google-cloud-cpp-spanner` from a larger
+# This CMake file shows how to use the Cloud Spanner C++ client from a larger
 # CMake project.
 
 cmake_minimum_required(VERSION 3.5)
