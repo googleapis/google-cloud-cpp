@@ -28,8 +28,6 @@ jobs:
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
           ${{ runner.os }}-${{ env.cache-name }}-${{ github.base_ref }}
-          ${{ runner.os }}-${{ env.cache-name }}-master
-          ${{ runner.os }}-${{ env.cache-name }}-
 
     - name: Build the code
       run: bazel build ...

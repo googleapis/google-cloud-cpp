@@ -27,9 +27,6 @@ jobs:
       with:
         path: ~/.cache/bazel
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
-        restore-keys: |
-          ${{ runner.os }}-${{ env.cache-name }}-master
-          ${{ runner.os }}-${{ env.cache-name }}-
 
     - name: Build the code
       run: bazel build ...
