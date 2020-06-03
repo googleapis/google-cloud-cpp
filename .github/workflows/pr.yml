@@ -6,7 +6,7 @@ name: PR
 # This workflow triggers only on Pull Requests to the master branch
 on:
   pull_request:
-    branches: 
+    branches:
       - master
 
 jobs:
