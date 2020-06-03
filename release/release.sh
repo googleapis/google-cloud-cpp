@@ -33,16 +33,16 @@
 # Examples:
 #
 #   # NO CHANGES ARE PUSHED. Shows what commands would be run.
-#   $ release.sh googleapis/google-cloud-cpp-spanner
+#   $ release.sh googleapis/google-cloud-cpp
 #
 #   # NO CHANGES ARE PUSHED. Shows what commands would be run.
-#   $ release.sh googleapis/google-cloud-cpp-spanner 2.0.0
+#   $ release.sh googleapis/google-cloud-cpp 2.0.0
 #
 #   # PUSHES CHANGES to release -spanner
-#   $ release.sh -f googleapis/google-cloud-cpp-spanner
+#   $ release.sh -f googleapis/google-cloud-cpp
 #
 #   # PUSHES CHANGES to release -spanner, setting its new version to 2.0.0
-#   $ release.sh -f googleapis/google-cloud-cpp-spanner 2.0.0
+#   $ release.sh -f googleapis/google-cloud-cpp 2.0.0
 
 set -eu
 

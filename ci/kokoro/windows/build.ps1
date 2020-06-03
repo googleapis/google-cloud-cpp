@@ -88,7 +88,7 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:VCPKG_TRIPLET = "x64-windows-static"
     $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Debug/x64-windows-static/quickstart.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp", "google-cloud-cpp-spanner")
+    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "build-quickstart-cmake.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-dll") {
     $env:CONFIG = "Debug"
@@ -96,7 +96,7 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:VCPKG_TRIPLET = "x64-windows"
     $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Debug/x64-windows/quickstart.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp", "google-cloud-cpp-spanner")
+    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "build-quickstart-cmake.ps1"
 }
 

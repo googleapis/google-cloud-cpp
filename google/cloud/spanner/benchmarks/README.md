@@ -40,8 +40,8 @@ You must compile both the library and its dependencies with optimization, using
 CMake this is:
 
 ```bash
-git clone https://github.com/googleapis/google-cloud-cpp-spanner.git
-cd google-cloud-cpp-spanner
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp
 cmake -Hsuper -Bcmake-out/si -DCMAKE_BUILD_TYPE=Release \
      -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-spanner
 cmake --build cmake-out/si --target project-dependencies
