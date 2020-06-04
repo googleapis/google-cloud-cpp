@@ -28,24 +28,8 @@ jobs:
     # the rest of the steps
     - uses: actions/checkout@v2
 
-    # The Caching step differs based on whether this is a push or a pull
-    # request. The only difference is that for PRs, we also look for a
-    # restore-key containing the `github.base_ref`, so that a PR can use the
-    # cache from the most recent CI build that was done on the base_ref (e.g.,
-    # "master"). We implement this with two steps that are selectively
-    # enabled/disabled based on the existence of the `github.base_ref` context.
-    # This is basically an if-else block.
-    - name: Cache bazel build results (push)
-      if: on.push
-      uses: actions/cache@v2.0.0
-      env:
-        cache-name: bazel-cache
-      with:
-        path: ~/.cache/bazel
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
-
-    - name: Cache bazel build results (PR)
-      if: on.pull_request
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
       uses: actions/cache@v2.0.0
       env:
         cache-name: bazel-cache
@@ -53,7 +37,7 @@ jobs:
         path: ~/.cache/bazel
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
-          ${{ runner.os }}-${{ env.cache-name }}-${{ github.base_ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
 
     - name: Build the code
       run: bazel build ...
