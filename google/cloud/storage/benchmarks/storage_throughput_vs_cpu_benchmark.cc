@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/internal/build_info.h"
@@ -20,7 +21,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "absl/strings/str_join.h"
-#include "absl/strings/str_split.h"
 #include <future>
 #include <set>
 #include <sstream>
@@ -29,6 +29,7 @@ namespace {
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::ApiName;
+using gcs_bm::ThroughputOptions;
 
 char const kDescription[] = R"""(
 A throughput vs. CPU benchmark for the Google Cloud Storage C++ client library.
@@ -87,34 +88,6 @@ A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
-struct Options {
-  std::string project_id;
-  std::string region;
-  std::string bucket_prefix = "cloud-cpp-testing-bm-";
-  std::chrono::seconds duration =
-      std::chrono::seconds(std::chrono::minutes(15));
-  int thread_count = 1;
-  std::int64_t minimum_object_size = 32 * gcs_bm::kMiB;
-  std::int64_t maximum_object_size = 256 * gcs_bm::kMiB;
-  std::int64_t minimum_write_size = 16 * gcs_bm::kMiB;
-  std::int64_t maximum_write_size = 64 * gcs_bm::kMiB;
-  std::int64_t write_quantum = 256 * gcs_bm::kKiB;
-  std::int64_t minimum_read_size = 4 * gcs_bm::kMiB;
-  std::int64_t maximum_read_size = 8 * gcs_bm::kMiB;
-  std::int64_t read_quantum = 1 * gcs_bm::kMiB;
-  std::int32_t minimum_sample_count = 0;
-  std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
-  std::vector<ApiName> enabled_apis = {
-      gcs_bm::ApiName::kApiJson,
-      gcs_bm::ApiName::kApiXml,
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-      gcs_bm::ApiName::kApiGrpc,
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  };
-  std::vector<bool> enabled_crc32c = {false, true};
-  std::vector<bool> enabled_md5 = {false, true};
-};
-
 enum OpType { kOpWrite, kOpInsert, kOpRead0, kOpRead1, kOpRead2 };
 struct IterationResult {
   OpType op;
@@ -130,16 +103,17 @@ struct IterationResult {
 };
 using TestResults = std::vector<IterationResult>;
 
-TestResults RunThread(Options const& options, std::string const& bucket_name);
+TestResults RunThread(ThroughputOptions const& ThroughputOptions,
+                      std::string const& bucket_name);
 void PrintHeader();
 void PrintResults(TestResults const& results);
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
+google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::StatusOr<Options> options = ParseArgs(argc, argv);
+  google::cloud::StatusOr<ThroughputOptions> options = ParseArgs(argc, argv);
   if (!options) {
     std::cerr << options.status() << "\n";
     return 1;
@@ -289,7 +263,8 @@ void PrintResults(TestResults const& results) {
   std::cout << std::flush;
 }
 
-TestResults RunThread(Options const& options, std::string const& bucket_name) {
+TestResults RunThread(ThroughputOptions const& options,
+                      std::string const& bucket_name) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto contents = gcs_bm::MakeRandomData(generator, options.maximum_write_size);
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -456,336 +431,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   return results;
 }
 
-google::cloud::StatusOr<Options> ParseArgsDefault(
-    std::vector<std::string> argv) {
-  Options options;
-  bool wants_help = false;
-  bool wants_description = false;
-
-  auto parse_checksums = [](std::string const& val) -> std::vector<bool> {
-    if (val == "enabled") {
-      return {true};
-    }
-    if (val == "disabled") {
-      return {false};
-    }
-    if (val == "random") {
-      return {false, true};
-    }
-    return {};
-  };
-
-  std::vector<gcs_bm::OptionDescriptor> desc{
-      {"--help", "print usage information",
-       [&wants_help](std::string const&) { wants_help = true; }},
-      {"--description", "print benchmark description",
-       [&wants_description](std::string const&) { wants_description = true; }},
-      {"--project-id", "use the given project id for the benchmark",
-       [&options](std::string const& val) { options.project_id = val; }},
-      {"--region", "use the given region for the benchmark",
-       [&options](std::string const& val) { options.region = val; }},
-      {"--bucket-prefix", "use the given prefix to create a bucket name",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
-      {"--thread-count", "set the number of threads in the benchmark",
-       [&options](std::string const& val) {
-         options.thread_count = std::stoi(val);
-       }},
-      {"--minimum-object-size", "configure the minimum object size",
-       [&options](std::string const& val) {
-         options.minimum_object_size = gcs_bm::ParseSize(val);
-       }},
-      {"--maximum-object-size", "configure the maximum object size",
-       [&options](std::string const& val) {
-         options.maximum_object_size = gcs_bm::ParseSize(val);
-       }},
-      {"--minimum-write-size",
-       "configure the minimum buffer size for write() calls",
-       [&options](std::string const& val) {
-         options.minimum_write_size = gcs_bm::ParseSize(val);
-       }},
-      {"--maximum-write-size",
-       "configure the maximum buffer size for write() calls",
-       [&options](std::string const& val) {
-         options.maximum_write_size = gcs_bm::ParseSize(val);
-       }},
-      {"--write-quantum", "quantize the buffer sizes for write() calls",
-       [&options](std::string const& val) {
-         options.write_quantum = gcs_bm::ParseSize(val);
-       }},
-      {"--minimum-read-size",
-       "configure the minimum buffer size for read() calls",
-       [&options](std::string const& val) {
-         options.minimum_read_size = gcs_bm::ParseSize(val);
-       }},
-      {"--maximum-read-size",
-       "configure the maximum buffer size for read() calls",
-       [&options](std::string const& val) {
-         options.maximum_read_size = gcs_bm::ParseSize(val);
-       }},
-      {"--read-quantum", "quantize the buffer sizes for read() calls",
-       [&options](std::string const& val) {
-         options.read_quantum = gcs_bm::ParseSize(val);
-       }},
-      {"--duration", "continue the test for at least this amount of time",
-       [&options](std::string const& val) {
-         options.duration = gcs_bm::ParseDuration(val);
-       }},
-      {"--minimum-sample-count",
-       "continue the test until at least this number of samples are obtained",
-       [&options](std::string const& val) {
-         options.minimum_sample_count = std::stol(val);
-       }},
-      {"--maximum-sample-count",
-       "stop the test when this number of samples are obtained",
-       [&options](std::string const& val) {
-         options.maximum_sample_count = std::stol(val);
-       }},
-      {"--enabled-apis", "enable a subset of the APIs for the test",
-       [&options](std::string const& val) {
-         std::map<std::string, gcs_bm::ApiName> const names{
-             {"JSON", gcs_bm::ApiName::kApiJson},
-             {"XML", gcs_bm::ApiName::kApiXml},
-             {"GRPC", gcs_bm::ApiName::kApiGrpc},
-         };
-         options.enabled_apis.clear();
-         std::set<ApiName> apis;
-         for (auto& token : absl::StrSplit(val, ',')) {
-           auto const l = names.find(std::string(token));
-           if (l == names.end()) return;
-           apis.insert(l->second);
-         }
-         options.enabled_apis = {apis.begin(), apis.end()};
-       }},
-      {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
-       [&options, &parse_checksums](std::string const& val) {
-         options.enabled_crc32c = parse_checksums(val);
-       }},
-      {"--enabled-md5", "run with MD5 enabled, disabled, or both",
-       [&options, &parse_checksums](std::string const& val) {
-         options.enabled_md5 = parse_checksums(val);
-       }},
-  };
-  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
-
-  auto unparsed = gcs_bm::OptionsParse(desc, argv);
-  if (wants_help) {
-    std::cout << usage << "\n";
-  }
-
-  if (wants_description) {
-    std::cout << kDescription << "\n";
-  }
-
-  auto make_status = [](std::ostringstream& os) {
-    auto const code = google::cloud::StatusCode::kInvalidArgument;
-    return google::cloud::Status{code, std::move(os).str()};
-  };
-
-  if (unparsed.size() > 2) {
-    std::ostringstream os;
-    os << "Unknown arguments or options\n" << usage << "\n";
-    return make_status(os);
-  }
-  if (unparsed.size() == 2) {
-    options.region = unparsed[1];
-  }
-  if (options.region.empty()) {
-    std::ostringstream os;
-    os << "Missing value for --region option\n" << usage << "\n";
-    return make_status(os);
-  }
-
-  if (options.minimum_object_size > options.maximum_object_size) {
-    std::ostringstream os;
-    os << "Invalid range for object size [" << options.minimum_object_size
-       << ',' << options.maximum_object_size << "]";
-    return make_status(os);
-  }
-
-  if (options.minimum_write_size > options.maximum_write_size) {
-    std::ostringstream os;
-    os << "Invalid range for write size [" << options.minimum_write_size << ','
-       << options.maximum_write_size << "]";
-    return make_status(os);
-  }
-  if (options.write_quantum <= 0 ||
-      options.write_quantum > options.minimum_write_size) {
-    std::ostringstream os;
-    os << "Invalid value for --write-quantum (" << options.write_quantum
-       << "), it should be in the [1," << options.minimum_write_size
-       << "] range";
-    return make_status(os);
-  }
-
-  if (options.minimum_read_size > options.maximum_read_size) {
-    std::ostringstream os;
-    os << "Invalid range for read size [" << options.minimum_read_size << ','
-       << options.maximum_read_size << "]";
-    return make_status(os);
-  }
-  if (options.read_quantum <= 0 ||
-      options.read_quantum > options.minimum_read_size) {
-    std::ostringstream os;
-    os << "Invalid value for --read-quantum (" << options.read_quantum
-       << "), it should be in the [1," << options.minimum_read_size
-       << "] range";
-    return make_status(os);
-  }
-
-  if (options.minimum_sample_count > options.maximum_sample_count) {
-    std::ostringstream os;
-    os << "Invalid range for sample range [" << options.minimum_sample_count
-       << ',' << options.maximum_sample_count << "]";
-    return make_status(os);
-  }
-
-  if (!gcs_bm::SimpleTimer::SupportPerThreadUsage() &&
-      options.thread_count > 1) {
-    std::cerr <<
-        R"""(
-# WARNING
-# Your platform does not support per-thread usage metrics and you have enabled
-# multiple threads, so the CPU usage results will not be usable. See
-# getrusage(2) for more information.
-# END WARNING
-#
-)""";
-  }
-
-  if (options.enabled_apis.empty()) {
-    std::ostringstream os;
-    os << "No APIs configured for benchmark.";
-    return make_status(os);
-  }
-
-  if (options.enabled_crc32c.empty()) {
-    std::ostringstream os;
-    os << "No CRC32C settings configured for benchmark.";
-    return make_status(os);
-  }
-
-  if (options.enabled_md5.empty()) {
-    std::ostringstream os;
-    os << "No MD5 settings configured for benchmark.";
-    return make_status(os);
-  }
-
-  return options;
-}
-
-google::cloud::StatusOr<Options> SelfTest() {
+google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
   using google::cloud::internal::GetEnv;
   using google::cloud::internal::Sample;
-
-  google::cloud::Status const self_test_error(
-      google::cloud::StatusCode::kUnknown, "self-test failure");
-
-  {
-    auto options = ParseArgsDefault(
-        {"self-test", "--help", "--description", "fake-region"});
-    if (!options) return options;
-  }
-  {
-    // Missing the region should be an error
-    auto options = ParseArgsDefault({"self-test"});
-    if (options) return self_test_error;
-  }
-  {
-    // Too many positional arguments should be an error
-    auto options = ParseArgsDefault({"self-test", "unused-1", "unused-2"});
-    if (options) return self_test_error;
-  }
-  {
-    // Object size range is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-object-size=8",
-        "--maximum-object-size=4",
-    });
-    if (options) return self_test_error;
-  }
-  {
-    // Write buffer size range is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-write-size=8",
-        "--maximum-write-size=4",
-    });
-    if (options) return self_test_error;
-  }
-  {
-    // Write size quantum is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-write-size=4",
-        "--maximum-write-size=8",
-        "--write-quantum=5",
-    });
-    if (options) return self_test_error;
-  }
-  {
-    // Read buffer size range is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-read-size=8",
-        "--maximum-read-size=4",
-    });
-    if (options) return self_test_error;
-  }
-  {
-    // Read size quantum is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-read-size=4",
-        "--maximum-read-size=8",
-        "--read-quantum=5",
-    });
-    if (options) return self_test_error;
-  }
-  {
-    // Sample count range is validated
-    auto options = ParseArgsDefault({
-        "self-test",
-        "--region=r",
-        "--minimum-sample-count=8",
-        "--maximum-sample-count=4",
-    });
-    if (options) return self_test_error;
-  }
-
-  // Enabled APIs are validated
-  std::cerr << "enabled-apis" << std::endl;
-  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-apis="})) {
-    return self_test_error;
-  }
-  // Enabled APIs are validated
-  if (ParseArgsDefault(
-          {"self-test", "--region=r", "--enabled-apis=JSON,XML,INVALID"})) {
-    return self_test_error;
-  }
-
-  // Enabled CRC32C settings are validated
-  std::cerr << "enabled-crc32c" << std::endl;
-  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-crc32c="})) {
-    return self_test_error;
-  }
-
-  // Enabled CRC32C settings are validated
-  std::cerr << "enabled-md5" << std::endl;
-  if (ParseArgsDefault({"self-test", "--region=r", "--enabled-md5="})) {
-    return self_test_error;
-  }
-  if (!ParseArgsDefault({"self-test", "--region=r", "--enabled-md5=random"})) {
-    return self_test_error;
-  }
-  if (!ParseArgsDefault({"self-test", "--region=r", "--enabled-md5=enabled"})) {
-    return self_test_error;
-  }
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
@@ -796,39 +444,42 @@ google::cloud::StatusOr<Options> SelfTest() {
     return google::cloud::Status(google::cloud::StatusCode::kUnknown,
                                  std::move(os).str());
   }
-  auto const thread_count_arg = gcs_bm::SimpleTimer::SupportPerThreadUsage()
-                                    ? "--thread-count=2"
-                                    : "--thread-count=1";
-  return ParseArgsDefault({
-      "self-test",
-      "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
-      "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
-      "--bucket-prefix=cloud-cpp-testing-ci-",
-      thread_count_arg,
-      "--minimum-object-size=16KiB",
-      "--maximum-object-size=32KiB",
-      "--minimum-write-size=16KiB",
-      "--maximum-write-size=128KiB",
-      "--write-quantum=16KiB",
-      "--minimum-read-size=16KiB",
-      "--maximum-read-size=128KiB",
-      "--read-quantum=16KiB",
-      "--duration=1s",
-      "--minimum-sample-count=1",
-      "--maximum-sample-count=2",
-      "--enabled-apis=JSON,GRPC,XML",
-      "--enabled-crc32c=enabled",
-      "--enabled-md5=disabled",
-  });
+  auto const* const thread_count_arg =
+      gcs_bm::SimpleTimer::SupportPerThreadUsage() ? "--thread-count=2"
+                                                   : "--thread-count=1";
+  return gcs_bm::ParseThroughputOptions(
+      {
+          argv0,
+          "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
+          "--region=" +
+              GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+          "--bucket-prefix=cloud-cpp-testing-ci-",
+          thread_count_arg,
+          "--minimum-object-size=16KiB",
+          "--maximum-object-size=32KiB",
+          "--minimum-write-size=16KiB",
+          "--maximum-write-size=128KiB",
+          "--write-quantum=16KiB",
+          "--minimum-read-size=16KiB",
+          "--maximum-read-size=128KiB",
+          "--read-quantum=16KiB",
+          "--duration=1s",
+          "--minimum-sample-count=1",
+          "--maximum-sample-count=2",
+          "--enabled-apis=JSON,GRPC,XML",
+          "--enabled-crc32c=enabled",
+          "--enabled-md5=disabled",
+      },
+      kDescription);
 }
 
-google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]) {
   bool auto_run =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
           .value_or("") == "yes";
-  if (auto_run) return SelfTest();
+  if (auto_run) return SelfTest(argv[0]);
 
-  return ParseArgsDefault({argv, argv + argc});
+  return gcs_bm::ParseThroughputOptions({argv, argv + argc}, kDescription);
 }
 
 }  // namespace
