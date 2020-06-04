@@ -17,16 +17,22 @@
 
 name: CI
 
-# This workflow triggers only on pushes (merges) to the master branch. This
-# workflow does not trigger on PRs. See pr.yml for that workflow.
+# This workflow triggers only on pushes (merges). It does not trigger on PRs.
+# See pr.yml for that workflow. The reason for the different workflows is
+# because the caching step is different.
 on:
   push:
     branches:
       - master
+      - v*.*.*
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-18.04]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
@@ -34,6 +40,8 @@ jobs:
     - uses: actions/checkout@v2
 
     # Caches (and restores) the bazel build output.
+    # This workflow is only run on pushes (not pull requests) and it caches
+    # using the `github.ref` context, which in most cases will be "master".
     - name: Cache bazel build results
       uses: actions/cache@v2.0.0
       env:
