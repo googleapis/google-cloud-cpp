@@ -35,6 +35,8 @@ jobs:
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
       uses: actions/cache@v2.0.0
+      env:
+        cache-name: bazel-cache-output-base
       with:
         path: ${{ runner.temp }}
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
