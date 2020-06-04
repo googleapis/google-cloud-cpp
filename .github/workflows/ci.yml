@@ -20,6 +20,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  build:
     runs-on: ubuntu-18.04
 
     steps:
