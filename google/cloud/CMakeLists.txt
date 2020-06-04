@@ -145,6 +145,8 @@ add_library(
     internal/setenv.cc
     internal/setenv.h
     internal/source_accumulators.h
+    internal/source_ready_token.cc
+    internal/source_ready_token.h
     internal/strerror.cc
     internal/strerror.h
     internal/throw_delegate.cc
@@ -205,6 +207,7 @@ if (BUILD_TESTING)
         internal/random_test.cc
         internal/retry_policy_test.cc
         internal/source_accumulators_test.cc
+        internal/source_ready_token_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
