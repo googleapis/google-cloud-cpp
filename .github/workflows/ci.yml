@@ -36,7 +36,7 @@ jobs:
     # enabled/disabled based on the existence of the `github.base_ref` context.
     # This is basically an if-else block.
     - name: Cache bazel build results (push)
-      if: !github.base_ref
+      if: on.push
       uses: actions/cache@v2.0.0
       env:
         cache-name: bazel-cache
@@ -45,7 +45,7 @@ jobs:
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
 
     - name: Cache bazel build results (PR)
-      if: github.base_ref
+      if: on.pull_request
       uses: actions/cache@v2.0.0
       env:
         cache-name: bazel-cache
