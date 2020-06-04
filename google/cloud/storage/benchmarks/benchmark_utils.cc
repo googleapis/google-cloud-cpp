@@ -306,6 +306,12 @@ char const* ToString(ApiName api) {
       return "XML";
     case ApiName::kApiGrpc:
       return "GRPC";
+    case ApiName::kApiRawJson:
+      return "JSON-RAW";
+    case ApiName::kApiRawXml:
+      return "XML-RAW";
+    case ApiName::kApiRawGrpc:
+      return "GRPC-RAW";
   }
   return "";
 }

@@ -90,11 +90,13 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     ASSERT_STATUS_OK(insert);
 
     auto result = e->Run(bucket_name_, object_name, config);
-    EXPECT_EQ(result.status, StatusCode::kOk);
-    if (result.status == StatusCode::kOk) {
-      auto status = client->DeleteObject(bucket_name_, object_name);
-      EXPECT_STATUS_OK(status);
-    }
+    // With the raw protocols this might fail object, that is fine, we just
+    // want the code to be exercised. Ignore failures in that case.
+    EXPECT_NE(0, result.cpu_time.count());
+    EXPECT_NE(0, result.elapsed_time.count());
+
+    auto status = client->DeleteObject(bucket_name_, object_name);
+    EXPECT_STATUS_OK(status);
   }
 }
 
@@ -107,6 +109,15 @@ INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestXml,
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestGrpc,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(ApiName::kApiGrpc));
+INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawJson,
+                         ThroughputExperimentIntegrationTest,
+                         ::testing::Values(ApiName::kApiRawJson));
+INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawXml,
+                         ThroughputExperimentIntegrationTest,
+                         ::testing::Values(ApiName::kApiRawXml));
+INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawGrpc,
+                         ThroughputExperimentIntegrationTest,
+                         ::testing::Values(ApiName::kApiRawGrpc));
 
 }  // namespace
 }  // namespace storage_benchmarks
