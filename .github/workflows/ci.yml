@@ -27,12 +27,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    # Computes the path to where bazel should read/write its build output.
-    # We'll cache/restore this directory to speed up builds.
-    env:
-      cache-name: bazel-cache
-      cache-path: ${{ runner.temp }}/${{ env.cache-name }}
-
     steps:
     # Checks out this repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps.
@@ -42,14 +36,14 @@ jobs:
     - name: Cache bazel build results
       uses: actions/cache@v2.0.0
       with:
-        path: ${{ env.cache-path }}
+        path: ${{ runner.temp }}
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
           ${{ runner.os }}-${{ env.cache-name }}-master
 
     - name: Build the code
-      run: bazel --output_base=${{ env.cache-path }} build ...
+      run: bazel --output_base=${{ runner.temp }} build ...
 
     - name: Test the code
-      run: bazel --output_base=${{ env.cache-path }} test --test_output=errors --test_tag_filters=-integration-test ...
+      run: bazel --output_base=${{ runner.temp }} test --test_output=errors --test_tag_filters=-integration-test ...
 
