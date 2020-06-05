@@ -37,7 +37,7 @@ namespace testing_util {
 template <class T, typename E>
 class FakeSource {
  public:
-  FakeSource(std::deque<T> values, E status, std::size_t max_outstanding)
+  FakeSource(std::deque<T> values, E status, int max_outstanding)
       : flow_control_(max_outstanding),
         values_(std::move(values)),
         status_(std::move(status)) {}
