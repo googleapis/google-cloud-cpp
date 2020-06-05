@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
+#include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/internal/build_info.h"
@@ -30,6 +31,7 @@ namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::ApiName;
 using gcs_bm::ThroughputOptions;
+using gcs_bm::ThroughputResult;
 
 char const kDescription[] = R"""(
 A throughput vs. CPU benchmark for the Google Cloud Storage C++ client library.
@@ -88,24 +90,10 @@ A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
-enum OpType { kOpWrite, kOpInsert, kOpRead0, kOpRead1, kOpRead2 };
-struct IterationResult {
-  OpType op;
-  std::int64_t object_size;
-  std::int64_t app_buffer_size;
-  std::uint64_t lib_buffer_size;
-  bool crc_enabled;
-  bool md5_enabled;
-  ApiName api;
-  std::chrono::microseconds elapsed_time;
-  std::chrono::microseconds cpu_time;
-  google::cloud::StatusCode status;
-};
-using TestResults = std::vector<IterationResult>;
+using TestResults = std::vector<ThroughputResult>;
 
 TestResults RunThread(ThroughputOptions const& ThroughputOptions,
                       std::string const& bucket_name);
-void PrintHeader();
 void PrintResults(TestResults const& results);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
@@ -204,7 +192,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  PrintHeader();
+  gcs_bm::PrintThroughputResultHeader(std::cout);
   std::vector<std::future<TestResults>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
     tasks.emplace_back(
@@ -226,39 +214,10 @@ int main(int argc, char* argv[]) {
 }
 
 namespace {
-char const* ToString(OpType type) {
-  switch (type) {
-    case kOpRead0:
-      return "READ[0]";
-    case kOpRead1:
-      return "READ[1]";
-    case kOpRead2:
-      return "READ[2]";
-    case kOpWrite:
-      return "WRITE";
-    case kOpInsert:
-      return "INSERT";
-  }
-  return nullptr;  // silence g++ error.
-}
-
-std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
-  return os << ToString(rhs.op) << ',' << rhs.object_size << ','
-            << rhs.app_buffer_size << ',' << rhs.lib_buffer_size << ','
-            << rhs.crc_enabled << ',' << rhs.md5_enabled << ','
-            << gcs_bm::ToString(rhs.api) << ',' << rhs.elapsed_time.count()
-            << ',' << rhs.cpu_time.count() << ',' << rhs.status;
-}
-
-void PrintHeader() {
-  std::cout << "Op,ObjectSize,AppBufferSize,LibBufferSize"
-            << ",Crc32cEnabled,MD5Enabled,ApiName"
-            << ",ElapsedTimeUs,CpuTimeUs,Status\n";
-}
 
 void PrintResults(TestResults const& results) {
-  for (auto& r : results) {
-    std::cout << r << '\n';
+  for (auto const& r : results) {
+    gcs_bm::PrintAsCsv(std::cout, r);
   }
   std::cout << std::flush;
 }
@@ -363,7 +322,7 @@ TestResults RunThread(ThroughputOptions const& options,
             bucket_name, object_name, std::move(data),
             gcs::DisableCrc32cChecksum(!enable_crc),
             gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
-        return std::make_pair(kOpInsert, std::move(object_metadata));
+        return std::make_pair(gcs_bm::kOpInsert, std::move(object_metadata));
       }
       auto writer = client->WriteObject(
           bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
@@ -377,7 +336,7 @@ TestResults RunThread(ThroughputOptions const& options,
         writer.write(contents.data(), len);
       }
       writer.Close();
-      return std::make_pair(kOpWrite, writer.metadata());
+      return std::make_pair(gcs_bm::kOpWrite, writer.metadata());
     };
 
     timer.Start();
@@ -385,7 +344,7 @@ TestResults RunThread(ThroughputOptions const& options,
     timer.Stop();
 
     auto object_metadata = std::move(upload_result.second);
-    results.emplace_back(IterationResult{
+    results.emplace_back(ThroughputResult{
         upload_result.first, object_size, write_size, upload_buffer_size,
         enable_crc, enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
         object_metadata.status().code()});
@@ -398,7 +357,7 @@ TestResults RunThread(ThroughputOptions const& options,
       continue;
     }
 
-    for (auto op : {kOpRead0, kOpRead1, kOpRead2}) {
+    for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
       timer.Start();
       auto reader = client->ReadObject(
           bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
@@ -409,9 +368,9 @@ TestResults RunThread(ThroughputOptions const& options,
       }
       timer.Stop();
       results.emplace_back(
-          IterationResult{op, object_size, read_size, download_buffer_size,
-                          enable_crc, enable_md5, api, timer.elapsed_time(),
-                          timer.cpu_time(), reader.status().code()});
+          ThroughputResult{op, object_size, read_size, download_buffer_size,
+                           enable_crc, enable_md5, api, timer.elapsed_time(),
+                           timer.cpu_time(), reader.status().code()});
 
       if (options.thread_count == 1 && !reader.status().ok()) {
         std::cerr << "# status=" << reader.status() << "\n"
