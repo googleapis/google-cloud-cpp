@@ -49,18 +49,19 @@ class UploadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
-    SimpleTimer timer;
-    timer.Start();
     // When the object is relatively small using `ObjectInsert` might be more
     // efficient. Randomly select about 1/2 of the small writes to use
     // ObjectInsert()
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
+      SimpleTimer timer;
+      timer.Start();
       std::string data = random_data_.substr(0, config.object_size);
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
           gcs::DisableMD5Hash(!config.enable_md5), api_selector);
+      timer.Stop();
       return ThroughputResult{kOpInsert,
                               config.object_size,
                               config.app_buffer_size,
@@ -72,6 +73,8 @@ class UploadObject : public ThroughputExperiment {
                               timer.cpu_time(),
                               object_metadata.status().code()};
     }
+    SimpleTimer timer;
+    timer.Start();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
