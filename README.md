@@ -25,12 +25,6 @@
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 
-> **NOTICE:** This repo will soon contain the code for all the other related
-`google-cloud-cpp-*` repos. As a new monorepo
-([#3612](https://github.com/googleapis/google-cloud-cpp/issues/3612)), the
-versioning of this repo will be changing to have a single per-repo version. See
-https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
-
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
