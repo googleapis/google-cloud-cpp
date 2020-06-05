@@ -82,8 +82,6 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
         $extract_flags=@(
             # Preserve full path
             "-spf",
-            # Preserve symbolic links
-            "-snl",
             # Preserve hard links
             "-snh",
             # Overwrite all items
@@ -187,8 +185,6 @@ if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
     $archive_flags=@(
         # Preserve hard links
         "-snh",
-        # Preserve soft links
-        "-snl",
         # Preserve full path
         "-spf",
         # Exclude directories named "install"
