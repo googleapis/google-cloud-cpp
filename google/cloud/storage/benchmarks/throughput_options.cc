@@ -1,0 +1,240 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/storage/benchmarks/throughput_options.h"
+#include "absl/strings/str_split.h"
+
+namespace google {
+namespace cloud {
+namespace storage_benchmarks {
+
+google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
+    std::vector<std::string> const& argv, std::string const& description) {
+  ThroughputOptions options;
+  bool wants_help = false;
+  bool wants_description = false;
+
+  auto parse_checksums = [](std::string const& val) -> std::vector<bool> {
+    if (val == "enabled") {
+      return {true};
+    }
+    if (val == "disabled") {
+      return {false};
+    }
+    if (val == "random") {
+      return {false, true};
+    }
+    return {};
+  };
+
+  std::vector<OptionDescriptor> desc{
+      {"--help", "print usage information",
+       [&wants_help](std::string const&) { wants_help = true; }},
+      {"--description", "print benchmark description",
+       [&wants_description](std::string const&) { wants_description = true; }},
+      {"--project-id", "use the given project id for the benchmark",
+       [&options](std::string const& val) { options.project_id = val; }},
+      {"--region", "use the given region for the benchmark",
+       [&options](std::string const& val) { options.region = val; }},
+      {"--bucket-prefix", "use the given prefix to create a bucket name",
+       [&options](std::string const& val) { options.bucket_prefix = val; }},
+      {"--thread-count", "set the number of threads in the benchmark",
+       [&options](std::string const& val) {
+         options.thread_count = std::stoi(val);
+       }},
+      {"--minimum-object-size", "configure the minimum object size",
+       [&options](std::string const& val) {
+         options.minimum_object_size = ParseSize(val);
+       }},
+      {"--maximum-object-size", "configure the maximum object size",
+       [&options](std::string const& val) {
+         options.maximum_object_size = ParseSize(val);
+       }},
+      {"--minimum-write-size",
+       "configure the minimum buffer size for write() calls",
+       [&options](std::string const& val) {
+         options.minimum_write_size = ParseSize(val);
+       }},
+      {"--maximum-write-size",
+       "configure the maximum buffer size for write() calls",
+       [&options](std::string const& val) {
+         options.maximum_write_size = ParseSize(val);
+       }},
+      {"--write-quantum", "quantize the buffer sizes for write() calls",
+       [&options](std::string const& val) {
+         options.write_quantum = ParseSize(val);
+       }},
+      {"--minimum-read-size",
+       "configure the minimum buffer size for read() calls",
+       [&options](std::string const& val) {
+         options.minimum_read_size = ParseSize(val);
+       }},
+      {"--maximum-read-size",
+       "configure the maximum buffer size for read() calls",
+       [&options](std::string const& val) {
+         options.maximum_read_size = ParseSize(val);
+       }},
+      {"--read-quantum", "quantize the buffer sizes for read() calls",
+       [&options](std::string const& val) {
+         options.read_quantum = ParseSize(val);
+       }},
+      {"--duration", "continue the test for at least this amount of time",
+       [&options](std::string const& val) {
+         options.duration = ParseDuration(val);
+       }},
+      {"--minimum-sample-count",
+       "continue the test until at least this number of samples are obtained",
+       [&options](std::string const& val) {
+         options.minimum_sample_count = std::stol(val);
+       }},
+      {"--maximum-sample-count",
+       "stop the test when this number of samples are obtained",
+       [&options](std::string const& val) {
+         options.maximum_sample_count = std::stol(val);
+       }},
+      {"--enabled-apis", "enable a subset of the APIs for the test",
+       [&options](std::string const& val) {
+         std::map<std::string, ApiName> const names{
+             {"JSON", ApiName::kApiJson},
+             {"XML", ApiName::kApiXml},
+             {"GRPC", ApiName::kApiGrpc},
+         };
+         options.enabled_apis.clear();
+         std::set<ApiName> apis;
+         for (auto& token : absl::StrSplit(val, ',')) {
+           auto const l = names.find(std::string(token));
+           if (l == names.end()) return;
+           apis.insert(l->second);
+         }
+         options.enabled_apis = {apis.begin(), apis.end()};
+       }},
+      {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
+       [&options, &parse_checksums](std::string const& val) {
+         options.enabled_crc32c = parse_checksums(val);
+       }},
+      {"--enabled-md5", "run with MD5 enabled, disabled, or both",
+       [&options, &parse_checksums](std::string const& val) {
+         options.enabled_md5 = parse_checksums(val);
+       }},
+  };
+  auto usage = BuildUsage(desc, argv[0]);
+
+  auto unparsed = OptionsParse(desc, argv);
+  if (wants_help) {
+    std::cout << usage << "\n";
+  }
+
+  if (wants_description) {
+    std::cout << description << "\n";
+  }
+
+  auto make_status = [](std::ostringstream& os) {
+    auto const code = google::cloud::StatusCode::kInvalidArgument;
+    return google::cloud::Status{code, std::move(os).str()};
+  };
+
+  if (unparsed.size() > 2) {
+    std::ostringstream os;
+    os << "Unknown arguments or options\n" << usage << "\n";
+    return make_status(os);
+  }
+  if (unparsed.size() == 2) {
+    options.region = unparsed[1];
+  }
+  if (options.region.empty()) {
+    std::ostringstream os;
+    os << "Missing value for --region option\n" << usage << "\n";
+    return make_status(os);
+  }
+
+  if (options.minimum_object_size > options.maximum_object_size) {
+    std::ostringstream os;
+    os << "Invalid range for object size [" << options.minimum_object_size
+       << ',' << options.maximum_object_size << "]";
+    return make_status(os);
+  }
+
+  if (options.minimum_write_size > options.maximum_write_size) {
+    std::ostringstream os;
+    os << "Invalid range for write size [" << options.minimum_write_size << ','
+       << options.maximum_write_size << "]";
+    return make_status(os);
+  }
+  if (options.write_quantum <= 0 ||
+      options.write_quantum > options.minimum_write_size) {
+    std::ostringstream os;
+    os << "Invalid value for --write-quantum (" << options.write_quantum
+       << "), it should be in the [1," << options.minimum_write_size
+       << "] range";
+    return make_status(os);
+  }
+
+  if (options.minimum_read_size > options.maximum_read_size) {
+    std::ostringstream os;
+    os << "Invalid range for read size [" << options.minimum_read_size << ','
+       << options.maximum_read_size << "]";
+    return make_status(os);
+  }
+  if (options.read_quantum <= 0 ||
+      options.read_quantum > options.minimum_read_size) {
+    std::ostringstream os;
+    os << "Invalid value for --read-quantum (" << options.read_quantum
+       << "), it should be in the [1," << options.minimum_read_size
+       << "] range";
+    return make_status(os);
+  }
+
+  if (options.minimum_sample_count > options.maximum_sample_count) {
+    std::ostringstream os;
+    os << "Invalid range for sample range [" << options.minimum_sample_count
+       << ',' << options.maximum_sample_count << "]";
+    return make_status(os);
+  }
+
+  if (!SimpleTimer::SupportPerThreadUsage() && options.thread_count > 1) {
+    std::cerr <<
+        R"""(
+# WARNING
+# Your platform does not support per-thread usage metrics and you have enabled
+# multiple threads, so the CPU usage results will not be usable. See
+# getrusage(2) for more information.
+# END WARNING
+#
+)""";
+  }
+
+  if (options.enabled_apis.empty()) {
+    std::ostringstream os;
+    os << "No APIs configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.enabled_crc32c.empty()) {
+    std::ostringstream os;
+    os << "No CRC32C settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  if (options.enabled_md5.empty()) {
+    std::ostringstream os;
+    os << "No MD5 settings configured for benchmark.";
+    return make_status(os);
+  }
+
+  return options;
+}
+
+}  // namespace storage_benchmarks
+}  // namespace cloud
+}  // namespace google

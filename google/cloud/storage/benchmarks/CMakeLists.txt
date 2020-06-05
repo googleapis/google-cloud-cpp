@@ -21,8 +21,10 @@ if (BUILD_TESTING)
     find_package(absl CONFIG REQUIRED)
     unset(FPHSA_NAME_MISMATCHED)
 
-    add_library(storage_benchmarks # cmake-format: sort
-                benchmark_utils.cc benchmark_utils.h bounded_queue.h)
+    add_library(
+        storage_benchmarks # cmake-format: sort
+        benchmark_utils.cc benchmark_utils.h bounded_queue.h
+        throughput_options.cc throughput_options.h)
     target_link_libraries(storage_benchmarks PUBLIC storage_client)
     google_cloud_cpp_add_common_options(storage_benchmarks)
 
@@ -74,8 +76,11 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(storage_benchmarks_unit_tests
         # cmake-format: sort
-        benchmark_make_random_test.cc benchmark_parse_args_test.cc
-        benchmark_parser_test.cc benchmark_utils_test.cc)
+        benchmark_make_random_test.cc
+        benchmark_parse_args_test.cc
+        benchmark_parser_test.cc
+        benchmark_utils_test.cc
+        throughput_options_test.cc)
 
     foreach (fname ${storage_benchmarks_unit_tests})
         google_cloud_cpp_add_executable(target "storage_benchmarks" "${fname}")
