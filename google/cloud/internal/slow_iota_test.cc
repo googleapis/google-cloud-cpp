@@ -41,7 +41,8 @@ class SlowIota {
   SlowIota(CompletionQueue cq, int count, Duration const& period)
       : cq_(std::move(cq)),
         period_(std::chrono::duration_cast<std::chrono::microseconds>(period)),
-        counter_limit_(count) {}
+        counter_limit_(count),
+        flow_control_(1) {}
 
   SlowIota(SlowIota&&) noexcept = default;
 
@@ -54,8 +55,10 @@ class SlowIota {
   using value_type = int;
   using error_type = google::cloud::Status;
 
+  future<ReadyToken> ready() { return flow_control_.Acquire(); }
+
   /// Get the next event, only one such call allowed at a time.
-  future<absl::variant<int, google::cloud::Status>> next();
+  future<absl::variant<int, google::cloud::Status>> next(ReadyToken token);
   //@}
 
  private:
@@ -63,6 +66,8 @@ class SlowIota {
   std::chrono::microseconds period_;
   int counter_limit_;
   int counter_ = 0;
+
+  internal::ReadyTokenFlowControl flow_control_;
 };
 
 using ::testing::ElementsAre;
@@ -78,7 +83,8 @@ TEST(SlowIota, Blocking) {
 
   // Retrieve the results blocking on each, yuck.
   std::vector<int> results;
-  for (auto v = iota.next().get(); v.index() == 0; v = iota.next().get()) {
+  auto next = [&iota] { return iota.next(iota.ready().get()).get(); };
+  for (auto v = next(); v.index() == 0; v = next()) {
     results.push_back(absl::get<0>(v));
   }
   EXPECT_THAT(results, ElementsAre(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
@@ -102,7 +108,11 @@ TEST(SlowIota, Background) {
   pool.Shutdown();
 }
 
-future<absl::variant<int, google::cloud::Status>> SlowIota::next() {
+future<absl::variant<int, google::cloud::Status>> SlowIota::next(
+    ReadyToken token) {
+  if (!flow_control_.Release(std::move(token))) {
+    google::cloud::internal::ThrowLogicError("invalid token in flow control");
+  }
   using R = absl::variant<int, google::cloud::Status>;
   if (counter_ >= counter_limit_) {
     ++counter_;
