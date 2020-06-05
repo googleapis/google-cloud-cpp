@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_SOURCE_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/source_ready_token.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include "absl/types/variant.h"
 #include <chrono>
 #include <deque>
@@ -35,14 +37,27 @@ namespace testing_util {
 template <class T, typename E>
 class FakeSource {
  public:
+  FakeSource(std::deque<T> values, E status, std::size_t max_outstanding)
+      : flow_control_(max_outstanding),
+        values_(std::move(values)), status_(std::move(status)) {}
+
   FakeSource(std::deque<T> values, E status)
-      : values_(std::move(values)), status_(std::move(status)) {}
+      : FakeSource(std::move(values), std::move(status), 1) {}
 
   //@{
   using value_type = T;
   using error_type = E;
 
-  future<absl::variant<T, E>> next() {
+  future<internal::ReadyToken> ready() {
+    return flow_control_.Acquire();
+  }
+
+  future<absl::variant<T, E>> next(internal::ReadyToken token) {
+    if (!flow_control_.Release(std::move(token))) {
+      // We prefer to crash in this case. The program is buggy, there is little
+      // point in returning an error.
+      internal::ThrowLogicError("mismatched or invalid ReadyToken");
+    }
     using event_t = absl::variant<T, E>;
 
     promise<event_t> p;
@@ -67,6 +82,7 @@ class FakeSource {
   //@}
 
  private:
+  internal::ReadyTokenFlowControl flow_control_;
   std::deque<T> values_;
   E status_;
 };

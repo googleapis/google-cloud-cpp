@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SOURCE_ACCUMULATORS_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/version.h"
+#include "google/cloud/internal/source_ready_token.h"
 #include "absl/meta/type_traits.h"
 #include "absl/types/variant.h"
 #include <vector>
@@ -63,7 +63,19 @@ future<AccumulateAllEventsType<absl::decay_t<Source>>> AccumulateAllEvents(
     std::vector<value_t> results;
 
     void Start(promise<event_t> done) {
-      /// Simulate extended lambda captures, we want to move @p done.
+      // Simulate extended lambda captures, we want to move @p done.
+      struct OnReady {
+        Accumulator* self;
+        promise<event_t> done;
+        void operator()(future<ReadyToken> f) {
+          self->OnReady(f.get(), std::move(done));
+        }
+      };
+      source.ready().then(OnReady{this, std::move(done)});
+    }
+
+    void OnReady(ReadyToken token, promise<event_t> done) {
+      // Simulate extended lambda captures, we want to move @p done.
       struct OnNext {
         Accumulator* self;
         promise<event_t> done;
@@ -71,7 +83,7 @@ future<AccumulateAllEventsType<absl::decay_t<Source>>> AccumulateAllEvents(
           self->OnNext(f.get(), std::move(done));
         }
       };
-      source.next().then(OnNext{this, std::move(done)});
+      source.next(std::move(token)).then(OnNext{this, std::move(done)});
     }
 
     void OnNext(source_event_t v, promise<event_t> done) {

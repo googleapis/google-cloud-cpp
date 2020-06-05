@@ -65,25 +65,10 @@ TEST(SourceAccumulators, AccumulateAllErrorAfterData) {
   EXPECT_EQ(absl::get<1>(actual).message(), "uh-oh");
 }
 
-TEST(SourceAccumulators, AccumulateAllCopy) {
-  FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
-  auto const actual = AccumulateAllEvents(mock).get();
-  ASSERT_EQ(actual.index(), 0);  // expect success
-  EXPECT_THAT(absl::get<0>(actual), ElementsAre(1, 2, 3, 4));
-}
-
 TEST(SourceAccumulators, AccumulateAllRef) {
   FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
   auto& ref = mock;
-  auto const actual = AccumulateAllEvents(ref).get();
-  ASSERT_EQ(actual.index(), 0);  // expect success
-  EXPECT_THAT(absl::get<0>(actual), ElementsAre(1, 2, 3, 4));
-}
-
-TEST(SourceAccumulators, AccumulateAllConstRef) {
-  FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
-  auto const& cref = mock;
-  auto const actual = AccumulateAllEvents(cref).get();
+  auto const actual = AccumulateAllEvents(std::move(ref)).get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(actual), ElementsAre(1, 2, 3, 4));
 }
