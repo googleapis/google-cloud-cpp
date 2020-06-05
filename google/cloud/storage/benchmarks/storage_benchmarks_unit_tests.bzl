@@ -22,4 +22,5 @@ storage_benchmarks_unit_tests = [
     "benchmark_parser_test.cc",
     "benchmark_utils_test.cc",
     "throughput_options_test.cc",
+    "throughput_result_test.cc",
 ]
