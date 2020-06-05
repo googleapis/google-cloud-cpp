@@ -39,7 +39,8 @@ class FakeSource {
  public:
   FakeSource(std::deque<T> values, E status, std::size_t max_outstanding)
       : flow_control_(max_outstanding),
-        values_(std::move(values)), status_(std::move(status)) {}
+        values_(std::move(values)),
+        status_(std::move(status)) {}
 
   FakeSource(std::deque<T> values, E status)
       : FakeSource(std::move(values), std::move(status), 1) {}
@@ -48,9 +49,7 @@ class FakeSource {
   using value_type = T;
   using error_type = E;
 
-  future<internal::ReadyToken> ready() {
-    return flow_control_.Acquire();
-  }
+  future<internal::ReadyToken> ready() { return flow_control_.Acquire(); }
 
   future<absl::variant<T, E>> next(internal::ReadyToken token) {
     if (!flow_control_.Release(std::move(token))) {
