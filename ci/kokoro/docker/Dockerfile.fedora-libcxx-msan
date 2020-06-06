@@ -22,6 +22,12 @@ RUN dnf makecache && \
         llvm-devel make ninja-build openssl-devel python3-lit tar unzip which \
         wget xz
 
+# Sets root's password to the empty string to enable users to get a root shell
+# inside the container with `su -` and no password. Sudo would not work because
+# we run these containers as the invoking user's uid, which does not exist in
+# the container's /etc/passwd file.
+RUN echo 'root:' | chpasswd
+
 WORKDIR /var/tmp/build
 RUN wget -q http://releases.llvm.org/8.0.0/libcxx-8.0.0.src.tar.xz
 RUN tar -xf libcxx-8.0.0.src.tar.xz
