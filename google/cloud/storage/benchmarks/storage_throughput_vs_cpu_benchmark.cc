@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
@@ -21,6 +22,8 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/algorithm/container.h"
+#include "absl/memory/memory.h"
 #include "absl/strings/str_join.h"
 #include <future>
 #include <set>
@@ -55,16 +58,25 @@ taken into account.
 After creating this bucket the program creates a number of threads, configurable
 via the command line, to obtain more samples in parallel. Configure this value
 with a small enough number of threads such that you do not saturate the CPU.
-Each thread creates a separate copy of the `storage::Client` object, and repeats
-this loop (see below for the conditions to stop the loop):
+
+Each thread creates C++ objects to perform the "upload experiments". Each one
+of these objects represents the "api" used to perform the upload, that is XML,
+JSON and/or gRPC (though technically gRPC is just another protocol for the JSON
+API). Likewise, the thread creates a number of "download experiments", also
+based on the APIs configured via the command-line.
+
+Then the thread repeats the following steps (see below for the conditions to
+stop the loop):
 
 - Select a random size, between two values configured in the command line of the
   object to upload.
 - The application buffer sizes for `read()` and `write()` calls are also
   selected at random. These sizes are quantized, and the quantum can be
   configured in the command-line.
-- Select, at random, the protocol / API used to perform the test, could be XML,
-  JSON, or gRPC.
+- Select a random uploader, that is, which API will be used to upload the
+  object.
+- Select a random downloader, that is, which API will be used to download the
+  object.
 - Select, at random, if the client library will perform CRC32C and/or MD5 hashes
   on the uploaded and downloaded data.
 - Upload an object of the selected size, choosing the name of the object at
@@ -72,9 +84,10 @@ this loop (see below for the conditions to stop the loop):
 - Once the object is fully uploaded, the program captures the object size, the
   write buffer size, the elapsed time (in microseconds), the CPU time
   (in microseconds) used during the upload, and the status code for the upload.
-- Then the program downloads the same object, and captures the object size, the
-  read buffer size, the elapsed time (in microseconds), the CPU time (in
-  microseconds) used during the download, and the status code for the download.
+- Then the program downloads the same object (3 times), and captures the object
+  size, the read buffer size, the elapsed time (in microseconds), the CPU time
+  (in microseconds) used during the download, and the status code for the
+  download.
 - The program then deletes this object and starts another iteration.
 
 The loop stops when any of the following conditions are met:
@@ -225,7 +238,6 @@ void PrintResults(TestResults const& results) {
 TestResults RunThread(ThroughputOptions const& options,
                       std::string const& bucket_name) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto contents = gcs_bm::MakeRandomData(generator, options.maximum_write_size);
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
   if (!client_options) {
@@ -237,13 +249,27 @@ TestResults RunThread(ThroughputOptions const& options,
   std::uint64_t download_buffer_size = client_options->download_buffer_size();
 
   gcs::Client rest_client(*client_options);
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  gcs::Client grpc_client =
-      google::cloud::storage_experimental::DefaultGrpcClient(
-          *std::move(client_options));
-#else
-  gcs::Client grpc_client(rest_client);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRP
+
+  auto uploaders = gcs_bm::CreateUploadExperiments(options, *client_options);
+  if (uploaders.empty()) {
+    // This is possible if only gRPC is requested but the benchmark was compiled
+    // without gRPC support.
+    std::cout << "# None of the APIs configured are available\n";
+    return {};
+  }
+  auto downloaders =
+      gcs_bm::CreateDownloadExperiments(options, *client_options);
+  if (downloaders.empty()) {
+    // This is possible if only gRPC is requested but the benchmark was compiled
+    // without gRPC support.
+    std::cout << "# None of the APIs configured are available\n";
+    return {};
+  }
+
+  std::uniform_int_distribution<std::size_t> uploader_generator(
+      0, uploaders.size() - 1);
+  std::uniform_int_distribution<std::size_t> downloader_generator(
+      0, downloaders.size() - 1);
 
   std::uniform_int_distribution<std::int64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
@@ -287,97 +313,31 @@ TestResults RunThread(ThroughputOptions const& options,
     bool const enable_crc = options.enabled_crc32c[crc32c_generator(generator)];
     bool const enable_md5 = options.enabled_md5[md5_generator(generator)];
     auto const api = options.enabled_apis[api_generator(generator)];
-    auto xml_write_selector = gcs::Fields();
-    auto json_read_selector = gcs::IfGenerationNotMatch();
 
-    auto* client = &rest_client;
-    switch (api) {
-      case gcs_bm::ApiName::kApiXml:
-        // For writes (uploads) the default is JSON, but if the application is
-        // not interested in any fields on the metadata the library can switch
-        // to XML and does.
-        xml_write_selector = gcs::Fields("");
-        break;
+    auto& uploader = uploaders[uploader_generator(generator)];
+    auto upload_result =
+        uploader->Run(bucket_name, object_name,
+                      gcs_bm::ThroughputExperimentConfig{
+                          gcs_bm::kOpWrite, object_size, write_size,
+                          upload_buffer_size, enable_crc, enable_md5});
+    auto status = upload_result.status;
+    results.emplace_back(std::move(upload_result));
 
-      case gcs_bm::ApiName::kApiJson:
-        // For reads (downloads) the default is XML, unless the application is
-        // using features that only JSON supports, like `IfGenerationNotMatch`.
-        json_read_selector = gcs::IfGenerationNotMatch(0);
-        break;
-
-      case gcs_bm::ApiName::kApiGrpc:
-        client = &grpc_client;
-        break;
-    }
-
-    auto perform_upload = [&options, &contents, client, bucket_name,
-                           object_name, object_size, write_size, enable_crc,
-                           enable_md5, xml_write_selector](bool prefer_insert) {
-      // When the object is relatively small using `ObjectInsert` might be more
-      // efficient. Randomly select about 1/2 of the small writes to use
-      // ObjectInsert()
-      if (object_size < options.maximum_write_size && prefer_insert) {
-        std::string data = contents.substr(0, object_size);
-        auto object_metadata = client->InsertObject(
-            bucket_name, object_name, std::move(data),
-            gcs::DisableCrc32cChecksum(!enable_crc),
-            gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
-        return std::make_pair(gcs_bm::kOpInsert, std::move(object_metadata));
-      }
-      auto writer = client->WriteObject(
-          bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
-          gcs::DisableMD5Hash(!enable_md5), xml_write_selector);
-      for (std::int64_t offset = 0; offset < object_size;
-           offset += write_size) {
-        auto len = write_size;
-        if (offset + len > object_size) {
-          len = object_size - offset;
-        }
-        writer.write(contents.data(), len);
-      }
-      writer.Close();
-      return std::make_pair(gcs_bm::kOpWrite, writer.metadata());
-    };
-
-    timer.Start();
-    auto upload_result = perform_upload(use_insert(generator));
-    timer.Stop();
-
-    auto object_metadata = std::move(upload_result.second);
-    results.emplace_back(ThroughputResult{
-        upload_result.first, object_size, write_size, upload_buffer_size,
-        enable_crc, enable_md5, api, timer.elapsed_time(), timer.cpu_time(),
-        object_metadata.status().code()});
-
-    if (!object_metadata) {
+    if (status != google::cloud::StatusCode::kOk) {
       if (options.thread_count == 1) {
-        std::cerr << "# status=" << object_metadata.status()
-                  << ", api=" << gcs_bm::ToString(api) << "\n";
+        std::cout << "# status=" << status << ", api=" << gcs_bm::ToString(api)
+                  << "\n";
       }
       continue;
     }
 
+    auto& downloader = downloaders[downloader_generator(generator)];
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
-      timer.Start();
-      auto reader = client->ReadObject(
-          bucket_name, object_name, gcs::DisableCrc32cChecksum(!enable_crc),
-          gcs::DisableMD5Hash(!enable_md5), json_read_selector);
-      std::vector<char> buffer(read_size);
-      for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
-           num_read += reader.gcount()) {
-      }
-      timer.Stop();
-      results.emplace_back(
-          ThroughputResult{op, object_size, read_size, download_buffer_size,
-                           enable_crc, enable_md5, api, timer.elapsed_time(),
-                           timer.cpu_time(), reader.status().code()});
-
-      if (options.thread_count == 1 && !reader.status().ok()) {
-        std::cerr << "# status=" << reader.status() << "\n"
-                  << "# metadata=" << *object_metadata << "\n"
-                  << "# json_read_selector=" << json_read_selector.has_value()
-                  << "\n";
-      }
+      results.emplace_back(downloader->Run(
+          bucket_name, object_name,
+          gcs_bm::ThroughputExperimentConfig{op, object_size, read_size,
+                                             download_buffer_size, enable_crc,
+                                             enable_md5}));
     }
     if (options.thread_count == 1) {
       // Immediately print the results, this makes it easier to debug problems.
@@ -385,7 +345,7 @@ TestResults RunThread(ThroughputOptions const& options,
       results.clear();
     }
 
-    auto status = client->DeleteObject(bucket_name, object_name);
+    (void)rest_client.DeleteObject(bucket_name, object_name);
   }
   return results;
 }
@@ -403,9 +363,6 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
     return google::cloud::Status(google::cloud::StatusCode::kUnknown,
                                  std::move(os).str());
   }
-  auto const* const thread_count_arg =
-      gcs_bm::SimpleTimer::SupportPerThreadUsage() ? "--thread-count=2"
-                                                   : "--thread-count=1";
   return gcs_bm::ParseThroughputOptions(
       {
           argv0,
@@ -413,7 +370,7 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--region=" +
               GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
           "--bucket-prefix=cloud-cpp-testing-ci-",
-          thread_count_arg,
+          "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",
           "--minimum-write-size=16KiB",
@@ -423,9 +380,9 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--maximum-read-size=128KiB",
           "--read-quantum=16KiB",
           "--duration=1s",
-          "--minimum-sample-count=1",
-          "--maximum-sample-count=2",
-          "--enabled-apis=JSON,GRPC,XML",
+          "--minimum-sample-count=4",
+          "--maximum-sample-count=10",
+          "--enabled-apis=JSON,XML",
           "--enabled-crc32c=enabled",
           "--enabled-md5=disabled",
       },

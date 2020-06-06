@@ -26,12 +26,15 @@ if (BUILD_TESTING)
         benchmark_utils.cc
         benchmark_utils.h
         bounded_queue.h
+        throughput_experiment.cc
+        throughput_experiment.h
         throughput_options.cc
         throughput_options.h
         throughput_result.cc
         throughput_result.h
         throughput_result_test.cc)
-    target_link_libraries(storage_benchmarks PUBLIC storage_client)
+    target_link_libraries(storage_benchmarks PUBLIC storage_client
+                                                    storage_client_testing)
     google_cloud_cpp_add_common_options(storage_benchmarks)
 
     include(CheckCXXSymbolExists)
