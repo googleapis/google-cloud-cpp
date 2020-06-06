@@ -363,9 +363,6 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
     return google::cloud::Status(google::cloud::StatusCode::kUnknown,
                                  std::move(os).str());
   }
-  auto const* const thread_count_arg =
-      gcs_bm::SimpleTimer::SupportPerThreadUsage() ? "--thread-count=2"
-                                                   : "--thread-count=1";
   return gcs_bm::ParseThroughputOptions(
       {
           argv0,
@@ -373,7 +370,7 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--region=" +
               GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
           "--bucket-prefix=cloud-cpp-testing-ci-",
-          thread_count_arg,
+          "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",
           "--minimum-write-size=16KiB",
@@ -383,8 +380,8 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--maximum-read-size=128KiB",
           "--read-quantum=16KiB",
           "--duration=1s",
-          "--minimum-sample-count=1",
-          "--maximum-sample-count=2",
+          "--minimum-sample-count=4",
+          "--maximum-sample-count=10",
           "--enabled-apis=JSON,GRPC,XML",
           "--enabled-crc32c=enabled",
           "--enabled-md5=disabled",
