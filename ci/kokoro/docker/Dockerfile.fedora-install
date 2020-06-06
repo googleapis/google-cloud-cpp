@@ -26,6 +26,12 @@ RUN dnf makecache && \
         make ninja-build openssl-devel pkgconfig protobuf-compiler python3 python3-pip \
         ShellCheck tar unzip w3m wget which zlib-devel
 
+# Sets root's password to the empty string to enable users to get a root shell
+# inside the container with `su -` and no password. Sudo would not work because
+# we run these containers as the invoking user's uid, which does not exist in
+# the container's /etc/passwd file.
+RUN echo 'root:' | chpasswd
+
 # Install the the buildifier tool, which does not compile with the default
 # golang compiler for Ubuntu 16.04 and Ubuntu 18.04.
 RUN wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
