@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_benchmark_programs = [
+    "throughput_experiment_test.cc",
     "storage_file_transfer_benchmark.cc",
     "storage_parallel_uploads_benchmark.cc",
     "storage_shard_throughput_benchmark.cc",
