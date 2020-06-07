@@ -23,8 +23,6 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
-namespace gcs = google::cloud::storage;
-
 class ThroughputExperimentIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<ApiName> {
