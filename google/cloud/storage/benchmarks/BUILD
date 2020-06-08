@@ -24,12 +24,15 @@ cc_library(
     hdrs = storage_benchmarks_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_google_googleapis//google/storage/v1:storage_cc_grpc",
+        "@com_google_googleapis//google/storage/v1:storage_cc_proto",
     ],
 )
 

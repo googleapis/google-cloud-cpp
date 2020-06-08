@@ -114,7 +114,14 @@ void DeleteAllObjects(google::cloud::storage::Client client,
 
 // Technically gRPC is not a different API, just the JSON API over a different
 // protocol, but it is easier to represent it as such in the benchmark.
-enum class ApiName { kApiJson, kApiXml, kApiGrpc };
+enum class ApiName {
+  kApiJson,
+  kApiXml,
+  kApiGrpc,
+  kApiRawJson,
+  kApiRawXml,
+  kApiRawGrpc,
+};
 char const* ToString(ApiName api);
 
 }  // namespace storage_benchmarks

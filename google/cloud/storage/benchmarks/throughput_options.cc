@@ -105,14 +105,22 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        }},
       {"--enabled-apis", "enable a subset of the APIs for the test",
        [&options](std::string const& val) {
-         std::map<std::string, ApiName> const names{
-             {"JSON", ApiName::kApiJson},
-             {"XML", ApiName::kApiXml},
-             {"GRPC", ApiName::kApiGrpc},
-         };
+         auto const names = [] {
+           std::map<std::string, ApiName> names;
+           for (auto a : {
+                    ApiName::kApiJson,
+                    ApiName::kApiXml,
+                    ApiName::kApiGrpc,
+                    ApiName::kApiRawJson,
+                    ApiName::kApiRawXml,
+                    ApiName::kApiRawGrpc,
+                })
+             names[ToString(a)] = a;
+           return names;
+         }();
          options.enabled_apis.clear();
          std::set<ApiName> apis;
-         for (auto& token : absl::StrSplit(val, ',')) {
+         for (auto const& token : absl::StrSplit(val, ',')) {
            auto const l = names.find(std::string(token));
            if (l == names.end()) return;
            apis.insert(l->second);
