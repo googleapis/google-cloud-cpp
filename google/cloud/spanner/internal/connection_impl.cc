@@ -414,7 +414,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
-        google::spanner::v1 ::ExecuteSqlRequest& request)> const&
+        google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());

@@ -74,7 +74,7 @@ ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
   auto session = raw_client_->CreateResumableSession(request);
   if (!session) {
-    auto error = absl::make_unique<internal ::ResumableUploadSessionError>(
+    auto error = absl::make_unique<internal::ResumableUploadSessionError>(
         std::move(session).status());
 
     ObjectWriteStream error_stream(
