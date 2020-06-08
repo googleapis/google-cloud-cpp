@@ -36,12 +36,11 @@ void Apply(google::cloud::bigtable::Table table,
         std::chrono::system_clock::now().time_since_epoch());
 
     cbt::SingleRowMutation mutation("test-key-for-apply");
-    mutation.emplace_back(cbt::SetCell("fam", "some-column", "some-value"));
     mutation.emplace_back(
-        cbt::SetCell("fam", "another-column", "another-value"));
-    mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
-                                       "with-explicit-timestamp"));
-    google::cloud::Status status = table.Apply(std::move(mutation));
+        cbt::SetCell("fam", "column0", timestamp, "value for column0"));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "column1", timestamp, "value for column1"));
+    auto status = table.Apply(std::move(mutation));
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply]
@@ -80,7 +79,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
                      table_id, cbt::LimitedErrorCountRetryPolicy(7));
     cbt::SingleRowMutation mutation(
         row_key, cbt::SetCell("fam", "some-column",
-                              std::chrono ::milliseconds(0), "some-value"));
+                              std::chrono::milliseconds(0), "some-value"));
     google::cloud::Status status = table.Apply(std::move(mutation));
     if (!status.ok()) throw std::runtime_error(status.message());
   }
@@ -320,8 +319,7 @@ void RowExists(google::cloud::bigtable::Table table,
 
     // Read a row, this returns a tuple (bool, row)
     StatusOr<std::pair<bool, cbt::Row>> status = table.ReadRow(row_key, filter);
-
-    if (!status) throw std::runtime_error("Table does not exist!");
+    if (!status) throw std::runtime_error(status.status().message());
 
     if (!status->first) {
       std::cout << "Row  not found\n";
@@ -357,10 +355,12 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
     columns.emplace_back(
         std::make_pair(it->substr(0, pos), it->substr(pos + 1)));
   }
+  //! [connect data]
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
           project_id, instance_id, google::cloud::bigtable::ClientOptions()),
       table_id);
+  //! [connect data]
 
   // [START bigtable_mutate_delete_columns]
   namespace cbt = google::cloud::bigtable;
@@ -398,7 +398,6 @@ void MutateDeleteRows(google::cloud::bigtable::Table table,
     for (auto const& f : failures) {
       std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
     }
-    throw std::runtime_error(failures.front().status().message());
   }
   // [END bigtable_mutate_delete_rows]
   (std::move(table), std::move(argv));
@@ -514,8 +513,9 @@ void RenameColumn(google::cloud::bigtable::Table table,
       auto timestamp_in_milliseconds =
           std::chrono::duration_cast<std::chrono::milliseconds>(
               cell.timestamp());
-      mutation.emplace_back(cbt::SetCell(
-          family, new_name, timestamp_in_milliseconds, cell.value()));
+      mutation.emplace_back(cbt::SetCell(family, new_name,
+                                         timestamp_in_milliseconds,
+                                         std::move(cell).value()));
     }
     mutation.emplace_back(cbt::DeleteFromColumn("fam", old_name));
 
@@ -727,7 +727,7 @@ void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
       google::cloud::bigtable::CreateDefaultDataClient(
           admin.project(), admin.instance_id(),
           google::cloud::bigtable::ClientOptions()),
-      table_id);
+      table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running MutateInsertUpdateRows() example [1]" << std::endl;
   MutateInsertUpdateRows(table, {"row1", "fam:col1=value1.1",
@@ -753,12 +753,10 @@ void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
   // Some temporary variables to make the snippet below more readable.
   auto const project_id = admin.project();
   auto const instance_id = admin.instance_id();
-  //! [connect data]
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
           project_id, instance_id, google::cloud::bigtable::ClientOptions()),
-      table_id);
-  //! [connect data]
+      table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running WriteSimple() example" << std::endl;
   WriteSimple(table, {});
@@ -788,7 +786,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
       google::cloud::bigtable::CreateDefaultDataClient(
           admin.project(), admin.instance_id(),
           google::cloud::bigtable::ClientOptions()),
-      table_id);
+      table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "\nPreparing data for MutateDeleteColumns()" << std::endl;
   MutateInsertUpdateRows(

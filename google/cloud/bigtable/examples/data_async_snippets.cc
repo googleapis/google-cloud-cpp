@@ -33,11 +33,10 @@ void AsyncApply(google::cloud::bigtable::Table table,
         std::chrono::system_clock::now().time_since_epoch());
 
     cbt::SingleRowMutation mutation(row_key);
-    mutation.emplace_back(cbt::SetCell("fam", "some-column", "some-value"));
     mutation.emplace_back(
-        cbt::SetCell("fam", "another-column", "another-value"));
-    mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
-                                       "with-explicit-timestamp"));
+        cbt::SetCell("fam", "column0", timestamp, "value for column0"));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "column1", timestamp, "value for column1"));
 
     future<google::cloud::Status> status_future =
         table.AsyncApply(std::move(mutation), cq);
@@ -335,7 +334,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::bigtable::CreateDefaultDataClient(
           admin.project(), admin.instance_id(),
           google::cloud::bigtable::ClientOptions()),
-      table_id);
+      table_id, cbt::AlwaysRetryMutationPolicy());
 
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });
