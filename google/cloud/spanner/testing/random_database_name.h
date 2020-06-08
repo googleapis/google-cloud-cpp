@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -26,6 +27,13 @@ inline namespace SPANNER_CLIENT_NS {
 
 /// Create a random database name given a PRNG generator.
 std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator);
+
+/// Return a regular expression (as a string) suitable to match the random
+/// database IDs
+std::string RandomDatabasePrefixRegex();
+
+// The prefix for databases created on the (UTC) day at @p tp.
+std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

@@ -48,6 +48,9 @@ std::string FormatV4SignedUrlTimestamp(
 /// Format a time point to use in the scope of a V4 signed url.
 std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
 
+/// Return the `tm` struct for @p tp using UTC as the timezone.
+std::tm AsUtcTm(std::chrono::system_clock::time_point tp);
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
