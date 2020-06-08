@@ -89,11 +89,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
         client->InsertObject(bucket_name_, object_name, std::move(contents));
     ASSERT_STATUS_OK(insert);
 
-    auto result = e->Run(bucket_name_, object_name, config);
-    // With the raw protocols this might fail object, that is fine, we just
-    // want the code to be exercised. Ignore failures in that case.
-    EXPECT_NE(0, result.cpu_time.count());
-    EXPECT_NE(0, result.elapsed_time.count());
+    // With the raw protocols this might fail, that is fine, we just want the
+    // code to not crash and return the result (including failures).
+    (void)e->Run(bucket_name_, object_name, config);
 
     auto status = client->DeleteObject(bucket_name_, object_name);
     EXPECT_STATUS_OK(status);
