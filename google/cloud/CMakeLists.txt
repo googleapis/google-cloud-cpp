@@ -147,6 +147,7 @@ add_library(
     internal/source_accumulators.h
     internal/source_ready_token.cc
     internal/source_ready_token.h
+    internal/source_transforms.h
     internal/strerror.cc
     internal/strerror.h
     internal/throw_delegate.cc
@@ -208,6 +209,7 @@ if (BUILD_TESTING)
         internal/retry_policy_test.cc
         internal/source_accumulators_test.cc
         internal/source_ready_token_test.cc
+        internal/source_transforms_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc

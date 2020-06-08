@@ -35,6 +35,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/retry_policy_test.cc",
     "internal/source_accumulators_test.cc",
     "internal/source_ready_token_test.cc",
+    "internal/source_transforms_test.cc",
     "internal/strerror_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/tuple_test.cc",
