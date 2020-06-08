@@ -15,6 +15,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include <array>
 #include <cstdio>
+#include <ctime>
 
 namespace {
 std::string FormatFractional(std::chrono::nanoseconds ns) {

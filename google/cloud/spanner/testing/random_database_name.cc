@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/format_time_point.h"
+#include <ctime>
 
 namespace google {
 namespace cloud {
