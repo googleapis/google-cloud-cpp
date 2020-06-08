@@ -33,8 +33,11 @@ if (BUILD_TESTING)
         throughput_result.cc
         throughput_result.h
         throughput_result_test.cc)
-    target_link_libraries(storage_benchmarks PUBLIC storage_client
-                                                    storage_client_testing)
+    target_link_libraries(
+        storage_benchmarks
+        PUBLIC storage_client storage_client_testing
+               google_cloud_cpp_grpc_utils googleapis-c++::storage_protos
+               CURL::libcurl)
     google_cloud_cpp_add_common_options(storage_benchmarks)
 
     include(CheckCXXSymbolExists)

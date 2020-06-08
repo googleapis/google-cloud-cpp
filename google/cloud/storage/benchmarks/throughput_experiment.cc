@@ -18,9 +18,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include <google/storage/v1/storage.grpc.pb.h>
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include <curl/curl.h>
 #include <vector>
 
@@ -247,7 +245,6 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   ApiName api_;
 };
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
   DownloadObjectRawGrpc()
@@ -292,7 +289,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
  private:
   std::unique_ptr<google::storage::v1::Storage::StubInterface> stub_;
 };
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+
 }  // namespace
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
@@ -302,22 +299,20 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
   auto contents = MakeRandomData(generator, options.maximum_write_size);
   gcs::Client rest_client(client_options);
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  gcs::Client grpc_client =
-      google::cloud::storage_experimental::DefaultGrpcClient(client_options);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto a : options.enabled_apis) {
     switch (a) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
       case ApiName::kApiGrpc:
-      case ApiName::kApiRawGrpc:
+      case ApiName::kApiRawGrpc: {
+        gcs::Client grpc_client =
+            google::cloud::storage_experimental::DefaultGrpcClient(
+                client_options);
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, false));
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, true));
-        break;
+      } break;
 #else
       case ApiName::kApiGrpc:
       case ApiName::kApiRawGrpc:
@@ -342,17 +337,15 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
     google::cloud::storage::ClientOptions const& client_options) {
   gcs::Client rest_client(client_options);
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  gcs::Client grpc_client =
-      google::cloud::storage_experimental::DefaultGrpcClient(client_options);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto a : options.enabled_apis) {
     switch (a) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
       case ApiName::kApiGrpc:
-        result.push_back(absl::make_unique<DownloadObject>(grpc_client, a));
+        result.push_back(absl::make_unique<DownloadObject>(
+            google::cloud::storage_experimental::DefaultGrpcClient(
+                client_options),
+            a));
         break;
 #else
       case ApiName::kApiGrpc:
@@ -362,12 +355,12 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       case ApiName::kApiJson:
         result.push_back(absl::make_unique<DownloadObject>(rest_client, a));
         break;
-      case ApiName::kApiRawGrpc:
-        result.push_back(absl::make_unique<DownloadObjectRawGrpc>());
-        break;
       case ApiName::kApiRawXml:
       case ApiName::kApiRawJson:
         result.push_back(absl::make_unique<DownloadObjectLibcurl>(a));
+        break;
+      case ApiName::kApiRawGrpc:
+        result.push_back(absl::make_unique<DownloadObjectRawGrpc>());
         break;
     }
   }
