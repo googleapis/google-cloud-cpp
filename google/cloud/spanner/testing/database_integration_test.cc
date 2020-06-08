@@ -42,7 +42,6 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
 
   db_ = new spanner::Database(project_id, *instance_id, database_id);
 
-  std::cout << "Creating database and table " << std::flush;
   spanner::DatabaseAdminClient admin_client;
 
   // Drop any databases more than 2 days old. This automatically cleans up
@@ -57,7 +56,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
     // Extract the database ID from the database full name.
     auto pos = db->name().find_last_of('/');
     if (pos == std::string::npos) continue;
-    auto id = db->name().substr(pos);
+    auto id = db->name().substr(pos + 1);
     // Skip databases that do not look like a randomly created DB.
     if (!std::regex_match(id, re)) continue;
     // Skip databases that are relatively recent
@@ -65,8 +64,10 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
     // Drop the database and ignore errors.
     (void)admin_client.DropDatabase(
         spanner::Database(project_id, *instance_id, id));
+    std::cout << "Dropped DB " << db->name() << "\n";
   }
 
+  std::cout << "Creating database and table " << std::flush;
   auto database_future =
       admin_client.CreateDatabase(*db_, {R"sql(CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,

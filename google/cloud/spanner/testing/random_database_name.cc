@@ -22,7 +22,7 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string RandomDatabasePrefixRegex() {
-  return R"re("^db-\d{4}-\d{2}-\d{2}-)re";
+  return R"re(^db-\d{4}-\d{2}-\d{2}-.*$)re";
 }
 
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
