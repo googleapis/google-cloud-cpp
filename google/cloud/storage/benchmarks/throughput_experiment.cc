@@ -166,8 +166,6 @@ extern "C" std::size_t OnWrite(char* src, size_t size, size_t nmemb, void* d) {
   return size * nmemb;
 }
 
-extern "C" std::size_t OnRead(char*, size_t, size_t, void*) { return 0; }
-
 extern "C" std::size_t OnHeader(char*, std::size_t size, std::size_t nitems,
                                 void*) {
   return size * nitems;
@@ -212,8 +210,6 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     std::vector<char> buffer(CURL_MAX_WRITE_SIZE);
     curl_easy_setopt(hnd, CURLOPT_WRITEDATA, &buffer);
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &OnWrite);
-    curl_easy_setopt(hnd, CURLOPT_READDATA, nullptr);
-    curl_easy_setopt(hnd, CURLOPT_READFUNCTION, &OnRead);
     curl_easy_setopt(hnd, CURLOPT_HEADERDATA, nullptr);
     curl_easy_setopt(hnd, CURLOPT_HEADERFUNCTION, &OnHeader);
 
