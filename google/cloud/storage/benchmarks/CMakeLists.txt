@@ -52,9 +52,11 @@ if (BUILD_TESTING)
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)
 
+    set(storage_benchmark_programs_production # cmake-format: sort
+                                              throughput_experiment_test.cc)
     set(storage_benchmark_programs
         # cmake-format: sort
-        ${storage_benchmark_programs_manual_run}
+        ${storage_benchmark_programs_production}
         storage_file_transfer_benchmark.cc
         storage_parallel_uploads_benchmark.cc
         storage_shard_throughput_benchmark.cc
@@ -68,6 +70,7 @@ if (BUILD_TESTING)
                     storage_client
                     storage_client_testing
                     google_cloud_cpp_common
+                    google_cloud_cpp_testing
                     absl::strings
                     CURL::libcurl
                     Threads::Threads
@@ -77,6 +80,13 @@ if (BUILD_TESTING)
         set_tests_properties(
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
+    endforeach ()
+
+    foreach (fname ${storage_benchmark_programs_production})
+        google_cloud_cpp_set_target_name(target "storage" "${fname}")
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-production")
     endforeach ()
 
     export_list_to_bazel("storage_benchmark_programs.bzl"
