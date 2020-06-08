@@ -13,13 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include <array>
-#include <cctype>
 #include <cstdio>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
 
 namespace {
 std::string FormatFractional(std::chrono::nanoseconds ns) {
@@ -59,6 +54,13 @@ std::string FormatFractional(std::chrono::nanoseconds ns) {
   return buffer.data();
 }
 
+}  // namespace
+
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
+
 std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
   std::time_t time = std::chrono::system_clock::to_time_t(tp);
   std::tm tm{};
@@ -71,12 +73,6 @@ std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
 #endif  // _WIN32
   return tm;
 }
-}  // namespace
-
-namespace google {
-namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 auto constexpr kTimestampFormatSize = 256;
 static_assert(kTimestampFormatSize > ((4 + 1)    // YYYY-
