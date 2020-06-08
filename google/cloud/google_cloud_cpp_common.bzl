@@ -49,6 +49,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/setenv.h",
     "internal/source_accumulators.h",
     "internal/source_ready_token.h",
+    "internal/source_transforms.h",
     "internal/strerror.h",
     "internal/throw_delegate.h",
     "internal/tuple.h",
