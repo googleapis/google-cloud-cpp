@@ -82,6 +82,9 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/storage/v1/storage.proto"
     "google/storage/v1/storage_resources.proto")
 
+# Always disable clang-tidy for this generated code.
+set(CMAKE_CXX_CLANG_TIDY "")
+
 set(GOOGLEAPIS_CPP_BYPRODUCTS)
 foreach (proto ${GOOGLEAPIS_CPP_PROTO_FILES})
     list(APPEND GOOGLEAPIS_CPP_BYPRODUCTS "${GOOGLEAPIS_CPP_SOURCE}/${proto}")

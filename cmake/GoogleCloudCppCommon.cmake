@@ -21,9 +21,6 @@ get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
 # If possible, enable a code coverage build type.
 include(EnableCoverage)
 
-# Include support for clang-tidy if available
-include(EnableClangTidy)
-
 # C++ Exceptions are enabled by default, but allow the user to turn them off.
 include(EnableCxxExceptions)
 

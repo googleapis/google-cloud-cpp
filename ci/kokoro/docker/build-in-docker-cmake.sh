@@ -82,7 +82,7 @@ if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
   # part of the regular build.
   if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" && \
     "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GIT_ON_BORG" ]]; then
-    cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_CLANG_TIDY=ON")
+    cmake_extra_flags+=("-DCMAKE_CXX_CLANG_TIDY=clang-tidy")
   fi
 fi
 
