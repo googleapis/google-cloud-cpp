@@ -105,8 +105,7 @@ TEST_F(WriteObjectTest, WriteObject) {
                 "fake-url", 0, expected, ResumableUploadResponse::kDone, {}})));
 
         return make_status_or(
-            std::unique_ptr<internal ::ResumableUploadSession>(
-                std::move(mock)));
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       }));
 
   auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
@@ -247,8 +246,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
             }));
 
         return make_status_or(
-            std::unique_ptr<internal ::ResumableUploadSession>(
-                std::move(mock)));
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       }));
 
   MockFilebuf filebuf;
@@ -303,8 +301,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
             }));
 
         return make_status_or(
-            std::unique_ptr<internal ::ResumableUploadSession>(
-                std::move(mock)));
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       }));
 
   MockFilebuf filebuf;
@@ -362,8 +359,7 @@ TEST_F(WriteObjectTest, UploadFile) {
             }));
 
         return make_status_or(
-            std::unique_ptr<internal ::ResumableUploadSession>(
-                std::move(mock)));
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       }));
 
   auto res =
