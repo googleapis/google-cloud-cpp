@@ -114,7 +114,7 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string const scheme = j_obj["scheme"];
   std::string url_style;
   if (j_obj.count("urlStyle") > 0) {
-    url_style = j_obj["urlStyle"];
+    url_style = j_obj["urlStyle"].get<std::string>();
   }
   std::string const date = j_obj["timestamp"];
   auto const valid_for =
@@ -219,7 +219,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   BucketBoundHostname domain_named_bucket;
   std::string url_style;
   if (input.count("urlStyle") > 0) {
-    url_style = input["urlStyle"];
+    url_style = input["urlStyle"].get<std::string>();
   }
   if (url_style == "BUCKET_BOUND_HOSTNAME") {
     domain_named_bucket = BucketBoundHostname(input["bucketBoundHostname"]);
@@ -269,7 +269,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
 
   std::map<std::string, std::string> expected_form_fields;
   for (auto const& field : fields.items()) {
-    expected_form_fields[field.key()] = field.value();
+    expected_form_fields[field.key()] = field.value().get<std::string>();
   }
   // We need to escape it because nl::json interprets the escaped characters.
   std::string const expected_decoded_policy =
