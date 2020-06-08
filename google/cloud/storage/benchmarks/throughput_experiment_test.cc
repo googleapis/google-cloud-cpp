@@ -73,7 +73,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   options.enabled_apis = {GetParam()};
 
   auto const& client_options = client->raw_client()->client_options();
-  auto experiments = CreateUploadExperiments(options, client_options);
+  auto experiments = CreateDownloadExperiments(options, client_options);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
 
