@@ -308,7 +308,10 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
             absl::make_unique<UploadObject>(grpc_client, a, contents, false));
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, true));
-      } break;
+      }
+      // this comment keeps clang-format from merging to previous line
+      // we thing `} break;` is just weird.
+      break;
 #else
       case ApiName::kApiGrpc:
       case ApiName::kApiRawGrpc:
