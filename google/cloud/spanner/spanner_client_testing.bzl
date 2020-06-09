@@ -17,6 +17,7 @@
 """Automatically generated source lists for spanner_client_testing - DO NOT EDIT."""
 
 spanner_client_testing_hdrs = [
+    "testing/cleanup_stale_databases.h",
     "testing/cleanup_stale_instances.h",
     "testing/compiler_supports_regexp.h",
     "testing/database_integration_test.h",
@@ -36,6 +37,7 @@ spanner_client_testing_hdrs = [
 ]
 
 spanner_client_testing_srcs = [
+    "testing/cleanup_stale_databases.cc",
     "testing/cleanup_stale_instances.cc",
     "testing/database_integration_test.cc",
     "testing/pick_instance_config.cc",

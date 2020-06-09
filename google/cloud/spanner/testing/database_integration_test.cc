@@ -14,11 +14,11 @@
 
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include <regex>
 
 namespace google {
 namespace cloud {
@@ -42,31 +42,12 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
 
   db_ = new spanner::Database(project_id, *instance_id, database_id);
 
-  std::cout << "Creating database and table " << std::flush;
   spanner::DatabaseAdminClient admin_client;
+  CleanupStaleDatabases(
+      admin_client, project_id, *instance_id,
+      std::chrono::system_clock::now() - std::chrono::hours(48));
 
-  // Drop any databases more than 2 days old. This automatically cleans up
-  // any databases created by a previous build that may have crashed before
-  // having a chance to cleanup.
-  auto const expired = RandomDatabasePrefix(std::chrono::system_clock::now() -
-                                            std::chrono::hours(48));
-  std::regex re(RandomDatabasePrefixRegex());
-  for (auto const& db : admin_client.ListDatabases(
-           spanner::Instance(project_id, *instance_id))) {
-    if (!db) break;
-    // Extract the database ID from the database full name.
-    auto pos = db->name().find_last_of('/');
-    if (pos == std::string::npos) continue;
-    auto id = db->name().substr(pos);
-    // Skip databases that do not look like a randomly created DB.
-    if (!std::regex_match(id, re)) continue;
-    // Skip databases that are relatively recent
-    if (id > expired) continue;
-    // Drop the database and ignore errors.
-    (void)admin_client.DropDatabase(
-        spanner::Database(project_id, *instance_id, id));
-  }
-
+  std::cout << "Creating database and table " << std::flush;
   auto database_future =
       admin_client.CreateDatabase(*db_, {R"sql(CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,

@@ -22,7 +22,7 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string RandomDatabasePrefixRegex() {
-  return R"re("^db-\d{4}-\d{2}-\d{2}-)re";
+  return R"re(^db-\d{4}-\d{2}-\d{2}-.*$)re";
 }
 
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
@@ -32,12 +32,12 @@ std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
   return "db-" + date + "-";
 }
 
-std::string RandomDatabaseName(
-    google::cloud::internal::DefaultPRNG& generator) {
+std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
+                               std::chrono::system_clock::time_point tp) {
   // A database ID must be between 2 and 30 characters, fitting the regular
   // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
   std::size_t const max_size = 30;
-  auto const prefix = RandomDatabasePrefix(std::chrono::system_clock::now());
+  auto const prefix = RandomDatabasePrefix(tp);
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
