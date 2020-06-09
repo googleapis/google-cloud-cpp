@@ -49,13 +49,13 @@ TEST(SourceBuilder, Accumulate) {
       MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
           .transform([](int x) { return x * 2; })
           .transform([](int x) { return std::to_string(x); })
-          .accumulate<AccumulateAllEvents>()
+          .Accumulate<AccumulateAllEvents>()
           .get();
   ASSERT_EQ(all_events.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(all_events), ElementsAre("2", "4", "6", "8"));
 }
 
-/// A test class to show accumulate() works with more than one type.
+/// A test class to show Accumulate() works with more than one type.
 template <typename Source>
 class SumAllSourceEvents {
  public:
@@ -133,7 +133,7 @@ TEST(SourceBuilder, AccumulateSum) {
   auto const all_events =
       MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
           .transform([](int x) { return x * 2; })
-          .accumulate<SumAllSourceEvents>(100)
+          .Accumulate<SumAllSourceEvents>(100)
           .get();
   ASSERT_EQ(all_events.index(), 0);  // expect success
   EXPECT_EQ(absl::get<0>(all_events), 100 + 2 + 4 + 6 + 8);

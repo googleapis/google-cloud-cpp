@@ -103,7 +103,7 @@ TEST(SlowIota, Background) {
   SlowIota iota(pool.cq(), kTestCount, kTestPeriod);
 
   auto results = MakeSourceBuilder(std::move(iota))
-                     .accumulate<AccumulateAllEvents>()
+                     .Accumulate<AccumulateAllEvents>()
                      .get();
   ASSERT_EQ(results.index(), 0) << ", status=" << absl::get<1>(results);
   EXPECT_THAT(absl::get<0>(results), ElementsAre(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));

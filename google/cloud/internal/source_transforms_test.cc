@@ -33,7 +33,7 @@ TEST(TransformedSource, Simple) {
       MakeTransformedSource(FakeSource<int, Status>({1, 2, 3, 4}, Status{}),
                             [](int x) { return std::to_string(x); });
   auto const actual = MakeSourceBuilder(std::move(transformed))
-                          .accumulate<AccumulateAllEvents>()
+                          .Accumulate<AccumulateAllEvents>()
                           .get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(actual), ElementsAre("1", "2", "3", "4"));
@@ -45,7 +45,7 @@ TEST(TransformedSource, Error) {
       MakeTransformedSource(FakeSource<int, Status>({1, 2, 3, 4}, expected),
                             [](int x) { return std::to_string(x); });
   auto const actual = MakeSourceBuilder(std::move(transformed))
-                          .accumulate<AccumulateAllEvents>()
+                          .Accumulate<AccumulateAllEvents>()
                           .get();
   ASSERT_EQ(actual.index(), 1);  // expect error
   EXPECT_THAT(absl::get<1>(actual), expected);

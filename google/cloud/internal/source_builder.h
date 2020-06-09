@@ -63,7 +63,7 @@ class SourceBuilder {
       std::declval<Source>(), std::forward<Transform>(t)))> {
     using result_source_type = decltype(MakeTransformedSource(
         std::declval<Source>(), std::forward<Transform>(t)));
-    return SourceBuilder<result_source_type>(
+    return SourceBuilder<result_source_type>(¡
         MakeTransformedSource(std::move(source_), std::forward<Transform>(t)));
   }
 
@@ -75,7 +75,7 @@ class SourceBuilder {
    * its work.
    */
   template <template <typename S> class Accumulator, typename... A>
-  auto accumulate(A&&... a) && -> decltype(
+  auto Accumulate(A&&... a) && -> decltype(
       std::declval<
           invoke_result_t<MakeAccumulator<Accumulator>, Source, A&&...>>()
           .Start()) {
