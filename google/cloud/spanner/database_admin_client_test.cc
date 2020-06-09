@@ -128,7 +128,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
   EXPECT_THAT(db->statements(), ElementsAre("-- test only: NOT SQL"));
 }
 
-TEST(DatabaseAdminClientTest, ListInstances) {
+TEST(DatabaseAdminClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases(_))
