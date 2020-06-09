@@ -28,21 +28,21 @@ using ::testing::ElementsAre;
 
 TEST(SourceAccumulators, AccumulateAllInt) {
   FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
-  auto const actual = AccumulateAllEvents(std::move(mock)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(actual), ElementsAre(1, 2, 3, 4));
 }
 
 TEST(SourceAccumulators, AccumulateAllString) {
   FakeSource<std::string, Status> mock({"a", "b", "c", "d"}, Status{});
-  auto const actual = AccumulateAllEvents(std::move(mock)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(actual), ElementsAre("a", "b", "c", "d"));
 }
 
 TEST(SourceAccumulators, AccumulateAllEmpty) {
   FakeSource<int, Status> mock({}, Status{});
-  auto const actual = AccumulateAllEvents(std::move(mock)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_TRUE(absl::get<0>(actual).empty());
 }
@@ -50,7 +50,7 @@ TEST(SourceAccumulators, AccumulateAllEmpty) {
 TEST(SourceAccumulators, AccumulateAllError) {
   FakeSource<int, Status> mock({},
                                Status{StatusCode::kUnavailable, "try-again"});
-  auto const actual = AccumulateAllEvents(std::move(mock)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();
   ASSERT_EQ(actual.index(), 1);  // expect error
   EXPECT_EQ(absl::get<1>(actual).code(), StatusCode::kUnavailable);
   EXPECT_EQ(absl::get<1>(actual).message(), "try-again");
@@ -59,7 +59,7 @@ TEST(SourceAccumulators, AccumulateAllError) {
 TEST(SourceAccumulators, AccumulateAllErrorAfterData) {
   FakeSource<int, Status> mock({1, 2, 3},
                                Status{StatusCode::kPermissionDenied, "uh-oh"});
-  auto const actual = AccumulateAllEvents(std::move(mock)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();
   ASSERT_EQ(actual.index(), 1);  // expect error
   EXPECT_EQ(absl::get<1>(actual).code(), StatusCode::kPermissionDenied);
   EXPECT_EQ(absl::get<1>(actual).message(), "uh-oh");
@@ -68,7 +68,7 @@ TEST(SourceAccumulators, AccumulateAllErrorAfterData) {
 TEST(SourceAccumulators, AccumulateAllRef) {
   FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
   auto& ref = mock;
-  auto const actual = AccumulateAllEvents(std::move(ref)).get();
+  auto const actual = MakeAccumulateAllEvents(std::move(ref)).Start().get();
   ASSERT_EQ(actual.index(), 0);  // expect success
   EXPECT_THAT(absl::get<0>(actual), ElementsAre(1, 2, 3, 4));
 }
