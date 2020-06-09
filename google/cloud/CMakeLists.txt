@@ -151,6 +151,8 @@ add_library(
     internal/strerror.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
+    internal/time_utils.cc
+    internal/time_utils.h
     internal/tuple.h
     internal/utility.h
     internal/version_info.h
@@ -210,6 +212,7 @@ if (BUILD_TESTING)
         internal/source_ready_token_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
+        internal/time_utils_test.cc
         internal/tuple_test.cc
         internal/utility_test.cc
         log_test.cc
@@ -227,8 +230,13 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
-                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing
+                    google_cloud_cpp_common
+                    protobuf::libprotobuf
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")

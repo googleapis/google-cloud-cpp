@@ -26,7 +26,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
-
+#if 0
 template <typename Duration>
 StatusOr<google::protobuf::Timestamp> ConvertTimePointToProtoTimestamp(
     sys_time<Duration> time_point) {
@@ -34,7 +34,7 @@ StatusOr<google::protobuf::Timestamp> ConvertTimePointToProtoTimestamp(
   if (!ts) return std::move(ts).status();
   return TimestampToProto(*ts);
 }
-
+#endif
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

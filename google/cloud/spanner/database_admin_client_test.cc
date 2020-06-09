@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -517,14 +517,13 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   auto proto_expire_time =
-      internal::ConvertTimePointToProtoTimestamp(expire_time);
-  ASSERT_STATUS_OK(proto_expire_time);
+      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
 
   EXPECT_CALL(*mock, UpdateBackup(_))
       .WillOnce([&backup, &proto_expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup.FullName(), p.request.backup().name());
-        EXPECT_THAT(*proto_expire_time,
+        EXPECT_THAT(proto_expire_time,
                     IsProtoEqual(p.request.backup().expire_time()));
         gcsa::Backup response;
         response.set_name(p.request.backup().name());
@@ -538,7 +537,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(gcsa::Backup::READY, response->state());
   EXPECT_EQ(backup.FullName(), response->name());
-  EXPECT_THAT(*proto_expire_time, IsProtoEqual(response->expire_time()));
+  EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
 }
 
 /// @test Verify DatabaseAdminClient uses GetBackup() correctly.
@@ -550,14 +549,13 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   auto proto_expire_time =
-      internal::ConvertTimePointToProtoTimestamp(expire_time);
-  ASSERT_STATUS_OK(proto_expire_time);
+      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
 
   EXPECT_CALL(*mock, UpdateBackup(_))
       .WillOnce([&backup_name, &proto_expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup_name.FullName(), p.request.backup().name());
-        EXPECT_THAT(*proto_expire_time,
+        EXPECT_THAT(proto_expire_time,
                     IsProtoEqual(p.request.backup().expire_time()));
         gcsa::Backup response;
         response.set_name(p.request.backup().name());
@@ -571,7 +569,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(gcsa::Backup::READY, response->state());
   EXPECT_EQ(backup_name.FullName(), response->name());
-  EXPECT_THAT(*proto_expire_time, IsProtoEqual(response->expire_time()));
+  EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
 }
 
 TEST(DatabaseAdminClientTest, ListBackupOperations) {

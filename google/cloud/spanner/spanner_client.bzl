@@ -62,7 +62,6 @@ spanner_client_hdrs = [
     "internal/spanner_stub.h",
     "internal/status_utils.h",
     "internal/time_format.h",
-    "internal/time_utils.h",
     "internal/transaction_impl.h",
     "internal/tuple_utils.h",
     "keys.h",

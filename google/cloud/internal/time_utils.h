@@ -12,30 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/time_utils.h"
-#include "google/cloud/testing_util/assert_ok.h"
-#include <gmock/gmock.h>
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TIME_UTILS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TIME_UTILS_H
+
+#include "google/cloud/version.h"
+#include <google/protobuf/timestamp.pb.h>
 #include <chrono>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-namespace {
-#if 0
-TEST(TimeUtils, ConvertTimePointToProtoTimestamp) {
-  auto const epoch = std::chrono::system_clock::from_time_t(0);
-  auto t = epoch + std::chrono::seconds(123) + std::chrono::nanoseconds(456000);
-  auto proto_timestamp = ConvertTimePointToProtoTimestamp(t);
-  EXPECT_STATUS_OK(proto_timestamp);
-  EXPECT_EQ(123, proto_timestamp->seconds());
-  EXPECT_EQ(456000, proto_timestamp->nanos());
-}
-#endif
-}  // namespace
+
+std::chrono::system_clock::time_point AsChronoTimepoint(
+    google::protobuf::Timestamp const& ts);
+
+google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
+    std::chrono::system_clock::time_point tp);
+
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TIME_UTILS_H
