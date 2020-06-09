@@ -57,14 +57,14 @@ class SourceBuilder {
    * This creates a new builder containing the source transformed by @p t. This
    * new builder can apply additional changes to the source.
    */
-  template <typename Transform>
+  template <typename Callable>
   auto
-  transform(Transform&& t) && -> SourceBuilder<decltype(MakeTransformedSource(
-      std::declval<Source>(), std::forward<Transform>(t)))> {
+  Transform(Callable&& t) && -> SourceBuilder<decltype(MakeTransformedSource(
+      std::declval<Source>(), std::forward<Callable>(t)))> {
     using result_source_type = decltype(MakeTransformedSource(
-        std::declval<Source>(), std::forward<Transform>(t)));
-    return SourceBuilder<result_source_type>(¡
-        MakeTransformedSource(std::move(source_), std::forward<Transform>(t)));
+        std::declval<Source>(), std::forward<Callable>(t)));
+    return SourceBuilder<result_source_type>(
+        MakeTransformedSource(std::move(source_), std::forward<Callable>(t)));
   }
 
   /**

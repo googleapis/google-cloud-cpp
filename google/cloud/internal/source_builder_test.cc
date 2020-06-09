@@ -30,8 +30,8 @@ using ::testing::ElementsAre;
 TEST(SourceBuilder, Simple) {
   auto transformed =
       MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
-          .transform([](int x) { return x * 2; })
-          .transform([](int x) { return std::to_string(x); })
+          .Transform([](int x) { return x * 2; })
+          .Transform([](int x) { return std::to_string(x); })
           .build();
   std::vector<std::string> events;
   auto next = [&transformed] {
@@ -47,8 +47,8 @@ TEST(SourceBuilder, Simple) {
 TEST(SourceBuilder, Accumulate) {
   auto const all_events =
       MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
-          .transform([](int x) { return x * 2; })
-          .transform([](int x) { return std::to_string(x); })
+          .Transform([](int x) { return x * 2; })
+          .Transform([](int x) { return std::to_string(x); })
           .Accumulate<AccumulateAllEvents>()
           .get();
   ASSERT_EQ(all_events.index(), 0);  // expect success
@@ -132,7 +132,7 @@ class SumAllSourceEvents {
 TEST(SourceBuilder, AccumulateSum) {
   auto const all_events =
       MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
-          .transform([](int x) { return x * 2; })
+          .Transform([](int x) { return x * 2; })
           .Accumulate<SumAllSourceEvents>(100)
           .get();
   ASSERT_EQ(all_events.index(), 0);  // expect success
