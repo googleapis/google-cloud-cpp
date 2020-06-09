@@ -28,7 +28,7 @@ std::chrono::system_clock::time_point AsChronoTimepoint(
     google::protobuf::Timestamp const& ts);
 
 google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
-    std::chrono::system_clock::time_point tp);
+    std::chrono::system_clock::time_point const& tp);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

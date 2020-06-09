@@ -20,7 +20,7 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
-#include "google/cloud/spanner/internal/time_utils.h"
+//#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"

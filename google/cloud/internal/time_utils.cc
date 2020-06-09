@@ -29,7 +29,7 @@ std::chrono::system_clock::time_point AsChronoTimepoint(
 }
 
 google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
-    std::chrono::system_clock::time_point tp) {
+    std::chrono::system_clock::time_point const& tp) {
   auto d = tp.time_since_epoch();
   using std::chrono::duration_cast;
   auto seconds = duration_cast<std::chrono::seconds>(d);
