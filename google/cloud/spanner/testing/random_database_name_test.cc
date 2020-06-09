@@ -24,6 +24,8 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::testing::StartsWith;
+
 TEST(RandomDatabaseNameTest, PrefixMatchesRegexp) {
   if (!CompilerSupportsRegexp()) GTEST_SKIP();
   auto const prefix = RandomDatabasePrefix(std::chrono::system_clock::now());
@@ -39,6 +41,15 @@ TEST(RandomDatabaseNameTest, NameMatchesRegexp) {
   auto const re = RandomDatabasePrefixRegex();
 
   EXPECT_TRUE(std::regex_match(name, std::regex(re)));
+}
+
+TEST(RandomDatabaseNameTest, RandomNameHasPrefix) {
+  if (!CompilerSupportsRegexp()) GTEST_SKIP();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const now = std::chrono::system_clock::now();
+  auto const prefix = RandomDatabasePrefix(now);
+  auto const name = RandomDatabaseName(generator, now);
+  EXPECT_THAT(name, StartsWith(prefix));
 }
 
 }  // namespace

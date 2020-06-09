@@ -211,6 +211,8 @@ function (spanner_client_define_tests)
 
     add_library(
         spanner_client_testing # cmake-format: sort
+        testing/cleanup_stale_databases.cc
+        testing/cleanup_stale_databases.h
         testing/cleanup_stale_instances.cc
         testing/cleanup_stale_instances.h
         testing/compiler_supports_regexp.h
@@ -304,6 +306,7 @@ function (spanner_client_define_tests)
         session_pool_options_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
+        testing/cleanup_stale_databases_test.cc
         testing/random_database_name_test.cc
         timestamp_test.cc
         transaction_test.cc

@@ -68,6 +68,7 @@ spanner_client_unit_tests = [
     "session_pool_options_test.cc",
     "spanner_version_test.cc",
     "sql_statement_test.cc",
+    "testing/cleanup_stale_databases_test.cc",
     "testing/random_database_name_test.cc",
     "timestamp_test.cc",
     "transaction_test.cc",

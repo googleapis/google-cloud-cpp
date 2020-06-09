@@ -26,7 +26,9 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 /// Create a random database name given a PRNG generator.
-std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator);
+std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
+                               std::chrono::system_clock::time_point tp =
+                                   std::chrono::system_clock::now());
 
 /// Return a regular expression (as a string) suitable to match the random
 /// database IDs
