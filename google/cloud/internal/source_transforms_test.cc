@@ -32,7 +32,7 @@ TEST(TransformedSource, Simple) {
   auto transformed =
       MakeTransformedSource(FakeSource<int, Status>({1, 2, 3, 4}, Status{}),
                             [](int x) { return std::to_string(x); });
-  auto const actual = make_source_builder(std::move(transformed))
+  auto const actual = MakeSourceBuilder(std::move(transformed))
                           .accumulate<AccumulateAllEvents>()
                           .get();
   ASSERT_EQ(actual.index(), 0);  // expect success
@@ -44,7 +44,7 @@ TEST(TransformedSource, Error) {
   auto transformed =
       MakeTransformedSource(FakeSource<int, Status>({1, 2, 3, 4}, expected),
                             [](int x) { return std::to_string(x); });
-  auto const actual = make_source_builder(std::move(transformed))
+  auto const actual = MakeSourceBuilder(std::move(transformed))
                           .accumulate<AccumulateAllEvents>()
                           .get();
   ASSERT_EQ(actual.index(), 1);  // expect error

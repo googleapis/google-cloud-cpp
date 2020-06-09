@@ -102,7 +102,7 @@ TEST(SlowIota, Background) {
   auto constexpr kTestPeriod = std::chrono::microseconds(10);
   SlowIota iota(pool.cq(), kTestCount, kTestPeriod);
 
-  auto results = make_source_builder(std::move(iota))
+  auto results = MakeSourceBuilder(std::move(iota))
                      .accumulate<AccumulateAllEvents>()
                      .get();
   ASSERT_EQ(results.index(), 0) << ", status=" << absl::get<1>(results);

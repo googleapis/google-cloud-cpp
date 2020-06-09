@@ -29,7 +29,7 @@ using ::testing::ElementsAre;
 
 TEST(SourceBuilder, Simple) {
   auto transformed =
-      make_source_builder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
+      MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
           .transform([](int x) { return x * 2; })
           .transform([](int x) { return std::to_string(x); })
           .build();
@@ -46,7 +46,7 @@ TEST(SourceBuilder, Simple) {
 
 TEST(SourceBuilder, Accumulate) {
   auto const all_events =
-      make_source_builder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
+      MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
           .transform([](int x) { return x * 2; })
           .transform([](int x) { return std::to_string(x); })
           .accumulate<AccumulateAllEvents>()
@@ -131,7 +131,7 @@ class SumAllSourceEvents {
 
 TEST(SourceBuilder, AccumulateSum) {
   auto const all_events =
-      make_source_builder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
+      MakeSourceBuilder(FakeSource<int, Status>({1, 2, 3, 4}, Status{}))
           .transform([](int x) { return x * 2; })
           .accumulate<SumAllSourceEvents>(100)
           .get();

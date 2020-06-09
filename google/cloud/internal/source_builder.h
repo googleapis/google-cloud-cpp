@@ -97,7 +97,7 @@ class SourceBuilder {
  * Factory function to create a `SourceBuilder` for @p s
  */
 template <typename Source>
-auto make_source_builder(Source&& s) -> SourceBuilder<absl::decay_t<Source>> {
+auto MakeSourceBuilder(Source&& s) -> SourceBuilder<absl::decay_t<Source>> {
   return SourceBuilder<absl::decay_t<Source>>(std::forward<Source>(s));
 }
 
