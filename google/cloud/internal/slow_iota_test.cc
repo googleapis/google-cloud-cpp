@@ -15,6 +15,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/source_accumulators.h"
+#include "google/cloud/internal/source_builder.h"
 #include "absl/types/variant.h"
 #include <gmock/gmock.h>
 #include <deque>
@@ -101,7 +102,9 @@ TEST(SlowIota, Background) {
   auto constexpr kTestPeriod = std::chrono::microseconds(10);
   SlowIota iota(pool.cq(), kTestCount, kTestPeriod);
 
-  auto results = MakeAccumulateAllEvents(std::move(iota)).Start().get();
+  auto results = MakeSourceBuilder(std::move(iota))
+                     .Accumulate<AccumulateAllEvents>()
+                     .get();
   ASSERT_EQ(results.index(), 0) << ", status=" << absl::get<1>(results);
   EXPECT_THAT(absl::get<0>(results), ElementsAre(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
 

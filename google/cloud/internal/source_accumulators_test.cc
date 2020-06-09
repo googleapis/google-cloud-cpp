@@ -26,6 +26,15 @@ namespace {
 using ::google::cloud::testing_util::FakeSource;
 using ::testing::ElementsAre;
 
+// Refactor some test code, we do not put this in the header because
+// applications should use SourceBuilder.
+template <typename Source>
+AccumulateAllEvents<absl::decay_t<Source>> MakeAccumulateAllEvents(
+    Source&& source) {
+  return AccumulateAllEvents<absl::decay_t<Source>>(
+      std::forward<Source>(source));
+}
+
 TEST(SourceAccumulators, AccumulateAllInt) {
   FakeSource<int, Status> mock({1, 2, 3, 4}, Status{});
   auto const actual = MakeAccumulateAllEvents(std::move(mock)).Start().get();

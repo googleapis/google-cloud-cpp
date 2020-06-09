@@ -48,6 +48,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/retry_policy.h",
     "internal/setenv.h",
     "internal/source_accumulators.h",
+    "internal/source_builder.h",
     "internal/source_ready_token.h",
     "internal/source_transforms.h",
     "internal/strerror.h",
