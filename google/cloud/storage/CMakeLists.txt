@@ -286,6 +286,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                googleapis-c++::storage_protos
                gRPC::grpc++
                protobuf::libprotobuf
+               absl::strings
                Crc32c::crc32c
                CURL::libcurl
                Threads::Threads
