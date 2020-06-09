@@ -33,6 +33,8 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 namespace spanner = ::google::cloud::spanner;
 
 TEST(CleanupStaleDatabases, Empty) {
+  if (!CompilerSupportsRegexp()) GTEST_SKIP();
+
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases(_))
@@ -59,6 +61,8 @@ TEST(CleanupStaleDatabases, Empty) {
 }
 
 TEST(CleanupStaleDatabases, ListError) {
+  if (!CompilerSupportsRegexp()) GTEST_SKIP();
+
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases(_))
@@ -88,8 +92,7 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
   if (!CompilerSupportsRegexp()) GTEST_SKIP();
 
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-
-  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto generator = google::cloud::internal::DefaultPRNG({});
   auto const now = std::chrono::system_clock::now();
   auto const day = std::chrono::hours(24);
   std::vector<std::string> expect_dropped{
