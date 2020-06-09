@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include <iostream>
 #include <regex>
 
 namespace google {

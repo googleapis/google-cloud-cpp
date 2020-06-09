@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_CLEANUP_STALE_DATABASES_H
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include <chrono>
 #include <string>
 
 namespace google {
