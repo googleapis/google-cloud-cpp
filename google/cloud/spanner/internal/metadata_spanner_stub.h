@@ -47,11 +47,6 @@ class MetadataSpannerStub : public SpannerStub {
   StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::Session>>
-  AsyncGetSession(grpc::ClientContext& client_context,
-                  google::spanner::v1::GetSessionRequest const& request,
-                  grpc::CompletionQueue* cq) override;
   StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::ListSessionsRequest const& request) override;
@@ -66,6 +61,11 @@ class MetadataSpannerStub : public SpannerStub {
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::ResultSet>>
+  AsyncExecuteSql(grpc::ClientContext& client_context,
+                  google::spanner::v1::ExecuteSqlRequest const& request,
+                  grpc::CompletionQueue* cq) override;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(

@@ -146,7 +146,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   future<StatusOr<google::protobuf::Empty>> AsyncDeleteSession(
       CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
       std::string session_name);
-  future<StatusOr<google::spanner::v1::Session>> AsyncGetSession(
+  future<StatusOr<google::spanner::v1::ResultSet>> AsyncRefreshSession(
       CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
       std::string session_name);
 

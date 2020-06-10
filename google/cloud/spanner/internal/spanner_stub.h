@@ -64,11 +64,6 @@ class SpannerStub {
   virtual StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) = 0;
-  virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::Session>>
-  AsyncGetSession(grpc::ClientContext& client_context,
-                  google::spanner::v1::GetSessionRequest const& request,
-                  grpc::CompletionQueue* cq) = 0;
   virtual StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::ListSessionsRequest const& request) = 0;
@@ -83,6 +78,11 @@ class SpannerStub {
   virtual StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::ResultSet>>
+  AsyncExecuteSql(grpc::ClientContext& client_context,
+                  google::spanner::v1::ExecuteSqlRequest const& request,
+                  grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(

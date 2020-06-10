@@ -60,16 +60,6 @@ StatusOr<spanner_proto::Session> MetadataSpannerStub::GetSession(
   return child_->GetSession(client_context, request);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
-MetadataSpannerStub::AsyncGetSession(
-    grpc::ClientContext& client_context,
-    spanner_proto::GetSessionRequest const& request,
-    grpc::CompletionQueue* cq) {
-  SetMetadata(client_context, "name=" + request.name());
-  return child_->AsyncGetSession(client_context, request, cq);
-}
-
 StatusOr<spanner_proto::ListSessionsResponse> MetadataSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
     spanner_proto::ListSessionsRequest const& request) {
@@ -99,6 +89,16 @@ StatusOr<spanner_proto::ResultSet> MetadataSpannerStub::ExecuteSql(
     spanner_proto::ExecuteSqlRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->ExecuteSql(client_context, request);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>
+MetadataSpannerStub::AsyncExecuteSql(
+    grpc::ClientContext& client_context,
+    spanner_proto::ExecuteSqlRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(client_context, "session=" + request.session());
+  return child_->AsyncExecuteSql(client_context, request, cq);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>

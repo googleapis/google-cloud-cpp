@@ -72,21 +72,6 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
       client_context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
-LoggingSpannerStub::AsyncGetSession(
-    grpc::ClientContext& client_context,
-    spanner_proto::GetSessionRequest const& request,
-    grpc::CompletionQueue* cq) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             spanner_proto::GetSessionRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return child_->AsyncGetSession(context, request, cq);
-      },
-      client_context, request, cq, __func__, tracing_options_);
-}
-
 StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
     spanner_proto::ListSessionsRequest const& request) {
@@ -133,6 +118,21 @@ StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
         return child_->ExecuteSql(context, request);
       },
       client_context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>
+LoggingSpannerStub::AsyncExecuteSql(
+    grpc::ClientContext& client_context,
+    spanner_proto::ExecuteSqlRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             spanner_proto::ExecuteSqlRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncExecuteSql(context, request, cq);
+      },
+      client_context, request, cq, __func__, tracing_options_);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>

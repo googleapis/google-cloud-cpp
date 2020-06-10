@@ -157,8 +157,8 @@ void SessionPool::RefreshExpiringSessions() {
     }
   }
   for (auto& refresh : sessions_to_refresh) {
-    AsyncGetSession(cq_, refresh.first, std::move(refresh.second))
-        .then([](future<StatusOr<spanner_proto::Session>> result) {
+    AsyncRefreshSession(cq_, refresh.first, std::move(refresh.second))
+        .then([](future<StatusOr<spanner_proto::ResultSet>> result) {
           // We simply discard the response as handling IsSessionNotFound()
           // by removing the session from the pool is problematic (and would
           // not eliminate the possibility of IsSessionNotFound() elsewhere).
@@ -444,19 +444,21 @@ future<StatusOr<google::protobuf::Empty>> SessionPool::AsyncDeleteSession(
       std::move(request));
 }
 
-future<StatusOr<spanner_proto::Session>> SessionPool::AsyncGetSession(
+/// Refresh the session `session_name` by executing a `SELECT 1` query on it.
+future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
     std::string session_name) {
-  spanner_proto::GetSessionRequest request;
-  request.set_name(std::move(session_name));
+  spanner_proto::ExecuteSqlRequest request;
+  request.set_session(std::move(session_name));
+  request.set_sql("SELECT 1;");
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, retry_policy_prototype_->clone(),
       backoff_policy_prototype_->clone(),
       /*is_idempotent=*/true,
       [stub](grpc::ClientContext* context,
-             spanner_proto::GetSessionRequest const& request,
+             spanner_proto::ExecuteSqlRequest const& request,
              grpc::CompletionQueue* cq) {
-        return stub->AsyncGetSession(*context, request, cq);
+        return stub->AsyncExecuteSql(*context, request, cq);
       },
       std::move(request));
 }

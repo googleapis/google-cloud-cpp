@@ -55,11 +55,6 @@ class DefaultSpannerStub : public SpannerStub {
   StatusOr<spanner_proto::Session> GetSession(
       grpc::ClientContext& client_context,
       spanner_proto::GetSessionRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
-  AsyncGetSession(grpc::ClientContext& client_context,
-                  spanner_proto::GetSessionRequest const& request,
-                  grpc::CompletionQueue* cq) override;
   StatusOr<spanner_proto::ListSessionsResponse> ListSessions(
       grpc::ClientContext& client_context,
       spanner_proto::ListSessionsRequest const& request) override;
@@ -74,6 +69,11 @@ class DefaultSpannerStub : public SpannerStub {
   StatusOr<spanner_proto::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       spanner_proto::ExecuteSqlRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::ResultSet>>
+  AsyncExecuteSql(grpc::ClientContext& client_context,
+                  google::spanner::v1::ExecuteSqlRequest const& request,
+                  grpc::CompletionQueue* cq) override;
   std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
   ExecuteStreamingSql(grpc::ClientContext& client_context,
                       spanner_proto::ExecuteSqlRequest const& request) override;
@@ -148,15 +148,6 @@ StatusOr<spanner_proto::Session> DefaultSpannerStub::GetSession(
   return response;
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
-DefaultSpannerStub::AsyncGetSession(
-    grpc::ClientContext& client_context,
-    spanner_proto::GetSessionRequest const& request,
-    grpc::CompletionQueue* cq) {
-  return grpc_stub_->AsyncGetSession(&client_context, request, cq);
-}
-
 StatusOr<spanner_proto::ListSessionsResponse> DefaultSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
     spanner_proto::ListSessionsRequest const& request) {
@@ -197,6 +188,15 @@ StatusOr<spanner_proto::ResultSet> DefaultSpannerStub::ExecuteSql(
     return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>
+DefaultSpannerStub::AsyncExecuteSql(
+    grpc::ClientContext& client_context,
+    google::spanner::v1::ExecuteSqlRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return grpc_stub_->AsyncExecuteSql(&client_context, request, cq);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>

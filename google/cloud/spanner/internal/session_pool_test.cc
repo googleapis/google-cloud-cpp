@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
 #include "absl/memory/memory.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>
@@ -40,6 +41,7 @@ namespace {
 using ::google::cloud::spanner_testing::FakeSteadyClock;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
@@ -399,22 +401,30 @@ TEST(SessionPool, SessionRefresh) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
   auto reader = absl::make_unique<
-      StrictMock<MockAsyncResponseReader<spanner_proto::Session>>>();
-  EXPECT_CALL(*mock, AsyncGetSession(_, _, _))
+      StrictMock<MockAsyncResponseReader<spanner_proto::ResultSet>>>();
+  EXPECT_CALL(*mock, AsyncExecuteSql(_, _, _))
       .WillOnce(Invoke([&reader](
                            grpc::ClientContext&,
-                           spanner_proto::GetSessionRequest const& request,
+                           spanner_proto::ExecuteSqlRequest const& request,
                            grpc::CompletionQueue*) {
-        EXPECT_EQ("s2", request.name());
+        EXPECT_EQ("s2", request.session());
         // This is safe. See comments in MockAsyncResponseReader.
         return std::unique_ptr<
-            grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>(
+            grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>(
             reader.get());
       }));
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke(
-          [](spanner_proto::Session* session, grpc::Status* status, void*) {
-            session->set_name("s2");
+          [](spanner_proto::ResultSet* result, grpc::Status* status, void*) {
+            // This is the actual spanner response to a "SELECT 1"
+            auto constexpr kResultSetText = R"pb(
+              metadata: {
+                row_type: { fields: { type: { code: INT64 } } }
+                transaction: {}
+              }
+              rows: { values: { string_value: "1" } }
+            )pb";
+            ASSERT_TRUE(TextFormat::ParseFromString(kResultSetText, result));
             *status = grpc::Status::OK;
           }));
 
@@ -443,7 +453,7 @@ TEST(SessionPool, SessionRefresh) {
 
   // Simulate completion of pending operations, which will result in
   // a call to RefreshExpiringSessions(). This should refresh "s2" and
-  // satisfy the AsyncGetSession() and Finish() expectations.
+  // satisfy the AsyncExecuteSql() and Finish() expectations.
   impl->SimulateCompletion(true);
 
   // Simulate completion again, making another RefreshExpiringSessions()
