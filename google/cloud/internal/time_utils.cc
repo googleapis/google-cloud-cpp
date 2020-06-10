@@ -28,18 +28,6 @@ std::chrono::system_clock::time_point ProtoTimestampToChronoTimepoint(
              std::chrono::nanoseconds(ts.nanos()));
 }
 
-google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
-    std::chrono::system_clock::time_point const& tp) {
-  auto d = tp.time_since_epoch();
-  using std::chrono::duration_cast;
-  auto seconds = duration_cast<std::chrono::seconds>(d);
-  auto nanos = duration_cast<std::chrono::nanoseconds>(d - seconds);
-  google::protobuf::Timestamp ts;
-  ts.set_seconds(seconds.count());
-  ts.set_nanos(nanos.count());
-  return ts;
-}
-
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

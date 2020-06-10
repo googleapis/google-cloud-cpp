@@ -34,12 +34,14 @@ TEST(TimeUtils, ConvertTimepointToProtoTimestamp) {
 TEST(TimeUtils, ProtoTimestampToChronoTimepoint) {
   google::protobuf::Timestamp proto_timestamp;
   proto_timestamp.set_seconds(867);
-  proto_timestamp.set_nanos(5309);
-  auto timepoint = ProtoTimestampToChronoTimepoint(proto_timestamp);
+  proto_timestamp.set_nanos(530900);
+  std::chrono::system_clock::time_point timepoint =
+      ProtoTimestampToChronoTimepoint(proto_timestamp);
 
-  const auto expected = std::chrono::system_clock::from_time_t(0) +
-                        std::chrono::seconds(867) +
-                        std::chrono::nanoseconds(5309);
+  std::chrono::system_clock::time_point expected =
+      std::chrono::system_clock::from_time_t(0) +
+      std::chrono::duration_cast<std::chrono::system_clock::duration>(
+          std::chrono::seconds(867) + std::chrono::nanoseconds(530900));
   EXPECT_EQ(timepoint, expected);
 }
 

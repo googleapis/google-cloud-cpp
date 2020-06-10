@@ -27,8 +27,18 @@ namespace internal {
 std::chrono::system_clock::time_point ProtoTimestampToChronoTimepoint(
     google::protobuf::Timestamp const& ts);
 
+template <typename Duration>
 google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
-    std::chrono::system_clock::time_point const& tp);
+    std::chrono::time_point<std::chrono::system_clock, Duration> const& tp) {
+  auto d = tp.time_since_epoch();
+  using std::chrono::duration_cast;
+  auto seconds = duration_cast<std::chrono::seconds>(d);
+  auto nanos = duration_cast<std::chrono::nanoseconds>(d - seconds);
+  google::protobuf::Timestamp ts;
+  ts.set_seconds(seconds.count());
+  ts.set_nanos(nanos.count());
+  return ts;
+}
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
