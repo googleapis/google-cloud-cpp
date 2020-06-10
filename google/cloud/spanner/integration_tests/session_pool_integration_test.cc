@@ -81,7 +81,7 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
                       future<StatusOr<google::spanner::v1::ResultSet>> f) {
               auto result = f.get();
               EXPECT_STATUS_OK(result);
-              if (!result) return false;
+              return result.ok();
             }));
   }
   for (auto& ag : async_get) {

@@ -133,8 +133,8 @@ void SessionPool::MaintainPoolSize() {
   }
 }
 
-// Initiate an async GetSession() call on any session whose last-use time is
-// older than the keep-alive interval.
+// Refresh all sessions whose last-use time is older than the keep-alive
+// interval. Issues asynchronous RPCs, so this method does not block.
 void SessionPool::RefreshExpiringSessions() {
   std::vector<std::pair<std::shared_ptr<SpannerStub>, std::string>>
       sessions_to_refresh;
