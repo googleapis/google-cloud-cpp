@@ -23,7 +23,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-TEST(TimeUtils, ConvertTimePointToProtoTimestamp) {
+TEST(TimeUtils, ConvertTimepointToProtoTimestamp) {
   auto const epoch = std::chrono::system_clock::from_time_t(0);
   auto t = epoch + std::chrono::seconds(123) + std::chrono::nanoseconds(456000);
   auto proto_timestamp = ChronoTimepointToProtoTimestamp(t);
@@ -31,11 +31,11 @@ TEST(TimeUtils, ConvertTimePointToProtoTimestamp) {
   EXPECT_EQ(456000, proto_timestamp.nanos());
 }
 
-TEST(TimeUtils, AsChronoTimepoint) {
+TEST(TimeUtils, ProtoTimestampToChronoTimepoint) {
   google::protobuf::Timestamp proto_timestamp;
   proto_timestamp.set_seconds(867);
   proto_timestamp.set_nanos(5309);
-  auto timepoint = AsChronoTimepoint(proto_timestamp);
+  auto timepoint = ProtoTimestampToChronoTimepoint(proto_timestamp);
 
   const auto expected = std::chrono::system_clock::from_time_t(0) +
                         std::chrono::seconds(867) +

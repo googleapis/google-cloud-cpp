@@ -24,7 +24,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-std::chrono::system_clock::time_point AsChronoTimepoint(
+std::chrono::system_clock::time_point ProtoTimestampToChronoTimepoint(
     google::protobuf::Timestamp const& ts);
 
 google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(

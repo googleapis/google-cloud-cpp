@@ -652,7 +652,8 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   }
   if (bucket.has_time_created()) {
     metadata.time_created_ =
-        google::cloud::internal::AsChronoTimepoint(bucket.time_created());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            bucket.time_created());
   }
   metadata.id_ = std::move(*bucket.mutable_id());
   metadata.name_ = std::move(*bucket.mutable_name());
@@ -666,7 +667,8 @@ BucketMetadata GrpcClient::FromProto(google::storage::v1::Bucket bucket) {
   metadata.etag_ = std::move(*bucket.mutable_etag());
   if (bucket.has_updated()) {
     metadata.updated_ =
-        google::cloud::internal::AsChronoTimepoint(bucket.updated());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            bucket.updated());
   }
   metadata.default_event_based_hold_ = bucket.default_event_based_hold();
   for (auto& kv : *bucket.mutable_labels()) {
@@ -731,11 +733,13 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   metadata.storage_class_ = std::move(*object.mutable_storage_class());
   if (object.has_time_created()) {
     metadata.time_created_ =
-        google::cloud::internal::AsChronoTimepoint(object.time_created());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            object.time_created());
   }
   if (object.has_updated()) {
     metadata.updated_ =
-        google::cloud::internal::AsChronoTimepoint(object.updated());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            object.updated());
   }
   std::vector<ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
@@ -769,18 +773,19 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   }
   if (object.has_retention_expiration_time()) {
     metadata.retention_expiration_time_ =
-        google::cloud::internal::AsChronoTimepoint(
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
             object.retention_expiration_time());
   }
   metadata.size_ = static_cast<std::uint64_t>(object.size());
   metadata.temporary_hold_ = object.temporary_hold();
   if (object.has_time_deleted()) {
     metadata.time_deleted_ =
-        google::cloud::internal::AsChronoTimepoint(object.time_deleted());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            object.time_deleted());
   }
   if (object.has_time_storage_class_updated()) {
     metadata.time_storage_class_updated_ =
-        google::cloud::internal::AsChronoTimepoint(
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
             object.time_storage_class_updated());
   }
 
@@ -949,7 +954,7 @@ BucketIamConfiguration GrpcClient::FromProto(
   if (rhs.has_uniform_bucket_level_access()) {
     UniformBucketLevelAccess ubla;
     ubla.enabled = rhs.uniform_bucket_level_access().enabled();
-    ubla.locked_time = google::cloud::internal::AsChronoTimepoint(
+    ubla.locked_time = google::cloud::internal::ProtoTimestampToChronoTimepoint(
         rhs.uniform_bucket_level_access().locked_time());
     result.uniform_bucket_level_access = std::move(ubla);
   }
@@ -987,7 +992,8 @@ BucketRetentionPolicy GrpcClient::FromProto(
     google::storage::v1::Bucket::RetentionPolicy const& rhs) {
   BucketRetentionPolicy result;
   result.effective_time =
-      google::cloud::internal::AsChronoTimepoint(rhs.effective_time());
+      google::cloud::internal::ProtoTimestampToChronoTimepoint(
+          rhs.effective_time());
   result.is_locked = rhs.is_locked();
   result.retention_period = std::chrono::seconds(rhs.retention_period());
   return result;
@@ -1070,7 +1076,8 @@ LifecycleRuleCondition GrpcClient::FromProto(
   }
   if (rhs.has_created_before()) {
     result.created_before =
-        google::cloud::internal::AsChronoTimepoint(rhs.created_before());
+        google::cloud::internal::ProtoTimestampToChronoTimepoint(
+            rhs.created_before());
   }
   if (rhs.has_is_live()) {
     result.is_live = rhs.is_live().value();

@@ -31,6 +31,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
     "internal/pagination_range.h",
+    "internal/time_utils.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
@@ -39,4 +40,5 @@ google_cloud_cpp_grpc_utils_srcs = [
     "grpc_error_delegate.cc",
     "internal/background_threads_impl.cc",
     "internal/completion_queue_impl.cc",
+    "internal/time_utils.cc",
 ]

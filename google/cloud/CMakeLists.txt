@@ -151,8 +151,6 @@ add_library(
     internal/strerror.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
-    internal/time_utils.cc
-    internal/time_utils.h
     internal/tuple.h
     internal/utility.h
     internal/version_info.h
@@ -169,8 +167,7 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory absl::variant
-                                                                         protobuf::libprotobuf
-Threads::Threads)
+                                                     Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common
@@ -213,7 +210,6 @@ if (BUILD_TESTING)
         internal/source_ready_token_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
-        internal/time_utils_test.cc
         internal/tuple_test.cc
         internal/utility_test.cc
         log_test.cc
@@ -231,13 +227,8 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
-                    google_cloud_cpp_common
-                    protobuf::libprotobuf
-                    absl::variant
-                    GTest::gmock_main
-                    GTest::gmock
-                    GTest::gtest)
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -321,7 +312,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/background_threads_impl.h
         internal/completion_queue_impl.cc
         internal/completion_queue_impl.h
-        internal/pagination_range.h)
+        internal/pagination_range.h
+        internal/time_utils.cc
+        internal/time_utils.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC absl::memory googleapis-c++::rpc_status_protos
@@ -352,7 +345,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/pagination_range_test.cc
-            internal/slow_iota_test.cc)
+            internal/slow_iota_test.cc
+            internal/time_utils_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
