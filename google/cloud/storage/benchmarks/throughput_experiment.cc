@@ -16,6 +16,9 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+#include "google/cloud/storage/internal/grpc_client.h"
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
 #include <google/storage/v1/storage.grpc.pb.h>
@@ -241,11 +244,20 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   ApiName api_;
 };
 
+std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel() {
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  gcs::ClientOptions options{gcs::oauth2::GoogleDefaultCredentials().value()};
+  return gcs::internal::CreateGrpcChannel(options);
+#else
+  return grpc::CreateChannel("storage.googleapis.com",
+                             grpc::GoogleDefaultCredentials());
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+}
+
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
   DownloadObjectRawGrpc()
-      : stub_(google::storage::v1::Storage::NewStub(grpc::CreateChannel(
-            "storage.googleapis.com", grpc::GoogleDefaultCredentials()))) {}
+      : stub_(google::storage::v1::Storage::NewStub(CreateGcsChannel())) {}
   ~DownloadObjectRawGrpc() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,

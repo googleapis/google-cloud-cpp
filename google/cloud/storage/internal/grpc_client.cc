@@ -25,6 +25,7 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "absl/algorithm/container.h"
+#include "absl/strings/str_split.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -36,6 +37,14 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::size_t constexpr GrpcClient::kMaxInsertObjectWriteRequestSize;
+
+bool DirectPathEnabled() {
+  auto const direct_path_settings =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
+          .value_or("");
+  return absl::c_any_of(absl::StrSplit(direct_path_settings, ','),
+                        [](absl::string_view v) { return v == "storage"; });
+}
 
 std::string GrpcEndpoint() {
   auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
@@ -55,12 +64,33 @@ std::shared_ptr<grpc::ChannelCredentials> GrpcCredentials(
           options.credentials().get()) != nullptr) {
     return grpc::InsecureChannelCredentials();
   }
+  if (DirectPathEnabled()) {
+    grpc::experimental::AltsCredentialsOptions alts_opts;
+    return grpc::CompositeChannelCredentials(
+        grpc::experimental::AltsCredentials(alts_opts),
+        grpc::GoogleComputeEngineCredentials());
+  }
   return grpc::GoogleDefaultCredentials();
 }
 
-GrpcClient::GrpcClient(ClientOptions options) : options_(std::move(options)) {
-  auto channel = grpc::CreateChannel(GrpcEndpoint(), GrpcCredentials(options_));
-  stub_ = google::storage::v1::Storage::NewStub(channel);
+std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
+    ClientOptions const& options) {
+  grpc::ChannelArguments args;
+  args.SetServiceConfigJSON(R"json({
+       "loadBalancingConfig": [{
+         "grpclb": {
+           "childPolicy": [ {"pick_first": {}}]
+         }
+       }]
+  })json");
+  args.SetInt("grpc.dns_enable_srv_queries", DirectPathEnabled() ? 1 : 0);
+  return grpc::CreateCustomChannel(GrpcEndpoint(), GrpcCredentials(options),
+                                   std::move(args));
+}
+
+GrpcClient::GrpcClient(ClientOptions options)
+    : options_(std::move(options)),
+      stub_(google::storage::v1::Storage::NewStub(CreateGrpcChannel(options))) {
 }
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(

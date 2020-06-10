@@ -24,6 +24,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+/// Determine if using DirectPath for GCS has been enabled through
+/// GOOGLE_CLOUD_DIRECT_PATH.
+bool DirectPathEnabled();
+
+std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&);
+
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
