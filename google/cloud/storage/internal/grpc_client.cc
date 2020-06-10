@@ -39,11 +39,9 @@ namespace internal {
 std::size_t constexpr GrpcClient::kMaxInsertObjectWriteRequestSize;
 
 bool DirectPathEnabled() {
-  auto direct_path_settings =
+  auto const direct_path_settings =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
           .value_or("");
-  if (direct_path_settings.empty()) return false;
-
   return absl::c_any_of(absl::StrSplit(direct_path_settings, ','),
                         [](absl::string_view v) { return v == "storage"; });
 }
