@@ -250,7 +250,7 @@ std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel() {
   return gcs::internal::CreateGrpcChannel(options);
 #else
   return grpc::CreateChannel(
-            "storage.googleapis.com", grpc::GoogleDefaultCredentials()));
+            "storage.googleapis.com", grpc::GoogleDefaultCredentials());
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 }
 
