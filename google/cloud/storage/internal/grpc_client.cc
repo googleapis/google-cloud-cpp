@@ -64,26 +64,17 @@ std::shared_ptr<grpc::ChannelCredentials> GrpcCredentials(
           options.credentials().get()) != nullptr) {
     return grpc::InsecureChannelCredentials();
   }
-  if (DirectPathEnabled()) {
-    grpc::experimental::AltsCredentialsOptions alts_opts;
-    return grpc::CompositeChannelCredentials(
-        grpc::experimental::AltsCredentials(alts_opts),
-        grpc::GoogleComputeEngineCredentials());
-  }
   return grpc::GoogleDefaultCredentials();
 }
 
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
     ClientOptions const& options) {
   grpc::ChannelArguments args;
-  args.SetServiceConfigJSON(R"json({
-       "loadBalancingConfig": [{
-         "grpclb": {
-           "childPolicy": [ {"pick_first": {}}]
-         }
-       }]
-  })json");
-  args.SetInt("grpc.dns_enable_srv_queries", DirectPathEnabled() ? 1 : 0);
+  if (DirectPathEnabled()) {
+    args.SetServiceConfigJSON(R"json({
+      "loadBalancingConfig": [{"grpclb": {}}]
+    })json");
+  }
   return grpc::CreateCustomChannel(GrpcEndpoint(), GrpcCredentials(options),
                                    std::move(args));
 }
