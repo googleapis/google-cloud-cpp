@@ -47,13 +47,6 @@ class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
                                grpc::ClientContext&,
                                google::spanner::v1::GetSessionRequest const&));
 
-  MOCK_METHOD3(AsyncGetSession,
-               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                   google::spanner::v1::Session>>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::GetSessionRequest const&,
-                   grpc::CompletionQueue*));
-
   MOCK_METHOD2(ListSessions,
                StatusOr<google::spanner::v1::ListSessionsResponse>(
                    grpc::ClientContext&,
@@ -74,6 +67,13 @@ class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
   MOCK_METHOD2(ExecuteSql, StatusOr<google::spanner::v1::ResultSet>(
                                grpc::ClientContext&,
                                google::spanner::v1::ExecuteSqlRequest const&));
+
+  MOCK_METHOD3(AsyncExecuteSql,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::spanner::v1::ResultSet>>(
+                   grpc::ClientContext&,
+                   google::spanner::v1::ExecuteSqlRequest const&,
+                   grpc::CompletionQueue*));
 
   MOCK_METHOD2(
       ExecuteStreamingSql,
