@@ -157,7 +157,7 @@ StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     google::spanner::admin::database::v1::Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
   auto proto_expire_time =
-      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.name());
   *request.mutable_backup()->mutable_expire_time() = proto_expire_time;
@@ -169,7 +169,7 @@ StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
   auto proto_expire_time =
-      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.FullName());
   *request.mutable_backup()->mutable_expire_time() = proto_expire_time;

@@ -517,7 +517,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   auto proto_expire_time =
-      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
 
   EXPECT_CALL(*mock, UpdateBackup(_))
       .WillOnce([&backup, &proto_expire_time](
@@ -549,7 +549,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   auto proto_expire_time =
-      google::cloud::internal::ChronoTimepointToProtoTimestamp(expire_time);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
 
   EXPECT_CALL(*mock, UpdateBackup(_))
       .WillOnce([&backup_name, &proto_expire_time](

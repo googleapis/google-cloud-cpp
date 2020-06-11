@@ -214,7 +214,7 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
       backup.value(), new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
   auto expected_timestamp =
-      google::cloud::internal::ChronoTimepointToProtoTimestamp(new_expire_time);
+      google::cloud::internal::ToProtoTimestamp(new_expire_time);
   EXPECT_EQ(expected_timestamp.seconds(),
             updated_backup->expire_time().seconds());
   // The server only preserves micros.

@@ -338,7 +338,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     auto backup = request.mutable_backup();
     backup->set_database(p.database.FullName());
     auto proto_expire_time =
-        google::cloud::internal::ChronoTimepointToProtoTimestamp(p.expire_time);
+        google::cloud::internal::ToProtoTimestamp(p.expire_time);
     *backup->mutable_expire_time() = proto_expire_time;
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),

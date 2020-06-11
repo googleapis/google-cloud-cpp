@@ -24,11 +24,11 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-std::chrono::system_clock::time_point ProtoTimestampToChronoTimepoint(
+std::chrono::system_clock::time_point ToChronoTimePoint(
     google::protobuf::Timestamp const& ts);
 
 template <typename Duration>
-google::protobuf::Timestamp ChronoTimepointToProtoTimestamp(
+google::protobuf::Timestamp ToProtoTimestamp(
     std::chrono::time_point<std::chrono::system_clock, Duration> const& tp) {
   auto d = tp.time_since_epoch();
   using std::chrono::duration_cast;
