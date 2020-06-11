@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/polling_loop.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
-#include "google/cloud/spanner/internal/time_utils.h"
+#include "google/cloud/internal/time_utils.h"
 #include <chrono>
 
 namespace google {
@@ -338,12 +338,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     auto backup = request.mutable_backup();
     backup->set_database(p.database.FullName());
     auto proto_expire_time =
-        internal::ConvertTimePointToProtoTimestamp(p.expire_time);
-    if (!proto_expire_time) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Backup>(proto_expire_time.status()));
-    }
-    *backup->mutable_expire_time() = *proto_expire_time;
+        google::cloud::internal::ToProtoTimestamp(p.expire_time);
+    *backup->mutable_expire_time() = proto_expire_time;
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         false,

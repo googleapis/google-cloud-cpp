@@ -12,33 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TIME_UTILS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TIME_UTILS_H
-
-#include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/spanner/version.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <chrono>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-template <typename Duration>
-StatusOr<google::protobuf::Timestamp> ConvertTimePointToProtoTimestamp(
-    sys_time<Duration> time_point) {
-  auto const ts = MakeTimestamp(time_point);
-  if (!ts) return std::move(ts).status();
-  return TimestampToProto(*ts);
+std::chrono::system_clock::time_point ToChronoTimePoint(
+    google::protobuf::Timestamp const& ts) {
+  return std::chrono::system_clock::from_time_t(ts.seconds()) +
+         std::chrono::duration_cast<std::chrono::system_clock::duration>(
+             std::chrono::nanoseconds(ts.nanos()));
 }
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TIME_UTILS_H

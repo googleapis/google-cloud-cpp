@@ -117,7 +117,6 @@ add_library(
     internal/status_utils.h
     internal/time_format.cc
     internal/time_format.h
-    internal/time_utils.h
     internal/transaction_impl.cc
     internal/transaction_impl.h
     internal/tuple_utils.h
@@ -290,7 +289,6 @@ function (spanner_client_define_tests)
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc
         internal/time_format_test.cc
-        internal/time_utils_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
         keys_test.cc

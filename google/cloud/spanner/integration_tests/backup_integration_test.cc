@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
-#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -214,13 +214,11 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
       backup.value(), new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
   auto expected_timestamp =
-      google::cloud::spanner::internal::ConvertTimePointToProtoTimestamp(
-          new_expire_time);
-  EXPECT_STATUS_OK(expected_timestamp);
-  EXPECT_EQ(expected_timestamp->seconds(),
+      google::cloud::internal::ToProtoTimestamp(new_expire_time);
+  EXPECT_EQ(expected_timestamp.seconds(),
             updated_backup->expire_time().seconds());
   // The server only preserves micros.
-  EXPECT_EQ(expected_timestamp->nanos() / 1000,
+  EXPECT_EQ(expected_timestamp.nanos() / 1000,
             updated_backup->expire_time().nanos() / 1000);
   auto delete_result = database_admin_client_.DeleteBackup(backup.value());
   EXPECT_STATUS_OK(delete_result);
