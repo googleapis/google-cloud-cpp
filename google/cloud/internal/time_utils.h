@@ -40,7 +40,7 @@ google::protobuf::Timestamp ToProtoTimestamp(
   // field is only 32 bits. It is safe here to perform this narrowing cast
   // because the arithmetic used to compute nanos precludes it from having a
   // value > 1,000,000,000.
-  ts.set_nanos(static_cast<int32_t>(nanos.count()));
+  ts.set_nanos(static_cast<std::int32_t>(nanos.count()));
   return ts;
 }
 
