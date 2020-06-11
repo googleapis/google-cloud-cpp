@@ -36,7 +36,11 @@ google::protobuf::Timestamp ToProtoTimestamp(
   auto nanos = duration_cast<std::chrono::nanoseconds>(d - seconds);
   google::protobuf::Timestamp ts;
   ts.set_seconds(seconds.count());
-  ts.set_nanos(nanos.count());
+  // Some platforms use 64 bit integers to represent nanos.count(). The proto
+  // field is only 32 bits. It is safe here to perform this narrowing cast
+  // because the arithmetic used to compute nanos precludes it from having a
+  // value > 1,000,000,000.
+  ts.set_nanos(static_cast<int32_t>(nanos.count()));
   return ts;
 }
 
