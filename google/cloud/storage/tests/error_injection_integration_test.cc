@@ -236,11 +236,12 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
+  int const kInjectedErrors = 10;
   auto opts = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(opts);
   // Make it at least the maximum curl buffer size (which is 512KiB)
   opts->SetDownloadBufferSize(512 * 1024);
-  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)),
+  Client client(*opts, LimitedErrorCountRetryPolicy(kInjectedErrors),
                 ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   auto object_name = MakeRandomObjectName();
@@ -261,11 +262,12 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
-      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 10);
+      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET,
+      kInjectedErrors);
   is.read(read_buf.data(), read_buf.size());
   ASSERT_TRUE(is.status().ok());
   is.Close();
-  EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
+  EXPECT_EQ(SymbolInterceptor::Instance().StopFailingRecv(), kInjectedErrors);
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
