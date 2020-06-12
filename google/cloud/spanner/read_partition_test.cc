@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -125,7 +126,7 @@ TEST(ReadPartitionTest, SerializeDeserialize) {
   StatusOr<ReadPartition> partition = DeserializeReadPartition(
       *(SerializeReadPartition(expected_partition.Partition())));
 
-  ASSERT_TRUE(partition.ok());
+  ASSERT_STATUS_OK(partition);
   ReadPartitionTester actual_partition = ReadPartitionTester(*partition);
   EXPECT_EQ(expected_partition.PartitionToken(),
             actual_partition.PartitionToken());

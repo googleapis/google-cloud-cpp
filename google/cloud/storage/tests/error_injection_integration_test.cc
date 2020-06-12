@@ -265,7 +265,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET,
       kInjectedErrors);
   is.read(read_buf.data(), read_buf.size());
-  ASSERT_TRUE(is.status().ok());
+  ASSERT_STATUS_OK(is.status());
   is.Close();
   EXPECT_EQ(SymbolInterceptor::Instance().StopFailingRecv(), kInjectedErrors);
 
