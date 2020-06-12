@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -108,7 +109,7 @@ TEST(QueryPartitionTest, SerializeDeserialize) {
   StatusOr<QueryPartition> partition = DeserializeQueryPartition(
       *(SerializeQueryPartition(expected_partition.Partition())));
 
-  ASSERT_TRUE(partition.ok());
+  ASSERT_STATUS_OK(partition);
   QueryPartitionTester actual_partition = QueryPartitionTester(*partition);
   EXPECT_EQ(expected_partition.PartitionToken(),
             actual_partition.PartitionToken());

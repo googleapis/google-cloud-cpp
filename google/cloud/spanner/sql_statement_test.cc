@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -57,7 +58,7 @@ TEST(SqlStatementTest, GetParameterExists) {
                                     {"first", Value("Elwood")}};
   SqlStatement stmt("select * from foo", params);
   auto results = stmt.GetParameter("first");
-  ASSERT_TRUE(results.ok());
+  ASSERT_STATUS_OK(results);
   EXPECT_EQ(expected, *results);
   EXPECT_EQ(std::string("Elwood"), *(results->get<std::string>()));
 }
