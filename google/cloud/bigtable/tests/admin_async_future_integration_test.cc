@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/util/time_util.h>
@@ -430,7 +431,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
                 << " This is unexpected, as the backup ids are"
                 << " generated at random.";
             return table_admin_->AsyncCreateBackup(
-                cq, {backup_cluster_id, backup_id, table_id, expire_time});
+                cq, {backup_cluster_id, backup_id, table_id,
+                     google::cloud::internal::ToChronoTimePoint(expire_time)});
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> result = fut.get();
@@ -444,7 +446,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
             EXPECT_STATUS_OK(get_result);
             EXPECT_EQ(get_result->name(), backup_full_name);
             return table_admin_->AsyncUpdateBackup(
-                cq, {backup_cluster_id, backup_id, updated_expire_time});
+                cq, {backup_cluster_id, backup_id,
+                     google::cloud::internal::ToChronoTimePoint(
+                         updated_expire_time)});
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> update_result = fut.get();
@@ -527,7 +531,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
                 << " This is unexpected, as the backup ids are"
                 << " generated at random.";
             return table_admin_->AsyncCreateBackup(
-                cq, {backup_cluster_id, backup_id, table_id, expire_time});
+                cq, {backup_cluster_id, backup_id, table_id,
+                     google::cloud::internal::ToChronoTimePoint(expire_time)});
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> result = fut.get();

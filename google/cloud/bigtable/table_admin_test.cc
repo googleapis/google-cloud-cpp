@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -612,8 +613,9 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
   google::protobuf::Timestamp expire_time;
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
-  bigtable::TableAdmin::UpdateBackupParams params("the-cluster", "the-backup",
-                                                  std::move(expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
   tested.UpdateBackup(std::move(params));
 }
 
@@ -631,8 +633,9 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
   google::protobuf::Timestamp expire_time;
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
-  bigtable::TableAdmin::UpdateBackupParams params("the-cluster", "the-backup",
-                                                  std::move(expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -652,8 +655,9 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
   google::protobuf::Timestamp expire_time;
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
-  bigtable::TableAdmin::UpdateBackupParams params("the-cluster", "the-backup",
-                                                  std::move(expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -1320,7 +1324,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   bigtable::TableAdmin::CreateBackupParams backup_config(
-      "the-cluster", "the-backup", "the-table", expire_time);
+      "the-cluster", "the-backup", "the-table",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
   FinishTest(table_admin_->AsyncCreateBackup(cq_, backup_config));
 }
 

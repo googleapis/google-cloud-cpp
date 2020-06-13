@@ -67,6 +67,7 @@ if (BUILD_TESTING)
                     google_cloud_cpp_testing
                     google_cloud_cpp_common
                     google_cloud_cpp_grpc_utils
+                    absl::time
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest
@@ -87,6 +88,7 @@ if (BUILD_TESTING)
                     google_cloud_cpp_common
                     google_cloud_cpp_testing
                     google_cloud_cpp_grpc_utils
+                    absl::time
                     gRPC::grpc++
                     gRPC::grpc
                     protobuf::libprotobuf)

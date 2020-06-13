@@ -432,13 +432,12 @@ class TableAdmin {
    *     where PROJECT_ID is obtained from the associated AdminClient and
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
    * @param expire_time the date and time when the created backup will expire.
-   *     The expected format, per RFC3339, is "1972-01-01T10:00:20.021-05:00"
    */
   class CreateBackupParams {
    public:
     CreateBackupParams(std::string cluster_id, std::string backup_id,
                        std::string table_id,
-                       google::protobuf::Timestamp expire_time)
+                       std::chrono::system_clock::time_point expire_time)
         : cluster_id_(std::move(cluster_id)),
           backup_id_(std::move(backup_id)),
           table_name_(std::move(table_id)),
@@ -453,7 +452,7 @@ class TableAdmin {
     std::string cluster_id_;
     std::string backup_id_;
     std::string table_name_;
-    google::protobuf::Timestamp expire_time_;
+    std::chrono::system_clock::time_point expire_time_;
   };
 
   /**
@@ -574,12 +573,11 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
    *     CLUSTER_ID is the cluster_id specified for this object.
    * @param expire_time the date and time when the created backup will expire.
-   *     The expected format, per RFC3339, is "1972-01-01T10:00:20.021-05:00"
    */
   class UpdateBackupParams {
    public:
     UpdateBackupParams(std::string cluster_id, std::string backup_id,
-                       google::protobuf::Timestamp expire_time)
+                       std::chrono::system_clock::time_point expire_time)
         : cluster_id_(std::move(cluster_id)),
           backup_name_(std::move(backup_id)),
           expire_time_(std::move(expire_time)) {}
@@ -590,7 +588,7 @@ class TableAdmin {
    private:
     std::string cluster_id_;
     std::string backup_name_;
-    google::protobuf::Timestamp expire_time_;
+    std::chrono::system_clock::time_point expire_time_;
   };
 
   /**

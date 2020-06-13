@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "absl/memory/memory.h"
@@ -381,7 +382,8 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
       google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   auto created_backup = table_admin_->CreateBackup(
-      {backup_cluster_id, backup_id, table_id, expire_time});
+      {backup_cluster_id, backup_id, table_id,
+       google::cloud::internal::ToChronoTimePoint(expire_time)});
   ASSERT_STATUS_OK(created_backup);
   EXPECT_EQ(created_backup->name(), backup_full_name);
 
@@ -394,7 +396,8 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   google::protobuf::Timestamp const updated_expire_time =
       expire_time + google::protobuf::util::TimeUtil::HoursToDuration(12);
   auto updated_backup = table_admin_->UpdateBackup(
-      {backup_cluster_id, backup_id, updated_expire_time});
+      {backup_cluster_id, backup_id,
+       google::cloud::internal::ToChronoTimePoint(updated_expire_time)});
 
   // get backup to verify update
   auto get_updated_backup =
@@ -468,7 +471,8 @@ TEST_F(AdminIntegrationTest, RestoreTableFromBackup) {
       google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   auto created_backup = table_admin_->CreateBackup(
-      {backup_cluster_id, backup_id, table_id, expire_time});
+      {backup_cluster_id, backup_id, table_id,
+       google::cloud::internal::ToChronoTimePoint(expire_time)});
   ASSERT_STATUS_OK(created_backup);
   EXPECT_EQ(created_backup->name(), backup_full_name);
 

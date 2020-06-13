@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/duration.pb.h>
 #include <sstream>
 
@@ -240,7 +241,8 @@ TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
   proto.set_backup_id(backup_id_);
   proto.mutable_backup()->set_source_table(std::move(instance_name) +
                                            "/tables/" + table_name_);
-  *proto.mutable_backup()->mutable_expire_time() = expire_time_;
+  *proto.mutable_backup()->mutable_expire_time() =
+      google::cloud::internal::ToProtoTimestamp(expire_time_);
   return proto;
 }
 
@@ -329,7 +331,8 @@ TableAdmin::UpdateBackupParams::AsProto(
   google::bigtable::admin::v2::UpdateBackupRequest proto;
   proto.mutable_backup()->set_name(instance_name + "/clusters/" + cluster_id_ +
                                    "/backups/" + backup_name_);
-  *proto.mutable_backup()->mutable_expire_time() = expire_time_;
+  *proto.mutable_backup()->mutable_expire_time() =
+      google::cloud::internal::ToProtoTimestamp(expire_time_);
   proto.mutable_update_mask()->add_paths("expire_time");
   return proto;
 }

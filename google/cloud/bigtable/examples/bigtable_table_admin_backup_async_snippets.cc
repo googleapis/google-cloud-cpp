@@ -16,7 +16,9 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/cloud/internal/time_utils.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <algorithm>
 
 namespace {
@@ -31,17 +33,17 @@ void AsyncCreateBackup(google::cloud::bigtable::TableAdmin const& admin,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
      std::string const& table_id, std::string const& cluster_id,
      std::string const& backup_id, std::string const& expire_time_string) {
-    google::protobuf::Timestamp expire_time;
-    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
-                                                      &expire_time)) {
-      throw std::runtime_error("Unable to parse expire_time:" +
-                               expire_time_string);
+    absl::Time t;
+    std::string err;
+    if (!absl::ParseTime(absl::RFC3339_full, expire_time_string, &t, &err)) {
+      throw std::runtime_error("Unable to parse expire_time:" + err);
     }
+    auto expire_time = absl::ToChronoTime(t);
 
     future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
         admin.AsyncCreateBackup(
-            cq, cbt::TableAdmin::CreateBackupParams(
-                    cluster_id, backup_id, table_id, std::move(expire_time)));
+            cq, cbt::TableAdmin::CreateBackupParams(cluster_id, backup_id,
+                                                    table_id, expire_time));
 
     auto final = backup_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Backup>> f) {
@@ -157,17 +159,16 @@ void AsyncUpdateBackup(google::cloud::bigtable::TableAdmin const& admin,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
      std::string const& cluster_id, std::string const& backup_id,
      std::string const& expire_time_string) {
-    google::protobuf::Timestamp expire_time;
-    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
-                                                      &expire_time)) {
-      throw std::runtime_error("Unable to parse expire_time:" +
-                               expire_time_string);
+    absl::Time t;
+    std::string err;
+    if (!absl::ParseTime(absl::RFC3339_full, expire_time_string, &t, &err)) {
+      throw std::runtime_error("Unable to parse expire_time:" + err);
     }
+    auto expire_time = absl::ToChronoTime(t);
 
     future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
-        admin.AsyncUpdateBackup(
-            cq, cbt::TableAdmin::UpdateBackupParams(cluster_id, backup_id,
-                                                    std::move(expire_time)));
+        admin.AsyncUpdateBackup(cq, cbt::TableAdmin::UpdateBackupParams(
+                                        cluster_id, backup_id, expire_time));
 
     auto final = backup_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Backup>> f) {
@@ -272,12 +273,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning AsyncCreateBackup() example" << std::endl;
   auto backup_id = examples::RandomTableId(backup_prefix, generator);
-  AsyncCreateBackup(
-      admin, cq,
-      {table_id, cluster_id, backup_id,
-       google::protobuf::util::TimeUtil::ToString(
-           google::protobuf::util::TimeUtil::GetCurrentTime() +
-           google::protobuf::util::TimeUtil::HoursToDuration(12))});
+  AsyncCreateBackup(admin, cq,
+                    {table_id, cluster_id, backup_id,
+                     absl::FormatTime(absl::Now() + absl::Hours(12))});
 
   std::cout << "\nRunning AsyncListBackups() example" << std::endl;
   AsyncListBackups(admin, cq, {"-", {}, {}});
@@ -288,10 +286,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning AsyncUpdateBackup() example" << std::endl;
   AsyncUpdateBackup(
       admin, cq,
-      {cluster_id, backup_id,
-       google::protobuf::util::TimeUtil::ToString(
-           google::protobuf::util::TimeUtil::GetCurrentTime() +
-           google::protobuf::util::TimeUtil::HoursToDuration(24))});
+      {cluster_id, backup_id, absl::FormatTime(absl::Now() + absl::Hours(24))});
 
   (void)admin.DeleteTable(table_id);
 
