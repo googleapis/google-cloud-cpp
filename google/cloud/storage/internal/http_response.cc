@@ -76,6 +76,11 @@ Status AsStatus(HttpResponse const& http_response) {
   if (http_response.status_code == HttpStatusCode::kMethodNotAllowed) {
     return Status(StatusCode::kPermissionDenied, http_response.payload);
   }
+  if (http_response.status_code == HttpStatusCode::kRequestTimeout) {
+    // GCS uses a 408 to signal that an upload has suffered a broken
+    // connection, and that the client should retry.
+    return Status(StatusCode::kUnavailable, http_response.payload);
+  }
   if (http_response.status_code == HttpStatusCode::kConflict) {
     return Status(StatusCode::kAborted, http_response.payload);
   }
