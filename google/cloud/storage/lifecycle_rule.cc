@@ -90,6 +90,16 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
   }
   if (rhs.num_newer_versions.has_value()) {
     os << sep << "num_newer_versions=" << *rhs.num_newer_versions;
+    sep = ", ";
+  }
+  if (rhs.days_since_noncurrent_time.has_value()) {
+    os << sep
+       << "days_since_noncurrent_time=" << *rhs.days_since_noncurrent_time;
+    sep = ", ";
+  }
+  if (rhs.noncurrent_time_before.has_value()) {
+    os << sep << "noncurrent_time_before=" << *rhs.noncurrent_time_before;
+    sep = ", ";
   }
   return os << "}";
 }
@@ -146,6 +156,22 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
     } else {
       auto tmp = *rhs.num_newer_versions;
       result.num_newer_versions.emplace(std::forward<std::int32_t>(tmp));
+    }
+  }
+  if (rhs.days_since_noncurrent_time.has_value()) {
+    if (result.days_since_noncurrent_time.has_value()) {
+      *result.days_since_noncurrent_time = (std::max)(
+          *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
+    } else {
+      result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
+    }
+  }
+  if (rhs.noncurrent_time_before.has_value()) {
+    if (result.noncurrent_time_before.has_value()) {
+      *result.noncurrent_time_before = (std::min)(
+          *result.noncurrent_time_before, *rhs.noncurrent_time_before);
+    } else {
+      result.noncurrent_time_before = *rhs.noncurrent_time_before;
     }
   }
 }
