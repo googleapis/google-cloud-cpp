@@ -61,6 +61,8 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{404, "not found", {}}).code());
   EXPECT_EQ(StatusCode::kPermissionDenied,
             AsStatus(HttpResponse{405, "method not allowed", {}}).code());
+  EXPECT_EQ(StatusCode::kUnavailable,
+            AsStatus(HttpResponse{408, "request timeout", {}}).code());
   EXPECT_EQ(StatusCode::kAborted,
             AsStatus(HttpResponse{409, "conflict", {}}).code());
   EXPECT_EQ(StatusCode::kNotFound,

@@ -53,6 +53,7 @@ enum HttpStatusCode {
   kForbidden = 403,
   kNotFound = 404,
   kMethodNotAllowed = 405,
+  kRequestTimeout = 408,
   kConflict = 409,
   kGone = 410,
   kLengthRequired = 411,
