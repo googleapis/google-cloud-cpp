@@ -81,6 +81,8 @@ struct LifecycleRuleCondition {
   google::cloud::optional<bool> is_live;
   google::cloud::optional<std::vector<std::string>> matches_storage_class;
   google::cloud::optional<std::int32_t> num_newer_versions;
+  optional<std::int32_t> days_since_noncurrent_time;
+  optional<std::chrono::system_clock::time_point> noncurrent_time_before;
 };
 
 inline bool operator==(LifecycleRuleCondition const& lhs,
@@ -88,15 +90,19 @@ inline bool operator==(LifecycleRuleCondition const& lhs,
   return lhs.age == rhs.age && lhs.created_before == rhs.created_before &&
          lhs.is_live == rhs.is_live &&
          lhs.matches_storage_class == rhs.matches_storage_class &&
-         lhs.num_newer_versions == rhs.num_newer_versions;
+         lhs.num_newer_versions == rhs.num_newer_versions &&
+         lhs.days_since_noncurrent_time == rhs.days_since_noncurrent_time &&
+         lhs.noncurrent_time_before == rhs.noncurrent_time_before;
 }
 
 inline bool operator<(LifecycleRuleCondition const& lhs,
                       LifecycleRuleCondition const& rhs) {
   return std::tie(lhs.age, lhs.created_before, lhs.is_live,
-                  lhs.matches_storage_class, lhs.num_newer_versions) <
+                  lhs.matches_storage_class, lhs.num_newer_versions,
+                  lhs.days_since_noncurrent_time, lhs.noncurrent_time_before) <
          std::tie(rhs.age, rhs.created_before, rhs.is_live,
-                  rhs.matches_storage_class, rhs.num_newer_versions);
+                  rhs.matches_storage_class, rhs.num_newer_versions,
+                  rhs.days_since_noncurrent_time, rhs.noncurrent_time_before);
 }
 
 inline bool operator!=(LifecycleRuleCondition const& lhs,
@@ -242,6 +248,25 @@ class LifecycleRule {
     LifecycleRuleCondition result;
     result.num_newer_versions.emplace(std::move(days));
     return result;
+  }
+
+  static LifecycleRuleCondition DaysSinceNoncurrentTime(std::int32_t days) {
+    LifecycleRuleCondition result;
+    result.days_since_noncurrent_time = days;
+    return result;
+  }
+
+  static LifecycleRuleCondition NoncurrentTimeBefore(
+      std::chrono::system_clock::time_point tp) {
+    LifecycleRuleCondition result;
+    result.noncurrent_time_before = tp;
+    return result;
+  }
+
+  static LifecycleRuleCondition NoncurrentTimeBefore(
+      std::string const& timestamp) {
+    return NoncurrentTimeBefore(
+        google::cloud::internal::ParseRfc3339(timestamp));
   }
   //@}
 

@@ -99,6 +99,15 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       result.condition_.num_newer_versions.emplace(
           internal::ParseIntField(condition, "numNewerVersions"));
     }
+    if (condition.count("daysSinceNoncurrentTime") != 0) {
+      result.condition_.days_since_noncurrent_time.emplace(
+          internal::ParseIntField(condition, "daysSinceNoncurrentTime"));
+    }
+    if (condition.count("noncurrentTimeBefore") != 0) {
+      result.condition_.noncurrent_time_before.emplace(
+          google::cloud::internal::ParseRfc3339(
+              condition.value("noncurrentTimeBefore", "")));
+    }
   }
   return result;
 }
