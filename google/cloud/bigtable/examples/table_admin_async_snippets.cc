@@ -301,8 +301,6 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin const& admin,
   (std::move(admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
-}  // anonymous namespace
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -374,6 +372,8 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncDeleteTable() example" << std::endl;
   AsyncDeleteTable(admin, cq, {table_id});
 }
+
+}  // anonymous namespace
 
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);

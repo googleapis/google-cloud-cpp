@@ -521,17 +521,12 @@ void RunAll(std::vector<std::string> const& argv) {
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
-      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const instance_id = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
-  auto const service_account =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
-          .value();
 
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),

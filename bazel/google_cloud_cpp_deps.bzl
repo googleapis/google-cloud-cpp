@@ -34,7 +34,7 @@ def google_cloud_cpp_deps():
             urls = [
                 "https://github.com/bazelbuild/rules_proto/archive/d7666ec475c1f8d4a6803cbc0a0b6b4374360868.tar.gz",
             ],
-            #            sha256 = "d21d38c4b8e81eed8fa95ede48dd69aba01a3b938be6ac03d2b9dc61886a7183",
+            sha256 = "3cd625058dc989f6fac0bf8cf7c3cac6d654052500bd8ffea15de1b47bd3d20d",
         )
 
     # Load rules_cc, used by googletest
@@ -104,12 +104,15 @@ def google_cloud_cpp_deps():
             sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
         )
 
+    # Load opencensus.
     if "io_opencensus_cpp" not in native.existing_rules():
         http_archive(
             name = "io_opencensus_cpp",
-            urls = ["https://github.com/census-instrumentation/opencensus-cpp/archive/3b7643c1a353d5164dc02a1fb1b19a641ee1a4f1.tar.gz"],
-            strip_prefix = "opencensus-cpp-3b7643c1a353d5164dc02a1fb1b19a641ee1a4f1",
-            sha256 = "24e2bdc4619b6e165f629fd408f21e205469bb36e748e966a8bd7d081c3c0cb2",
+            urls = [
+                "https://github.com/census-instrumentation/opencensus-cpp/archive/c900c4d723ef596f357b0e695e68e2fa725eec90.tar.gz",
+            ],
+            strip_prefix = "opencensus-cpp-c900c4d723ef596f357b0e695e68e2fa725eec90",
+            sha256 = "040753b92d0ea57e2e9ffe7fc51f4c954cfb352204dc967c04ae6100842d6f45",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
