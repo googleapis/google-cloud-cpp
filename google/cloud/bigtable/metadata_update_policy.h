@@ -51,6 +51,7 @@ class MetadataParamTypes final {
   static MetadataParamTypes const APP_PROFILE_NAME;
   // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const INSTANCE_NAME;
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static MetadataParamTypes const BACKUP_NAME;
 
   std::string const& type() const { return type_; }

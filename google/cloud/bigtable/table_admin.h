@@ -775,7 +775,7 @@ class TableAdmin {
      *     where PROJECT_ID is obtained from the associated AdminClient and
      *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
      */
-    ListBackupsParams& set_cluster(std::string cluster_id) {
+    ListBackupsParams& set_cluster(std::string const& cluster_id) {
       cluster_id_ = cluster_id;
       return *this;
     }
@@ -816,7 +816,7 @@ class TableAdmin {
      *       * `size_bytes > 10000000000` --> The backup's size is greater than
      *          10GB
      */
-    ListBackupsParams& set_filter(std::string filter) {
+    ListBackupsParams& set_filter(std::string const& filter) {
       filter_ = filter;
       return *this;
     }
@@ -844,7 +844,7 @@ class TableAdmin {
      *     If order_by is empty, results will be sorted by `start_time` in
      *     descending order starting from the most recently created backup.
      */
-    ListBackupsParams& set_order_by(std::string order_by) {
+    ListBackupsParams& set_order_by(std::string const& order_by) {
       order_by_ = order_by;
       return *this;
     }
