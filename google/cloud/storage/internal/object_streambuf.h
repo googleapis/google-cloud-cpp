@@ -42,7 +42,8 @@ namespace internal {
 class ObjectReadStreambuf : public std::basic_streambuf<char> {
  public:
   ObjectReadStreambuf(ReadObjectRangeRequest const& request,
-                      std::unique_ptr<ObjectReadSource> source);
+                      std::unique_ptr<ObjectReadSource> source,
+                      std::streamoff pos_in_stream);
 
   /// Create a streambuf in a permanent error status.
   ObjectReadStreambuf(ReadObjectRangeRequest const& request, Status status);
@@ -53,6 +54,10 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   ObjectReadStreambuf& operator=(ObjectReadStreambuf&&) noexcept = delete;
   ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
   ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
+
+  pos_type seekpos(pos_type pos, std::ios_base::openmode which) override;
+  pos_type seekoff(off_type off, std::ios_base::seekdir dir,
+                   std::ios_base::openmode which) override;
 
   bool IsOpen() const;
   void Close();
@@ -76,6 +81,7 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   std::streamsize xsgetn(char* s, std::streamsize count) override;
 
   std::unique_ptr<ObjectReadSource> source_;
+  std::streamoff source_pos_;
   std::vector<char> current_ios_buffer_;
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
