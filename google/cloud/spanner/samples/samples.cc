@@ -63,15 +63,49 @@ void GetInstanceCommand(std::vector<std::string> const& argv) {
   GetInstance(std::move(client), argv[0], argv[1]);
 }
 
-//! [create-instance]
+//! [START spanner_create_instance] [create-instance]
 void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
-                    std::string const& display_name) {
+                    std::string const& display_name,
+                    std::string const& region) {
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
-  google::cloud::spanner::Instance in(project_id, instance_id);
+  namespace spanner = google::cloud::spanner;
+  spanner::Instance in(project_id, instance_id);
 
+  std::string region_id = region.empty() ? "us-central1" : region;
+  std::string instance_config =
+      "projects/" + project_id + "/instanceConfigs/regional-" + region;
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
+      client.CreateInstance(
+          spanner::CreateInstanceRequestBuilder(in, instance_config)
+              .SetDisplayName(display_name)
+              .SetNodeCount(1)
+              .SetLabels({{"cloud_spanner_samples", "true"}})
+              .Build());
+  auto instance = f.get();
+  if (!instance) throw std::runtime_error(instance.status().message());
+  std::cout << "Created instance [" << in << "]\n";
+}
+//! [END spanner_create_instance] [create-instance]
+
+void CreateInstanceCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3 && argv.size() != 4) {
+    throw std::runtime_error(
+        "create-instance <project-id> <instance-id> <display_name> "
+        "[instance_config]");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  std::string instance_config = argv.size() == 4 ? argv[3] : "";
+  CreateInstance(std::move(client), argv[0], argv[1], argv[2], instance_config);
+}
+
+void PickLocationAndCreateInstance(
+    google::cloud::spanner::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& display_name) {
   // Pick instance config that matches the regex, if there's no match, pick the
   // first one.
   std::string instance_config = [client, project_id]() mutable {
@@ -92,30 +126,17 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
   if (instance_config.empty()) {
     throw std::runtime_error("could not pick an instance config");
   }
-  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
-      client.CreateInstance(
-          google::cloud::spanner::CreateInstanceRequestBuilder(in,
-                                                               instance_config)
-              .SetDisplayName(display_name)
-              .SetNodeCount(1)
-              .SetLabels({{"label-key", "label-value"}})
-              .Build());
-  StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
-  if (!instance) {
-    throw std::runtime_error(instance.status().message());
-  }
+  namespace spanner = google::cloud::spanner;
+  spanner::Instance in(project_id, instance_id);
+  auto instance = client
+                      .CreateInstance(spanner::CreateInstanceRequestBuilder(
+                                          in, instance_config)
+                                          .SetDisplayName(display_name)
+                                          .SetNodeCount(1)
+                                          .Build())
+                      .get();
+  if (!instance) throw std::runtime_error(instance.status().message());
   std::cout << "Created instance [" << in << "]\n";
-}
-//! [create-instance]
-
-void CreateInstanceCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "create-instance <project-id> <instance-id> <display_name>");
-  }
-  google::cloud::spanner::InstanceAdminClient client(
-      google::cloud::spanner::MakeInstanceAdminConnection());
-  CreateInstance(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [update-instance]
@@ -2777,8 +2798,8 @@ void RunAll(bool emulator) {
     std::string crud_instance_id =
         google::cloud::spanner_testing::RandomInstanceName(generator);
     std::cout << "\nRunning create-instance sample" << std::endl;
-    CreateInstance(instance_admin_client, project_id, crud_instance_id,
-                   "Test Instance");
+    PickLocationAndCreateInstance(instance_admin_client, project_id,
+                                  crud_instance_id, "Test Instance");
     if (!emulator) {
       std::cout << "\nRunning update-instance sample" << std::endl;
       UpdateInstance(instance_admin_client, project_id, crud_instance_id,
