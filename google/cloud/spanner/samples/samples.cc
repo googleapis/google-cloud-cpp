@@ -1035,35 +1035,41 @@ void UpdateData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_update_data]
 
-//! [START spanner_delete_data] [make-key] [make-keybound-closed]
-//! [keyset-add-key]
+//! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  // Delete each of the albums by individual key, then delete all the singers
-  // using a key range.
+  // Delete the albums with key (2,1) and (2,3).
+  //! [make-key] [keyset-add-key]
   auto delete_albums = spanner::DeleteMutationBuilder(
                            "Albums", spanner::KeySet()
-                                         .AddKey(spanner::MakeKey(1, 1))
-                                         .AddKey(spanner::MakeKey(1, 2))
                                          .AddKey(spanner::MakeKey(2, 1))
-                                         .AddKey(spanner::MakeKey(2, 2))
                                          .AddKey(spanner::MakeKey(2, 3)))
                            .Build();
-  auto delete_singers =
-      spanner::DeleteMutationBuilder(
-          "Singers", spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(1),
-                                                spanner::MakeKeyBoundClosed(5)))
-          .Build();
+  //! [make-key] [keyset-add-key]
 
-  auto commit_result =
-      client.Commit(spanner::Mutations{delete_albums, delete_singers});
+  // Delete some singers using the keys in the range [3, 5]
+  //! [make-keybound-closed]
+  auto delete_singers_range =
+      spanner::DeleteMutationBuilder(
+          "Singers", spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(3),
+                                                spanner::MakeKeyBoundOpen(5)))
+          .Build();
+  //! [make-keybound-closed]
+
+  // Deletes remaining rows from the Singers table and the Albums table, because
+  // the Albums table is defined with ON DELETE CASCADE.
+  auto delete_singers_all =
+      spanner::MakeDeleteMutation("Singers", spanner::KeySet::All());
+
+  auto commit_result = client.Commit(spanner::Mutations{
+      delete_albums, delete_singers_range, delete_singers_all});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
-//! [END spanner_delete_data] [make-keybound-closed] [make-key] [keyset-add-key]
+//! [END spanner_delete_data]
 
 //! [keyset-all]
 void DeleteAll(google::cloud::spanner::Client client) {
