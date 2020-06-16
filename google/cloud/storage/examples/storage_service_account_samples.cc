@@ -101,34 +101,30 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
 
 std::string CreateHmacKey(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
-  std::string created_id;
   //! [create hmac key] [START storage_create_hmac_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& service_account_email,
-     std::string& access_id) {
+  return [](gcs::Client client, std::string const& service_account_email) {
     StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> key_info =
         client.CreateHmacKey(service_account_email);
     if (!key_info) throw std::runtime_error(key_info.status().message());
 
-    access_id = key_info->first.access_id();
     std::cout << "The base64 encoded secret is: " << key_info->second
               << "\nDo not miss that secret, there is no API to recover it."
               << "\nThe HMAC key metadata is: " << key_info->first << "\n";
+    return key_info->first.access_id();
   }
   //! [create hmac key] [END storage_create_hmac_key]
-  (std::move(client), argv.at(0), created_id);
-  return created_id;
+  (std::move(client), argv.at(0));
 }
 
 std::string CreateHmacKeyForProject(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
-  std::string created_id;
   //! [create hmac key project]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& project_id,
-     std::string const& service_account_email, std::string& access_id) {
+  return [](gcs::Client client, std::string const& project_id,
+            std::string const& service_account_email) {
     StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> hmac_key_details =
         client.CreateHmacKey(service_account_email,
                              gcs::OverrideDefaultProject(project_id));
@@ -136,15 +132,14 @@ std::string CreateHmacKeyForProject(google::cloud::storage::Client client,
       throw std::runtime_error(hmac_key_details.status().message());
     }
 
-    access_id = hmac_key_details->first.access_id();
     std::cout << "The base64 encoded secret is: " << hmac_key_details->second
               << "\nDo not miss that secret, there is no API to recover it."
               << "\nThe HMAC key metadata is: " << hmac_key_details->first
               << "\n";
+    return hmac_key_details->first.access_id();
   }
   //! [create hmac key project]
-  (std::move(client), argv.at(0), argv.at(1), created_id);
-  return created_id;
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteHmacKey(google::cloud::storage::Client client,
