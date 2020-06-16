@@ -33,6 +33,18 @@ TEST(PredefinedAclHeaderNameTest, Simple) {
   EXPECT_EQ("SomeCustom", PredefinedAcl("SomeCustom").HeaderName());
 }
 
+TEST(WellKnownParameter, ValueOrEmptyCase) {
+  KmsKeyName param;
+  ASSERT_FALSE(param.has_value());
+  EXPECT_EQ("foo", param.value_or("foo"));
+}
+
+TEST(WellKnownParameter, ValueOrNonEmptyCase) {
+  KmsKeyName param("value");
+  ASSERT_TRUE(param.has_value());
+  EXPECT_EQ("value", param.value_or("foo"));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

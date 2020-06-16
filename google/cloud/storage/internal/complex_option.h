@@ -47,6 +47,10 @@ class ComplexOption {
   char const* option_name() const { return Derived::name(); }
   bool has_value() const { return value_.has_value(); }
   T const& value() const { return value_.value(); }
+  template <typename U>
+  T value_or(U&& default_val) {
+    return value_.value_or(std::forward<U>(default_val));
+  }
 
  private:
   google::cloud::optional<T> value_;

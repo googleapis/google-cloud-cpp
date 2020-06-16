@@ -59,9 +59,7 @@ ObjectReadStream Client::ReadObjectImpl(
   auto stream =
       ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source),
-          request.HasOption<ReadFromOffset>()
-              ? request.GetOption<ReadFromOffset>().value()
-              : 0));
+          request.GetOption<ReadFromOffset>().value_or(0)));
   (void)stream.peek();
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Without exceptions the streambuf cannot report errors, so we have to

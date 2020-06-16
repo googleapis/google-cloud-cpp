@@ -38,6 +38,7 @@ storage_client_unit_tests = [
     "internal/binary_data_as_debug_string_test.cc",
     "internal/bucket_acl_requests_test.cc",
     "internal/bucket_requests_test.cc",
+    "internal/complex_option_test.cc",
     "internal/compute_engine_util_test.cc",
     "internal/curl_client_test.cc",
     "internal/curl_handle_factory_test.cc",

@@ -134,6 +134,18 @@ TEST(WellKnownHeader, FromGenerator) {
   ASSERT_FALSE(header.value().sha256.empty());
 }
 
+TEST(WellKnownHeader, ValueOrEmptyCase) {
+  CustomHeader header;
+  ASSERT_FALSE(header.has_value());
+  EXPECT_EQ("foo", header.value_or("foo"));
+}
+
+TEST(WellKnownHeader, ValueOrNonEmptyCase) {
+  CustomHeader header("header", "value");
+  ASSERT_TRUE(header.has_value());
+  EXPECT_EQ("value", header.value_or("foo"));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -133,12 +133,10 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
 template <typename RequestType>
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
-  if (request.template HasOption<UseResumableUploadSession>()) {
-    auto session_id =
-        request.template GetOption<UseResumableUploadSession>().value();
-    if (!session_id.empty()) {
-      return RestoreResumableSession(session_id);
-    }
+  auto session_id =
+      request.template GetOption<UseResumableUploadSession>().value_or("");
+  if (!session_id.empty()) {
+    return RestoreResumableSession(session_id);
   }
 
   CurlRequestBuilder builder(
