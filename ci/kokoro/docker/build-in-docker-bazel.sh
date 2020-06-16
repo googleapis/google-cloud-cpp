@@ -39,7 +39,6 @@ echo "================================================================"
 readonly BAZEL_BIN="/usr/local/bin/bazel"
 io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
-echo "================================================================"
 
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
@@ -52,21 +51,18 @@ fi
 
 echo "================================================================"
 io::log "Fetching dependencies"
-echo "================================================================"
 # retry up to 3 times with exponential backoff, initial interval 120s
 "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
   "${BAZEL_BIN}" fetch -- //google/cloud/...:all
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
-echo "================================================================"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
   -- //google/cloud/...:all
 
 echo "================================================================"
 io::log "Compiling all the code, including integration tests"
-echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
 "${BAZEL_BIN}" build \
@@ -99,7 +95,6 @@ should_run_integration_tests() {
 if should_run_integration_tests; then
   echo "================================================================"
   io::log "Running the integration tests"
-  echo "================================================================"
 
   bazel_args+=(
     # Common configuration
@@ -142,9 +137,8 @@ if should_run_integration_tests; then
   set +e
   success=no
   for attempt in 1 2 3; do
-    echo
+    echo "================================================================"
     io::log_yellow "running bigtable integration tests via Bazel+Emulator [${attempt}]"
-    echo
     # TODO(#441) - when the emulator crashes the tests can take a long time.
     # The slowest test normally finishes in about 10 seconds, 100 seems safe.
     if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
@@ -186,7 +180,7 @@ if should_run_integration_tests; then
   done
 
   # Run the integration tests using Bazel to drive them. Some of the tests and
-  # examples require environment variables with dynamic values, we run them
+  # examples require environment variables with dynamic values, so we run them
   # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
@@ -200,13 +194,11 @@ if should_run_integration_tests; then
   trap delete_gcloud_config EXIT
   create_gcloud_config
 
-  echo
   echo "================================================================"
   io::log "Delete any stale service account used in HMAC key tests."
   activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
   cleanup_stale_hmac_service_accounts
 
-  echo
   echo "================================================================"
   io::log "Create a service account to run the storage HMAC tests."
   # Recall that each evaluation of ${RANDOM} produces a different value, note
@@ -228,7 +220,6 @@ if should_run_integration_tests; then
   delete_hmac_service_account() {
     local -r ACCOUNT="${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
     set +e
-    echo
     echo "================================================================"
     io::log_yellow "Performing cleanup actions."
     io::log "Activate service account used to manage HMAC service accounts."
@@ -247,12 +238,9 @@ if should_run_integration_tests; then
     delete_gcloud_config
 
     io::log_yellow "Cleanup actions completed."
-    echo "================================================================"
-    echo
     set -e
   }
 
-  echo
   echo "================================================================"
   io::log "Create an access token to run the Bigtable credential examples."
   activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
@@ -275,12 +263,10 @@ if should_run_integration_tests; then
   done
 
   # Run the integration tests and examples that need the HMAC service account.
-  for target in "${hmac_service_account_targets[@]}"; do
-    "${BAZEL_BIN}" test \
-      "${bazel_args[@]}" \
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-      -- "${target}"
-  done
+  "${BAZEL_BIN}" test \
+    "${bazel_args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+    -- "${hmac_service_account_targets[@]}"
 fi
 
 echo "================================================================"
