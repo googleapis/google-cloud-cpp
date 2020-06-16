@@ -25,14 +25,14 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 ObjectReadStreambuf::ObjectReadStreambuf(
     ReadObjectRangeRequest const& request,
-    std::unique_ptr<ObjectReadSource> source)
-    : source_(std::move(source)) {
+    std::unique_ptr<ObjectReadSource> source, std::streamoff pos_in_stream)
+    : source_(std::move(source)), source_pos_(pos_in_stream) {
   hash_validator_ = CreateHashValidator(request);
 }
 
 ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const& request,
                                          Status status)
-    : source_(new ObjectReadErrorSource(status)) {
+    : source_(new ObjectReadErrorSource(status)), source_pos_(-1) {
   // TODO(coryan) - revisit this, we probably do not need the validator.
   hash_validator_ = CreateHashValidator(request);
   status_ = std::move(status);
@@ -64,6 +64,7 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
   if (!read_result.ok()) {
     return std::move(read_result).status();
   }
+  source_pos_ += read_result->bytes_received;
   // assert(n <= current_ios_buffer_.size())
   current_ios_buffer_.resize(read_result->bytes_received);
 
@@ -176,7 +177,9 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // Maybe the internal get area is enough to satisfy this request, no need to
   // read more in that case:
   auto from_internal = (std::min)(count, in_avail());
-  std::memcpy(s, gptr(), static_cast<std::size_t>(from_internal));
+  if (from_internal > 0) {
+    std::memcpy(s, gptr(), static_cast<std::size_t>(from_internal));
+  }
   gbump(static_cast<int>(from_internal));
   offset += from_internal;
   if (offset >= count) {
@@ -202,6 +205,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
 
   hash_validator_->Update(s + offset, read_result->bytes_received);
   offset += read_result->bytes_received;
+  source_pos_ += read_result->bytes_received;
 
   for (auto const& kv : read_result->response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
@@ -257,6 +261,25 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
   if (upload_session_->done()) {
     last_response_ = upload_session_->last_response();
   }
+}
+
+ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
+    pos_type /*pos*/, std::ios_base::openmode /*which*/) {
+  // TODO(4013): Implement proper seeking.
+  return -1;
+}
+
+ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
+    off_type off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
+  // TODO(4013): Implement proper seeking.
+  // Seeking is non-trivial because the hash validator and `source_` have to be
+  // recreated in the general case, which doesn't fit the current code
+  // organization.  We can, however, at least implement the bare minimum of this
+  // function allowing `tellg()` to work.
+  if (which == std::ios_base::in && dir == std::ios_base::cur && off == 0) {
+    return source_pos_ - in_avail();
+  }
+  return -1;
 }
 
 StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {
