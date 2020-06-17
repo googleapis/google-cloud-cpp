@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/abd6b709a5533ba5d0bc435189ffda7f2445cd4b.tar.gz"
-)
+    "https://github.com/googleapis/googleapis/archive/spanner_cmek.tar.gz")
+
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "c45d0e135ac7ad54c34546404d5338e4980d0b397f093e1e2cb185ec8813430f")
+    "610f8eadb93256f72be56842145524a93d886efb653a6ed97c9882678a53894f")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
