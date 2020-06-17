@@ -72,7 +72,7 @@ export GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS
 #
 # If RUN_INTEGRATION_TESTS is set in the environment, we should generally use
 # that value, but individual builds can override it if necessary.
-if [[ "${BUILD_NAME}" = "clang-tidy" ]] || [[ "${BUILD_NAME}" = "clang-tidy-gob" ]]; then
+if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
   # as errors.
   export DISTRO=fedora-install
