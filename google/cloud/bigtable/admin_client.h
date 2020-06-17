@@ -113,27 +113,27 @@ class AdminClient {
   virtual grpc::Status CreateBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateBackupRequest const& request,
-      google::longrunning::Operation* response) = 0;
+      google::longrunning::Operation* response);
   virtual grpc::Status GetBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetBackupRequest const& request,
-      google::bigtable::admin::v2::Backup* response) = 0;
+      google::bigtable::admin::v2::Backup* response);
   virtual grpc::Status UpdateBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::UpdateBackupRequest const& request,
-      google::bigtable::admin::v2::Backup* response) = 0;
+      google::bigtable::admin::v2::Backup* response);
   virtual grpc::Status DeleteBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteBackupRequest const& request,
-      google::protobuf::Empty* response) = 0;
+      google::protobuf::Empty* response);
   virtual grpc::Status ListBackups(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListBackupsRequest const& request,
-      google::bigtable::admin::v2::ListBackupsResponse* response) = 0;
+      google::bigtable::admin::v2::ListBackupsResponse* response);
   virtual grpc::Status RestoreTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::RestoreTableRequest const& request,
-      google::longrunning::Operation* response) = 0;
+      google::longrunning::Operation* response);
   virtual grpc::Status ModifyColumnFamilies(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
@@ -194,41 +194,41 @@ class AdminClient {
   AsyncCreateBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateBackupRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Backup>>
   AsyncGetBackup(grpc::ClientContext* context,
                  google::bigtable::admin::v2::GetBackupRequest const& request,
-                 grpc::CompletionQueue* cq) = 0;
+                 grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Backup>>
   AsyncUpdateBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::UpdateBackupRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteBackup(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteBackupRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListBackupsResponse>>
   AsyncListBackups(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListBackupsRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncRestoreTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::RestoreTableRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      grpc::CompletionQueue* cq);
 
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>

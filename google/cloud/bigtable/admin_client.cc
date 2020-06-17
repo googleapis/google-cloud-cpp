@@ -16,6 +16,109 @@
 #include "google/cloud/bigtable/internal/common_client.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+grpc::Status AdminClient::CreateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::CreateBackupRequest const&,
+    google::longrunning::Operation*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+grpc::Status AdminClient::GetBackup(
+    grpc::ClientContext*, google::bigtable::admin::v2::GetBackupRequest const&,
+    google::bigtable::admin::v2::Backup*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+grpc::Status AdminClient::UpdateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::UpdateBackupRequest const&,
+    google::bigtable::admin::v2::Backup*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+grpc::Status AdminClient::DeleteBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::DeleteBackupRequest const&,
+    google::protobuf::Empty*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+grpc::Status AdminClient::ListBackups(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::ListBackupsRequest const&,
+    google::bigtable::admin::v2::ListBackupsResponse*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+grpc::Status AdminClient::RestoreTable(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::RestoreTableRequest const&,
+    google::longrunning::Operation*) {
+  return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+AdminClient::AsyncCreateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::CreateBackupRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+AdminClient::AsyncGetBackup(
+    grpc::ClientContext*, google::bigtable::admin::v2::GetBackupRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+AdminClient::AsyncUpdateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::UpdateBackupRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+AdminClient::AsyncDeleteBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::DeleteBackupRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::ListBackupsResponse>>
+AdminClient::AsyncListBackups(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::ListBackupsRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+AdminClient::AsyncRestoreTable(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::RestoreTableRequest const&,
+    grpc::CompletionQueue*) {
+  return {};
+}
+
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
+
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 
