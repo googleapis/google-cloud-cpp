@@ -144,12 +144,12 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-StatusOr<internal::OptionalRow> RowReader::Advance() {
+StatusOr<RowReader::OptionalRow> RowReader::Advance() {
   if (operation_cancelled_) {
     return Status(StatusCode::kCancelled, "Operation cancelled.");
   }
   while (true) {
-    internal::OptionalRow row;
+    OptionalRow row;
     grpc::Status status = AdvanceOrFail(row);
     if (status.ok()) {
       return row;
@@ -187,7 +187,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
+grpc::Status RowReader::AdvanceOrFail(OptionalRow& row) {
   row.reset();
   grpc::Status status;
   if (!stream_) {

@@ -168,8 +168,9 @@ add_library(
     tracing_options.h
     version.cc
     version.h)
-target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory absl::variant
-                                                     Threads::Threads)
+target_link_libraries(
+    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::variant
+                                   Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common

@@ -25,6 +25,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/optional.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>
@@ -99,6 +100,8 @@ class RowReader {
   void Cancel();
 
  private:
+  using OptionalRow = google::cloud::optional<Row>;
+
   /**
    * Read and parse the next row in the response.
    *
@@ -107,10 +110,10 @@ class RowReader {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  StatusOr<internal::OptionalRow> Advance();
+  StatusOr<OptionalRow> Advance();
 
   /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail(internal::OptionalRow& row);
+  grpc::Status AdvanceOrFail(OptionalRow& row);
 
   /**
    * Move the `processed_chunks_count_` index to the next chunk,

@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/optional.h"
 #include <iterator>
 #include <utility>
 
@@ -30,12 +29,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 class RowReader;
 
 namespace internal {
-/**
- * An optional row value.
- *
- * TODO(#277) - replace with absl::optional<> or std::optional<> when possible.
- */
-using OptionalRow = google::cloud::optional<Row>;
 
 /**
  * The input iterator used to scan the rows in a RowReader.
