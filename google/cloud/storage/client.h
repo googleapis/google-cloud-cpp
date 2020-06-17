@@ -33,10 +33,10 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/meta/type_traits.h"
 #include <type_traits>
 
 namespace google {
@@ -1043,12 +1043,12 @@ class Client {
   ObjectReadStream ReadObject(std::string const& bucket_name,
                               std::string const& object_name,
                               Options&&... options) {
-    struct HasReadRange : public google::cloud::internal::disjunction<
-                              std::is_same<ReadRange, Options>...> {};
-    struct HasReadFromOffset : public google::cloud::internal::disjunction<
-                                   std::is_same<ReadFromOffset, Options>...> {};
-    struct HasReadLast : public google::cloud::internal::disjunction<
-                             std::is_same<ReadLast, Options>...> {};
+    struct HasReadRange
+        : public absl::disjunction<std::is_same<ReadRange, Options>...> {};
+    struct HasReadFromOffset
+        : public absl::disjunction<std::is_same<ReadFromOffset, Options>...> {};
+    struct HasReadLast
+        : public absl::disjunction<std::is_same<ReadLast, Options>...> {};
 
     struct HasIncompatibleRangeOptions
         : public std::integral_constant<bool, HasReadLast::value &&
@@ -1170,8 +1170,8 @@ class Client {
     // call. This needs to be done at compile time because ObjectInsertMedia
     // does not support (nor should it support) the UseResumableUploadSession
     // option.
-    using HasUseResumableUpload = google::cloud::internal::disjunction<
-        std::is_same<UseResumableUploadSession, Options>...>;
+    using HasUseResumableUpload =
+        absl::disjunction<std::is_same<UseResumableUploadSession, Options>...>;
     return UploadFileImpl(file_name, bucket_name, object_name,
                           HasUseResumableUpload{},
                           std::forward<Options>(options)...);

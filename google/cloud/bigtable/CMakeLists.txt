@@ -111,7 +111,6 @@ add_library(
     internal/client_options_defaults.h
     internal/common_client.cc
     internal/common_client.h
-    internal/conjunction.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
     internal/prefix_range_end.cc
@@ -157,6 +156,7 @@ add_library(
 target_link_libraries(
     bigtable_client
     PUBLIC absl::memory
+           absl::type_traits
            bigtable_protos
            google_cloud_cpp_common
            google_cloud_cpp_grpc_utils
