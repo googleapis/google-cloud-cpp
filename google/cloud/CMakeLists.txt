@@ -168,8 +168,9 @@ add_library(
     tracing_options.h
     version.cc
     version.h)
-target_link_libraries(google_cloud_cpp_common PUBLIC absl::memory absl::variant
-                                                     Threads::Threads)
+target_link_libraries(
+    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::variant
+                                   Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common
@@ -217,7 +218,6 @@ if (BUILD_TESTING)
         internal/tuple_test.cc
         internal/utility_test.cc
         log_test.cc
-        optional_test.cc
         status_or_test.cc
         status_test.cc
         terminate_handler_test.cc
@@ -274,7 +274,12 @@ set(GOOGLE_CLOUD_CPP_PC_NAME
     "Google Cloud C++ Client Library Common Components")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
+# Abseil doesn't install package config files listing the runtime deps of their
+# libraries, so we need to explicitly include them here. Here we include the
+# runtime deps of the absl::optional target (http://github.com/abseil/abseil-cpp
+# /blob/4a851046a0102cd986a5714a1af8deef28a544c4/absl/types/CMakeLists.txt#L164)
+set(GOOGLE_CLOUD_CPP_PC_LIBS
+    "-lgoogle_cloud_cpp_common -labsl_bad_optional_access")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"

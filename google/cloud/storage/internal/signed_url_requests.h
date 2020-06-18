@@ -20,6 +20,7 @@
 #include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/status.h"
 #include <iosfwd>
 #include <map>
 
