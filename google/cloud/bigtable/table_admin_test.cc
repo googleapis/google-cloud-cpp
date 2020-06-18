@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -24,6 +25,7 @@
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -114,6 +116,35 @@ auto create_policy_with_params = []() {
     return grpc::Status::OK;
   };
 };
+
+auto create_list_backups_lambda =
+    [](std::string const& expected_token, std::string const& returned_token,
+       std::vector<std::string> const& backup_names) {
+      return [expected_token, returned_token, backup_names](
+                 grpc::ClientContext* context,
+                 btadmin::ListBackupsRequest const& request,
+                 btadmin::ListBackupsResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + kInstanceId;
+        auto const cluster_name = instance_name + "/clusters/-";
+        EXPECT_EQ(cluster_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
+
+        EXPECT_NE(nullptr, response);
+        for (auto const& backup_name : backup_names) {
+          auto& backup = *response->add_backups();
+          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+          backup.set_name(instance_name + "/clusters/the-cluster/backups/" +
+                          backup_name);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -252,24 +283,24 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
 TEST_F(TableAdminTest, CreateTableSimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
-  std::string expected_text = R"""(
-      parent: 'projects/the-project/instances/the-instance'
-table_id: 'new-table'
-table {
-  column_families {
-    key: 'f1'
-    value { gc_rule { max_num_versions: 1 }}
-  }
-  column_families {
-    key: 'f2'
-    value { gc_rule { max_age { seconds: 1 }}}
-  }
-  granularity: TIMESTAMP_GRANULARITY_UNSPECIFIED
-}
-initial_splits { key: 'a' }
-initial_splits { key: 'c' }
-initial_splits { key: 'p' }
-)""";
+  std::string expected_text = R"pb(
+    parent: 'projects/the-project/instances/the-instance'
+    table_id: 'new-table'
+    table {
+      column_families {
+        key: 'f1'
+        value { gc_rule { max_num_versions: 1 } }
+      }
+      column_families {
+        key: 'f2'
+        value { gc_rule { max_age { seconds: 1 } } }
+      }
+      granularity: TIMESTAMP_GRANULARITY_UNSPECIFIED
+    }
+    initial_splits { key: 'a' }
+    initial_splits { key: 'c' }
+    initial_splits { key: 'p' }
+  )pb";
   auto mock_create_table =
       MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
           expected_text,
@@ -350,10 +381,10 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
 /// @test Verify that `bigtable::TableAdmin::GetTable` works in the easy case.
 TEST_F(TableAdminTest, GetTableSimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-      view: SCHEMA_VIEW
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+    view: SCHEMA_VIEW
+  )pb";
   auto mock = MockRpcFactory<btadmin::GetTableRequest, btadmin::Table>::Create(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.GetTable");
   EXPECT_CALL(*client_, GetTable(_, _, _))
@@ -400,9 +431,9 @@ TEST_F(TableAdminTest, DeleteTable) {
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+  )pb";
   auto mock = MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable");
   EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
@@ -425,6 +456,250 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
   EXPECT_FALSE(tested.DeleteTable("other-table").ok());
 }
 
+/// @test Verify that `bigtable::TableAdmin::ListBackups` works in the easy
+/// case.
+TEST_F(TableAdminTest, ListBackups) {
+  bigtable::TableAdmin tested(client_, kInstanceId);
+  auto mock_list_backups = create_list_backups_lambda("", "", {"b0", "b1"});
+  EXPECT_CALL(*client_, ListBackups(_, _, _))
+      .WillOnce(Invoke(mock_list_backups));
+
+  // After all the setup, make the actual call we want to test.
+  auto actual = tested.ListBackups({});
+  ASSERT_STATUS_OK(actual);
+  auto const& v = *actual;
+  std::string instance_name = tested.instance_name();
+  ASSERT_EQ(2UL, v.size());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b0", v[0].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b1", v[1].name());
+}
+
+/// @test Verify that `bigtable::TableAdmin::ListBackups` handles failures.
+TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     btadmin::ListBackupsRequest const&,
+                                     btadmin::ListBackupsResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto batch0 = create_list_backups_lambda("", "token-001", {"b0", "b1"});
+  auto batch1 = create_list_backups_lambda("token-001", "", {"b2", "b3"});
+  EXPECT_CALL(*client_, ListBackups(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch0))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(batch1));
+
+  // After all the setup, make the actual call we want to test.
+  auto actual = tested.ListBackups({});
+  ASSERT_STATUS_OK(actual);
+  auto const& v = *actual;
+  std::string instance_name = tested.instance_name();
+  ASSERT_EQ(4UL, v.size());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b0", v[0].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b1", v[1].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b2", v[2].name());
+  EXPECT_EQ(instance_name + "/clusters/the-cluster/backups/b3", v[3].name());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListBackups` handles unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, ListBackupsUnrecoverableFailures) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, ListBackups(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  EXPECT_FALSE(tested.ListBackups({}));
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::ListBackups` handles too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
+  bigtable::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     btadmin::ListBackupsRequest const&,
+                                     btadmin::ListBackupsResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  EXPECT_CALL(*client_, ListBackups(_, _, _))
+      .WillRepeatedly(Invoke(mock_recoverable_failure));
+
+  EXPECT_FALSE(tested.ListBackups({}));
+}
+
+/// @test Verify that `bigtable::TableAdmin::GetBackup` works in the easy case.
+TEST_F(TableAdminTest, GetBackupSimple) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
+  )pb";
+  auto mock =
+      MockRpcFactory<btadmin::GetBackupRequest, btadmin::Backup>::Create(
+          expected_text,
+          "google.bigtable.admin.v2.BigtableTableAdmin.GetBackup");
+  EXPECT_CALL(*client_, GetBackup(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+
+  // After all the setup, make the actual call we want to test.
+  tested.GetBackup("the-cluster", "the-backup");
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetBackup` reports unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, GetBackupUnrecoverableFailures) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, GetBackup(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.GetBackup("other-cluster", "other-table"));
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::GetBackup` works with too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, GetBackupTooManyFailures) {
+  bigtable::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  EXPECT_CALL(*client_, GetBackup(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.GetBackup("other-cluster", "other-table"));
+}
+
+/// @test Verify that `bigtable::TableAdmin::UpdateBackup` works in the easy
+/// case.
+TEST_F(TableAdminTest, UpdateBackupSimple) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"pb(
+    backup {
+      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
+      expire_time: { seconds: 1893387600 }
+    }
+    update_mask: { paths: 'expire_time' }
+  )pb";
+
+  auto mock =
+      MockRpcFactory<btadmin::UpdateBackupRequest, btadmin::Backup>::Create(
+          expected_text,
+          "google.bigtable.admin.v2.BigtableTableAdmin.UpdateBackup");
+  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Invoke(mock));
+
+  // After all the setup, make the actual call we want to test.
+  google::protobuf::Timestamp expire_time;
+  EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
+      "2029-12-31T00:00:00.000-05:00", &expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
+  tested.UpdateBackup(std::move(params));
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::UpdateBackup` reports unrecoverable
+ * failures.
+ */
+TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  google::protobuf::Timestamp expire_time;
+  EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
+      "2029-12-31T00:00:00.000-05:00", &expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
+  EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::UpdateBackup` works with too many
+ * recoverable failures.
+ */
+TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
+  bigtable::TableAdmin tested(
+      client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
+      bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
+  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // After all the setup, make the actual call we want to test.
+  google::protobuf::Timestamp expire_time;
+  EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
+      "2029-12-31T00:00:00.000-05:00", &expire_time));
+  bigtable::TableAdmin::UpdateBackupParams params(
+      "the-cluster", "the-backup",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
+  EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
+}
+
+/// @test Verify that bigtable::TableAdmin::DeleteBackup works as expected.
+TEST_F(TableAdminTest, DeleteBackup) {
+  using google::protobuf::Empty;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
+  )pb";
+  auto mock = MockRpcFactory<btadmin::DeleteBackupRequest, Empty>::Create(
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup");
+  EXPECT_CALL(*client_, DeleteBackup(_, _, _))
+      .WillOnce(Invoke(mock))
+      .WillOnce(Invoke(mock));
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_STATUS_OK(tested.DeleteBackup("the-cluster", "the-backup"));
+
+  google::bigtable::admin::v2::Backup backup;
+  backup.set_name(
+      "projects/the-project/instances/the-instance/clusters/the-cluster/"
+      "backups/the-backup");
+  EXPECT_STATUS_OK(tested.DeleteBackup(backup));
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::BackupTable` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, DeleteBackupFailure) {
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, DeleteBackup(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.DeleteBackup("the-cluster", "the-backup").ok());
+}
+
 /**
  * @test Verify that bigtable::TableAdmin::ModifyColumnFamilies works as
  * expected.
@@ -433,17 +708,17 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-modifications {
-  id: 'foo'
-  create { gc_rule { max_age { seconds: 172800 }}}
-}
-modifications {
-  id: 'bar'
-  update { gc_rule { max_age { seconds: 86400 }}}
-}
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+    modifications {
+      id: 'foo'
+      create { gc_rule { max_age { seconds: 172800 } } }
+    }
+    modifications {
+      id: 'bar'
+      update { gc_rule { max_age { seconds: 86400 } } }
+    }
+  )pb";
   auto mock = MockRpcFactory<btadmin::ModifyColumnFamiliesRequest,
                              btadmin::Table>::
       Create(
@@ -482,10 +757,10 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-      row_key_prefix: 'foobar'
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+    row_key_prefix: 'foobar'
+  )pb";
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
@@ -513,10 +788,10 @@ TEST_F(TableAdminTest, DropAllRows) {
   using google::protobuf::Empty;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-      delete_all_data_from_table: true
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+    delete_all_data_from_table: true
+  )pb";
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
@@ -546,9 +821,9 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
  */
 TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+  )pb";
   auto mock = MockRpcFactory<btadmin::GenerateConsistencyTokenRequest,
                              btadmin::GenerateConsistencyTokenResponse>::
       Create(expected_text,
@@ -581,10 +856,10 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
  */
 TEST_F(TableAdminTest, CheckConsistencySimple) {
   bigtable::TableAdmin tested(client_, "the-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-instance/tables/the-table'
-      consistency_token: 'test-token'
-)""";
+  std::string expected_text = R"pb(
+    name: 'projects/the-project/instances/the-instance/tables/the-table'
+    consistency_token: 'test-token'
+  )pb";
   auto mock = MockRpcFactory<btadmin::CheckConsistencyRequest,
                              btadmin::CheckConsistencyResponse>::
       Create(expected_text,
@@ -1006,11 +1281,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateTable(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              parent: "projects/the-project/instances/the-instance"
-              table_id: "the-table"
-              table: { }
-          )""",
+          R"pb(
+            parent: "projects/the-project/instances/the-instance"
+            table_id: "the-table"
+            table: {}
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable")));
   FinishTest(table_admin_->AsyncCreateTable(cq_, "the-table",
                                             bigtable::TableConfig()));
@@ -1022,11 +1297,54 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteTable(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              name: "projects/the-project/instances/the-instance/tables/the-table"
-          )""",
+          R"pb(
+            name: "projects/the-project/instances/the-instance/tables/the-table"
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable")));
   FinishTest(table_admin_->AsyncDeleteTable(cq_, "the-table"));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateBackupRequest,
+                                                google::longrunning::Operation>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncCreateBackup(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"pb(
+            parent: "projects/the-project/instances/the-instance/clusters/the-cluster"
+            backup_id: "the-backup"
+            backup: {
+              source_table: "projects/the-project/instances/the-instance/tables/the-table"
+              expire_time: { seconds: 1893387600 }
+            }
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup")));
+  google::protobuf::Timestamp expire_time;
+  EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
+      "2029-12-31T00:00:00.000-05:00", &expire_time));
+  bigtable::TableAdmin::CreateBackupParams backup_config(
+      "the-cluster", "the-backup", "the-table",
+      google::cloud::internal::ToChronoTimePoint(expire_time));
+  FinishTest(table_admin_->AsyncCreateBackup(cq_, backup_config));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::RestoreTableRequest,
+                                                google::longrunning::Operation>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncRestoreTable(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"pb(
+            parent: "projects/the-project/instances/the-instance"
+            table_id: "restored-table"
+            backup: "projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup"
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable")));
+  bigtable::TableAdmin::RestoreTableParams params("restored-table",
+                                                  "the-cluster", "the-backup");
+  FinishTest(table_admin_->AsyncRestoreTable(cq_, std::move(params)));
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
@@ -1035,10 +1353,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              name: "projects/the-project/instances/the-instance/tables/the-table"
-              delete_all_data_from_table: true
-          )""",
+          R"pb(
+            name: "projects/the-project/instances/the-instance/tables/the-table"
+            delete_all_data_from_table: true
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
   FinishTest(table_admin_->AsyncDropAllRows(cq_, "the-table"));
 }
@@ -1049,10 +1367,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              name: "projects/the-project/instances/the-instance/tables/the-table"
-              row_key_prefix: "prefix"
-          )""",
+          R"pb(
+            name: "projects/the-project/instances/the-instance/tables/the-table"
+            row_key_prefix: "prefix"
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
   FinishTest(table_admin_->AsyncDropRowsByPrefix(cq_, "the-table", "prefix"));
 }
@@ -1064,9 +1382,9 @@ TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGenerateConsistencyToken(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              name: "projects/the-project/instances/the-instance/tables/the-table"
-          )""",
+          R"pb(
+            name: "projects/the-project/instances/the-instance/tables/the-table"
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin."
           "GenerateConsistencyToken")));
   FinishTest(table_admin_->AsyncGenerateConsistencyToken(cq_, "the-table"));
@@ -1078,10 +1396,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncListTables(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              parent: "projects/the-project/instances/the-instance"
-              view: SCHEMA_VIEW
-          )""",
+          R"pb(
+            parent: "projects/the-project/instances/the-instance"
+            view: SCHEMA_VIEW
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.ListTables")));
   FinishTest(table_admin_->AsyncListTables(cq_, btadmin::Table::SCHEMA_VIEW));
 }
@@ -1092,9 +1410,9 @@ TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
       rpc_factory;
   EXPECT_CALL(*client_, AsyncModifyColumnFamilies(_, _, _))
       .WillOnce(::testing::Invoke(rpc_factory.Create(
-          R"""(
-              name: "projects/the-project/instances/the-instance/tables/the-table"
-          )""",
+          R"pb(
+            name: "projects/the-project/instances/the-instance/tables/the-table"
+          )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies")));
   FinishTest(table_admin_->AsyncModifyColumnFamilies(cq_, "the-table", {}));
 }

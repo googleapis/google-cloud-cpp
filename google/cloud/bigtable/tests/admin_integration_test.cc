@@ -58,7 +58,6 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     return static_cast<int>(count);
   }
 };
-}  // namespace
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   std::vector<std::string> expected_table_list;
@@ -308,6 +307,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   EXPECT_STATUS_OK(table_admin.DeleteTable(random_table_id));
   EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
+
+}  // namespace
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {

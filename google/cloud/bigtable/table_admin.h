@@ -413,6 +413,575 @@ class TableAdmin {
                                   std::string const& table_id);
 
   /**
+   * Parameters for `CreateBackup` and `AsyncCreateBackup`.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id specified for this object.
+   * @param table_id the id of the table within the instance to be backed up.
+   *     The full name of the table is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param expire_time the date and time when the created backup will expire.
+   */
+  struct CreateBackupParams {
+    CreateBackupParams() = default;
+    CreateBackupParams(std::string cluster_id, std::string backup_id,
+                       std::string table_id,
+                       std::chrono::system_clock::time_point expire_time)
+        : cluster_id(std::move(cluster_id)),
+          backup_id(std::move(backup_id)),
+          table_name(std::move(table_id)),
+          expire_time(std::move(expire_time)) {}
+
+    google::bigtable::admin::v2::CreateBackupRequest AsProto(
+        std::string instance_name) const;
+
+    std::string cluster_id;
+    std::string backup_id;
+    std::string table_name;
+    std::chrono::system_clock::time_point expire_time;
+  };
+
+  /**
+   * Create a new backup of a table in the instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param params instance of `CreateBackupParams`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc create backup
+   */
+  StatusOr<google::bigtable::admin::v2::Backup> CreateBackup(
+      CreateBackupParams const& params);
+
+  /**
+   * Sends an asynchronous request to create a new backup of a table in the
+   * instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param params instance of `CreateBackupParams`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async create backup
+   *
+   */
+  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
+      CompletionQueue& cq, CreateBackupParams const& params);
+
+  /**
+   * Get information about a single backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id previously specified.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc get backup
+   */
+  StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
+      std::string const& cluster_id, std::string const& backup_id);
+
+  /**
+   * Sends an asynchronous request to get information about a single backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *
+   `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id previously specified.
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
+   */
+  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
+      CompletionQueue& cq, std::string const& cluster_id,
+      std::string const& backup_id);
+
+  /**
+   * Parameters for `UpdateBackup` and `AsyncUpdateBackup`.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id specified for this object.
+   * @param expire_time the date and time when the created backup will expire.
+   */
+  struct UpdateBackupParams {
+    UpdateBackupParams() = default;
+    UpdateBackupParams(std::string cluster_id, std::string backup_id,
+                       std::chrono::system_clock::time_point expire_time)
+        : cluster_id(std::move(cluster_id)),
+          backup_name(std::move(backup_id)),
+          expire_time(std::move(expire_time)) {}
+
+    google::bigtable::admin::v2::UpdateBackupRequest AsProto(
+        std::string const& instance_name) const;
+
+    std::string cluster_id;
+    std::string backup_name;
+    std::chrono::system_clock::time_point expire_time;
+  };
+
+  /**
+   * Updates a backup of a table in the instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param params instance of `UpdateBackupParams`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc update backup
+   */
+  StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
+      UpdateBackupParams const& params);
+
+  /**
+   * Sends an asynchronous request to update a backup of a table in the
+   * instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param params instance of `UpdateBackupParams`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async update backup
+   *
+   */
+  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
+      CompletionQueue& cq, UpdateBackupParams const& params);
+
+  /**
+   * Delete a backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id previously specified.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc delete backup
+   */
+  Status DeleteBackup(std::string const& cluster_id,
+                      std::string const& backup_id);
+
+  /**
+   * Delete a backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc delete backup
+   */
+  Status DeleteBackup(google::bigtable::admin::v2::Backup const& backup);
+
+  /**
+   * Sends an asynchronous request to delete a backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *    `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id previously specified.
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
+   */
+  future<Status> AsyncDeleteBackup(CompletionQueue& cq,
+                                   std::string const& cluster_id,
+                                   std::string const& backup_id);
+
+  /**
+   * Sends an asynchronous request to delete a backup.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
+   */
+  future<Status> AsyncDeleteBackup(
+      CompletionQueue& cq, google::bigtable::admin::v2::Backup const& backup);
+
+  /**
+   * Parameters for `ListBackups` and `AsyncListBackups`.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   */
+  struct ListBackupsParams {
+    ListBackupsParams() = default;
+
+    /**
+     * Sets the cluster_id.
+     *
+     * @param cluster_id the name of the cluster relative to the instance
+     *     managed by the `TableAdmin` object. If no cluster_id is specified,
+     *     teh all backups in all clusters are listed. The full cluster name is
+     *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+     *     where PROJECT_ID is obtained from the associated AdminClient and
+     *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+     */
+    ListBackupsParams& set_cluster(std::string const& cluster_id) {
+      this->cluster_id = cluster_id;
+      return *this;
+    }
+
+    /**
+     * Sets the filtering expression.
+     *
+     * @param filter expression that filters backups listed in the response.
+     *     The expression must specify the field name, a comparison operator,
+     *     and the value that you want to use for filtering. The value must be a
+     *     string, a number, or a boolean. The comparison operator must be
+     *     <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator which
+     *     is roughly synonymous with equality. Filter rules are case
+     *     insensitive.
+     *
+     *     The fields eligible for filtering are:
+     *       * `name`
+     *       * `table`
+     *       * `state`
+     *       * `start_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
+     *       * `end_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
+     *       * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
+     *       * `size_bytes`
+     *
+     *     To filter on multiple expressions, provide each separate expression
+     *     within parentheses. By default, each expression is an AND expression.
+     *     However, you can include AND, OR, and NOT expressions explicitly.
+     *
+     *     Some examples of using filters are:
+     *       * `name:"exact"` --> The backup's name is the string "exact".
+     *       * `name:howl` --> The backup's name contains the string "howl".
+     *       * `table:prod` --> The table's name contains the string "prod".
+     *       * `state:CREATING` --> The backup is pending creation.
+     *       * `state:READY` --> The backup is fully created and ready for use.
+     *       * `(name:howl) AND (start_time < \"2018-03-28T14:50:00Z\")`
+     *          --> The backup name contains the string "howl" and start_time
+     *              of the backup is before 2018-03-28T14:50:00Z.
+     *       * `size_bytes > 10000000000` --> The backup's size is greater than
+     *          10GB
+     */
+    ListBackupsParams& set_filter(std::string const& filter) {
+      this->filter = filter;
+      return *this;
+    }
+
+    /**
+     * Sets the ordering expression.
+     *
+     * @param order_by expression for specifying the sort order of the results
+     *     of the request. The string value should specify only one field in
+     *     `google::bigtable::admin::v2::Backup`.
+     *     The following field names are supported:
+     *        * name
+     *        * table
+     *        * expire_time
+     *        * start_time
+     *        * end_time
+     *        * size_bytes
+     *        * state
+     *
+     *     For example, "start_time". The default sorting order is ascending.
+     *     Append the " desc" suffix to the field name to sort descending, e.g.
+     *     "start_time desc". Redundant space characters in the syntax are
+     *     insignificant.
+     *
+     *     If order_by is empty, results will be sorted by `start_time` in
+     *     descending order starting from the most recently created backup.
+     */
+    ListBackupsParams& set_order_by(std::string const& order_by) {
+      this->order_by = order_by;
+      return *this;
+    }
+
+    google::bigtable::admin::v2::ListBackupsRequest AsProto(
+        std::string const& instance_name) const;
+
+    optional<std::string> cluster_id;
+    optional<std::string> filter;
+    optional<std::string> order_by;
+  };
+
+  /**
+   * Retrieves a list of backups.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param params instance of `ListBackupsParams`.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc list backups
+   */
+  StatusOr<std::vector<google::bigtable::admin::v2::Backup>> ListBackups(
+      ListBackupsParams const& params);
+
+  /**
+   * Sends an asynchronous request to retrieve a list of backups.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param params instance of `ListBackupsParams`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async list backups
+   *
+   */
+  future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
+  AsyncListBackups(CompletionQueue& cq, ListBackupsParams const& params);
+
+  /**
+   * Parameters for `RestoreTable` and `AsyncRestoreTable`.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object. The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param cluster_id the name of the cluster relative to the instance managed
+   *     by the `TableAdmin` object. The full cluster name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
+   * @param backup_id the name of the backup relative to the cluster specified.
+   *     The full backup name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient,
+   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
+   *     CLUSTER_ID is the cluster_id previously specified.
+   */
+  struct RestoreTableParams {
+    RestoreTableParams() = default;
+    RestoreTableParams(std::string table_id, std::string cluster_id,
+                       std::string backup_id)
+        : table_id(std::move(table_id)),
+          cluster_id(std::move(cluster_id)),
+          backup_id(std::move(backup_id)) {}
+
+    google::bigtable::admin::v2::RestoreTableRequest AsProto(
+        std::string const& instance_name) const;
+
+    std::string table_id;
+    std::string cluster_id;
+    std::string backup_id;
+  };
+
+  /**
+   * Restore a backup into a new table in the instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @param params instance of `RestoreTableParams`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc restore table
+   */
+  StatusOr<google::bigtable::admin::v2::Table> RestoreTable(
+      RestoreTableParams const& params);
+
+  /**
+   * Sends an asynchronous request to restore a backup into a new table in the
+   * instance.
+   *
+   * @warning This feature is not GA, it is subject to change without notice.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param params instance of `RestoreTableParams`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async restore table
+   *
+   */
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
+      CompletionQueue& cq, RestoreTableParams const& params);
+
+  /**
    * Modify the schema for an existing table.
    *
    * @param table_id the id of the table within the instance associated with

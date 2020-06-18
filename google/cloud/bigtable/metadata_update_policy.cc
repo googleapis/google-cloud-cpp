@@ -35,6 +35,8 @@ MetadataParamTypes const MetadataParamTypes::APP_PROFILE_NAME(
     "app_profile.name");
 // NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::INSTANCE_NAME("instance.name");
+// NOLINTNEXTLINE(readability-identifier-naming)
+MetadataParamTypes const MetadataParamTypes::BACKUP_NAME("backup.name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string const& resource_name,
