@@ -237,12 +237,12 @@ future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
 google::bigtable::admin::v2::CreateBackupRequest
 TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
   google::bigtable::admin::v2::CreateBackupRequest proto;
-  proto.set_parent(instance_name + "/clusters/" + cluster_id_);
-  proto.set_backup_id(backup_id_);
+  proto.set_parent(instance_name + "/clusters/" + cluster_id);
+  proto.set_backup_id(backup_id);
   proto.mutable_backup()->set_source_table(std::move(instance_name) +
-                                           "/tables/" + table_name_);
+                                           "/tables/" + table_name);
   *proto.mutable_backup()->mutable_expire_time() =
-      google::cloud::internal::ToProtoTimestamp(expire_time_);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
   return proto;
 }
 
@@ -329,10 +329,10 @@ google::bigtable::admin::v2::UpdateBackupRequest
 TableAdmin::UpdateBackupParams::AsProto(
     std::string const& instance_name) const {
   google::bigtable::admin::v2::UpdateBackupRequest proto;
-  proto.mutable_backup()->set_name(instance_name + "/clusters/" + cluster_id_ +
-                                   "/backups/" + backup_name_);
+  proto.mutable_backup()->set_name(instance_name + "/clusters/" + cluster_id +
+                                   "/backups/" + backup_name);
   *proto.mutable_backup()->mutable_expire_time() =
-      google::cloud::internal::ToProtoTimestamp(expire_time_);
+      google::cloud::internal::ToProtoTimestamp(expire_time);
   proto.mutable_update_mask()->add_paths("expire_time");
   return proto;
 }
@@ -471,10 +471,10 @@ future<Status> TableAdmin::AsyncDeleteBackup(CompletionQueue& cq,
 google::bigtable::admin::v2::ListBackupsRequest
 TableAdmin::ListBackupsParams::AsProto(std::string const& instance_name) const {
   google::bigtable::admin::v2::ListBackupsRequest proto;
-  proto.set_parent(cluster_id_ ? instance_name + "/clusters/" + *cluster_id_
-                               : instance_name + "/clusters/-");
-  if (filter_) *proto.mutable_filter() = *filter_;
-  if (order_by_) *proto.mutable_order_by() = *order_by_;
+  proto.set_parent(cluster_id ? instance_name + "/clusters/" + *cluster_id
+                              : instance_name + "/clusters/-");
+  if (filter) *proto.mutable_filter() = *filter;
+  if (order_by) *proto.mutable_order_by() = *order_by;
   return proto;
 }
 
@@ -541,9 +541,9 @@ TableAdmin::RestoreTableParams::AsProto(
     std::string const& instance_name) const {
   google::bigtable::admin::v2::RestoreTableRequest proto;
   proto.set_parent(instance_name);
-  proto.set_table_id(table_id_);
-  proto.set_backup(instance_name + "/clusters/" + cluster_id_ + "/backups/" +
-                   backup_id_);
+  proto.set_table_id(table_id);
+  proto.set_backup(instance_name + "/clusters/" + cluster_id + "/backups/" +
+                   backup_id);
   return proto;
 }
 

@@ -435,26 +435,23 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
    * @param expire_time the date and time when the created backup will expire.
    */
-  class CreateBackupParams {
-   public:
+  struct CreateBackupParams {
+    CreateBackupParams() = default;
     CreateBackupParams(std::string cluster_id, std::string backup_id,
                        std::string table_id,
                        std::chrono::system_clock::time_point expire_time)
-        : cluster_id_(std::move(cluster_id)),
-          backup_id_(std::move(backup_id)),
-          table_name_(std::move(table_id)),
-          expire_time_(std::move(expire_time)) {}
-
-    std::string source_table() const { return table_name_; }
+        : cluster_id(std::move(cluster_id)),
+          backup_id(std::move(backup_id)),
+          table_name(std::move(table_id)),
+          expire_time(std::move(expire_time)) {}
 
     google::bigtable::admin::v2::CreateBackupRequest AsProto(
         std::string instance_name) const;
 
-   private:
-    std::string cluster_id_;
-    std::string backup_id_;
-    std::string table_name_;
-    std::chrono::system_clock::time_point expire_time_;
+    std::string cluster_id;
+    std::string backup_id;
+    std::string table_name;
+    std::chrono::system_clock::time_point expire_time;
   };
 
   /**
@@ -586,21 +583,20 @@ class TableAdmin {
    *     CLUSTER_ID is the cluster_id specified for this object.
    * @param expire_time the date and time when the created backup will expire.
    */
-  class UpdateBackupParams {
-   public:
+  struct UpdateBackupParams {
+    UpdateBackupParams() = default;
     UpdateBackupParams(std::string cluster_id, std::string backup_id,
                        std::chrono::system_clock::time_point expire_time)
-        : cluster_id_(std::move(cluster_id)),
-          backup_name_(std::move(backup_id)),
-          expire_time_(std::move(expire_time)) {}
+        : cluster_id(std::move(cluster_id)),
+          backup_name(std::move(backup_id)),
+          expire_time(std::move(expire_time)) {}
 
     google::bigtable::admin::v2::UpdateBackupRequest AsProto(
         std::string const& instance_name) const;
 
-   private:
-    std::string cluster_id_;
-    std::string backup_name_;
-    std::chrono::system_clock::time_point expire_time_;
+    std::string cluster_id;
+    std::string backup_name;
+    std::chrono::system_clock::time_point expire_time;
   };
 
   /**
@@ -761,8 +757,7 @@ class TableAdmin {
    *
    * @warning This feature is not GA, it is subject to change without notice.
    */
-  class ListBackupsParams {
-   public:
+  struct ListBackupsParams {
     ListBackupsParams() = default;
 
     /**
@@ -776,7 +771,7 @@ class TableAdmin {
      *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
      */
     ListBackupsParams& set_cluster(std::string const& cluster_id) {
-      cluster_id_ = cluster_id;
+      this->cluster_id = cluster_id;
       return *this;
     }
 
@@ -817,7 +812,7 @@ class TableAdmin {
      *          10GB
      */
     ListBackupsParams& set_filter(std::string const& filter) {
-      filter_ = filter;
+      this->filter = filter;
       return *this;
     }
 
@@ -845,17 +840,16 @@ class TableAdmin {
      *     descending order starting from the most recently created backup.
      */
     ListBackupsParams& set_order_by(std::string const& order_by) {
-      order_by_ = order_by;
+      this->order_by = order_by;
       return *this;
     }
 
     google::bigtable::admin::v2::ListBackupsRequest AsProto(
         std::string const& instance_name) const;
 
-   private:
-    optional<std::string> cluster_id_;
-    optional<std::string> filter_;
-    optional<std::string> order_by_;
+    optional<std::string> cluster_id;
+    optional<std::string> filter;
+    optional<std::string> order_by;
   };
 
   /**
@@ -925,21 +919,20 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
    *     CLUSTER_ID is the cluster_id previously specified.
    */
-  class RestoreTableParams {
-   public:
+  struct RestoreTableParams {
+    RestoreTableParams() = default;
     RestoreTableParams(std::string table_id, std::string cluster_id,
                        std::string backup_id)
-        : table_id_(std::move(table_id)),
-          cluster_id_(std::move(cluster_id)),
-          backup_id_(std::move(backup_id)) {}
+        : table_id(std::move(table_id)),
+          cluster_id(std::move(cluster_id)),
+          backup_id(std::move(backup_id)) {}
 
     google::bigtable::admin::v2::RestoreTableRequest AsProto(
         std::string const& instance_name) const;
 
-   private:
-    std::string table_id_;
-    std::string cluster_id_;
-    std::string backup_id_;
+    std::string table_id;
+    std::string cluster_id;
+    std::string backup_id;
   };
 
   /**
