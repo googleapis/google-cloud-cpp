@@ -42,7 +42,6 @@ google_cloud_cpp_common_unit_tests = [
     "internal/tuple_test.cc",
     "internal/utility_test.cc",
     "log_test.cc",
-    "optional_test.cc",
     "status_or_test.cc",
     "status_test.cc",
     "terminate_handler_test.cc",
