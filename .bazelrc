@@ -66,6 +66,10 @@ build:msan --linkopt=-stdlib=libc++
 build:msan --linkopt=-lc++
 build:msan --linkopt=-lc++abi
 
+# --config xsan: Run several sanitizers that are safe to run together.
+build:xsan --config=asan
+build:xsan --config=ubsan
+
 # --config libcxx: Compile and link using libc++.
 build:libcxx --cxxopt=-stdlib=libc++
 build:libcxx --linkopt=-stdlib=libc++

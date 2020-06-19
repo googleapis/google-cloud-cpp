@@ -143,6 +143,15 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="ubsan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+elif [[ "${BUILD_NAME}" = "xsan" ]]; then
+  # Compile with several sanitizers that can be run together. See the top-level
+  # .bazelrc for details.
+  export CC=clang
+  export CXX=clang++
+  export DISTRO=fedora
+  export DISTRO_VERSION=31
+  export BAZEL_CONFIG="xsan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
   export BUILD_TYPE=Release
