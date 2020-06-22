@@ -56,6 +56,7 @@ spanner_client_unit_tests = [
     "internal/tuple_utils_test.cc",
     "keys_test.cc",
     "mutations_test.cc",
+    "numeric_test.cc",
     "partition_options_test.cc",
     "query_options_test.cc",
     "query_partition_test.cc",

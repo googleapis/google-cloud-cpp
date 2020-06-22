@@ -124,6 +124,8 @@ add_library(
     keys.h
     mutations.cc
     mutations.h
+    numeric.cc
+    numeric.h
     partition_options.cc
     partition_options.h
     partitioned_dml_result.h
@@ -160,8 +162,8 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     spanner_client
-    PUBLIC absl::memory google_cloud_cpp_grpc_utils google_cloud_cpp_common
-           googleapis-c++::spanner_protos)
+    PUBLIC absl::memory absl::numeric absl::strings google_cloud_cpp_grpc_utils
+           google_cloud_cpp_common googleapis-c++::spanner_protos)
 set_target_properties(
     spanner_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                               SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
@@ -293,6 +295,7 @@ function (spanner_client_define_tests)
         internal/tuple_utils_test.cc
         keys_test.cc
         mutations_test.cc
+        numeric_test.cc
         partition_options_test.cc
         query_options_test.cc
         query_partition_test.cc
@@ -326,6 +329,7 @@ function (spanner_client_define_tests)
             ${target}
             PRIVATE spanner_client_testing
                     absl::memory
+                    absl::numeric
                     googleapis-c++::spanner_client
                     google_cloud_cpp_testing
                     GTest::gmock_main
@@ -354,6 +358,7 @@ function (spanner_client_define_benchmarks)
         internal/date_benchmark.cc
         internal/merge_chunk_benchmark.cc
         internal/time_format_benchmark.cc
+        numeric_benchmark.cc
         row_benchmark.cc)
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
