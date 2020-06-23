@@ -43,7 +43,7 @@ MATCHER_P2(HasStatus, code, message, "") {
 TEST(Numeric, DefaultCtor) {
   Numeric n;
   EXPECT_EQ(0, ToInteger<int>(n).value());
-  EXPECT_EQ(0U, ToInteger<unsigned int>(n).value());
+  EXPECT_EQ(0U, ToInteger<unsigned>(n).value());
   EXPECT_EQ(0.0, ToDouble(n));
   EXPECT_EQ("0", n.ToString());
 }
@@ -228,29 +228,6 @@ TEST(Numeric, MakeNumericString) {
                 .ToString());
 }
 
-TEST(Numeric, MakeNumericStringRounding) {
-  // If the argument has more than 9 digits after the decimal point
-  // it will be rounded, with halfway cases rounding away from zero.
-  EXPECT_EQ("0.899989999", MakeNumeric("0.8999899994").value().ToString());
-  EXPECT_EQ("0.89999", MakeNumeric("0.8999899995").value().ToString());
-  EXPECT_EQ("0.899999999", MakeNumeric("0.8999999994").value().ToString());
-  EXPECT_EQ("0.9", MakeNumeric("0.8999999995").value().ToString());
-  EXPECT_EQ("0.999989999", MakeNumeric(".9999899994").value().ToString());
-  EXPECT_EQ("0.99999", MakeNumeric(".9999899995").value().ToString());
-  EXPECT_EQ("0.999999999", MakeNumeric(".9999999994").value().ToString());
-  EXPECT_EQ("1", MakeNumeric(".9999999995").value().ToString());
-  EXPECT_EQ("99.999999999", MakeNumeric("99.9999999994").value().ToString());
-  EXPECT_EQ("100", MakeNumeric("99.9999999995").value().ToString());
-  EXPECT_EQ("90000000000000000000000000000",
-            MakeNumeric("89999999999999999999999999999.9999999999")
-                .value()
-                .ToString());
-  EXPECT_EQ("-99999999999999999999999999999.999999999",
-            MakeNumeric("-99999999999999999999999999999.9999999989")
-                .value()
-                .ToString());
-}
-
 TEST(Numeric, MakeNumericStringFail) {
   // Valid chars, but incomplete.
   EXPECT_THAT(MakeNumeric("").status(),
@@ -285,6 +262,50 @@ TEST(Numeric, MakeNumericStringFail) {
   EXPECT_THAT(MakeNumeric("99999999999999999999999999999.9999999995").status(),
               HasStatus(StatusCode::kOutOfRange,
                         "99999999999999999999999999999.9999999995"));
+}
+
+TEST(Numeric, MakeNumericStringRounding) {
+  // If the argument has more than 9 digits after the decimal point
+  // it will be rounded, with halfway cases rounding away from zero.
+  EXPECT_EQ("0.899989999", MakeNumeric("0.8999899994").value().ToString());
+  EXPECT_EQ("0.89999", MakeNumeric("0.8999899995").value().ToString());
+  EXPECT_EQ("0.899999999", MakeNumeric("0.8999999994").value().ToString());
+  EXPECT_EQ("0.9", MakeNumeric("0.8999999995").value().ToString());
+  EXPECT_EQ("0.999989999", MakeNumeric(".9999899994").value().ToString());
+  EXPECT_EQ("0.99999", MakeNumeric(".9999899995").value().ToString());
+  EXPECT_EQ("0.999999999", MakeNumeric(".9999999994").value().ToString());
+  EXPECT_EQ("1", MakeNumeric(".9999999995").value().ToString());
+  EXPECT_EQ("99.999999999", MakeNumeric("99.9999999994").value().ToString());
+  EXPECT_EQ("100", MakeNumeric("99.9999999995").value().ToString());
+
+  EXPECT_EQ("90000000000000000000000000000",
+            MakeNumeric("89999999999999999999999999999.9999999999")
+                .value()
+                .ToString());
+  EXPECT_EQ("-99999999999999999999999999999.999999999",
+            MakeNumeric("-99999999999999999999999999999.9999999989")
+                .value()
+                .ToString());
+
+  EXPECT_EQ(
+      std::int64_t{-9223372036854775807} - 1,
+      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775807.5").value())
+          .value());
+  EXPECT_EQ(
+      std::uint64_t{18446744073709551615ULL},
+      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551614.5").value())
+          .value());
+}
+
+TEST(Numeric, MakeNumericStringRoundingFail) {
+  EXPECT_THAT(
+      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775808.5").value())
+          .status(),
+      HasStatus(StatusCode::kDataLoss, "-9223372036854775808.5"));
+  EXPECT_THAT(
+      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551615.5").value())
+          .status(),
+      HasStatus(StatusCode::kDataLoss, "18446744073709551615.5"));
 }
 
 TEST(Numeric, MakeNumericDouble) {
@@ -354,7 +375,7 @@ TEST(Numeric, MakeNumericDoubleFail) {
 TEST(Numeric, MakeNumericInteger) {
   // Zero, signed and unsigned.
   EXPECT_EQ(0, ToInteger<int>(MakeNumeric(0).value()).value());
-  EXPECT_EQ(0U, ToInteger<unsigned int>(MakeNumeric(0U).value()).value());
+  EXPECT_EQ(0U, ToInteger<unsigned>(MakeNumeric(0U).value()).value());
 
   // 8-bit types.
   EXPECT_EQ(std::numeric_limits<std::int8_t>::min(),
@@ -401,13 +422,17 @@ TEST(Numeric, MakeNumericInteger) {
   EXPECT_EQ(0, ToInteger<int>(MakeNumeric(-0.4).value()).value());
   EXPECT_EQ(0, ToInteger<int>(MakeNumeric(0.4).value()).value());
   EXPECT_EQ(1, ToInteger<int>(MakeNumeric(0.5).value()).value());
-  EXPECT_EQ(0, ToInteger<unsigned int>(MakeNumeric(0.4).value()).value());
-  EXPECT_EQ(1, ToInteger<unsigned int>(MakeNumeric(0.5).value()).value());
-  EXPECT_EQ(0, ToInteger<unsigned int>(MakeNumeric(49, -2).value()).value());
-  EXPECT_EQ(1, ToInteger<unsigned int>(MakeNumeric(50, -2).value()).value());
+  EXPECT_EQ(0, ToInteger<unsigned>(MakeNumeric(0.4).value()).value());
+  EXPECT_EQ(1, ToInteger<unsigned>(MakeNumeric(0.5).value()).value());
+  EXPECT_EQ(0, ToInteger<unsigned>(MakeNumeric(49, -2).value()).value());
+  EXPECT_EQ(1, ToInteger<unsigned>(MakeNumeric(50, -2).value()).value());
 }
 
 TEST(Numeric, MakeNumericIntegerFail) {
+  // Negative to unsigned.
+  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(-1).value()).status(),
+              HasStatus(StatusCode::kDataLoss, "-1"));
+
   // Beyond the 8-bit limits.
   EXPECT_THAT(ToInteger<std::int8_t>(MakeNumeric(-129).value()).status(),
               HasStatus(StatusCode::kDataLoss, "-129"));
@@ -474,8 +499,6 @@ TEST(Numeric, MakeNumericIntegerScaled) {
   EXPECT_EQ(100000, ToInteger<int>(MakeNumeric(1).value(), 5).value());
   EXPECT_EQ(1000000, ToInteger<int>(MakeNumeric(1).value(), 6).value());
   EXPECT_EQ(10000000, ToInteger<int>(MakeNumeric(1).value(), 7).value());
-  EXPECT_EQ(100000000, ToInteger<int>(MakeNumeric(1).value(), 8).value());
-  EXPECT_EQ(1000000000, ToInteger<int>(MakeNumeric(1).value(), 9).value());
 
   EXPECT_EQ(345679, ToInteger<int>(MakeNumeric(3456789).value(), -1).value());
   EXPECT_EQ(34568, ToInteger<int>(MakeNumeric(3456789).value(), -2).value());
@@ -484,6 +507,28 @@ TEST(Numeric, MakeNumericIntegerScaled) {
   EXPECT_EQ(35, ToInteger<int>(MakeNumeric(3456789).value(), -5).value());
   EXPECT_EQ(3, ToInteger<int>(MakeNumeric(3456789).value(), -6).value());
   EXPECT_EQ(0, ToInteger<int>(MakeNumeric(3456789).value(), -7).value());
+
+  EXPECT_EQ(1U, ToInteger<unsigned>(MakeNumeric(1U).value(), 0).value());
+  EXPECT_EQ(10U, ToInteger<unsigned>(MakeNumeric(1U).value(), 1).value());
+  EXPECT_EQ(100U, ToInteger<unsigned>(MakeNumeric(1U).value(), 2).value());
+  EXPECT_EQ(1000U, ToInteger<unsigned>(MakeNumeric(1U).value(), 3).value());
+  EXPECT_EQ(10000U, ToInteger<unsigned>(MakeNumeric(1U).value(), 4).value());
+  EXPECT_EQ(100000U, ToInteger<unsigned>(MakeNumeric(1U).value(), 5).value());
+  EXPECT_EQ(1000000U, ToInteger<unsigned>(MakeNumeric(1U).value(), 6).value());
+  EXPECT_EQ(10000000U, ToInteger<unsigned>(MakeNumeric(1U).value(), 7).value());
+
+  EXPECT_EQ(345679U,
+            ToInteger<unsigned>(MakeNumeric(3456789U).value(), -1).value());
+  EXPECT_EQ(34568U,
+            ToInteger<unsigned>(MakeNumeric(3456789U).value(), -2).value());
+  EXPECT_EQ(3457U,
+            ToInteger<unsigned>(MakeNumeric(3456789U).value(), -3).value());
+  EXPECT_EQ(346U,
+            ToInteger<unsigned>(MakeNumeric(3456789U).value(), -4).value());
+  EXPECT_EQ(35U,
+            ToInteger<unsigned>(MakeNumeric(3456789U).value(), -5).value());
+  EXPECT_EQ(3U, ToInteger<unsigned>(MakeNumeric(3456789U).value(), -6).value());
+  EXPECT_EQ(0U, ToInteger<unsigned>(MakeNumeric(3456789U).value(), -7).value());
 
   // Demonstrate how to use scaled integers as "precise fractional" values.
   auto const n = MakeNumeric(9223372036854775807, -9).value();
