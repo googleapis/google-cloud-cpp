@@ -42,6 +42,11 @@ class AdminBackupAsyncFutureIntegrationTest
             .value_or("") != "yes") {
       GTEST_SKIP();
     }
+    if (google::cloud::internal::GetEnv(
+            "ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS")
+            .value_or("") != "yes") {
+      GTEST_SKIP();
+    }
 
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
@@ -81,7 +86,7 @@ class AdminBackupAsyncFutureIntegrationTest
 
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work
 /// as expected.
-TEST_F(AdminBackupAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
+TEST_F(AdminBackupAsyncFutureIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -155,85 +160,6 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
             EXPECT_STATUS_OK(update_result);
             EXPECT_EQ(update_result->name(), backup_full_name);
             EXPECT_EQ(update_result->expire_time(), updated_expire_time);
-            return table_admin_->AsyncDeleteBackup(cq, backup_cluster_id,
-                                                   backup_id);
-          })
-          .then([&](future<Status> fut) {
-            Status delete_result = fut.get();
-            EXPECT_STATUS_OK(delete_result);
-          });
-  chain.get();
-
-  // delete table
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
-  // List to verify it is no longer there
-  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  auto table_count = CountMatchingTables(table_id, *current_table_list);
-  EXPECT_EQ(0, table_count);
-
-  SUCCEED();  // we expect that previous operations do not fail.
-
-  cq.Shutdown();
-  pool.join();
-}
-
-/// @test Verify that `bigtable::TableAdmin` Async Backup and Restore
-/// operations work as expected.
-TEST_F(AdminBackupAsyncFutureIntegrationTest, RestoreTableFromBackup) {
-  std::string const table_id = RandomTableId();
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
-  // verify new table id does not exist
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
-
-  TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
-                            {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
-                           {"a1000", "a2000", "b3000", "m5000"});
-  // create table
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-
-  auto clusters_list =
-      instance_admin_->ListClusters(table_admin_->instance_id());
-  ASSERT_STATUS_OK(clusters_list);
-  std::string const backup_cluster_full_name =
-      clusters_list->clusters.begin()->name();
-  std::string const backup_cluster_id = backup_cluster_full_name.substr(
-      backup_cluster_full_name.rfind('/') + 1,
-      backup_cluster_full_name.size() - backup_cluster_full_name.rfind('/'));
-  std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name =
-      backup_cluster_full_name + "/backups/" + backup_id;
-  google::protobuf::Timestamp const expire_time =
-      google::protobuf::util::TimeUtil::GetCurrentTime() +
-      google::protobuf::util::TimeUtil::HoursToDuration(12);
-
-  future<void> chain =
-      table_admin_->AsyncListBackups(cq, {})
-          .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
-            StatusOr<std::vector<btadmin::Backup>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            auto previous_count =
-                CountMatchingBackups(backup_cluster_id, backup_id, *result);
-            EXPECT_EQ(0, previous_count)
-                << "Backup (" << backup_id << ") already exists."
-                << " This is unexpected, as the backup ids are"
-                << " generated at random.";
-            return table_admin_->AsyncCreateBackup(
-                cq, {backup_cluster_id, backup_id, table_id,
-                     google::cloud::internal::ToChronoTimePoint(expire_time)});
-          })
-          .then([&](future<StatusOr<btadmin::Backup>> fut) {
-            StatusOr<btadmin::Backup> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            EXPECT_THAT(result->name(), ::testing::HasSubstr(backup_id));
             return table_admin_->AsyncDeleteTable(cq, table_id);
           })
           .then([&](future<Status> fut) {
@@ -245,6 +171,12 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest, RestoreTableFromBackup) {
           .then([&](future<StatusOr<btadmin::Table>> fut) {
             auto restore_result = fut.get();
             EXPECT_STATUS_OK(restore_result);
+            return table_admin_->AsyncDeleteBackup(cq, backup_cluster_id,
+                                                   backup_id);
+          })
+          .then([&](future<Status> fut) {
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
           });
   chain.get();
 
@@ -254,8 +186,6 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest, RestoreTableFromBackup) {
   auto table_count = CountMatchingTables(table_id, *current_table_list);
   EXPECT_EQ(1, table_count);
 
-  // delete backup
-  EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
   // delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 

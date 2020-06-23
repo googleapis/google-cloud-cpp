@@ -103,6 +103,17 @@ elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+  # Until more quota is available rotate executing backup tests, backup async tests, and snippets.
+  day_of_year=$(date +%j)
+  if [[ $(( day_of_year % 4 )) == 0 ]]; then
+    ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS="yes"
+  elif [[ $(( day_of_year % 4 )) = 1 ]]; then
+    ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS="yes"
+  elif [[ $(( day_of_year % 4 )) == 2 ]]; then
+    ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS="yes"
+  elif [[ $(( day_of_year % 4 )) = 3 ]]; then
+    ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS="yes"
+  fi
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export BUILD_TYPE=Debug
@@ -460,6 +471,12 @@ docker_flags=(
   # The Bigtable Admin integration tests can only run in nightly builds, the
   # quota (as in calls per day) is too restrictive to run more often.
   "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+
+  # The Bigtable Backup Write quota (per user per 100s) precludes us from running all four of these simultaneously.
+  "--env" "ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS:-no}"
+  "--env" "ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS:-no}"
+  "--env" "ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS=${ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS:-no}"
+  "--env" "ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS=${ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS:-no}"
 
   # These tests are quite slow, so we only enable them in certain builds.
   "--env" "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
