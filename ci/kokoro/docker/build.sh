@@ -105,15 +105,12 @@ elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
   # Until more quota is available rotate executing backup tests, backup async tests, and snippets.
   day_of_year=10#$(date +%j)
-  if [[ $((day_of_year % 4)) == 0 ]]; then
-    ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS="yes"
-  elif [[ $((day_of_year % 4)) = 1 ]]; then
-    ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS="yes"
-  elif [[ $((day_of_year % 4)) == 2 ]]; then
-    ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS="yes"
-  elif [[ $((day_of_year % 4)) = 3 ]]; then
-    ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS="yes"
-  fi
+  case $((day_of_year % 4)) in
+  0) ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS="yes" ;;
+  1) ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS="yes" ;;
+  2) ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS="yes" ;;
+  3) ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS="yes" ;;
+  esac
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export BUILD_TYPE=Debug
