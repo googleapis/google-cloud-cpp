@@ -443,12 +443,13 @@ TEST(Numeric, MakeNumericIntegerFail) {
 
   // Beyond the 32-bit limits.
   EXPECT_THAT(
-      ToInteger<std::int32_t>(MakeNumeric(-2147483649).value()).status(),
+      ToInteger<std::int32_t>(MakeNumeric("-2147483649").value()).status(),
       HasStatus(StatusCode::kDataLoss, "-2147483649"));
-  EXPECT_THAT(ToInteger<std::int32_t>(MakeNumeric(2147483648).value()).status(),
-              HasStatus(StatusCode::kDataLoss, "2147483648"));
   EXPECT_THAT(
-      ToInteger<std::uint32_t>(MakeNumeric(4294967296).value()).status(),
+      ToInteger<std::int32_t>(MakeNumeric("2147483648").value()).status(),
+      HasStatus(StatusCode::kDataLoss, "2147483648"));
+  EXPECT_THAT(
+      ToInteger<std::uint32_t>(MakeNumeric("4294967296").value()).status(),
       HasStatus(StatusCode::kDataLoss, "4294967296"));
 
   // Beyond the 64-bit limits (which requires input strings or 128-bit types).
