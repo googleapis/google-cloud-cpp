@@ -151,9 +151,9 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
   if (google::cloud::internal::GetEnv(
-             "ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS")
-             .value_or("") != "yes") {
-      return;
+          "ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS")
+          .value_or("") != "yes") {
+    return;
   }
 
   examples::CheckEnvironmentVariablesAreSet({

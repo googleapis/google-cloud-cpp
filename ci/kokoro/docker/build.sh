@@ -105,13 +105,13 @@ elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
   # Until more quota is available rotate executing backup tests, backup async tests, and snippets.
   day_of_year=$(date +%j)
-  if [[ $(( day_of_year % 4 )) == 0 ]]; then
+  if [[ $((day_of_year % 4)) == 0 ]]; then
     ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS="yes"
-  elif [[ $(( day_of_year % 4 )) = 1 ]]; then
+  elif [[ $((day_of_year % 4)) = 1 ]]; then
     ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS="yes"
-  elif [[ $(( day_of_year % 4 )) == 2 ]]; then
+  elif [[ $((day_of_year % 4)) == 2 ]]; then
     ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_SNIPPETS="yes"
-  elif [[ $(( day_of_year % 4 )) = 3 ]]; then
+  elif [[ $((day_of_year % 4)) = 3 ]]; then
     ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_SNIPPETS="yes"
   fi
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
