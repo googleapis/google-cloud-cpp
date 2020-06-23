@@ -542,6 +542,12 @@ TEST(Numeric, MakeNumericIntegerScaledFail) {
   EXPECT_THAT(MakeNumeric(1, 29).status(),
               HasStatus(StatusCode::kOutOfRange, "1e29"));
 
+  // Beyond the integer-scaling limit on output.
+  EXPECT_THAT(ToInteger<int>(MakeNumeric(1, 1).value(), 28).status(),
+              HasStatus(StatusCode::kOutOfRange, "10e28"));
+  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(1U, 1).value(), 28).status(),
+              HasStatus(StatusCode::kOutOfRange, "10e28"));
+
   // Beyond the fractional-scaling limit (value is truncated).
   EXPECT_EQ(0.0, ToDouble(MakeNumeric(1, -10).value()));
 }
