@@ -104,7 +104,7 @@ elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
   # Until more quota is available rotate executing backup tests, backup async tests, and snippets.
-  day_of_year=$(date +%j)
+  day_of_year=10#$(date +%j)
   if [[ $((day_of_year % 4)) == 0 ]]; then
     ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS="yes"
   elif [[ $((day_of_year % 4)) = 1 ]]; then
