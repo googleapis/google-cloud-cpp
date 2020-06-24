@@ -442,6 +442,7 @@ TEST(Numeric, MakeNumericIntegerFail) {
               HasStatus(StatusCode::kDataLoss, "256"));
 
   // Beyond the 32-bit limits.
+  // Beyond the 32-bit limits (requires string input on 32-bit platforms).
   EXPECT_THAT(
       ToInteger<std::int32_t>(MakeNumeric("-2147483649").value()).status(),
       HasStatus(StatusCode::kDataLoss, "-2147483649"));
@@ -452,7 +453,7 @@ TEST(Numeric, MakeNumericIntegerFail) {
       ToInteger<std::uint32_t>(MakeNumeric("4294967296").value()).status(),
       HasStatus(StatusCode::kDataLoss, "4294967296"));
 
-  // Beyond the 64-bit limits (which requires input strings or 128-bit types).
+  // Beyond the 64-bit limits (requires string input on 64-bit platforms).
   EXPECT_THAT(
       ToInteger<std::int64_t>(MakeNumeric("-9223372036854775809").value())
           .status(),

@@ -127,7 +127,7 @@ Status DataLoss(std::string message) {
 //   [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
 //   [-+]?.[0-9]+([eE][-+]?[0-9]+)?
 //
-// and the value is within the allowed range, and produces a representation
+// and the value is within the allowed range, producing a representation
 // that matches one of these regular expressions ...
 //
 //   0                                      // value == 0
