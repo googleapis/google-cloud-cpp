@@ -42,11 +42,6 @@ class AdminBackupAsyncFutureIntegrationTest
             .value_or("") != "yes") {
       GTEST_SKIP();
     }
-    if (google::cloud::internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_BACKUP_ASYNC_INTEGRATION_TESTS")
-            .value_or("") != "yes") {
-      GTEST_SKIP();
-    }
 
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(

@@ -45,11 +45,6 @@ class AdminBackupIntegrationTest
             .value_or("") != "yes") {
       GTEST_SKIP();
     }
-    if (google::cloud::internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_BACKUP_INTEGRATION_TESTS")
-            .value_or("") != "yes") {
-      GTEST_SKIP();
-    }
 
     TableIntegrationTest::SetUp();
 
