@@ -40,6 +40,12 @@ class AdminBackupIntegrationTest
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
 
   void SetUp() override {
+    if (google::cloud::internal::GetEnv(
+            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
+            .value_or("") != "yes") {
+      GTEST_SKIP();
+    }
+
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
