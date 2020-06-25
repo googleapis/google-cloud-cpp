@@ -41,7 +41,7 @@ StatusOr<gcsa::Database> DatabaseAdminMetadata::GetDatabase(
 
 StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
-  SetMetadata(context, "name=" + request.database());
+  SetMetadata(context, "database=" + request.database());
   return child_->GetDatabaseDdl(context, request);
 }
 
