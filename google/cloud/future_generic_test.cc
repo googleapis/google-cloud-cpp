@@ -450,7 +450,7 @@ TEST(FutureTestInt, conform_30_6_6_15) {
 
   p.set_value(42);
   // now thread `t` can make progress.
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
 
   waiter.get();
   t.join();
@@ -560,7 +560,7 @@ TEST(FutureTestInt, conform_30_6_6_20) {
   auto waiter = f_wait_returned.get_future();
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
 
   t.join();
 }
@@ -589,7 +589,7 @@ TEST(FutureTestInt, conform_30_6_6_21) {
   auto waiter = f_wait_returned.get_future();
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
 
   t.join();
 }
@@ -607,7 +607,7 @@ TEST(FutureTestInt, conform_30_6_6_22_2) {
 
   p0.set_value(42);
   auto s = f0.wait_for(0_ms);
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   EXPECT_EQ(42, f0.get());
 }
 
@@ -651,7 +651,7 @@ TEST(FutureTestInt, conform_30_6_6_24) {
   auto waiter = f_wait_returned.get_future();
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
 
   t.join();
 }
@@ -669,7 +669,7 @@ TEST(FutureTestInt, conform_30_6_6_25_2) {
 
   p0.set_value(42);
   auto s = f0.wait_until(std::chrono::system_clock::now());
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
   EXPECT_EQ(42, f0.get());
 }

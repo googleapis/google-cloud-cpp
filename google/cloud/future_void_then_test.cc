@@ -41,7 +41,7 @@ TEST(FutureTestVoid, ThenSimple) {
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   next.get();
   SUCCEED();
@@ -66,7 +66,7 @@ TEST(FutureTestVoid, ThenException) {
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   EXPECT_THROW(
       try { next.get(); } catch (std::runtime_error const& ex) {
@@ -137,7 +137,7 @@ TEST(FutureTestVoid, ThenMoveOnlyCallable) {
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   next.get();
   EXPECT_FALSE(next.valid());
@@ -158,7 +158,7 @@ TEST(FutureTestVoid, ThenByCopy) {
   p.set_value();
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   next.get();
   EXPECT_FALSE(next.valid());
@@ -417,7 +417,7 @@ TEST(FutureTestVoid, conform_2_3_8_d) {
   future<int> next = f.then([&](future<void>) -> int { return 42; });
   EXPECT_TRUE(next.valid());
   p.set_value();
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
   EXPECT_EQ(42, next.get());
 }
 
@@ -436,7 +436,7 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value();
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
   EXPECT_THROW(
       try { next.get(); } catch (std::runtime_error const& ex) {
         EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
@@ -652,7 +652,7 @@ TEST(FutureTestVoid, conform_2_3_11_c) {
 TEST(FutureTestVoid, conform_2_10_4) {
   future<void> f = make_ready_future();
   EXPECT_TRUE(f.valid());
-  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, f.wait_for(0_ms));
   f.get();
   SUCCEED();
 }

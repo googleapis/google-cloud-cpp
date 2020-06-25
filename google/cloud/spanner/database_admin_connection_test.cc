@@ -74,7 +74,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateDatabase({dbase, {}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
 
@@ -95,7 +95,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateDatabase({dbase, {}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
@@ -234,7 +234,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->UpdateDatabase(
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto metadata = fut.get();
   EXPECT_STATUS_OK(metadata);
 
@@ -257,7 +257,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseErrorInPoll) {
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->UpdateDatabase(
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
@@ -434,7 +434,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseSuccess) {
   Database dbase("test-project", "test-instance", "test-db");
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
   auto fut = conn->RestoreDatabase({dbase, backup.FullName()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
 
@@ -456,7 +456,7 @@ TEST(DatabaseAdminClientTest, HandleRestoreDatabaseError) {
   Database dbase("test-project", "test-instance", "test-db");
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
   auto fut = conn->RestoreDatabase({dbase, backup.FullName()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
@@ -689,7 +689,7 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup({dbase, "test-backup", {}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
 
@@ -767,7 +767,7 @@ TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup({dbase, "test-backup", {}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, backup.status().code());
 }

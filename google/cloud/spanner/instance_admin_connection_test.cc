@@ -149,7 +149,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
            .SetNodeCount(1)
            .SetLabels({{"key", "value"}})
            .Build()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto instance = fut.get();
   EXPECT_STATUS_OK(instance);
 
@@ -173,7 +173,7 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
            .SetNodeCount(1)
            .SetLabels({{"key", "value"}})
            .Build()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
 }
@@ -210,7 +210,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
   gcsa::UpdateInstanceRequest req;
   req.mutable_instance()->set_name(expected_name);
   auto fut = conn->UpdateInstance({req});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto instance = fut.get();
   EXPECT_STATUS_OK(instance);
 
@@ -228,7 +228,7 @@ TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
 }
@@ -245,7 +245,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
           });
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
   EXPECT_EQ(StatusCode::kUnavailable, instance.status().code());
 }

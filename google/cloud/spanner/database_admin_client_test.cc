@@ -52,7 +52,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase) {
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.CreateDatabase(dbase, {"-- NOT SQL for test"});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
 
@@ -121,7 +121,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.UpdateDatabase(dbase, {"-- test only: NOT SQL"});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
 
@@ -361,7 +361,7 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.CreateBackup(dbase, backup_id, expire_time);
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
 
@@ -388,7 +388,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabase) {
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.RestoreDatabase(dbase, backup);
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto database = fut.get();
   EXPECT_STATUS_OK(database);
 
@@ -417,7 +417,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseOverload) {
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.RestoreDatabase(dbase, backup);
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto database = fut.get();
   EXPECT_STATUS_OK(database);
 

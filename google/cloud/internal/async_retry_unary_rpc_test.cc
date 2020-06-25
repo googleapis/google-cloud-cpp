@@ -126,7 +126,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
   auto result = fut.get();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ("fake/table/name/response", result->name());
@@ -175,7 +175,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
   auto result = fut.get();
   ASSERT_STATUS_OK(result);
 }
@@ -223,7 +223,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
   auto result = fut.get();
   EXPECT_FALSE(result);
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
@@ -303,7 +303,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   impl->SimulateCompletion(true);
   EXPECT_TRUE(impl->empty());
 
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
   auto result = fut.get();
   EXPECT_FALSE(result);
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
@@ -355,7 +355,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
   auto result = fut.get();
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("non-idempotent"));

@@ -62,7 +62,7 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
         return std::this_thread::get_id();
       });
   std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(std::future_status::ready, id.wait_for(ms(500)));
+  ASSERT_EQ(std::future_status::ready, id.wait_for(ms(500)));
   EXPECT_EQ(t.get_id(), id.get());
 
   cq.Shutdown();
