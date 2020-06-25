@@ -15,6 +15,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
@@ -27,13 +28,9 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-class MockCompletionQueue : public internal::CompletionQueueImpl {
- public:
-  using internal::CompletionQueueImpl::SimulateCompletion;
-};
-
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
+using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
 using ::testing::StrictMock;
 
