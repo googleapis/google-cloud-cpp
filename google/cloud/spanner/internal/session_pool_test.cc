@@ -45,7 +45,6 @@ using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
@@ -403,18 +402,17 @@ TEST(SessionPool, SessionRefresh) {
   auto reader = absl::make_unique<
       StrictMock<MockAsyncResponseReader<spanner_proto::ResultSet>>>();
   EXPECT_CALL(*mock, AsyncExecuteSql(_, _, _))
-      .WillOnce(Invoke([&reader](
-                           grpc::ClientContext&,
-                           spanner_proto::ExecuteSqlRequest const& request,
-                           grpc::CompletionQueue*) {
+      .WillOnce([&reader](grpc::ClientContext&,
+                          spanner_proto::ExecuteSqlRequest const& request,
+                          grpc::CompletionQueue*) {
         EXPECT_EQ("s2", request.session());
         // This is safe. See comments in MockAsyncResponseReader.
         return std::unique_ptr<
             grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>(
             reader.get());
-      }));
+      });
   EXPECT_CALL(*reader, Finish(_, _, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [](spanner_proto::ResultSet* result, grpc::Status* status, void*) {
             // This is the actual spanner response to a "SELECT 1"
             auto constexpr kResultSetText = R"pb(
@@ -426,7 +424,7 @@ TEST(SessionPool, SessionRefresh) {
             )pb";
             ASSERT_TRUE(TextFormat::ParseFromString(kResultSetText, result));
             *status = grpc::Status::OK;
-          }));
+          });
 
   auto db = Database("project", "instance", "database");
   SessionPoolOptions options;
