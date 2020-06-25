@@ -69,11 +69,10 @@ TEST(ConnectionImplTest, ParallelReadRpcFailure) {
   auto mock = std::make_shared<bigquery_testing::MockStorageStub>();
   auto conn = MakeConnection(mock);
   EXPECT_CALL(*mock, CreateReadSession(_))
-      .WillOnce(
-          testing::Invoke([](bigquerystorage_proto::
-                                 CreateReadSessionRequest const& /*request*/) {
-            return Status(StatusCode::kPermissionDenied, "Permission denied!");
-          }));
+      .WillOnce([](bigquerystorage_proto::
+                       CreateReadSessionRequest const& /*request*/) {
+        return Status(StatusCode::kPermissionDenied, "Permission denied!");
+      });
 
   StatusOr<std::vector<ReadStream>> result = conn->ParallelRead(
       "my-parent-project", "my-project:my-dataset.my-table", {});
@@ -85,7 +84,7 @@ TEST(ConnectionImplTest, ParallelReadRpcSuccess) {
   auto mock = std::make_shared<bigquery_testing::MockStorageStub>();
   auto conn = MakeConnection(mock);
   EXPECT_CALL(*mock, CreateReadSession(_))
-      .WillOnce(testing::Invoke(
+      .WillOnce(
           [](bigquerystorage_proto::CreateReadSessionRequest const& request)
               -> StatusOr<bigquerystorage_proto::ReadSession> {
             EXPECT_THAT(request.parent(), Eq("projects/my-parent-project"));
@@ -108,7 +107,7 @@ TEST(ConnectionImplTest, ParallelReadRpcSuccess) {
             )pb";
             EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
             return response;
-          }));
+          });
 
   StatusOr<std::vector<ReadStream>> result =
       conn->ParallelRead("my-parent-project", "my-project:my-dataset.my-table",
