@@ -31,7 +31,6 @@ using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::testing::_;
 using ::testing::ContainerEq;
-using ::testing::Invoke;
 using ::testing::Return;
 
 ObjectMetadata CreateElement(int index) {
@@ -75,9 +74,9 @@ TEST(ListObjectsReaderTest, Basic) {
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Invoke(create_mock(0)))
-      .WillOnce(Invoke(create_mock(1)))
-      .WillOnce(Invoke(create_mock(2)));
+      .WillOnce(create_mock(0))
+      .WillOnce(create_mock(1))
+      .WillOnce(create_mock(2));
 
   ListObjectsReader reader(
       ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
@@ -124,11 +123,11 @@ TEST(ListObjectsReaderTest, PermanentFailure) {
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Invoke(create_mock(0)))
-      .WillOnce(Invoke(create_mock(1)))
-      .WillOnce(Invoke([](ListObjectsRequest const&) {
+      .WillOnce(create_mock(0))
+      .WillOnce(create_mock(1))
+      .WillOnce([](ListObjectsRequest const&) {
         return StatusOr<ListObjectsResponse>(PermanentError());
-      }));
+      });
 
   ListObjectsReader reader(
       ListObjectsRequest("test-bucket"),
@@ -175,12 +174,10 @@ TEST(ListObjectsReaderTest, IteratorCompare) {
   };
 
   auto mock1 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock1, ListObjects(_))
-      .WillOnce(Invoke(create_mock(0, page_count)));
+  EXPECT_CALL(*mock1, ListObjects(_)).WillOnce(create_mock(0, page_count));
 
   auto mock2 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock2, ListObjects(_))
-      .WillOnce(Invoke(create_mock(0, page_count)));
+  EXPECT_CALL(*mock2, ListObjects(_)).WillOnce(create_mock(0, page_count));
 
   ListObjectsReader reader1(
       ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),

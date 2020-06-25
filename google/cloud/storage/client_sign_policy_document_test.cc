@@ -32,7 +32,6 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -157,11 +156,10 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
 
   EXPECT_CALL(*mock_, SignBlob(_))
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
-      .WillOnce(
-          Invoke([&expected_signed_blob](internal::SignBlobRequest const&) {
-            return make_status_or(internal::SignBlobResponse{
-                "test-key-id", expected_signed_blob});
-          }));
+      .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
+        return make_status_or(
+            internal::SignBlobResponse{"test-key-id", expected_signed_blob});
+      });
   auto actual =
       client_->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);

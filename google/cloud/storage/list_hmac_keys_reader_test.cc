@@ -31,7 +31,6 @@ using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::testing::_;
 using ::testing::ContainerEq;
-using ::testing::Invoke;
 using ::testing::Return;
 
 HmacKeyMetadata CreateElement(int index) {
@@ -73,9 +72,9 @@ TEST(ListHmacKeysReaderTest, Basic) {
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListHmacKeys(_))
-      .WillOnce(Invoke(create_mock(0)))
-      .WillOnce(Invoke(create_mock(1)))
-      .WillOnce(Invoke(create_mock(2)));
+      .WillOnce(create_mock(0))
+      .WillOnce(create_mock(1))
+      .WillOnce(create_mock(2));
 
   ListHmacKeysReader reader(
       ListHmacKeysRequest("test-project-id"),
@@ -122,11 +121,11 @@ TEST(ListHmacKeysReaderTest, PermanentFailure) {
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListHmacKeys(_))
-      .WillOnce(Invoke(create_mock(0)))
-      .WillOnce(Invoke(create_mock(1)))
-      .WillOnce(Invoke([](ListHmacKeysRequest const&) {
+      .WillOnce(create_mock(0))
+      .WillOnce(create_mock(1))
+      .WillOnce([](ListHmacKeysRequest const&) {
         return StatusOr<ListHmacKeysResponse>(PermanentError());
-      }));
+      });
 
   ListHmacKeysReader reader(
       ListHmacKeysRequest("test-project"),
@@ -173,12 +172,10 @@ TEST(ListHmacKeysReaderTest, IteratorCompare) {
   };
 
   auto mock1 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock1, ListHmacKeys(_))
-      .WillOnce(Invoke(create_mock(0, page_count)));
+  EXPECT_CALL(*mock1, ListHmacKeys(_)).WillOnce(create_mock(0, page_count));
 
   auto mock2 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock2, ListHmacKeys(_))
-      .WillOnce(Invoke(create_mock(0, page_count)));
+  EXPECT_CALL(*mock2, ListHmacKeys(_)).WillOnce(create_mock(0, page_count));
 
   ListHmacKeysReader reader1(
       ListHmacKeysRequest("test-project-id"),

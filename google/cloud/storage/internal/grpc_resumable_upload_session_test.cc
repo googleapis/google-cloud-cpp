@@ -26,7 +26,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 
 class MockGrpcUploadWriter : public GrpcClient::UploadWriter {
@@ -142,10 +141,10 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   ResumableUploadResponse const resume_response{
       {}, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}};
   EXPECT_CALL(*mock, QueryResumableUpload(_))
-      .WillOnce(Invoke([&](QueryResumableUploadRequest const& request) {
+      .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(resume_response);
-      }));
+      });
 
   auto upload = session.UploadChunk(payload);
   EXPECT_EQ(size, session.next_expected_byte());

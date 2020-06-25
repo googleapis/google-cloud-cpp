@@ -32,7 +32,6 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -82,104 +81,104 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
   // 18. next_expected_byte() -> returns 3 * quantum
   //
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const& p) {
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(7, count);
         EXPECT_EQ(payload, p);
         return make_status_or(ResumableUploadResponse{
             "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(11, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(14, count);
         EXPECT_EQ(payload, p);
         return make_status_or(ResumableUploadResponse{
             "", 2 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(18, count);
         EXPECT_EQ(payload, p);
         return make_status_or(ResumableUploadResponse{
             "", 3 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(4, count);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(5, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(12, count);
         return make_status_or(ResumableUploadResponse{
             "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         EXPECT_EQ(1, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(2, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(6, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(8, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(9, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(10, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(13, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(15, ++count);
         return 2 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(16, ++count);
         return 2 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(17, ++count);
         return 2 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(19, ++count);
         return 3 * quantum;
-      }));
+      });
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
@@ -214,12 +213,12 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
   // Ignore next_expected_byte() in tests - it will always return 0.
   // 1. UploadChunk() -> returns permanent error, the request aborts.
   //
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload, p);
     return StatusOr<ResumableUploadResponse>(PermanentError());
-  }));
+  });
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
@@ -249,18 +248,18 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
   // 1. UploadChunk() -> returns transient error
   // 2. ResetSession() -> returns permanent, the request aborts.
   //
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload, p);
     return StatusOr<ResumableUploadResponse>(TransientError());
-  }));
+  });
 
-  EXPECT_CALL(*mock, ResetSession()).WillOnce(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillOnce([&]() {
     ++count;
     EXPECT_EQ(2, count);
     return StatusOr<ResumableUploadResponse>(PermanentError());
-  }));
+  });
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
@@ -294,38 +293,38 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
   // 5. UploadChunk() -> returns transient error, the policy is exhausted.
   //
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const& p) {
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(5, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }));
+      });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(2, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(4, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
@@ -360,34 +359,34 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
   // 4. ResetSession() -> returns transient error
   // 5. ResetSession() -> returns transient error, the policy is exhausted
   //
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const& p) {
     ++count;
     EXPECT_EQ(3, count);
     EXPECT_EQ(payload, p);
     return StatusOr<ResumableUploadResponse>(TransientError());
-  }));
+  });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(4, count);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(5, count);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         EXPECT_EQ(1, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(2, ++count);
         return 0;
-      }));
+      });
 
   // We only tolerate 2 transient errors, the third causes a permanent failure.
   // As described above, the first call to UploadChunk() will consume the full
@@ -416,9 +415,9 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
   // expected_byte() is called, but it does need to return the right values,
   // the other mock functions set the correct return value using a local
   // variable.
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
     return next_expected_byte;
-  }));
+  });
 
   // The sequence of messages is split across two EXPECT_CALL() and hard to see,
   // basically we want this to happen:
@@ -435,13 +434,13 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
   // 9. UploadChunk() -> returns success
   //
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const& p) {
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(payload, p);
@@ -452,14 +451,14 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(4, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(6, count);
         EXPECT_EQ(payload, p);
@@ -470,14 +469,14 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(7, count);
         EXPECT_EQ(payload, p);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(9, count);
         EXPECT_EQ(payload, p);
@@ -488,16 +487,16 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(2, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(5, count);
         return make_status_or(
@@ -506,8 +505,8 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(8, count);
         return make_status_or(
@@ -516,7 +515,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      }));
+      });
 
   // Configure a session that tolerates 2 transient errors per call. None of
   // the calls to UploadChunk() should use more than these.
@@ -554,13 +553,13 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
   // 1. UploadChunk() -> returns permanent error, the request aborts.
   //
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t s) {
+      .WillOnce([&](std::string const& p, std::size_t s) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(payload, p);
         EXPECT_EQ(quantum, s);
         return StatusOr<ResumableUploadResponse>(PermanentError());
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
@@ -597,41 +596,41 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   // 5. UploadFinalChunk() -> returns transient error, the policy is exhausted.
   //
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t s) {
+      .WillOnce([&](std::string const& p, std::size_t s) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(payload, p);
         EXPECT_EQ(quantum, s);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t s) {
+      })
+      .WillOnce([&](std::string const& p, std::size_t s) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(payload, p);
         EXPECT_EQ(quantum, s);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t s) {
+      })
+      .WillOnce([&](std::string const& p, std::size_t s) {
         ++count;
         EXPECT_EQ(5, count);
         EXPECT_EQ(payload, p);
         EXPECT_EQ(quantum, s);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }));
+      });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(2, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(4, count);
         return make_status_or(ResumableUploadResponse{
             "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
@@ -751,115 +750,115 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
   // 19. UploadFinalChunk() -> returns success (6 * quantum bytes committed)
   // 20. next_expected_byte() -> returns 6 * quantum
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const& p) {
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(3 * quantum, p.size());
         EXPECT_EQ('X', p[0]);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(6, count);
         EXPECT_EQ(2 * quantum, p.size());
         EXPECT_EQ('Y', p[0]);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(9, count);
         EXPECT_EQ(quantum, p.size());
         EXPECT_EQ('Z', p[0]);
         return make_status_or(ResumableUploadResponse{
             "", 3 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t) {
+      .WillOnce([&](std::string const& p, std::size_t) {
         ++count;
         EXPECT_EQ(13, count);
         EXPECT_EQ(3 * quantum, p.size());
         EXPECT_EQ('A', p[0]);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t) {
+      })
+      .WillOnce([&](std::string const& p, std::size_t) {
         ++count;
         EXPECT_EQ(16, count);
         EXPECT_EQ(2 * quantum, p.size());
         EXPECT_EQ('B', p[0]);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p, std::size_t) {
+      })
+      .WillOnce([&](std::string const& p, std::size_t) {
         ++count;
         EXPECT_EQ(19, count);
         EXPECT_EQ(quantum, p.size());
         EXPECT_EQ('C', p[0]);
         return make_status_or(ResumableUploadResponse{
             "", 6 * quantum - 1, {}, ResumableUploadResponse::kDone, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(4, count);
         return make_status_or(ResumableUploadResponse{
             "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(7, count);
         return make_status_or(ResumableUploadResponse{
             "", 2 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(14, count);
         return make_status_or(ResumableUploadResponse{
             "", 4 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         ++count;
         EXPECT_EQ(17, count);
         return make_status_or(ResumableUploadResponse{
             "", 5 * quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
   EXPECT_CALL(*mock, next_expected_byte())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         EXPECT_EQ(1, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(2, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(5, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(8, ++count);
         return 2 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(10, ++count);
         return 3 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(11, ++count);
         return 3 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(12, ++count);
         return 3 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(15, ++count);
         return 4 * quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(18, ++count);
         return 5 * quantum;
-      }));
+      });
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
@@ -897,58 +896,57 @@ TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
   // 7. UploadFinalChunk() -> returns transient error
   // 8. ResetSession() -> returns success (0 bytes committed)
   // 9. next_expected_byte() -> returns 0
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const&) {
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const&) {
     ++count;
     EXPECT_EQ(3, count);
     return make_status_or(ResumableUploadResponse{
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-  }));
+  });
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const&, std::size_t) {
+      .WillOnce([&](std::string const&, std::size_t) {
         ++count;
         EXPECT_EQ(7, count);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }));
+      });
 
-  EXPECT_CALL(*mock, ResetSession()).WillOnce(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillOnce([&]() {
     ++count;
     EXPECT_EQ(8, count);
     return make_status_or(ResumableUploadResponse{
         "", 0, {}, ResumableUploadResponse::kInProgress, {}});
-  }));
+  });
 
   EXPECT_CALL(*mock, next_expected_byte())
-      .WillOnce(Invoke([&]() {
+      .WillOnce([&]() {
         EXPECT_EQ(1, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(2, ++count);
         return 0;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(4, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(5, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(6, ++count);
         return quantum;
-      }))
-      .WillOnce(Invoke([&]() {
+      })
+      .WillOnce([&]() {
         EXPECT_EQ(9, ++count);
         return 0;
-      }));
+      });
 
   StatusOr<ResumableUploadResponse> response;
   EXPECT_CALL(*mock, last_response())
-      .WillOnce(
-          Invoke([&response]() -> StatusOr<ResumableUploadResponse> const& {
-            return response;
-          }));
+      .WillOnce([&response]() -> StatusOr<ResumableUploadResponse> const& {
+        return response;
+      });
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
@@ -974,9 +972,9 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
   // Keep track of the sequence of calls.
   int count = 0;
   std::uint64_t neb = 0;
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
     return neb;
-  }));
+  });
 
   // The sequence of messages is split across two EXPECT_CALL() and hard to see,
   // basically we want this to happen:
@@ -986,35 +984,35 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
   // 3. Retry policy is exhausted.
   //
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const&) {
+      .WillOnce([&](std::string const&) {
         ++count;
         EXPECT_EQ(1, count);
         return make_status_or(ResumableUploadResponse{
             "", neb - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(2, count);
         EXPECT_EQ(p.size(), payload.size() - neb);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(p.size(), payload.size() - neb);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }))
-      .WillOnce(Invoke([&](std::string const& p) {
+      })
+      .WillOnce([&](std::string const& p) {
         ++count;
         EXPECT_EQ(4, count);
         EXPECT_EQ(p.size(), payload.size() - neb);
         return StatusOr<ResumableUploadResponse>(TransientError());
-      }));
+      });
 
-  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly([&]() {
     return make_status_or(ResumableUploadResponse{
         "", neb - 1, {}, ResumableUploadResponse::kInProgress, {}});
-  }));
+  });
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
@@ -1036,9 +1034,9 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
   // Keep track of the sequence of calls.
   int count = 0;
   std::uint64_t neb = 0;
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
     return neb;
-  }));
+  });
 
   // The sequence of messages is split across two EXPECT_CALL() and hard to see,
   // basically we want this to happen:
@@ -1047,25 +1045,25 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
   // 2. UploadChunk() -> success (2* quantum committed)
   //
   EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const&) {
+      .WillOnce([&](std::string const&) {
         ++count;
         EXPECT_EQ(1, count);
         neb = quantum;
         return make_status_or(ResumableUploadResponse{
             "", neb - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }))
-      .WillOnce(Invoke([&](std::string const&) {
+      })
+      .WillOnce([&](std::string const&) {
         ++count;
         EXPECT_EQ(2, count);
         neb = 2 * quantum;
         return make_status_or(ResumableUploadResponse{
             "", neb - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      }));
+      });
 
-  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly([&]() {
     return make_status_or(ResumableUploadResponse{
         "", neb - 1, {}, ResumableUploadResponse::kInProgress, {}});
-  }));
+  });
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),

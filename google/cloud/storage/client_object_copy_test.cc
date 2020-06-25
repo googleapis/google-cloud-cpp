@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -69,13 +68,13 @@ TEST_F(ObjectCopyTest, CopyObject) {
       storage::internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock_, CopyObject(_))
-      .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
+      .WillOnce([&expected](internal::CopyObjectRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.destination_bucket());
         EXPECT_EQ("test-object-name", request.destination_object());
         EXPECT_EQ("source-bucket-name", request.source_bucket());
         EXPECT_EQ("source-object-name", request.source_object());
         return make_status_or(expected);
-      }));
+      });
   StatusOr<ObjectMetadata> actual =
       client_->CopyObject("source-bucket-name", "source-object-name",
                           "test-bucket-name", "test-object-name");
@@ -142,7 +141,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
 
   EXPECT_CALL(*mock_, ComposeObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::ComposeObjectRequest const& r) {
+      .WillOnce([&expected](internal::ComposeObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
         internal::nl::json actual_payload =
@@ -152,7 +151,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
             {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
         EXPECT_EQ(expected_payload, actual_payload);
         return make_status_or(expected);
-      }));
+      });
   auto actual = client_->ComposeObject(
       "test-bucket-name", {{"object1", {}, {}}, {"object2", {}, {}}},
       "test-object-name");
@@ -197,7 +196,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
   EXPECT_CALL(*mock_, RewriteObject(_))
       .WillOnce(
           Return(StatusOr<internal::RewriteObjectResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+      .WillOnce([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
         EXPECT_EQ("test-source-object-name", r.source_object());
         EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
@@ -212,8 +211,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "rewriteToken": "abcd-test-token-0"
         })""";
         return internal::RewriteObjectResponse::FromHttpResponse(response);
-      }))
-      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+      })
+      .WillOnce([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
         EXPECT_EQ("test-source-object-name", r.source_object());
         EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
@@ -228,8 +227,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "rewriteToken": "abcd-test-token-2"
         })""";
         return internal::RewriteObjectResponse::FromHttpResponse(response);
-      }))
-      .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
+      })
+      .WillOnce([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
         EXPECT_EQ("test-source-object-name", r.source_object());
         EXPECT_EQ("test-destination-bucket-name", r.destination_bucket());
@@ -248,7 +247,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             }
         })""";
         return internal::RewriteObjectResponse::FromHttpResponse(response);
-      }));
+      });
   auto copier = client_->RewriteObject(
       "test-source-bucket-name", "test-source-object-name",
       "test-destination-bucket-name", "test-destination-object-name",
