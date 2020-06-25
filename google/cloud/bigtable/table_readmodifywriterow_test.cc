@@ -23,7 +23,6 @@ namespace btproto = ::google::bigtable::v2;
 namespace bigtable = ::google::cloud::bigtable;
 
 using ::testing::_;
-using ::testing::Invoke;
 
 /// Define helper types and functions for this test.
 namespace {
@@ -92,7 +91,7 @@ row {
       create_rules_lambda(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillOnce(Invoke(mock_read_modify_write_row));
+      .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
       row_key,
@@ -162,7 +161,7 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
       create_rules_lambda(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillOnce(Invoke(mock_read_modify_write_row));
+      .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
       row_key,
@@ -236,7 +235,7 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
       create_rules_lambda(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillOnce(Invoke(mock_read_modify_write_row));
+      .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
       row_key,
@@ -263,14 +262,13 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
   std::string const column_id1 = "colid1";
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillRepeatedly(
-          Invoke([](grpc::ClientContext* context,
-                    google::bigtable::v2::ReadModifyWriteRowRequest const&,
-                    google::bigtable::v2::ReadModifyWriteRowResponse*) {
-            EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-                *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
-            return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
-          }));
+      .WillRepeatedly([](grpc::ClientContext* context,
+                         google::bigtable::v2::ReadModifyWriteRowRequest const&,
+                         google::bigtable::v2::ReadModifyWriteRowResponse*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
+        return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
+      });
 
   EXPECT_FALSE(table_.ReadModifyWriteRow(
       row_key,

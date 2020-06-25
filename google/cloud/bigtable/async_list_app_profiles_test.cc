@@ -35,7 +35,6 @@ namespace btadmin = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::ReturnRef;
 
 using MockAsyncListAppProfilesReader =
@@ -73,7 +72,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
   std::unique_ptr<MockAsyncListAppProfilesReader> profiles_reader_3_;
 };
 
-// Dynamically create the lambda for `Invoke()`, note that the return type is
+// Dynamically create the lambda for `Finish()`. Note that the return type is
 // unknown, so a function or function template would not work. Alternatively,
 // writing this inline is very repetitive.
 auto create_list_profiles_lambda =
@@ -105,9 +104,9 @@ std::vector<std::string> AppProfileNames(
 /// @test One successful page with 1 one profile.
 TEST_F(AsyncListAppProfilesTest, Simple) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -115,9 +114,9 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
-      }));
+      });
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_profiles_lambda("", {"profile_1"})));
+      .WillOnce(create_list_profiles_lambda("", {"profile_1"}));
 
   Start();
 
@@ -134,9 +133,9 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
 /// @test Test 3 pages, no failures, multiple profiles.
 TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -144,10 +143,10 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -155,10 +154,10 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_2_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -166,14 +165,14 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
-      }));
+      });
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_profiles_lambda("token_1", {"profile_1"})));
+      .WillOnce(create_list_profiles_lambda("token_1", {"profile_1"}));
   EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          create_list_profiles_lambda("token_2", {"profile_2", "profile_3"})));
+      .WillOnce(
+          create_list_profiles_lambda("token_2", {"profile_2", "profile_3"}));
   EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_profiles_lambda("", {"profile_4"})));
+      .WillOnce(create_list_profiles_lambda("", {"profile_4"}));
 
   Start();
 
@@ -204,9 +203,9 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
 /// @test Test 2 pages, with a filure between them.
 TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -214,10 +213,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -225,10 +224,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_2_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btadmin::ListAppProfilesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
@@ -236,16 +235,16 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
-      }));
+      });
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_profiles_lambda("token_1", {"profile_1"})));
+      .WillOnce(create_list_profiles_lambda("token_1", {"profile_1"}));
   EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [](btadmin::ListAppProfilesResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
-          }));
+          });
   EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_profiles_lambda("", {"profile_2"})));
+      .WillOnce(create_list_profiles_lambda("", {"profile_2"}));
 
   Start();
 

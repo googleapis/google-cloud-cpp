@@ -22,7 +22,6 @@
 namespace bigtable = google::cloud::bigtable;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 
 /// Define types and functions used for this tests.
@@ -38,15 +37,15 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   auto reader =
       new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader->MakeMockReturner()));
+      .WillOnce(reader->MakeMockReturner());
   EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test1");
           r->set_offset_bytes(11);
         }
         return true;
-      }))
+      })
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows();
@@ -65,15 +64,15 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   auto reader =
       new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader->MakeMockReturner()));
+      .WillOnce(reader->MakeMockReturner());
   EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test1");
           r->set_offset_bytes(11);
         }
         return true;
-      }))
+      })
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
   auto result = table_.SampleRows();
@@ -93,17 +92,17 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
   auto reader_retry =
       new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader->MakeMockReturner()))
-      .WillOnce(Invoke(reader_retry->MakeMockReturner()));
+      .WillOnce(reader->MakeMockReturner())
+      .WillOnce(reader_retry->MakeMockReturner());
 
   EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test1");
           r->set_offset_bytes(11);
         }
         return true;
-      }))
+      })
       .WillOnce(Return(false));
 
   EXPECT_CALL(*reader, Finish())
@@ -111,20 +110,20 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_CALL(*reader_retry, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test2");
           r->set_offset_bytes(123);
         }
         return true;
-      }))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      })
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test3");
           r->set_offset_bytes(1234);
         }
         return true;
-      }))
+      })
       .WillOnce(Return(false));
 
   EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
@@ -161,13 +160,13 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   auto r1 =
       new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
   EXPECT_CALL(*r1, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
+      .WillOnce([](btproto::SampleRowKeysResponse* r) {
         {
           r->set_row_key("test1");
           r->set_offset_bytes(11);
         }
         return true;
-      }))
+      })
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
@@ -183,9 +182,9 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   };
 
   EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(r1->MakeMockReturner()))
-      .WillOnce(Invoke(create_cancelled_stream))
-      .WillOnce(Invoke(create_cancelled_stream));
+      .WillOnce(r1->MakeMockReturner())
+      .WillOnce(create_cancelled_stream)
+      .WillOnce(create_cancelled_stream);
 
   EXPECT_FALSE(custom_table.SampleRows());
 }

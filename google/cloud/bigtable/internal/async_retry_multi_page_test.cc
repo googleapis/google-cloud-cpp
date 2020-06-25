@@ -36,7 +36,6 @@ namespace internal {
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
@@ -138,20 +137,20 @@ class AsyncMultipageFutureTest : public ::testing::Test {
                                        : last_success->next_page_token;
 
       EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
-          .WillOnce(Invoke([cluster_reader, expected_token](
-                               grpc::ClientContext*,
-                               ListClustersRequest const& request,
-                               grpc::CompletionQueue*) {
+          .WillOnce([cluster_reader, expected_token](
+                        grpc::ClientContext*,
+                        ListClustersRequest const& request,
+                        grpc::CompletionQueue*) {
             EXPECT_EQ(expected_token, request.page_token());
             // This is safe, see comments in MockAsyncResponseReader.
             return std::unique_ptr<
                 grpc::ClientAsyncResponseReaderInterface<ListClustersResponse>>(
                 cluster_reader);
-          }))
+          })
           .RetiresOnSaturation();
       EXPECT_CALL(*cluster_reader, Finish(_, _, _))
-          .WillOnce(Invoke([exchange](ListClustersResponse* response,
-                                      grpc::Status* status, void*) {
+          .WillOnce([exchange](ListClustersResponse* response,
+                               grpc::Status* status, void*) {
             for (auto const& cluster_name : exchange.clusters) {
               auto& cluster = *response->add_clusters();
               cluster.set_name(cluster_name);
@@ -159,7 +158,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
             // Return the right token.
             response->set_next_page_token(exchange.next_page_token);
             *status = grpc::Status(exchange.status_code, "");
-          }));
+          });
     }
   }
 

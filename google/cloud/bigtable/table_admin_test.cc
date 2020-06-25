@@ -40,7 +40,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _s;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -202,7 +201,7 @@ TEST_F(TableAdminTest, Default) {
 TEST_F(TableAdminTest, ListTables) {
   bigtable::TableAdmin tested(client_, kInstanceId);
   auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*client_, ListTables(_, _, _)).WillOnce(Invoke(mock_list_tables));
+  EXPECT_CALL(*client_, ListTables(_, _, _)).WillOnce(mock_list_tables);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
@@ -227,11 +226,11 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListTables(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch0))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch1));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch0)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch1);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
@@ -274,7 +273,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables(_, _, _))
-      .WillRepeatedly(Invoke(mock_recoverable_failure));
+      .WillRepeatedly(mock_recoverable_failure);
 
   EXPECT_FALSE(tested.ListTables(btadmin::Table::FULL));
 }
@@ -305,8 +304,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
       MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable");
-  EXPECT_CALL(*client_, CreateTable(_, _, _))
-      .WillOnce(Invoke(mock_create_table));
+  EXPECT_CALL(*client_, CreateTable(_, _, _)).WillOnce(mock_create_table);
 
   // After all the setup, make the actual call we want to test.
   using GC = bigtable::GcRule;
@@ -390,7 +388,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Invoke(mock));
+      .WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   tested.GetTable("the-table");
@@ -436,7 +434,7 @@ TEST_F(TableAdminTest, DeleteTable) {
   )pb";
   auto mock = MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable");
-  EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DeleteTable("the-table"));
@@ -461,8 +459,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
 TEST_F(TableAdminTest, ListBackups) {
   bigtable::TableAdmin tested(client_, kInstanceId);
   auto mock_list_backups = create_list_backups_lambda("", "", {"b0", "b1"});
-  EXPECT_CALL(*client_, ListBackups(_, _, _))
-      .WillOnce(Invoke(mock_list_backups));
+  EXPECT_CALL(*client_, ListBackups(_, _, _)).WillOnce(mock_list_backups);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListBackups({});
@@ -487,11 +484,11 @@ TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
   auto batch0 = create_list_backups_lambda("", "token-001", {"b0", "b1"});
   auto batch1 = create_list_backups_lambda("token-001", "", {"b2", "b3"});
   EXPECT_CALL(*client_, ListBackups(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch0))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch1));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch0)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch1);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListBackups({});
@@ -534,7 +531,7 @@ TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListBackups(_, _, _))
-      .WillRepeatedly(Invoke(mock_recoverable_failure));
+      .WillRepeatedly(mock_recoverable_failure);
 
   EXPECT_FALSE(tested.ListBackups({}));
 }
@@ -552,7 +549,7 @@ TEST_F(TableAdminTest, GetBackupSimple) {
   EXPECT_CALL(*client_, GetBackup(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Invoke(mock));
+      .WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   tested.GetBackup("the-cluster", "the-backup");
@@ -607,7 +604,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
   EXPECT_CALL(*client_, UpdateBackup(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Invoke(mock));
+      .WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   google::protobuf::Timestamp expire_time;
@@ -672,9 +669,7 @@ TEST_F(TableAdminTest, DeleteBackup) {
   auto mock = MockRpcFactory<btadmin::DeleteBackupRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup");
-  EXPECT_CALL(*client_, DeleteBackup(_, _, _))
-      .WillOnce(Invoke(mock))
-      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteBackup(_, _, _)).WillOnce(mock).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DeleteBackup("the-cluster", "the-backup"));
@@ -724,7 +719,7 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
       Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies");
-  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   using M = bigtable::ColumnFamilyModification;
@@ -764,7 +759,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DropRowsByPrefix("the-table", "foobar"));
@@ -795,7 +790,7 @@ TEST_F(TableAdminTest, DropAllRows) {
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DropAllRows("the-table"));
@@ -829,8 +824,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
       Create(expected_text,
              "google.bigtable.admin.v2.BigtableTableAdmin."
              "GenerateConsistencyToken");
-  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
-      .WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   tested.GenerateConsistencyToken("the-table");
@@ -864,7 +858,7 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
                              btadmin::CheckConsistencyResponse>::
       Create(expected_text,
              "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency");
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   auto result = tested.CheckConsistency("the-table", "test-token");
@@ -889,7 +883,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 TEST_F(TableAdminTest, GetIamPolicy) {
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_get_policy_mock();
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetIamPolicy(resource);
@@ -927,8 +921,8 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
   auto mock_policy = create_get_policy_mock();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetIamPolicy(resource);
@@ -941,7 +935,7 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 TEST_F(TableAdminTest, SetIamPolicy) {
   bigtable::TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_policy_with_params();
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy = bigtable::IamPolicy(
@@ -985,8 +979,8 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
   auto mock_policy = create_policy_with_params();
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy = bigtable::IamPolicy(
@@ -1019,7 +1013,7 @@ TEST_F(TableAdminTest, TestIamPermissions) {
       };
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(Invoke(mock_permission_set));
+      .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
@@ -1071,8 +1065,8 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
         return grpc::Status::OK;
       };
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_permission_set));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
@@ -1095,27 +1089,27 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
 
   auto r1 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r1, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](btadmin::CheckConsistencyResponse* response,
+                   grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-      }));
+      });
   auto r2 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r2, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](btadmin::CheckConsistencyResponse* response,
+                   grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         response->set_consistent(false);
         *status = grpc::Status::OK;
-      }));
+      });
   auto r3 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r3, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](btadmin::CheckConsistencyResponse* response,
+                   grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         response->set_consistent(true);
         *status = grpc::Status::OK;
-      }));
+      });
 
   auto make_invoke = [](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
     return [&r](grpc::ClientContext* context,
@@ -1135,9 +1129,9 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
 
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
-      .WillOnce(Invoke(make_invoke(r1)))
-      .WillOnce(Invoke(make_invoke(r2)))
-      .WillOnce(Invoke(make_invoke(r3)));
+      .WillOnce(make_invoke(r1))
+      .WillOnce(make_invoke(r2))
+      .WillOnce(make_invoke(r3));
 
   std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
   bigtable::CompletionQueue cq(cq_impl);
@@ -1192,16 +1186,16 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   bigtable::TableAdmin tested(client_, "test-instance");
   auto reader = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*reader, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](btadmin::CheckConsistencyResponse* response,
+                   grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
-      }));
+      });
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext* context,
-                           btadmin::CheckConsistencyRequest const& request,
-                           grpc::CompletionQueue*) {
+      .WillOnce([&](grpc::ClientContext* context,
+                    btadmin::CheckConsistencyRequest const& request,
+                    grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
@@ -1211,7 +1205,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             ::btadmin::CheckConsistencyResponse>>(reader.get());
-      }));
+      });
 
   std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
   bigtable::CompletionQueue cq(cq_impl);
@@ -1280,13 +1274,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
                                                 btadmin::Table>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateTable(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
             table_id: "the-table"
             table: {}
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable"));
   FinishTest(table_admin_->AsyncCreateTable(cq_, "the-table",
                                             bigtable::TableConfig()));
 }
@@ -1296,11 +1290,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
                                                 google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteTable(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable"));
   FinishTest(table_admin_->AsyncDeleteTable(cq_, "the-table"));
 }
 
@@ -1310,7 +1304,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
                                                 google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateBackup(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance/clusters/the-cluster"
             backup_id: "the-backup"
@@ -1319,7 +1313,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
               expire_time: { seconds: 1893387600 }
             }
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup"));
   google::protobuf::Timestamp expire_time;
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
@@ -1335,13 +1329,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
                                                 google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncRestoreTable(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
             table_id: "restored-table"
             backup: "projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup"
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable"));
   bigtable::TableAdmin::RestoreTableParams params("restored-table",
                                                   "the-cluster", "the-backup");
   FinishTest(table_admin_->AsyncRestoreTable(cq_, std::move(params)));
@@ -1352,12 +1346,12 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
                                                 google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
             delete_all_data_from_table: true
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange"));
   FinishTest(table_admin_->AsyncDropAllRows(cq_, "the-table"));
 }
 
@@ -1366,12 +1360,12 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
                                                 google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
             row_key_prefix: "prefix"
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange"));
   FinishTest(table_admin_->AsyncDropRowsByPrefix(cq_, "the-table", "prefix"));
 }
 
@@ -1381,12 +1375,12 @@ TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
       btadmin::GenerateConsistencyTokenResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGenerateConsistencyToken(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
           )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin."
-          "GenerateConsistencyToken")));
+          "GenerateConsistencyToken"));
   FinishTest(table_admin_->AsyncGenerateConsistencyToken(cq_, "the-table"));
 }
 
@@ -1395,12 +1389,12 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
                                                 btadmin::ListTablesResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncListTables(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
             view: SCHEMA_VIEW
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.ListTables")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
   FinishTest(table_admin_->AsyncListTables(cq_, btadmin::Table::SCHEMA_VIEW));
 }
 
@@ -1409,11 +1403,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
       btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncModifyColumnFamilies(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
           )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies")));
+          "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies"));
   FinishTest(table_admin_->AsyncModifyColumnFamilies(cq_, "the-table", {}));
 }
 
@@ -1430,10 +1424,9 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         reader_(new MockAsyncIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                ::google::iam::v1::GetIamPolicyRequest const&
-                                    request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         ::google::iam::v1::GetIamPolicyRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
@@ -1443,7 +1436,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::iam::v1::Policy>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -1466,13 +1459,12 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            response->set_version(3);
-            response->set_etag("random-tag");
-            *status = grpc::Status::OK;
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        *status = grpc::Status::OK;
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1490,11 +1482,10 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1520,10 +1511,9 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         reader_(new MockAsyncSetIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                ::google::iam::v1::SetIamPolicyRequest const&
-                                    request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         ::google::iam::v1::SetIamPolicyRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
@@ -1533,7 +1523,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::iam::v1::Policy>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -1560,17 +1550,16 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
 
-            auto new_binding = response->add_bindings();
-            new_binding->set_role("writer");
-            new_binding->add_members("abc@gmail.com");
-            new_binding->add_members("xyz@gmail.com");
-            response->set_etag("test-tag");
-            *status = grpc::Status::OK;
-          }));
+        auto new_binding = response->add_bindings();
+        new_binding->set_role("writer");
+        new_binding->add_members("abc@gmail.com");
+        new_binding->add_members("xyz@gmail.com");
+        response->set_etag("test-tag");
+        *status = grpc::Status::OK;
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1589,11 +1578,10 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1619,11 +1607,10 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         reader_(new MockAsyncTestIamPermissionsReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
-        .WillOnce(Invoke([this](
-                             grpc::ClientContext* context,
-                             ::google::iam::v1::TestIamPermissionsRequest const&
-                                 request,
-                             grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         ::google::iam::v1::TestIamPermissionsRequest const&
+                             request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableTableAdmin."
@@ -1634,7 +1621,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::iam::v1::TestIamPermissionsResponse>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -1658,13 +1645,13 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
+                   grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         response->add_permissions("writer");
         response->add_permissions("reader");
         *status = grpc::Status::OK;
-      }));
+      });
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1681,11 +1668,11 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   bigtable::TableAdmin tested(client_, "the-instance");
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
+                   grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-      }));
+      });
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));

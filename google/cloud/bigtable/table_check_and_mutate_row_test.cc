@@ -21,7 +21,6 @@
 namespace bigtable = google::cloud::bigtable;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::testing::_;
-using ::testing::Invoke;
 
 /// Define helper types and functions for this test.
 namespace {
@@ -44,7 +43,7 @@ auto mock_check_and_mutate = [](grpc::Status const& status) {
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillOnce(Invoke(mock_check_and_mutate(grpc::Status::OK)));
+      .WillOnce(mock_check_and_mutate(grpc::Status::OK));
 
   auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -58,8 +57,8 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
 TEST_F(TableCheckAndMutateRowTest, Failure) {
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillRepeatedly(Invoke(mock_check_and_mutate(
-          grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))));
+      .WillRepeatedly(mock_check_and_mutate(
+          grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_FALSE(table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),

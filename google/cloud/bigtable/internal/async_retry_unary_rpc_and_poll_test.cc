@@ -73,19 +73,18 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   }
   void ExpectCreateCluster(grpc::StatusCode mocked_code) {
     using ::testing::_;
-    using ::testing::Invoke;
     EXPECT_CALL(*create_cluster_reader, Finish(_, _, _))
-        .WillOnce(Invoke([mocked_code](longrunning::Operation* response,
-                                       grpc::Status* status, void*) {
+        .WillOnce([mocked_code](longrunning::Operation* response,
+                                grpc::Status* status, void*) {
           response->set_name("create_cluster_op_1");
           *status = mocked_code != grpc::StatusCode::OK
                         ? grpc::Status(mocked_code, "mocked-status")
                         : grpc::Status::OK;
-        }));
+        });
     EXPECT_CALL(*client, AsyncCreateCluster(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                btproto::CreateClusterRequest const& request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         btproto::CreateClusterRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster"));
@@ -94,17 +93,16 @@ class AsyncStartPollAfterRetryUnaryRpcTest
           return std::unique_ptr<
               grpc::ClientAsyncResponseReaderInterface<longrunning::Operation>>(
               create_cluster_reader.get());
-        }));
+        });
   }
 
   void ExpectPolling(bool polling_finished,
                      grpc::StatusCode polling_error_code) {
     using ::testing::_;
-    using ::testing::Invoke;
     EXPECT_CALL(*get_operation_reader, Finish(_, _, _))
-        .WillOnce(Invoke([polling_finished, polling_error_code](
-                             longrunning::Operation* response,
-                             grpc::Status* status, void*) {
+        .WillOnce([polling_finished, polling_error_code](
+                      longrunning::Operation* response, grpc::Status* status,
+                      void*) {
           if (!polling_finished) {
             *status = (polling_error_code != grpc::StatusCode::OK)
                           ? grpc::Status(polling_error_code, "mocked-status")
@@ -124,11 +122,11 @@ class AsyncStartPollAfterRetryUnaryRpcTest
             any->PackFrom(response_content);
             response->set_allocated_response(any.release());
           }
-        }));
+        });
     EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                longrunning::GetOperationRequest const& request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         longrunning::GetOperationRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context, "google.longrunning.Operations.GetOperation"));
           EXPECT_EQ("create_cluster_op_1", request.name());
@@ -136,7 +134,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
           return std::unique_ptr<
               grpc::ClientAsyncResponseReaderInterface<longrunning::Operation>>(
               get_operation_reader.get());
-        }));
+        });
   }
 
   future<StatusOr<btproto::Cluster>> SimulateCreateCluster() {

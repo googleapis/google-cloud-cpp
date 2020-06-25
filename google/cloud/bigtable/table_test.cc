@@ -156,13 +156,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncApply) {
                                                 bt::MutateRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncMutateRow(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"
               row_key: "row_key"
               mutations: { delete_from_row { } }
           )""",
-          "google.bigtable.v2.Bigtable.MutateRow")));
+          "google.bigtable.v2.Bigtable.MutateRow"));
   FinishTest(table_->AsyncApply(
       bigtable::SingleRowMutation("row_key", bigtable::DeleteFromRow()), cq_));
 }
@@ -173,14 +173,14 @@ TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
                                                 bt::CheckAndMutateRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"
               row_key: "row_key"
               true_mutations: { delete_from_row { } }
               predicate_filter: { pass_all_filter: true }
           )""",
-          "google.bigtable.v2.Bigtable.CheckAndMutateRow")));
+          "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
   FinishTest(table_->AsyncCheckAndMutateRow(
       "row_key", bigtable::Filter::PassAllFilter(), {bigtable::DeleteFromRow()},
       {}, cq_));
@@ -192,7 +192,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
                                                 bt::ReadModifyWriteRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncReadModifyWriteRow(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"
               row_key: "row_key"
@@ -207,7 +207,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
                   append_value: ";element"
               }
           )""",
-          "google.bigtable.v2.Bigtable.ReadModifyWriteRow")));
+          "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
   FinishTest(table_->AsyncReadModifyWriteRow(
       "row_key", cq_,
       bigtable::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),

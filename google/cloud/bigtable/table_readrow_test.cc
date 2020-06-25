@@ -21,7 +21,6 @@
 namespace bigtable = ::google::cloud::bigtable;
 namespace btproto = ::google::bigtable::v2;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 
 /// Define helper types and functions for this test.
@@ -45,16 +44,16 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
   auto stream = absl::make_unique<MockReadRowsReader>(
       "google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_))
-      .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
+      .WillOnce([&response](btproto::ReadRowsResponse* r) {
         *r = response;
         return true;
-      }))
+      })
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext* context,
-                                       btproto::ReadRowsRequest const& req) {
+      .WillOnce([&stream, this](grpc::ClientContext* context,
+                                btproto::ReadRowsRequest const& req) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadRows"));
         EXPECT_EQ(1, req.rows().row_keys_size());
@@ -62,7 +61,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
-      }));
+      });
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
   ASSERT_STATUS_OK(result);
@@ -78,8 +77,8 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext* context,
-                                       btproto::ReadRowsRequest const& req) {
+      .WillOnce([&stream, this](grpc::ClientContext* context,
+                                btproto::ReadRowsRequest const& req) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadRows"));
         EXPECT_EQ(1, req.rows().row_keys_size());
@@ -87,7 +86,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
         EXPECT_EQ(1, req.rows_limit());
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
-      }));
+      });
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
   ASSERT_STATUS_OK(result);
@@ -103,12 +102,12 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillRepeatedly(Invoke([&stream](grpc::ClientContext* context,
-                                       btproto::ReadRowsRequest const&) {
+      .WillRepeatedly([&stream](grpc::ClientContext* context,
+                                btproto::ReadRowsRequest const&) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadRows"));
         return stream.release()->AsUniqueMocked();
-      }));
+      });
 
   auto row = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
   EXPECT_FALSE(row);
