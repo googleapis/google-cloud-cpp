@@ -25,7 +25,6 @@ namespace {
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ItemType = ::google::bigtable::admin::v2::AppProfile;
 using Request = ::google::bigtable::admin::v2::ListAppProfilesRequest;
 using Response = ::google::bigtable::admin::v2::ListAppProfilesResponse;
@@ -44,12 +43,12 @@ std::vector<ItemType> GetItems(Response const& response) {
 
 TEST(RangeFromPagination, Empty) {
   MockRpc mock;
-  EXPECT_CALL(mock, Loader(_)).WillOnce(Invoke([](Request const& request) {
+  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
     EXPECT_TRUE(request.page_token().empty());
     Response response;
     response.clear_next_page_token();
     return response;
-  }));
+  });
 
   TestedRange range(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
@@ -58,14 +57,14 @@ TEST(RangeFromPagination, Empty) {
 
 TEST(RangeFromPagination, SinglePage) {
   MockRpc mock;
-  EXPECT_CALL(mock, Loader(_)).WillOnce(Invoke([](Request const& request) {
+  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
     EXPECT_TRUE(request.page_token().empty());
     Response response;
     response.clear_next_page_token();
     response.add_app_profiles()->set_name("p1");
     response.add_app_profiles()->set_name("p2");
     return response;
-  }));
+  });
 
   TestedRange range(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
@@ -80,22 +79,22 @@ TEST(RangeFromPagination, SinglePage) {
 TEST(RangeFromPagination, TwoPages) {
   MockRpc mock;
   EXPECT_CALL(mock, Loader(_))
-      .WillOnce(Invoke([](Request const& request) {
+      .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.page_token().empty());
         Response response;
         response.set_next_page_token("t1");
         response.add_app_profiles()->set_name("p1");
         response.add_app_profiles()->set_name("p2");
         return response;
-      }))
-      .WillOnce(Invoke([](Request const& request) {
+      })
+      .WillOnce([](Request const& request) {
         EXPECT_EQ("t1", request.page_token());
         Response response;
         response.clear_next_page_token();
         response.add_app_profiles()->set_name("p3");
         response.add_app_profiles()->set_name("p4");
         return response;
-      }));
+      });
 
   TestedRange range(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
@@ -110,26 +109,26 @@ TEST(RangeFromPagination, TwoPages) {
 TEST(RangeFromPagination, TwoPagesWithError) {
   MockRpc mock;
   EXPECT_CALL(mock, Loader(_))
-      .WillOnce(Invoke([](Request const& request) {
+      .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.page_token().empty());
         Response response;
         response.set_next_page_token("t1");
         response.add_app_profiles()->set_name("p1");
         response.add_app_profiles()->set_name("p2");
         return response;
-      }))
-      .WillOnce(Invoke([](Request const& request) {
+      })
+      .WillOnce([](Request const& request) {
         EXPECT_EQ("t1", request.page_token());
         Response response;
         response.set_next_page_token("t2");
         response.add_app_profiles()->set_name("p3");
         response.add_app_profiles()->set_name("p4");
         return response;
-      }))
-      .WillOnce(Invoke([](Request const& request) {
+      })
+      .WillOnce([](Request const& request) {
         EXPECT_EQ("t2", request.page_token());
         return Status(StatusCode::kAborted, "bad-luck");
-      }));
+      });
 
   TestedRange range(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
@@ -148,17 +147,17 @@ TEST(RangeFromPagination, TwoPagesWithError) {
 TEST(RangeFromPagination, IteratorCoverage) {
   MockRpc mock;
   EXPECT_CALL(mock, Loader(_))
-      .WillOnce(Invoke([](Request const& request) {
+      .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.page_token().empty());
         Response response;
         response.set_next_page_token("t1");
         response.add_app_profiles()->set_name("p1");
         return response;
-      }))
-      .WillOnce(Invoke([](Request const& request) {
+      })
+      .WillOnce([](Request const& request) {
         EXPECT_EQ("t1", request.page_token());
         return Status(StatusCode::kAborted, "bad-luck");
-      }));
+      });
 
   TestedRange range(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);

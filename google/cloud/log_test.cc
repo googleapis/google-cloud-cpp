@@ -25,7 +25,6 @@ namespace {
 using ::testing::_;
 using ::testing::ExitedWithCode;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 
 TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
@@ -93,10 +92,10 @@ TEST(LogSinkTest, LogEnabled) {
   LogSink sink;
   auto backend = std::make_shared<MockLogBackend>();
   EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
         EXPECT_EQ("test message", lr.message);
-      }));
+      });
   sink.AddBackend(backend);
 
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_WARNING, sink) << "test message";
@@ -106,15 +105,15 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
   LogSink sink;
   auto be1 = std::make_shared<MockLogBackend>();
   auto be2 = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*be1, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
+  EXPECT_CALL(*be1, Process(_)).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
-  }));
+  });
   sink.AddBackend(be1);
-  EXPECT_CALL(*be2, Process(_)).WillOnce(Invoke([](LogRecord const& lr) {
+  EXPECT_CALL(*be2, Process(_)).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
-  }));
+  });
   sink.AddBackend(be2);
 
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_WARNING, sink) << "test message";
@@ -123,10 +122,10 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
 TEST(LogSinkTest, LogDefaultInstance) {
   auto backend = std::make_shared<MockLogBackend>();
   EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
         EXPECT_EQ("test message", lr.message);
-      }));
+      });
   LogSink::Instance().AddBackend(backend);
 
   GCP_LOG(WARNING) << "test message";
