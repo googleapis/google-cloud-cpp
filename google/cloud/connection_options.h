@@ -19,6 +19,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
+#include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
 #include <functional>
 #include <memory>

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_POLICY_H
 
 #include "google/cloud/iam_bindings.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

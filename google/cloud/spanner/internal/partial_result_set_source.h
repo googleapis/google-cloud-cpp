@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"

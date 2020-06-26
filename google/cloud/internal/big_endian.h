@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <array>
 #include <cstdint>
 #include <limits>

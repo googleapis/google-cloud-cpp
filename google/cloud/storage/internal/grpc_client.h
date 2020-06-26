@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
 
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 #include <google/storage/v1/storage.grpc.pb.h>
 
 namespace google {

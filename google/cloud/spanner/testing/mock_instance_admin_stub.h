@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_INSTANCE_ADMIN_STUB_H
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
 
 namespace google {

@@ -27,6 +27,7 @@
  */
 
 #include "google/cloud/log.h"
+#include "google/cloud/version.h"
 #include <utility>
 #include <vector>
 

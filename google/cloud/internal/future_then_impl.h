@@ -28,6 +28,7 @@
 
 #include "google/cloud/future_generic.h"
 #include "google/cloud/future_void.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

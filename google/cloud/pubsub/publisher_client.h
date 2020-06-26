@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/create_topic_builder.h"
 #include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/version.h"
 #include <memory>
 
 namespace google {

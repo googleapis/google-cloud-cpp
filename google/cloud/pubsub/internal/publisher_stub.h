@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_STUB_H
 
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 

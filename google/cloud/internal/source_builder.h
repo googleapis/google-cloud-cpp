@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SOURCE_BUILDER_H
 
 #include "google/cloud/internal/source_transforms.h"
+#include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 #include <utility>
 

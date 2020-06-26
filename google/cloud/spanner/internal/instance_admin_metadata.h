@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_INSTANCE_ADMIN_METADATA_H
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/version.h"
 
 namespace google {
 namespace cloud {

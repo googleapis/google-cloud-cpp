@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_H
 
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

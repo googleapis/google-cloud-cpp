@@ -22,6 +22,7 @@
 
 #include "google/cloud/internal/future_fwd.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {

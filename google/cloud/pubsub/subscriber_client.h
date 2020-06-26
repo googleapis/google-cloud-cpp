@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/create_subscription_builder.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/version.h"
 #include <memory>
 
 namespace google {

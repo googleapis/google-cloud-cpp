@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_CREATE_TOPIC_BUILDER_H
 
 #include "google/cloud/pubsub/topic.h"
+#include "google/cloud/pubsub/version.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {

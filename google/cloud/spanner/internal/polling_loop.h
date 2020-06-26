@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H
 
 #include "google/cloud/spanner/polling_policy.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/status_or.h"

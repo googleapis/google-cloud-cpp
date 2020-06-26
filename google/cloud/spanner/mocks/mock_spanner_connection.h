@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
 
 namespace google {

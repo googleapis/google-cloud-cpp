@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/source_ready_token.h"
+#include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 #include "absl/types/variant.h"
 

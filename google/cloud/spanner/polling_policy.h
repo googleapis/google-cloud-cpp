@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 
 namespace google {

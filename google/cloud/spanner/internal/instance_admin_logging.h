@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
 #include "google/cloud/spanner/tracing_options.h"
+#include "google/cloud/spanner/version.h"
 #include <memory>
 
 namespace google {

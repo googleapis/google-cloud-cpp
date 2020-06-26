@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/tracing_options.h"
+#include "google/cloud/spanner/version.h"
 #include <memory>
 
 namespace google {

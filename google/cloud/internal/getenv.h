@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H
 
 #include "google/cloud/optional.h"
+#include "google/cloud/version.h"
 #include <string>
 
 namespace google {
