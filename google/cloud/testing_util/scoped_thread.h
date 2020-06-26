@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_THREAD_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_THREAD_H
 
+#include "google/cloud/version.h"
 #include <thread>
 
 namespace google {
@@ -41,6 +42,7 @@ class ScopedThread {
  private:
   std::thread t_;
 };
+
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
