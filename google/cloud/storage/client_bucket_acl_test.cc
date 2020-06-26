@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -116,11 +115,11 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
   EXPECT_CALL(*mock_, ListBucketAcl(_))
       .WillOnce(
           Return(StatusOr<internal::ListBucketAclResponse>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::ListBucketAclRequest const& r) {
+      .WillOnce([&expected](internal::ListBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListBucketAclResponse{expected});
-      }));
+      });
 
   StatusOr<std::vector<BucketAccessControl>> actual =
       client_->ListBucketAcl("test-bucket");
@@ -156,13 +155,13 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
 
   EXPECT_CALL(*mock_, CreateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::CreateBucketAclRequest const& r) {
+      .WillOnce([&expected](internal::CreateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<BucketAccessControl> actual = client_->CreateBucketAcl(
       "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(actual);
@@ -205,12 +204,12 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
 TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
   EXPECT_CALL(*mock_, DeleteBucketAcl(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::DeleteBucketAclRequest const& r) {
+      .WillOnce([](internal::DeleteBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
         return make_status_or(internal::EmptyResponse{});
-      }));
+      });
   auto status = client_->DeleteBucketAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(status);
 }
@@ -248,12 +247,12 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
 
   EXPECT_CALL(*mock_, GetBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::GetBucketAclRequest const& r) {
+      .WillOnce([&expected](internal::GetBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<BucketAccessControl> actual =
       client_->GetBucketAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(actual);
@@ -292,13 +291,13 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
 
   EXPECT_CALL(*mock_, UpdateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::UpdateBucketAclRequest const& r) {
+      .WillOnce([&expected](internal::UpdateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("OWNER", r.role());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<BucketAccessControl> actual = client_->UpdateBucketAcl(
       "test-bucket",
       BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
@@ -353,7 +352,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
 
   EXPECT_CALL(*mock_, PatchBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
-      .WillOnce(Invoke([&result](internal::PatchBucketAclRequest const& r) {
+      .WillOnce([&result](internal::PatchBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         internal::nl::json expected{{"role", "OWNER"}};
@@ -361,7 +360,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
         EXPECT_EQ(expected, payload);
 
         return make_status_or(result);
-      }));
+      });
   StatusOr<BucketAccessControl> actual = client_->PatchBucketAcl(
       "test-bucket", "user-test-user-1",
       BucketAccessControlPatchBuilder().set_role("OWNER"));

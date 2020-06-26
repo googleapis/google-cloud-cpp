@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
@@ -61,11 +60,11 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const& p) {
     EXPECT_EQ(payload, p);
     return StatusOr<ResumableUploadResponse>(
         AsStatus(HttpResponse{503, "uh oh", {}}));
-  }));
+  });
 
   LoggingResumableUploadSession session(std::move(mock));
 
@@ -81,12 +80,12 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+      .WillOnce([&](std::string const& p, std::uint64_t s) {
         EXPECT_EQ(payload, p);
         EXPECT_EQ(513 * 1024, s);
         return StatusOr<ResumableUploadResponse>(
             AsStatus(HttpResponse{503, "uh oh", {}}));
-      }));
+      });
 
   LoggingResumableUploadSession session(std::move(mock));
 
@@ -101,10 +100,10 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
-  EXPECT_CALL(*mock, ResetSession()).WillOnce(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillOnce([&]() {
     return StatusOr<ResumableUploadResponse>(
         Status(AsStatus(HttpResponse{308, "uh oh", {}})));
-  }));
+  });
 
   LoggingResumableUploadSession session(std::move(mock));
 
@@ -118,9 +117,9 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Invoke([&]() {
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce([&]() {
     return 512 * 1024U;
-  }));
+  });
 
   LoggingResumableUploadSession session(std::move(mock));
 

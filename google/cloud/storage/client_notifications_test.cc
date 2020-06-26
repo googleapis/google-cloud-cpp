@@ -32,7 +32,6 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -79,12 +78,11 @@ TEST_F(NotificationsTest, ListNotifications) {
   EXPECT_CALL(*mock_, ListNotifications(_))
       .WillOnce(Return(
           StatusOr<internal::ListNotificationsResponse>(TransientError())))
-      .WillOnce(Invoke([&expected](
-                           internal::ListNotificationsRequest const& r) {
+      .WillOnce([&expected](internal::ListNotificationsRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListNotificationsResponse{expected});
-      }));
+      });
   StatusOr<std::vector<NotificationMetadata>> actual =
       client_->ListNotifications("test-bucket");
   ASSERT_STATUS_OK(actual);
@@ -122,16 +120,15 @@ TEST_F(NotificationsTest, CreateNotification) {
 
   EXPECT_CALL(*mock_, CreateNotification(_))
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::CreateNotificationRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
-            EXPECT_THAT(r.json_payload(), HasSubstr("test-topic-1"));
-            EXPECT_THAT(r.json_payload(), HasSubstr("JSON_API_V1"));
-            EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
-            EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
+      .WillOnce([&expected](internal::CreateNotificationRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-topic-1"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("JSON_API_V1"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
+        EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
 
-            return make_status_or(expected);
-          }));
+        return make_status_or(expected);
+      });
   StatusOr<NotificationMetadata> actual = client_->CreateNotification(
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
@@ -180,12 +177,12 @@ TEST_F(NotificationsTest, GetNotification) {
 
   EXPECT_CALL(*mock_, GetNotification(_))
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
+      .WillOnce([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<NotificationMetadata> actual =
       client_->GetNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(actual);
@@ -215,12 +212,12 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
+      .WillOnce([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
         return make_status_or(internal::EmptyResponse{});
-      }));
+      });
   auto status =
       client_->DeleteNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(status);

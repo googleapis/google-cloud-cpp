@@ -30,7 +30,6 @@ namespace {
 using ::google::cloud::storage::oauth2::CreateAnonymousCredentials;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -67,12 +66,12 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
 
   EXPECT_CALL(*mock_, GetServiceAccount(_))
       .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected](internal::GetProjectServiceAccountRequest const& r) {
             EXPECT_EQ("test-project", r.project_id());
 
             return make_status_or(expected);
-          }));
+          });
   StatusOr<ServiceAccount> actual =
       client_->GetServiceAccountForProject("test-project");
   ASSERT_STATUS_OK(actual);
@@ -106,12 +105,12 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
   EXPECT_CALL(*mock_, CreateHmacKey(_))
       .WillOnce(
           Return(StatusOr<internal::CreateHmacKeyResponse>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::CreateHmacKeyRequest const& r) {
+      .WillOnce([&expected](internal::CreateHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-service-account", r.service_account());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
       client_->CreateHmacKey("test-service-account",
                              OverrideDefaultProject("test-project"));
@@ -141,12 +140,12 @@ TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
 TEST_F(ServiceAccountTest, DeleteHmacKey) {
   EXPECT_CALL(*mock_, DeleteHmacKey(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::DeleteHmacKeyRequest const& r) {
+      .WillOnce([](internal::DeleteHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
         return make_status_or(internal::EmptyResponse{});
-      }));
+      });
   Status actual = client_->DeleteHmacKey(
       "test-access-id-1", OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
@@ -174,12 +173,12 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 
   EXPECT_CALL(*mock_, GetHmacKey(_))
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::GetHmacKeyRequest const& r) {
+      .WillOnce([&expected](internal::GetHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<HmacKeyMetadata> actual = client_->GetHmacKey(
       "test-access-id-1", OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
@@ -213,12 +212,12 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
 
   EXPECT_CALL(*mock_, UpdateHmacKey(_))
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::UpdateHmacKeyRequest const& r) {
+      .WillOnce([&expected](internal::UpdateHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
         return make_status_or(expected);
-      }));
+      });
   StatusOr<HmacKeyMetadata> actual = client_->UpdateHmacKey(
       "test-access-id-1", HmacKeyMetadata().set_state("ACTIVE"),
       OverrideDefaultProject("test-project"));

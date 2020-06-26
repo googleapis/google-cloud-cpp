@@ -380,15 +380,13 @@ TEST(CurlRequestTest, Logging) {
   google::cloud::LogSink::Instance().AddBackend(mock_logger);
 
   using ::testing::_;
-  using ::testing::Invoke;
 
   std::string log_messages;
   EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))
-      .WillRepeatedly(
-          Invoke([&log_messages](google::cloud::LogRecord const& lr) {
-            log_messages += lr.message;
-            log_messages += "\n";
-          }));
+      .WillRepeatedly([&log_messages](google::cloud::LogRecord const& lr) {
+        log_messages += lr.message;
+        log_messages += "\n";
+      });
 
   {
     storage::internal::CurlRequestBuilder request(

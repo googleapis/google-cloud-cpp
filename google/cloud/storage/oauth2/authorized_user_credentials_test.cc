@@ -36,7 +36,6 @@ using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 
@@ -59,30 +58,30 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   EXPECT_CALL(*mock_request, MakeRequest(_))
-      .WillOnce(Invoke([response](std::string const& payload) {
+      .WillOnce([response](std::string const& payload) {
         EXPECT_THAT(payload, HasSubstr("grant_type=refresh_token"));
         EXPECT_THAT(payload, HasSubstr("client_id=a-client-id.example.com"));
         EXPECT_THAT(payload, HasSubstr("client_secret=a-123456ABCDEF"));
         EXPECT_THAT(payload, HasSubstr("refresh_token=1/THETOKEN"));
         return HttpResponse{200, response, {}};
-      }));
+      });
 
   auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder,
               Constructor(StrEq("https://oauth2.googleapis.com/token")))
       .Times(1);
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request]() {
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request]() {
     MockHttpRequest result;
     result.mock = mock_request;
     return result;
-  }));
+  });
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly(Invoke([](std::string const& s) {
+      .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
         t[s.size()] = '\0';
         return t;
-      }));
+      });
 
   std::string config = R"""({
       "client_id": "a-client-id.example.com",
@@ -122,20 +121,20 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
     MockHttpRequest request;
     request.mock = mock_request;
     return request;
-  }));
+  });
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly(Invoke([](std::string const& s) {
+      .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
         t[s.size()] = '\0';
         return t;
-      }));
+      });
 
   std::string config = R"""({
       "client_id": "a-client-id.example.com",
@@ -163,20 +162,20 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
     MockHttpRequest request;
     request.mock = mock_request;
     return request;
-  }));
+  });
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly(Invoke([](std::string const& s) {
+      .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
         t[s.size()] = '\0';
         return t;
-      }));
+      });
 
   std::string config = R"""({
       "client_id": "a-client-id.example.com",

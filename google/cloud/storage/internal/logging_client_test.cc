@@ -28,7 +28,6 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 
 class MockLogBackend : public google::cloud::LogBackend {
@@ -73,17 +72,17 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
   EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
-      }))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      })
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("US"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
-      }));
+      });
 
   LoggingClient client(mock);
   client.GetBucketMetadata(GetBucketMetadataRequest("my-bucket"));
@@ -97,15 +96,15 @@ TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
   EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
-      }))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      })
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("status={"));
-      }));
+      });
 
   LoggingClient client(mock);
   client.GetBucketMetadata(GetBucketMetadataRequest("my-bucket"));
@@ -126,19 +125,19 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
   EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("InsertObjectMediaRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
         EXPECT_THAT(lr.message, HasSubstr("baz"));
         EXPECT_THAT(lr.message, HasSubstr("the contents"));
-      }))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      })
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
         EXPECT_THAT(lr.message, HasSubstr("baz"));
-      }));
+      });
 
   LoggingClient client(mock);
   client.InsertObjectMedia(
@@ -161,19 +160,19 @@ TEST_F(LoggingClientTest, ListObjects) {
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
   EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsRequest={"));
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
-      }))
-      .WillOnce(Invoke([](LogRecord const& lr) {
+      })
+      .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsResponse={"));
         EXPECT_THAT(lr.message, HasSubstr("a-token"));
         EXPECT_THAT(lr.message, HasSubstr("response-object-o1"));
         EXPECT_THAT(lr.message, HasSubstr("response-object-o2"));
-      }));
+      });
 
   LoggingClient client(mock);
   client.ListObjects(ListObjectsRequest("my-bucket"));

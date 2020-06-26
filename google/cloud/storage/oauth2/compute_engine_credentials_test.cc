@@ -38,7 +38,6 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 using ::testing::UnorderedElementsAre;
@@ -77,16 +76,16 @@ TEST_F(ComputeEngineCredentialsTest,
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
-      .WillOnce(Invoke([first_mock_req_impl] {
+      .WillOnce([first_mock_req_impl] {
         MockHttpRequest mock_request;
         mock_request.mock = first_mock_req_impl;
         return mock_request;
-      }))
-      .WillOnce(Invoke([second_mock_req_impl] {
+      })
+      .WillOnce([second_mock_req_impl] {
         MockHttpRequest mock_request;
         mock_request.mock = second_mock_req_impl;
         return mock_request;
-      }));
+      });
 
   // Both requests add this header.
   EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
@@ -233,11 +232,11 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
       .Times(3)
-      .WillRepeatedly(Invoke([first_mock_req_impl] {
+      .WillRepeatedly([first_mock_req_impl] {
         MockHttpRequest mock_request;
         mock_request.mock = first_mock_req_impl;
         return mock_request;
-      }));
+      });
 
   EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
       .Times(3);
@@ -297,11 +296,11 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
       .WillOnce(Return(HttpResponse{1, token_info_resp, {}}));
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
-  auto mock_matcher = Invoke([mock_req] {
+  auto mock_matcher = [mock_req] {
     MockHttpRequest mock_request;
     mock_request.mock = mock_req;
     return mock_request;
-  });
+  };
   EXPECT_CALL(*mock_req_builder, BuildRequest())
       .Times(7)
       .WillRepeatedly(mock_matcher);
@@ -370,11 +369,11 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_req_builder, BuildRequest())
-      .WillOnce(Invoke([first_mock_req_impl] {
+      .WillOnce([first_mock_req_impl] {
         MockHttpRequest mock_request;
         mock_request.mock = first_mock_req_impl;
         return mock_request;
-      }));
+      });
 
   // Both requests add this header.
   EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))

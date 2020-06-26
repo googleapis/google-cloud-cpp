@@ -32,7 +32,6 @@ using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -88,13 +87,13 @@ TEST_F(BucketTest, CreateBucket) {
   EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock_, CreateBucket(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::CreateBucketRequest const& r) {
+      .WillOnce([&expected](internal::CreateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
         EXPECT_EQ("test-project-name", r.project_id());
         return make_status_or(expected);
-      }));
+      });
   auto actual = client_->CreateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
@@ -145,11 +144,10 @@ TEST_F(BucketTest, GetBucketMetadata) {
 
   EXPECT_CALL(*mock_, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::GetBucketMetadataRequest const& r) {
-            EXPECT_EQ("foo-bar-baz", r.bucket_name());
-            return make_status_or(expected);
-          }));
+      .WillOnce([&expected](internal::GetBucketMetadataRequest const& r) {
+        EXPECT_EQ("foo-bar-baz", r.bucket_name());
+        return make_status_or(expected);
+      });
   auto actual = client_->GetBucketMetadata("foo-bar-baz");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
@@ -176,10 +174,10 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
 TEST_F(BucketTest, DeleteBucket) {
   EXPECT_CALL(*mock_, DeleteBucket(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::DeleteBucketRequest const& r) {
+      .WillOnce([](internal::DeleteBucketRequest const& r) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(internal::EmptyResponse{});
-      }));
+      });
   auto status = client_->DeleteBucket("foo-bar-baz");
   ASSERT_STATUS_OK(status);
 }
@@ -221,12 +219,12 @@ TEST_F(BucketTest, UpdateBucket) {
 
   EXPECT_CALL(*mock_, UpdateBucket(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::UpdateBucketRequest const& r) {
+      .WillOnce([&expected](internal::UpdateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
         return make_status_or(expected);
-      }));
+      });
   auto actual = client_->UpdateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
@@ -278,11 +276,11 @@ TEST_F(BucketTest, PatchBucket) {
 
   EXPECT_CALL(*mock_, PatchBucket(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::PatchBucketRequest const& r) {
+      .WillOnce([&expected](internal::PatchBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket());
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
         return make_status_or(expected);
-      }));
+      });
   auto actual = client_->PatchBucket(
       "test-bucket-name",
       BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
@@ -325,11 +323,10 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
 
   EXPECT_CALL(*mock_, GetBucketIamPolicy(_))
       .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::GetBucketIamPolicyRequest const& r) {
-            EXPECT_EQ("test-bucket-name", r.bucket_name());
-            return make_status_or(expected);
-          }));
+      .WillOnce([&expected](internal::GetBucketIamPolicyRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        return make_status_or(expected);
+      });
   auto actual = client_->GetBucketIamPolicy("test-bucket-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
@@ -360,12 +357,11 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
 
   EXPECT_CALL(*mock_, SetBucketIamPolicy(_))
       .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::SetBucketIamPolicyRequest const& r) {
-            EXPECT_EQ("test-bucket-name", r.bucket_name());
-            EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
-            return make_status_or(expected);
-          }));
+      .WillOnce([&expected](internal::SetBucketIamPolicyRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
+        return make_status_or(expected);
+      });
   auto actual = client_->SetBucketIamPolicy("test-bucket-name", expected);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
@@ -404,12 +400,12 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
   EXPECT_CALL(*mock_, TestBucketIamPermissions(_))
       .WillOnce(Return(StatusOr<internal::TestBucketIamPermissionsResponse>(
           TransientError())))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected](internal::TestBucketIamPermissionsRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
             return make_status_or(expected);
-          }));
+          });
   auto actual = client_->TestBucketIamPermissions("test-bucket-name",
                                                   {"storage.buckets.delete"});
   ASSERT_STATUS_OK(actual);
@@ -454,12 +450,12 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
 
   EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Invoke(
+      .WillOnce(
           [expected](internal::LockBucketRetentionPolicyRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_EQ(42, r.metageneration());
             return make_status_or(expected);
-          }));
+          });
   auto metadata = client_->LockBucketRetentionPolicy("test-bucket-name", 42U);
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(expected, *metadata);

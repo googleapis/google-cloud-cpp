@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -78,12 +77,11 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
   EXPECT_CALL(*mock_, ListDefaultObjectAcl(_))
       .WillOnce(Return(
           StatusOr<internal::ListDefaultObjectAclResponse>(TransientError())))
-      .WillOnce(Invoke([&expected](
-                           internal::ListDefaultObjectAclRequest const& r) {
+      .WillOnce([&expected](internal::ListDefaultObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListDefaultObjectAclResponse{expected});
-      }));
+      });
 
   StatusOr<std::vector<ObjectAccessControl>> actual =
       client_->ListDefaultObjectAcl("test-bucket");
@@ -119,14 +117,13 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
 
   EXPECT_CALL(*mock_, CreateDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::CreateDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
-            EXPECT_EQ("user-test-user-1", r.entity());
-            EXPECT_EQ("READER", r.role());
+      .WillOnce([&expected](internal::CreateDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        EXPECT_EQ("READER", r.role());
 
-            return make_status_or(expected);
-          }));
+        return make_status_or(expected);
+      });
   StatusOr<ObjectAccessControl> actual = client_->CreateDefaultObjectAcl(
       "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(actual);
@@ -171,12 +168,12 @@ TEST_F(DefaultObjectAccessControlsTest,
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   EXPECT_CALL(*mock_, DeleteDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::DeleteDefaultObjectAclRequest const& r) {
+      .WillOnce([](internal::DeleteDefaultObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user", r.entity());
 
         return make_status_or(internal::EmptyResponse{});
-      }));
+      });
   auto status =
       client_->DeleteDefaultObjectAcl("test-bucket", "user-test-user");
   ASSERT_STATUS_OK(status);
@@ -218,13 +215,12 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
 
   EXPECT_CALL(*mock_, GetDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::GetDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
-            EXPECT_EQ("user-test-user-1", r.entity());
+      .WillOnce([&expected](internal::GetDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
 
-            return make_status_or(expected);
-          }));
+        return make_status_or(expected);
+      });
   StatusOr<ObjectAccessControl> actual =
       client_->GetDefaultObjectAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(actual);
@@ -263,14 +259,13 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
 
   EXPECT_CALL(*mock_, UpdateDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::UpdateDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
-            EXPECT_EQ("user-test-user-1", r.entity());
-            EXPECT_EQ("READER", r.role());
+      .WillOnce([&expected](internal::UpdateDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        EXPECT_EQ("READER", r.role());
 
-            return make_status_or(expected);
-          }));
+        return make_status_or(expected);
+      });
   StatusOr<ObjectAccessControl> actual = client_->UpdateDefaultObjectAcl(
       "test-bucket", ObjectAccessControl()
                          .set_entity("user-test-user-1")
@@ -322,16 +317,15 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
 
   EXPECT_CALL(*mock_, PatchDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
-      .WillOnce(
-          Invoke([result](internal::PatchDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
-            EXPECT_EQ("user-test-user-1", r.entity());
-            internal::nl::json expected{{"role", "OWNER"}};
-            auto payload = internal::nl::json::parse(r.payload());
-            EXPECT_EQ(expected, payload);
+      .WillOnce([result](internal::PatchDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("user-test-user-1", r.entity());
+        internal::nl::json expected{{"role", "OWNER"}};
+        auto payload = internal::nl::json::parse(r.payload());
+        EXPECT_EQ(expected, payload);
 
-            return make_status_or(result);
-          }));
+        return make_status_or(result);
+      });
   auto actual = client_->PatchDefaultObjectAcl(
       "test-bucket", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
