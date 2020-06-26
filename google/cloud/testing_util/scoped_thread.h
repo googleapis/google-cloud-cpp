@@ -30,8 +30,7 @@ class ScopedThread {
  public:
   /// call the `std::thread()` constructor with the given `args`
   template <class... Args>
-  explicit ScopedThread(Args&&... args)
-      : t_(std::forward<Args>(args)...) {}
+  explicit ScopedThread(Args&&... args) : t_(std::forward<Args>(args)...) {}
   ~ScopedThread() {
     if (t_.joinable()) t_.join();
   }
