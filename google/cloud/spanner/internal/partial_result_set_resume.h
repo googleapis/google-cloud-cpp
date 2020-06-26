@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/version.h"
 #include <functional>
 #include <memory>
 

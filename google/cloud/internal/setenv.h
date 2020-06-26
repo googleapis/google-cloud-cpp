@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H
 
 #include "google/cloud/optional.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

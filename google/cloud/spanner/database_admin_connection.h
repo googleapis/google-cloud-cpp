@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <string>

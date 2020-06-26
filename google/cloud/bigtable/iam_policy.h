@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_POLICY_H
 
 #include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/version.h"
 #include <list>
 
 namespace google {

@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
+#include "google/cloud/version.h"
 #include <type_traits>
 #include <utility>
 

@@ -22,6 +22,7 @@
 
 #include "google/cloud/internal/future_then_meta.h"
 #include "google/cloud/terminate_handler.h"
+#include "google/cloud/version.h"
 #include "absl/memory/memory.h"
 #include <condition_variable>
 #include <exception>

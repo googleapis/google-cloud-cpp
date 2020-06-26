@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_FAKE_CLOCK_H
 
 #include "google/cloud/spanner/internal/clock.h"
+#include "google/cloud/spanner/version.h"
 #include <chrono>
 #include <mutex>
 

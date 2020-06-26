@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
 

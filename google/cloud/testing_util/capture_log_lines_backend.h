@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
 
 #include "google/cloud/log.h"
+#include "google/cloud/version.h"
 #include <vector>
 
 namespace google {

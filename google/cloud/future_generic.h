@@ -24,6 +24,7 @@
 #include "google/cloud/internal/future_fwd.h"
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/internal/future_then_meta.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

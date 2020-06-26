@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/iam_updater.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/instance_admin_connection.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 
 namespace google {

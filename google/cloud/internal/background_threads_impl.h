@@ -17,6 +17,7 @@
 
 #include "google/cloud/background_threads.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/version.h"
 #include <thread>
 
 namespace google {

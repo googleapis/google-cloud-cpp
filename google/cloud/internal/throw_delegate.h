@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_THROW_DELEGATE_H
 
 #include "google/cloud/status.h"
+#include "google/cloud/version.h"
 #include <system_error>
 
 namespace google {

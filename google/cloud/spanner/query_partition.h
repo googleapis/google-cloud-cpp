@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/sql_statement.h"
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <string>

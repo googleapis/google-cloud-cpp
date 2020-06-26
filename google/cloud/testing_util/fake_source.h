@@ -18,6 +18,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/source_ready_token.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/version.h"
 #include "absl/types/variant.h"
 #include <chrono>
 #include <deque>
