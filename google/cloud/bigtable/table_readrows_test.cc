@@ -20,7 +20,6 @@
 namespace bigtable = google::cloud::bigtable;
 using testing::_;
 using testing::DoAll;
-using testing::Invoke;
 using testing::Return;
 using testing::SetArgPointee;
 
@@ -48,8 +47,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-  EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke(stream->MakeMockReturner()));
+  EXPECT_CALL(*client_, ReadRows(_, _)).WillOnce(stream->MakeMockReturner());
 
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
@@ -90,8 +88,8 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke(stream->MakeMockReturner()))
-      .WillOnce(Invoke(stream_retry->MakeMockReturner()));
+      .WillOnce(stream->MakeMockReturner())
+      .WillOnce(stream_retry->MakeMockReturner());
 
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
@@ -122,16 +120,15 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 }
 
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
-  EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
-        auto stream =
-            new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-        EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-        EXPECT_CALL(*stream, Finish())
-            .WillOnce(
-                Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
-        return stream->AsUniqueMocked();
-      })));
+  EXPECT_CALL(*client_, ReadRows(_, _)).WillRepeatedly(testing::WithoutArgs([] {
+    auto stream =
+        new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish())
+        .WillOnce(
+            Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
+    return stream->AsUniqueMocked();
+  }));
 
   auto table = bigtable::Table(
       client_, "table_id", bigtable::LimitedErrorCountRetryPolicy(3),

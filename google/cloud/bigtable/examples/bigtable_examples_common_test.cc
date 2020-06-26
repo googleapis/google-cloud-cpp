@@ -27,7 +27,6 @@ namespace examples {
 
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::ReturnRef;
 using ::testing::StartsWith;
 
@@ -103,16 +102,16 @@ TEST(BigtableExamplesCommon, CleanupOldTables) {
   EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
 
   EXPECT_CALL(*mock, ListTables(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::ListTablesRequest const& request,
-                           btadmin::ListTablesResponse* response) {
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::ListTablesRequest const& request,
+                    btadmin::ListTablesResponse* response) {
         for (auto const& id : {id_1, id_2, id_3, id_4, id_5}) {
           auto& instance = *response->add_tables();
           instance.set_name(request.parent() + "/tables/" + id);
         }
         response->clear_next_page_token();
         return grpc::Status::OK;
-      }));
+      });
 
   bigtable::TableAdmin admin(mock, instance_id);
   auto const name_1 = admin.TableName(id_1);
@@ -120,18 +119,18 @@ TEST(BigtableExamplesCommon, CleanupOldTables) {
 
   // Verify only `name_1` and `name_2` are deleted.
   EXPECT_CALL(*mock, DeleteTable(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteTableRequest const& request,
-                           google::protobuf::Empty*) {
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteTableRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), name_1);
         return grpc::Status::OK;
-      }))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteTableRequest const& request,
-                           google::protobuf::Empty*) {
+      })
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteTableRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), name_2);
         return grpc::Status::OK;
-      }));
+      });
 
   CleanupOldTables("test-", admin);
 }
@@ -161,32 +160,31 @@ TEST(BigtableExamplesCommon, CleanupOldBackups) {
   EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
 
   EXPECT_CALL(*mock, ListBackups(_, _, _))
-      .WillOnce(
-          Invoke([&](grpc::ClientContext*, btadmin::ListBackupsRequest const&,
-                     btadmin::ListBackupsResponse* response) {
-            for (auto const& backup : {backup_1, backup_2}) {
-              auto& instance = *response->add_backups();
-              instance = backup;
-            }
-            response->clear_next_page_token();
-            return grpc::Status::OK;
-          }));
+      .WillOnce([&](grpc::ClientContext*, btadmin::ListBackupsRequest const&,
+                    btadmin::ListBackupsResponse* response) {
+        for (auto const& backup : {backup_1, backup_2}) {
+          auto& instance = *response->add_backups();
+          instance = backup;
+        }
+        response->clear_next_page_token();
+        return grpc::Status::OK;
+      });
 
   bigtable::TableAdmin admin(mock, instance_id);
 
   EXPECT_CALL(*mock, DeleteBackup(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteBackupRequest const& request,
-                           google::protobuf::Empty*) {
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteBackupRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), backup_1.name());
         return grpc::Status::OK;
-      }))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteBackupRequest const& request,
-                           google::protobuf::Empty*) {
+      })
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteBackupRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), backup_2.name());
         return grpc::Status::OK;
-      }));
+      });
 
   CleanupOldBackups("test-instance-id-c1", admin);
 }
@@ -241,16 +239,16 @@ TEST(BigtableExamplesCommon, CleanupOldInstances) {
   EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
 
   EXPECT_CALL(*mock, ListInstances(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::ListInstancesRequest const& request,
-                           btadmin::ListInstancesResponse* response) {
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::ListInstancesRequest const& request,
+                    btadmin::ListInstancesResponse* response) {
         for (auto const& id : {id_1, id_2, id_3, id_4, id_5}) {
           auto& instance = *response->add_instances();
           instance.set_name(request.parent() + "/instances/" + id);
         }
         response->clear_next_page_token();
         return grpc::Status::OK;
-      }));
+      });
 
   bigtable::InstanceAdmin admin(mock);
   auto const name_1 = admin.InstanceName(id_1);
@@ -258,18 +256,18 @@ TEST(BigtableExamplesCommon, CleanupOldInstances) {
 
   // Verify only `name_1` and `name_2` are deleted.
   EXPECT_CALL(*mock, DeleteInstance(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteInstanceRequest const& request,
-                           google::protobuf::Empty*) {
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteInstanceRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), name_1);
         return grpc::Status::OK;
-      }))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
-                           btadmin::DeleteInstanceRequest const& request,
-                           google::protobuf::Empty*) {
+      })
+      .WillOnce([&](grpc::ClientContext*,
+                    btadmin::DeleteInstanceRequest const& request,
+                    google::protobuf::Empty*) {
         EXPECT_EQ(request.name(), name_2);
         return grpc::Status::OK;
-      }));
+      });
 
   CleanupOldInstances("test-", admin);
 }

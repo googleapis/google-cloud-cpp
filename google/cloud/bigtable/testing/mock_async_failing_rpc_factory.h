@@ -56,7 +56,6 @@ struct MockAsyncFailingRpcFactory {
                                             RequestType const& request,
                                             grpc::CompletionQueue*) {
       using ::testing::_;
-      using ::testing::Invoke;
       EXPECT_STATUS_OK(IsContextMDValid(*context, method));
       RequestType expected;
       // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
@@ -68,11 +67,10 @@ struct MockAsyncFailingRpcFactory {
       EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
       EXPECT_CALL(*reader, Finish(_, _, _))
-          .WillOnce(Invoke([](ResponseType* response, grpc::Status* status,
-                              void*) {
+          .WillOnce([](ResponseType* response, grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+          });
       // This is safe, see comments in MockAsyncResponseReader.
       return std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<ResponseType>>(reader.get());

@@ -33,7 +33,6 @@ namespace {
 namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::ReturnRef;
 using MockAsyncListInstancesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
@@ -72,7 +71,7 @@ class AsyncListInstancesTest : public ::testing::Test {
   std::unique_ptr<MockAsyncListInstancesReader> instances_reader_3_;
 };
 
-// Dynamically create the lambda for `Invoke()`, note that the return type is
+// Dynamically create the lambda for `Finish()`. Note that the return type is
 // unknown, so a function or function template would not work. Alternatively,
 // writing this inline is very repetitive.
 auto create_list_instances_lambda =
@@ -107,9 +106,9 @@ std::vector<std::string> InstanceNames(InstanceList const& response) {
 /// @test One successful page with 1 one instance.
 TEST_F(AsyncListInstancesTest, Simple) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -118,10 +117,10 @@ TEST_F(AsyncListInstancesTest, Simple) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
-      }));
+      });
   EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          create_list_instances_lambda("", {"instance_1"}, {"failed_loc_1"})));
+      .WillOnce(
+          create_list_instances_lambda("", {"instance_1"}, {"failed_loc_1"}));
 
   Start();
 
@@ -139,9 +138,9 @@ TEST_F(AsyncListInstancesTest, Simple) {
 /// @test Test 3 pages, no failures, multiple clusters and failed locations.
 TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -150,10 +149,10 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -162,10 +161,10 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_2_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -174,17 +173,17 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_3_.get());
-      }));
+      });
   EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_instances_lambda("token_1", {"instance_1"},
-                                                    {"failed_loc_1"})));
+      .WillOnce(create_list_instances_lambda("token_1", {"instance_1"},
+                                             {"failed_loc_1"}));
   EXPECT_CALL(*instances_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          create_list_instances_lambda("token_2", {"instance_2", "instance_3"},
-                                       {"failed_loc_1", "failed_loc_2"})));
+      .WillOnce(create_list_instances_lambda("token_2",
+                                             {"instance_2", "instance_3"},
+                                             {"failed_loc_1", "failed_loc_2"}));
   EXPECT_CALL(*instances_reader_3_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          create_list_instances_lambda("", {"instance_4"}, {"failed_loc_1"})));
+      .WillOnce(
+          create_list_instances_lambda("", {"instance_4"}, {"failed_loc_1"}));
 
   Start();
 
@@ -219,9 +218,9 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
 /// @test Test 2 pages, with a filure between them.
 TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -230,10 +229,10 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -242,10 +241,10 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_2_.get());
-      }))
-      .WillOnce(Invoke([this](grpc::ClientContext* context,
-                              btproto::ListInstancesRequest const& request,
-                              grpc::CompletionQueue*) {
+      })
+      .WillOnce([this](grpc::ClientContext* context,
+                       btproto::ListInstancesRequest const& request,
+                       grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
@@ -254,18 +253,18 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_3_.get());
-      }));
+      });
   EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
-      .WillOnce(Invoke(create_list_instances_lambda("token_1", {"instance_1"},
-                                                    {"failed_loc_1"})));
+      .WillOnce(create_list_instances_lambda("token_1", {"instance_1"},
+                                             {"failed_loc_1"}));
   EXPECT_CALL(*instances_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [](btproto::ListInstancesResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
-          }));
+          });
   EXPECT_CALL(*instances_reader_3_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          create_list_instances_lambda("", {"instance_2"}, {"failed_loc_2"})));
+      .WillOnce(
+          create_list_instances_lambda("", {"instance_2"}, {"failed_loc_2"}));
 
   Start();
 

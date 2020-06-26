@@ -33,7 +33,6 @@ using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -246,8 +245,7 @@ TEST_F(InstanceAdminTest, MoveAssignment) {
 TEST_F(InstanceAdminTest, ListInstances) {
   bigtable::InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*client_, ListInstances(_, _, _))
-      .WillOnce(Invoke(mock_list_instances));
+  EXPECT_CALL(*client_, ListInstances(_, _, _)).WillOnce(mock_list_instances);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
@@ -273,11 +271,11 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch0))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch1));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch0)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch1);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
@@ -315,7 +313,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
   auto mock = MockRpcFactory<btadmin::DeleteInstanceRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteInstance");
-  EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(mock);
   // After all the setup, make the actual call we want to test.
   ASSERT_STATUS_OK(tested.DeleteInstance("the-instance"));
 }
@@ -348,8 +346,7 @@ TEST_F(InstanceAdminTest, ListClusters) {
   std::string const& instance_id = "the-instance";
   auto mock_list_clusters =
       create_list_clusters_lambda("", "", instance_id, {"t0", "t1"});
-  EXPECT_CALL(*client_, ListClusters(_, _, _))
-      .WillOnce(Invoke(mock_list_clusters));
+  EXPECT_CALL(*client_, ListClusters(_, _, _)).WillOnce(mock_list_clusters);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
@@ -377,11 +374,11 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   auto batch1 =
       create_list_clusters_lambda("token-001", "", instance_id, {"t2", "t3"});
   EXPECT_CALL(*client_, ListClusters(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch0))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(batch1));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch0)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(batch1);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
@@ -414,7 +411,7 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
 TEST_F(InstanceAdminTest, GetCluster) {
   bigtable::InstanceAdmin tested(client_);
   auto mock = create_get_cluster_mock();
-  EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(mock);
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster("the-instance", "the-cluster");
   ASSERT_STATUS_OK(cluster);
@@ -444,9 +441,9 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 
   auto mock_cluster = create_get_cluster_mock();
   EXPECT_CALL(*client_, GetCluster(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_cluster));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_cluster);
 
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster("the-instance", "the-cluster");
@@ -465,7 +462,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   auto mock = MockRpcFactory<btadmin::DeleteClusterRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteCluster");
-  EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(mock);
   // After all the setup, make the actual call we want to test.
   ASSERT_STATUS_OK(tested.DeleteCluster("the-instance", "the-cluster"));
 }
@@ -494,11 +491,10 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_get_policy_mock();
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   tested.GetIamPolicy(resource);
@@ -507,13 +503,12 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
 /// @test Verify that IamPolicies with conditions cause failures.
 TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
   using ::testing::_;
-  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext* context,
-                          ::google::iam::v1::GetIamPolicyRequest const&,
-                          ::google::iam::v1::Policy* response) {
+      .WillOnce([](grpc::ClientContext* context,
+                   ::google::iam::v1::GetIamPolicyRequest const&,
+                   ::google::iam::v1::Policy* response) {
         EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy"));
@@ -527,7 +522,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
         new_binding->set_allocated_condition(new google::type::Expr);
 
         return grpc::Status::OK;
-      }));
+      });
 
   std::string resource = "test-resource";
   auto res = tested.GetIamPolicy(resource);
@@ -554,7 +549,6 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
 /// @test Verify recoverable errors for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -570,8 +564,8 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
   auto mock_policy = create_get_policy_mock();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   tested.GetIamPolicy(resource);
@@ -580,11 +574,10 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
 /// @test Verify positive scenario for InstanceAdmin::GetNativeIamPolicy.
 TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_get_policy_mock();
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetNativeIamPolicy(resource);
@@ -612,7 +605,6 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyUnrecoverableError) {
 /// @test Verify recoverable errors for InstanceAdmin::GetNativeIamPolicy.
 TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -628,8 +620,8 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
   auto mock_policy = create_get_policy_mock();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetNativeIamPolicy(resource);
@@ -651,10 +643,9 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         reader_(new MockAsyncIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                ::google::iam::v1::GetIamPolicyRequest const&
-                                    request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         ::google::iam::v1::GetIamPolicyRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy"));
@@ -663,7 +654,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::iam::v1::Policy>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -690,18 +681,16 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
 /// @test Verify that AsyncGetIamPolicy works in simple case.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            response->set_version(3);
-            response->set_etag("random-tag");
-            *status = grpc::Status::OK;
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        *status = grpc::Status::OK;
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -716,16 +705,14 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncGetIamPolicy.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -741,18 +728,16 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
 /// @test Verify that AsyncGetNativeIamPolicy works in simple case.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            response->set_version(3);
-            response->set_etag("random-tag");
-            *status = grpc::Status::OK;
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        *status = grpc::Status::OK;
+      });
 
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
@@ -767,16 +752,14 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicy) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncGetNativeIamPolicy.
 TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicyUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
@@ -792,11 +775,10 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicyUnrecoverableError) {
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy.
 TEST_F(InstanceAdminTest, SetIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_policy_with_params();
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
@@ -828,7 +810,6 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy.
 TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -844,8 +825,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   auto mock_policy = create_policy_with_params();
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
@@ -860,11 +841,10 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy (native).
 TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
   auto mock_policy = create_policy_with_params();
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy = bigtable::IamPolicy(
@@ -898,7 +878,6 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyUnrecoverableError) {
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy (native).
 TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
 
   bigtable::InstanceAdmin tested(client_);
@@ -914,8 +893,8 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
   auto mock_policy = create_policy_with_params();
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_policy));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy = bigtable::IamPolicy(
@@ -930,7 +909,6 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
 TEST_F(InstanceAdminTest, TestIamPermissions) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
@@ -949,7 +927,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
   };
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(Invoke(mock_permission_set));
+      .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
@@ -979,7 +957,6 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
 /// @test Test for recoverable errors for InstanceAdmin::TestIamPermissions.
 TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
@@ -1006,8 +983,8 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
     return grpc::Status::OK;
   };
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(Invoke(mock_recoverable_failure))
-      .WillOnce(Invoke(mock_permission_set));
+      .WillOnce(mock_recoverable_failure)
+      .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
@@ -1030,9 +1007,9 @@ class AsyncDeleteClusterTest : public ::testing::Test {
         reader_(new MockAsyncDeleteClusterReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncDeleteCluster(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                btadmin::DeleteClusterRequest const& request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         btadmin::DeleteClusterRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteCluster"));
@@ -1043,7 +1020,7 @@ class AsyncDeleteClusterTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::protobuf::Empty>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -1063,15 +1040,14 @@ class AsyncDeleteClusterTest : public ::testing::Test {
 /// @test Verify that AsyncDeleteCluster works in simple case.
 TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
   using ::testing::_;
-  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             *status = grpc::Status::OK;
-          }));
+          });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1084,15 +1060,14 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncDeleteCluster.
 TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+          });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1116,10 +1091,9 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         reader_(new MockAsyncSetIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext* context,
-                                ::google::iam::v1::SetIamPolicyRequest const&
-                                    request,
-                                grpc::CompletionQueue*) {
+        .WillOnce([this](grpc::ClientContext* context,
+                         ::google::iam::v1::SetIamPolicyRequest const& request,
+                         grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.SetIamPolicy"));
@@ -1128,7 +1102,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
               ::google::iam::v1::Policy>>(reader_.get());
-        }));
+        });
   }
 
  protected:
@@ -1163,22 +1137,20 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
 /// @test Verify that AsyncSetIamPolicy works in simple case.
 TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
 
-            auto new_binding = response->add_bindings();
-            new_binding->set_role("writer");
-            new_binding->add_members("abc@gmail.com");
-            new_binding->add_members("xyz@gmail.com");
-            response->set_etag("test-tag");
-            *status = grpc::Status::OK;
-          }));
+        auto new_binding = response->add_bindings();
+        new_binding->set_role("writer");
+        new_binding->add_members("abc@gmail.com");
+        new_binding->add_members("xyz@gmail.com");
+        response->set_etag("test-tag");
+        *status = grpc::Status::OK;
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1194,16 +1166,14 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncSetIamPolicy.
 TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1219,22 +1189,20 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
 /// @test Verify that AsyncSetIamPolicy works in simple case (native).
 TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicy) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
 
-            auto new_binding = response->add_bindings();
-            new_binding->set_role("writer");
-            new_binding->add_members("abc@gmail.com");
-            new_binding->add_members("xyz@gmail.com");
-            response->set_etag("test-tag");
-            *status = grpc::Status::OK;
-          }));
+        auto new_binding = response->add_bindings();
+        new_binding->set_role("writer");
+        new_binding->add_members("abc@gmail.com");
+        new_binding->add_members("xyz@gmail.com");
+        response->set_etag("test-tag");
+        *status = grpc::Status::OK;
+      });
 
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
@@ -1250,16 +1218,14 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicy) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncSetIamPolicy native.
 TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      });
 
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
@@ -1285,7 +1251,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         reader_(new MockAsyncTestIamPermissionsReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
-        .WillOnce(Invoke(
+        .WillOnce(
             [this](grpc::ClientContext* context,
                    ::google::iam::v1::TestIamPermissionsRequest const& request,
                    grpc::CompletionQueue*) {
@@ -1300,7 +1266,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
               return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   ::google::iam::v1::TestIamPermissionsResponse>>(
                   reader_.get());
-            }));
+            });
   }
 
  protected:
@@ -1321,18 +1287,17 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
 /// @test Verify that AsyncTestIamPermissions works in simple case.
 TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
+                   grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         response->add_permissions("writer");
         response->add_permissions("reader");
         *status = grpc::Status::OK;
-      }));
+      });
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1346,16 +1311,15 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncTestIamPermissions.
 TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   using ::testing::_;
-  using ::testing::Invoke;
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
+                   grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-      }));
+      });
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -1403,13 +1367,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateAppProfile) {
       btadmin::CreateAppProfileRequest, btadmin::AppProfile>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateAppProfile(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               parent: "projects/the-project/instances/the-instance"
               app_profile_id: "prof"
               app_profile: { multi_cluster_routing_use_any { } }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateAppProfile"));
   FinishTest(instance_admin_->AsyncCreateAppProfile(
       cq_, "the-instance",
       bigtable::AppProfileConfig::MultiClusterUseAny("prof")));
@@ -1421,12 +1385,12 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteAppProfile) {
       btadmin::DeleteAppProfileRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteAppProfile(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
               ignore_warnings: true
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteAppProfile"));
   auto res_future = instance_admin_->AsyncDeleteAppProfile(cq_, "the-instance",
                                                            "the-profile");
   EXPECT_EQ(1U, cq_impl_->size());
@@ -1442,11 +1406,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteInstance) {
                                                 google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteInstance(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               name: "projects/the-project/instances/the-instance"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteInstance"));
   auto res_future = instance_admin_->AsyncDeleteInstance("the-instance", cq_);
   EXPECT_EQ(1U, cq_impl_->size());
   cq_impl_->SimulateCompletion(true);
@@ -1461,11 +1425,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetAppProfile) {
                                                 btadmin::AppProfile>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetAppProfile(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetAppProfile"));
   FinishTest(
       instance_admin_->AsyncGetAppProfile(cq_, "the-instance", "the-profile"));
 }
@@ -1476,11 +1440,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetCluster) {
                                                 btadmin::Cluster>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetCluster(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               name: "projects/the-project/instances/the-instance/clusters/the-cluster"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetCluster"));
   FinishTest(
       instance_admin_->AsyncGetCluster(cq_, "the-instance", "the-cluster"));
 }
@@ -1491,11 +1455,11 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetInstance) {
                                                 btadmin::Instance>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetInstance(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               name: "projects/the-project/instances/the-instance"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetInstance"));
   FinishTest(instance_admin_->AsyncGetInstance(cq_, "the-instance"));
 }
 
@@ -1505,7 +1469,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateCluster) {
                                                 google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateCluster(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               parent: "projects/the-project/instances/the-instance"
               cluster_id: "the-cluster"
@@ -1515,7 +1479,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateCluster) {
                   default_storage_type: SSD
               }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster"));
   FinishTest(instance_admin_->AsyncCreateCluster(
       cq_, bigtable::ClusterConfig("loc1", 3, bigtable::ClusterConfig::SSD),
       "the-instance", "the-cluster"));
@@ -1527,13 +1491,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateInstance) {
                                                 google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateInstance(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               parent: "projects/the-project"
               instance_id: "the-instance"
               instance: { display_name: "Displayed instance" }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateInstance"));
   FinishTest(instance_admin_->AsyncCreateInstance(
       cq_, bigtable::InstanceConfig("the-instance", "Displayed instance", {})));
 }
@@ -1544,13 +1508,13 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateAppProfile) {
       btadmin::UpdateAppProfileRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateAppProfile(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               app_profile: {
                   name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
               }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateAppProfile"));
   FinishTest(instance_admin_->AsyncUpdateAppProfile(
       cq_, "the-instance", "the-profile", bigtable::AppProfileUpdateConfig()));
 }
@@ -1561,14 +1525,14 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateCluster) {
                                                 google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateCluster(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               location: "loc1"
               serve_nodes: 3
               default_storage_type: SSD
               name: "projects/the-project/instances/the-instance/clusters/the-cluster"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateCluster"));
   auto cluster =
       bigtable::ClusterConfig("loc1", 3, bigtable::ClusterConfig::SSD)
           .as_proto();
@@ -1584,14 +1548,14 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateInstance) {
       btadmin::PartialUpdateInstanceRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateInstance(_, _, _))
-      .WillOnce(::testing::Invoke(rpc_factory.Create(
+      .WillOnce(rpc_factory.Create(
           R"""(
               instance: {
                   name: "projects/the-project/instances/the-instance"
               }
           )""",
           "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "PartialUpdateInstance")));
+          "PartialUpdateInstance"));
   bigtable::Instance instance;
   instance.set_name("projects/the-project/instances/the-instance");
   FinishTest(instance_admin_->AsyncUpdateInstance(
@@ -1609,7 +1573,7 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
                              btadmin::AppProfile>::
       Create(expected_text,
              "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateAppProfile");
-  EXPECT_CALL(*client_, CreateAppProfile(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, CreateAppProfile(_, _, _)).WillOnce(mock);
   ASSERT_STATUS_OK(tested.CreateAppProfile(
       "the-instance", bigtable::AppProfileConfig::MultiClusterUseAny("prof")));
 }
@@ -1624,7 +1588,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
   auto mock = MockRpcFactory<btadmin::DeleteAppProfileRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteAppProfile");
-  EXPECT_CALL(*client_, DeleteAppProfile(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteAppProfile(_, _, _)).WillOnce(mock);
   ASSERT_STATUS_OK(tested.DeleteAppProfile("the-instance", "the-profile"));
 }
 
@@ -1639,7 +1603,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
           Create(
               expected_text,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.GetAppProfile");
-  EXPECT_CALL(*client_, GetAppProfile(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, GetAppProfile(_, _, _)).WillOnce(mock);
   ASSERT_STATUS_OK(tested.GetAppProfile("the-instance", "the-profile"));
 }
 
@@ -1653,6 +1617,6 @@ TEST_F(InstanceAdminTest, GetInstance) {
       MockRpcFactory<btadmin::GetInstanceRequest, btadmin::Instance>::Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableInstanceAdmin.GetInstance");
-  EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, GetInstance(_, _, _)).WillOnce(mock);
   ASSERT_STATUS_OK(tested.GetInstance("the-instance"));
 }

@@ -35,7 +35,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::bigtable::v2::SampleRowKeysResponse;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
-using ::testing::Invoke;
 using ::testing::WithParamInterface;
 
 using MockAsyncLongrunningOpReader =
@@ -65,26 +64,25 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish(_, _, _))
-      .WillOnce(Invoke([success](google::longrunning::Operation* response,
-                                 grpc::Status* status, void*) {
+      .WillOnce([success](google::longrunning::Operation* response,
+                          grpc::Status* status, void*) {
         if (success) {
           OperationFinishedSuccessfully(*response, *status);
         } else {
           *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
         }
-      }));
+      });
 
   EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
-      .WillOnce(
-          Invoke([&longrunning_reader](
-                     grpc::ClientContext*,
-                     google::longrunning::GetOperationRequest const& request,
-                     grpc::CompletionQueue*) {
-            EXPECT_EQ("test_operation_id", request.name());
-            // This is safe, see comments in MockAsyncResponseReader.
-            return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                google::longrunning::Operation>>(longrunning_reader.get());
-          }));
+      .WillOnce([&longrunning_reader](
+                    grpc::ClientContext*,
+                    google::longrunning::GetOperationRequest const& request,
+                    grpc::CompletionQueue*) {
+        EXPECT_EQ("test_operation_id", request.name());
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            google::longrunning::Operation>>(longrunning_reader.get());
+      });
 
   google::longrunning::Operation op_arg;
   op_arg.set_name("test_operation_id");
@@ -144,14 +142,13 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
           response_filler,
       google::longrunning::Operation op) {
     EXPECT_CALL(*longrunning_reader_, Finish(_, _, _))
-        .WillOnce(
-            Invoke([response_filler](google::longrunning::Operation* response,
-                                     grpc::Status* status, void*) {
-              response_filler(*response, *status);
-            }));
+        .WillOnce([response_filler](google::longrunning::Operation* response,
+                                    grpc::Status* status, void*) {
+          response_filler(*response, *status);
+        });
 
     EXPECT_CALL(*client_, AsyncGetOperation(_, _, _))
-        .WillOnce(Invoke(
+        .WillOnce(
             [this](grpc::ClientContext*,
                    google::longrunning::GetOperationRequest const& request,
                    grpc::CompletionQueue*) {
@@ -159,7 +156,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
               // This is safe, see comments in MockAsyncResponseReader.
               return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>(longrunning_reader_.get());
-            }));
+            });
     internal::AsyncLongrunningOperation<testing::MockAdminClient,
                                         SampleRowKeysResponse>
         operation(client_, std::move(op));
