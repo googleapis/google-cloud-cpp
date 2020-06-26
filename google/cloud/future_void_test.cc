@@ -15,6 +15,7 @@
 #include "google/cloud/future_void.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
+#include "google/cloud/testing_util/scoped_thread.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,6 +25,7 @@ namespace {
 using ::testing::HasSubstr;
 using testing_util::chrono_literals::operator"" _ms;
 using testing_util::ExpectFutureError;
+using testing_util::ScopedThread;
 
 // Verify we are testing the types we think we should be testing.
 static_assert(std::is_same<future<void>, ::google::cloud::future<void>>::value,
@@ -447,7 +449,7 @@ TEST(FutureTestVoid, conform_30_6_6_15) {
   std::promise<void> p_get_future_called;
   std::promise<void> f_get_called;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     future<void> f = p.get_future();
     p_get_future_called.set_value();
     f.get();
@@ -461,10 +463,9 @@ TEST(FutureTestVoid, conform_30_6_6_15) {
 
   p.set_value();
   // now thread `t` can make progress.
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
 
   waiter.get();
-  t.join();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -560,7 +561,7 @@ TEST(FutureTestVoid, conform_30_6_6_20) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait();
     f_wait_returned.set_value();
@@ -572,8 +573,6 @@ TEST(FutureTestVoid, conform_30_6_6_20) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value();
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -589,7 +588,7 @@ TEST(FutureTestVoid, conform_30_6_6_21) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait_for(500_ms);
     f_wait_returned.set_value();
@@ -601,8 +600,6 @@ TEST(FutureTestVoid, conform_30_6_6_21) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value();
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 // Paragraph 30.6.6.22.1 refers to futures that hold a deferred function (like
@@ -618,7 +615,7 @@ TEST(FutureTestVoid, conform_30_6_6_22_2) {
 
   p0.set_value();
   auto s = f0.wait_for(0_ms);
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   f0.get();
   SUCCEED();
 }
@@ -652,7 +649,7 @@ TEST(FutureTestVoid, conform_30_6_6_24) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait_until(std::chrono::system_clock::now() + 500_ms);
     f_wait_returned.set_value();
@@ -664,8 +661,6 @@ TEST(FutureTestVoid, conform_30_6_6_24) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value();
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 // Paragraph 30.6.6.25.1 refers to futures that hold a deferred function (like
@@ -681,7 +676,7 @@ TEST(FutureTestVoid, conform_30_6_6_25_2) {
 
   p0.set_value();
   auto s = f0.wait_until(std::chrono::system_clock::now());
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
   f0.get();
   SUCCEED();
@@ -700,9 +695,9 @@ TEST(FutureTestVoid, conform_30_6_6_25_3) {
   ASSERT_NE(std::future_status::ready, f0.wait_for(0_ms));
 }
 
-// Paragraph 30.6.6.26 asserts that if the clock raises then wait_until() might
-// raise too. We do not need to test for that, exceptions are always propagated,
-// this is just giving implementors freedom.
+// Paragraph 30.6.6.26 asserts that if the clock raises then wait_until()
+// might raise too. We do not need to test for that, exceptions are always
+// propagated, this is just giving implementors freedom.
 
 /// @test Verify the behavior around cancellation.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)

@@ -1168,7 +1168,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   // AsyncCheckConsistency() -> consistent
   cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
-  EXPECT_EQ(std::future_status::ready, future_status);
+  ASSERT_EQ(std::future_status::ready, future_status);
 
   // The future becomes ready on the first request that completes with a
   // permanent error.
@@ -1221,7 +1221,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   // The future becomes ready on the first request that completes with a
   // permanent error.
   future_status = result.wait_for(0_ms);
-  EXPECT_EQ(std::future_status::ready, future_status);
+  ASSERT_EQ(std::future_status::ready, future_status);
 
   auto consistent = result.get();
   EXPECT_FALSE(consistent.ok());

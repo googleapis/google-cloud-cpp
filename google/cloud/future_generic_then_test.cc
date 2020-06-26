@@ -44,7 +44,7 @@ TEST(FutureTestInt, ThenSimple) {
   p.set_value(42);
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   EXPECT_EQ(84, next.get());
   EXPECT_FALSE(next.valid());
@@ -72,7 +72,7 @@ TEST(FutureTestInt, ThenException) {
   p.set_value(42);
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   EXPECT_THROW(
       try { next.get(); } catch (std::runtime_error const& ex) {
@@ -146,7 +146,7 @@ TEST(FutureTestInt, ThenMoveOnlyCallable) {
   p.set_value(42);
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   EXPECT_EQ(2 * 42, next.get());
   EXPECT_FALSE(next.valid());
@@ -170,7 +170,7 @@ TEST(FutureTestInt, ThenByCopy) {
   p.set_value(42);
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
   EXPECT_EQ(2 * 42, next.get());
   EXPECT_FALSE(next.valid());
@@ -430,7 +430,7 @@ TEST(FutureTestInt, conform_2_3_8_d) {
   future<int> next = f.then([&](future<int> r) { return 2 * r.get(); });
   EXPECT_TRUE(next.valid());
   p.set_value(42);
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
   EXPECT_EQ(84, next.get());
 }
 
@@ -448,7 +448,7 @@ TEST(FutureTestInt, conform_2_3_8_e) {
   EXPECT_TRUE(next.valid());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value(42);
-  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, next.wait_for(0_ms));
   EXPECT_THROW(
       try { next.get(); } catch (std::runtime_error const& ex) {
         EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
@@ -663,7 +663,7 @@ TEST(FutureTestString, conform_2_10_4_2_a) {
   // When T is a simple value type we get back T.
   future<std::string> f = make_ready_future(std::string("42"));
   EXPECT_TRUE(f.valid());
-  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, f.wait_for(0_ms));
   EXPECT_EQ("42", f.get());
 }
 
@@ -675,7 +675,7 @@ TEST(FutureTestString, conform_2_10_4_2_b) {
   std::string& sref = value;
   future<std::string> f = make_ready_future(sref);
   EXPECT_TRUE(f.valid());
-  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, f.wait_for(0_ms));
   EXPECT_EQ("42", f.get());
 }
 
@@ -692,7 +692,7 @@ TEST(FutureTestString, conform_2_10_4_2_c) {
   std::string value("42");
   future<std::string&> f = make_ready_future(std::ref(value));
   EXPECT_TRUE(f.valid());
-  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  ASSERT_EQ(std::future_status::ready, f.wait_for(0_ms));
   EXPECT_EQ("42", f.get());
 #endif  // 1
 }

@@ -15,6 +15,7 @@
 #include "google/cloud/future_generic.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
+#include "google/cloud/testing_util/scoped_thread.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,6 +25,7 @@ namespace {
 using ::testing::HasSubstr;
 using testing_util::chrono_literals::operator"" _ms;
 using testing_util::ExpectFutureError;
+using testing_util::ScopedThread;
 
 /// @test Verify that destructing a promise does not introduce race conditions.
 TEST(FutureTestInt, DestroyInWaitingThread) {
@@ -436,7 +438,7 @@ TEST(FutureTestInt, conform_30_6_6_15) {
   std::promise<void> p_get_future_called;
   std::promise<void> f_get_called;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     future<int> f = p.get_future();
     p_get_future_called.set_value();
     f.get();
@@ -450,10 +452,8 @@ TEST(FutureTestInt, conform_30_6_6_15) {
 
   p.set_value(42);
   // now thread `t` can make progress.
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
+  ASSERT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
   waiter.get();
-  t.join();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -549,7 +549,7 @@ TEST(FutureTestInt, conform_30_6_6_20) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait();
     f_wait_returned.set_value();
@@ -561,8 +561,6 @@ TEST(FutureTestInt, conform_30_6_6_20) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -578,7 +576,7 @@ TEST(FutureTestInt, conform_30_6_6_21) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait_for(500_ms);
     f_wait_returned.set_value();
@@ -590,8 +588,6 @@ TEST(FutureTestInt, conform_30_6_6_21) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 // Paragraph 30.6.6.22.1 refers to futures that hold a deferred function (like
@@ -607,7 +603,7 @@ TEST(FutureTestInt, conform_30_6_6_22_2) {
 
   p0.set_value(42);
   auto s = f0.wait_for(0_ms);
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   EXPECT_EQ(42, f0.get());
 }
 
@@ -640,7 +636,7 @@ TEST(FutureTestInt, conform_30_6_6_24) {
   std::promise<void> thread_started;
   std::promise<void> f_wait_returned;
 
-  std::thread t([&] {
+  ScopedThread t([&] {
     thread_started.set_value();
     f.wait_until(std::chrono::system_clock::now() + 500_ms);
     f_wait_returned.set_value();
@@ -652,8 +648,6 @@ TEST(FutureTestInt, conform_30_6_6_24) {
   EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
   p.set_value(42);
   EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
-
-  t.join();
 }
 
 // Paragraph 30.6.6.25.1 refers to futures that hold a deferred function (like
@@ -669,7 +663,7 @@ TEST(FutureTestInt, conform_30_6_6_25_2) {
 
   p0.set_value(42);
   auto s = f0.wait_until(std::chrono::system_clock::now());
-  EXPECT_EQ(std::future_status::ready, s);
+  ASSERT_EQ(std::future_status::ready, s);
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
   EXPECT_EQ(42, f0.get());
 }
