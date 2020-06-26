@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/testing_util/scoped_thread.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,12 +22,14 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using testing_util::ScopedThread;
+
 /// @test Verify we can create and use a CustomerSuppliedBackgroundThreads
 /// without impacting the completion queue
 TEST(CustomerSuppliedBackgroundThreads, LifecycleNoShutdown) {
   CompletionQueue cq;
   promise<void> p;
-  std::thread t([&cq, &p] {
+  ScopedThread t([&cq, &p] {
     cq.Run();
     p.set_value();
   });
@@ -43,8 +46,6 @@ TEST(CustomerSuppliedBackgroundThreads, LifecycleNoShutdown) {
 
   cq.Shutdown();
   EXPECT_EQ(std::future_status::ready, has_shutdown.wait_for(ms(500)));
-
-  t.join();
 }
 
 /// @test Verify that users can supply their own queue and threads.
@@ -61,12 +62,11 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
       [](future<StatusOr<std::chrono::system_clock::time_point>>) {
         return std::this_thread::get_id();
       });
-  std::thread t([&cq] { cq.Run(); });
+  ScopedThread t([&cq] { cq.Run(); });
   ASSERT_EQ(std::future_status::ready, id.wait_for(ms(500)));
-  EXPECT_EQ(t.get_id(), id.get());
+  EXPECT_EQ(t.get().get_id(), id.get());
 
   cq.Shutdown();
-  t.join();
 }
 
 /// @test Verify that automatically created completion queues are usable.
