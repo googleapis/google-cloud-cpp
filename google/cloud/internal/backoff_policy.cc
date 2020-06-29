@@ -21,10 +21,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  auto tmp = absl::make_unique<ExponentialBackoffPolicy>(*this);
-  // Force OnCompletion() to reseed the generator.
-  tmp->generator_.reset();
-  return std::unique_ptr<BackoffPolicy>(std::move(tmp));
+  return absl::make_unique<ExponentialBackoffPolicy>(*this);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {

@@ -138,6 +138,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
     }
   }
 
+  // Do not copy the PRNG, we get two benefits:
+  //  - This works around a bug triggered by MSVC + Abseil optional (we do not
+  //    know specifically which one is at fault)
+  //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
       : current_delay_range_(rhs.current_delay_range_),
         maximum_delay_(rhs.maximum_delay_),
