@@ -67,7 +67,8 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
                     [](std::string const& line) {
                       return line.rfind("x-goog-hash: md5=", 0) == 0;
                     });
-  EXPECT_EQ(1, count);
+  // The count could be > 1 if there was a retry.
+  EXPECT_LE(1, count);
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -99,7 +100,8 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
         // contents.
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
-  EXPECT_EQ(1, count);
+  // The count could be > 1 if there was a retry.
+  EXPECT_LE(1, count);
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
