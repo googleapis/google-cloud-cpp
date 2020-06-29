@@ -389,9 +389,7 @@ TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
   auto result = client_->ExecutePartitionedDml(
       SqlStatement("UPDATE Singers SET LastName = 'test-only'"
                    " WHERE SingerId >= 1"));
-  if (!EmulatorUnimplemented(result.status())) {
-    EXPECT_STATUS_OK(result);
-  }
+  EXPECT_STATUS_OK(result);
 }
 
 void CheckReadWithOptions(
@@ -591,7 +589,6 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
   auto read_partitions =
       client_->PartitionRead(ro_transaction, "Singers", KeySet::All(),
                              {"SingerId", "FirstName", "LastName"});
-  if (EmulatorUnimplemented(read_partitions.status())) GTEST_SKIP();
   ASSERT_STATUS_OK(read_partitions);
 
   std::vector<std::string> serialized_partitions;
@@ -633,7 +630,6 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
   auto query_partitions = client_->PartitionQuery(
       ro_transaction,
       SqlStatement("select SingerId, FirstName, LastName from Singers"));
-  if (EmulatorUnimplemented(query_partitions.status())) return;
   ASSERT_STATUS_OK(query_partitions);
 
   std::vector<std::string> serialized_partitions;
