@@ -16,6 +16,19 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+# First check the required environment variables.
+$missing=@()
+ForEach($var in ("BUILD_NAME")) {
+    if (-not (Test-Path env:${var})) {
+        $missing+=(${var})
+    }
+}
+if ($missing.count -ge 1) {
+    Write-Host -ForegroundColor Red `
+        "Aborting build because the ${missing} environment variables are not set."
+    Exit 1
+}
+
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
@@ -38,7 +51,7 @@ $BRANCH_NAME="master"
 $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH_NAME}"
 # Bazel creates many links (aka NTFS JUNCTIONS) and only .tgz files seem to
 # support those well.
-$CACHE_BASENAME="cache-windows-bazel"
+$CACHE_BASENAME="cache-windows-${env:BUILD_NAME}"
 
 $RunningCI = (Test-Path env:RUNNING_CI) -and `
     ($env:RUNNING_CI -eq "yes")
@@ -107,6 +120,11 @@ $test_flags = @("--test_output=errors",
                 "--verbose_failures=true",
                 "--keep_going")
 $build_flags = @("--keep_going")
+
+if (${env:BUILD_NAME} -eq "bazel-release") {
+    $test_flags+=("-c", "opt")
+    $build_flags+=("-c", "opt")
+}
 
 $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
 
