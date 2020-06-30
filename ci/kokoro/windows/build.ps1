@@ -76,7 +76,12 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x86-windows-static/cmake-release.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
-} elseif ($BuildName -eq "bazel") {
+} elseif (($BuildName -eq "bazel-debug") -or ($BuildName -eq "bazel")) {
+    $env:BUILD_NAME = "bazel-debug"
+    $DependencyScript = "build-bazel-dependencies.ps1"
+    $BuildScript = "build-bazel.ps1"
+} elseif ($BuildName -eq "bazel-release") {
+    $env:BUILD_NAME = "bazel-release"
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
