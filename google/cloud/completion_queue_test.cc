@@ -326,6 +326,21 @@ TEST(CompletionQueueTest, RunAsync) {
   runner.join();
 }
 
+TEST(CompletionQueueTest, RunAsyncVoid) {
+  CompletionQueue cq;
+
+  std::thread runner([&cq] { cq.Run(); });
+
+  std::promise<void> done_promise;
+  cq.RunAsync([&done_promise] { done_promise.set_value(); });
+
+  auto done = done_promise.get_future();
+  done.get();
+
+  cq.Shutdown();
+  runner.join();
+}
+
 TEST(CompletionQueueTest, RunAsyncCompletionQueueDestroyed) {
   auto cq_impl = std::make_shared<MockCompletionQueue>();
 
@@ -346,6 +361,24 @@ TEST(CompletionQueueTest, RunAsyncMoveOnly) {
   struct MoveOnly {
     promise<void> p;
     void operator()(CompletionQueue&) { p.set_value(); }
+  };
+  static_assert(!std::is_copy_assignable<MoveOnly>::value,
+                "MoveOnly test type should not copy-assignable");
+
+  promise<void> p;
+  auto done = p.get_future();
+  CompletionQueue cq;
+  std::thread t{[&cq] { cq.Run(); }};
+  cq.RunAsync(MoveOnly{std::move(p)});
+  done.get();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(CompletionQueueTest, RunAsyncMoveOnlyVoid) {
+  struct MoveOnly {
+    promise<void> p;
+    void operator()() { p.set_value(); }
   };
   static_assert(!std::is_copy_assignable<MoveOnly>::value,
                 "MoveOnly test type should not copy-assignable");

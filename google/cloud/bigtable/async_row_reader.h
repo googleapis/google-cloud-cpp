@@ -231,7 +231,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
         return;
       }
       if (break_recursion) {
-        self->cq_.RunAsync([self](CompletionQueue&) { self->UserWantsRows(); });
+        self->cq_.RunAsync([self] { self->UserWantsRows(); });
         return;
       }
       self->UserWantsRows();
