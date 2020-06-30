@@ -371,8 +371,7 @@ BRANCH="${BRANCH%%* }"
 BRANCH="${BRANCH##remotes/origin/}"
 BRANCH="${BRANCH##remotes/upstream/}"
 export BRANCH
-echo "================================================================"
-io::log_yellow "Detected the branch name: ${BRANCH}."
+io::log_green "Detected the branch name: ${BRANCH}."
 
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
@@ -580,9 +579,12 @@ echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
-io::log_yellow "Build finished with ${exit_status} exit status."
+if [[ "${exit_status}" -eq 0 ]]; then
+  io::log_green "Docker run succeeded."
+else
+  io::log_red "Docker run failed with exit status ${exit_status}."
+fi
 
-echo "================================================================"
 if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
   exit_status=$?
@@ -598,15 +600,14 @@ fi
 if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
     "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
-fi
-
-if [[ "${exit_status}" != 0 ]]; then
+else
   echo "================================================================"
-  io::log_red "Build failed printing logs."
+  io::log_yellow "Build failed; printing logs."
   "${PROJECT_ROOT}/ci/kokoro/docker/dump-logs.sh"
 fi
 
 echo "================================================================"
+io::log_yellow "Dumping API/ABI compatibility reports."
 "${PROJECT_ROOT}/ci/kokoro/docker/dump-reports.sh"
 
 echo "================================================================"
