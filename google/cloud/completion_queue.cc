@@ -76,6 +76,38 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
+class AsyncFunction : public internal::AsyncGrpcOperation {
+ public:
+  AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun,
+                std::unique_ptr<grpc::Alarm> alarm)
+      : fun_(std::move(fun)), alarm_(std::move(alarm)) {}
+
+  void Set(grpc::CompletionQueue& cq,
+           std::chrono::system_clock::time_point deadline, void* tag) {
+    if (alarm_) {
+      alarm_->Set(&cq, deadline, tag);
+    }
+  }
+
+  void Cancel() override {
+    if (alarm_) {
+      alarm_->Cancel();
+    }
+  }
+
+ private:
+  bool Notify(bool) override {
+    fun_->exec();
+    fun_.reset();
+    return true;
+  }
+
+  std::shared_ptr<internal::CompletionQueueImpl> cq_;
+  std::unique_ptr<internal::RunAsyncBase> fun_;
+  // Holds the underlying handle, it might be a nullpotr in tests.
+  std::unique_ptr<grpc::Alarm> alarm_;
+};
+
 }  // namespace
 
 CompletionQueue::CompletionQueue() : impl_(new internal::CompletionQueueImpl) {}
@@ -93,6 +125,13 @@ CompletionQueue::MakeDeadlineTimer(
   impl_->StartOperation(
       op, [&](void* tag) { op->Set(impl_->cq(), deadline, tag); });
   return op->GetFuture();
+}
+
+void CompletionQueue::RunAsyncImpl(std::unique_ptr<internal::RunAsyncBase> f) {
+  auto deadline = std::chrono::system_clock::now();
+  auto op = std::make_shared<AsyncFunction>(std::move(f), impl_->CreateAlarm());
+  impl_->StartOperation(
+      op, [&](void* tag) { op->Set(impl_->cq(), deadline, tag); });
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
