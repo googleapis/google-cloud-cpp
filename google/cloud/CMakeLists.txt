@@ -144,11 +144,6 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
-    internal/source_accumulators.h
-    internal/source_builder.h
-    internal/source_ready_token.cc
-    internal/source_ready_token.h
-    internal/source_transforms.h
     internal/strerror.cc
     internal/strerror.h
     internal/throw_delegate.cc
@@ -209,10 +204,6 @@ if (BUILD_TESTING)
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
-        internal/source_accumulators_test.cc
-        internal/source_builder_test.cc
-        internal/source_ready_token_test.cc
-        internal/source_transforms_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
@@ -354,7 +345,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/pagination_range_test.cc
-            internal/slow_iota_test.cc
             internal/time_utils_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.

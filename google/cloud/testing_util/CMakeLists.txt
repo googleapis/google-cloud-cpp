@@ -30,7 +30,6 @@ if (BUILD_TESTING)
         example_driver.h
         expect_exception.h
         expect_future_error.h
-        fake_source.h
         scoped_environment.cc
         scoped_environment.h
         scoped_thread.h
