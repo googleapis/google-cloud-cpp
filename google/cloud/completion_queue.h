@@ -20,10 +20,20 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/memory/memory.h"
+#include "absl/meta/type_traits.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
+// Type erase the callables in RunAsync()
+struct RunAsyncBase {
+  virtual ~RunAsyncBase() = default;
+  virtual void exec() = 0;
+};
+}  // namespace internal
+
 /**
  * Call the functor associated with asynchronous operations when they complete.
  */
@@ -178,20 +188,29 @@ class CompletionQueue {
             typename std::enable_if<
                 internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0>
   void RunAsync(Functor&& functor) {
-    auto impl = impl_;
-    MakeRelativeTimer(std::chrono::seconds(0))
-        .then(
-            [impl, functor](
-                future<
-                    StatusOr<std::chrono::system_clock::time_point>>) mutable {
-              // We intentionally ignore the status here; the functor is always
-              // called, even after a call to `CancelAll`.
-              CompletionQueue cq(impl);
-              functor(cq);
-            });
+    class Wrapper : public internal::RunAsyncBase {
+     public:
+      Wrapper(std::weak_ptr<internal::CompletionQueueImpl> impl, Functor&& f)
+          : impl_(std::move(impl)), fun_(std::forward<Functor>(f)) {}
+      ~Wrapper() override = default;
+      void exec() override {
+        auto impl = impl_.lock();
+        if (!impl) return;
+        CompletionQueue cq(std::move(impl));
+        fun_(cq);
+      }
+
+     private:
+      std::weak_ptr<internal::CompletionQueueImpl> impl_;
+      absl::decay_t<Functor> fun_;
+    };
+    RunAsyncImpl(
+        absl::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
   }
 
  private:
+  void RunAsyncImpl(std::unique_ptr<internal::RunAsyncBase>);
+
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
 

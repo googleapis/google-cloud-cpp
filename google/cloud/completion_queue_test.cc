@@ -32,6 +32,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
+using ::testing::Contains;
 using ::testing::StrictMock;
 
 class MockClient {
@@ -339,6 +340,61 @@ TEST(CompletionQueueTest, RunAsyncCompletionQueueDestroyed) {
   cq_impl->SimulateCompletion(true);
 
   done_promise.get_future().get();
+}
+
+TEST(CompletionQueueTest, RunAsyncMoveOnly) {
+  struct MoveOnly {
+    promise<void> p;
+    void operator()(CompletionQueue&) { p.set_value(); }
+  };
+  static_assert(!std::is_copy_assignable<MoveOnly>::value,
+                "MoveOnly test type should not copy-assignable");
+
+  promise<void> p;
+  auto done = p.get_future();
+  CompletionQueue cq;
+  std::thread t{[&cq] { cq.Run(); }};
+  cq.RunAsync(MoveOnly{std::move(p)});
+  done.get();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(CompletionQueueTest, RunAsyncThread) {
+  CompletionQueue cq;
+
+  std::set<std::thread::id> runner_ids;
+  auto constexpr kRunners = 8;
+  std::vector<std::thread> runners(kRunners);
+  for (auto& t : runners) {
+    promise<std::thread::id> started;
+    auto f = started.get_future();
+    t = std::thread(
+        [&cq](promise<std::thread::id> p) {
+          p.set_value(std::this_thread::get_id());
+          cq.Run();
+        },
+        std::move(started));
+    runner_ids.insert(f.get());
+  }
+
+  auto constexpr kIterations = 10000;
+  std::vector<promise<std::thread::id>> pending(kIterations);
+  std::vector<future<std::thread::id>> actual;
+  for (int i = 0; i != kIterations; ++i) {
+    auto& p = pending[i];
+    actual.push_back(p.get_future());
+    cq.RunAsync(
+        [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
+  }
+
+  for (auto& done : actual) {
+    auto id = done.get();
+    EXPECT_THAT(runner_ids, Contains(id));
+  }
+
+  cq.Shutdown();
+  for (auto& t : runners) t.join();
 }
 
 // Sets up a timer that reschedules itself and verifies we can shut down
