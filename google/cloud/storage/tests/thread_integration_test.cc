@@ -105,10 +105,13 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 TEST_F(ThreadIntegrationTest, Unshared) {
   std::string bucket_name =
       MakeRandomBucketName(/*prefix=*/"cloud-cpp-testing-");
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = bucket_client->CreateBucketForProject(
       bucket_name, project_id_,
       BucketMetadata()
           .set_storage_class(storage_class::Standard())
@@ -153,7 +156,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
     t.get();
   }
 
-  auto delete_status = client->DeleteBucket(bucket_name);
+  auto delete_status = bucket_client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);
   // This is basically a smoke test, if the test does not crash it was
   // successful.

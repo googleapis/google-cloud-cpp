@@ -17,8 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
-#include <map>
-#include <sstream>
+#include <thread>
 
 namespace {
 
@@ -126,7 +125,11 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating bucket to run the examples" << std::endl;
   (void)client.CreateBucketForProject(bucket_name, project_id,
-                                      gcs::BucketMetadata());
+                                      gcs::BucketMetadata{});
+  // In GCS a single project cannot create or delete buckets more often than
+  // once every two seconds. We will pause for at least that long before
+  // deleting the bucket.
+  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   std::cout << "\nRunning GetDefaultEventBasedHold() example" << std::endl;
   GetDefaultEventBasedHold(client, {bucket_name});
@@ -138,6 +141,7 @@ void RunAll(std::vector<std::string> const& argv) {
   DisableDefaultEventBasedHold(client, {bucket_name});
 
   std::cout << "\nCleaning up" << std::endl;
+  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
   (void)client.DeleteBucket(bucket_name);
 }
 

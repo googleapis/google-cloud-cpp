@@ -17,8 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
-#include <map>
-#include <sstream>
 
 namespace {
 
@@ -99,7 +97,7 @@ void CreateBucketForProject(google::cloud::storage::Client client,
      std::string const& project_id) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.CreateBucketForProject(bucket_name, project_id,
-                                      gcs::BucketMetadata());
+                                      gcs::BucketMetadata{});
 
     if (!bucket_metadata) {
       throw std::runtime_error(bucket_metadata.status().message());

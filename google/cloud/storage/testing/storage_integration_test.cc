@@ -45,35 +45,54 @@ StorageIntegrationTest::MakeIntegrationTestClient() {
 }
 
 google::cloud::StatusOr<google::cloud::storage::Client>
+StorageIntegrationTest::MakeBucketIntegrationTestClient() {
+  if (UsingTestbench()) return MakeIntegrationTestClient();
+
+  auto constexpr kInitialDelay = std::chrono::seconds(5);
+  auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
+  auto constexpr kBackoffScalingFactor = 2.0;
+  return MakeIntegrationTestClient(
+      LimitedTimeRetryPolicy(/*maximum_duration=*/2 * kMaximumBackoffDelay)
+          .clone(),
+      ExponentialBackoffPolicy(kInitialDelay, kMaximumBackoffDelay,
+                               kBackoffScalingFactor)
+          .clone());
+}
+
+google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient(
     std::unique_ptr<RetryPolicy> retry_policy) {
+  return MakeIntegrationTestClient(std::move(retry_policy),
+                                   TestBackoffPolicy());
+}
+
+google::cloud::StatusOr<google::cloud::storage::Client>
+StorageIntegrationTest::MakeIntegrationTestClient(
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto options = ClientOptions::CreateDefaultClientOptions();
   if (!options) {
     return std::move(options).status();
   }
 
-  auto backoff = TestBackoffPolicy();
-  std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
-  if (UsingTestbench()) {
-    initial_delay = std::chrono::milliseconds(10);
-  }
-
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMetadata()) {
-    return Client(std::make_shared<internal::GrpcClient>(*options), *backoff);
+    return Client(std::make_shared<internal::GrpcClient>(*options),
+                  *backoff_policy);
   }
   if (UseGrpcForMedia()) {
-    return Client(std::make_shared<internal::HybridClient>(*options), *backoff);
+    return Client(std::make_shared<internal::HybridClient>(*options),
+                  *backoff_policy);
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
   auto idempotency =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
   if (!idempotency || *idempotency == "always-retry") {
-    return Client(*std::move(options), *retry_policy, *backoff);
+    return Client(*std::move(options), *retry_policy, *backoff_policy);
   }
   if (*idempotency == "strict") {
-    return Client(*std::move(options), *retry_policy, *backoff,
+    return Client(*std::move(options), *retry_policy, *backoff_policy,
                   StrictIdempotencyPolicy{});
   }
   return Status(

@@ -19,7 +19,7 @@ source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module etc/integration-tests-config.sh
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage: $(basename "$0") [bazel-test-args]"
+  echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
   exit 1
 fi
 

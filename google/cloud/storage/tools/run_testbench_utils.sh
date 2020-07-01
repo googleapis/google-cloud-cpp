@@ -53,11 +53,13 @@ kill_testbench() {
 #   None
 ################################################
 start_testbench() {
+  local port="${1:-0}"
+
   echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment set-up"
   echo "Launching testbench emulator in the background"
   trap kill_testbench EXIT
 
-  gunicorn --bind 0.0.0.0:0 \
+  gunicorn --bind "0.0.0.0:${port}" \
     --worker-class gevent \
     --access-logfile - \
     --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
@@ -94,7 +96,7 @@ start_testbench() {
     delay=$((delay * 2))
   done
 
-  if [ "${connected}" = "no" ]; then
+  if [[ "${connected}" = "no" ]]; then
     echo "Cannot connect to testbench; aborting test." >&2
     exit 1
   else

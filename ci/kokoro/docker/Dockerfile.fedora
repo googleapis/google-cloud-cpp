@@ -42,3 +42,5 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh
+
+RUN dnf makecache && dnf install -y llvm

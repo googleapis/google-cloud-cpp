@@ -16,6 +16,7 @@
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
+#include <thread>
 
 namespace {
 
@@ -129,10 +130,13 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
-  auto bucket_metadata = client
-                             .CreateBucketForProject(bucket_name, project_id,
-                                                     gcs::BucketMetadata{})
-                             .value();
+  (void)client
+      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{})
+      .value();
+  // In GCS a single project cannot create or delete buckets more often than
+  // once every two seconds. We will pause for at least that long before
+  // deleting the bucket.
+  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   std::cout << "\nRunning ListNotifications() example [1]" << std::endl;
   ListNotifications(client, {bucket_name});
@@ -174,6 +178,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteNotification() example [2]" << std::endl;
   DeleteNotification(client, {bucket_name, n2.id()});
 
+  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
   (void)client.DeleteBucket(bucket_name);
 }
 

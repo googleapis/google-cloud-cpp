@@ -19,7 +19,9 @@
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
+#include <chrono>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -31,11 +33,35 @@ namespace testing {
  */
 class StorageIntegrationTest : public ::testing::Test {
  protected:
+  /**
+   * Return a client suitable for most integration tests.
+   *
+   * Most integration tests, particularly when running against the testbench,
+   * should use short backoff and retry periods. This returns a client so
+   * configured.
+   */
   static google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient();
 
+  /**
+   * Return a client with retry policies suitable for CreateBucket() class.
+   *
+   * Creating (and deleting) buckets require (specially when using production)
+   * longer backoff and retry periods. A single project cannot create more than
+   * one bucket every two seconds, suggesting that the default backoff should be
+   * at least that long.
+   */
+  static google::cloud::StatusOr<google::cloud::storage::Client>
+  MakeBucketIntegrationTestClient();
+
+  /// Like MakeIntegrationTestClient() but with a custom retry policy
   static google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy);
+
+  /// Like MakeIntegrationTestClient() but with custom retry and bucket policies
+  static google::cloud::StatusOr<google::cloud::storage::Client>
+  MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy,
+                            std::unique_ptr<BackoffPolicy> backoff_policy);
 
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
   static std::unique_ptr<RetryPolicy> TestRetryPolicy();

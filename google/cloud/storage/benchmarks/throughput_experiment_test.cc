@@ -37,7 +37,13 @@ class ThroughputExperimentIntegrationTest
   std::string bucket_name_;
 };
 
+bool ProductionOnly(ApiName api) {
+  return api == ApiName::kApiRawGrpc || api == ApiName::kApiGrpc;
+}
+
 TEST_P(ThroughputExperimentIntegrationTest, Upload) {
+  if (UsingTestbench() && ProductionOnly(GetParam())) GTEST_SKIP();
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -65,6 +71,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
 }
 
 TEST_P(ThroughputExperimentIntegrationTest, Download) {
+  if (UsingTestbench() && ProductionOnly(GetParam())) GTEST_SKIP();
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

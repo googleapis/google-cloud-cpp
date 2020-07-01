@@ -130,6 +130,13 @@ if should_run_integration_tests; then
   )
 
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+
+  echo
+  io::log_yellow "running storage integration tests via Bazel+Emulator"
+  echo
+  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+    "${BAZEL_BIN}" "${bazel_args[@]}"
+
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
   # Manually restarting the build clears up the problem, but that is just a
@@ -175,6 +182,9 @@ if should_run_integration_tests; then
     # was called above. The one exception is the bigtable_grpc_credentials
     # test, which requires an access token and will be run separately.
     "-//google/cloud/bigtable/..."
+
+    # The Storage integration tests were already run above
+    "-//google/cloud/storage/..."
   )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
@@ -196,53 +206,6 @@ if should_run_integration_tests; then
   create_gcloud_config
 
   echo "================================================================"
-  io::log "Delete any stale service account used in HMAC key tests."
-  activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
-  cleanup_stale_hmac_service_accounts
-
-  echo "================================================================"
-  io::log "Create a service account to run the storage HMAC tests."
-  # Recall that each evaluation of ${RANDOM} produces a different value, note
-  # the YYYYMMDD prefix used above to delete stale accounts. We use the
-  # hour, minute and seconds because ${RANDOM} is a small random number: while
-  # we do not expect ${RANDOM} to repeat in the same second, it could repeat in
-  # the same day. In addition, the format must be compact because the service
-  # account name cannot be longer than 30 characters.
-  HMAC_SERVICE_ACCOUNT_NAME="$(date +hmac-%Y%m%d-%H%M%S-${RANDOM})"
-  create_hmac_service_account "${HMAC_SERVICE_ACCOUNT_NAME}"
-  GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-  export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
-
-  # Deactivate the recently activated service accounts to prevent accidents.
-  io::log "Revoke service account used to manage HMAC service accounts."
-  revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
-
-  trap delete_hmac_service_account EXIT
-  delete_hmac_service_account() {
-    local -r ACCOUNT="${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
-    set +e
-    echo "================================================================"
-    io::log_yellow "Performing cleanup actions."
-    io::log "Activate service account used to manage HMAC service accounts."
-    activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
-    io::log "Delete service account used in HMAC key tests."
-    cleanup_hmac_service_account "${ACCOUNT}"
-
-    # Deactivate the recently activated service accounts to prevent accidents.
-    io::log "Revoke service account used to manage HMAC service accounts."
-    revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
-
-    # This is normally revoked manually, but in case we exit before that point
-    # we try again, ignore any errors.
-    revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}" >/dev/null 2>&1
-
-    delete_gcloud_config
-
-    io::log_yellow "Cleanup actions completed."
-    set -e
-  }
-
-  echo "================================================================"
   io::log "Create an access token to run the Bigtable credential examples."
   activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
@@ -262,12 +225,6 @@ if should_run_integration_tests; then
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
       -- "${target}"
   done
-
-  # Run the integration tests and examples that need the HMAC service account.
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-    -- "${hmac_service_account_targets[@]}"
 fi
 
 echo "================================================================"

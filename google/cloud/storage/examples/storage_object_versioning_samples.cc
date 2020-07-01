@@ -17,7 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
-#include <map>
+#include <thread>
 
 namespace {
 
@@ -171,10 +171,13 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
-  auto bucket_metadata = client
-                             .CreateBucketForProject(bucket_name, project_id,
-                                                     gcs::BucketMetadata{})
-                             .value();
+  (void)client
+      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{})
+      .value();
+  // In GCS a single project cannot create or delete buckets more often than
+  // once every two seconds. We will pause for at least that long before
+  // deleting the bucket.
+  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   std::cout << "\nRunning the GetObjectVersioning() example [1]" << std::endl;
   GetObjectVersioning(client, {bucket_name});
@@ -216,6 +219,7 @@ void RunAll(std::vector<std::string> const& argv) {
   GetObjectVersioning(client, {bucket_name});
 
   (void)client.DeleteObject(bucket_name, dst_object_name);
+  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
   (void)client.DeleteBucket(bucket_name);
 }
 
