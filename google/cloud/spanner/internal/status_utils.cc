@@ -22,7 +22,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 bool IsSessionNotFound(google::cloud::Status const& status) {
-  // "Session not found" in the status message is an API guanantee.
+  // "Session not found" in the status message is an API guarantee.
   return status.code() == StatusCode::kNotFound &&
          status.message().find("Session not found") != std::string::npos;
 }
