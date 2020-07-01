@@ -55,8 +55,8 @@ git log --no-merges --format="format:* %s" \
    ':(exclude)google/cloud/storage/'
 ```
 
-Any _chore_/_ci_-tagged PRs in the above lists should probably be discarded as
-they are uninteresting to our users.
+Any _chore_/_ci_/_test_-tagged PRs in the above lists should probably be
+discarded as they are uninteresting to our users.
 
 ### Send a PR with all these changes
 
