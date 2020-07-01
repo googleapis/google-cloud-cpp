@@ -104,7 +104,7 @@ class AsyncFunction : public internal::AsyncGrpcOperation {
 
   std::shared_ptr<internal::CompletionQueueImpl> cq_;
   std::unique_ptr<internal::RunAsyncBase> fun_;
-  // Holds the underlying handle, it might be a nullpotr in tests.
+  // Holds the underlying handle, it might be a nullptr in tests.
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
