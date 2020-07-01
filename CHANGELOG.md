@@ -6,18 +6,13 @@
 
 ### Bigtable
 
-* fix: rotate through backup tests to stay under quota (#4420)
 * feature: add bigtable backup API support (#4407)
-* ci(macos): less flaky bigtable examples (#4369)
 * fix: deadlock in MutationBatcher (#4327)
 
 ### Storage
 
-* fix(storage): accept more than one matching log line (#4445)
 * fix: support ObjectReadStream::tellg() (#4402)
-* fix: eliminate data race between storage "service account" tests (#4403)
 * fix(storage): treat 408 errors as retryable (#4397)
-* fix: deflake test that was hitting a 500ms timeout (#4390)
 * fix(GCS+gRPC): simplify DirectPath configuration (#4388)
 * feat(GCS+gRPC): DirectPath can be manually configured (#4379)
 * fix: warnings with MSVC 2019 16.6 (aka 19.26 akak 14.26) (#4365)
@@ -31,9 +26,7 @@
 * doc(spanner): add CreateInstance() example (#4405)
 * fix(spanner): examples on how to delete data (#4401)
 * feat: use `SELECT 1` to refresh sessions (#4377)
-* ci(spanner): auto drop databases for realsies (#4371)
 * fix(spanner): use correct name for test (#4373)
-* ci(spanner): auto cleanup old databases (#4364)
 
 ### Common libraries
 
