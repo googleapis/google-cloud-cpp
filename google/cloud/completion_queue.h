@@ -224,7 +224,7 @@ class CompletionQueue {
   void RunAsync(Functor&& functor) {
     class Wrapper : public internal::RunAsyncBase {
      public:
-      Wrapper(Functor&& f) : fun_(std::forward<Functor>(f)) {}
+      explicit Wrapper(Functor&& f) : fun_(std::forward<Functor>(f)) {}
       ~Wrapper() override = default;
       void exec() override { fun_(); }
 
