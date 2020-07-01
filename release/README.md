@@ -22,28 +22,28 @@ Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
 Spanner, and the common libraries:
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the Bigtable header
+# Summarize the output of this into CHANGELOG.md under the *Bigtable* header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/bigtable
 ```
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the Storage header
+# Summarize the output of this into CHANGELOG.md under the *Storage* header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/storage
 ```
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the Spanner header
+# Summarize the output of this into CHANGELOG.md under the *Spanner* header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/spanner
 ```
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the Storage header
+# Summarize the output of this into CHANGELOG.md under the *Common libraries* header
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud \
@@ -54,6 +54,9 @@ git log --no-merges --format="format:* %s" \
    ':(exclude)google/cloud/spanner/' \
    ':(exclude)google/cloud/storage/'
 ```
+
+Any _chore_/_ci_-tagged PRs in the above lists should probably be discarded as
+they are uninteresting to our users.
 
 ### Send a PR with all these changes
 
