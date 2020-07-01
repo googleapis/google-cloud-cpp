@@ -24,6 +24,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 template <typename T>
 using optional = absl::optional<T>;
+using absl::nullopt;
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
