@@ -172,15 +172,15 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
   using ms = std::chrono::milliseconds;
 
   // Schedule some work, it cannot execute because there is no thread attached.
-  auto background_thread_id = background->cq().MakeRelativeTimer(ms(0)).then(
-      [](future<StatusOr<std::chrono::system_clock::time_point>>) {
-        return std::this_thread::get_id();
-      });
+  promise<std::thread::id> p;
+  auto background_thread_id = p.get_future();
+  background->cq().RunAsync(
+      [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
   EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));
 
   // Verify we can create our own threads to drain the completion queue.
   std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(500)));
+  EXPECT_EQ(t.get_id(), background_thread_id.get());
 
   cq.Shutdown();
   t.join();
