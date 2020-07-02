@@ -19,8 +19,8 @@ FROM fedora:${DISTRO_VERSION}
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y clang clang-tools-extra cmake findutils gcc-c++ git \
-        llvm-devel make ninja-build openssl-devel python3-lit tar unzip which \
-        wget xz
+        llvm llvm-devel make ninja-build openssl-devel python3-lit tar unzip \
+        which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
