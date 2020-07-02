@@ -70,6 +70,9 @@ int Example::Run(int argc, char const* const argv[]) try {
 } catch (Usage const& u) {
   PrintUsage(argv[0], u.what());
   return 1;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+  throw;
 }
 
 void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
