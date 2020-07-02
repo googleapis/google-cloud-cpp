@@ -28,8 +28,7 @@ BAZEL_BIN="$1"
 shift
 bazel_test_args=("$@")
 
-# Configure run_emulators_utils.sh to find the instance admin emulator.
-# Configure run_emulators_utils.sh to find the instance admin emulator.
+# Configure run_testbench_utils.sh to run the GCS testbench.
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # These can only run against production
@@ -88,8 +87,5 @@ testbench_args=(
   "//google/cloud/storage/...:all" \
   "${excluded_targets[@]}"
 exit_status=$?
-
-kill_testbench
-trap '' EXIT
 
 exit "${exit_status}"

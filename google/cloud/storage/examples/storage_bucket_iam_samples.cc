@@ -402,8 +402,8 @@ void RunAll(std::vector<std::string> const& argv) {
               gcs::BucketMetadata{}.set_iam_configuration(iam_configuration()))
           .value();
   // In GCS a single project cannot create or delete buckets more often than
-  // once every two seconds. We will pause for at least that long before
-  // deleting the bucket.
+  // once every two seconds. We will pause until that time before deleting the
+  // bucket.
   auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   std::cout << "\nRunning GetBucketIamPolicy() example" << std::endl;

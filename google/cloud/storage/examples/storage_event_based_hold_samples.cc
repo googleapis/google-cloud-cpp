@@ -127,8 +127,8 @@ void RunAll(std::vector<std::string> const& argv) {
   (void)client.CreateBucketForProject(bucket_name, project_id,
                                       gcs::BucketMetadata{});
   // In GCS a single project cannot create or delete buckets more often than
-  // once every two seconds. We will pause for at least that long before
-  // deleting the bucket.
+  // once every two seconds. We will pause until that time before deleting the
+  // bucket.
   auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   std::cout << "\nRunning GetDefaultEventBasedHold() example" << std::endl;

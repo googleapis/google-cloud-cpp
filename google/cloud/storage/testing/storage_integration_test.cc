@@ -51,9 +51,11 @@ StorageIntegrationTest::MakeBucketIntegrationTestClient() {
   auto constexpr kInitialDelay = std::chrono::seconds(5);
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
   auto constexpr kBackoffScalingFactor = 2.0;
+  // This is comparable to the timeout for each integration test, it makes
+  // little sense to wait any longer.
+  auto constexpr kMaximumRetryTime = std::chrono::minutes(10);
   return MakeIntegrationTestClient(
-      LimitedTimeRetryPolicy(/*maximum_duration=*/2 * kMaximumBackoffDelay)
-          .clone(),
+      LimitedTimeRetryPolicy(kMaximumRetryTime).clone(),
       ExponentialBackoffPolicy(kInitialDelay, kMaximumBackoffDelay,
                                kBackoffScalingFactor)
           .clone());
