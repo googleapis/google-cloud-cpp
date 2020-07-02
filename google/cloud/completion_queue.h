@@ -180,9 +180,6 @@ class CompletionQueue {
    * @tparam Functor the functor to call on the CompletionQueue thread.
    *   It must satisfy the `void(CompletionQueue&)` signature.
    * @param functor the value of the functor.
-   * @return an asynchronous operation wrapping the functor; it can be used for
-   *   cancelling but it makes little sense given that it will be completed
-   *   straight away
    */
   template <typename Functor,
             typename std::enable_if<
@@ -206,6 +203,29 @@ class CompletionQueue {
     };
     RunAsyncImpl(
         absl::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
+  }
+
+  /**
+   * Asynchronously run a functor on a thread `Run()`ning the `CompletionQueue`.
+   *
+   * @tparam Functor the functor to call on the CompletionQueue thread.
+   *   It must satisfy the `void()` signature.
+   * @param functor the value of the functor.
+   */
+  template <typename Functor,
+            typename std::enable_if<internal::is_invocable<Functor>::value,
+                                    int>::type = 0>
+  void RunAsync(Functor&& functor) {
+    class Wrapper : public internal::RunAsyncBase {
+     public:
+      explicit Wrapper(Functor&& f) : fun_(std::forward<Functor>(f)) {}
+      ~Wrapper() override = default;
+      void exec() override { fun_(); }
+
+     private:
+      absl::decay_t<Functor> fun_;
+    };
+    RunAsyncImpl(absl::make_unique<Wrapper>(std::forward<Functor>(functor)));
   }
 
  private:
