@@ -330,15 +330,17 @@ cc_library(
         ":macos": [
             "-fno-constant-cfstrings",
         ],
+        "//conditions:default": [],
+    }),
+    defines = ["CURL_STATICLIB"] + select({
         ":windows": [
             # See curl.h for discussion of write size and Windows
-            "/DCURL_MAX_WRITE_SIZE=16384",
+            "CURL_MAX_WRITE_SIZE=16384",
         ],
         "//conditions:default": [
-            "-DCURL_MAX_WRITE_SIZE=65536",
+            "CURL_MAX_WRITE_SIZE=65536",
         ],
     }),
-    defines = ["CURL_STATICLIB"],
     includes = ["include"],
     linkopts = select({
         ":macos": [
