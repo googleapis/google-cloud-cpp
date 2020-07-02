@@ -359,7 +359,8 @@ workstation or build server.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
-        gzip libcurl-devel libopenssl-devel libtool make tar wget which
+        gzip libcurl-devel libopenssl-devel libtool make tar wget which \
+        zlib zlib-devel-static
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
