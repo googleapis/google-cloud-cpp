@@ -19,14 +19,20 @@ FROM fedora:${DISTRO_VERSION}
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y clang clang-tools-extra cmake findutils gcc-c++ git \
-        llvm llvm-devel make ninja-build openssl-devel python3-lit tar unzip \
-        which wget xz
+        llvm llvm-devel make ninja-build openssl-devel python3 python3-devel \
+        python3-lit python3-pip tar unzip which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
+
+# Install the Python modules needed to run the storage testbench
+RUN pip3 install --upgrade pip
+RUN pip3 install setuptools
+RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
+    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 
 WORKDIR /var/tmp/build
 RUN wget -q http://releases.llvm.org/8.0.0/libcxx-8.0.0.src.tar.xz

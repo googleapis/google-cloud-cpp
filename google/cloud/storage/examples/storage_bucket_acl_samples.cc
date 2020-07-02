@@ -17,7 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
-#include <map>
+#include <thread>
 
 namespace {
 
@@ -246,10 +246,13 @@ void RunAll(std::vector<std::string> const& argv) {
   auto client = gcs::Client::CreateDefaultClient().value();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
-  auto bucket_metadata = client
-                             .CreateBucketForProject(bucket_name, project_id,
-                                                     gcs::BucketMetadata{})
-                             .value();
+  (void)client
+      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{})
+      .value();
+  // In GCS a single project cannot create or delete buckets more often than
+  // once every two seconds. We will pause until that time before deleting the
+  // bucket.
+  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
 
   auto const reader = gcs::BucketAccessControl::ROLE_READER();
   auto const owner = gcs::BucketAccessControl::ROLE_OWNER();
@@ -281,6 +284,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning RemoveBucketOwner() example" << std::endl;
   RemoveBucketOwner(client, {bucket_name, entity});
 
+  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
   (void)client.DeleteBucket(bucket_name);
 }
 

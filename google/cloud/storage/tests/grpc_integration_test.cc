@@ -56,7 +56,7 @@ class GrpcIntegrationTest
 };
 
 TEST_F(GrpcIntegrationTest, BucketCRUD) {
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
@@ -89,12 +89,15 @@ TEST_F(GrpcIntegrationTest, BucketCRUD) {
 }
 
 TEST_F(GrpcIntegrationTest, ObjectCRUD) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
   auto object_name = MakeRandomObjectName();
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -114,7 +117,7 @@ TEST_F(GrpcIntegrationTest, ObjectCRUD) {
       bucket_name, object_name, Generation(object_metadata->generation()));
   EXPECT_STATUS_OK(delete_object_status);
 
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
@@ -167,11 +170,14 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 /// @test Verify that NOT_FOUND is returned for missing objects
 TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -196,7 +202,7 @@ TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto status = stream->Finish();
   ASSERT_EQ(grpc::StatusCode::NOT_FOUND, status.error_code())
       << "message = " << status.error_message();
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
@@ -212,11 +218,14 @@ TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
 TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   if (!UsingGrpc()) GTEST_SKIP();
 
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -277,19 +286,22 @@ TEST_F(GrpcIntegrationTest, ReproLargeInsert) {
   auto delete_object_status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(delete_object_status);
 
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 TEST_F(GrpcIntegrationTest, InsertLarge) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
   auto object_name = MakeRandomObjectName();
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -310,17 +322,20 @@ TEST_F(GrpcIntegrationTest, InsertLarge) {
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
 
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
 TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
   auto object_name = MakeRandomObjectName();
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -342,7 +357,7 @@ TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
 
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 

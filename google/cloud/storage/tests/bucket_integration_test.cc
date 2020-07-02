@@ -18,6 +18,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -62,7 +64,7 @@ class BucketIntegrationTest
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto buckets = client->ListBucketsForProject(project_id_);
@@ -151,20 +153,26 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
       PredefinedAcl::PublicReadWrite(),
   };
 
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
         bucket_name, project_id_, BucketMetadata(), PredefinedAcl(acl));
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
 
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+
     auto status = client->DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
+
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
   }
 }
 
@@ -178,12 +186,12 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
       PredefinedDefaultObjectAcl::PublicRead(),
   };
 
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
         bucket_name, project_id_, BucketMetadata(),
@@ -191,14 +199,20 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
 
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+
     auto status = client->DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
+
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
   }
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // We need to have an available bucket for logging ...
@@ -209,6 +223,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   ASSERT_STATUS_OK(logging_meta);
   EXPECT_EQ(logging_name, logging_meta->name());
 
+  // Wait at least 2 seconds before trying to create / delete another bucket.
+  if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
   // Create a Bucket, use the default settings for most fields, except the
   // storage class and location. Fetch the full attributes of the bucket.
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
@@ -334,6 +350,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
+  // Wait at least 2 seconds before trying to create / delete another bucket.
+  if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
   status = client->DeleteBucket(logging_name);
   ASSERT_STATUS_OK(status);
 }
@@ -341,7 +359,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
@@ -460,7 +478,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private" PredefinedAcl so
@@ -539,7 +557,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private"
@@ -615,7 +633,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -669,7 +687,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -724,7 +742,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
