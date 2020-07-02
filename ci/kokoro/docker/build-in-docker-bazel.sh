@@ -131,11 +131,10 @@ if should_run_integration_tests; then
 
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
 
-  echo
+  echo "================================================================"
   io::log_yellow "running storage integration tests via Bazel+Emulator"
-  echo
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${bazel_args[@]}"
+    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
 
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
