@@ -180,9 +180,6 @@ class CompletionQueue {
    * @tparam Functor the functor to call on the CompletionQueue thread.
    *   It must satisfy the `void(CompletionQueue&)` signature.
    * @param functor the value of the functor.
-   * @return an asynchronous operation wrapping the functor; it can be used for
-   *   cancelling but it makes little sense given that it will be completed
-   *   straight away
    */
   template <typename Functor,
             typename std::enable_if<
@@ -214,9 +211,6 @@ class CompletionQueue {
    * @tparam Functor the functor to call on the CompletionQueue thread.
    *   It must satisfy the `void()` signature.
    * @param functor the value of the functor.
-   * @return an asynchronous operation wrapping the functor; it can be used for
-   *   cancelling but it makes little sense given that it will be completed
-   *   straight away
    */
   template <typename Functor,
             typename std::enable_if<internal::is_invocable<Functor>::value,
