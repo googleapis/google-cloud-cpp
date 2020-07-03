@@ -1,4 +1,5 @@
 // Copyright 2019 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,11 +42,12 @@ TEST(CustomerSuppliedBackgroundThreads, LifecycleNoShutdown) {
   auto has_shutdown = p.get_future();
   EXPECT_NE(std::future_status::ready, has_shutdown.wait_for(ms(2)));
 
-  auto expired = cq.MakeRelativeTimer(ms(0));
-  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(500)));
+  std::promise<std::thread::id> bg;
+  cq.RunAsync([&bg] { bg.set_value(std::this_thread::get_id()); });
+  EXPECT_EQ(t.get().get_id(), bg.get_future().get());
 
   cq.Shutdown();
-  EXPECT_EQ(std::future_status::ready, has_shutdown.wait_for(ms(500)));
+  has_shutdown.get();
 }
 
 /// @test Verify that users can supply their own queue and threads.
@@ -63,7 +65,6 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
         return std::this_thread::get_id();
       });
   ScopedThread t([&cq] { cq.Run(); });
-  ASSERT_EQ(std::future_status::ready, id.wait_for(ms(500)));
   EXPECT_EQ(t.get().get_id(), id.get());
 
   cq.Shutdown();
@@ -73,10 +74,9 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
 TEST(AutomaticallyCreatedBackgroundThreads, IsActive) {
   AutomaticallyCreatedBackgroundThreads actual;
 
-  using ms = std::chrono::milliseconds;
-
-  auto expired = actual.cq().MakeRelativeTimer(ms(0));
-  EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(500)));
+  promise<std::thread::id> bg;
+  actual.cq().RunAsync([&bg] { bg.set_value(std::this_thread::get_id()); });
+  EXPECT_NE(std::this_thread::get_id(), bg.get_future().get());
 }
 
 }  // namespace
