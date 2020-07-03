@@ -24,6 +24,8 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/kms_key_name.h"
+#include "absl/types/optional.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <string>
 #include <vector>
@@ -119,6 +121,8 @@ class DatabaseAdminConnection {
     Database database;
     /// Any additional statements to execute after creating the database.
     std::vector<std::string> extra_statements;
+    /// The KMS key that was used to encrypt and decrypt the database.
+    absl::optional<KmsKeyName> encryption_key;
   };
 
   /// Wrap the arguments for `GetDatabase()`.

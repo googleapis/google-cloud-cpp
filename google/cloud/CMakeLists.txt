@@ -151,6 +151,8 @@ add_library(
     internal/tuple.h
     internal/utility.h
     internal/version_info.h
+    kms_key_name.cc
+    kms_key_name.h
     log.cc
     log.h
     optional.h

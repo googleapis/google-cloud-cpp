@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -31,77 +32,112 @@ namespace {
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::testing::EndsWith;
 
+// Constants used to identify the encryption key.
+// For staging, the location must be us-central1.
+auto constexpr kLocation = "us-central1";
+auto constexpr kKeyRing = "spanner-cmek";
+auto constexpr kKeyName = "spanner-cmek-test-key";
+
+class DatabaseAdminClientTest : public ::testing::Test {
+ protected:
+   static void SetUpTestSuite() {
+     // XXX(salty) run these tests against staging spanner
+     using ::google::cloud::internal::SetEnv;
+     SetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+            "staging-wrenchworks.sandbox.googleapis.com");
+#if 0
+     // XXX(salty) I thought I needed this service account but I guess not?
+     SetEnv(
+         "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT",
+         "service-936212892354@gcp-sa-staging-spanner.iam.gserviceaccount.com");
+#endif
+   }
+
+  // We can't use ASSERT* in the constructor, so defer initializing `instance_`
+  // and `database_` until `SetUp()`.
+  DatabaseAdminClientTest()
+      : instance_("dummy", "dummy"), database_(instance_, "dummy") {}
+
+  void SetUp() override {
+    using ::google::cloud::internal::GetEnv;
+    emulator_ = GetEnv("SPANNER_EMULATOR_HOST").has_value();
+    auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id.empty());
+
+    auto generator = google::cloud::internal::MakeDefaultPRNG();
+    auto instance_id =
+        spanner_testing::PickRandomInstance(generator, project_id);
+    ASSERT_STATUS_OK(instance_id);
+    instance_ = Instance(project_id, *instance_id);
+
+    database_ =
+        Database(instance_, spanner_testing::RandomDatabaseName(generator));
+
+    test_iam_service_account_ =
+        GetEnv(
+            "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
+            .value_or("");
+    ASSERT_TRUE(emulator_ || !test_iam_service_account_.empty());
+  }
+
+  // Does `database_` exist in `instance_`?
+  bool DatabaseExists() {
+    auto full_name = database_.FullName();
+    for (auto const& database : client_.ListDatabases(instance_)) {
+      EXPECT_STATUS_OK(database);
+      if (!database) break;
+      if (database->name() == full_name) return true;
+    }
+    return false;
+  };
+
+  Instance instance_;
+  Database database_;
+  DatabaseAdminClient client_;
+  bool emulator_;
+  std::string test_iam_service_account_;
+};
+
 /// @test Verify the basic CRUD operations for databases work.
-TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
-  auto emulator =
-      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_FALSE(project_id.empty());
-
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto instance_id = spanner_testing::PickRandomInstance(generator, project_id);
-  ASSERT_STATUS_OK(instance_id);
-
-  auto test_iam_service_account =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT")
-          .value_or("");
-  ASSERT_TRUE(emulator || !test_iam_service_account.empty());
-
-  Instance const in(project_id, *instance_id);
-
-  std::string database_id = spanner_testing::RandomDatabaseName(generator);
-
-  DatabaseAdminClient client;
-
-  // We test client.ListDatabases() by verifying that (a) it does not return a
+TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
+  // We test Client::ListDatabases() by verifying that (a) it does not return a
   // randomly generated database name before we create a database with that
   // name, (b) it *does* return that database name once created, and (c) it no
   // longer returns that name once the database is dropped. Implicitly that also
-  // tests that client.DropDatabase() and client.CreateDatabase() do something,
-  // which is nice.
-  auto get_current_databases = [&client, in] {
-    std::vector<std::string> names;
-    for (auto const& database : client.ListDatabases(in)) {
-      EXPECT_STATUS_OK(database);
-      if (!database) return names;
-      names.push_back(database->name());
-    }
-    return names;
-  };
+  // tests that Client::DropDatabase() and client::CreateDatabase() do
+  // something, which is nice.
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_
+                                 << " already exists, this is unexpected as "
+                                    "the database id is selected at random.";
 
-  Database db(project_id, *instance_id, database_id);
-
-  auto db_list = get_current_databases();
-  ASSERT_EQ(0, std::count(db_list.begin(), db_list.end(), db.FullName()))
-      << "Database " << database_id << " already exists, this is unexpected"
-      << " as the database id is selected at random.";
-
-  auto database_future = client.CreateDatabase(db);
+  // Use an encryption key for this test.
+  KmsKeyName encryption_key(instance_.project_id(), kLocation, kKeyRing,
+                            kKeyName);
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, encryption_key);
   auto database = database_future.get();
   ASSERT_STATUS_OK(database);
 
-  EXPECT_THAT(database->name(), EndsWith(database_id));
+  EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
 
-  auto get_result = client.GetDatabase(db);
+  auto get_result = client_.GetDatabase(database_);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
 
-  if (!emulator) {
-    auto current_policy = client.GetIamPolicy(db);
+  if (!emulator_) {
+    auto current_policy = client_.GetIamPolicy(database_);
     ASSERT_STATUS_OK(current_policy);
     EXPECT_EQ(0, current_policy->bindings_size());
 
     std::string const reader_role = "roles/spanner.databaseReader";
     std::string const writer_role = "roles/spanner.databaseUser";
     std::string const expected_member =
-        "serviceAccount:" + test_iam_service_account;
+        "serviceAccount:" + test_iam_service_account_;
     auto& binding = *current_policy->add_bindings();
     binding.set_role(reader_role);
     *binding.add_members() = expected_member;
 
-    auto updated_policy = client.SetIamPolicy(db, *current_policy);
+    auto updated_policy = client_.SetIamPolicy(database_, *current_policy);
     ASSERT_STATUS_OK(updated_policy);
     EXPECT_EQ(1, updated_policy->bindings_size());
     ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());
@@ -110,11 +146,10 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
               updated_policy->bindings().Get(0).members().Get(0));
 
     // Perform a different update using the the OCC loop API:
-    updated_policy =
-        client.SetIamPolicy(db, [&test_iam_service_account, &writer_role](
-                                    google::iam::v1::Policy current) {
+    updated_policy = client_.SetIamPolicy(
+        database_, [this, &writer_role](google::iam::v1::Policy current) {
           std::string const expected_member =
-              "serviceAccount:" + test_iam_service_account;
+              "serviceAccount:" + test_iam_service_account_;
           auto& binding = *current.add_bindings();
           binding.set_role(writer_role);
           *binding.add_members() = expected_member;
@@ -128,19 +163,19 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
               updated_policy->bindings().Get(1).members().Get(0));
 
     // Fetch the Iam Policy again.
-    current_policy = client.GetIamPolicy(db);
+    current_policy = client_.GetIamPolicy(database_);
     ASSERT_STATUS_OK(current_policy);
     EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
 
     auto test_iam_permission_result =
-        client.TestIamPermissions(db, {"spanner.databases.read"});
+        client_.TestIamPermissions(database_, {"spanner.databases.read"});
     ASSERT_STATUS_OK(test_iam_permission_result);
     ASSERT_EQ(1, test_iam_permission_result->permissions_size());
     ASSERT_EQ("spanner.databases.read",
               test_iam_permission_result->permissions(0));
   }
 
-  auto get_ddl_result = client.GetDatabaseDdl(db);
+  auto get_ddl_result = client_.GetDatabaseDdl(database_);
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
@@ -153,25 +188,60 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
                              ) PRIMARY KEY (SingerId)
                             )""";
 
-  auto update_future = client.UpdateDatabase(db, {create_table_statement});
+  auto update_future =
+      client_.UpdateDatabase(database_, {create_table_statement});
   auto metadata = update_future.get();
   ASSERT_STATUS_OK(metadata);
-  EXPECT_THAT(metadata->database(), EndsWith(database_id));
+  EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));
   EXPECT_EQ(1, metadata->statements_size());
   EXPECT_EQ(1, metadata->commit_timestamps_size());
   if (metadata->statements_size() > 1) {
     EXPECT_EQ(create_table_statement, metadata->statements(0));
   }
 
-  db_list = get_current_databases();
-  ASSERT_EQ(1, std::count(db_list.begin(), db_list.end(), db.FullName()));
-
-  auto drop_status = client.DropDatabase(db);
+  EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
+  auto drop_status = client_.DropDatabase(database_);
   EXPECT_STATUS_OK(drop_status);
-
-  db_list = get_current_databases();
-  ASSERT_EQ(0, std::count(db_list.begin(), db_list.end(), db.FullName()));
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
 }
+
+// @test Verify we can create a database with an encryption key.
+TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
+  KmsKeyName encryption_key(instance_.project_id(), kLocation, kKeyRing,
+                            kKeyName);
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, encryption_key);
+  auto database = database_future.get();
+  EXPECT_STATUS_OK(database);
+
+  auto get_result = client_.GetDatabase(database_);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(database->name(), get_result->name());
+  // Verify the encryption key name
+  // TODO(salty) it seems to me that these expectations should also hold true
+  // for the `database` returned from `CreateDatabase`, but the encryption
+  // config is not present in `database`. I talked to the spanner folks about
+  // it, waiting to hear if they're going to change it.
+  EXPECT_TRUE(get_result->has_encryption_config());
+  EXPECT_EQ(get_result->encryption_config().kms_key_name(),
+            encryption_key.FullName());
+
+  auto drop_status = client_.DropDatabase(database_);
+  EXPECT_STATUS_OK(drop_status);
+}
+
+// @test Verify creating a database fails if a nonexistent encryption key is
+// supplied.
+TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
+  KmsKeyName nonexistent_encryption_key(instance_.project_id(), kLocation,
+                                        kKeyRing, "ceci-n-est-pas-une-cle");
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, nonexistent_encryption_key);
+  auto database = database_future.get();
+  EXPECT_FALSE(database.ok());
+}
+
+
 
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
