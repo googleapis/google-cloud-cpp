@@ -78,7 +78,8 @@ start_testbench() {
   done
 
   if [[ -z "${testbench_port}" ]]; then
-    echo "Cannot find listening port for testbench." >&2
+    echo "${IO_COLOR_RED}Cannot find listening port for testbench.${IO_COLOR_RESET}" >&2
+    cat testbench.log
     exit 1
   fi
 
@@ -97,7 +98,8 @@ start_testbench() {
   done
 
   if [[ "${connected}" = "no" ]]; then
-    echo "Cannot connect to testbench; aborting test." >&2
+    echo "${IO_COLOR_RED}Cannot connect to testbench; aborting test.${IO_COLOR_RESET}" >&2
+    cat testbench.log
     exit 1
   else
     echo "Successfully connected to testbench [${TESTBENCH_PID}]"
