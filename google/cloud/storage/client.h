@@ -1148,8 +1148,8 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`, and
-   *   `WithObjectMetadata`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`,
+   *   `UploadFromOffset`, `UploadLimit` and `WithObjectMetadata`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
