@@ -91,37 +91,33 @@ ObjectWriteStream Client::WriteObjectImpl(
       internal::CreateHashValidator(request)));
 }
 
-bool Client::UseSimpleUpload(std::string const& file_name) const {
+bool Client::UseSimpleUpload(std::string const& file_name,
+                             std::uintmax_t* size) const {
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {
     return false;
   }
-  auto size = google::cloud::internal::file_size(file_name);
-  return size <= raw_client()->client_options().maximum_simple_upload_size();
+  *size = google::cloud::internal::file_size(file_name);
+  return *size <= raw_client()->client_options().maximum_simple_upload_size();
 }
 
 StatusOr<ObjectMetadata> Client::UploadFileSimple(
-    std::string const& file_name, internal::InsertObjectMediaRequest request) {
-  std::error_code size_err;
-  auto file_size = google::cloud::internal::file_size(file_name, size_err);
-  if (size_err) {
-    return Status(StatusCode::kNotFound, size_err.message());
-  }
-
+    std::string const& file_name, std::uintmax_t file_size,
+    internal::InsertObjectMediaRequest request) {
   auto upload_offset = request.HasOption<UploadFromOffset>()
                            ? request.GetOption<UploadFromOffset>().value()
                            : 0;
-  auto upload_size = request.HasOption<UploadLimit>()
-                         ? std::min(request.GetOption<UploadLimit>().value(),
-                                    file_size - upload_offset)
-                         : file_size - upload_offset;
-  if (upload_size < 0) {
+  if (file_size < upload_offset) {
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name
        << "): UploadFromOffset (" << upload_offset
        << ") is bigger than the size of file source (" << file_size << ")";
-    return Status(StatusCode::kInternal, std::move(os).str());
+    return Status(StatusCode::kInvalidArgument, std::move(os).str());
   }
+  auto upload_size = request.HasOption<UploadLimit>()
+                         ? std::min(request.GetOption<UploadLimit>().value(),
+                                    file_size - upload_offset)
+                         : file_size - upload_offset;
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -144,6 +140,9 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
 StatusOr<ObjectMetadata> Client::UploadFileResumable(
     std::string const& file_name,
     google::cloud::storage::internal::ResumableUploadRequest request) {
+  auto upload_offset = request.HasOption<UploadFromOffset>()
+                           ? request.GetOption<UploadFromOffset>().value()
+                           : 0;
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {
     GCP_LOG(WARNING) << "Trying to upload " << file_name
@@ -164,21 +163,18 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     if (size_err) {
       return Status(StatusCode::kNotFound, size_err.message());
     }
-
-    auto upload_offset = request.HasOption<UploadFromOffset>()
-                             ? request.GetOption<UploadFromOffset>().value()
-                             : 0;
-    auto upload_size = request.HasOption<UploadLimit>()
-                           ? std::min(request.GetOption<UploadLimit>().value(),
-                                      file_size - upload_offset)
-                           : file_size - upload_offset;
-    if (upload_size < 0) {
+    if (file_size < upload_offset) {
       std::ostringstream os;
       os << __func__ << "(" << request << ", " << file_name
          << "): UploadFromOffset (" << upload_offset
          << ") is bigger than the size of file source (" << file_size << ")";
-      return Status(StatusCode::kInternal, std::move(os).str());
+      return Status(StatusCode::kInvalidArgument, std::move(os).str());
     }
+
+    auto upload_size = request.HasOption<UploadLimit>()
+                           ? std::min(request.GetOption<UploadLimit>().value(),
+                                      file_size - upload_offset)
+                           : file_size - upload_offset;
     request.set_option(UploadContentLength(upload_size));
   }
   std::ifstream source(file_name, std::ios::binary);
@@ -188,6 +184,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
        << "): cannot open upload file source";
     return Status(StatusCode::kNotFound, std::move(os).str());
   }
+  // We set its offset before passing it to `UploadStreamResumable` so we don't
+  // need to compute `UploadFromOffset` again.
+  source.seekg(upload_offset, std::ios::beg);
   return UploadStreamResumable(source, request);
 }
 
@@ -200,22 +199,18 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   }
 
   auto session = std::move(*session_status);
-
-  auto upload_offset = request.HasOption<UploadFromOffset>()
-                           ? request.GetOption<UploadFromOffset>().value()
-                           : 0;
   // How many bytes of the local file are uploaded to the GCS server.
   auto server_size = session->next_expected_byte();
-  if (request.HasOption<UploadLimit>()) {
-    auto upload_limit = request.GetOption<UploadLimit>().value();
-    if (server_size > upload_limit) {
-      return Status(StatusCode::kOutOfRange,
-                    "UploadLimit (" + std::to_string(upload_limit) +
-                        ") is smaller than the uploaded size (" +
-                        std::to_string(server_size) + ") on GCS server");
-    }
+  auto upload_limit = request.HasOption<UploadLimit>()
+                          ? request.GetOption<UploadLimit>().value()
+                          : std::numeric_limits<std::uint64_t>::max();
+  if (server_size >= upload_limit) {
+    return Status(StatusCode::kOutOfRange,
+                  "UploadLimit (" + std::to_string(upload_limit) +
+                      ") is not bigger than the uploaded size (" +
+                      std::to_string(server_size) + ") on GCS server");
   }
-  source.seekg(server_size + upload_offset, std::ios::beg);
+  source.seekg(server_size, std::ios::cur);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
@@ -229,13 +224,10 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   while (!source.eof() && upload_response &&
          !upload_response->payload.has_value() && !reach_upload_limit) {
     // Read a chunk of data from the source file.
-    if (request.HasOption<UploadLimit>()) {
-      auto upload_limit = request.GetOption<UploadLimit>().value();
-      if (upload_limit - server_size <= chunk_size) {
-        // We don't want the `source_size` to exceed `UploadLimit`.
-        chunk_size = upload_limit - server_size;
-        reach_upload_limit = true;
-      }
+    if (upload_limit - server_size <= chunk_size) {
+      // We don't want the `source_size` to exceed `UploadLimit`.
+      chunk_size = upload_limit - server_size;
+      reach_upload_limit = true;
     }
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());

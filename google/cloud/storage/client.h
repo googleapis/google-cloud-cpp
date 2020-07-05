@@ -3048,21 +3048,24 @@ class Client {
                                           std::string const& object_name,
                                           std::false_type,
                                           Options&&... options) {
-    if (UseSimpleUpload(file_name)) {
+    std::uintmax_t file_size;
+    if (UseSimpleUpload(file_name, &file_size)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
       request.set_multiple_options(std::forward<Options>(options)...);
-      return UploadFileSimple(file_name, request);
+      return UploadFileSimple(file_name, file_size, request);
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return UploadFileResumable(file_name, std::move(request));
   }
 
-  bool UseSimpleUpload(std::string const& file_name) const;
+  bool UseSimpleUpload(std::string const& file_name,
+                       std::uintmax_t* size) const;
 
   StatusOr<ObjectMetadata> UploadFileSimple(
-      std::string const& file_name, internal::InsertObjectMediaRequest request);
+      std::string const& file_name, std::uintmax_t file_size,
+      internal::InsertObjectMediaRequest request);
 
   StatusOr<ObjectMetadata> UploadFileResumable(
       std::string const& file_name, internal::ResumableUploadRequest request);
