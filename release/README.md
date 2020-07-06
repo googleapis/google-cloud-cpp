@@ -11,54 +11,26 @@ familiar with the project itself, [git][git-docs], [GitHub][github-guides],
 
 ## Preparing for a release
 
-Assuming you are working on your own fork of the `google-cloud-cpp` project,
-and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
-commands should be useful in identifying important changes for inclusion in the
-release notes.
+The following sections assume you are working on your own fork of the
+`google-cloud-cpp` project, and `upstream` points to the
+`googleapis/google-cloud-cpp` remote.
 
 ### Update CHANGELOG.md
 
-Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
-Spanner, and the common libraries:
+We first need to update `CHANGELOG.md` with the release notes for Bigtable,
+Storage, Spanner, and the common libraries. This step is handled automatically
+for us by the [`./release/changelog.pl`
+script](https://github.com/googleapis/google-cloud-cpp/blob/master/release/changelog.pl), which summarizes the PRs merged into each component.
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the "Bigtable" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/bigtable
+$ ./release/changelog.pl
 ```
 
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Storage" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/storage
-```
+Run `git diff CHANGELOG.md` to check the edit. Any
+**chore**/**ci**/**test**-tagged PRs will have been omitted as they are not
+interesting to our users.
 
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Spanner" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/spanner
-```
-
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Common libraries" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud \
-   ':(exclude)google/cloud/firestore/' \
-   ':(exclude)google/cloud/bigquery/' \
-   ':(exclude)google/cloud/bigtable/' \
-   ':(exclude)google/cloud/pubsub/' \
-   ':(exclude)google/cloud/spanner/' \
-   ':(exclude)google/cloud/storage/'
-```
-
-Any **chore**/**ci**/**test**-tagged PRs in the above lists should probably be
-discarded as they are uninteresting to our users.
-
-### Send a PR with all these changes
+### Send a PR with these changes
 
 It is not recommended that you create the release branch before this PR is
 *merged*, but in some circumstances it might be needed, for example, if a large
