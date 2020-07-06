@@ -116,7 +116,7 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
     // call `cq.Shutdown()`, use a little loop to avoid this. In most runs this
     // loop will exit after the first iteration. By my measurements the loop
     // would need to run more than once every 10,000 runs. On the other hand,
-    // this should prevent the flake reported in #4246.
+    // this should prevent the flake reported in #4384.
     for (auto i = 0; i != 5; ++i) {
       timer = cq.MakeRelativeTimer(ms(500)).then(
           [](future<StatusOr<std::chrono::system_clock::time_point>> f) {
