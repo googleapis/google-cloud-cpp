@@ -124,6 +124,11 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
             EXPECT_STATUS_OK(f.get().status());
           });
       if (timer.wait_for(ms(0)) == std::future_status::timeout) break;
+      // This should be so rare that it is Okay to fail the test. We expect a
+      // the following assertion to fail once every 10^25 runs, if we see even
+      // one that means something is terribly wrong with my math and/or the
+      // code.
+      ASSERT_NE(i, 4);
     }
     cq.Shutdown();
     runner.join();
@@ -459,8 +464,8 @@ TEST(CompletionQueueTest, ShutdownWithReschedulingTimer) {
 
   cq.Shutdown();
   t.join();
-  // This is a "it did not crash nor hung" test, if we get here it was
-  // successful
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, ShutdownWithFastReschedulingTimer) {
@@ -484,8 +489,8 @@ TEST(CompletionQueueTest, ShutdownWithFastReschedulingTimer) {
   for (auto& t : threads) {
     t.join();
   }
-  // This is a "it did not crash nor hung" test, if we get here it was
-  // successful
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
@@ -497,8 +502,8 @@ TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
   cq.CancelAll();
   cq.Shutdown();
   t.join();
-  // This is a "it did not crash nor hung" test, if we get here it was
-  // successful
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, CancelTimerSimple) {
