@@ -123,6 +123,34 @@ TEST(CurlRequestTest, SimplePOST) {
   EXPECT_EQ("baz=baz2", form["baz"].get<std::string>());
 }
 
+TEST(CurlRequestTest, MultiBufferPUT) {
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/put",
+      storage::internal::GetDefaultCurlHandleFactory());
+  request.SetMethod("PUT");
+
+  std::vector<std::string> lines = {
+      {"line 1"},
+      {"line 2"},
+      {"line 3"},
+  };
+  std::vector<absl::Span<char const>> data;
+  std::string nl = "\n";
+  for (auto const& p : lines) {
+    data.emplace_back(p.data(), p.size());
+    data.emplace_back(nl.data(), nl.size());
+  }
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("Content-Type: application/octet-stream");
+  request.AddHeader("charsets: utf-8");
+
+  auto response = request.BuildRequest().MakeUploadRequest(data);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
+  EXPECT_EQ("line 1\nline 2\nline 3\n", parsed["data"]);
+}
+
 TEST(CurlRequestTest, Handle404) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/status/404",
