@@ -151,6 +151,23 @@ TEST(CurlRequestTest, MultiBufferPUT) {
   EXPECT_EQ("line 1\nline 2\nline 3\n", parsed["data"]);
 }
 
+TEST(CurlRequestTest, MultiBufferEmptyPUT) {
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/put",
+      storage::internal::GetDefaultCurlHandleFactory());
+  request.SetMethod("PUT");
+
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("Content-Type: application/octet-stream");
+  request.AddHeader("charsets: utf-8");
+
+  auto response = request.BuildRequest().MakeUploadRequest({});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
+  EXPECT_TRUE(parsed["data"].get<std::string>().empty());
+}
+
 TEST(CurlRequestTest, Handle404) {
   storage::internal::CurlRequestBuilder request(
       HttpBinEndpoint() + "/status/404",
