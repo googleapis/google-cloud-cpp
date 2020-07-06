@@ -112,14 +112,25 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
   {
     CompletionQueue cq;
     std::thread runner([&cq] { cq.Run(); });
-    timer = cq.MakeRelativeTimer(ms(20)).then(
-        [](future<StatusOr<std::chrono::system_clock::time_point>> result) {
-          // Timer still runs to completion after `Shutdown`.
-          EXPECT_STATUS_OK(result.get().status());
-        });
-    EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
+    // In very rare conditions the timer would expire before we get a chance to
+    // call `cq.Shutdown()`, use a little loop to avoid this. In most runs this
+    // loop will exit after the first iteration. By my measurements the loop
+    // would need to run more than once every 10,000 runs. On the other hand,
+    // this should prevent the flake reported in #4384.
+    for (auto i = 0; i != 5; ++i) {
+      timer = cq.MakeRelativeTimer(ms(500)).then(
+          [](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+            // Timer still runs to completion after `Shutdown`.
+            EXPECT_STATUS_OK(f.get().status());
+          });
+      if (timer.wait_for(ms(0)) == std::future_status::timeout) break;
+      // This should be so rare that it is Okay to fail the test. We expect a
+      // the following assertion to fail once every 10^25 runs, if we see even
+      // one that means something is terribly wrong with my math and/or the
+      // code.
+      ASSERT_NE(i, 4);
+    }
     cq.Shutdown();
-    EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
     runner.join();
   }
   EXPECT_EQ(std::future_status::ready, timer.wait_for(ms(0)));
@@ -453,6 +464,8 @@ TEST(CompletionQueueTest, ShutdownWithReschedulingTimer) {
 
   cq.Shutdown();
   t.join();
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, ShutdownWithFastReschedulingTimer) {
@@ -476,6 +489,8 @@ TEST(CompletionQueueTest, ShutdownWithFastReschedulingTimer) {
   for (auto& t : threads) {
     t.join();
   }
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
@@ -487,6 +502,8 @@ TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
   cq.CancelAll();
   cq.Shutdown();
   t.join();
+  // This is a "neither crashed nor hung" test. Reaching this point is success.
+  SUCCEED();
 }
 
 TEST(CompletionQueueTest, CancelTimerSimple) {
