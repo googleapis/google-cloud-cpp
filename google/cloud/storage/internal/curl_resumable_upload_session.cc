@@ -21,20 +21,18 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadChunk(
-    std::string const& buffer) {
-  UploadChunkRequest request(session_id_, next_expected_,
-                             {{buffer.data(), buffer.size()}});
+    ConstBufferSequence const& buffers) {
+  UploadChunkRequest request(session_id_, next_expected_, buffers);
   auto result = client_->UploadChunk(request);
-  Update(result, buffer.size());
+  Update(result, TotalBytes(buffers));
   return result;
 }
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
-    std::string const& buffer, std::uint64_t upload_size) {
-  UploadChunkRequest request(session_id_, next_expected_,
-                             {{buffer.data(), buffer.size()}}, upload_size);
+    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
+  UploadChunkRequest request(session_id_, next_expected_, buffers, upload_size);
   auto result = client_->UploadChunk(request);
-  Update(result, buffer.size());
+  Update(result, TotalBytes(buffers));
   return result;
 }
 

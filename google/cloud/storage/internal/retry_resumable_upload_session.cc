@@ -37,18 +37,18 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 }  // namespace
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
-    std::string const& buffer) {
-  return UploadGenericChunk(buffer, optional<std::uint64_t>());
+    ConstBufferSequence const& buffers) {
+  return UploadGenericChunk(buffers, optional<std::uint64_t>());
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
-    std::string const& buffer, std::uint64_t upload_size) {
-  return UploadGenericChunk(buffer, upload_size);
+    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
+  return UploadGenericChunk(buffers, upload_size);
 }
 
 StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::UploadGenericChunk(
-    std::string const& buffer, optional<std::uint64_t> const& upload_size) {
+    ConstBufferSequence buffers, optional<std::uint64_t> const& upload_size) {
   bool const is_final_chunk = upload_size.has_value();
   char const* const func = is_final_chunk ? "UploadFinalChunk" : "UploadChunk";
   std::uint64_t next_byte = session_->next_expected_byte();
@@ -58,9 +58,7 @@ RetryResumableUploadSession::UploadGenericChunk(
   // The current APIs require us to copy the buffer in such a scenario. We can
   // and want to avoid the copy in the common case, so we use this variable to
   // either reference the copy or the original buffer.
-  // TODO(#3036): change the APIs to avoid this extra copy.
-  std::string const* buffer_to_use = &buffer;
-  std::string truncated_buffer;
+
   auto retry_policy = retry_policy_prototype_->clone();
   auto backoff_policy = backoff_policy_prototype_->clone();
   while (!retry_policy->IsExhausted()) {
@@ -84,13 +82,12 @@ RetryResumableUploadSession::UploadGenericChunk(
       return Status(StatusCode::kInternal, os.str());
     }
     if (new_next_byte > next_byte) {
-      truncated_buffer = buffer_to_use->substr(new_next_byte - next_byte);
-      buffer_to_use = &truncated_buffer;
+      PopFrontBytes(buffers, new_next_byte - next_byte);
       next_byte = new_next_byte;
     }
     auto result = is_final_chunk
-                      ? session_->UploadFinalChunk(*buffer_to_use, *upload_size)
-                      : session_->UploadChunk(*buffer_to_use);
+                      ? session_->UploadFinalChunk(buffers, *upload_size)
+                      : session_->UploadChunk(buffers);
     if (result.ok()) {
       if (result->upload_state == ResumableUploadResponse::kDone) {
         // The upload was completed. This can happen even if
@@ -100,7 +97,8 @@ RetryResumableUploadSession::UploadGenericChunk(
         return result;
       }
       auto current_next_expected_byte = next_expected_byte();
-      if (current_next_expected_byte - next_byte == buffer_to_use->size()) {
+      auto const total_bytes = TotalBytes(buffers);
+      if (current_next_expected_byte - next_byte == total_bytes) {
         // Otherwise, return only if there were no failures and it wasn't a
         // short write.
         return result;
@@ -108,7 +106,7 @@ RetryResumableUploadSession::UploadGenericChunk(
       std::stringstream os;
       os << "Short write. Previous next_byte=" << next_byte
          << ", current next_byte=" << current_next_expected_byte
-         << ", intended to write=" << buffer_to_use->size()
+         << ", intended to write=" << total_bytes
          << ", wrote=" << current_next_expected_byte - next_byte;
       last_status = Status(StatusCode::kUnavailable, os.str());
       // Don't reset the session on a short write nor wait according to the

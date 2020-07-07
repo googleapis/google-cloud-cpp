@@ -29,6 +29,7 @@ namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::testing::_;
+using ::testing::ElementsAre;
 using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
@@ -60,15 +61,16 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce([&](std::string const& p) {
-    EXPECT_EQ(payload, p);
-    return StatusOr<ResumableUploadResponse>(
-        AsStatus(HttpResponse{503, "uh oh", {}}));
-  });
+  EXPECT_CALL(*mock, UploadChunk(_))
+      .WillOnce([&](ConstBufferSequence const& p) {
+        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+        return StatusOr<ResumableUploadResponse>(
+            AsStatus(HttpResponse{503, "uh oh", {}}));
+      });
 
   LoggingResumableUploadSession session(std::move(mock));
 
-  auto result = session.UploadChunk(payload);
+  auto result = session.UploadChunk({{payload}});
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
@@ -80,8 +82,8 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce([&](std::string const& p, std::uint64_t s) {
-        EXPECT_EQ(payload, p);
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         EXPECT_EQ(513 * 1024, s);
         return StatusOr<ResumableUploadResponse>(
             AsStatus(HttpResponse{503, "uh oh", {}}));
@@ -89,7 +91,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   LoggingResumableUploadSession session(std::move(mock));
 
-  auto result = session.UploadFinalChunk(payload, 513 * 1024);
+  auto result = session.UploadFinalChunk({{payload}}, 513 * 1024);
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 

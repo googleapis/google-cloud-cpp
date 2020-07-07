@@ -54,7 +54,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadFinalChunk(contents, contents.size());
+      (*session)->UploadFinalChunk({{contents}}, contents.size());
 
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->payload.has_value());
@@ -84,13 +84,13 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk(contents);
+      (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk(contents, 2 * contents.size());
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -121,7 +121,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
 
   StatusOr<ResumableUploadResponse> response =
-      (*old_session)->UploadChunk(contents);
+      (*old_session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -129,10 +129,10 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
   old_session->reset();
 
-  response = (*session)->UploadChunk(contents);
+  response = (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk(contents, 3 * contents.size());
+  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -163,9 +163,9 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   // Send 2 chunks sized to be round quantums.
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk(contents);
+      (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
-  response = (*session)->UploadChunk(contents);
+  response = (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
   // Consider a streaming upload where the application flushes before closing
@@ -174,7 +174,7 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   // upload quantum. In this case the stream is terminated by sending an empty
   // chunk at the end, with the size of the previous chunks as an indication
   // of "done".
-  response = (*session)->UploadFinalChunk(std::string{}, 2 * contents.size());
+  response = (*session)->UploadFinalChunk({}, 2 * contents.size());
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -202,7 +202,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 
   ASSERT_STATUS_OK(session);
 
-  auto response = (*session)->UploadFinalChunk(std::string{}, 0);
+  auto response = (*session)->UploadFinalChunk({}, 0);
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());

@@ -222,6 +222,8 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   // We iterate while `source` is good, the upload size does not reach the
   // `UploadLimit` and the retry policy has not been exhausted.
   bool reach_upload_limit = false;
+  internal::ConstBufferSequence buffers(1);
+  std::vector<char> buffer(chunk_size);
   while (!source.eof() && upload_response &&
          !upload_response->payload.has_value() && !reach_upload_limit) {
     // Read a chunk of data from the source file.
@@ -230,18 +232,16 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       chunk_size = upload_limit - server_size;
       reach_upload_limit = true;
     }
-    std::string buffer(chunk_size, '\0');
-    source.read(&buffer[0], buffer.size());
+    source.read(buffer.data(), buffer.size());
     auto gcount = static_cast<std::size_t>(source.gcount());
     bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
     auto source_size = session->next_expected_byte() + gcount;
-    buffer.resize(gcount);
-
-    auto expected = session->next_expected_byte() + gcount;
+    auto expected = source_size;
+    buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
     if (final_chunk) {
-      upload_response = session->UploadFinalChunk(buffer, source_size);
+      upload_response = session->UploadFinalChunk(buffers, source_size);
     } else {
-      upload_response = session->UploadChunk(buffer);
+      upload_response = session->UploadChunk(buffers);
     }
     if (!upload_response) {
       return std::move(upload_response).status();

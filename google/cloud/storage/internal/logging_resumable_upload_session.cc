@@ -23,9 +23,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
-    std::string const& buffer) {
-  GCP_LOG(INFO) << __func__ << "() << {buffer.size=" << buffer.size() << "}";
-  auto response = session_->UploadChunk(buffer);
+    ConstBufferSequence const& buffers) {
+  GCP_LOG(INFO) << __func__ << "() << {buffer.size=" << TotalBytes(buffers)
+                << "}";
+  auto response = session_->UploadChunk(buffers);
   if (response.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
@@ -35,11 +36,11 @@ StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
 }
 
 StatusOr<ResumableUploadResponse>
-LoggingResumableUploadSession::UploadFinalChunk(std::string const& buffer,
-                                                std::uint64_t upload_size) {
+LoggingResumableUploadSession::UploadFinalChunk(
+    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
   GCP_LOG(INFO) << __func__ << "() << upload_size=" << upload_size
-                << ", buffer.size=" << buffer.size();
-  auto response = session_->UploadFinalChunk(buffer, upload_size);
+                << ", buffer.size=" << TotalBytes(buffers);
+  auto response = session_->UploadFinalChunk(buffers, upload_size);
   if (response.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {

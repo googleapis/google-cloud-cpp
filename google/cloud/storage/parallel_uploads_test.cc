@@ -40,6 +40,7 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::testing::_;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -206,9 +207,9 @@ class ParallelUploadTest : public ::testing::Test {
     if (expected_content) {
       EXPECT_CALL(res, UploadFinalChunk(_, _))
           .WillOnce([expected_content, object_name, generation](
-                        std::string const& content, std::uint64_t /*size*/) {
-            EXPECT_EQ(*expected_content, content);
-            EXPECT_EQ(expected_content->size(), content.size());
+                        ConstBufferSequence const& content,
+                        std::uint64_t /*size*/) {
+            EXPECT_THAT(content, ElementsAre(ConstBuffer(*expected_content)));
             return make_status_or(
                 ResumableUploadResponse{"fake-url",
                                         0,
