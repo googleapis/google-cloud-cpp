@@ -51,6 +51,10 @@ class WriteVector {
       capacity -= n;
       writev_.front() = absl::Span<char const>(f.data() + n, f.size() - n);
       if (writev_.front().empty()) {
+        // In practice this is expected to be cheap, most vectors will contain 1
+        // or 2 elements. And, if you are really lucky, your compiler turns this
+        // into a memmove():
+        //     https://godbolt.org/z/jw5VDd
         writev_.erase(writev_.begin());
       }
     }

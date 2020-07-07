@@ -18,6 +18,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
@@ -29,6 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
 std::string HttpBinEndpoint() {
@@ -166,6 +168,42 @@ TEST(CurlRequestTest, MultiBufferEmptyPUT) {
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   EXPECT_TRUE(parsed["data"].get<std::string>().empty());
+}
+
+TEST(CurlRequestTest, MultiBufferLargePUT) {
+  storage::internal::CurlRequestBuilder request(
+      HttpBinEndpoint() + "/put",
+      storage::internal::GetDefaultCurlHandleFactory());
+  request.SetMethod("PUT");
+
+  std::vector<std::string> lines;
+  auto constexpr kLineSize = 1024;
+  // libcurl's CURLOPT_READFUNCTION provides at most CURL_MAX_READ_SIZE bytes,
+  // use enough buffers to ensure we get more than one read callback.
+  auto constexpr kLineCount = (2 * CURL_MAX_READ_SIZE) / kLineSize;
+  for (int i = 0; i != kLineCount; ++i) {
+    std::string line = std::to_string(i);
+    line += ": ";
+    line += std::string(kLineSize, '=');
+    lines.push_back(std::move(line));
+  }
+  std::vector<absl::Span<char const>> data;
+  std::string nl = "\n";
+  for (auto const& p : lines) {
+    data.emplace_back(p.data(), p.size());
+    data.emplace_back(nl.data(), nl.size());
+  }
+  request.AddHeader("Accept: application/json");
+  request.AddHeader("Content-Type: application/octet-stream");
+  request.AddHeader("charsets: utf-8");
+
+  auto response = request.BuildRequest().MakeUploadRequest(data);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
+  std::vector<std::string> const actual = absl::StrSplit(
+      parsed["data"].get<std::string>(), '\n', absl::SkipEmpty());
+  EXPECT_THAT(actual, ElementsAreArray(lines));
 }
 
 TEST(CurlRequestTest, Handle404) {

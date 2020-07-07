@@ -51,6 +51,7 @@ class CurlRequest {
    */
   StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
+  /// @copydoc MakeRequest(std::string const&)
   StatusOr<HttpResponse> MakeUploadRequest(
       std::vector<absl::Span<char const>> payload);
 
