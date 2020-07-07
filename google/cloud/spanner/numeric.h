@@ -53,6 +53,14 @@ StatusOr<Numeric> MakeNumeric(std::string s);
  *
  * `Numeric` values can be copied/assigned/moved, compared for equality, and
  * streamed.
+ *
+ * @par Example
+ *
+ * @code
+ * spanner::Numeric n = spanner::MakeNumeric(1234).value();
+ * assert(n.ToString() == "1234");
+ * assert(spanner::ToInteger<int>(n).value() == 1234);
+ * @endcode
  */
 class Numeric {
  public:
@@ -125,11 +133,13 @@ StatusOr<Numeric> MakeNumeric(std::string s, int exponent);
 }  // namespace internal
 
 /**
- * Construction from a string, in decimal fixed- or floating-point formats
- * (where there must be digits either before or after the decimal point):
+ * Construction from a string, in decimal fixed- or floating-point formats.
  *
  *    [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
  *    [-+]?.[0-9]+([eE][-+]?[0-9]+)?
+ *
+ * There must be digits either before or after any decimal point. For example,
+ * "0", "-999", "3.141592654", "299792458", "6.02214076e23", etc.
  *
  * Fails on syntax errors or if the conversion would yield a value outside
  * the NUMERIC range. If the argument has more than `kFracPrec` digits after
@@ -139,16 +149,19 @@ StatusOr<Numeric> MakeNumeric(std::string s, int exponent);
 StatusOr<Numeric> MakeNumeric(std::string s);
 
 /**
- * Construction from a double. Fails on NaN or any argument outside the
- * NUMERIC value range (which includes infinities). If the argument has more
- * than `kFracPrec` digits after the decimal point it will be rounded, with
- * halfway cases rounding away from zero.
+ * Construction from a double.
+ *
+ * Fails on NaN or any argument outside the NUMERIC value range (including
+ * infinities). If the argument has more than `kFracPrec` digits after the
+ * decimal point it will be rounded, with halfway cases rounding away from
+ * zero.
  */
 StatusOr<Numeric> MakeNumeric(double d);
 
 /**
- * Construction from an integer `i`, scaled by 10^`exponent`. Fails on any
- * (scaled) argument outside the NUMERIC value range.
+ * Construction from an integer `i`, scaled by 10^`exponent`.
+ *
+ * Fails on any (scaled) argument outside the NUMERIC value range.
  */
 template <typename T, typename std::enable_if<
                           std::numeric_limits<T>::is_integer, int>::type = 0>
@@ -158,6 +171,7 @@ StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
 
 /**
  * Conversion to the closest double value, with possible loss of precision.
+ *
  * Always succeeds (i.e., can never overflow, assuming a double can hold
  * values up to 10^(kIntPrec+1)).
  */
@@ -166,9 +180,10 @@ inline double ToDouble(Numeric const& n) {
 }
 
 /**
- * Conversion to the nearest integer value, scaled by 10^`exponent`, rounding
- * halfway cases away from zero. Fails when the destination type cannot hold
- * that value.
+ * Conversion to the nearest integer value, scaled by 10^`exponent`.
+ *
+ * Rounds halfway cases away from zero. Fails when the destination type
+ * cannot hold that value.
  *
  * @par Example
  *

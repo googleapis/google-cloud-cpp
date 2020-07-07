@@ -436,7 +436,7 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_spanner_protos"
 )
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client -labsl_int128")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
