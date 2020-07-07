@@ -62,6 +62,7 @@ foreach (fname ${storage_client_integration_tests})
                 GTest::gtest
                 CURL::libcurl
                 Threads::Threads
+                absl::strings
                 nlohmann_json)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
