@@ -505,7 +505,7 @@ TEST(ObjectRequestsTest, UploadChunk) {
       "https://storage.googleapis.com/upload/storage/v1/b/"
       "myBucket/o?uploadType=resumable"
       "&upload_id=xa298sd_sdlkj2";
-  UploadChunkRequest request(url, 0, "abc123", 2048);
+  UploadChunkRequest request(url, 0, {ConstBuffer{"abc123", 6}}, 2048);
   EXPECT_EQ(url, request.upload_session_url());
   EXPECT_EQ(0, request.range_begin());
   EXPECT_EQ(5, request.range_end());
@@ -521,32 +521,34 @@ TEST(ObjectRequestsTest, UploadChunk) {
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, "1234");
+  UploadChunkRequest request(url, 1024, {ConstBuffer{"1234", 4}});
   EXPECT_EQ("Content-Range: bytes 1024-1027/*", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2045, "1234", 2048U);
+  UploadChunkRequest request(url, 2045, {ConstBuffer{"1234", 4}}, 2048U);
   EXPECT_EQ("Content-Range: bytes 2045-2048/2048", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, std::string{});
+  UploadChunkRequest request(url, 1024, {});
   EXPECT_EQ("Content-Range: bytes */*", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2047, std::string{}, 2048U);
+  UploadChunkRequest request(url, 2047, {}, 2048U);
   EXPECT_EQ("Content-Range: bytes */2048", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadEmpty) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, std::string{}, 0U);
-  EXPECT_EQ("Content-Range: bytes */0", request.RangeHeader());
+  UploadChunkRequest r0(url, 1024, {}, 0U);
+  EXPECT_EQ("Content-Range: bytes */0", r0.RangeHeader());
+  UploadChunkRequest r1(url, 1024, {{}, {}, {}}, 0U);
+  EXPECT_EQ("Content-Range: bytes */0", r1.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, QueryResumableUpload) {

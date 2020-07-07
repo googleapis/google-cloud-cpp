@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_H
 
+#include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
-#include "absl/types/span.h"
 #include <vector>
 
 namespace google {
@@ -52,8 +52,7 @@ class CurlRequest {
   StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
   /// @copydoc MakeRequest(std::string const&)
-  StatusOr<HttpResponse> MakeUploadRequest(
-      std::vector<absl::Span<char const>> payload);
+  StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload);
 
  private:
   StatusOr<HttpResponse> MakeRequestImpl();

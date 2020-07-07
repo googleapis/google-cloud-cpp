@@ -42,6 +42,15 @@ class MockCurlClient : public CurlClient {
                                          QueryResumableUploadRequest const&));
 };
 
+MATCHER_P(MatchesPayload, value, "Checks whether payload matches a value") {
+  std::string contents;
+  for (auto const& s : arg) {
+    contents += std::string{s.data(), s.size()};
+  }
+  return ::testing::ExplainMatchResult(::testing::Eq(contents), value,
+                                       result_listener);
+}
+
 TEST(CurlResumableUploadSessionTest, Simple) {
   auto mock = MockCurlClient::Create();
   std::string test_url = "http://invalid.example.com/not-used-in-mock";
@@ -55,7 +64,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
-        EXPECT_EQ(payload, request.payload());
+        EXPECT_THAT(request.payload(), MatchesPayload(payload));
         EXPECT_EQ(0, request.source_size());
         EXPECT_EQ(0, request.range_begin());
         return make_status_or(ResumableUploadResponse{
@@ -63,7 +72,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
       })
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
-        EXPECT_EQ(payload, request.payload());
+        EXPECT_THAT(request.payload(), MatchesPayload(payload));
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
         return make_status_or(ResumableUploadResponse{
@@ -152,6 +161,33 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());
+}
+
+TEST(CurlResumableUploadSessionTest, Empty) {
+  auto mock = MockCurlClient::Create();
+  std::string test_url = "http://invalid.example.com/not-used-in-mock";
+  CurlResumableUploadSession session(mock, test_url);
+
+  std::string const payload{};
+  auto const size = payload.size();
+
+  EXPECT_FALSE(session.done());
+  EXPECT_EQ(0, session.next_expected_byte());
+  EXPECT_CALL(*mock, UploadChunk(_))
+      .WillOnce([&](UploadChunkRequest const& request) {
+        EXPECT_EQ(test_url, request.upload_session_url());
+        EXPECT_THAT(request.payload(), MatchesPayload(payload));
+        EXPECT_EQ(0, request.source_size());
+        EXPECT_EQ(0, request.range_begin());
+        return make_status_or(ResumableUploadResponse{
+            "", size, {}, ResumableUploadResponse::kDone, {}});
+      });
+
+  auto upload = session.UploadFinalChunk(payload, size);
+  EXPECT_STATUS_OK(upload);
+  EXPECT_EQ(size, upload->last_committed_byte);
+  EXPECT_EQ(size, session.next_expected_byte());
+  EXPECT_TRUE(session.done());
 }
 
 }  // namespace

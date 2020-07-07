@@ -136,7 +136,7 @@ TEST(CurlRequestTest, MultiBufferPUT) {
       {"line 2"},
       {"line 3"},
   };
-  std::vector<absl::Span<char const>> data;
+  ConstBufferSequence data;
   std::string nl = "\n";
   for (auto const& p : lines) {
     data.emplace_back(p.data(), p.size());

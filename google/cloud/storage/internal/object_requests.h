@@ -17,12 +17,16 @@
 
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "absl/types/span.h"
+#include <numeric>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -378,24 +382,24 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     std::string payload)
+                     ConstBufferSequence payload)
       : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)) {}
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     std::string payload, std::uint64_t source_size)
+                     ConstBufferSequence payload, std::uint64_t source_size)
       : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
-        payload_(std::move(payload)),
         source_size_(source_size),
-        last_chunk_(true) {}
+        last_chunk_(true),
+        payload_(std::move(payload)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t range_begin() const { return range_begin_; }
-  std::uint64_t range_end() const { return range_begin_ + payload_.size() - 1; }
+  std::uint64_t range_end() const { return range_begin_ + payload_size() - 1; }
   std::uint64_t source_size() const { return source_size_; }
-  std::string const& payload() const { return payload_; }
-
+  std::size_t payload_size() const { return TotalBytes(payload_); }
+  ConstBufferSequence const& payload() const { return payload_; }
   std::string RangeHeader() const;
 
   // Chunks must be multiples of 256 KiB:
@@ -416,9 +420,9 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  private:
   std::string upload_session_url_;
   std::uint64_t range_begin_ = 0;
-  std::string payload_;
   std::uint64_t source_size_ = 0;
   bool last_chunk_ = false;
+  ConstBufferSequence payload_;
 };
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
