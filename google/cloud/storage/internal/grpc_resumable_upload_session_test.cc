@@ -148,7 +148,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
   auto upload = session.UploadChunk(payload);
   EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_TRUE(upload.ok());
+  EXPECT_STATUS_OK(upload);
   upload = session.UploadChunk(payload);
   EXPECT_FALSE(upload.ok());
   EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());

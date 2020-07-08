@@ -256,7 +256,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
                    static_cast<int>(opts->download_buffer_size()) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
-  EXPECT_TRUE(os.metadata().ok());
+  EXPECT_STATUS_OK(os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
@@ -294,7 +294,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
                    static_cast<int>(opts->download_buffer_size()) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
-  EXPECT_TRUE(os.metadata().ok());
+  EXPECT_STATUS_OK(os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
