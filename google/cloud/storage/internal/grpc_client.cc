@@ -308,11 +308,9 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  if (request.HasOption<UseResumableUploadSession>()) {
-    auto session_id = request.GetOption<UseResumableUploadSession>().value();
-    if (!session_id.empty()) {
-      return RestoreResumableSession(session_id);
-    }
+  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
+  if (!session_id.empty()) {
+    return RestoreResumableSession(session_id);
   }
 
   grpc::ClientContext context;

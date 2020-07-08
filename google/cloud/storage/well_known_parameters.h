@@ -43,6 +43,10 @@ class WellKnownParameter {
   char const* parameter_name() const { return P::well_known_parameter_name(); }
   bool has_value() const { return value_.has_value(); }
   T const& value() const { return value_.value(); }
+  template <typename U>
+  T value_or(U&& default_val) {
+    return value_.value_or(std::forward<U>(default_val));
+  }
 
  private:
   google::cloud::optional<T> value_;
