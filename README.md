@@ -108,6 +108,11 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+## Contact us
+
+If you have questions or comments, or want to file bugs or request feature,
+please do so using GitHub's normal Issues mechanism: [Contact Us](https://github.com/googleapis/google-cloud-cpp/issues/new/choose)
+
 ## Contributing changes
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for details on how to contribute to
