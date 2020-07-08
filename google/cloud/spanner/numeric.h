@@ -25,6 +25,7 @@
 #include <ostream>
 #include <string>
 #include <type_traits>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,7 @@ StatusOr<Numeric> MakeNumeric(std::string s);
  *
  * A `Numeric` can be constructed from, and converted to a `std::string`, a
  * `double`, or any integral type. See the `MakeNumeric()` factory functions,
- * the `ToString()` member function, and the `ToDouble()`/`ToInteger<T>()`
+ * the `ToString()` member function, and the `ToDouble()`/`ToInteger()`
  * free functions.
  *
  * `Numeric` values can be copied/assigned/moved, compared for equality, and
@@ -73,7 +74,7 @@ class Numeric {
   /// A zero value.
   Numeric();
 
-  /// @name Regular value type, supporting copy, assign, move.
+  /// Regular value type, supporting copy, assign, move.
   ///@{
   Numeric(Numeric&&) = default;
   Numeric& operator=(Numeric&&) = default;
@@ -84,9 +85,10 @@ class Numeric {
   /**
    * Conversion to a decimal-string representation of the `Numeric` in one
    * of the following forms:
-   *   0                                      // value == 0
-   *   -?0.[0-9]{0,8}[1-9]                    // 0 < abs(value) < 1
-   *   -?[1-9][0-9]{0,28}(.[0-9]{0,8}[1-9])?  // abs(value) >= 1
+   *
+   *  - 0                                      // value == 0
+   *  - -?0.[0-9]{0,8}[1-9]                    // 0 < abs(value) < 1
+   *  - -?[1-9][0-9]{0,28}(.[0-9]{0,8}[1-9])?  // abs(value) >= 1
    *
    * Note: The string never includes an exponent field.
    */
@@ -95,7 +97,7 @@ class Numeric {
   std::string&& ToString() && { return std::move(rep_); }
   ///@}
 
-  /// @name Relational operators
+  /// Relational operators
   ///@{
   friend bool operator==(Numeric const& a, Numeric const& b) {
     return a.rep_ == b.rep_;
@@ -120,8 +122,8 @@ namespace internal {
 
 // Like `std::to_string`, but also supports Abseil 128-bit integers.
 template <typename T>
-std::string ToString(T value) {
-  return std::to_string(value);
+std::string ToString(T&& value) {
+  return std::to_string(std::forward<T>(value));
 }
 std::string ToString(absl::int128 value);
 std::string ToString(absl::uint128 value);
@@ -135,11 +137,11 @@ StatusOr<Numeric> MakeNumeric(std::string s, int exponent);
 /**
  * Construction from a string, in decimal fixed- or floating-point formats.
  *
- *    [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
- *    [-+]?.[0-9]+([eE][-+]?[0-9]+)?
+ *  - [-+]?[0-9]+(.[0-9]*)?([eE][-+]?[0-9]+)?
+ *  - [-+]?.[0-9]+([eE][-+]?[0-9]+)?
  *
- * There must be digits either before or after any decimal point. For example,
- * "0", "-999", "3.141592654", "299792458", "6.02214076e23", etc.
+ * For example, "0", "-999", "3.141592654", "299792458", "6.02214076e23", etc.
+ * There must be digits either before or after any decimal point.
  *
  * Fails on syntax errors or if the conversion would yield a value outside
  * the NUMERIC range. If the argument has more than `kFracPrec` digits after
@@ -231,6 +233,7 @@ StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
   }
   return v;
 }
+
 template <typename T,
           typename std::enable_if<std::numeric_limits<T>::is_integer &&
                                       std::numeric_limits<T>::is_signed,
