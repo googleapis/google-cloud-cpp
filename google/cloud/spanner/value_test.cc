@@ -380,7 +380,7 @@ TEST(Value, MixingTypes) {
   using B = std::int64_t;
 
   Value a(A{});
-  EXPECT_TRUE(a.get<A>().ok());
+  EXPECT_STATUS_OK(a.get<A>());
   EXPECT_FALSE(a.get<B>().ok());
   EXPECT_FALSE(a.get<B>().ok());
 
@@ -391,7 +391,7 @@ TEST(Value, MixingTypes) {
   EXPECT_NE(null_a, a);
 
   Value b(B{});
-  EXPECT_TRUE(b.get<B>().ok());
+  EXPECT_STATUS_OK(b.get<B>());
   EXPECT_FALSE(b.get<A>().ok());
   EXPECT_FALSE(b.get<A>().ok());
 
@@ -414,14 +414,14 @@ TEST(Value, SpannerArray) {
   ArrayInt64 const empty = {};
   Value const ve(empty);
   EXPECT_EQ(ve, ve);
-  EXPECT_TRUE(ve.get<ArrayInt64>().ok());
+  EXPECT_STATUS_OK(ve.get<ArrayInt64>());
   EXPECT_FALSE(ve.get<ArrayDouble>().ok());
   EXPECT_EQ(empty, *ve.get<ArrayInt64>());
 
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
-  EXPECT_TRUE(vi.get<ArrayInt64>().ok());
+  EXPECT_STATUS_OK(vi.get<ArrayInt64>());
   EXPECT_FALSE(vi.get<ArrayDouble>().ok());
   EXPECT_EQ(ai, *vi.get<ArrayInt64>());
 
@@ -430,7 +430,7 @@ TEST(Value, SpannerArray) {
   EXPECT_EQ(vd, vd);
   EXPECT_NE(vi, vd);
   EXPECT_FALSE(vd.get<ArrayInt64>().ok());
-  EXPECT_TRUE(vd.get<ArrayDouble>().ok());
+  EXPECT_STATUS_OK(vd.get<ArrayDouble>());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
 
   Value const null_vi = MakeNullValue<ArrayInt64>();
@@ -522,7 +522,7 @@ TEST(Value, SpannerStruct) {
   };
   using T4 = decltype(array_struct);
   Value v4(array_struct);
-  EXPECT_TRUE(v4.get<T4>().ok());
+  EXPECT_STATUS_OK(v4.get<T4>());
   EXPECT_FALSE(v4.get<T3>().ok());
   EXPECT_FALSE(v4.get<T2>().ok());
   EXPECT_FALSE(v4.get<T1>().ok());
@@ -533,7 +533,7 @@ TEST(Value, SpannerStruct) {
   auto empty = tuple<>{};
   using T5 = decltype(empty);
   Value v5(empty);
-  EXPECT_TRUE(v5.get<T5>().ok());
+  EXPECT_STATUS_OK(v5.get<T5>());
   EXPECT_FALSE(v5.get<T4>().ok());
   EXPECT_EQ(v5, v5);
   EXPECT_NE(v5, v4);
@@ -544,7 +544,7 @@ TEST(Value, SpannerStruct) {
   auto crazy = tuple<tuple<std::vector<optional<bool>>>>{};
   using T6 = decltype(crazy);
   Value v6(crazy);
-  EXPECT_TRUE(v6.get<T6>().ok());
+  EXPECT_STATUS_OK(v6.get<T6>());
   EXPECT_FALSE(v6.get<T5>().ok());
   EXPECT_EQ(v6, v6);
   EXPECT_NE(v6, v5);

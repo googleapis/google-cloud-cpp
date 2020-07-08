@@ -50,7 +50,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   // case), but we need to wait before checking the results.
   Status status = fut.get();
   EXPECT_STATUS_OK(status);
-  EXPECT_TRUE(status.ok());
 
   // Validate that the newly created cells are actually in the server.
   std::vector<bigtable::Cell> expected{
@@ -140,7 +139,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   // case), but we need to wait before checking the results.
   auto status = fut.get();
   EXPECT_STATUS_OK(status);
-  EXPECT_TRUE(status.ok());
 
   std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
                                        {key, kFamily, "c2", 0, "v2000"}};
@@ -174,7 +172,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   // case), but we need to wait before checking the results.
   auto status = fut.get();
   EXPECT_STATUS_OK(status);
-  EXPECT_TRUE(status.ok());
 
   std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
                                        {key, kFamily, "c3", 0, "v3000"}};

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hmac_key_requests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -32,7 +33,7 @@ TEST(HmacKeyRequestsTest, ParseFailure) {
 
 TEST(HmacKeyRequestsTest, ParseEmpty) {
   auto actual = internal::HmacKeyMetadataParser::FromString("{}");
-  EXPECT_TRUE(actual.ok());
+  EXPECT_STATUS_OK(actual);
 }
 
 TEST(HmacKeyRequestsTest, Create) {

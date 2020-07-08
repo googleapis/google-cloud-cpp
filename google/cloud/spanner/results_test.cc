@@ -62,7 +62,7 @@ TEST(RowStream, IterateOverRows) {
   int num_rows = 0;
   for (auto const& row :
        StreamOf<std::tuple<std::int64_t, bool, std::string>>(rows)) {
-    EXPECT_TRUE(row.ok());
+    EXPECT_STATUS_OK(row);
     switch (num_rows++) {
       case 0:
         EXPECT_EQ(std::get<0>(*row), 5);
@@ -97,7 +97,7 @@ TEST(RowStream, IterateError) {
        StreamOf<std::tuple<std::int64_t, bool, std::string>>(rows)) {
     switch (num_rows++) {
       case 0:
-        EXPECT_TRUE(row.ok());
+        EXPECT_STATUS_OK(row);
         EXPECT_EQ(std::get<0>(*row), 5);
         EXPECT_EQ(std::get<1>(*row), true);
         EXPECT_EQ(std::get<2>(*row), "foo");

@@ -367,7 +367,7 @@ TEST(ClientTest, RollbackSuccess) {
 
   auto txn = MakeReadWriteTransaction();
   auto rollback = client.Rollback(txn);
-  EXPECT_TRUE(rollback.ok());
+  EXPECT_STATUS_OK(rollback);
 }
 
 TEST(ClientTest, RollbackError) {
