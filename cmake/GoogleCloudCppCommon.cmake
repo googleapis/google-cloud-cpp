@@ -37,7 +37,6 @@ include(SelectMSVCRuntime)
 include(EnableWerror)
 
 if (${CMAKE_VERSION} VERSION_LESS "3.9")
-
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
 else ()
@@ -80,6 +79,7 @@ else ()
         set(DOXYGEN_SHOW_USED_FILES NO)
         set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
         set(DOXYGEN_SOURCE_BROWSER YES)
+        set(DOXYGEN_DISTRIBUTE_GROUP_DOC YES)
         set(DOXYGEN_GENERATE_TAGFILE
             "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
         set(DOXYGEN_LAYOUT_FILE
@@ -104,7 +104,7 @@ else ()
         doxygen_add_docs(
             ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs ${CMAKE_CURRENT_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMENT
-            "Generate HTML documentation")
+            "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
         if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
             add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "cloud-docs")
