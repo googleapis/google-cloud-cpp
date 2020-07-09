@@ -223,17 +223,6 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, next_expected_byte())
             .WillRepeatedly([&bytes_written]() { return bytes_written; });
 
-        EXPECT_CALL(*mock, UploadChunk(_))
-            .WillRepeatedly(
-                [&bytes_written](internal::ConstBufferSequence const& data) {
-                  bytes_written += internal::TotalBytes(data);
-                  return make_status_or(ResumableUploadResponse{
-                      "fake-url",
-                      bytes_written,
-                      {},
-                      ResumableUploadResponse::kInProgress,
-                      {}});
-                });
         EXPECT_CALL(*mock, UploadFinalChunk(_, _))
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
