@@ -114,7 +114,7 @@ class InsertObjectMediaRequest
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UserProject,
-          WithObjectMetadata> {
+          UploadFromOffset, UploadLimit, WithObjectMetadata> {
  public:
   InsertObjectMediaRequest() = default;
 
@@ -361,7 +361,8 @@ class ResumableUploadRequest
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
-          UserProject, WithObjectMetadata, UploadContentLength> {
+          UserProject, UploadFromOffset, UploadLimit, WithObjectMetadata,
+          UploadContentLength> {
  public:
   ResumableUploadRequest() = default;
 

@@ -597,6 +597,41 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
+TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto file_name = ::testing::TempDir() + MakeRandomFilename();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create a file with the contents to upload.
+  std::ofstream os(file_name, std::ios::binary);
+  WriteRandomLines(os, expected);
+  os.close();
+
+  StatusOr<ObjectMetadata> meta = client->UploadFile(
+      file_name, bucket_name_, object_name, UploadFromOffset(10),
+      UploadLimit(10000), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+  auto expected_str = expected.str().substr(10, 10000);
+  ASSERT_EQ(expected_str.size(), meta->size());
+
+  // Create an iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
+  EXPECT_EQ(expected_str, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

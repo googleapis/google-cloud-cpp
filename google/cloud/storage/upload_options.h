@@ -69,6 +69,30 @@ struct UploadContentLength
   static char const* header_name() { return "X-Upload-Content-Length"; }
 };
 
+/**
+ * Upload the local file to GCS server starting at the given offset.
+ */
+struct UploadFromOffset
+    : public internal::ComplexOption<UploadFromOffset, std::uint64_t> {
+  using ComplexOption::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  UploadFromOffset() = default;
+  static char const* name() { return "upload-offset"; }
+};
+
+/**
+ * The maximum length of the local file to upload to GCS server.
+ */
+struct UploadLimit
+    : public internal::ComplexOption<UploadLimit, std::uint64_t> {
+  using ComplexOption::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  UploadLimit() = default;
+  static char const* name() { return "upload-limit"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
