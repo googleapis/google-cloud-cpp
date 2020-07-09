@@ -94,11 +94,11 @@ class CurlClientTest : public ::testing::Test,
 
 TEST_P(CurlClientTest, UploadChunk) {
   // Use an invalid port (0) to force a libcurl failure
-  auto actual =
-      client_
-          ->UploadChunk(UploadChunkRequest(
-              "http://localhost:1/invalid-session-id", 0, std::string{}, 0))
-          .status();
+  auto actual = client_
+                    ->UploadChunk(UploadChunkRequest(
+                        "http://localhost:1/invalid-session-id", 0,
+                        {ConstBuffer{std::string{}}}, 0))
+                    .status();
   CheckStatus(actual);
 }
 

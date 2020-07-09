@@ -261,8 +261,8 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   builder.AddHeader(request.RangeHeader());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.AddHeader("Content-Length: " +
-                    std::to_string(request.payload().size()));
-  auto response = builder.BuildRequest().MakeRequest(request.payload());
+                    std::to_string(request.payload_size()));
+  auto response = builder.BuildRequest().MakeUploadRequest(request.payload());
   if (!response.ok()) {
     return std::move(response).status();
   }

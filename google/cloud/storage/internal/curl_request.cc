@@ -35,8 +35,7 @@ extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
 
 class WriteVector {
  public:
-  explicit WriteVector(std::vector<absl::Span<char const>> w)
-      : writev_(std::move(w)) {}
+  explicit WriteVector(ConstBufferSequence w) : writev_(std::move(w)) {}
 
   bool empty() const { return writev_.empty(); }
 
@@ -49,20 +48,13 @@ class WriteVector {
       std::copy(f.data(), f.data() + n, ptr + offset);
       offset += n;
       capacity -= n;
-      writev_.front() = absl::Span<char const>(f.data() + n, f.size() - n);
-      if (writev_.front().empty()) {
-        // In practice this is expected to be cheap, most vectors will contain 1
-        // or 2 elements. And, if you are really lucky, your compiler turns this
-        // into a memmove():
-        //     https://godbolt.org/z/jw5VDd
-        writev_.erase(writev_.begin());
-      }
+      PopFrontBytes(writev_, n);
     }
     return offset;
   }
 
  private:
-  std::vector<absl::Span<char const>> writev_;
+  ConstBufferSequence writev_;
 };
 
 extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
@@ -82,15 +74,18 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
-    std::vector<absl::Span<char const>> payload) {
-  WriteVector writev{std::move(payload)};
-  if (!writev.empty()) {
-    handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
-    handle_.SetOption(CURLOPT_READDATA, &writev);
-    handle_.SetOption(CURLOPT_UPLOAD, 1L);
-  } else {
-    handle_.SetOption(CURLOPT_UPLOAD, 0L);
+    ConstBufferSequence payload) {
+  handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  if (payload.empty()) return MakeRequestImpl();
+  if (payload.size() == 1) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
+    return MakeRequestImpl();
   }
+  WriteVector writev{std::move(payload)};
+  handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
+  handle_.SetOption(CURLOPT_READDATA, &writev);
+  handle_.SetOption(CURLOPT_UPLOAD, 1L);
   return MakeRequestImpl();
 }
 

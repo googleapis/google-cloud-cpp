@@ -571,7 +571,8 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r) {
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";
-  if (payload().empty()) {
+  auto const size = payload_size();
+  if (size == 0) {
     // This typically happens when the sender realizes too late that the
     // previous chunk was really the last chunk (e.g. the file is exactly a
     // multiple of the quantum, reading the last chunk from a file, or sending
@@ -579,7 +580,7 @@ std::string UploadChunkRequest::RangeHeader() const {
     // the range is special in this case.
     os << "*";
   } else {
-    os << range_begin() << "-" << range_begin() + payload().size() - 1;
+    os << range_begin() << "-" << range_begin() + size - 1;
   }
   if (!last_chunk_) {
     os << "/*";
@@ -593,11 +594,15 @@ std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
      << ", range=<" << r.RangeHeader() << ">";
   r.DumpOptions(os, ", ");
+  os << ", payload={";
   auto constexpr kMaxOutputBytes = 128;
-  return os << ", payload="
-            << BinaryDataAsDebugString(r.payload().data(), r.payload().size(),
-                                       kMaxOutputBytes)
-            << "}";
+  char const* sep = "";
+  for (auto const& b : r.payload()) {
+    os << sep << "{"
+       << BinaryDataAsDebugString(b.data(), b.size(), kMaxOutputBytes) << "}";
+    sep = ", ";
+  }
+  return os << "}}";
 }
 
 std::ostream& operator<<(std::ostream& os,

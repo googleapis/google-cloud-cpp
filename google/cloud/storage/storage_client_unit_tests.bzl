@@ -40,6 +40,7 @@ storage_client_unit_tests = [
     "internal/bucket_requests_test.cc",
     "internal/complex_option_test.cc",
     "internal/compute_engine_util_test.cc",
+    "internal/const_buffer_test.cc",
     "internal/curl_client_test.cc",
     "internal/curl_handle_factory_test.cc",
     "internal/curl_handle_test.cc",
