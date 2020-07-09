@@ -23,129 +23,51 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+static_assert(
+    (google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES %
+     UploadChunkRequest::kChunkSizeQuantum) == 0,
+    "Expected maximum insert request size to be a multiple of chunk quantum");
+static_assert(google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
+                  UploadChunkRequest::kChunkSizeQuantum * 2,
+              "Expected maximum insert request size to be greater than twice "
+              "the chunk quantum");
+
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
-    std::string const& buffer) {
-  CreateUploadWriter();
-
-  bool success = true;
-  // This loop must run at least once because we need to send at least one
-  // Write() call for empty objects.
-  std::size_t offset = 0;
-  do {
-    // This limit is for the *message*, not just the payload. It includes any
-    // additional information such as checksums. We need to use a stricter
-    // limit, a chunk quantum seems to work in practice.
-    std::size_t const maximum_buffer_size =
-        GrpcClient::kMaxInsertObjectWriteRequestSize -
-        UploadChunkRequest::kChunkSizeQuantum;
-
-    google::storage::v1::InsertObjectRequest request;
-    request.set_upload_id(session_id_);
-    request.set_write_offset(next_expected_);
-    request.set_finish_write(false);
-
-    auto& data = *request.mutable_checksummed_data();
-    auto const n = (std::min)(buffer.size() - offset, maximum_buffer_size);
-    data.set_content(buffer.substr(offset, n));
-    data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
-
-    success = upload_writer_->Write(request);
-
-    if (!success) break;
-    // After the first message, clear the object specification and checksums,
-    // there is no need to resend it.
-    request.clear_insert_object_spec();
-    request.clear_object_checksums();
-    offset += n;
-
-    auto result = ResumableUploadResponse{{},
-                                          next_expected_ + n - 1,
-                                          {},
-                                          ResumableUploadResponse::kInProgress,
-                                          {}};
-    Update(result);
-  } while (success && offset < buffer.size());
-  if (success) {
-    return ResumableUploadResponse{
-        {}, next_expected_ - 1, {}, ResumableUploadResponse::kInProgress, {}};
-  }
-  auto grpc_status = upload_writer_->Finish();
-  upload_writer_ = nullptr;
-  upload_context_ = nullptr;
-  if (!grpc_status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(grpc_status);
-  }
-  return Status(StatusCode::kUnavailable,
-                "GrpcResumableUploadSession: stream closed unexpectedly");
+    std::string const& payload) {
+  return UploadGeneric(payload, false);
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
-    std::string const& buffer, std::uint64_t) {
-  std::size_t const maximum_buffer_size =
-      GrpcClient::kMaxInsertObjectWriteRequestSize -
-      UploadChunkRequest::kChunkSizeQuantum;
-  static_assert(
-      GrpcClient::kMaxInsertObjectWriteRequestSize %
-              UploadChunkRequest::kChunkSizeQuantum ==
-          0,
-      "Expected maximum insert request size to be a multiple of chunk quantum");
-  static_assert(GrpcClient::kMaxInsertObjectWriteRequestSize >
-                    UploadChunkRequest::kChunkSizeQuantum * 2,
-                "Expected maximum insert request size to be greater than twice "
-                "the chunk quantum");
+    std::string const& payload, std::uint64_t) {
+  auto initial = UploadGeneric(payload, true);
+  if (!initial) return initial;
 
-  std::string trailer;
-  if (buffer.size() < maximum_buffer_size) {
-    trailer = buffer;
-  } else {
-    auto const last_full_chunk_pos = [&buffer] {
-      if (buffer.size() % UploadChunkRequest::kChunkSizeQuantum == 0) {
-        return buffer.size() - UploadChunkRequest::kChunkSizeQuantum;
-      }
-      return (buffer.size() / UploadChunkRequest::kChunkSizeQuantum) *
-             UploadChunkRequest::kChunkSizeQuantum;
-    }();
-    auto initial = UploadChunk(buffer.substr(0, last_full_chunk_pos));
-    if (!initial) return initial;
-    trailer = buffer.substr(last_full_chunk_pos);
-  }
-
-  CreateUploadWriter();
-  google::storage::v1::InsertObjectRequest request;
-  request.set_upload_id(session_id_);
-  request.set_write_offset(next_expected_);
-  request.set_finish_write(true);
-  request.mutable_checksummed_data()->set_content(trailer);
-  request.mutable_checksummed_data()->mutable_crc32c()->set_value(
-      crc32c::Crc32c(trailer));
-  // TODO(#4156) - compute the crc32c value inline and set it here
-  // TODO(#4157) - compute the MD5 hash value and set it here
-  auto success =
-      upload_writer_->Write(request, grpc::WriteOptions().set_last_message());
-  if (!success) {
-    return Status(
-        StatusCode::kUnavailable,
-        "GrpcResumableUploadSession: error writing last chunk to stream");
-  }
   auto status = upload_writer_->Finish();
   upload_writer_ = nullptr;
   upload_context_ = nullptr;
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
 
-  ResumableUploadResponse result{{},
-                                 next_expected_ + buffer.size() - 1,
+  done_ = true;
+  return ResumableUploadResponse{{},
+                                 next_expected_ - 1,
                                  GrpcClient::FromProto(upload_object_),
                                  ResumableUploadResponse::kDone,
                                  {}};
-  Update(result);
-  return result;
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_);
   auto result = client_->QueryResumableUpload(request);
-  Update(result);
-  return result;
+  last_response_ = std::move(result);
+  if (!last_response_) return last_response_;
+
+  done_ = (last_response_->upload_state == ResumableUploadResponse::kDone);
+  if (last_response_->last_committed_byte == 0) {
+    next_expected_ = 0;
+  } else {
+    next_expected_ = last_response_->last_committed_byte + 1;
+  }
+  return last_response_;
 }
 
 std::uint64_t GrpcResumableUploadSession::next_expected_byte() const {
@@ -163,6 +85,68 @@ GrpcResumableUploadSession::last_response() const {
   return last_response_;
 }
 
+StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
+    std::string const& payload, bool final_chunk) {
+  CreateUploadWriter();
+
+  std::size_t const maximum_chunk_size =
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
+  std::string chunk;
+  chunk.reserve(maximum_chunk_size);
+  auto flush_chunk = [&](bool has_more) {
+    if (chunk.size() < maximum_chunk_size && has_more) return true;
+    if (chunk.empty() && !final_chunk) return true;
+
+    google::storage::v1::InsertObjectRequest request;
+    request.set_upload_id(session_id_);
+    request.set_write_offset(next_expected_);
+    request.set_finish_write(false);
+
+    auto& data = *request.mutable_checksummed_data();
+    auto const n = chunk.size();
+    data.set_content(std::move(chunk));
+    chunk.clear();
+    chunk.reserve(maximum_chunk_size);
+    data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
+
+    auto options = grpc::WriteOptions();
+    if (final_chunk && !has_more) {
+      // At this point we can set the full object checksums, there are two bugs
+      // for this:
+      // TODO(#4156) - compute the crc32c value inline
+      // TODO(#4157) - compute the MD5 hash value inline
+      request.set_finish_write(true);
+      options.set_last_message();
+    }
+
+    if (!upload_writer_->Write(request, options)) return false;
+    // After the first message, clear the object specification and checksums,
+    // there is no need to resend it.
+    request.clear_insert_object_spec();
+    request.clear_object_checksums();
+
+    next_expected_ += n;
+    return true;
+  };
+
+  std::size_t payload_offset = 0;
+  do {
+    // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
+    auto capacity = maximum_chunk_size - chunk.size();
+    auto n = (std::min)(capacity, payload.size() - payload_offset);
+    char const* begin = payload.data() + payload_offset;
+    chunk.append(begin, begin + n);
+    payload_offset += n;
+
+    if (!flush_chunk(payload_offset != payload.size())) {
+      return HandleWriteError();
+    }
+  } while (payload_offset != payload.size());
+
+  return ResumableUploadResponse{
+      {}, next_expected_ - 1, {}, ResumableUploadResponse::kInProgress, {}};
+}
+
 void GrpcResumableUploadSession::CreateUploadWriter() {
   if (upload_writer_) {
     return;
@@ -175,21 +159,17 @@ void GrpcResumableUploadSession::CreateUploadWriter() {
       client_->CreateUploadWriter(*upload_context_, upload_object_);
 }
 
-void GrpcResumableUploadSession::Update(
-    StatusOr<ResumableUploadResponse> const& result) {
-  last_response_ = result;
-  if (!result.ok()) {
-    return;
-  }
-  done_ = result->upload_state == ResumableUploadResponse::kDone;
-  if (result->last_committed_byte == 0) {
-    next_expected_ = 0;
-  } else {
-    next_expected_ = result->last_committed_byte + 1;
-  }
-  if (!result->upload_session_url.empty()) {
-    session_id_ = result->upload_session_url;
-  }
+StatusOr<ResumableUploadResponse>
+GrpcResumableUploadSession::HandleWriteError() {
+  auto grpc_status = upload_writer_->Finish();
+  upload_writer_ = nullptr;
+  upload_context_ = nullptr;
+  last_response_ =
+      grpc_status.ok()
+          ? Status(StatusCode::kUnavailable,
+                   "GrpcResumableUploadSession: stream closed unexpectedly")
+          : google::cloud::MakeStatusFromRpcError(grpc_status);
+  return last_response_;
 }
 
 }  // namespace internal

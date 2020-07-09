@@ -32,10 +32,10 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
       : client_(std::move(client)), session_id_(std::move(session_id)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
-      std::string const& buffer) override;
+      std::string const& payload) override;
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      std::string const& buffer, std::uint64_t upload_size) override;
+      std::string const& payload, std::uint64_t upload_size) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 
@@ -48,8 +48,17 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
+  /**
+   * Uploads a multiple of the upload quantum bytes from @p buffers
+   *
+   * This function is used by both UploadChunk() and UploadFinalChunk()
+   */
+  StatusOr<ResumableUploadResponse> UploadGeneric(std::string const& payload,
+                                                  bool final_chunk);
+
   void CreateUploadWriter();
-  void Update(StatusOr<ResumableUploadResponse> const& result);
+
+  StatusOr<ResumableUploadResponse> HandleWriteError();
 
   std::shared_ptr<GrpcClient> client_;
   std::string session_id_;

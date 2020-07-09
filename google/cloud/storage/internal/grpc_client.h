@@ -37,10 +37,6 @@ class GrpcClient : public RawClient,
   explicit GrpcClient(ClientOptions options);
   ~GrpcClient() override = default;
 
-  /// The gRPC server rejects messages that are larger than 4 MiB.
-  static std::size_t constexpr kMaxInsertObjectWriteRequestSize =
-      4 * 1024 * 1024L;
-
   //@{
   /// @name Implement the ResumableSession operations.
   // Note that these member functions are not inherited from RawClient, they are

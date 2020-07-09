@@ -37,8 +37,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::size_t constexpr GrpcClient::kMaxInsertObjectWriteRequestSize;
-
 bool DirectPathEnabled() {
   auto const direct_path_settings =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
@@ -205,11 +203,8 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   google::storage::v1::Object response;
   auto stream = stub_->InsertObject(&context, &response);
   auto proto_request = ToProto(request);
-  // This limit is for the *message*, not just the payload. It includes any
-  // additional information such as checksums. We need to use a stricter limit,
-  // a chunk quantum seems to work in practice.
   std::size_t const maximum_buffer_size =
-      kMaxInsertObjectWriteRequestSize - UploadChunkRequest::kChunkSizeQuantum;
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   auto const& contents = request.contents();
 
   // This loop must run at least once because we need to send at least one
@@ -308,9 +303,11 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
-  if (!session_id.empty()) {
-    return RestoreResumableSession(session_id);
+  if (request.HasOption<UseResumableUploadSession>()) {
+    auto session_id = request.GetOption<UseResumableUploadSession>().value();
+    if (!session_id.empty()) {
+      return RestoreResumableSession(session_id);
+    }
   }
 
   grpc::ClientContext context;
