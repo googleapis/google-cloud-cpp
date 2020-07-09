@@ -95,7 +95,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
   std::string chunk;
   auto flush_chunk = [&](bool has_more) {
     std::cout << "chunk.size=" << chunk.size() << ", has_more=" << has_more
-        << ", final_chunk=" << final_chunk << "\n";
+              << ", final_chunk=" << final_chunk << "\n";
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !final_chunk) return true;
 
