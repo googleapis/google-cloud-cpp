@@ -40,6 +40,7 @@ load(
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_integration_tests]

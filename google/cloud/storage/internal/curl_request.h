@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
+#include "absl/types/span.h"
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -49,7 +51,13 @@ class CurlRequest {
    */
   StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
+  /// @copydoc MakeRequest(std::string const&)
+  StatusOr<HttpResponse> MakeUploadRequest(
+      std::vector<absl::Span<char const>> payload);
+
  private:
+  StatusOr<HttpResponse> MakeRequestImpl();
+
   friend class CurlRequestBuilder;
   friend size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
                                        void* userdata);

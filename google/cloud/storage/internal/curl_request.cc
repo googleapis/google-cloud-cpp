@@ -33,7 +33,68 @@ extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
   return request->OnHeaderData(contents, size, nitems);
 }
 
+class WriteVector {
+ public:
+  explicit WriteVector(std::vector<absl::Span<char const>> w)
+      : writev_(std::move(w)) {}
+
+  bool empty() const { return writev_.empty(); }
+
+  std::size_t OnRead(char* ptr, std::size_t size, std::size_t nitems) {
+    std::size_t offset = 0;
+    auto capacity = size * nitems;
+    while (capacity > 0 && !writev_.empty()) {
+      auto& f = writev_.front();
+      auto n = (std::min)(capacity, writev_.front().size());
+      std::copy(f.data(), f.data() + n, ptr + offset);
+      offset += n;
+      capacity -= n;
+      writev_.front() = absl::Span<char const>(f.data() + n, f.size() - n);
+      if (writev_.front().empty()) {
+        // In practice this is expected to be cheap, most vectors will contain 1
+        // or 2 elements. And, if you are really lucky, your compiler turns this
+        // into a memmove():
+        //     https://godbolt.org/z/jw5VDd
+        writev_.erase(writev_.begin());
+      }
+    }
+    return offset;
+  }
+
+ private:
+  std::vector<absl::Span<char const>> writev_;
+};
+
+extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
+                                             std::size_t nitems,
+                                             void* userdata) {
+  auto* v = reinterpret_cast<WriteVector*>(userdata);
+  return v->OnRead(ptr, size, nitems);
+}
+
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
+  handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  if (!payload.empty()) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
+  }
+  return MakeRequestImpl();
+}
+
+StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
+    std::vector<absl::Span<char const>> payload) {
+  WriteVector writev{std::move(payload)};
+  if (!writev.empty()) {
+    handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
+    handle_.SetOption(CURLOPT_READDATA, &writev);
+    handle_.SetOption(CURLOPT_UPLOAD, 1L);
+  } else {
+    handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  }
+  return MakeRequestImpl();
+}
+
+StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   // We get better performance using a slightly larger buffer (128KiB) than the
   // default buffer size set by libcurl (16KiB)
   auto constexpr kDefaultBufferSize = 128 * 1024L;
@@ -44,7 +105,6 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
   handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  handle_.SetOption(CURLOPT_UPLOAD, 0L);
   handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
@@ -52,10 +112,6 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
   handle_.SetOption(CURLOPT_WRITEDATA, this);
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
   handle_.SetOption(CURLOPT_HEADERDATA, this);
-  if (!payload.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
-  }
   auto status = handle_.EasyPerform();
   if (!status.ok()) {
     return status;
