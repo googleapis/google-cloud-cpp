@@ -204,7 +204,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   auto stream = stub_->InsertObject(&context, &response);
   auto proto_request = ToProto(request);
   std::size_t const maximum_buffer_size =
-      google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES;
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   auto const& contents = request.contents();
 
   // This loop must run at least once because we need to send at least one

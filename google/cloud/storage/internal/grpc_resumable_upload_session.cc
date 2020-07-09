@@ -24,14 +24,13 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 static_assert(
-    (google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES %
+    (google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES %
      UploadChunkRequest::kChunkSizeQuantum) == 0,
     "Expected maximum insert request size to be a multiple of chunk quantum");
-static_assert(
-    google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES >
-        UploadChunkRequest::kChunkSizeQuantum * 2,
-    "Expected maximum insert request size to be greater than twice "
-    "the chunk quantum");
+static_assert(google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
+                  UploadChunkRequest::kChunkSizeQuantum * 2,
+              "Expected maximum insert request size to be greater than twice "
+              "the chunk quantum");
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
     std::string const& payload) {
@@ -91,8 +90,9 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
   CreateUploadWriter();
 
   std::size_t const maximum_chunk_size =
-      google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES;
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   std::string chunk;
+  chunk.reserve(maximum_chunk_size);
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !final_chunk) return true;
@@ -106,6 +106,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     auto const n = chunk.size();
     data.set_content(std::move(chunk));
     chunk.clear();
+    chunk.reserve(maximum_chunk_size);
     data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
 
     auto options = grpc::WriteOptions();
@@ -130,7 +131,6 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
 
   std::size_t payload_offset = 0;
   do {
-    chunk.reserve(maximum_chunk_size);
     // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
     auto capacity = maximum_chunk_size - chunk.size();
     auto n = (std::min)(capacity, payload.size() - payload_offset);
