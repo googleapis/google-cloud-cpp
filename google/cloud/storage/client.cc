@@ -112,10 +112,9 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
        << ") is bigger than the size of file source (" << file_size << ")";
     return Status(StatusCode::kInvalidArgument, std::move(os).str());
   }
-  auto upload_size = request.HasOption<UploadLimit>()
-                         ? std::min(request.GetOption<UploadLimit>().value(),
-                                    file_size - upload_offset)
-                         : file_size - upload_offset;
+  auto upload_size = (std::min)(
+      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
+      file_size - upload_offset);
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -173,10 +172,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
       return Status(StatusCode::kInvalidArgument, std::move(os).str());
     }
 
-    auto upload_size = request.HasOption<UploadLimit>()
-                           ? std::min(request.GetOption<UploadLimit>().value(),
-                                      file_size - upload_offset)
-                           : file_size - upload_offset;
+    auto upload_size = (std::min)(
+        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
+        file_size - upload_offset);
     request.set_option(UploadContentLength(upload_size));
   }
   std::ifstream source(file_name, std::ios::binary);
@@ -204,7 +202,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   // How many bytes of the local file are uploaded to the GCS server.
   auto server_size = session->next_expected_byte();
   auto upload_limit = request.GetOption<UploadLimit>().value_or(
-      std::numeric_limits<std::uint64_t>::max());
+      (std::numeric_limits<std::uint64_t>::max)());
   // If `server_size == upload_limit`, we will upload an empty string and
   // finalize the upload.
   if (server_size > upload_limit) {
