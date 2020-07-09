@@ -93,7 +93,9 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
   std::size_t const maximum_chunk_size =
       google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES;
   std::string chunk;
-  auto flush_chunk = [&chunk, final_chunk, this](bool has_more) {
+  auto flush_chunk = [&](bool has_more) {
+    std::cout << "chunk.size=" << chunk.size() << ", has_more=" << has_more
+        << ", final_chunk=" << final_chunk << "\n";
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !final_chunk) return true;
 
@@ -129,7 +131,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
   };
 
   std::size_t payload_offset = 0;
-  while (payload_offset != payload.size()) {
+  do {
     chunk.reserve(maximum_chunk_size);
     // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
     auto capacity = maximum_chunk_size - chunk.size();
@@ -141,7 +143,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     if (!flush_chunk(payload_offset != payload.size())) {
       return HandleWriteError();
     }
-  }
+  } while (payload_offset != payload.size());
 
   return ResumableUploadResponse{
       {}, next_expected_ - 1, {}, ResumableUploadResponse::kInProgress, {}};
