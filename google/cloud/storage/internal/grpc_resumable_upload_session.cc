@@ -94,8 +94,6 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       google::storage::v1::ServiceConstants_Values_MAX_WRITE_CHUNK_BYTES;
   std::string chunk;
   auto flush_chunk = [&](bool has_more) {
-    std::cout << "chunk.size=" << chunk.size() << ", has_more=" << has_more
-              << ", final_chunk=" << final_chunk << "\n";
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !final_chunk) return true;
 
