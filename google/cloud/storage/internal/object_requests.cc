@@ -594,16 +594,15 @@ std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
      << ", range=<" << r.RangeHeader() << ">";
   r.DumpOptions(os, ", ");
-  os << ", payload=";
+  os << ", payload={";
   auto constexpr kMaxOutputBytes = 128;
-  if (r.payload().empty()) {
-    os << "{}";
-  } else {
-    os << BinaryDataAsDebugString(r.payload().front().data(),
-                                  r.payload().front().size(), kMaxOutputBytes);
+  char const* sep = "";
+  for (auto const& b : r.payload()) {
+    os << sep << "{"
+       << BinaryDataAsDebugString(b.data(), b.size(), kMaxOutputBytes) << "}";
+    sep = ", ";
   }
-
-  return os << "}";
+  return os << "}}";
 }
 
 std::ostream& operator<<(std::ostream& os,
