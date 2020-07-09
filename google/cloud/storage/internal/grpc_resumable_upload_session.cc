@@ -63,7 +63,11 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   if (!last_response_) return last_response_;
 
   done_ = (last_response_->upload_state == ResumableUploadResponse::kDone);
-  next_expected_ = last_response_->last_committed_byte + 1;
+  if (last_response_->last_committed_byte == 0) {
+    next_expected_ = 0;
+  } else {
+    next_expected_ = last_response_->last_committed_byte + 1;
+  }
   return last_response_;
 }
 

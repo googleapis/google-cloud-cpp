@@ -150,7 +150,6 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_STATUS_OK(upload);
   upload = session.UploadChunk(payload);
-  EXPECT_FALSE(upload.ok());
   EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
 
   session.ResetSession();
@@ -160,6 +159,75 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
       session.last_response();
   ASSERT_STATUS_OK(last_response);
   EXPECT_EQ(last_response.value(), resume_response);
+}
+
+TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
+  auto mock = MockGrpcClient::Create();
+  GrpcResumableUploadSession session(mock, "test-upload-id");
+
+  std::string const payload = "test payload";
+  auto const size = payload.size();
+
+  EXPECT_EQ(0, session.next_expected_byte());
+  EXPECT_CALL(*mock, CreateUploadWriter(_, _))
+      .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
+        auto writer = absl::make_unique<MockGrpcUploadWriter>();
+
+        EXPECT_CALL(*writer, Write(_, _))
+            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+                          grpc::WriteOptions const&) {
+              EXPECT_EQ("test-upload-id", r.upload_id());
+              EXPECT_EQ(payload, r.checksummed_data().content());
+              EXPECT_EQ(0, r.write_offset());
+              EXPECT_TRUE(r.finish_write());
+              return false;
+            });
+        EXPECT_CALL(*writer, Finish())
+            .WillOnce(Return(
+                grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again")));
+
+        return std::unique_ptr<GrpcClient::UploadWriter>(writer.release());
+      })
+      .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
+        auto writer = absl::make_unique<MockGrpcUploadWriter>();
+
+        EXPECT_CALL(*writer, Write(_, _))
+            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+                          grpc::WriteOptions const&) {
+              EXPECT_EQ("test-upload-id", r.upload_id());
+              EXPECT_EQ(payload, r.checksummed_data().content());
+              EXPECT_EQ(0, r.write_offset());
+              EXPECT_TRUE(r.finish_write());
+              return true;
+            });
+        EXPECT_CALL(*writer, Finish()).WillOnce(Return(grpc::Status::OK));
+
+        return std::unique_ptr<GrpcClient::UploadWriter>(writer.release());
+      });
+
+  ResumableUploadResponse const resume_response{
+      {}, 0, {}, ResumableUploadResponse::kInProgress, {}};
+  EXPECT_CALL(*mock, QueryResumableUpload(_))
+      .WillOnce([&](QueryResumableUploadRequest const& request) {
+        EXPECT_EQ("test-upload-id", request.upload_session_url());
+        return make_status_or(resume_response);
+      });
+
+  auto upload = session.UploadFinalChunk(payload, size);
+  EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
+
+  session.ResetSession();
+  EXPECT_EQ(0, session.next_expected_byte());
+  EXPECT_EQ("test-upload-id", session.session_id());
+  StatusOr<ResumableUploadResponse> const& last_response =
+      session.last_response();
+  ASSERT_STATUS_OK(last_response);
+  EXPECT_EQ(last_response.value(), resume_response);
+
+  upload = session.UploadFinalChunk(payload, size);
+  EXPECT_STATUS_OK(upload);
+  EXPECT_EQ(size, session.next_expected_byte());
+  EXPECT_TRUE(session.done());
 }
 
 }  // namespace
