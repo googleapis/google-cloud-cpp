@@ -13,7 +13,7 @@
 @REM limitations under the License.
 
 REM Install Bazel using Chocolatey.
-choco install --no-progress -y bazel --version 2.0.0
+choco install --no-progress -y bazel --version 3.3.1
 
 REM Change PATH to use chocolatey's version of Bazel
 set PATH=C:\ProgramData\chocolatey\bin;%PATH%
