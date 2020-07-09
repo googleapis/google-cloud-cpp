@@ -3049,7 +3049,7 @@ class Client {
                                           std::false_type,
                                           Options&&... options) {
     std::uintmax_t file_size;
-    if (UseSimpleUpload(file_name, &file_size)) {
+    if (UseSimpleUpload(file_name, file_size)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
       request.set_multiple_options(std::forward<Options>(options)...);
@@ -3061,7 +3061,7 @@ class Client {
   }
 
   bool UseSimpleUpload(std::string const& file_name,
-                       std::uintmax_t* size) const;
+                       std::uintmax_t& size) const;
 
   StatusOr<ObjectMetadata> UploadFileSimple(
       std::string const& file_name, std::uintmax_t file_size,
