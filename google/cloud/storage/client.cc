@@ -128,7 +128,7 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
   std::string payload(upload_size, char{});
   is.seekg(upload_offset, std::ios::beg);
   is.read(&payload[0], payload.size());
-  if (is.gcount() < payload.size()) {
+  if (static_cast<size_t>(is.gcount()) < payload.size()) {
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name << "): Actual read ("
        << is.gcount() << ") is smaller than upload_size (" << payload.size()
