@@ -123,7 +123,7 @@ if ($LastExitCode) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg package versions."
 foreach ($pkg in $packages) {
-    .\vcpkg.exe install ${vcpkg_flags} "${pkg}"
+    .\vcpkg.exe install --x-wait-for-lock ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "vcpkg install $pkg failed with exit code $LastExitCode"
         Exit ${LastExitCode}

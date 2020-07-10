@@ -40,7 +40,7 @@ fi
   cd "${vcpkg_dir}"
   ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
-  ./vcpkg install google-cloud-cpp
+  ./vcpkg install --x-wait-for-lock google-cloud-cpp
 )
 # Use the new installed/ directory to create the cache.
 rm -fr "cmake-out/vcpkg-quickstart-cache"
