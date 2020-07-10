@@ -331,11 +331,10 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
   if (traits_type::eq_int_type(ch, traits_type::eof())) return 0;
   if (!IsOpen()) return traits_type::eof();
 
-  // assert pptr() != epptr()
-  *pptr() = traits_type::to_char_type(ch);
-  pbump(1);
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   if (actual_size >= max_buffer_size_) Flush();
+  *pptr() = traits_type::to_char_type(ch);
+  pbump(1);
   return last_response_ ? ch : traits_type::eof();
 }
 
