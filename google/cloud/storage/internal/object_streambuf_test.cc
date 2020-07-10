@@ -31,6 +31,7 @@ using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::InSequence;
 using ::testing::InvokeWithoutArgs;
+using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -489,7 +490,8 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
 
 /// @test Verify that last error status is accessible for large payloads.
 TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+  auto mock =
+      absl::make_unique<NiceMock<testing::MockResumableUploadSession>>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -497,6 +499,7 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   std::string const payload_2("trailer");
   std::string const session_id = "upload_id";
 
+  ON_CALL(*mock, next_expected_byte()).WillByDefault(Return(0));
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce([&](ConstBufferSequence const& p) {
         EXPECT_EQ(3 * quantum, TotalBytes(p));
