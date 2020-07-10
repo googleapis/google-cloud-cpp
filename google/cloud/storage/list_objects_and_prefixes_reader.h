@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_AND_PREFIXES_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_AND_PREFIXES_READER_H
 
-#include "absl/types/variant.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/range_from_pagination.h"
+#include "absl/types/variant.h"
 #include <iterator>
 #include <string>
 

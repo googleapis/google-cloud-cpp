@@ -173,6 +173,7 @@ add_library(
     list_buckets_reader.h
     list_hmac_keys_reader.cc
     list_hmac_keys_reader.h
+    list_objects_and_prefixes_reader.h
     list_objects_reader.cc
     list_objects_reader.h
     notification_event_type.h
