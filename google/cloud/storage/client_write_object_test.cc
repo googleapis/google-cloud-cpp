@@ -223,20 +223,11 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, next_expected_byte())
             .WillRepeatedly([&bytes_written]() { return bytes_written; });
 
-        EXPECT_CALL(*mock, UploadChunk(_))
-            .WillRepeatedly([&bytes_written](std::string const& data) {
-              bytes_written += data.size();
-              return make_status_or(
-                  ResumableUploadResponse{"fake-url",
-                                          bytes_written,
-                                          {},
-                                          ResumableUploadResponse::kInProgress,
-                                          {}});
-            });
         EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-            .WillOnce([expected, &bytes_written](std::string const& data,
-                                                 size_t size) {
-              bytes_written += data.size();
+            .WillOnce([expected, &bytes_written](
+                          internal::ConstBufferSequence const& data,
+                          size_t size) {
+              bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
                   "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});
@@ -269,9 +260,10 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
           rng, 2 * internal::UploadChunkRequest::kChunkSizeQuantum + 10));
 
   std::size_t bytes_written = 0;
+  auto last_response_value = StatusOr<internal::ResumableUploadResponse>(
+      Status(StatusCode::kUnknown, ""));
   EXPECT_CALL(*mock_, CreateResumableSession(_))
-      .WillOnce([&bytes_written](
-                    internal::ResumableUploadRequest const& request) {
+      .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
 
@@ -287,15 +279,18 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
             .WillOnce(Return(524288))
             .WillRepeatedly(Return(524287));  // start lying
         EXPECT_CALL(*mock, UploadChunk(_))
-            .WillRepeatedly([&bytes_written](std::string const& data) {
-              bytes_written += data.size();
-              return make_status_or(
-                  ResumableUploadResponse{"fake-url",
-                                          bytes_written,
-                                          {},
-                                          ResumableUploadResponse::kInProgress,
-                                          {}});
-            });
+            .WillRepeatedly(
+                [&bytes_written](internal::ConstBufferSequence const& data) {
+                  bytes_written += internal::TotalBytes(data);
+                  return make_status_or(ResumableUploadResponse{
+                      "fake-url",
+                      bytes_written,
+                      {},
+                      ResumableUploadResponse::kInProgress,
+                      {}});
+                });
+        EXPECT_CALL(*mock, last_response())
+            .WillRepeatedly(ReturnRef(last_response_value));
 
         return make_status_or(
             std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
@@ -315,7 +310,9 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), ::testing::HasSubstr("This is a bug"));
+  EXPECT_THAT(res.status().message(),
+              ::testing::HasSubstr(
+                  "This is most likely a bug in the GCS client library"));
 }
 
 TEST_F(WriteObjectTest, UploadFile) {
@@ -346,9 +343,10 @@ TEST_F(WriteObjectTest, UploadFile) {
         EXPECT_CALL(*mock, next_expected_byte())
             .WillRepeatedly([&bytes_written]() { return bytes_written; });
         EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-            .WillOnce([expected, &bytes_written](std::string const& data,
-                                                 size_t size) {
-              bytes_written += data.size();
+            .WillOnce([expected, &bytes_written](
+                          internal::ConstBufferSequence const& data,
+                          size_t size) {
+              bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
                   "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});

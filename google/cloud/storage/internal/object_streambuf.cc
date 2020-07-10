@@ -369,8 +369,8 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::FlushFinal() {
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
   hash_validator_->Update(pbase(), actual_size);
 
-  std::string to_upload(pbase(), actual_size);
-  last_response_ = upload_session_->UploadFinalChunk(to_upload, upload_size);
+  last_response_ = upload_session_->UploadFinalChunk(
+      {ConstBuffer(pbase(), actual_size)}, upload_size);
   if (!last_response_) {
     // This was an unrecoverable error, time to store status and signal an
     // error.
@@ -405,8 +405,8 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
 
   hash_validator_->Update(pbase(), chunk_size);
   StatusOr<ResumableUploadResponse> result;
-  std::string to_send(pbase(), chunk_size);
-  last_response_ = upload_session_->UploadChunk(to_send);
+  last_response_ =
+      upload_session_->UploadChunk({ConstBuffer{pbase(), chunk_size}});
   if (!last_response_) {
     return last_response_;
   }

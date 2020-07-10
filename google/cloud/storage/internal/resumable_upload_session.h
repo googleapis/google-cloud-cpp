@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H
 
+#include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
@@ -45,7 +46,7 @@ class ResumableUploadSession {
    * @return The result of uploading the chunk.
    */
   virtual StatusOr<ResumableUploadResponse> UploadChunk(
-      std::string const& buffer) = 0;
+      ConstBufferSequence const& buffers) = 0;
 
   /**
    * Uploads the final chunk in a stream, committing all previous data.
@@ -56,7 +57,7 @@ class ResumableUploadSession {
    * @return The final result of the upload, including the object metadata.
    */
   virtual StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      std::string const& buffer, std::uint64_t upload_size) = 0;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) = 0;
 
   /// Resets the session by querying its current state.
   virtual StatusOr<ResumableUploadResponse> ResetSession() = 0;
@@ -124,11 +125,12 @@ class ResumableUploadSessionError : public ResumableUploadSession {
 
   ~ResumableUploadSessionError() override = default;
 
-  StatusOr<ResumableUploadResponse> UploadChunk(std::string const&) override {
+  StatusOr<ResumableUploadResponse> UploadChunk(
+      ConstBufferSequence const&) override {
     return last_response_;
   }
 
-  StatusOr<ResumableUploadResponse> UploadFinalChunk(std::string const&,
+  StatusOr<ResumableUploadResponse> UploadFinalChunk(ConstBufferSequence const&,
                                                      std::uint64_t) override {
     return last_response_;
   }

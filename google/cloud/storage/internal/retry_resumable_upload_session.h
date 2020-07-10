@@ -42,9 +42,9 @@ class RetryResumableUploadSession : public ResumableUploadSession {
         backoff_policy_prototype_(std::move(backoff_policy)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
-      std::string const& buffer) override;
+      ConstBufferSequence const& buffers) override;
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      std::string const& buffer, std::uint64_t upload_size) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
@@ -52,9 +52,10 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
-  // Retry either UploadChunk or either UploadFinalChunk.
+  // Retry either UploadChunk or either UploadFinalChunk. Note that we need a
+  // copy of the buffers because on some retries they need to be modified.
   StatusOr<ResumableUploadResponse> UploadGenericChunk(
-      std::string const& buffer, optional<std::uint64_t> const& upload_size);
+      ConstBufferSequence buffers, optional<std::uint64_t> const& upload_size);
 
   // Reset the current session using previously cloned policies.
   StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,

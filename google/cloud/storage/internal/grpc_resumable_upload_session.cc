@@ -33,12 +33,12 @@ static_assert(google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
               "the chunk quantum");
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
-    std::string const& payload) {
+    ConstBufferSequence const& payload) {
   return UploadGeneric(payload, false);
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
-    std::string const& payload, std::uint64_t) {
+    ConstBufferSequence const& payload, std::uint64_t) {
   auto initial = UploadGeneric(payload, true);
   if (!initial) return initial;
 
@@ -86,7 +86,7 @@ GrpcResumableUploadSession::last_response() const {
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
-    std::string const& payload, bool final_chunk) {
+    ConstBufferSequence buffers, bool final_chunk) {
   CreateUploadWriter();
 
   std::size_t const maximum_chunk_size =
@@ -129,19 +129,20 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     return true;
   };
 
-  std::size_t payload_offset = 0;
   do {
-    // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
-    auto capacity = maximum_chunk_size - chunk.size();
-    auto n = (std::min)(capacity, payload.size() - payload_offset);
-    char const* begin = payload.data() + payload_offset;
-    chunk.append(begin, begin + n);
-    payload_offset += n;
-
-    if (!flush_chunk(payload_offset != payload.size())) {
-      return HandleWriteError();
+    std::size_t consumed = 0;
+    for (auto const& b : buffers) {
+      // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
+      auto capacity = maximum_chunk_size - chunk.size();
+      if (capacity == 0) break;
+      auto n = (std::min)(capacity, b.size());
+      chunk.append(b.data(), b.data() + n);
+      consumed += n;
     }
-  } while (payload_offset != payload.size());
+    PopFrontBytes(buffers, consumed);
+
+    if (!flush_chunk(!buffers.empty())) return HandleWriteError();
+  } while (!buffers.empty());
 
   return ResumableUploadResponse{
       {}, next_expected_ - 1, {}, ResumableUploadResponse::kInProgress, {}};

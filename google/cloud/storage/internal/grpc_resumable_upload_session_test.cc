@@ -89,13 +89,13 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
         return std::unique_ptr<GrpcClient::UploadWriter>(writer.release());
       });
 
-  auto upload = session.UploadChunk(payload);
+  auto upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size - 1, upload->last_committed_byte);
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
-  upload = session.UploadFinalChunk(payload, 2 * size);
+  upload = session.UploadFinalChunk({{payload}}, 2 * size);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -146,10 +146,10 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
         return make_status_or(resume_response);
       });
 
-  auto upload = session.UploadChunk(payload);
+  auto upload = session.UploadChunk({{payload}});
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_STATUS_OK(upload);
-  upload = session.UploadChunk(payload);
+  upload = session.UploadChunk({{payload}});
   EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
 
   session.ResetSession();
@@ -213,7 +213,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
         return make_status_or(resume_response);
       });
 
-  auto upload = session.UploadFinalChunk(payload, size);
+  auto upload = session.UploadFinalChunk({{payload}}, size);
   EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
 
   session.ResetSession();
@@ -224,7 +224,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   ASSERT_STATUS_OK(last_response);
   EXPECT_EQ(last_response.value(), resume_response);
 
-  upload = session.UploadFinalChunk(payload, size);
+  upload = session.UploadFinalChunk({{payload}}, size);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_TRUE(session.done());
