@@ -82,7 +82,8 @@ class PaginationIterator {
     }
     // Iterators on the same stream are equal if they point to the same object.
     if (lhs.value_.ok() && rhs.value_.ok()) {
-      return (*lhs.value_) == (*rhs.value_);
+      return google::protobuf::util::MessageDifferencer::Equals(*lhs.value_,
+                                                                *rhs.value_);
     }
     // If one is an error and the other is not then they must be different,
     // because only one iterator per range can have an error status. For the

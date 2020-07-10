@@ -75,7 +75,6 @@ cc_library(
     deps = [
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
