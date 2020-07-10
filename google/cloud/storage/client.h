@@ -24,6 +24,7 @@
 #include "google/cloud/storage/internal/tuple_filter.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
+#include "google/cloud/storage/list_objects_and_prefixes_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
@@ -1005,6 +1006,44 @@ class Client {
                              [client](internal::ListObjectsRequest const& r) {
                                return client->ListObjects(r);
                              });
+  }
+
+  /**
+   * Lists the objects and prefixes in a bucket.
+   *
+   * @param bucket_name the name of the bucket to list.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include
+   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
+   *     `Projection`, `Prefix`, `Delimiter`, and `Versions`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc list objects
+   */
+  template <typename... Options>
+  ListObjectsAndPrefixesReader ListObjectsAndPrefixes(
+      std::string const& bucket_name, Options&&... options) {
+    internal::ListObjectsRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto client = raw_client_;
+    return ListObjectsAndPrefixesReader(
+        request,
+        [client](internal::ListObjectsRequest const& r) {
+          return client->ListObjects(r);
+        },
+        [](internal::ListObjectsResponse r) {
+          std::vector<absl::variant<std::string, ObjectMetadata>> result;
+          for (auto& item : r.items) {
+            result.emplace_back(std::move(item));
+          }
+          for (auto& prefix : r.prefixes) {
+            result.emplace_back(std::move(prefix));
+          }
+          return result;
+        });
   }
 
   /**

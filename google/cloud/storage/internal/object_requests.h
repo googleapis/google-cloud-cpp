@@ -82,9 +82,11 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 struct ListObjectsResponse {
   static StatusOr<ListObjectsResponse> FromHttpResponse(
       std::string const& payload);
+  std::string* mutable_next_page_token() { return &next_page_token; }
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
+  std::vector<std::string> prefixes;
 };
 
 std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r);

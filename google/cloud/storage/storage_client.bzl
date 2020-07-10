@@ -78,6 +78,7 @@ storage_client_hdrs = [
     "internal/tuple_filter.h",
     "lifecycle_rule.h",
     "list_buckets_reader.h",
+    "list_objects_and_prefixes_reader.h",
     "list_hmac_keys_reader.h",
     "list_objects_reader.h",
     "notification_event_type.h",

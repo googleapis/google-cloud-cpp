@@ -212,6 +212,15 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
     result.items.emplace_back(std::move(*parsed));
   }
 
+  for (auto const& prefix_iterator : json["prefixes"].items()) {
+    auto const& prefix = prefix_iterator.value();
+    if (!prefix.is_string()) {
+      return Status(StatusCode::kInternal,
+                    "List Objects Response's 'prefix' is not a string.");
+    }
+    result.prefixes.emplace_back(prefix.get<std::string>());
+  }
+
   return result;
 }
 
@@ -220,6 +229,9 @@ std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r) {
      << ", items={";
   std::copy(r.items.begin(), r.items.end(),
             std::ostream_iterator<ObjectMetadata>(os, "\n  "));
+  os << "}, prefixes={";
+  std::copy(r.prefixes.begin(), r.prefixes.end(),
+            std::ostream_iterator<std::string>(os, "\n "));
   return os << "}}";
 }
 
