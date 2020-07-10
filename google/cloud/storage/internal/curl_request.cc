@@ -66,9 +66,6 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
-  if (logging_enabled_) {
-    GCP_LOG(DEBUG) << __func__ << "() << payload.size=" << payload.size();
-  }
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
@@ -79,10 +76,6 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
     ConstBufferSequence payload) {
-  if (logging_enabled_) {
-    GCP_LOG(DEBUG) << __func__ << "() << payload.size=" << payload.size()
-                   << ", payload.bytes=" << TotalBytes(payload);
-  }
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (payload.empty()) return MakeRequestImpl();
   if (payload.size() == 1) {
