@@ -115,7 +115,7 @@ if ($LastExitCode) {
 
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup old vcpkg package versions."
-.\vcpkg.exe remove ${vcpkg_flags} --outdated --recurse
+.\vcpkg.exe remove --x-wait-for-lock ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
     Exit ${LastExitCode}

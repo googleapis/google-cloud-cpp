@@ -56,7 +56,7 @@ fi
 (
   cd "${vcpkg_dir}"
   ./bootstrap-vcpkg.sh
-  ./vcpkg remove --outdated --recurse
+  ./vcpkg remove --x-wait-for-lock --outdated --recurse
   ./vcpkg install --x-wait-for-lock google-cloud-cpp
 )
 # Use the new installed/ directory to create the cache.
