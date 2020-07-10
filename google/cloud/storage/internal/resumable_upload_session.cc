@@ -103,7 +103,10 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
   } else {
     os << "{}";
   }
-  return os << ", upload_state=" << r.upload_state
+  return os << ", upload_state="
+            << (r.upload_state == ResumableUploadResponse::kDone
+                    ? "kDone"
+                    : "kInProgress")
             << ", annotations=" << r.annotations << "}";
 }
 

@@ -140,11 +140,14 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   int_type overflow(int_type ch) override;
 
  private:
-  /// Flush any data if possible.
-  StatusOr<ResumableUploadResponse> Flush();
+  /// Flush any data if possible, returns the bytes written.
+  void Flush();
 
-  /// Flush any remaining data and commit the upload.
-  StatusOr<ResumableUploadResponse> FlushFinal();
+  /// Flush any remaining data and finalize the upload.
+  void FlushFinal();
+
+  /// Upload a round chunk
+  void FlushRoundChunk(ConstBufferSequence buffers);
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 
