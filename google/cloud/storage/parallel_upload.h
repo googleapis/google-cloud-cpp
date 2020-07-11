@@ -957,7 +957,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
 template <typename... Options>
 std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
     std::uintmax_t file_size, std::tuple<Options...> const& options) {
-  auto div_ceil = [](std::uintmax_t dividend, std::size_t divisor) {
+  auto div_ceil = [](std::uintmax_t dividend, std::uintmax_t divisor) {
     return (dividend + divisor - 1) / divisor;
   };
   // These defaults were obtained by experiments summarized in
@@ -965,7 +965,7 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
   MaxStreams const default_max_streams(64);
   MinStreamSize const default_min_stream_size(32 * 1024 * 1024);
 
-  std::uintmax_t const min_stream_size =
+  auto const min_stream_size =
       (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
                                         options)
                                         .value_or(default_min_stream_size)
@@ -974,21 +974,18 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
                                .value_or(default_max_streams)
                                .value();
 
-  std::size_t const wanted_num_streams =
-      (std::max<std::size_t>)(1, (std::min<std::size_t>)(max_streams,
+  auto const wanted_num_streams =
+      (std::max<std::uintmax_t>)(1, (std::min<std::uintmax_t>)(max_streams,
                                                          div_ceil(
                                                              file_size,
                                                              min_stream_size)));
 
-  std::uintmax_t const stream_size =
+  auto const stream_size =
       (std::max<std::uintmax_t>)(1, div_ceil(file_size, wanted_num_streams));
 
-  // This number might be less than wanted_num_streams.
-  auto num_streams =
-      (std::max<std::size_t>)(1U, div_ceil(file_size, stream_size));
   std::vector<std::uintmax_t> res;
-  for (std::size_t i = 1; i < num_streams; ++i) {
-    res.emplace_back(stream_size * i);
+  for (auto split = stream_size; split <= file_size; split += stream_size) {
+    res.push_back(split);
   }
   return res;
 }

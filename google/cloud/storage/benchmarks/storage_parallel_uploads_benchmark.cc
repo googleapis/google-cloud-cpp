@@ -91,8 +91,8 @@ struct Options {
   int thread_count = 1;
   std::int64_t minimum_object_size = 128 * gcs_bm::kMiB;
   std::int64_t maximum_object_size = 8 * gcs_bm::kGiB;
-  std::int64_t minimum_num_shards = 1;
-  std::int64_t maximum_num_shards = 128;
+  std::size_t minimum_num_shards = 1;
+  std::size_t maximum_num_shards = 128;
   long minimum_sample_count = 0;  // NOLINT(google-runtime-int)
   // NOLINTNEXTLINE(google-runtime-int)
   long maximum_sample_count = std::numeric_limits<long>::max();
@@ -114,8 +114,10 @@ StatusOr<std::string> CreateTempFile(
         "Failed to create a temporary file (file_name=" + file_name + ")");
   }
   while (size_left > 0) {
-    std::size_t const to_write =
-        std::min<std::uintmax_t>(size_left, random_data.size());
+    auto const to_write = [size_left, &random_data] {
+      if (size_left > random_data.size()) return random_data.size();
+      return static_cast<std::size_t>(size_left);
+    }();
     size_left -= to_write;
     file.write(random_data.c_str(), to_write);
     if (!file.good()) {
@@ -248,7 +250,7 @@ int main(int argc, char* argv[]) {
 
       std::uniform_int_distribution<std::uint64_t> size_generator(
           options->minimum_object_size, options->maximum_object_size);
-      std::uniform_int_distribution<std::uint64_t> num_shards_generator(
+      std::uniform_int_distribution<std::size_t> num_shards_generator(
           options->minimum_num_shards, options->maximum_num_shards);
 
       auto deadline = std::chrono::steady_clock::now() + options->duration;
@@ -337,12 +339,12 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
       {"--minimum-num-shards",
        "configure the minimum number of shards in the test",
        [&options](std::string const& val) {
-         options.minimum_num_shards = gcs_bm::ParseSize(val);
+         options.minimum_num_shards = std::stoi(val);
        }},
       {"--maximum-num-shards",
        "configure the maximum number of shards in the test",
        [&options](std::string const& val) {
-         options.maximum_num_shards = gcs_bm::ParseSize(val);
+         options.maximum_num_shards = std::stoi(val);
        }},
       {"--duration", "continue the test for at least this amount of time",
        [&options](std::string const& val) {

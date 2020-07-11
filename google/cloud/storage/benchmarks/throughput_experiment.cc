@@ -62,7 +62,7 @@ class UploadObject : public ThroughputExperiment {
         prefer_insert_) {
       SimpleTimer timer;
       timer.Start();
-      std::string data = random_data_.substr(0, config.object_size);
+      std::string data = random_data_.substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -89,7 +89,7 @@ class UploadObject : public ThroughputExperiment {
          offset += config.app_buffer_size) {
       auto len = config.app_buffer_size;
       if (offset + len > config.object_size) {
-        len = config.object_size - offset;
+        len = static_cast<std::size_t>(config.object_size - offset);
       }
       writer.write(random_data_.data(), len);
     }
@@ -142,7 +142,7 @@ class DownloadObject : public ThroughputExperiment {
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-    for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
+    for (std::uint64_t num_read = 0; reader.read(buffer.data(), buffer.size());
          num_read += reader.gcount()) {
     }
     timer.Stop();

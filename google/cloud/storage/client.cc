@@ -92,17 +92,21 @@ ObjectWriteStream Client::WriteObjectImpl(
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name,
-                             std::uintmax_t& size) const {
+                             std::size_t& size) const {
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {
     return false;
   }
-  size = google::cloud::internal::file_size(file_name);
-  return size <= raw_client()->client_options().maximum_simple_upload_size();
+  auto const fs = google::cloud::internal::file_size(file_name);
+  if (fs <= raw_client()->client_options().maximum_simple_upload_size()) {
+    size = static_cast<std::size_t>(fs);
+    return true;
+  }
+  return false;
 }
 
 StatusOr<ObjectMetadata> Client::UploadFileSimple(
-    std::string const& file_name, std::uintmax_t file_size,
+    std::string const& file_name, std::size_t file_size,
     internal::InsertObjectMediaRequest request) {
   auto upload_offset = request.GetOption<UploadFromOffset>().value_or(0);
   if (file_size < upload_offset) {
@@ -124,7 +128,7 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     return Status(StatusCode::kNotFound, std::move(os).str());
   }
 
-  std::string payload(upload_size, char{});
+  std::string payload(static_cast<std::size_t>(upload_size), char{});
   is.seekg(upload_offset, std::ios::beg);
   is.read(&payload[0], payload.size());
   if (static_cast<std::size_t>(is.gcount()) < payload.size()) {
@@ -229,7 +233,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     // Read a chunk of data from the source file.
     if (upload_limit - server_size <= chunk_size) {
       // We don't want the `source_size` to exceed `upload_limit`.
-      chunk_size = upload_limit - server_size;
+      chunk_size = static_cast<std::size_t>(upload_limit - server_size);
       reach_upload_limit = true;
     }
     source.read(buffer.data(), buffer.size());

@@ -243,8 +243,8 @@ TestResults RunThread(ThroughputOptions const& options,
               << client_options.status() << "\n";
     return {};
   }
-  std::uint64_t upload_buffer_size = client_options->upload_buffer_size();
-  std::uint64_t download_buffer_size = client_options->download_buffer_size();
+  auto const upload_buffer_size = client_options->upload_buffer_size();
+  auto const download_buffer_size = client_options->download_buffer_size();
 
   gcs::Client rest_client(*client_options);
 
@@ -271,10 +271,10 @@ TestResults RunThread(ThroughputOptions const& options,
 
   std::uniform_int_distribution<std::int64_t> size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::int64_t> write_size_generator(
+  std::uniform_int_distribution<std::size_t> write_size_generator(
       options.minimum_write_size / options.write_quantum,
       options.maximum_write_size / options.write_quantum);
-  std::uniform_int_distribution<std::int64_t> read_size_generator(
+  std::uniform_int_distribution<std::size_t> read_size_generator(
       options.minimum_read_size / options.read_quantum,
       options.maximum_read_size / options.read_quantum);
 
