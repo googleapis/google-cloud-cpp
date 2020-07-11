@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request.h"
-#include "google/cloud/log.h"
 #include <iostream>
 
 namespace google {

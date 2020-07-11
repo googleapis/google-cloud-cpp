@@ -308,13 +308,13 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
                                              std::streamsize count) {
   if (!IsOpen()) return traits_type::eof();
 
-  auto internal_buffer_size = static_cast<std::size_t>(pptr() - pbase());
-  if (count + internal_buffer_size >= max_buffer_size_) {
-    if (internal_buffer_size == 0) {
+  auto const actual_size = put_area_size();
+  if (count + actual_size >= max_buffer_size_) {
+    if (actual_size == 0) {
       FlushRoundChunk({ConstBuffer(s, count)});
     } else {
       FlushRoundChunk({
-          ConstBuffer(pbase(), internal_buffer_size),
+          ConstBuffer(pbase(), actual_size),
           ConstBuffer(s, count),
       });
     }
@@ -331,7 +331,7 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
   if (traits_type::eq_int_type(ch, traits_type::eof())) return 0;
   if (!IsOpen()) return traits_type::eof();
 
-  auto actual_size = static_cast<std::size_t>(pptr() - pbase());
+  auto actual_size = put_area_size();
   if (actual_size >= max_buffer_size_) Flush();
   *pptr() = traits_type::to_char_type(ch);
   pbump(1);
@@ -342,7 +342,7 @@ void ObjectWriteStreambuf::FlushFinal() {
   if (!IsOpen()) return;
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
-  auto actual_size = static_cast<std::size_t>(pptr() - pbase());
+  auto const actual_size = put_area_size();
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
   hash_validator_->Update(pbase(), actual_size);
 
@@ -361,10 +361,10 @@ void ObjectWriteStreambuf::FlushFinal() {
 void ObjectWriteStreambuf::Flush() {
   if (!IsOpen()) return;
 
-  auto actual_size = static_cast<std::size_t>(pptr() - pbase());
+  auto actual_size = put_area_size();
   if (actual_size < UploadChunkRequest::kChunkSizeQuantum) return;
 
-  ConstBufferSequence payload{ConstBuffer(pbase(), pptr() - pbase())};
+  ConstBufferSequence payload{ConstBuffer(pbase(), actual_size)};
   FlushRoundChunk(payload);
 }
 
@@ -430,11 +430,9 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   // to the caller, so there is no way to know what byte range to specify
   // next.  Replace it with a SessionError so next_expected_byte and
   // resumable_session_id can still be retrieved.
-  if (!last_response_.ok()) {
-    upload_session_ =
-        std::unique_ptr<ResumableUploadSession>(new ResumableUploadSessionError(
-            last_response_.status(), next_expected_byte(),
-            resumable_session_id()));
+  if (!last_response_) {
+    upload_session_ = absl::make_unique<ResumableUploadSessionError>(
+        last_response_.status(), next_expected_byte(), resumable_session_id());
   }
 }
 

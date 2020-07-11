@@ -140,7 +140,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   int_type overflow(int_type ch) override;
 
  private:
-  /// Flush any data if possible, returns the bytes written.
+  /// Flush any data if possible.
   void Flush();
 
   /// Flush any remaining data and finalize the upload.
@@ -148,6 +148,9 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   /// Upload a round chunk
   void FlushRoundChunk(ConstBufferSequence buffers);
+
+  /// The current used bytes in the put area (aka current_ios_buffer_)
+  std::size_t put_area_size() const { return pptr() - pbase(); }
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 

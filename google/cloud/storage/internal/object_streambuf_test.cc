@@ -630,6 +630,34 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
   EXPECT_STATUS_OK(response);
 }
 
+/// @test Verify flushing too small a buffer does nothing.
+TEST(ObjectWriteStreambufTest, PubsyncTooSmall) {
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto const half = quantum / 2;
+  std::string const p0(half, '0');
+  std::string const p1(half, '1');
+  std::string const p2(half, '2');
+
+  std::size_t mock_next_byte = 0;
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
+    return mock_next_byte;
+  });
+  bool mock_is_done = false;
+  EXPECT_CALL(*mock, done()).WillRepeatedly([&]() { return mock_is_done; });
+  std::string const mock_session_id = "session-id";
+  EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(mock_session_id));
+
+  // Write some data and flush it, because there are no EXPECT_CALLS for
+  // UploadChunk yet this fails if we flush too early.
+  ObjectWriteStreambuf streambuf(std::move(mock), 2 * quantum,
+                                 absl::make_unique<NullHashValidator>());
+
+  EXPECT_EQ(half, streambuf.sputn(p0.data(), half));
+  EXPECT_EQ(0, streambuf.pubsync());
+}
+
 TEST(ObjectReadStreambufTest, FailedTellg) {
   ObjectReadStreambuf buf(ReadObjectRangeRequest{},
                           Status(StatusCode::kInvalidArgument, "some error"));
