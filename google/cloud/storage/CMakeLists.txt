@@ -23,7 +23,7 @@ option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ ªClient")
+set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER
     "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
@@ -40,7 +40,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/testing/*"
     "*/google/cloud/storage/tests/*"
     "*/google/cloud/storage/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storage_benchmarks")
 
 include(GoogleCloudCppCommon)
 

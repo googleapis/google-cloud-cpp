@@ -1071,29 +1071,46 @@ class Client {
    * can use either the regular `operator<<()`, or `std::ostream::write()` to
    * upload data.
    *
-   * The application can explicitly request a new resumable upload using the
-   * result of `#NewResumableUploadSession()`. To restore a previously created
-   * resumable session use `#RestoreResumableUploadSession()`.
+   * This function always uses [resumable uploads][resumable-link]. The
+   * application can provide a `#RestoreResumableUploadSession()` option to
+   * resume a previously created upload. The returned object has accessors to
+   * query the session id and the next byte expected by GCS.
    *
-   * @note It is the application's responsibility to query the stream to find
-   *     the latest committed byte and to upload data starting from the next
-   *     byte expected by the upload session.
-   *
-   * @note Using the `WithObjectMetadata` option implicitly creates a resumable
-   *     upload.
-   *
-   * Without resumable uploads an interrupted upload has to be restarted from
-   * the beginning. Therefore, applications streaming large objects should try
-   * to use resumable uploads, and save the session id to restore them if
-   * needed.
-   *
-   * Non-resumable uploads may be more efficient for small and medium sized
-   * uploads, as they require fewer roundtrips to the service.
+   * @note When resuming uploads it is the application's responsibility to save
+   *     the session id to restart the upload later. Likewise, it is the
+   *     application's responsibility to query the next expected byte and send
+   *     the remaining data without gaps or duplications.
    *
    * For small uploads we recommend using `InsertObject`, consult
-   * [the
-   * documentation](https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload)
-   * for details.
+   * [the documentation][how-to-upload-link] for details.
+   *
+   * If the application does not provide a `#RestoreResumableUploadSession()`
+   * option, or it provides the `#NewResumableUploadSession()` option then a new
+   * resumable upload session is created.
+   *
+   * To perform efficient uploads applications should consider using unbuffered
+   * I/O operations on the returned stream (aka `std::ostream::write()`).
+   * Application developers should consider the following properties of
+   * resumable uploads to use this API efficiently:
+   *
+   * - Resumable uploads are performed in "chunks" sent to GCS, these chunks
+   *   are committed and saved at least until the session is deleted (or garbage
+   *   collected, approximately after 7 days.)
+   * - The size of these chunks (except the last one) must be a multiple of the
+   *   upload quantum (256KiB).
+   * - Uploading a chunk that is not a multiple of the quantum implicitly
+   *   finalizes the upload.
+   *
+   * The library, therefore, *must* buffer any data that does not fill a full
+   * quantum. If you are interested in avoiding data copies you should always
+   * provide the library with buffers that fit in this quantum.
+   *
+   * In addition, applications should consider providing large buffers as the
+   * library waits until GCS confirms that the chunk is uploaded before
+   * returning control to the application. Naturally there is a tradeoff between
+   * copying data to prepare large buffers vs. sending many small buffers and
+   * paying the network costs for each.  We recommend that you use buffers in
+   * the 16MiB to 64MiB range for best performance.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -1121,6 +1138,13 @@ class Client {
    *
    * @par Example: resuming a resumable upload.
    * @snippet storage_object_resumable_write_samples.cc resume resumable upload
+   *
+   * @see [Resumable Uploads][resumable-link] for more information about
+   *     resumable uploads.
+   *
+   * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+   * [how-to-upload-link]:
+   * https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,

@@ -673,6 +673,7 @@ class GcsBucket(object):
         end = next_byte + len(request.data)
         total = end
         final_chunk = False
+        payload = testbench_utils.extract_media(request)
         content_range = request.headers.get("content-range")
         if content_range is not None:
             if content_range.startswith("bytes */*"):
@@ -711,14 +712,14 @@ class GcsBucket(object):
                         % (next_byte, begin),
                         status_code=400,
                     )
-                if len(request.data) != end - begin + 1:
+                if len(payload) != end - begin + 1:
                     raise error_response.ErrorResponse(
-                        "Mismatched data range (%d) vs. content-length (%d)"
-                        % (end - begin + 1, len(request.data)),
+                        "Mismatched data range (%d) vs. received data (%d)"
+                        % (end - begin + 1, len(payload)),
                         status_code=400,
                     )
 
-        upload["media"] = upload.get("media", b"") + request.data
+        upload["media"] = upload.get("media", b"") + payload
         next_byte = len(upload.get("media", ""))
         upload["next_byte"] = next_byte
         response_payload = ""

@@ -141,10 +141,16 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
  private:
   /// Flush any data if possible.
-  StatusOr<ResumableUploadResponse> Flush();
+  void Flush();
 
-  /// Flush any remaining data and commit the upload.
-  StatusOr<ResumableUploadResponse> FlushFinal();
+  /// Flush any remaining data and finalize the upload.
+  void FlushFinal();
+
+  /// Upload a round chunk
+  void FlushRoundChunk(ConstBufferSequence buffers);
+
+  /// The current used bytes in the put area (aka current_ios_buffer_)
+  std::size_t put_area_size() const { return pptr() - pbase(); }
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 
