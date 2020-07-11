@@ -62,7 +62,8 @@ class UploadObject : public ThroughputExperiment {
         prefer_insert_) {
       SimpleTimer timer;
       timer.Start();
-      std::string data = random_data_.substr(0, static_cast<std::size_t>(config.object_size));
+      std::string data =
+          random_data_.substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),

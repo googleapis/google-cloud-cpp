@@ -3084,8 +3084,7 @@ class Client {
     return UploadFileResumable(file_name, std::move(request));
   }
 
-  bool UseSimpleUpload(std::string const& file_name,
-                       std::size_t& size) const;
+  bool UseSimpleUpload(std::string const& file_name, std::size_t& size) const;
 
   StatusOr<ObjectMetadata> UploadFileSimple(
       std::string const& file_name, std::size_t file_size,

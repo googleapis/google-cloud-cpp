@@ -391,7 +391,7 @@ Status ParallelUploadFileShard::Upload() {
   }
 
   static_assert(sizeof(std::ifstream::off_type) >= sizeof(std::uintmax_t),
-     "files cannot handle uintmax_t for offsets uploads");
+                "files cannot handle uintmax_t for offsets uploads");
 
   // TODO(#...) - this cast should not be necessary.
   istream.seekg(static_cast<std::ifstream::off_type>(offset_in_file_));
@@ -399,8 +399,7 @@ Status ParallelUploadFileShard::Upload() {
     return fail(StatusCode::kInternal, "file changed size during upload?");
   }
   while (left_to_upload_ > 0) {
-    auto const to_copy =
-    static_cast<std::ifstream::off_type>(
+    auto const to_copy = static_cast<std::ifstream::off_type>(
         std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_));
     istream.read(buf.data(), to_copy);
     if (!istream.good()) {

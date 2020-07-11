@@ -975,7 +975,8 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
                                .value();
 
   auto const wanted_num_streams =
-      (std::max<std::uintmax_t>)(1, (std::min<std::uintmax_t>)(max_streams,
+      (std::max<
+          std::uintmax_t>)(1, (std::min<std::uintmax_t>)(max_streams,
                                                          div_ceil(
                                                              file_size,
                                                              min_stream_size)));
