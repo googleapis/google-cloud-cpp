@@ -1035,13 +1035,14 @@ class Client {
           return client->ListObjects(r);
         },
         [](internal::ListObjectsResponse r) {
-          std::vector<absl::variant<std::string, ObjectMetadata>> result;
+          std::vector<ObjectOrPrefix> result;
           for (auto& item : r.items) {
             result.emplace_back(std::move(item));
           }
           for (auto& prefix : r.prefixes) {
             result.emplace_back(std::move(prefix));
           }
+          SortObjectsAndPrefixes(result);
           return result;
         });
   }

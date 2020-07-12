@@ -116,8 +116,6 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
-  if (UsingTestbench()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -161,8 +159,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
-  if (UsingTestbench()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

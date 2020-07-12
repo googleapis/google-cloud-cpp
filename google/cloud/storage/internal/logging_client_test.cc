@@ -155,7 +155,8 @@ TEST_F(LoggingClientTest, ListObjects) {
   };
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Return(make_status_or(ListObjectsResponse{"a-token", items})));
+      .WillOnce(
+          Return(make_status_or(ListObjectsResponse{"a-token", items, {}})));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.

@@ -25,12 +25,27 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+using ObjectOrPrefix = absl::variant<ObjectMetadata, std::string>;
+
 using ListObjectsAndPrefixesReader =
     google::cloud::storage::internal::PaginationRange<
-        absl::variant<std::string, ObjectMetadata>,
-        internal::ListObjectsRequest, internal::ListObjectsResponse>;
+        ObjectOrPrefix, internal::ListObjectsRequest,
+        internal::ListObjectsResponse>;
 
 using ListObjectsAndPrefixesIterator = ListObjectsAndPrefixesReader::iterator;
+
+struct GetNameOrPrefix {
+  std::string const& operator()(std::string const& v) { return v; }
+  std::string const& operator()(ObjectMetadata const& v) { return v.name(); }
+};
+
+void inline SortObjectsAndPrefixes(std::vector<ObjectOrPrefix>& in) {
+  std::sort(in.begin(), in.end(),
+            [](ObjectOrPrefix const& a, ObjectOrPrefix const& b) {
+              return (absl::visit(GetNameOrPrefix{}, a) <
+                      absl::visit(GetNameOrPrefix{}, b));
+            });
+}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

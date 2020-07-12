@@ -373,19 +373,29 @@ def objects_list(bucket_name):
     base_url = flask.url_for("gcs_index", _external=True)
     insert_magic_bucket(base_url)
     _ = testbench_utils.lookup_bucket(bucket_name)
-    result = {"next_page_token": "", "items": []}
+    result = {"next_page_token": "", "items": [], "prefixes:": []}
     versions_parameter = flask.request.args.get("versions")
     all_versions = versions_parameter is not None and bool(versions_parameter)
+    prefixes = set()
+    prefix = flask.request.args.get("prefix", "", type(""))
+    delimiter = flask.request.args.get("delimiter", "", type(""))
     for name, o in testbench_utils.all_objects():
-        if name.find(bucket_name + "/o") != 0:
+        if name.find(bucket_name + "/o/" + prefix) != 0:
             continue
         if o.get_latest() is None:
+            continue
+        # We assume `delimiter` has only one character.
+        delimiter_index = name.find(delimiter, len(bucket_name + "/o/" + prefix))
+        if delimiter != "" and delimiter_index > 0:
+            # We don't want to include `bucket_name + "/o/"` in the returned prefix.
+            prefixes.add(name[len(bucket_name + "/o/") : delimiter_index + 1])
             continue
         if all_versions:
             for object_version in o.revisions.values():
                 result["items"].append(object_version.metadata)
         else:
             result["items"].append(o.get_latest().metadata)
+        result["prefixes"] = list(prefixes)
     return testbench_utils.filtered_response(flask.request, result)
 
 
