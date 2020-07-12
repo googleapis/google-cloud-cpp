@@ -352,7 +352,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
   EXPECT_TRUE(stream.fail());
   EXPECT_FALSE(stream.bad());
   EXPECT_EQ(kObjectSize - 3 * kMiB, stream.gcount());
-  std::string actual(buffer.data(), stream.gcount());
+  std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
   EXPECT_EQ(large_text.substr(3 * kMiB), actual);
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -456,7 +456,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   EXPECT_TRUE(stream.fail());
   EXPECT_FALSE(stream.bad());
   EXPECT_EQ(129 * kKiB, stream.gcount());
-  std::string actual(buffer.data(), stream.gcount());
+  std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
   EXPECT_EQ(large_text.substr(kObjectSize - 129 * kKiB), actual);
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -507,7 +507,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
     EXPECT_FALSE(stream.fail());
     EXPECT_FALSE(stream.bad());
     EXPECT_EQ(1 * kMiB, stream.gcount());
-    std::string actual(buffer.data(), stream.gcount());
+    std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
 
     EXPECT_EQ(large_text.substr(i * kMiB, 1 * kMiB), actual);
   }
@@ -522,7 +522,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   EXPECT_TRUE(stream.fail());
   EXPECT_FALSE(stream.bad());
   EXPECT_EQ(kObjectSize - 3 * kMiB, stream.gcount());
-  std::string actual(buffer.data(), stream.gcount());
+  std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
   auto expected = large_text.substr(3 * kMiB);
   EXPECT_EQ(expected.size(), actual.size());
   EXPECT_EQ(expected, actual);

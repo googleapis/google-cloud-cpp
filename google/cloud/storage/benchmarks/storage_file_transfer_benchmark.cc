@@ -117,8 +117,18 @@ int main(int argc, char* argv[]) {
 
   std::cout << "# Creating file to upload ..." << std::flush;
   auto filename = gcs_bm::MakeRandomFileName(generator);
-  std::ofstream(filename, std::ios::binary)
-      << gcs_bm::MakeRandomData(generator, options->file_size);
+  {
+    auto const filler = gcs_bm::MakeRandomData(generator, 4 * gcs_bm::kMiB);
+    std::ofstream os(filename, std::ios::binary);
+    std::int64_t current_size = 0;
+    while (current_size < options->file_size) {
+      auto n = filler.size();
+      if (static_cast<std::int64_t>(n) > (options->file_size - current_size)) {
+        n = static_cast<std::size_t>(options->file_size - current_size);
+      }
+      os.write(filler.data(), n);
+    }
+  }
   std::cout << " DONE\n"
             << "# File: " << filename << "\n";
 

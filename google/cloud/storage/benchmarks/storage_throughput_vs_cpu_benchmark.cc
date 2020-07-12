@@ -290,14 +290,7 @@ TestResults RunThread(ThroughputOptions const& options,
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
   gcs_bm::SimpleTimer timer;
-  // This obviously depends on the size of the objects, but a good estimate for
-  // the upload + download bandwidth is 250MiB/s.
-  constexpr auto kExpectedBandwidth = 250 * gcs_bm::kMiB;
-  auto const median_size =
-      (options.minimum_object_size + options.minimum_object_size) / 2;
-  auto const objects_per_second = median_size / kExpectedBandwidth;
   TestResults results;
-  results.reserve(options.duration.count() * objects_per_second);
 
   std::int32_t iteration_count = 0;
   for (auto start = std::chrono::steady_clock::now();
