@@ -379,16 +379,17 @@ def objects_list(bucket_name):
     prefixes = set()
     prefix = flask.request.args.get("prefix", "", type(""))
     delimiter = flask.request.args.get("delimiter", "", type(""))
+    bucket_link = bucket_name + "/o/"
     for name, o in testbench_utils.all_objects():
-        if name.find(bucket_name + "/o/" + prefix) != 0:
+        if name.find(bucket_link + prefix) != 0:
             continue
         if o.get_latest() is None:
             continue
         # We assume `delimiter` has only one character.
-        delimiter_index = name.find(delimiter, len(bucket_name + "/o/" + prefix))
+        delimiter_index = name.find(delimiter, len(bucket_link + prefix))
         if delimiter != "" and delimiter_index > 0:
-            # We don't want to include `bucket_name + "/o/"` in the returned prefix.
-            prefixes.add(name[len(bucket_name + "/o/") : delimiter_index + 1])
+            # We don't want to include `bucket_link` in the returned prefix.
+            prefixes.add(name[len(bucket_link) : delimiter_index + 1])
             continue
         if all_versions:
             for object_version in o.revisions.values():

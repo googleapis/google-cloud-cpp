@@ -1021,7 +1021,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_object_samples.cc list objects
+   * @snippet storage_object_samples.cc list objects and prefixes
    */
   template <typename... Options>
   ListObjectsAndPrefixesReader ListObjectsAndPrefixes(
