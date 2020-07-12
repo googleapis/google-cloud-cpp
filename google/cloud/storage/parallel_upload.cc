@@ -428,11 +428,11 @@ StatusOr<std::pair<std::string, std::int64_t>> ParseResumableSessionId(
   Status invalid(StatusCode::kInternal,
                  "Not a valid parallel upload session ID");
 
-  if (!starts_with(session_id, kSessionIdPrefix)) {
+  auto const prefix = ResumableParallelUploadState::session_id_prefix();
+  if (!starts_with(session_id, prefix)) {
     return invalid;
   }
-  std::string const object_and_gen =
-      session_id.substr(std::string(kSessionIdPrefix).size());
+  std::string const object_and_gen = session_id.substr(prefix.size());
   auto sep_pos = object_and_gen.find(':');
   if (sep_pos == std::string::npos) {
     return invalid;
