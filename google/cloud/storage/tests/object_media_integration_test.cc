@@ -507,7 +507,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
     EXPECT_FALSE(stream.fail());
     EXPECT_FALSE(stream.bad());
     EXPECT_EQ(1 * kMiB, stream.gcount());
-    std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
+    std::string actual(buffer.data(),
+                       static_cast<std::size_t>(stream.gcount()));
 
     EXPECT_EQ(large_text.substr(i * kMiB, 1 * kMiB), actual);
   }
