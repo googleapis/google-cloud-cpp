@@ -64,8 +64,9 @@ std::int64_t ParseSize(std::string const& val) {
 }
 
 std::size_t ParseBufferSize(std::string const& val) {
-  auto s = ParseSize(val);
-  if (s < 0 || s > (std::numeric_limits<std::size_t>::max)()) {
+  auto const s = ParseSize(val);
+  if (s < 0 || static_cast<std::uint64_t>(s) >
+                   (std::numeric_limits<std::size_t>::max)()) {
     internal::ThrowRangeError("invalid range in ParseBufferSize");
   }
   return static_cast<std::size_t>(s);

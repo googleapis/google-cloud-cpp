@@ -89,7 +89,7 @@ class UploadObject : public ThroughputExperiment {
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
       auto len = config.app_buffer_size;
-      if (offset + len > config.object_size) {
+      if (offset + static_cast<std::int64_t>(len) > config.object_size) {
         len = static_cast<std::size_t>(config.object_size - offset);
       }
       writer.write(random_data_.data(), len);

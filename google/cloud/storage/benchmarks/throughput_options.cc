@@ -64,30 +64,30 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
       {"--minimum-write-size",
        "configure the minimum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.minimum_write_size = ParseSize(val);
+         options.minimum_write_size = ParseBufferSize(val);
        }},
       {"--maximum-write-size",
        "configure the maximum buffer size for write() calls",
        [&options](std::string const& val) {
-         options.maximum_write_size = ParseSize(val);
+         options.maximum_write_size = ParseBufferSize(val);
        }},
       {"--write-quantum", "quantize the buffer sizes for write() calls",
        [&options](std::string const& val) {
-         options.write_quantum = ParseSize(val);
+         options.write_quantum = ParseBufferSize(val);
        }},
       {"--minimum-read-size",
        "configure the minimum buffer size for read() calls",
        [&options](std::string const& val) {
-         options.minimum_read_size = ParseSize(val);
+         options.minimum_read_size = ParseBufferSize(val);
        }},
       {"--maximum-read-size",
        "configure the maximum buffer size for read() calls",
        [&options](std::string const& val) {
-         options.maximum_read_size = ParseSize(val);
+         options.maximum_read_size = ParseBufferSize(val);
        }},
       {"--read-quantum", "quantize the buffer sizes for read() calls",
        [&options](std::string const& val) {
-         options.read_quantum = ParseSize(val);
+         options.read_quantum = ParseBufferSize(val);
        }},
       {"--duration", "continue the test for at least this amount of time",
        [&options](std::string const& val) {
