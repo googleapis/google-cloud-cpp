@@ -127,6 +127,7 @@ int main(int argc, char* argv[]) {
         n = static_cast<std::size_t>(options->file_size - current_size);
       }
       os.write(filler.data(), n);
+      current_size += n;
     }
   }
   std::cout << " DONE\n"
