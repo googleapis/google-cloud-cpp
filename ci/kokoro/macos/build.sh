@@ -116,10 +116,6 @@ readonly CACHE_NAME
 
 echo "================================================================"
 io::log_yellow "install crcmod to speed up gsutil."
-echo "DEBUG DEBUG DEBUG"
-gsutil version -l
-export CACHE_GSUTIL_DEBUG="-m"
-echo "DEBUG DEBUG DEBUG END"
 sudo pip3 install -U crcmod
 
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
