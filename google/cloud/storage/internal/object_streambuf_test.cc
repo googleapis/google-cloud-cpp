@@ -601,20 +601,11 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
                                     {},
                                     ResumableUploadResponse::kInProgress,
                                     {}});
-      })
-      .WillOnce([&](ConstBufferSequence const& p) {
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
-        mock_next_byte += TotalBytes(p);
-        return make_status_or(
-            ResumableUploadResponse{"",
-                                    mock_next_byte - 1,
-                                    {},
-                                    ResumableUploadResponse::kInProgress,
-                                    {}});
       });
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t) {
-        EXPECT_EQ(0, TotalBytes(p));
+        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+        mock_next_byte += TotalBytes(p);
         mock_is_done = true;
         return make_status_or(ResumableUploadResponse{
             "", mock_next_byte - 1, {}, ResumableUploadResponse::kDone, {}});

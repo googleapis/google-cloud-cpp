@@ -283,8 +283,6 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
 }
 
 StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {
-  pubsync();
-  GCP_LOG(INFO) << __func__ << "()";
   FlushFinal();
   return last_response_;
 }
