@@ -118,6 +118,7 @@ echo "================================================================"
 io::log_yellow "install crcmod to speed up gsutil."
 echo "DEBUG DEBUG DEBUG"
 gsutil version -l
+export CACHE_GSUTIL_DEBUG=""
 echo "DEBUG DEBUG DEBUG END"
 sudo pip3 install -U crcmod
 
