@@ -27,6 +27,8 @@ namespace {
 
 using ::testing::AnyOf;
 using ::testing::Eq;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -154,6 +156,43 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto constexpr kUploadQuantum = 256 * 1024;
+  auto const payload = std::string(
+      client->raw_client()->client_options().upload_buffer_size(), '*');
+  auto const header = MakeRandomData(kUploadQuantum / 2);
+
+  auto os =
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(os.good()) << "status=" << os.metadata().status();
+  // Write a small header that is too small to be flushed...
+  os.write(header.data(), header.size());
+  for (int i = 0; i != 3; ++i) {
+    // Append some data that is large enough to flush, this creates a call to
+    // UploadChunk() with two buffers, and that triggered chunked transfer
+    // encoding, even though the size is known which wastes bandwidth.
+    os.write(payload.data(), payload.size());
+    ASSERT_TRUE(os.good());
+  }
+  os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  ObjectMetadata meta = os.metadata().value();
+  if (meta.has_metadata("x_testbench_upload")) {
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+  if (meta.has_metadata("x_testbench_transfer_encoding")) {
+    EXPECT_THAT(meta.metadata("x_testbench_transfer_encoding"),
+                Not(HasSubstr("chunked")));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
