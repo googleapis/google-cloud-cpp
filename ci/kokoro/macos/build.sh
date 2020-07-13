@@ -131,7 +131,20 @@ else
   exit 1
 fi
 
+io::log_yellow "post build cache upload + cleanup"
+
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
+
+if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  # Our CI system (Kokoro) syncs the data in this directory to somewhere after
+  # the build completes. Removing the cmake-out/ dir shaves minutes off this
+  # process. This is safe as long as we don't wish to save any build artifacts.
+  io::log_yellow "cleaning up artifacts."
+  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 |
+    xargs -0 -t rm -rf || true
+else
+  io::log_yellow "Not a CI build; skipping artifact cleanup"
+fi
 
 exit 0
