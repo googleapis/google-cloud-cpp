@@ -34,18 +34,19 @@ using ListObjectsAndPrefixesReader =
 
 using ListObjectsAndPrefixesIterator = ListObjectsAndPrefixesReader::iterator;
 
-struct GetNameOrPrefix {
-  std::string const& operator()(std::string const& v) { return v; }
-  std::string const& operator()(ObjectMetadata const& v) { return v.name(); }
-};
-
-void inline SortObjectsAndPrefixes(std::vector<ObjectOrPrefix>& in) {
+namespace internal {
+inline void SortObjectsAndPrefixes(std::vector<ObjectOrPrefix>& in) {
+  struct GetNameOrPrefix {
+    std::string const& operator()(std::string const& v) { return v; }
+    std::string const& operator()(ObjectMetadata const& v) { return v.name(); }
+  };
   std::sort(in.begin(), in.end(),
             [](ObjectOrPrefix const& a, ObjectOrPrefix const& b) {
               return (absl::visit(GetNameOrPrefix{}, a) <
                       absl::visit(GetNameOrPrefix{}, b));
             });
 }
+}  // namespace internal
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

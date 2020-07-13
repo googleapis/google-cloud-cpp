@@ -85,16 +85,14 @@ void ListVersionedObjects(google::cloud::storage::Client client,
 
 void ListObjectsAndPrefixes(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
-  //! [list objects and prefixes] [START storage_list_objects_and_prefixes]
+  //! [list objects and prefixes]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& bucket_prefix) {
-    for (auto&& status_or_result : client.ListObjectsAndPrefixes(
+    for (auto&& item : client.ListObjectsAndPrefixes(
              bucket_name, gcs::Prefix(bucket_prefix), gcs::Delimiter("/"))) {
-      if (!status_or_result) {
-        throw std::runtime_error(status_or_result.status().message());
-      }
-      auto result = status_or_result.value();
+      if (!item) throw std::runtime_error(item.status().message());
+      auto result = *std::move(item);
       if (absl::holds_alternative<gcs::ObjectMetadata>(result)) {
         std::cout << "object_name="
                   << absl::get<gcs::ObjectMetadata>(result).name() << "\n";
@@ -103,7 +101,7 @@ void ListObjectsAndPrefixes(google::cloud::storage::Client client,
       }
     }
   }
-  //! [list objects and prefixes] [END storage_list_objects_and_prefixes]
+  //! [list objects and prefixes]
   (std::move(client), argv.at(0), argv.at(1));
 }
 

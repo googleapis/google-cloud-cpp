@@ -1042,7 +1042,7 @@ class Client {
           for (auto& prefix : r.prefixes) {
             result.emplace_back(std::move(prefix));
           }
-          SortObjectsAndPrefixes(result);
+          internal::SortObjectsAndPrefixes(result);
           return result;
         });
   }

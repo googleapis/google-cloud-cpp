@@ -26,6 +26,7 @@ namespace {
 
 using ::google::cloud::storage::internal::ListObjectsRequest;
 using ::google::cloud::storage::internal::ListObjectsResponse;
+using ::google::cloud::storage::internal::SortObjectsAndPrefixes;
 using ::google::cloud::storage::testing::MockClient;
 using ::testing::_;
 using ::testing::ContainerEq;
