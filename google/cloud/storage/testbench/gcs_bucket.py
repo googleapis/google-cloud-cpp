@@ -630,6 +630,7 @@ class GcsBucket(object):
             "expected_bytes": expected_bytes,
             "object_name": metadata.get("name"),
             "media": b"",
+            "transfer": set(),
             "done": False,
         }
         # Capture the preconditions, including those that are None.
@@ -669,7 +670,7 @@ class GcsBucket(object):
         # Be gracious in what you accept, if the Content-Range header is not
         # set we assume it is a good header and it is the end of the file.
         next_byte = upload["next_byte"]
-        begin = next_byte
+        upload["transfer"].add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
         end = next_byte + len(request.data)
         total = end
         final_chunk = False
@@ -747,6 +748,10 @@ class GcsBucket(object):
             if upload.pop("instructions", None) == "inject-upload-data-error":
                 media = testbench_utils.corrupt_media(media)
             revision = blob.insert_resumable(gcs_url, request, media, original_metadata)
+            revision.metadata.setdefault("metadata", {})
+            revision.metadata["metadata"]["x_testbench_transfer_encoding"] = ":".join(
+                upload["transfer"]
+            )
             response_payload = testbench_utils.filter_fields_from_response(
                 upload.get("fields"), revision.metadata
             )

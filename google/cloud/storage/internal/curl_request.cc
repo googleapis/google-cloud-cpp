@@ -82,6 +82,7 @@ StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
     handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
     return MakeRequestImpl();
   }
+
   WriteVector writev{std::move(payload)};
   handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
   handle_.SetOption(CURLOPT_READDATA, &writev);

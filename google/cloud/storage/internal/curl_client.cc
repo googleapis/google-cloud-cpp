@@ -262,6 +262,10 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.payload_size()));
+  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
+  // default (at least in this case), and that wastes bandwidth as the content
+  // length is known.
+  builder.AddHeader("Transfer-Encoding:");
   auto response = builder.BuildRequest().MakeUploadRequest(request.payload());
   if (!response.ok()) {
     return std::move(response).status();
