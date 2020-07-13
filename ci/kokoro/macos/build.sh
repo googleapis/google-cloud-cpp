@@ -114,7 +114,11 @@ readonly CACHE_FOLDER
 CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
-"${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
+echo "================================================================"
+io::log_yellow "install crcmod to speed up gsutil."
+sudo pip3 install -U crcmod
+
+gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
 echo "================================================================"
@@ -122,15 +126,12 @@ io::log_yellow "starting build script."
 
 if "${driver_script}" "${script_flags[@]+"${script_flags[@]}"}"; then
   io::log_green "build script was successful."
-  exit_status=0
 else
   io::log_red "build script reported errors."
-  exit_status=1
+  exit 1
 fi
 
-if [[ "${exit_status}" -eq 0 ]]; then
-  "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
-    "${CACHE_FOLDER}" "${CACHE_NAME}" || true
-fi
+gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
+  "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
-exit ${exit_status}
+exit 0
