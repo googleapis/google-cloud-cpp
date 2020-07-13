@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=31
+ARG DISTRO_VERSION=32
 FROM fedora:${DISTRO_VERSION}
 
 # Install the minimal packages needed to compile libcxx, install Bazel, and
@@ -35,9 +35,9 @@ RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
     gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 
 WORKDIR /var/tmp/build
-RUN wget -q http://releases.llvm.org/10.0.0/libcxx-10.0.0.src.tar.xz
+RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxx-10.0.0.src.tar.xz
 RUN tar -xf libcxx-10.0.0.src.tar.xz
-RUN wget -q http://releases.llvm.org/10.0.0/libcxxabi-10.0.0.src.tar.xz
+RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxxabi-10.0.0.src.tar.xz
 RUN tar -xf libcxxabi-10.0.0.src.tar.xz
 
 # To build libc++abi we need to bootstrap libc++ without libc++abi first:
