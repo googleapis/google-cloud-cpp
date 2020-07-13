@@ -106,7 +106,10 @@ TEST(ObjectRequestsTest, ParseListResponse) {
       "nextPageToken": "some-token-42",
       "items":
 )""";
-  text += "[" + object1 + "," + object2 + "]}";
+  text += "[" + object1 + "," + object2 + "],\n";
+  text += R"""(
+    "prefixes" : ["foo/", "qux/"]}
+)""";
 
   auto o1 = internal::ObjectMetadataParser::FromString(object1).value();
   auto o2 = internal::ObjectMetadataParser::FromString(object2).value();
@@ -114,6 +117,7 @@ TEST(ObjectRequestsTest, ParseListResponse) {
   auto actual = ListObjectsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
   EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
+  EXPECT_THAT(actual.prefixes, ::testing::ElementsAre("foo/", "qux/"));
 }
 
 TEST(ObjectRequestsTest, ParseListResponseFailure) {

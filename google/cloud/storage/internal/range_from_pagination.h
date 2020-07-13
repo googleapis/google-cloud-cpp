@@ -105,9 +105,12 @@ class PaginationRange {
  public:
   explicit PaginationRange(
       Request request,
-      std::function<StatusOr<Response>(Request const& r)> loader)
+      std::function<StatusOr<Response>(Request const& r)> loader,
+      std::function<std::vector<T>(Response r)> get_items =
+          [](Response r) { return std::move(r.items); })
       : request_(std::move(request)),
         next_page_loader_(std::move(loader)),
+        get_items_(std::move(get_items)),
         on_last_page_(false) {
     current_ = current_page_.begin();
   }
@@ -157,7 +160,7 @@ class PaginationRange {
         return iterator(this, std::move(response).status());
       }
       next_page_token_ = std::move(response->next_page_token);
-      current_page_ = std::move(response->items);
+      current_page_ = get_items_(*std::move(response));
       current_ = current_page_.begin();
       if (next_page_token_.empty()) {
         on_last_page_ = true;
@@ -172,6 +175,7 @@ class PaginationRange {
  private:
   Request request_;
   std::function<StatusOr<Response>(Request const& r)> next_page_loader_;
+  std::function<std::vector<T>(Response r)> get_items_;
   std::vector<T> current_page_;
   typename std::vector<T>::iterator current_;
   std::string next_page_token_;

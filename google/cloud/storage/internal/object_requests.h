@@ -85,6 +85,7 @@ struct ListObjectsResponse {
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
+  std::vector<std::string> prefixes;
 };
 
 std::ostream& operator<<(std::ostream& os, ListObjectsResponse const& r);

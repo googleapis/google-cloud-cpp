@@ -173,6 +173,7 @@ add_library(
     list_buckets_reader.h
     list_hmac_keys_reader.cc
     list_hmac_keys_reader.h
+    list_objects_and_prefixes_reader.h
     list_objects_reader.cc
     list_objects_reader.h
     notification_event_type.h
@@ -421,6 +422,7 @@ if (BUILD_TESTING)
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
+        list_objects_and_prefixes_reader_test.cc
         list_objects_reader_test.cc
         notification_metadata_test.cc
         oauth2/anonymous_credentials_test.cc

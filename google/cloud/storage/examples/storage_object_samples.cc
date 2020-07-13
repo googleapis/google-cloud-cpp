@@ -83,6 +83,28 @@ void ListVersionedObjects(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
+void ListObjectsAndPrefixes(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
+  //! [list objects and prefixes]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& bucket_prefix) {
+    for (auto&& item : client.ListObjectsAndPrefixes(
+             bucket_name, gcs::Prefix(bucket_prefix), gcs::Delimiter("/"))) {
+      if (!item) throw std::runtime_error(item.status().message());
+      auto result = *std::move(item);
+      if (absl::holds_alternative<gcs::ObjectMetadata>(result)) {
+        std::cout << "object_name="
+                  << absl::get<gcs::ObjectMetadata>(result).name() << "\n";
+      } else if (absl::holds_alternative<std::string>(result)) {
+        std::cout << "prefix     =" << absl::get<std::string>(result) << "\n";
+      }
+    }
+  }
+  //! [list objects and prefixes]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void InsertObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [insert object]
@@ -549,9 +571,16 @@ void RunAll(std::vector<std::string> const& argv) {
                         "media-for-object-1"});
   InsertObject(client, {bucket_name, bucket_prefix + "/object-2.txt",
                         "media-for-object-2"});
+  InsertObject(client,
+               {bucket_name, bucket_prefix + "/foo/bar", "media-for-foo-bar"});
+  InsertObject(client,
+               {bucket_name, bucket_prefix + "/qux/bar", "media-for-qux-bar"});
 
   std::cout << "\nRunning ListObjectsWithPrefix() example" << std::endl;
   ListObjectsWithPrefix(client, {bucket_name, bucket_prefix});
+
+  std::cout << "\nRunning ListObjectsAndPrefixes() example" << std::endl;
+  ListObjectsAndPrefixes(client, {bucket_name, bucket_prefix});
 
   std::cout << "\nRunning GetObjectMetadata() example" << std::endl;
   GetObjectMetadata(client, {bucket_name, object_name});
@@ -644,6 +673,8 @@ int main(int argc, char* argv[]) {
       make_entry("list-objects-with-prefix", {"<prefix>"},
                  ListObjectsWithPrefix),
       make_entry("list-versioned-objects", {}, ListVersionedObjects),
+      make_entry("list-objects-and-prefixes", {"<prefix>"},
+                 ListObjectsAndPrefixes),
       make_entry("insert-object",
                  {"<object-name>", "<object-contents (string)>"}, InsertObject),
       make_entry("insert-object-strict-idempotency",
