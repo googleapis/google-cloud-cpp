@@ -571,6 +571,10 @@ void RunAll(std::vector<std::string> const& argv) {
                         "media-for-object-1"});
   InsertObject(client, {bucket_name, bucket_prefix + "/object-2.txt",
                         "media-for-object-2"});
+  InsertObject(client,
+               {bucket_name, bucket_prefix + "/foo/bar", "media-for-foo-bar"});
+  InsertObject(client,
+               {bucket_name, bucket_prefix + "/qux/bar", "media-for-qux-bar"});
 
   std::cout << "\nRunning ListObjectsWithPrefix() example" << std::endl;
   ListObjectsWithPrefix(client, {bucket_name, bucket_prefix});
