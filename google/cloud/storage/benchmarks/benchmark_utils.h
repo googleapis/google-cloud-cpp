@@ -51,7 +51,7 @@ std::int64_t ParseSize(std::string const& val);
 /**
  * Parse a string as a byte size, with support for unit suffixes.
  *
- * The size must be small enough for a in-memory buffer.
+ * The size must be small enough for an in-memory buffer.
  */
 std::size_t ParseBufferSize(std::string const& val);
 
