@@ -85,14 +85,15 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
 
+    auto constexpr kObjectSize = 16 * kKiB;
     ThroughputExperimentConfig config{OpType::kOpRead0,
-                                      16 * kKiB,
+                                      kObjectSize,
                                       1 * kMiB,
                                       client_options.upload_buffer_size(),
                                       /*enable_crc32c=*/false,
                                       /*enable_md5=*/false};
 
-    auto contents = MakeRandomData(config.object_size);
+    auto contents = MakeRandomData(kObjectSize);
     auto insert =
         client->InsertObject(bucket_name_, object_name, std::move(contents));
     ASSERT_STATUS_OK(insert);

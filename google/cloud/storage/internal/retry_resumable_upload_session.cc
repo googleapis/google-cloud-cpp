@@ -82,7 +82,8 @@ RetryResumableUploadSession::UploadGenericChunk(
       return Status(StatusCode::kInternal, os.str());
     }
     if (new_next_byte > next_byte) {
-      PopFrontBytes(buffers, new_next_byte - next_byte);
+      PopFrontBytes(buffers,
+                    static_cast<std::size_t>(new_next_byte - next_byte));
       next_byte = new_next_byte;
     }
     auto result = is_final_chunk

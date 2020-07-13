@@ -64,9 +64,9 @@ struct ThroughputResult {
   // TODO(#4349) - use a separate field to represent the bytes transferred
   std::int64_t object_size;
   /// The size of the application buffer (for .read() or .write() calls).
-  std::int64_t app_buffer_size;
+  std::size_t app_buffer_size;
   /// The size of the library buffers (if any).
-  std::uint64_t lib_buffer_size;
+  std::size_t lib_buffer_size;
   /// True if the CRC32C checksums are enabled in this experiment.
   bool crc_enabled;
   /// True if the MD5 hashes are enabled in this experiment.

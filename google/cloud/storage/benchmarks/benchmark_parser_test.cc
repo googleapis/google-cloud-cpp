@@ -34,6 +34,18 @@ TEST(StorageBenchmarksUtilsTest, ParseSize) {
   EXPECT_EQ(8 * kKiB, ParseSize("8KiB"));
 }
 
+TEST(StorageBenchmarksUtilsTest, ParseBufferSize) {
+  EXPECT_EQ(500, ParseBufferSize("500"));
+
+  EXPECT_EQ(1 * kKB, ParseBufferSize("1KB"));
+  EXPECT_EQ(2 * kMB, ParseBufferSize("2MB"));
+  EXPECT_EQ(3 * kGB, ParseBufferSize("3GB"));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_ANY_THROW(ParseBufferSize("-2"));
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(StorageBenchmarksUtilsTest, ParseDuration) {
   using s = std::chrono::seconds;
   using m = std::chrono::minutes;

@@ -22,8 +22,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::size_t InitialOffset(OffsetDirection const& offset_direction,
-                          ReadObjectRangeRequest const& request) {
+std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
+                            ReadObjectRangeRequest const& request) {
   if (offset_direction == kFromEnd) {
     return request.GetOption<ReadLast>().value();
   }

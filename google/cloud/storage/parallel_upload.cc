@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/parallel_upload.h"
 #include "absl/memory/memory.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -375,7 +376,7 @@ Status ParallelUploadFileShard::Upload() {
     left_to_upload_ = 0;
     return status;
   };
-  std::uintmax_t const already_uploaded = ostream_.next_expected_byte();
+  auto const already_uploaded = ostream_.next_expected_byte();
   if (already_uploaded > left_to_upload_) {
     return fail(StatusCode::kInternal, "Corrupted upload state, uploaded " +
                                            std::to_string(already_uploaded) +
@@ -388,13 +389,18 @@ Status ParallelUploadFileShard::Upload() {
   if (!istream.good()) {
     return fail(StatusCode::kNotFound, "cannot open upload file source");
   }
-  istream.seekg(offset_in_file_);
+
+  static_assert(sizeof(std::ifstream::off_type) >= sizeof(std::uintmax_t),
+                "files cannot handle uintmax_t for offsets uploads");
+
+  // TODO(#...) - this cast should not be necessary.
+  istream.seekg(static_cast<std::ifstream::off_type>(offset_in_file_));
   if (!istream.good()) {
     return fail(StatusCode::kInternal, "file changed size during upload?");
   }
   while (left_to_upload_ > 0) {
-    std::size_t const to_copy =
-        std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
+    auto const to_copy = static_cast<std::ifstream::off_type>(
+        std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_));
     istream.read(buf.data(), to_copy);
     if (!istream.good()) {
       return fail(StatusCode::kInternal, "cannot read from file source");
@@ -422,11 +428,11 @@ StatusOr<std::pair<std::string, std::int64_t>> ParseResumableSessionId(
   Status invalid(StatusCode::kInternal,
                  "Not a valid parallel upload session ID");
 
-  if (!starts_with(session_id, kSessionIdPrefix)) {
+  auto const prefix = ResumableParallelUploadState::session_id_prefix();
+  if (!starts_with(session_id, prefix)) {
     return invalid;
   }
-  std::string const object_and_gen =
-      session_id.substr(std::string(kSessionIdPrefix).size());
+  std::string const object_and_gen = session_id.substr(prefix.size());
   auto sep_pos = object_and_gen.find(':');
   if (sep_pos == std::string::npos) {
     return invalid;

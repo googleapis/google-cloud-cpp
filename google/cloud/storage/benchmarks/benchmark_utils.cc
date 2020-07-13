@@ -14,8 +14,10 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <future>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 
@@ -59,6 +61,15 @@ std::int64_t ParseSize(std::string const& val) {
     return s * kKB;
   }
   return s;
+}
+
+std::size_t ParseBufferSize(std::string const& val) {
+  auto const s = ParseSize(val);
+  if (s < 0 || static_cast<std::uint64_t>(s) >
+                   (std::numeric_limits<std::size_t>::max)()) {
+    internal::ThrowRangeError("invalid range in ParseBufferSize");
+  }
+  return static_cast<std::size_t>(s);
 }
 
 // This parser does not validate the input fully, but it is good enough for our

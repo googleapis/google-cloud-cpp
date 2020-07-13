@@ -67,15 +67,15 @@ struct Options {
   int thread_count = 1;
   int iteration_size = 100;
   int iteration_count = 100;
-  std::int64_t chunk_size = 12 * gcs_bm::kMiB;
+  std::size_t chunk_size = 12 * gcs_bm::kMiB;
   int chunk_count = 20;
 };
 
 struct WorkItem {
   std::string bucket;
   std::string object;
-  std::int64_t begin;
-  std::int64_t end;
+  std::size_t begin;
+  std::size_t end;
 };
 
 using WorkItemQueue = gcs_bm::BoundedQueue<WorkItem>;
@@ -283,7 +283,7 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
 
   std::uniform_int_distribution<std::size_t> object_generator(
       0, object_names.size() - 1);
-  std::uniform_int_distribution<std::int64_t> chunk_generator(
+  std::uniform_int_distribution<std::size_t> chunk_generator(
       0, options.chunk_count - 1);
 
   auto const download_start = std::chrono::steady_clock::now();
@@ -341,7 +341,7 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        }},
       {"--chunk-size", "size of the chunks used in the benchmark",
        [&options](std::string const& val) {
-         options.chunk_size = gcs_bm::ParseSize(val);
+         options.chunk_size = gcs_bm::ParseBufferSize(val);
        }},
       {"--chunk-count", "the number of chunks in each object",
        [&options](std::string const& val) {

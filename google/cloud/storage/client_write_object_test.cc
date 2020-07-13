@@ -226,7 +226,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, UploadFinalChunk(_, _))
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          size_t size) {
+                          std::uint64_t size) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
@@ -259,7 +259,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
       google::cloud::storage::testing::MakeRandomData(
           rng, 2 * internal::UploadChunkRequest::kChunkSizeQuantum + 10));
 
-  std::size_t bytes_written = 0;
+  std::uint64_t bytes_written = 0;
   auto last_response_value = StatusOr<internal::ResumableUploadResponse>(
       Status(StatusCode::kUnknown, ""));
   EXPECT_CALL(*mock_, CreateResumableSession(_))
@@ -328,7 +328,7 @@ TEST_F(WriteObjectTest, UploadFile) {
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   // Simulate situation when a quantum has already been uploaded.
-  std::size_t bytes_written = quantum;
+  std::uint64_t bytes_written = quantum;
   EXPECT_CALL(*mock_, CreateResumableSession(_))
       .WillOnce([&expected, &bytes_written,
                  file_size](internal::ResumableUploadRequest const& request) {
@@ -345,7 +345,7 @@ TEST_F(WriteObjectTest, UploadFile) {
         EXPECT_CALL(*mock, UploadFinalChunk(_, _))
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          size_t size) {
+                          std::uint64_t size) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{

@@ -311,11 +311,11 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
   auto const actual_size = put_area_size();
   if (count + actual_size >= max_buffer_size_) {
     if (actual_size == 0) {
-      FlushRoundChunk({ConstBuffer(s, count)});
+      FlushRoundChunk({ConstBuffer(s, static_cast<std::size_t>(count))});
     } else {
       FlushRoundChunk({
           ConstBuffer(pbase(), actual_size),
-          ConstBuffer(s, count),
+          ConstBuffer(s, static_cast<std::size_t>(count)),
       });
     }
     if (!last_response_) return traits_type::eof();
@@ -343,7 +343,7 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
-  std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
+  auto const upload_size = upload_session_->next_expected_byte() + actual_size;
   hash_validator_->Update(pbase(), actual_size);
 
   last_response_ = upload_session_->UploadFinalChunk(

@@ -53,8 +53,8 @@ struct Options {
   std::string region;
   std::chrono::seconds duration = std::chrono::seconds(60);
   std::int64_t file_size = 100 * gcs_bm::kMiB;
-  std::int64_t download_buffer_size = 16 * gcs_bm::kMiB;
-  std::int64_t upload_buffer_size = 16 * gcs_bm::kMiB;
+  std::size_t download_buffer_size = 16 * gcs_bm::kMiB;
+  std::size_t upload_buffer_size = 16 * gcs_bm::kMiB;
 };
 
 google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
@@ -117,8 +117,19 @@ int main(int argc, char* argv[]) {
 
   std::cout << "# Creating file to upload ..." << std::flush;
   auto filename = gcs_bm::MakeRandomFileName(generator);
-  std::ofstream(filename, std::ios::binary)
-      << gcs_bm::MakeRandomData(generator, options->file_size);
+  {
+    auto const filler = gcs_bm::MakeRandomData(generator, 4 * gcs_bm::kMiB);
+    std::ofstream os(filename, std::ios::binary);
+    std::int64_t current_size = 0;
+    while (current_size < options->file_size) {
+      auto n = filler.size();
+      if (static_cast<std::int64_t>(n) > (options->file_size - current_size)) {
+        n = static_cast<std::size_t>(options->file_size - current_size);
+      }
+      os.write(filler.data(), n);
+      current_size += n;
+    }
+  }
   std::cout << " DONE\n"
             << "# File: " << filename << "\n";
 
@@ -204,11 +215,11 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        }},
       {"--upload-buffer-size", "configure gcs::Client upload buffer size",
        [&options](std::string const& val) {
-         options.upload_buffer_size = gcs_bm::ParseSize(val);
+         options.upload_buffer_size = gcs_bm::ParseBufferSize(val);
        }},
       {"--download-buffer-size", "configure gcs::Client download buffer size",
        [&options](std::string const& val) {
-         options.download_buffer_size = gcs_bm::ParseSize(val);
+         options.download_buffer_size = gcs_bm::ParseBufferSize(val);
        }},
       {"--region", "The GCS region used for the benchmark",
        [&options](std::string const& val) { options.region = val; }},

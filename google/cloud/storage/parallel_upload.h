@@ -70,6 +70,7 @@ class MinStreamSize {
 namespace internal {
 
 class ParallelUploadFileShard;
+struct CreateParallelUploadShards;
 
 /**
  * Return an empty option if Tuple contains an element of type T, otherwise
@@ -109,16 +110,11 @@ class ParallelUploadExtraPersistentState {
   std::string payload() const& { return payload_; }
 
  private:
+  friend struct CreateParallelUploadShards;
   explicit ParallelUploadExtraPersistentState(std::string payload)
       : payload_(std::move(payload)) {}
 
   std::string payload_;
-
-  template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string const& bucket_name,
-      std::string const& object_name, std::string const& prefix,
-      Options&&... options);
 };
 
 class ParallelObjectWriteStreambuf;
@@ -240,9 +236,6 @@ class ParallelUploadStateImpl
   std::string resumable_session_id_;
 };
 
-// NOLINTNEXTLINE(readability-identifier-naming)
-static char const* kSessionIdPrefix = "ParUpl:";
-
 struct ComposeManyApplyHelper {
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options&&... options) const {
@@ -356,6 +349,7 @@ class ParallelUploadFileShard {
   std::string resumable_session_id() { return resumable_session_id_; }
 
  private:
+  friend struct CreateParallelUploadShards;
   ParallelUploadFileShard(std::shared_ptr<ParallelUploadStateImpl> state,
                           ObjectWriteStream ostream, std::string file_name,
                           std::uintmax_t offset_in_file,
@@ -376,12 +370,6 @@ class ParallelUploadFileShard {
   std::uintmax_t left_to_upload_;
   std::size_t upload_buffer_size_;
   std::string resumable_session_id_;
-
-  template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string const& bucket_name,
-      std::string const& object_name, std::string const& prefix,
-      Options&&... options);
 };
 
 /**
@@ -464,11 +452,7 @@ class NonResumableParallelUploadState {
   std::vector<ObjectWriteStream> shards_;
 
   friend class NonResumableParallelObjectWriteStreambuf;
-  template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string const& bucket_name,
-      std::string const& object_name, std::string const& prefix,
-      Options&&... options);
+  friend struct CreateParallelUploadShards;
 };
 
 /**
@@ -495,6 +479,8 @@ class NonResumableParallelUploadState {
  */
 class ResumableParallelUploadState {
  public:
+  static std::string session_id_prefix() { return "ParUpl:"; }
+
   template <typename... Options>
   static StatusOr<ResumableParallelUploadState> CreateNew(
       Client client, std::string const& bucket_name,
@@ -588,11 +574,7 @@ class ResumableParallelUploadState {
   std::vector<ObjectWriteStream> shards_;
 
   friend class ResumableParallelObjectWriteStreambuf;
-  template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string const& bucket_name,
-      std::string const& object_name, std::string const& prefix,
-      Options&&... options);
+  friend struct CreateParallelUploadShards;
 };
 
 /**
@@ -852,7 +834,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
     internal_state->Fail(state_object.status());
     return std::move(state_object).status();
   }
-  std::string resumable_session_id = kSessionIdPrefix + state_object_name +
+  std::string resumable_session_id = session_id_prefix() + state_object_name +
                                      ":" +
                                      std::to_string(state_object->generation());
   internal_state->set_resumable_session_id(resumable_session_id);
@@ -957,7 +939,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
 template <typename... Options>
 std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
     std::uintmax_t file_size, std::tuple<Options...> const& options) {
-  auto div_ceil = [](std::uintmax_t dividend, std::size_t divisor) {
+  auto div_ceil = [](std::uintmax_t dividend, std::uintmax_t divisor) {
     return (dividend + divisor - 1) / divisor;
   };
   // These defaults were obtained by experiments summarized in
@@ -965,7 +947,7 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
   MaxStreams const default_max_streams(64);
   MinStreamSize const default_min_stream_size(32 * 1024 * 1024);
 
-  std::uintmax_t const min_stream_size =
+  auto const min_stream_size =
       (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
                                         options)
                                         .value_or(default_min_stream_size)
@@ -974,21 +956,19 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
                                .value_or(default_max_streams)
                                .value();
 
-  std::size_t const wanted_num_streams =
-      (std::max<std::size_t>)(1, (std::min<std::size_t>)(max_streams,
+  auto const wanted_num_streams =
+      (std::max<
+          std::uintmax_t>)(1, (std::min<std::uintmax_t>)(max_streams,
                                                          div_ceil(
                                                              file_size,
                                                              min_stream_size)));
 
-  std::uintmax_t const stream_size =
+  auto const stream_size =
       (std::max<std::uintmax_t>)(1, div_ceil(file_size, wanted_num_streams));
 
-  // This number might be less than wanted_num_streams.
-  auto num_streams =
-      (std::max<std::size_t>)(1U, div_ceil(file_size, stream_size));
   std::vector<std::uintmax_t> res;
-  for (std::size_t i = 1; i < num_streams; ++i) {
-    res.emplace_back(stream_size * i);
+  for (auto split = stream_size; split < file_size; split += stream_size) {
+    res.push_back(split);
   }
   return res;
 }
@@ -1026,120 +1006,134 @@ struct PrepareParallelUploadApplyHelper {
   std::string const& prefix;
 };
 
-/**
- * Prepare a parallel upload of a given file.
- *
- * The returned opaque objects reflect computed shards of the given file. Each
- * of them has an `Upload()` member function which will perform the upload of
- * that shard. You should parallelize running this function on them according to
- * your needs. You can affect how many shards will be created by using the
- * `MaxStreams` and `MinStreamSize` options.
- *
- * Any of the returned objects can be used for obtaining the metadata of the
- * resulting object.
- *
- * @param client the client on which to perform the operation.
- * @param file_name the path to the file to be uploaded
- * @param bucket_name the name of the bucket that will contain the object.
- * @param object_name the uploaded object name.
- * @param prefix the prefix with which temporary objects will be created.
- * @param options a list of optional query parameters and/or request headers.
- *     Valid types for this operation include `DestinationPredefinedAcl`,
- *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`,
- *     `KmsKeyName`, `MaxStreams, `MinStreamSize`, `QuotaUser`, `UserIp`,
- *     `UserProject`, `WithObjectMetadata`, `UseResumableUploadSession`.
- *
- * @return the shards of the input file to be uploaded in parallel
- *
- * @par Idempotency
- * This operation is not idempotent. While each request performed by this
- * function is retried based on the client policies, the operation itself stops
- * on the first request that fails.
- *
- * @par Example
- * @snippet storage_object_file_transfer_samples.cc parallel upload file
- */
+struct CreateParallelUploadShards {
+  /**
+   * Prepare a parallel upload of a given file.
+   *
+   * The returned opaque objects reflect computed shards of the given file. Each
+   * of them has an `Upload()` member function which will perform the upload of
+   * that shard. You should parallelize running this function on them according
+   * to your needs. You can affect how many shards will be created by using the
+   * `MaxStreams` and `MinStreamSize` options.
+   *
+   * Any of the returned objects can be used for obtaining the metadata of the
+   * resulting object.
+   *
+   * @param client the client on which to perform the operation.
+   * @param file_name the path to the file to be uploaded
+   * @param bucket_name the name of the bucket that will contain the object.
+   * @param object_name the uploaded object name.
+   * @param prefix the prefix with which temporary objects will be created.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationPredefinedAcl`,
+   *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`,
+   *     `KmsKeyName`, `MaxStreams, `MinStreamSize`, `QuotaUser`, `UserIp`,
+   *     `UserProject`, `WithObjectMetadata`, `UseResumableUploadSession`.
+   *
+   * @return the shards of the input file to be uploaded in parallel
+   *
+   * @par Idempotency
+   * This operation is not idempotent. While each request performed by this
+   * function is retried based on the client policies, the operation itself
+   * stops on the first request that fails.
+   *
+   * @par Example
+   * @snippet storage_object_file_transfer_samples.cc parallel upload file
+   */
+  template <typename... Options>
+  static StatusOr<std::vector<ParallelUploadFileShard>> Create(
+      Client client,  // NOLINT(performance-unnecessary-value-param)
+      std::string file_name, std::string const& bucket_name,
+      std::string const& object_name, std::string const& prefix,
+      Options&&... options) {
+    std::error_code size_err;
+    auto file_size = google::cloud::internal::file_size(file_name, size_err);
+    if (size_err) {
+      return Status(StatusCode::kNotFound, size_err.message());
+    }
+
+    auto const resumable_session_id_arg =
+        ExtractFirstOccurenceOfType<UseResumableUploadSession>(
+            std::tie(options...));
+    bool const new_session = !resumable_session_id_arg ||
+                             resumable_session_id_arg.value().value().empty();
+    auto upload_options =
+        StaticTupleFilter<NotAmong<MaxStreams, MinStreamSize>::TPred>(
+            std::tie(options...));
+
+    std::vector<uintmax_t> file_split_points;
+    std::size_t num_shards = 0;
+    if (new_session) {
+      file_split_points =
+          ComputeParallelFileUploadSplitPoints(file_size, std::tie(options...));
+      num_shards = file_split_points.size() + 1;
+    }
+
+    // Create the upload state.
+    auto state = google::cloud::internal::apply(
+        PrepareParallelUploadApplyHelper{client, bucket_name, object_name,
+                                         num_shards, prefix},
+        std::tuple_cat(
+            std::move(upload_options),
+            std::make_tuple(ParallelUploadExtraPersistentState(
+                ParallelFileUploadSplitPointsToString(file_split_points)))));
+    if (!state) {
+      return state.status();
+    }
+
+    if (!new_session) {
+      // We need to recreate the split points of the file.
+      auto maybe_split_points =
+          ParallelFileUploadSplitPointsFromString(state->impl_->custom_data());
+      if (!maybe_split_points) {
+        state->Fail(maybe_split_points.status());
+        return std::move(maybe_split_points).status();
+      }
+      file_split_points = *std::move(maybe_split_points);
+    }
+
+    // Everything ready - we've got the shared state and the files open, let's
+    // prepare the returned objects.
+    auto upload_buffer_size =
+        client.raw_client()->client_options().upload_buffer_size();
+
+    file_split_points.emplace_back(file_size);
+    assert(file_split_points.size() == state->shards().size());
+    std::vector<ParallelUploadFileShard> res;
+    std::uintmax_t offset = 0;
+    std::size_t shard_idx = 0;
+    for (auto shard_end : file_split_points) {
+      res.emplace_back(ParallelUploadFileShard(
+          state->impl_, std::move(state->shards()[shard_idx++]), file_name,
+          offset, shard_end - offset, upload_buffer_size));
+      offset = shard_end;
+    }
+#if !defined(__clang__) && \
+    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))
+    // The extra std::move() is required to workaround a gcc-4.9 and gcc-4.8
+    // bug, which tries to copy the result otherwise.
+    return std::move(res);
+#elif defined(__clang__) && \
+    (__clang_major__ < 4 || (__clang_major__ == 3 && __clang_minor__ <= 8))
+    // The extra std::move() is required to workaround a Clang <= 3.8 bug, which
+    // tries to copy the result otherwise.
+    return std::move(res);
+#else
+    return res;
+#endif
+  }
+};
+
+/// @copydoc CreateParallelUploadShards::Create()
 template <typename... Options>
 StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-    Client client,  // NOLINT(performance-unnecessary-value-param)
+    Client client,  // NOLxxxxxxINT(performance-unnecessary-value-param)
     std::string file_name, std::string const& bucket_name,
     std::string const& object_name, std::string const& prefix,
     Options&&... options) {
-  std::error_code size_err;
-  auto file_size = google::cloud::internal::file_size(file_name, size_err);
-  if (size_err) {
-    return Status(StatusCode::kNotFound, size_err.message());
-  }
-
-  auto const resumable_session_id_arg =
-      ExtractFirstOccurenceOfType<UseResumableUploadSession>(
-          std::tie(options...));
-  bool const new_session = !resumable_session_id_arg ||
-                           resumable_session_id_arg.value().value().empty();
-  auto upload_options =
-      StaticTupleFilter<NotAmong<MaxStreams, MinStreamSize>::TPred>(
-          std::tie(options...));
-
-  std::vector<uintmax_t> file_split_points;
-  std::size_t num_shards = 0;
-  if (new_session) {
-    file_split_points =
-        ComputeParallelFileUploadSplitPoints(file_size, std::tie(options...));
-    num_shards = file_split_points.size() + 1;
-  }
-
-  // Create the upload state.
-  auto state = google::cloud::internal::apply(
-      PrepareParallelUploadApplyHelper{client, bucket_name, object_name,
-                                       num_shards, prefix},
-      std::tuple_cat(
-          std::move(upload_options),
-          std::make_tuple(ParallelUploadExtraPersistentState(
-              ParallelFileUploadSplitPointsToString(file_split_points)))));
-  if (!state) {
-    return state.status();
-  }
-
-  if (!new_session) {
-    // We need to recreate the split points of the file.
-    auto maybe_split_points =
-        ParallelFileUploadSplitPointsFromString(state->impl_->custom_data());
-    if (!maybe_split_points) {
-      state->Fail(maybe_split_points.status());
-      return std::move(maybe_split_points).status();
-    }
-    file_split_points = *std::move(maybe_split_points);
-  }
-
-  // Everything ready - we've got the shared state and the files open, let's
-  // prepare the returned objects.
-  auto upload_buffer_size =
-      client.raw_client()->client_options().upload_buffer_size();
-
-  file_split_points.emplace_back(file_size);
-  assert(file_split_points.size() == state->shards().size());
-  std::vector<ParallelUploadFileShard> res;
-  std::uintmax_t offset = 0;
-  std::size_t shard_idx = 0;
-  for (auto shard_end : file_split_points) {
-    res.emplace_back(ParallelUploadFileShard(
-        state->impl_, std::move(state->shards()[shard_idx++]), file_name,
-        offset, shard_end - offset, upload_buffer_size));
-    offset = shard_end;
-  }
-#if !defined(__clang__) && \
-    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))
-  // The extra std::move() is required to workaround a gcc-4.9 and gcc-4.8 bug,
-  // which tries to copy the result otherwise.
-  return std::move(res);
-#elif defined(__clang__) && \
-    (__clang_major__ < 4 || (__clang_major__ == 3 && __clang_minor__ <= 8))
-  // The extra std::move() is required to workaround a Clang <= 3.8 bug, which
-  // tries to copy the result otherwise.
-  return std::move(res);
-#else
-  return res;
-#endif
+  return CreateParallelUploadShards::Create(
+      std::move(client), std::move(file_name), bucket_name, object_name, prefix,
+      std::forward<Options>(options)...);
 }
 
 }  // namespace internal
@@ -1178,7 +1172,7 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
     Client client, std::string file_name, std::string bucket_name,
     std::string object_name, std::string prefix, bool ignore_cleanup_failures,
     Options&&... options) {
-  auto shards = internal::CreateUploadShards(
+  auto shards = internal::CreateParallelUploadShards::Create(
       std::move(client), std::move(file_name), std::move(bucket_name),
       std::move(object_name), std::move(prefix),
       std::forward<Options>(options)...);

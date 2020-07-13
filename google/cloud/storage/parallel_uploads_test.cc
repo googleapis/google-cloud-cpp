@@ -602,9 +602,9 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsNotReached) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders =
-      CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                         kDestObjectName, kPrefix, MinStreamSize(1));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
   ASSERT_EQ(3U, uploaders->size());
@@ -652,9 +652,9 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsReached) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders = CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                                      kDestObjectName, kPrefix,
-                                      MinStreamSize(1), MaxStreams(2));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1), MaxStreams(2));
   EXPECT_STATUS_OK(uploaders);
 
   ASSERT_EQ(2U, uploaders->size());
@@ -696,9 +696,9 @@ TEST_F(ParallelUploadTest, FileSuccessWithEmptyFile) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders = CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                                      kDestObjectName, kPrefix,
-                                      MinStreamSize(100), MaxStreams(200));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(100), MaxStreams(200));
   EXPECT_STATUS_OK(uploaders);
 
   ASSERT_EQ(1U, uploaders->size());
@@ -717,9 +717,9 @@ TEST_F(ParallelUploadTest, FileSuccessWithEmptyFile) {
 
 TEST_F(ParallelUploadTest, NonExistentFile) {
   // The expectations need to be reversed.
-  auto uploaders =
-      CreateUploadShards(*client_, "nonexistent", kBucketName, kDestObjectName,
-                         kPrefix, MinStreamSize(100), MaxStreams(200));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, "nonexistent", kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(100), MaxStreams(200));
   EXPECT_FALSE(uploaders);
   EXPECT_EQ(StatusCode::kNotFound, uploaders.status().code());
 }
@@ -739,9 +739,9 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
       .WillOnce(expect_new_object(kPrefix, kUploadMarkerGeneration));
   EXPECT_CALL(*raw_client_mock_, DeleteObject(_))
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
-  auto uploaders = CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                                      kDestObjectName, kPrefix,
-                                      MinStreamSize(100), MaxStreams(200));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(100), MaxStreams(200));
   EXPECT_STATUS_OK(uploaders);
   ASSERT_EQ(1U, uploaders->size());
 
@@ -768,9 +768,9 @@ TEST_F(ParallelUploadTest, FileOneStreamFailsUponCration) {
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
   testing::TempFile temp_file("whatever");
-  auto uploaders = CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                                      kDestObjectName, kPrefix,
-                                      MinStreamSize(1), MaxStreams(2));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1), MaxStreams(2));
   EXPECT_FALSE(uploaders);
   EXPECT_EQ(PermanentError().code(), uploaders.status().code());
 }
@@ -797,9 +797,9 @@ TEST_F(ParallelUploadTest, FileBrokenStream) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders =
-      CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                         kDestObjectName, kPrefix, MinStreamSize(1));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
@@ -834,9 +834,9 @@ TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders =
-      CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                         kDestObjectName, kPrefix, MinStreamSize(1));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
@@ -878,9 +878,9 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
       })
       .WillOnce(expect_deletion(kPrefix, kUploadMarkerGeneration));
 
-  auto uploaders =
-      CreateUploadShards(*client_, temp_file.name(), kBucketName,
-                         kDestObjectName, kPrefix, MinStreamSize(1));
+  auto uploaders = CreateParallelUploadShards::Create(
+      *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
+      MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
@@ -1722,7 +1722,7 @@ TEST_F(ParallelUploadTest, ResumableUploadFileShards) {
       .WillOnce(
           expect_deletion(kPersistentStateName, kPersistentStateGeneration));
 
-  auto uploaders = CreateUploadShards(
+  auto uploaders = CreateParallelUploadShards::Create(
       *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(1), UseResumableUploadSession(""));
   EXPECT_STATUS_OK(uploaders);
@@ -1766,7 +1766,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileShards) {
   EXPECT_CALL(*raw_client_mock_, GetObjectMetadata(_))
       .WillOnce(Return(Status(StatusCode::kNotFound, "")));
 
-  auto uploaders = CreateUploadShards(
+  auto uploaders = CreateParallelUploadShards::Create(
       *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(3), UseResumableUploadSession(""));
   EXPECT_STATUS_OK(uploaders);
@@ -1841,7 +1841,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
 
   testing::TempFile temp_file("abcdefghi");
 
-  auto uploaders = CreateUploadShards(
+  auto uploaders = CreateParallelUploadShards::Create(
       *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(3), UseResumableUploadSession(kParallelResumableId));
 
@@ -1886,7 +1886,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
 
   testing::TempFile temp_file("abcdefghi");
 
-  auto uploaders = CreateUploadShards(
+  auto uploaders = CreateParallelUploadShards::Create(
       *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(3), UseResumableUploadSession(kParallelResumableId));
 
