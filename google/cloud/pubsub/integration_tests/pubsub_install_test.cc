@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Cloud Pub/Sub C++ Client version: "
             << google::cloud::version_string() << "\n";
 
-  auto publisher = google::cloud::pubsub::PublisherClient(
+  auto publisher = google::cloud::pubsub::TopicAdminClient(
       google::cloud::pubsub::MakePublisherConnection());
   std::cout << "Available topics in project " << project_id << ":\n";
   for (auto const& topic : publisher.ListTopics(project_id)) {

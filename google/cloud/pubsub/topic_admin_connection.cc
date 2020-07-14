@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include <memory>
 
@@ -22,13 +22,13 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 namespace {
-class PublisherConnectionImpl : public PublisherConnection {
+class TopicAdminConnectionImpl : public TopicAdminConnection {
  public:
-  explicit PublisherConnectionImpl(
+  explicit TopicAdminConnectionImpl(
       std::shared_ptr<pubsub_internal::PublisherStub> stub)
       : stub_(std::move(stub)) {}
 
-  ~PublisherConnectionImpl() override = default;
+  ~TopicAdminConnectionImpl() override = default;
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
@@ -68,13 +68,13 @@ class PublisherConnectionImpl : public PublisherConnection {
 };
 }  // namespace
 
-PublisherConnection::~PublisherConnection() = default;
+TopicAdminConnection::~TopicAdminConnection() = default;
 
-std::shared_ptr<PublisherConnection> MakePublisherConnection(
+std::shared_ptr<TopicAdminConnection> MakePublisherConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
-  return std::make_shared<PublisherConnectionImpl>(std::move(stub));
+  return std::make_shared<TopicAdminConnectionImpl>(std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

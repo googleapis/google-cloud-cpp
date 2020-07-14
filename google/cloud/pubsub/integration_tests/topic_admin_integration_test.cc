@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -36,12 +36,13 @@ std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
                                                   "abcdefghijklmnopqrstuvwxyz");
 }
 
-TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
+TEST(TopicAdminIntegrationTest, TopicCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto topic_names = [](PublisherClient client, std::string const& project_id) {
+  auto topic_names = [](TopicAdminClient client,
+                        std::string const& project_id) {
     std::vector<std::string> names;
     for (auto& topic : client.ListTopics(project_id)) {
       EXPECT_STATUS_OK(topic);
@@ -55,7 +56,7 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
   Topic topic(project_id, RandomTopicId(generator));
 
   auto publisher =
-      PublisherClient(MakePublisherConnection(ConnectionOptions{}));
+      TopicAdminClient(MakePublisherConnection(ConnectionOptions{}));
 
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
@@ -72,32 +73,35 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
               Not(Contains(topic.FullName())));
 }
 
-TEST(PublisherAdminIntegrationTest, CreateTopicFailure) {
+TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher = PublisherClient(MakePublisherConnection(connection_options));
+  auto publisher =
+      TopicAdminClient(MakePublisherConnection(connection_options));
   auto create_response = publisher.CreateTopic(
       CreateTopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
 }
 
-TEST(PublisherAdminIntegrationTest, ListTopicsFailure) {
+TEST(TopicAdminIntegrationTest, ListTopicsFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher = PublisherClient(MakePublisherConnection(connection_options));
+  auto publisher =
+      TopicAdminClient(MakePublisherConnection(connection_options));
   auto list = publisher.ListTopics("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
   EXPECT_FALSE(*i);
 }
 
-TEST(PublisherAdminIntegrationTest, DeleteTopicFailure) {
+TEST(TopicAdminIntegrationTest, DeleteTopicFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher = PublisherClient(MakePublisherConnection(connection_options));
+  auto publisher =
+      TopicAdminClient(MakePublisherConnection(connection_options));
   auto delete_response =
       publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());

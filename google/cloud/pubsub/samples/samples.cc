@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/subscriber_client.h"
+#include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
@@ -40,11 +40,11 @@ std::string RandomSubscriptionId(
                       "abcdefghijklmnopqrstuvwxyz");
 }
 
-void CreateTopic(google::cloud::pubsub::PublisherClient client,
+void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [create-topic]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::PublisherClient client, std::string project_id,
+  [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.CreateTopic(pubsub::CreateTopicBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
@@ -57,11 +57,11 @@ void CreateTopic(google::cloud::pubsub::PublisherClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ListTopics(google::cloud::pubsub::PublisherClient client,
+void ListTopics(google::cloud::pubsub::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
   //! [list-topics]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::PublisherClient client, std::string const& project_id) {
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
     for (auto const& topic : client.ListTopics(project_id)) {
       if (!topic) throw std::runtime_error(topic.status().message());
@@ -76,11 +76,11 @@ void ListTopics(google::cloud::pubsub::PublisherClient client,
   (std::move(client), argv.at(0));
 }
 
-void DeleteTopic(google::cloud::pubsub::PublisherClient client,
+void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [delete-topic]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::PublisherClient client, std::string const& project_id,
+  [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
     auto status = client.DeleteTopic(
         pubsub::Topic(std::move(project_id), std::move(topic_id)));
@@ -92,11 +92,11 @@ void DeleteTopic(google::cloud::pubsub::PublisherClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void CreateSubscription(google::cloud::pubsub::SubscriberClient client,
+void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [create-subscription]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::SubscriberClient client, std::string const& project_id,
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto subscription =
         client.CreateSubscription(pubsub::CreateSubscriptionBuilder(
@@ -112,11 +112,11 @@ void CreateSubscription(google::cloud::pubsub::SubscriberClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ListSubscriptions(google::cloud::pubsub::SubscriberClient client,
+void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
   //! [list-subscriptions]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::SubscriberClient client, std::string const& project_id) {
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     int count = 0;
     for (auto const& subscription : client.ListSubscriptions(project_id)) {
       if (!subscription)
@@ -132,11 +132,11 @@ void ListSubscriptions(google::cloud::pubsub::SubscriberClient client,
   (std::move(client), argv.at(0));
 }
 
-void DeleteSubscription(google::cloud::pubsub::SubscriberClient client,
+void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [delete-subscription]
   namespace pubsub = google::cloud::pubsub;
-  [](pubsub::SubscriberClient client, std::string const& project_id,
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto status = client.DeleteSubscription(pubsub::Subscription(
         std::move(project_id), std::move(subscription_id)));
@@ -162,9 +162,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
 
-  google::cloud::pubsub::PublisherClient publisher_client(
+  google::cloud::pubsub::TopicAdminClient publisher_client(
       google::cloud::pubsub::MakePublisherConnection());
-  google::cloud::pubsub::SubscriberClient subscriber_client(
+  google::cloud::pubsub::SubscriptionAdminClient subscriber_client(
       google::cloud::pubsub::MakeSubscriberConnection());
 
   std::cout << "\nRunning CreateTopic() sample\n";

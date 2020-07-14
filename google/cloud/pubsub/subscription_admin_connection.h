@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CONNECTION_H
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -56,9 +56,9 @@ using ListSubscriptionsRange = google::cloud::internal::PaginationRange<
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeSubscriberConnection()`.
  */
-class SubscriberConnection {
+class SubscriptionAdminConnection {
  public:
-  virtual ~SubscriberConnection() = 0;
+  virtual ~SubscriptionAdminConnection() = 0;
 
   //@{
   /**
@@ -108,7 +108,7 @@ class SubscriberConnection {
  * @param options (optional) configure the `SubscriberConnection` created by
  *     this function.
  */
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriberConnection(
     ConnectionOptions const& options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -116,4 +116,4 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CONNECTION_H

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/subscriber_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-SubscriberClient::SubscriberClient(
-    std::shared_ptr<SubscriberConnection> connection)
+TopicAdminClient::TopicAdminClient(
+    std::shared_ptr<TopicAdminConnection> connection)
     : connection_(std::move(connection)) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_client.h"
-#include "google/cloud/pubsub/subscriber_client.h"
 #include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -47,12 +47,12 @@ std::string RandomSubscriptionId(
                                                   "abcdefghijklmnopqrstuvwxyz");
 }
 
-TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
+TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto subscription_names = [](SubscriberClient client,
+  auto subscription_names = [](SubscriptionAdminClient client,
                                std::string const& project_id) {
     std::vector<std::string> names;
     for (auto& subscription : client.ListSubscriptions(project_id)) {
@@ -67,8 +67,8 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
   Topic topic(project_id, RandomTopicId(generator));
   Subscription subscription(project_id, RandomSubscriptionId(generator));
 
-  auto publisher_client = PublisherClient(MakePublisherConnection());
-  auto client = SubscriberClient(pubsub::MakeSubscriberConnection());
+  auto publisher_client = TopicAdminClient(MakePublisherConnection());
+  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
 
   EXPECT_THAT(subscription_names(client, project_id),
               Not(Contains(subscription.FullName())));
@@ -98,36 +98,36 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
               Not(Contains(subscription.FullName())));
 }
 
-TEST(SubscriberAdminIntegrationTest, CreateSubscriptionFailure) {
+TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto client = SubscriberClient(pubsub::MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
   auto create_response = client.CreateSubscription(CreateSubscriptionBuilder(
       Subscription("--invalid-project--", "--invalid-subscription--"),
       Topic("--invalid-project--", "--invalid-topic--")));
   ASSERT_FALSE(create_response.ok());
 }
 
-TEST(SubscriberAdminIntegrationTest, ListSubscriptionsFailure) {
+TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
   // Use an invalid endpoint to force a connection error.
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto client = SubscriberClient(pubsub::MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
   auto list = client.ListSubscriptions("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
   EXPECT_FALSE(*i);
 }
 
-TEST(SubscriberAdminIntegrationTest, DeleteSubscriptionFailure) {
+TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto client = SubscriberClient(pubsub::MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
   auto delete_response = client.DeleteSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(delete_response.ok());

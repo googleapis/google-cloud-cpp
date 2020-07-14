@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/create_subscription_builder.h"
-#include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/create_topic_builder.h"
+#include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -26,19 +26,19 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Performs subscriber operations in Cloud Pub/Sub.
+ * Performs publisher operations in Cloud Pub/Sub.
  *
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
  *
  * @par Performance
  *
- * `SubscriberClient` objects are relatively cheap to create, copy, and move.
- * However, each `SubscriberClient` object must be created with a
- * `std::shared_ptr<SubscriberConnection>`, which itself is relatively
+ * `PublisherClient` objects are cheap to create, copy, and move. However,
+ * each `PublisherClient` object must be created with a
+ * `std::shared_ptr<PublisherConnection>`, which itself is relatively
  * expensive to create. Therefore, connection instances should be shared when
- * possible. See the `MakeSubscriberConnection()` function and the
- * `SubscriberConnection` interface for more details.
+ * possible. See the `MakePublisherConnection()` function and the
+ * `PublisherConnection` interface for more details.
  *
  * @par Thread Safety
  *
@@ -57,64 +57,63 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
-class SubscriberClient {
+class TopicAdminClient {
  public:
-  explicit SubscriberClient(std::shared_ptr<SubscriberConnection> connection);
+  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection);
 
   /**
    * The default constructor is deleted.
    *
-   * Use `SubscriberClient(std::shared_ptr<SubscriberConnection>)`
+   * Use `PublisherClient(std::shared_ptr<PublisherConnection>)`
    */
-  SubscriberClient() = delete;
+  TopicAdminClient() = delete;
 
   /**
-   * Create a new subscription in Cloud Pub/Sub.
+   * Create a new topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This is not an idempotent operation and therefore it is never retried.
    *
    * @par Example
-   * @snippet samples.cc create-subscription
+   * @snippet samples.cc create-topic
    *
-   * @param builder the configuration for the new subscription.
+   * @param builder the configuration for the new topic.
    */
-  StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      CreateSubscriptionBuilder builder) {
-    return connection_->CreateSubscription({std::move(builder).as_proto()});
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(CreateTopicBuilder builder) {
+    return connection_->CreateTopic({std::move(builder).as_proto()});
   }
 
   /**
-   * List all the subscriptions for a given project id.
+   * List all the topics for a given project id.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always treated as
    * idempotent.
    *
    * @par Example
-   * @snippet samples.cc list-subscriptions
+   * @snippet samples.cc list-topics
    */
-  ListSubscriptionsRange ListSubscriptions(std::string const& project_id) {
-    return connection_->ListSubscriptions({"projects/" + project_id});
+  ListTopicsRange ListTopics(std::string const& project_id) {
+    return connection_->ListTopics({"projects/" + project_id});
   }
 
   /**
-   * Delete an existing subscription in Cloud Pub/Sub.
+   * Delete an existing topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This is not an idempotent operation and therefore it is never retried.
    *
    * @par Example
-   * @snippet samples.cc delete-subscription
+   * @snippet samples.cc delete-topic
    *
-   * @param subscription the name of the subscription to be deleted.
+   * @param topic the name of the topic to be deleted.
    */
-  Status DeleteSubscription(Subscription subscription) {
-    return connection_->DeleteSubscription({std::move(subscription)});
+  Status DeleteTopic(Topic topic) {
+    return connection_->DeleteTopic({std::move(topic)});
   }
 
  private:
-  std::shared_ptr<SubscriberConnection> connection_;
+  std::shared_ptr<TopicAdminConnection> connection_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -122,4 +121,4 @@ class SubscriberClient {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
