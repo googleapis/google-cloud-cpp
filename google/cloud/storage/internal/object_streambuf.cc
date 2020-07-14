@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/log.h"
+#include "absl/memory/memory.h"
 #include <cstring>
 
 namespace google {
