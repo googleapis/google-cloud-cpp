@@ -80,7 +80,8 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
-````
+
+```
 
 ## Contributing changes
 
