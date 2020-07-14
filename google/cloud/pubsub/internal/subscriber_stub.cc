@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/internal/emulator_overrides.h"
 #include "google/cloud/grpc_error_delegate.h"
 
 namespace google {
@@ -66,7 +67,8 @@ class DefaultSubscriberStub : public SubscriberStub {
 };
 
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    pubsub::ConnectionOptions const& options, int channel_id) {
+    pubsub::ConnectionOptions options, int channel_id) {
+  options = EmulatorOverrides(std::move(options));
   auto channel_arguments = options.CreateChannelArguments();
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
   // its value here to allow compiling against older versions.

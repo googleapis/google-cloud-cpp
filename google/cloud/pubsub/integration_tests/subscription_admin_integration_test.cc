@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +28,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
@@ -100,10 +102,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
 TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
   auto create_response = client.CreateSubscription(CreateSubscriptionBuilder(
       Subscription("--invalid-project--", "--invalid-subscription--"),
       Topic("--invalid-project--", "--invalid-topic--")));
@@ -112,10 +112,8 @@ TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
 
 TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
   // Use an invalid endpoint to force a connection error.
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
   auto list = client.ListSubscriptions("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
@@ -124,10 +122,8 @@ TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
 
 TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
   auto delete_response = client.DeleteSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(delete_response.ok());

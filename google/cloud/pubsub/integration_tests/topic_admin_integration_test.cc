@@ -17,6 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,6 +26,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
@@ -74,22 +76,16 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
 }
 
 TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto publisher =
-      TopicAdminClient(MakePublisherConnection(connection_options));
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakePublisherConnection());
   auto create_response = publisher.CreateTopic(
       CreateTopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
 }
 
 TEST(TopicAdminIntegrationTest, ListTopicsFailure) {
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto publisher =
-      TopicAdminClient(MakePublisherConnection(connection_options));
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakePublisherConnection());
   auto list = publisher.ListTopics("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
@@ -97,11 +93,8 @@ TEST(TopicAdminIntegrationTest, ListTopicsFailure) {
 }
 
 TEST(TopicAdminIntegrationTest, DeleteTopicFailure) {
-  auto connection_options =
-      ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1");
-  auto publisher =
-      TopicAdminClient(MakePublisherConnection(connection_options));
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakePublisherConnection());
   auto delete_response =
       publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());
