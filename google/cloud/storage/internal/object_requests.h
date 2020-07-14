@@ -59,7 +59,8 @@ internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
  */
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
-                            Projection, UserProject, Versions> {
+                            StartOffset, EndOffset, Projection, UserProject,
+                            Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)
