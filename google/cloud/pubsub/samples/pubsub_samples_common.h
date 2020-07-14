@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 
-#include "google/cloud/pubsub/publisher_client.h"
-#include "google/cloud/pubsub/subscriber_client.h"
+#include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/testing_util/example_driver.h"
 
 namespace google {
@@ -25,9 +25,10 @@ namespace pubsub {
 namespace examples {
 
 using PublisherCommand = std::function<void(
-    google::cloud::pubsub::PublisherClient, std::vector<std::string> const&)>;
-using SubscriberCommand = std::function<void(
-    google::cloud::pubsub::SubscriberClient, std::vector<std::string> const&)>;
+    google::cloud::pubsub::TopicAdminClient, std::vector<std::string> const&)>;
+using SubscriberCommand =
+    std::function<void(google::cloud::pubsub::SubscriptionAdminClient,
+                       std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     std::string const& name, std::vector<std::string> const& arg_names,

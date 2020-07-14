@@ -23,8 +23,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
 
     set(pubsub_client_integration_tests
         # cmake-format: sortable
-        publisher_admin_integration_test.cc
-        subscriber_admin_integration_test.cc)
+        subscription_admin_integration_test.cc topic_admin_integration_test.cc)
     set(pubsub_client_install_tests pubsub_install_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

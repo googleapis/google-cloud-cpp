@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/topic.h"
@@ -54,9 +54,9 @@ using ListTopicsRange = google::cloud::internal::PaginationRange<
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakePublisherConnection()`.
  */
-class PublisherConnection {
+class TopicAdminConnection {
  public:
-  virtual ~PublisherConnection() = 0;
+  virtual ~TopicAdminConnection() = 0;
 
   //@{
   /**
@@ -106,7 +106,7 @@ class PublisherConnection {
  * @param options (optional) configure the `PublisherConnection` created by
  *     this function.
  */
-std::shared_ptr<PublisherConnection> MakePublisherConnection(
+std::shared_ptr<TopicAdminConnection> MakePublisherConnection(
     ConnectionOptions const& options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -114,4 +114,4 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H

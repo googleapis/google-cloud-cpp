@@ -32,7 +32,7 @@ TEST(PubSubSamplesCommon, PublisherCommand) {
   google::cloud::testing_util::ScopedEnvironment emulator(
       "PUBSUB_EMULATOR_HOST", "localhost:8085");
   int call_count = 0;
-  auto command = [&call_count](pubsub::PublisherClient const&,
+  auto command = [&call_count](pubsub::TopicAdminClient const&,
                                std::vector<std::string> const& argv) {
     ++call_count;
     ASSERT_EQ(2, argv.size());
@@ -63,7 +63,7 @@ TEST(PubSubSamplesCommon, SubscriberCommand) {
   google::cloud::testing_util::ScopedEnvironment emulator(
       "PUBSUB_EMULATOR_HOST", "localhost:8085");
   int call_count = 0;
-  auto command = [&call_count](pubsub::SubscriberClient const&,
+  auto command = [&call_count](pubsub::SubscriptionAdminClient const&,
                                std::vector<std::string> const& argv) {
     ++call_count;
     ASSERT_EQ(2, argv.size());

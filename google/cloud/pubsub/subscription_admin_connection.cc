@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include <memory>
 
@@ -22,13 +22,13 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 namespace {
-class SubscriberConnectionImpl : public SubscriberConnection {
+class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
  public:
-  explicit SubscriberConnectionImpl(
+  explicit SubscriptionAdminConnectionImpl(
       std::shared_ptr<pubsub_internal::SubscriberStub> stub)
       : stub_(std::move(stub)) {}
 
-  ~SubscriberConnectionImpl() override = default;
+  ~SubscriptionAdminConnectionImpl() override = default;
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       CreateSubscriptionParams p) override {
@@ -68,13 +68,13 @@ class SubscriberConnectionImpl : public SubscriberConnection {
 };
 }  // namespace
 
-SubscriberConnection::~SubscriberConnection() = default;
+SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
 
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriberConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0);
-  return std::make_shared<SubscriberConnectionImpl>(std::move(stub));
+  return std::make_shared<SubscriptionAdminConnectionImpl>(std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

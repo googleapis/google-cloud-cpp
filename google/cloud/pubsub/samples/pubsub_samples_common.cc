@@ -33,7 +33,7 @@ google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
       }
       throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
-    google::cloud::pubsub::PublisherClient client(
+    google::cloud::pubsub::TopicAdminClient client(
         google::cloud::pubsub::MakePublisherConnection());
     command(std::move(client), std::move(argv));
   };
@@ -54,7 +54,7 @@ google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
       }
       throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
-    google::cloud::pubsub::SubscriberClient client(
+    google::cloud::pubsub::SubscriptionAdminClient client(
         google::cloud::pubsub::MakeSubscriberConnection());
     command(std::move(client), std::move(argv));
   };

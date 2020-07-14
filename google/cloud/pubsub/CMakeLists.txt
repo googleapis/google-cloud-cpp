@@ -34,18 +34,18 @@ add_library(
     internal/subscriber_stub.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
-    publisher_client.cc
-    publisher_client.h
-    publisher_connection.cc
-    publisher_connection.h
-    subscriber_client.cc
-    subscriber_client.h
-    subscriber_connection.cc
-    subscriber_connection.h
     subscription.cc
     subscription.h
+    subscription_admin_client.cc
+    subscription_admin_client.h
+    subscription_admin_connection.cc
+    subscription_admin_connection.h
     topic.cc
     topic.h
+    topic_admin_client.cc
+    topic_admin_client.h
+    topic_admin_connection.cc
+    topic_admin_connection.h
     version.h
     version_info.h)
 target_include_directories(
