@@ -453,6 +453,30 @@ struct Delimiter : public internal::WellKnownParameter<Delimiter, std::string> {
 };
 
 /**
+ * Filter results to objects whose names are lexicographically equal to or after
+ * StartOffset.
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/v1/objects/list for more
+ *   information.
+ */
+struct StartOffset
+    : public internal::WellKnownParameter<StartOffset, std::string> {
+  using WellKnownParameter<StartOffset, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "startOffset"; }
+};
+
+/**
+ * Filter results to objects whose names are lexicographically before EndOffset.
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/v1/objects/list for more
+ *   information.
+ */
+struct EndOffset : public internal::WellKnownParameter<EndOffset, std::string> {
+  using WellKnownParameter<EndOffset, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "endOffset"; }
+};
+
+/**
  * Controls what metadata fields are included in the response.
  *
  * For those operations that return the metadata of an Object or Bucket, this

@@ -379,6 +379,8 @@ def objects_list(bucket_name):
     prefixes = set()
     prefix = flask.request.args.get("prefix", "", type(""))
     delimiter = flask.request.args.get("delimiter", "", type(""))
+    start_offset = flask.request.args.get("startOffset", "", type(""))
+    end_offset = flask.request.args.get("endOffset", "", type(""))
     bucket_link = bucket_name + "/o/"
     for name, o in testbench_utils.all_objects():
         if name.find(bucket_link + prefix) != 0:
@@ -386,6 +388,10 @@ def objects_list(bucket_name):
         if o.get_latest() is None:
             continue
         # We assume `delimiter` has only one character.
+        if name[len(bucket_link) :] < start_offset:
+            continue
+        if end_offset != "" and name[len(bucket_link) :] >= end_offset:
+            continue
         delimiter_index = name.find(delimiter, len(bucket_link + prefix))
         if delimiter != "" and delimiter_index > 0:
             # We don't want to include `bucket_link` in the returned prefix.
