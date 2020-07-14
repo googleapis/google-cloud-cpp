@@ -13,7 +13,6 @@
 // limitations under the License.
 
 // [START bigtable_quickstart]
-
 #include "google/cloud/bigtable/table.h"
 
 int main(int argc, char* argv[]) try {
