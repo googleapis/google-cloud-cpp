@@ -63,10 +63,10 @@ _EOF_
 
 # Dumps the contents of quickstart.cc starting at the first #include, so we
 # skip the license header comment.
-sed -n '/^#/,$p' "${BINDIR}/../../google/cloud/bigtable/quickstart/quickstart.cc"
+sed -n -e '/END bigtable_quickstart/,$d' -e '/^#/,$p' "${BINDIR}/../../google/cloud/bigtable/quickstart/quickstart.cc"
 
 cat <<'_EOF_'
-````
+```
 
 ## Contributing changes
 

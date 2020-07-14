@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// [START bigtable_quickstart]
 #include "google/cloud/bigtable/table.h"
 
 int main(int argc, char* argv[]) try {
@@ -57,3 +58,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
+// [END bigtable_quickstart]
