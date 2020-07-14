@@ -555,6 +555,9 @@ readonly CACHE_FOLDER
 CACHE_NAME="cache-${DOCKER_IMAGE_BASENAME}-${BUILD_NAME}"
 readonly CACHE_NAME
 
+echo "================================================================"
+io::log_yellow "Downloading build cache."
+
 "${PROJECT_ROOT}/ci/kokoro/docker/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
 
