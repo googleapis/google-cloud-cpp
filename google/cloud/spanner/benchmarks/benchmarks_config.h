@@ -42,8 +42,8 @@ struct Config {
   int minimum_clients = 1;
   int maximum_clients = 1;
 
-  std::int64_t table_size = 1000 * 1000L;
-  std::int64_t query_size = 1000;
+  std::int32_t table_size = 1000 * 1000L;
+  std::int32_t query_size = 1000;
 
   bool use_only_clients = false;
   bool use_only_stubs = false;

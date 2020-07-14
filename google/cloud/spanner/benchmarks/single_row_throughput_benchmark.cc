@@ -190,7 +190,7 @@ void FillTableTask(Config const& config, spanner::Client client, std::mutex& mu,
   auto flush_as_needed = [&maybe_flush] { maybe_flush(false); };
 
   auto const report_period =
-      (std::max)(static_cast<std::int64_t>(2), config.table_size / 50);
+      (std::max)(static_cast<std::int32_t>(2), config.table_size / 50);
   for (std::int64_t key = 0; key != config.table_size; ++key) {
     // Each thread does a fraction of the key space.
     if (key % task_count != task_id) continue;

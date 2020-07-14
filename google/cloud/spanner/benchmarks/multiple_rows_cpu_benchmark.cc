@@ -532,7 +532,7 @@ class ExperimentImpl {
     auto flush_as_needed = [&maybe_flush] { return maybe_flush(false); };
 
     auto const report_period =
-        (std::max)(static_cast<std::int64_t>(2), config.table_size / 50);
+        (std::max)(static_cast<std::int32_t>(2), config.table_size / 50);
     for (std::int64_t key = 0; key != config.table_size; ++key) {
       // Each thread does a fraction of the key space.
       if (key % task_count != task_id) continue;
@@ -662,7 +662,8 @@ class ReadExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread. Use that to estimate
     // the size of the vector.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     std::vector<std::string> const columns{"Key",   "Data0", "Data1", "Data2",
                                            "Data3", "Data4", "Data5", "Data6",
                                            "Data7", "Data8", "Data9"};
@@ -745,7 +746,8 @@ class ReadExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread, so allocate enough
     // memory to start.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
@@ -881,7 +883,8 @@ class SelectExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread. Use that to estimate
     // the size of the vector.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     auto const statement = CreateStatement();
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
@@ -965,7 +968,8 @@ class SelectExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread, so allocate enough
     // memory to start.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
@@ -1120,7 +1124,8 @@ class UpdateExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread. Use that to estimate
     // the size of the vector.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
@@ -1215,7 +1220,8 @@ class UpdateExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread, so allocate enough
     // memory to start.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
@@ -1388,7 +1394,8 @@ class MutationExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread. Use that to estimate
     // the size of the vector.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
@@ -1469,7 +1476,8 @@ class MutationExperiment : public Experiment {
     std::vector<RowCpuSample> samples;
     // We expect about 50 reads per second per thread, so allocate enough
     // memory to start.
-    samples.reserve(config.iteration_duration.count() * 50);
+    samples.reserve(
+        static_cast<std::size_t>(config.iteration_duration.count() * 50));
     for (auto start = std::chrono::steady_clock::now(),
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {

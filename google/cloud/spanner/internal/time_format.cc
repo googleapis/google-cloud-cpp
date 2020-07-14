@@ -176,7 +176,7 @@ std::size_t ParseTime(char const* fmt, std::string const& s, std::tm* tm) {
   input >> std::get_time(tm, fmt);
   if (!input) return std::string::npos;
   auto const pos = input.tellg();
-  if (pos >= 0) return pos;
+  if (pos >= 0) return static_cast<std::size_t>(pos);
   return s.size();
 #endif
 }
