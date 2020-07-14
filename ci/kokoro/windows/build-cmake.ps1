@@ -40,11 +40,6 @@ $cmake_flags += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
 $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
 $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
 
-if ("${env:VCPKG_TRIPLET}" -like "x86*") {
-    # TODO(#4501) - cannot use /WX (aka -Werror) on MSVC+Windows+x86
-    $cmake_flags += "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=OFF"
-}
-
 # Configure CMake and create the build directory.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_flags"
 cmake $cmake_flags

@@ -113,9 +113,9 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
          c.maximum_clients = std::stoi(v);
        }},
       {"--table-size=",
-       [](Config& c, std::string const& v) { c.table_size = std::stol(v); }},
+       [](Config& c, std::string const& v) { c.table_size = std::stoi(v); }},
       {"--query-size=",
-       [](Config& c, std::string const& v) { c.query_size = std::stol(v); }},
+       [](Config& c, std::string const& v) { c.query_size = std::stoi(v); }},
 
       {"--use-only-stubs",
        [](Config& c, std::string const&) { c.use_only_stubs = true; }},

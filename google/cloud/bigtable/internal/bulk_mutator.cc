@@ -77,15 +77,20 @@ std::vector<int> BulkMutatorState::OnRead(
     google::bigtable::v2::MutateRowsResponse& response) {
   std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
-    auto index = entry.index();
-    if (index < 0 || annotations_.size() <= std::size_t(index)) {
+    // The type of `entry.index()` is a 64-bit int. But we can never create more
+    // than std::numeric_limits<std::size_t>::max() entries in the request
+    // (which might be a 32-bit number, depending on the platform), so the
+    // following test only fails if the server has a bug:
+    if (entry.index() < 0 ||
+        static_cast<std::size_t>(entry.index()) >= annotations_.size()) {
       // There is no sensible way to return an error from here, the server did
       // something completely unexpected.
       GCP_LOG(ERROR) << "Invalid mutation index received from the server, got="
-                     << index << ", expected in range=[0,"
+                     << entry.index() << ", expected in range=[0,"
                      << annotations_.size() << ")";
       continue;
     }
+    auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
     auto& status = entry.status();
@@ -97,7 +102,7 @@ std::vector<int> BulkMutatorState::OnRead(
       res.push_back(annotation.original_index);
       continue;
     }
-    auto& original = *mutations_.mutable_entries(static_cast<int>(index));
+    auto& original = *mutations_.mutable_entries(index);
     // Failed responses are handled according to the current policies.
     if (SafeGrpcRetry::IsTransientFailure(code) && annotation.is_idempotent) {
       // Retryable requests are saved in the pending mutations, along with the
