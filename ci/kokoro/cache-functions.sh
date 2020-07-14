@@ -48,10 +48,11 @@ cache_download_tarball() {
   activate_service_account_keyfile "${CACHE_KEYFILE}"
 
   echo "================================================================"
+  io::log "gsutil configuration"
+  gsutil version -l
   io::log "Downloading build cache ${FILENAME} from ${GCS_FOLDER}"
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     gsutil "${CACHE_GSUTIL_DEBUG:--q}" \
-    -o GSUtil:sliced_object_download_threshold=256M \
     cp "gs://${GCS_FOLDER}/${FILENAME}" "${DESTINATION}"
 }
 
@@ -77,6 +78,8 @@ cache_upload_tarball() {
   local -r GCS_FOLDER="$3"
 
   echo "================================================================"
+  io::log "gsutil configuration"
+  gsutil version -l
   io::log "Uploading build cache ${FILENAME} to ${GCS_FOLDER}"
 
   trap cache_gcloud_cleanup RETURN
@@ -84,7 +87,6 @@ cache_upload_tarball() {
   activate_service_account_keyfile "${CACHE_KEYFILE}"
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     gsutil "${CACHE_GSUTIL_DEBUG:--q}" \
-    -o GSUtil:parallel_composite_upload_threshold=256M \
     cp "${SOURCE_DIRECTORY}/${FILENAME}" "gs://${CACHE_FOLDER}/"
 
   io::log "Upload completed"
