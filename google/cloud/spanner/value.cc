@@ -53,6 +53,7 @@ bool Equal(google::spanner::v1::Type const& pt1,
     case google::spanner::v1::TypeCode::BYTES:
     case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::TIMESTAMP:
+    case google::spanner::v1::TypeCode::NUMERIC:
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();
@@ -139,6 +140,7 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
 
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::DATE:
+    case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
@@ -235,6 +237,10 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::BYTES;
 }
 
+bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::NUMERIC;
+}
+
 //
 // Value::MakeTypeProto
 //
@@ -266,6 +272,12 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::BYTES);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(Numeric const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::NUMERIC);
   return t;
 }
 
@@ -332,6 +344,12 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
 google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   google::protobuf::Value v;
   v.set_string_value(internal::BytesToBase64(std::move(bytes)));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(Numeric n) {
+  google::protobuf::Value v;
+  v.set_string_value(std::move(n).ToString());
   return v;
 }
 
@@ -436,6 +454,17 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
     return Status(StatusCode::kUnknown, "missing BYTES");
   }
   auto decoded = internal::BytesFromBase64(pv.string_value());
+  if (!decoded) return decoded.status();
+  return *decoded;
+}
+
+StatusOr<Numeric> Value::GetValue(Numeric const&,
+                                  google::protobuf::Value const& pv,
+                                  google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing NUMERIC");
+  }
+  auto decoded = MakeNumeric(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
 }

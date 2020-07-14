@@ -29,6 +29,8 @@ cc_library(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/numeric:int128",
+        "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc",
         "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
@@ -78,6 +80,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/numeric:int128",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_unit_tests]

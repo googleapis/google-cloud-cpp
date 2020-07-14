@@ -140,6 +140,23 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
+  for (auto const& x : {
+           MakeNumeric(-0.9e29).value(),
+           MakeNumeric(-1).value(),
+           MakeNumeric(-1.0e-9).value(),
+           Numeric(),
+           MakeNumeric(1.0e-9).value(),
+           MakeNumeric(1U).value(),
+           MakeNumeric(0.9e29).value(),
+       }) {
+    SCOPED_TRACE("Testing: google::cloud::spanner::Numeric " + x.ToString());
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<Numeric>(5, x));
+    std::vector<optional<Numeric>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (time_t t : {
            -9223372035LL,   // near the limit of 64-bit/ns system_clock
            -2147483649LL,   // below min 32-bit int
@@ -197,6 +214,7 @@ TEST(Value, Equality) {
       {Value(3.14), Value(42.0)},
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
+      {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
       {Value(Date(1970, 1, 1)), Value(Date(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
@@ -648,6 +666,24 @@ TEST(Value, ProtoConversionBytes) {
   }
 }
 
+TEST(Value, ProtoConversionNumeric) {
+  for (auto const& x : std::vector<Numeric>{
+           MakeNumeric(-0.9e29).value(),
+           MakeNumeric(-1).value(),
+           MakeNumeric(-1.0e-9).value(),
+           Numeric(),
+           MakeNumeric(1.0e-9).value(),
+           MakeNumeric(1U).value(),
+           MakeNumeric(0.9e29).value(),
+       }) {
+    Value const v(x);
+    auto const p = internal::ToProto(v);
+    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT + 1, p.first.code());
+    EXPECT_EQ(x.ToString(), p.second.string_value());
+  }
+}
+
 TEST(Value, ProtoConversionTimestamp) {
   for (time_t t : {
            -9223372035LL,   // near the limit of 64-bit/ns system_clock
@@ -813,6 +849,30 @@ TEST(Value, GetBadBytes) {
 
   SetProtoKind(v, 0.0);
   EXPECT_FALSE(v.get<Bytes>().ok());
+}
+
+TEST(Value, GetBadNumeric) {
+  Value v(MakeNumeric(0).value());
+  ClearProtoKind(v);
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, "");
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, "123blah");
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
 }
 
 TEST(Value, GetBadInt) {
@@ -1001,6 +1061,7 @@ TEST(Value, OutputStream) {
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
+      {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
       {Value(Date()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
@@ -1023,6 +1084,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<double>(), "NULL", normal},
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
+      {MakeNullValue<Numeric>(), "NULL", normal},
       {MakeNullValue<Date>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
 
@@ -1035,6 +1097,7 @@ TEST(Value, OutputStream) {
       {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
+      {Value(std::vector<Numeric>{2}), "[0, 0]", normal},
       {Value(std::vector<Date>{2}), "[1970-01-01, 1970-01-01]", normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
       {Value(std::vector<optional<double>>{1, {}, 2}), "[1, NULL, 2]", normal},
@@ -1045,6 +1108,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<double>>(), "NULL", normal},
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<Date>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
 
@@ -1084,6 +1148,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
       {MakeNullValue<std::tuple<bool, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<Numeric, Date>>(), "NULL", normal},
       {MakeNullValue<std::tuple<std::vector<bool>>>(), "NULL", normal},
   };
 
@@ -1133,6 +1198,11 @@ TEST(Value, OutputStreamMatchesT) {
   // Bytes
   StreamMatchesValueStream(Bytes());
   StreamMatchesValueStream(Bytes("foo"));
+
+  // Numeric
+  StreamMatchesValueStream(MakeNumeric("999").value());
+  StreamMatchesValueStream(MakeNumeric(3.14159).value());
+  StreamMatchesValueStream(MakeNumeric(42).value());
 
   // Date
   StreamMatchesValueStream(Date(1, 1, 1));
