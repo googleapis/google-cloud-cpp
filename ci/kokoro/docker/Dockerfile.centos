@@ -33,11 +33,13 @@ RUN echo 'root:' | chpasswd
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \
     ln -sf /usr/bin/ctest3 /usr/bin/ctest
 
-# Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
-# client.  They are used in the integration tests.
+# Install the Cloud SDK and some of the emulators. We use the emulators to run
+# integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN yum makecache && yum install -y java-latest-openjdk
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh

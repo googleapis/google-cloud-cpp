@@ -136,6 +136,11 @@ if should_run_integration_tests; then
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
 
+  echo "================================================================"
+  io::log_yellow "running pubsub integration tests via Bazel+Emulator"
+  "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
+
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
   # Manually restarting the build clears up the problem, but that is just a
@@ -184,6 +189,9 @@ if should_run_integration_tests; then
 
     # The Storage integration tests were already run above
     "-//google/cloud/storage/..."
+
+    # The Pub/Sub integration tests were already run above
+    "-//google/cloud/pubsub/..."
   )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
