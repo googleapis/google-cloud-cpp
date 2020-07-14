@@ -402,7 +402,7 @@ def objects_list(bucket_name):
                 result["items"].append(object_version.metadata)
         else:
             result["items"].append(o.get_latest().metadata)
-        result["prefixes"] = list(prefixes)
+    result["prefixes"] = list(prefixes)
     return testbench_utils.filtered_response(flask.request, result)
 
 
