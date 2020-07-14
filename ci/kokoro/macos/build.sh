@@ -115,9 +115,6 @@ CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
 echo "================================================================"
-io::log_yellow "install crcmod to speed up gsutil."
-sudo pip3 install -U crcmod
-
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
