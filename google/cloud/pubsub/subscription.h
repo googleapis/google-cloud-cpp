@@ -25,6 +25,13 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Objects of this class identify a Cloud Pub/Sub subscription.
+ *
+ * @note
+ * This class makes no effort to validate the ids provided. The application
+ * should verify that any ids passed to this application conform to the
+ * Cloud Pub/Sub [resource name][name-link] restrictions.
+ *
+ * [name-link]: https://cloud.google.com/pubsub/docs/admin#resource_names
  */
 class Subscription {
  public:
