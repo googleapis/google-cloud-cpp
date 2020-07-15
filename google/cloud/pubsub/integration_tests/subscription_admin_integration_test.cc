@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
@@ -32,23 +33,6 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
-std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
-                          std::string const& prefix = "cloud-cpp-testing-") {
-  constexpr int kMaxRandomTopicSuffixLength = 32;
-  return prefix + google::cloud::internal::Sample(generator,
-                                                  kMaxRandomTopicSuffixLength,
-                                                  "abcdefghijklmnopqrstuvwxyz");
-}
-
-std::string RandomSubscriptionId(
-    google::cloud::internal::DefaultPRNG& generator,
-    std::string const& prefix = "cloud-cpp-testing-") {
-  constexpr int kMaxRandomTopicSuffixLength = 32;
-  return prefix + google::cloud::internal::Sample(generator,
-                                                  kMaxRandomTopicSuffixLength,
-                                                  "abcdefghijklmnopqrstuvwxyz");
-}
-
 TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -66,8 +50,9 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   };
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  Topic topic(project_id, RandomTopicId(generator));
-  Subscription subscription(project_id, RandomSubscriptionId(generator));
+  Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
+  Subscription subscription(project_id,
+                            pubsub_testing::RandomSubscriptionId(generator));
 
   auto publisher_client = TopicAdminClient(MakePublisherConnection());
   auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());

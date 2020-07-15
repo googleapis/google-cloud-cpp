@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
@@ -30,14 +31,6 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
-std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
-                          std::string const& prefix = "cloud-cpp-testing-") {
-  constexpr int kMaxRandomTopicSuffixLength = 32;
-  return prefix + google::cloud::internal::Sample(generator,
-                                                  kMaxRandomTopicSuffixLength,
-                                                  "abcdefghijklmnopqrstuvwxyz");
-}
-
 TEST(TopicAdminIntegrationTest, TopicCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -55,7 +48,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   };
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  Topic topic(project_id, RandomTopicId(generator));
+  Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
 
   auto publisher =
       TopicAdminClient(MakePublisherConnection(ConnectionOptions{}));

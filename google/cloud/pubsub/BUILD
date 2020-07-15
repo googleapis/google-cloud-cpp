@@ -29,6 +29,20 @@ cc_library(
     ],
 )
 
+load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
+
+cc_library(
+    name = "pubsub_client_testing",
+    srcs = pubsub_client_testing_srcs,
+    hdrs = pubsub_client_testing_hdrs,
+    deps = [
+        ":pubsub_client",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+    ],
+)
+
 load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 [cc_test(
@@ -36,6 +50,7 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     srcs = [test],
     deps = [
         ":pubsub_client",
+        ":pubsub_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

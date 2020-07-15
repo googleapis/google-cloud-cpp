@@ -79,6 +79,17 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    add_library(pubsub_client_testing # cmake-format: sort
+                testing/random_names.cc testing/random_names.h)
+    target_link_libraries(
+        pubsub_client_testing
+        PUBLIC pubsub_client google_cloud_cpp_grpc_utils
+               google_cloud_cpp_common googleapis-c++::pubsub_protos)
+    google_cloud_cpp_add_common_options(pubsub_client_testing)
+    target_compile_options(pubsub_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    create_bazel_config(pubsub_client_testing YEAR "2020")
+
     set(pubsub_client_unit_tests
         # cmake-format: sort
         create_subscription_builder_test.cc
@@ -98,9 +109,13 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
-                    google_cloud_cpp_testing_grpc GTest::gmock_main
-                    GTest::gmock GTest::gtest)
+            PRIVATE pubsub_client_testing
+                    googleapis-c++::pubsub_client
+                    google_cloud_cpp_testing
+                    google_cloud_cpp_testing_grpc
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
