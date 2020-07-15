@@ -126,7 +126,7 @@ if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
     try {
         $ErrorActionPreference = "SilentlyContinue"
         Get-ChildItem -Recurse -File `
-            -Exclude test.xml,sponge_log.xml,build.bat `
+            -Exclude test.xml,sponge_log.xml,build.bat,build-32.bat,build.ps1 `
             -ErrorAction SilentlyContinue `
             -Path "${env:KOKORO_ARTIFACTS_DIR}" | `
             Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
