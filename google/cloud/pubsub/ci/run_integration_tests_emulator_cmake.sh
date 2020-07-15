@@ -42,6 +42,3 @@ pubsub_emulator::start
 trap pubsub_emulator::kill EXIT
 
 ctest -R "^pubsub_" "${ctest_args[@]}"
-exit_status=$?
-
-exit "${exit_status}"

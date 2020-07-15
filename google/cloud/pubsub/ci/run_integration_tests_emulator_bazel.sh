@@ -49,13 +49,6 @@ for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")
 done
 
-echo DEBUG DEBUG DEBUG "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
-  --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
-  --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
-  --test_tag_filters="integration-test" -- \
-  "//google/cloud/pubsub/...:all" \
-  "${excluded_targets[@]}"
-
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
   --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
