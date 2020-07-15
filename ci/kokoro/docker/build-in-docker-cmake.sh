@@ -187,6 +187,13 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+
+    echo
+    io::log_yellow "running pusub integration tests via CTest+Emulator"
+    echo
+    "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+
     # TODO(#441) - remove the for loops below.
     # Sometimes the integration tests manage to crash the Bigtable emulator.
     # Manually restarting the build clears up the problem, but that is just a

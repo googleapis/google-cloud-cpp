@@ -71,11 +71,13 @@ RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.0 \
     gunicorn==19.10.0 httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 \
     raven==6.10.0
 
-# Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
-# client.  They are used in the integration tests.
+# Install the Cloud SDK and some of the emulators. We use the emulators to run
+# integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh

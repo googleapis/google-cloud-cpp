@@ -24,5 +24,5 @@ wget -q "${SITE}/${TARBALL}"
 
 echo "${GOOGLE_CLOUD_CPP_SDK_SHA256} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f "${TARBALL}"
-/usr/local/google-cloud-sdk/bin/gcloud \
-  --quiet components install cbt bigtable cloud-spanner-emulator beta
+/usr/local/google-cloud-sdk/bin/gcloud --quiet components install \
+  beta bigtable cbt cloud-spanner-emulator pubsub-emulator
