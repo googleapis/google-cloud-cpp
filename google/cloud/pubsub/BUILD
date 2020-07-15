@@ -37,6 +37,7 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     deps = [
         ":pubsub_client",
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
     ],

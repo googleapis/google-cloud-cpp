@@ -28,6 +28,8 @@ add_library(
     connection_options.h
     create_subscription_builder.h
     create_topic_builder.h
+    internal/emulator_overrides.cc
+    internal/emulator_overrides.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/subscriber_stub.cc
@@ -79,8 +81,12 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     set(pubsub_client_unit_tests
         # cmake-format: sort
-        create_subscription_builder_test.cc create_topic_builder_test.cc
-        internal/user_agent_prefix_test.cc subscription_test.cc topic_test.cc)
+        create_subscription_builder_test.cc
+        create_topic_builder_test.cc
+        internal/emulator_overrides_test.cc
+        internal/user_agent_prefix_test.cc
+        subscription_test.cc
+        topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

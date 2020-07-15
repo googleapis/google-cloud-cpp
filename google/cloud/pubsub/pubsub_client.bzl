@@ -20,6 +20,7 @@ pubsub_client_hdrs = [
     "connection_options.h",
     "create_subscription_builder.h",
     "create_topic_builder.h",
+    "internal/emulator_overrides.h",
     "internal/publisher_stub.h",
     "internal/subscriber_stub.h",
     "internal/user_agent_prefix.h",
@@ -35,6 +36,7 @@ pubsub_client_hdrs = [
 
 pubsub_client_srcs = [
     "connection_options.cc",
+    "internal/emulator_overrides.cc",
     "internal/publisher_stub.cc",
     "internal/subscriber_stub.cc",
     "internal/user_agent_prefix.cc",

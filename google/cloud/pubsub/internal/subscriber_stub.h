@@ -63,7 +63,7 @@ class SubscriberStub {
  * to ensure they use different underlying connections.
  */
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    pubsub::ConnectionOptions const& options, int channel_id);
+    pubsub::ConnectionOptions options, int channel_id);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
