@@ -33,11 +33,9 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # These can only run against production
 production_only_targets=(
-  "//google/cloud/storage/examples:storage_grpc_samples"
   "//google/cloud/storage/examples:storage_policy_doc_samples"
   "//google/cloud/storage/examples:storage_signed_url_v2_samples"
   "//google/cloud/storage/examples:storage_signed_url_v4_samples"
-  "//google/cloud/storage/tests:grpc_integration_test"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
 )
@@ -59,6 +57,10 @@ excluded_targets=(
   # and some CMake magic. It is also skipped against production, so most Bazel
   # builds run it but it is a no-op.
   "-//google/cloud/storage/tests:error_injection_integration_test"
+
+  # TODO(#4536) - restore the GCS+gRPC integration tests
+  "-//google/cloud/storage/examples:storage_grpc_samples"
+  "-//google/cloud/storage/tests:grpc_integration_test"
 )
 for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")

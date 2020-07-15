@@ -304,6 +304,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       #   builds because they consume too much quota.
       ctest_args+=(-E "^bigtable_")
     fi
+    ctest_args+=(-E "storage_grpc_")
     env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
       -L integration-test-production
 
