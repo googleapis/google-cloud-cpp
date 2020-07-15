@@ -14,30 +14,24 @@
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <tuple>
 #include <utility>
 
 namespace {
-std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
-                          std::string const& prefix = "cloud-cpp-samples-") {
-  constexpr int kMaxRandomTopicSuffixLength = 32;
-  return prefix + google::cloud::internal::Sample(generator,
-                                                  kMaxRandomTopicSuffixLength,
-                                                  "abcdefghijklmnopqrstuvwxyz");
+std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomTopicId(generator,
+                                                      "cloud-cpp-samples");
 }
 
 std::string RandomSubscriptionId(
-    google::cloud::internal::DefaultPRNG& generator,
-    std::string const& prefix = "cloud-cpp-samples-") {
-  constexpr int kMaxRandomSubscriptionSuffixLength = 32;
-  return prefix + google::cloud::internal::Sample(
-                      generator, kMaxRandomSubscriptionSuffixLength,
-                      "abcdefghijklmnopqrstuvwxyz");
+    google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomSubscriptionId(
+      generator, "cloud-cpp-samples");
 }
 
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,

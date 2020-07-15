@@ -27,6 +27,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
+        "//google/cloud/pubsub:pubsub_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
     ],
 )

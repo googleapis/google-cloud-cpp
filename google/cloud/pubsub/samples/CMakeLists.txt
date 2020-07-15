@@ -20,6 +20,7 @@ function (pubsub_client_define_samples)
                 pubsub_samples_common.cc pubsub_samples_common.h)
     target_link_libraries(
         pubsub_samples_common
+        pubsub_client_testing
         googleapis-c++::pubsub_client
         google_cloud_cpp_common
         google_cloud_cpp_grpc_utils
