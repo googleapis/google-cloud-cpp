@@ -22,7 +22,7 @@ cat <<'END_OF_PREAMBLE'
 # Packaging `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
-<!-- Make changes in ci/test-markdown/generate-packaging.sh -->
+<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
 This document is intended for package maintainers or anyone else who might like
 to "install" the `google-cloud-cpp` libraries.
@@ -47,7 +47,7 @@ tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 # Installing `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
-<!-- Make changes in ci/test-markdown/generate-packaging.sh -->
+<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
 By default `google-cloud-cpp` libraries download and compile all their
 dependencies ([see below](#required-libraries) for a complete list). This makes
@@ -202,9 +202,9 @@ these dependencies.
 - [Fedora 31](#fedora-31)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
-- [Ubuntu (20.04 - Bionic Beaver)](#ubuntu-2004---focal-fossa)
-- [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
-- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+- [Ubuntu (20.04 LTS - Focal Fossa)](#ubuntu-2004-lts---focal-fossa)
+- [Ubuntu (18.04 LTS - Bionic Beaver)](#ubuntu-1804-lts---bionic-beaver)
+- [Ubuntu (16.04 LTS - Xenial Xerus)](#ubuntu-1604-lts---xenial-xerus)
 - [Debian (Buster)](#debian-buster)
 - [Debian (Stretch)](#debian-stretch)
 - [CentOS 8](#centos-8)
@@ -226,15 +226,15 @@ echo "### openSUSE (Leap)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
 
 echo
-echo "### Ubuntu (20.04 - Focal Fossa)"
+echo "### Ubuntu (20.04 LTS - Focal Fossa)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-focal"
 
 echo
-echo "### Ubuntu (18.04 - Bionic Beaver)"
+echo "### Ubuntu (18.04 LTS - Bionic Beaver)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-bionic"
 
 echo
-echo "### Ubuntu (16.04 - Xenial Xerus)"
+echo "### Ubuntu (16.04 LTS - Xenial Xerus)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
 
 echo
