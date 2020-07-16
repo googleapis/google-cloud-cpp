@@ -37,6 +37,8 @@ add_library(
     internal/subscriber_stub.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
+    message.cc
+    message.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
@@ -97,6 +99,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         create_topic_builder_test.cc
         internal/emulator_overrides_test.cc
         internal/user_agent_prefix_test.cc
+        message_test.cc
         subscription_test.cc
         topic_test.cc)
 
