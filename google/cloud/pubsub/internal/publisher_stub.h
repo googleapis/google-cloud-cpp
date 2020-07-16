@@ -53,6 +53,11 @@ class PublisherStub {
   virtual Status DeleteTopic(
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
+
+  /// Publish a batch of messages.
+  virtual StatusOr<google::pubsub::v1::PublishResponse> Publish(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::PublishRequest const& request) = 0;
 };
 
 /**

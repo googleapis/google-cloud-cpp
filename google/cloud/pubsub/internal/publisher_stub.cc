@@ -62,6 +62,15 @@ class DefaultPublisherStub : public PublisherStub {
     return {};
   }
 
+  StatusOr<google::pubsub::v1::PublishResponse> Publish(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PublishRequest const& request) override {
+    google::pubsub::v1::PublishResponse response;
+    auto status = grpc_stub_->Publish(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
  private:
   std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub_;
 };

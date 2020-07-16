@@ -54,6 +54,16 @@ class SubscriberStub {
   virtual Status DeleteSubscription(
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
+
+  /// Pull a batch of messages.
+  virtual StatusOr<google::pubsub::v1::PullResponse> Pull(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::PullRequest const& request) = 0;
+
+  /// Acknowledge one or more messages.
+  virtual Status Acknowledge(
+      grpc::ClientContext& context,
+      google::pubsub::v1::AcknowledgeRequest const& request) = 0;
 };
 
 /**

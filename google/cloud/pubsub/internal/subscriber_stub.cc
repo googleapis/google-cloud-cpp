@@ -62,6 +62,24 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
+  StatusOr<google::pubsub::v1::PullResponse> Pull(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PullRequest const& request) override {
+    google::pubsub::v1::PullResponse response;
+    auto status = grpc_stub_->Pull(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
+  Status Acknowledge(
+      grpc::ClientContext& context,
+      google::pubsub::v1::AcknowledgeRequest const& request) override {
+    google::protobuf::Empty response;
+    auto status = grpc_stub_->Acknowledge(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return {};
+  }
+
  private:
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };
