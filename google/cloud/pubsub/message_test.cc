@@ -17,6 +17,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <sstream>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -69,8 +70,8 @@ TEST(Message, FromAttributesVectorStdPair) {
 }
 
 TEST(Message, FromAttributesVectorStdTuple) {
-  std::vector<std::tuple<std::string, std::string>> const attributes(
-      {{"k1", "v1"}, {"k2", "v2"}});
+  using tuple = std::tuple<std::string, std::string>;
+  std::vector<tuple> const attributes({tuple("k1", "v1"), tuple("k2", "v2")});
   auto const m0 = Message::FromAttributes(attributes);
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -107,8 +108,8 @@ TEST(Message, SetAttributesVectorStdPair) {
 }
 
 TEST(Message, SetAttributesVectorStdTuple) {
-  std::vector<std::tuple<std::string, std::string>> const attributes(
-      {{"k1", "v1"}, {"k2", "v2"}});
+  using tuple = std::tuple<std::string, std::string>;
+  std::vector<tuple> const attributes({tuple("k1", "v1"), tuple("k2", "v2")});
   auto const m0 = Message::SetAttributes(
       Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
       attributes);
