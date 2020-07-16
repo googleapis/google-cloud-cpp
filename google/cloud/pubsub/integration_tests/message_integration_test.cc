@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -59,44 +59,9 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       CreateSubscriptionBuilder(subscription, topic));
   ASSERT_STATUS_OK(subscription_metadata);
 
-  auto publisher =
-      pubsub_internal::CreateDefaultPublisherStub(ConnectionOptions{}, 0);
+  auto publisher = MakePublisherConnection();
   auto subscriber =
       pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
-
-  auto publish = [&]() -> StatusOr<std::vector<std::string>> {
-    grpc::ClientContext context;
-    google::pubsub::v1::PublishRequest request;
-    request.set_topic(topic.FullName());
-    *request.add_messages() = [] {
-      google::pubsub::v1::PubsubMessage m;
-      m.set_message_id("message-0");
-      m.set_data("foo");
-      return m;
-    }();
-    *request.add_messages() = [] {
-      google::pubsub::v1::PubsubMessage m;
-      m.set_message_id("message-1");
-      m.set_data("bar");
-      return m;
-    }();
-    *request.add_messages() = [] {
-      google::pubsub::v1::PubsubMessage m;
-      m.set_message_id("message-2");
-      m.set_data("baz");
-      return m;
-    }();
-
-    auto response = publisher->Publish(context, request);
-    if (!response) return std::move(response).status();
-
-    std::vector<std::string> ids;
-    ids.reserve(response->message_ids_size());
-    for (auto& i : *response->mutable_message_ids()) {
-      ids.push_back(std::move(i));
-    }
-    return ids;
-  };
 
   auto pull =
       [&]() -> StatusOr<std::vector<google::pubsub::v1::ReceivedMessage>> {
@@ -122,19 +87,29 @@ TEST(MessageIntegrationTest, PublishPullAck) {
     return subscriber->Acknowledge(context, request);
   };
 
-  auto ids = publish();
-  ASSERT_STATUS_OK(ids);
+  std::vector<std::string> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response = publisher
+                        ->Publish({topic.FullName(),
+                                   MessageBuilder{}.SetData(data).Build()})
+                        .get();
+    EXPECT_STATUS_OK(response);
+    if (response) {
+      ids.push_back(*std::move(response));
+    }
+  }
+  EXPECT_FALSE(ids.empty());
 
-  while (!ids->empty()) {
+  while (!ids.empty()) {
     auto messages = pull();
     ASSERT_STATUS_OK(messages);
 
     for (auto const& m : *messages) {
       SCOPED_TRACE("Search for message " + m.DebugString());
-      auto i = std::find(ids->begin(), ids->end(), m.message().message_id());
+      auto i = std::find(ids.begin(), ids.end(), m.message().message_id());
       EXPECT_STATUS_OK(ack(m.ack_id()));
-      if (i != ids->end()) {
-        ids->erase(i);
+      if (i != ids.end()) {
+        ids.erase(i);
       } else {
         FAIL() << "Cannot find message id=" << m.message().message_id()
                << " to erase";
