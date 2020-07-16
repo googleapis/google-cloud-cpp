@@ -45,9 +45,8 @@ class MessageBuilder;
  * The C++ representation for a Cloud Pub/Sub messages.
  *
  * Cloud Pub/Sub applications communicate to each other using messages. Note
- * that messages must provide at least some data or some attributes. The `From*`
- * factory functions are designed to encourage applications to always create
- * valid messages.
+ * that messages must provide at least some data or some attributes. Use
+ * `MessageBuilder` to create instances of this class.
  */
 class Message {
  public:
@@ -121,7 +120,7 @@ class MessageBuilder {
 
   /// Create a message with the data in @p data
   MessageBuilder&& SetData(std::string data) && {
-    (*this).SetData(std::move(data));
+    SetData(std::move(data));
     return std::move(*this);
   }
 
