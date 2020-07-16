@@ -699,8 +699,9 @@ TEST(ClientTest, CommitMutations) {
 
 MATCHER(DoesNotHaveSession, "not bound to a session") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               google::spanner::v1::TransactionSelector&, std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (session) {
           *result_listener << "has session " << session->session_name();
           return false;
@@ -711,8 +712,9 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
 
 MATCHER_P(HasSession, name, "bound to expected session") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               google::spanner::v1::TransactionSelector&, std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
           return false;
@@ -726,15 +728,20 @@ MATCHER_P(HasSession, name, "bound to expected session") {
       });
 }
 
-MATCHER(HasBegin, "not bound to a transaction-id") {
+MATCHER(HasBegin, "not bound to a transaction-id or a non-ok status") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder&,
-               google::spanner::v1::TransactionSelector& s, std::int64_t) {
-        if (!s.has_begin()) {
-          if (s.has_single_use()) {
+      arg,
+      [&](internal::SessionHolder&,
+          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
+        if (!s) {
+          *result_listener << "has status " << s.status();
+          return false;
+        }
+        if (!s->has_begin()) {
+          if (s->has_single_use()) {
             *result_listener << "is single-use";
           } else {
-            *result_listener << "has transaction-id " << s.id();
+            *result_listener << "has transaction-id " << s->id();
           }
           return false;
         }
@@ -745,7 +752,8 @@ MATCHER(HasBegin, "not bound to a transaction-id") {
 bool SetSessionName(Transaction const& txn, std::string name) {
   return internal::Visit(
       txn, [&name](internal::SessionHolder& session,
-                   google::spanner::v1::TransactionSelector&, std::int64_t) {
+                   StatusOr<google::spanner::v1::TransactionSelector>&,
+                   std::int64_t) {
         session = internal::MakeDissociatedSessionHolder(std::move(name));
         return true;
       });
@@ -754,8 +762,9 @@ bool SetSessionName(Transaction const& txn, std::string name) {
 bool SetTransactionId(Transaction const& txn, std::string id) {
   return internal::Visit(
       txn, [&id](internal::SessionHolder&,
-                 google::spanner::v1::TransactionSelector& s, std::int64_t) {
-        s.set_id(std::move(id));
+                 StatusOr<google::spanner::v1::TransactionSelector>& s,
+                 std::int64_t) {
+        s->set_id(std::move(id));  // only valid when s.ok()
         return true;
       });
 }

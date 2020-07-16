@@ -44,12 +44,9 @@ class ResultSet {};
 // operation that does nothing but track the expected transaction callbacks.
 class Client {
  public:
-  enum class Mode {
-    kReadSucceeds,
-    kReadFails,
-  };
-
-  explicit Client(Mode mode) : mode_(mode), begin_seqno_(0) {}
+  Client() = default;
+  explicit Client(Status s)
+      : mode_(Mode::kReadFails), txn_status_(std::move(s)) {}
 
   // Set the `read_timestamp` we expect to see, and the `session_id` and
   // `txn_id` we want to use during the upcoming `Read()` calls.
@@ -72,9 +69,10 @@ class Client {
   // User-visible read operation.
   ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
-    auto read = [this, &table, &keys, &columns](SessionHolder& session,
-                                                TransactionSelector& selector,
-                                                std::int64_t seqno) {
+    auto read = [this, &table, &keys, &columns](
+                    SessionHolder& session,
+                    StatusOr<TransactionSelector>& selector,
+                    std::int64_t seqno) {
       return this->Read(session, selector, seqno, table, keys, columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -89,40 +87,63 @@ class Client {
   }
 
  private:
-  ResultSet Read(SessionHolder& session, TransactionSelector& selector,
-                 std::int64_t seqno, std::string const& table,
-                 KeySet const& keys, std::vector<std::string> const& columns);
+  enum class Mode {
+    kReadSucceeds,
+    kReadFails,
+  };
 
-  Mode mode_;
+  ResultSet Read(SessionHolder& session,
+                 StatusOr<TransactionSelector>& selector, std::int64_t seqno,
+                 std::string const& table, KeySet const& keys,
+                 std::vector<std::string> const& columns);
+
+  Mode mode_{Mode::kReadSucceeds};
+  Status txn_status_;
   Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
   std::mutex mu_;
-  std::int64_t begin_seqno_;  // GUARDED_BY(mu_)
-  int valid_visits_;          // GUARDED_BY(mu_)
+  std::int64_t begin_seqno_{0};  // GUARDED_BY(mu_)
+  int valid_visits_;             // GUARDED_BY(mu_)
 };
 
 // Transaction callback.  Normally we would use the TransactionSelector
 // to make a StreamingRead() RPC, and then, if the selector was a `begin`,
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
-ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
+ResultSet Client::Read(SessionHolder& session,
+                       StatusOr<TransactionSelector>& selector,
                        std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
-  if (selector.has_begin()) {
+  if (!selector) {
+    EXPECT_EQ(selector.status(), txn_status_);
+    std::unique_lock<std::mutex> lock(mu_);
+    switch (mode_) {
+      case Mode::kReadSucceeds:  // visits never valid
+        break;
+      case Mode::kReadFails:  // visits always valid
+        ++valid_visits_;
+        if (valid_visits_ % 2 == 0) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+          throw "1201 Program Alarm - Executive Overflow - No Core Sets.";
+#endif
+        }
+        break;
+    }
+  } else if (selector->has_begin()) {
     EXPECT_THAT(session, IsNull());
     bool fail_with_throw = false;
-    if (selector.begin().has_read_only() &&
-        selector.begin().read_only().has_read_timestamp()) {
-      auto const& proto = selector.begin().read_only().read_timestamp();
+    if (selector->begin().has_read_only() &&
+        selector->begin().read_only().has_read_timestamp()) {
+      auto const& proto = selector->begin().read_only().read_timestamp();
       if (internal::TimestampFromProto(proto) == read_timestamp_ && seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
-          case Mode::kReadSucceeds:
-            if (valid_visits_ == 0) ++valid_visits_;  // first visit valid
+          case Mode::kReadSucceeds:  // first visit valid
+            if (valid_visits_ == 0) ++valid_visits_;
             break;
-          case Mode::kReadFails:
-            ++valid_visits_;  // always `begin`, always valid
+          case Mode::kReadFails:  // visits always valid
+            ++valid_visits_;
             fail_with_throw = (valid_visits_ % 2 == 0);
             break;
         }
@@ -130,20 +151,27 @@ ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
       }
     }
     switch (mode_) {
-      case Mode::kReadSucceeds:  // `begin` -> `id`, calls now parallelized
+      case Mode::kReadSucceeds:
+        // `begin` -> `id`, calls now parallelized
         session = internal::MakeDissociatedSessionHolder(session_id_);
-        selector.set_id(txn_id_);
+        selector->set_id(txn_id_);
         break;
-      case Mode::kReadFails:  // leave as `begin`, calls stay serialized
+      case Mode::kReadFails:
+        if (txn_status_.ok()) {
+          // leave as `begin`, calls stay serialized
+        } else {
+          // `begin` -> `error`, calls now parallelized
+          selector = txn_status_;
+        }
         if (fail_with_throw) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-          throw "1202 Program Alarm";
+          throw "1202 Program Alarm - Executive Overflow - No VAC Areas.";
 #endif
         }
         break;
     }
   } else {
-    if (selector.id() == txn_id_) {
+    if (selector->id() == txn_id_) {
       EXPECT_THAT(session, NotNull());
       EXPECT_EQ(session_id_, session->session_name());
       std::unique_lock<std::mutex> lock(mu_);
@@ -200,17 +228,24 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
 }
 
 TEST(InternalTransaction, ReadSucceeds) {
-  Client client(Client::Mode::kReadSucceeds);
-  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess-0", "tx-0"));
-  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess-1", "tx-1"));
-  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess-2", "tx-2"));
+  Client client;
+  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess0", "txn0"));
+  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess1", "txn1"));
+  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess2", "txn2"));
 }
 
-TEST(InternalTransaction, ReadFails) {
-  Client client(Client::Mode::kReadFails);
-  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess-0", "tx-0"));
-  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess-1", "tx-1"));
-  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess-2", "tx-2"));
+TEST(InternalTransaction, ReadFailsTxnBegin) {
+  Client client{Status()};  // OK
+  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess0", "txn0"));
+  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess1", "txn1"));
+  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess2", "txn2"));
+}
+
+TEST(InternalTransaction, ReadFailsTxnBad) {
+  Client client{Status(StatusCode::kInternal, "Bad transaction")};
+  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess0", "txn0"));
+  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess1", "txn1"));
+  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess2", "txn2"));
 }
 
 }  // namespace
