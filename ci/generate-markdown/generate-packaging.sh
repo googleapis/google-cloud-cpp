@@ -22,7 +22,7 @@ cat <<'END_OF_PREAMBLE'
 # Packaging `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
-<!-- Make changes in ci/test-markdown/generate-packaging.sh -->
+<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
 This document is intended for package maintainers or anyone else who might like
 to "install" the `google-cloud-cpp` libraries.
@@ -47,7 +47,7 @@ tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 # Installing `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
-<!-- Make changes in ci/test-markdown/generate-packaging.sh -->
+<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
 By default `google-cloud-cpp` libraries download and compile all their
 dependencies ([see below](#required-libraries) for a complete list). This makes
