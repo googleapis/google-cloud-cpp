@@ -133,9 +133,10 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       auto i = std::find(ids->begin(), ids->end(), m.message().message_id());
       EXPECT_STATUS_OK(ack(m.ack_id()));
       if (i != ids->end()) {
-        EXPECT_NE(i, ids->end());
-      } else {
         ids->erase(i);
+      } else {
+        FAIL() << "Cannot find message id=" << m.message().message_id()
+               << " to erase";
       }
     }
   }
