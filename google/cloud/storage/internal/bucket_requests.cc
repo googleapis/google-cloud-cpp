@@ -108,6 +108,15 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
           google::cloud::internal::ParseRfc3339(
               condition.value("noncurrentTimeBefore", "")));
     }
+    if (condition.count("daysSinceCustomTime") != 0) {
+      result.condition_.days_since_custom_time.emplace(
+          internal::ParseIntField(condition, "daysSinceCustomTime"));
+    }
+    if (condition.count("customTimeBefore") != 0) {
+      result.condition_.custom_time_before.emplace(
+          google::cloud::internal::ParseRfc3339(
+              condition.value("customTimeBefore", "")));
+    }
   }
   return result;
 }

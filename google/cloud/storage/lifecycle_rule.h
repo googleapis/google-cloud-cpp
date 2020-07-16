@@ -83,6 +83,8 @@ struct LifecycleRuleCondition {
   google::cloud::optional<std::int32_t> num_newer_versions;
   optional<std::int32_t> days_since_noncurrent_time;
   optional<std::chrono::system_clock::time_point> noncurrent_time_before;
+  optional<std::int32_t> days_since_custom_time;
+  optional<std::chrono::system_clock::time_point> custom_time_before;
 };
 
 inline bool operator==(LifecycleRuleCondition const& lhs,
@@ -92,17 +94,21 @@ inline bool operator==(LifecycleRuleCondition const& lhs,
          lhs.matches_storage_class == rhs.matches_storage_class &&
          lhs.num_newer_versions == rhs.num_newer_versions &&
          lhs.days_since_noncurrent_time == rhs.days_since_noncurrent_time &&
-         lhs.noncurrent_time_before == rhs.noncurrent_time_before;
+         lhs.noncurrent_time_before == rhs.noncurrent_time_before &&
+         lhs.days_since_custom_time == rhs.days_since_custom_time &&
+         lhs.custom_time_before == rhs.custom_time_before;
 }
 
 inline bool operator<(LifecycleRuleCondition const& lhs,
                       LifecycleRuleCondition const& rhs) {
   return std::tie(lhs.age, lhs.created_before, lhs.is_live,
                   lhs.matches_storage_class, lhs.num_newer_versions,
-                  lhs.days_since_noncurrent_time, lhs.noncurrent_time_before) <
+                  lhs.days_since_noncurrent_time, lhs.noncurrent_time_before,
+                  lhs.days_since_custom_time, lhs.custom_time_before) <
          std::tie(rhs.age, rhs.created_before, rhs.is_live,
                   rhs.matches_storage_class, rhs.num_newer_versions,
-                  rhs.days_since_noncurrent_time, rhs.noncurrent_time_before);
+                  rhs.days_since_noncurrent_time, rhs.noncurrent_time_before,
+                  rhs.days_since_custom_time, rhs.custom_time_before);
 }
 
 inline bool operator!=(LifecycleRuleCondition const& lhs,
@@ -267,6 +273,23 @@ class LifecycleRule {
       std::string const& timestamp) {
     return NoncurrentTimeBefore(
         google::cloud::internal::ParseRfc3339(timestamp));
+  }
+
+  static LifecycleRuleCondition DaysSinceCustomTime(std::int32_t days) {
+    LifecycleRuleCondition result;
+    result.days_since_custom_time = days;
+    return result;
+  }
+
+  static LifecycleRuleCondition CustomTimeBefore(
+      std::chrono::system_clock::time_point tp) {
+    LifecycleRuleCondition result;
+    result.custom_time_before = tp;
+    return result;
+  }
+
+  static LifecycleRuleCondition CustomTimeBefore(std::string const& timestamp) {
+    return CustomTimeBefore(google::cloud::internal::ParseRfc3339(timestamp));
   }
   //@}
 

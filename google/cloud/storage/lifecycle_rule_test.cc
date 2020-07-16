@@ -31,7 +31,9 @@ LifecycleRule CreateLifecycleRuleForTest() {
         "matchesStorageClass": [ "STANDARD" ],
         "numNewerVersions": 7,
         "daysSinceNoncurrentTime": 3,
-        "noncurrentTimeBefore": "2020-06-15T12:00:00Z"
+        "noncurrentTimeBefore": "2020-06-15T12:00:00Z",
+        "daysSinceCustomTime": 30,
+        "customTimeBefore": "2020-07-15T12:01:00Z"
       },
       "action": {
         "type": "SetStorageClass",
@@ -282,6 +284,39 @@ TEST(LifecycleRuleTest, NoncurrentTimeBefore) {
   EXPECT_NE(c1, empty);
 }
 
+/// @test Verify that LifecycleRule::DaysSinceCustomTime() works as expected.
+TEST(LifecycleRuleTest, DaysSinceCustomTime) {
+  auto const c1 = LifecycleRule::DaysSinceCustomTime(3);
+  ASSERT_TRUE(c1.days_since_custom_time.has_value());
+  EXPECT_EQ(3, c1.days_since_custom_time.value());
+  EXPECT_EQ(c1, c1);
+  auto const c2 = LifecycleRule::DaysSinceCustomTime(4);
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
+/// @test Verify that LifecycleRule::NoncurrentTimeBefore() works as expected.
+TEST(LifecycleRuleTest, CustomTimeBefore) {
+  auto tp1 = google::cloud::internal::ParseRfc3339("2020-06-15T12:00:00Z");
+  auto const c1 = LifecycleRule::CustomTimeBefore("2020-06-15T12:00:00Z");
+  ASSERT_TRUE(c1.custom_time_before.has_value());
+  EXPECT_EQ(tp1, c1.custom_time_before.value());
+  EXPECT_EQ(c1, c1);
+  auto const tp2 = tp1 + std::chrono::minutes(15);
+  auto const c2 = LifecycleRule::CustomTimeBefore(tp2);
+  ASSERT_TRUE(c2.custom_time_before.has_value());
+  EXPECT_EQ(tp2, c2.custom_time_before.value());
+  EXPECT_EQ(c2, c2);
+
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
 TEST(LifecycleRuleTest, ConditionConjunctionAge) {
   auto c1 = LifecycleRule::MaxAge(7);
@@ -382,6 +417,27 @@ TEST(LifecycleRuleTest, ConditionConjunctionNoncurrentTimeBefore) {
 }
 
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionDaysSinceCustomTime) {
+  auto const c1 = LifecycleRule::DaysSinceCustomTime(7);
+  auto const c2 = LifecycleRule::DaysSinceCustomTime(42);
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.days_since_custom_time.has_value());
+  EXPECT_EQ(42, *condition.days_since_custom_time);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionCustomTimeBefore) {
+  auto const tp1 =
+      google::cloud::internal::ParseRfc3339("2020-05-15T12:00:00Z");
+  auto const tp2 = tp1 + std::chrono::hours(24);
+  auto const c1 = LifecycleRule::CustomTimeBefore(tp1);
+  auto const c2 = LifecycleRule::CustomTimeBefore(tp2);
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.custom_time_before.has_value());
+  EXPECT_EQ(tp1, *condition.custom_time_before);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
 TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
   auto c1 = LifecycleRule::NumNewerVersions(7);
   auto c2 = LifecycleRule::MaxAge(42);
@@ -414,7 +470,9 @@ TEST(LifecycleRuleTest, Parsing) {
           LifecycleRule::MatchesStorageClassStandard(),
           LifecycleRule::NumNewerVersions(7),
           LifecycleRule::DaysSinceNoncurrentTime(3),
-          LifecycleRule::NoncurrentTimeBefore("2020-06-15T12:00:00Z"));
+          LifecycleRule::NoncurrentTimeBefore("2020-06-15T12:00:00Z"),
+          LifecycleRule::DaysSinceCustomTime(30),
+          LifecycleRule::CustomTimeBefore("2020-07-15T12:01:00Z"));
   EXPECT_EQ(expected_condition, actual.condition());
 
   LifecycleRuleAction expected_action =
@@ -430,6 +488,8 @@ TEST(LifecycleRuleTest, LifecycleRuleStream) {
   auto actual = os.str();
   EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
   EXPECT_THAT(actual, ::testing::HasSubstr("NEARLINE"));
+  EXPECT_THAT(actual, ::testing::HasSubstr("days_since_custom_time="));
+  EXPECT_THAT(actual, ::testing::HasSubstr("custom_time_before="));
 }
 
 }  // namespace
