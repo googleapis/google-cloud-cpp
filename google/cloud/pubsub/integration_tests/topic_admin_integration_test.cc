@@ -51,7 +51,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
 
   auto publisher =
-      TopicAdminClient(MakePublisherConnection(ConnectionOptions{}));
+      TopicAdminClient(MakeTopicAdminConnection(ConnectionOptions{}));
 
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
@@ -70,7 +70,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
 
 TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(MakePublisherConnection());
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
   auto create_response = publisher.CreateTopic(
       CreateTopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
@@ -78,7 +78,7 @@ TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
 
 TEST(TopicAdminIntegrationTest, ListTopicsFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(MakePublisherConnection());
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
   auto list = publisher.ListTopics("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
@@ -87,7 +87,7 @@ TEST(TopicAdminIntegrationTest, ListTopicsFailure) {
 
 TEST(TopicAdminIntegrationTest, DeleteTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(MakePublisherConnection());
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
   auto delete_response =
       publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());

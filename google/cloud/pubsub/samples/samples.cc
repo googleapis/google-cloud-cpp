@@ -157,9 +157,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto subscription_id = RandomSubscriptionId(generator);
 
   google::cloud::pubsub::TopicAdminClient publisher_client(
-      google::cloud::pubsub::MakePublisherConnection());
+      google::cloud::pubsub::MakeTopicAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscriber_client(
-      google::cloud::pubsub::MakeSubscriberConnection());
+      google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
   std::cout << "\nRunning CreateTopic() sample\n";
   CreateTopic(publisher_client, {project_id, topic_id});

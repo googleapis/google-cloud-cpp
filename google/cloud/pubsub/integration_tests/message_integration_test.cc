@@ -40,8 +40,9 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   Subscription subscription(project_id,
                             pubsub_testing::RandomSubscriptionId(generator));
 
-  auto topic_admin = TopicAdminClient(MakePublisherConnection());
-  auto subscription_admin = SubscriptionAdminClient(MakeSubscriberConnection());
+  auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
+  auto subscription_admin =
+      SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
   auto topic_metadata = topic_admin.CreateTopic(CreateTopicBuilder(topic));
   ASSERT_STATUS_OK(topic_metadata);

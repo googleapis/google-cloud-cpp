@@ -52,7 +52,7 @@ using ListTopicsRange = google::cloud::internal::PaginationRange<
  * Mock object) in a `PublisherClient` object for use in their own tests.
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
- * service, see `MakePublisherConnection()`.
+ * service, see `MakeTopicAdminConnection()`.
  */
 class TopicAdminConnection {
  public:
@@ -106,7 +106,7 @@ class TopicAdminConnection {
  * @param options (optional) configure the `PublisherConnection` created by
  *     this function.
  */
-std::shared_ptr<TopicAdminConnection> MakePublisherConnection(
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

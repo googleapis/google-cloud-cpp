@@ -37,7 +37,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * each `PublisherClient` object must be created with a
  * `std::shared_ptr<PublisherConnection>`, which itself is relatively
  * expensive to create. Therefore, connection instances should be shared when
- * possible. See the `MakePublisherConnection()` function and the
+ * possible. See the `MakeTopicAdminConnection()` function and the
  * `PublisherConnection` interface for more details.
  *
  * @par Thread Safety
