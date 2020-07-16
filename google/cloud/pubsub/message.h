@@ -1,0 +1,211 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MESSAGE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MESSAGE_H
+
+#include "google/cloud/pubsub/version.h"
+#include <google/pubsub/v1/pubsub.pb.h>
+#include <iosfwd>
+#include <map>
+#include <vector>
+
+namespace google {
+namespace cloud {
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+class Message;
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+::google::pubsub::v1::PubsubMessage const& ToProto(pubsub::Message const&);
+::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&&);
+pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+class MessageBuilder;
+
+/**
+ * The C++ representation for a Cloud Pub/Sub messages.
+ *
+ * Cloud Pub/Sub applications communicate to each other using messages. Note
+ * that messages must provide at least some data or some attributes. Use
+ * `MessageBuilder` to create instances of this class.
+ */
+class Message {
+ public:
+  /// @name accessors
+  //@{
+  std::string const& data() const& { return proto_.data(); }
+  std::string&& data() && { return std::move(*proto_.mutable_data()); }
+  std::string const& message_id() const { return proto_.message_id(); }
+  std::string const& ordering_key() const { return proto_.ordering_key(); }
+  std::chrono::system_clock::time_point publish_time() const;
+  std::map<std::string, std::string> attributes() const {
+    std::map<std::string, std::string> r;
+    for (auto const& kv : proto_.attributes()) {
+      r.emplace(kv.first, kv.second);
+    }
+    return r;
+  }
+  //@}
+
+  /// @name Copy and move
+  //@{
+  Message(Message const&) = default;
+  Message& operator=(Message const&) = default;
+  Message(Message&&) = default;
+  Message& operator=(Message&&) = default;
+  //@}
+
+  /// @name Equality operators
+  //@{
+  friend bool operator==(Message const& a, Message const& b);
+  friend bool operator!=(Message const& a, Message const& b) {
+    return !(a == b);
+  }
+  //@}
+
+  /// Output in protobuf format, this is intended for debugging
+  friend std::ostream& operator<<(std::ostream& os, Message const& rhs);
+
+ private:
+  friend Message pubsub_internal::FromProto(
+      ::google::pubsub::v1::PubsubMessage m);
+  friend ::google::pubsub::v1::PubsubMessage const& pubsub_internal::ToProto(
+      Message const& m);
+  friend ::google::pubsub::v1::PubsubMessage&& pubsub_internal::ToProto(
+      Message&& m);
+  friend class MessageBuilder;
+
+  Message() = default;
+
+  explicit Message(::google::pubsub::v1::PubsubMessage m)
+      : proto_(std::move(m)) {}
+
+  google::pubsub::v1::PubsubMessage proto_;
+};
+
+/**
+ * Constructs `Message` objects.
+ */
+class MessageBuilder {
+ public:
+  MessageBuilder() = default;
+
+  /// Create a new message.
+  Message Build() && { return Message(std::move(proto_)); }
+
+  /// Create a message with the data in @p data
+  MessageBuilder& SetData(std::string data) & {
+    proto_.set_data(std::move(data));
+    return *this;
+  }
+
+  /// Create a message with the data in @p data
+  MessageBuilder&& SetData(std::string data) && {
+    SetData(std::move(data));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes from the range [@p begin, @p end)
+  template <typename Iterator>
+  MessageBuilder& SetAttributes(Iterator begin, Iterator end) & {
+    google::protobuf::Map<std::string, std::string> tmp;
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    for (auto kv = begin; kv != end; ++kv) {
+      using std::get;
+      tmp.insert(value_type(get<0>(*kv), get<1>(*kv)));
+    }
+    proto_.mutable_attributes()->swap(tmp);
+    return *this;
+  }
+
+  /// Create a message with the attributes from the range [@p begin, @p end)
+  template <typename Iterator>
+  MessageBuilder&& SetAttributes(Iterator begin, Iterator end) && {
+    SetAttributes(std::move(begin), std::move(end));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes in @p v
+  MessageBuilder& SetAttributes(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      std::vector<std::pair<std::string, std::string>> v) & {
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    google::protobuf::Map<std::string, std::string> tmp;
+    for (auto& kv : v) {
+      tmp.insert(value_type(std::move(kv.first), std::move(kv.second)));
+    }
+    proto_.mutable_attributes()->swap(tmp);
+    return *this;
+  }
+
+  /// Create a message with the attributes in @p v
+  MessageBuilder&& SetAttributes(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      std::vector<std::pair<std::string, std::string>> v) && {
+    SetAttributes(std::move(v));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes in @p v
+  template <typename Pair>
+  MessageBuilder& SetAttributes(std::vector<Pair> v) & {
+    return SetAttributes(v.begin(), v.end());
+  }
+
+  /// Create a message with the attributes in @p v
+  template <typename Pair>
+  MessageBuilder&& SetAttributes(std::vector<Pair> v) && {
+    SetAttributes(std::move(v));
+    return std::move(*this);
+  }
+
+ private:
+  google::pubsub::v1::PubsubMessage proto_;
+};
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline ::google::pubsub::v1::PubsubMessage const& ToProto(
+    pubsub::Message const& m) {
+  return m.proto_;
+}
+
+inline ::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&& m) {
+  return std::move(m.proto_);
+}
+
+inline pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage m) {
+  return pubsub::Message(std::move(m));
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MESSAGE_H
