@@ -130,12 +130,13 @@ TEST(MessageIntegrationTest, PublishPullAck) {
 
     for (auto const& m : *messages) {
       SCOPED_TRACE("Search for message " + m.DebugString());
-      auto i = std::find_if(
-          ids->begin(), ids->end(),
-          [&m](std::string const& x) { return m.message().message_id() == x; });
+      auto i = std::find(ids->begin(), ids->end(), m.message().message_id());
       EXPECT_STATUS_OK(ack(m.ack_id()));
-      EXPECT_NE(i, ids->end());
-      ids->erase(i);
+      if (i != ids->end()) {
+        EXPECT_NE(i, ids->end());
+      } else {
+        ids->erase(i);
+      }
     }
   }
 
