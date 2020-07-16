@@ -54,8 +54,9 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   Subscription subscription(project_id,
                             pubsub_testing::RandomSubscriptionId(generator));
 
-  auto publisher_client = TopicAdminClient(MakePublisherConnection());
-  auto client = SubscriptionAdminClient(pubsub::MakeSubscriberConnection());
+  auto publisher_client = TopicAdminClient(MakeTopicAdminConnection());
+  auto client =
+      SubscriptionAdminClient(pubsub::MakeSubscriptionAdminConnection());
 
   EXPECT_THAT(subscription_names(client, project_id),
               Not(Contains(subscription.FullName())));
@@ -88,7 +89,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto create_response = client.CreateSubscription(CreateSubscriptionBuilder(
       Subscription("--invalid-project--", "--invalid-subscription--"),
       Topic("--invalid-project--", "--invalid-topic--")));
@@ -98,7 +99,7 @@ TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
 TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto list = client.ListSubscriptions("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
@@ -108,7 +109,7 @@ TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
 TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto client = SubscriptionAdminClient(MakeSubscriberConnection());
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto delete_response = client.DeleteSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(delete_response.ok());

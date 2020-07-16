@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) try {
             << google::cloud::version_string() << "\n";
 
   auto publisher = google::cloud::pubsub::TopicAdminClient(
-      google::cloud::pubsub::MakePublisherConnection());
+      google::cloud::pubsub::MakeTopicAdminConnection());
   std::cout << "Available topics in project " << project_id << ":\n";
   for (auto const& topic : publisher.ListTopics(project_id)) {
     if (!topic) throw std::runtime_error(topic.status().message());

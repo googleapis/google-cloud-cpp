@@ -70,7 +70,7 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
 
 TopicAdminConnection::~TopicAdminConnection() = default;
 
-std::shared_ptr<TopicAdminConnection> MakePublisherConnection(
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);

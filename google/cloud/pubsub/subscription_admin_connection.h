@@ -54,7 +54,7 @@ using ListSubscriptionsRange = google::cloud::internal::PaginationRange<
  * use in their own tests.
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
- * service, see `MakeSubscriberConnection()`.
+ * service, see `MakeSubscriptionAdminConnection()`.
  */
 class SubscriptionAdminConnection {
  public:
@@ -108,7 +108,7 @@ class SubscriptionAdminConnection {
  * @param options (optional) configure the `SubscriberConnection` created by
  *     this function.
  */
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriberConnection(
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     ConnectionOptions const& options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

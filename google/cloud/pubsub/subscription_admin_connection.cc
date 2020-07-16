@@ -70,7 +70,7 @@ class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
 
 SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
 
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriberConnection(
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0);

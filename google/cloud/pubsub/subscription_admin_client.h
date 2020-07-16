@@ -37,7 +37,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * However, each `SubscriberClient` object must be created with a
  * `std::shared_ptr<SubscriberConnection>`, which itself is relatively
  * expensive to create. Therefore, connection instances should be shared when
- * possible. See the `MakeSubscriberConnection()` function and the
+ * possible. See the `MakeSubscriptionAdminConnection()` function and the
  * `SubscriberConnection` interface for more details.
  *
  * @par Thread Safety
