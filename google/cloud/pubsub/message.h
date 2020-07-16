@@ -39,6 +39,7 @@ pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
 
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+class MessageBuilder;
 
 /**
  * The C++ representation for a Cloud Pub/Sub messages.
@@ -47,76 +48,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * that messages must provide at least some data or some attributes. The `From*`
  * factory functions are designed to encourage applications to always create
  * valid messages.
- *
- * A #Message is immutable other than through move copy or assignment. Once a
- * message is created its properties cannot be changed, though it is possible to
- * create new messages by using the `Set*()` factory functions.
  */
 class Message {
  public:
-  /// Change the payload in @p m to @p data
-  static Message SetData(Message m, std::string data) {
-    m.proto_.set_data(std::move(data));
-    return m;
-  }
-
-  /// Change the attributes in @p m to those in the range [@p begin, @p end)
-  template <typename Iterator>
-  static Message SetAttributes(Message m, Iterator begin, Iterator end) {
-    using value_type =
-        google::protobuf::Map<std::string, std::string>::value_type;
-    m.proto_.clear_attributes();
-    for (auto kv = begin; kv != end; ++kv) {
-      using std::get;
-      m.proto_.mutable_attributes()->insert(
-          value_type(get<0>(*kv), get<1>(*kv)));
-    }
-    return m;
-  }
-
-  /// Change the attributes in @p m to the values in @p v
-  static Message SetAttributes(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param)
-      Message m, std::vector<std::pair<std::string, std::string>> v) {
-    using value_type =
-        google::protobuf::Map<std::string, std::string>::value_type;
-    m.proto_.clear_attributes();
-    for (auto& kv : v) {
-      m.proto_.mutable_attributes()->insert(
-          value_type(std::move(kv.first), std::move(kv.second)));
-    }
-    return m;
-  }
-
-  /// Change the attributes in @p m to the values in @p v
-  template <typename Pair>
-  static Message SetAttributes(Message m, std::vector<Pair> v) {
-    return SetAttributes(std::move(m), v.begin(), v.end());
-  }
-
-  /// Create a new message with @p data as its payload
-  static Message FromData(std::string data) {
-    return SetData(Message{}, std::move(data));
-  }
-
-  /// Create a new message with the attributes in the range [@p begin, @p end)
-  template <typename Iterator>
-  static Message FromAttributes(Iterator begin, Iterator end) {
-    return SetAttributes(Message{}, begin, end);
-  }
-
-  /// Create a new message with the attributes in @p v
-  static Message FromAttributes(
-      std::vector<std::pair<std::string, std::string>> v) {
-    return SetAttributes(Message{}, std::move(v));
-  }
-
-  /// Create a new message with the attributes in @p v
-  template <typename Pair>
-  static Message FromAttributes(std::vector<Pair> v) {
-    return SetAttributes(Message{}, std::move(v));
-  }
-
   /// @name accessors
   //@{
   std::string const& data() const& { return proto_.data(); }
@@ -153,17 +87,101 @@ class Message {
   friend std::ostream& operator<<(std::ostream& os, Message const& rhs);
 
  private:
-  Message() = default;
-
-  explicit Message(::google::pubsub::v1::PubsubMessage m)
-      : proto_(std::move(m)) {}
-
   friend Message pubsub_internal::FromProto(
       ::google::pubsub::v1::PubsubMessage m);
   friend ::google::pubsub::v1::PubsubMessage const& pubsub_internal::ToProto(
       Message const& m);
   friend ::google::pubsub::v1::PubsubMessage&& pubsub_internal::ToProto(
       Message&& m);
+  friend class MessageBuilder;
+
+  Message() = default;
+
+  explicit Message(::google::pubsub::v1::PubsubMessage m)
+      : proto_(std::move(m)) {}
+
+  google::pubsub::v1::PubsubMessage proto_;
+};
+
+/**
+ * Constructs `Message` objects.
+ */
+class MessageBuilder {
+ public:
+  MessageBuilder() = default;
+
+  /// Create a new message.
+  Message Build() && { return Message(std::move(proto_)); }
+
+  /// Create a message with the data in @p data
+  MessageBuilder& SetData(std::string data) & {
+    proto_.set_data(std::move(data));
+    return *this;
+  }
+
+  /// Create a message with the data in @p data
+  MessageBuilder&& SetData(std::string data) && {
+    (*this).SetData(std::move(data));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes from the range [@p begin, @p end)
+  template <typename Iterator>
+  MessageBuilder& SetAttributes(Iterator begin, Iterator end) & {
+    google::protobuf::Map<std::string, std::string> tmp;
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    for (auto kv = begin; kv != end; ++kv) {
+      using std::get;
+      tmp.insert(value_type(get<0>(*kv), get<1>(*kv)));
+    }
+    proto_.mutable_attributes()->swap(tmp);
+    return *this;
+  }
+
+  /// Create a message with the attributes from the range [@p begin, @p end)
+  template <typename Iterator>
+  MessageBuilder&& SetAttributes(Iterator begin, Iterator end) && {
+    SetAttributes(std::move(begin), std::move(end));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes in @p v
+  MessageBuilder& SetAttributes(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      std::vector<std::pair<std::string, std::string>> v) & {
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    google::protobuf::Map<std::string, std::string> tmp;
+    for (auto& kv : v) {
+      tmp.insert(value_type(std::move(kv.first), std::move(kv.second)));
+    }
+    proto_.mutable_attributes()->swap(tmp);
+    return *this;
+  }
+
+  /// Create a message with the attributes in @p v
+  MessageBuilder&& SetAttributes(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      std::vector<std::pair<std::string, std::string>> v) && {
+    SetAttributes(std::move(v));
+    return std::move(*this);
+  }
+
+  /// Create a message with the attributes in @p v
+  template <typename Pair>
+  MessageBuilder& SetAttributes(std::vector<Pair> v) & {
+    return SetAttributes(v.begin(), v.end());
+  }
+
+  /// Create a message with the attributes in @p v
+  template <typename Pair>
+  MessageBuilder&& SetAttributes(std::vector<Pair> v) && {
+    SetAttributes(std::move(v));
+    return std::move(*this);
+  }
+
+ private:
   google::pubsub::v1::PubsubMessage proto_;
 };
 

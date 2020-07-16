@@ -29,14 +29,20 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAre;
 
-TEST(Message, FromData) {
-  auto const m0 = Message::FromData("contents-0");
+TEST(Message, Empty) {
+  auto const m = MessageBuilder{}.Build();
+  EXPECT_TRUE(m.data().empty());
+  EXPECT_TRUE(m.attributes().empty());
+}
+
+TEST(Message, SetDataSimple) {
+  auto const m0 = MessageBuilder{}.SetData("contents-0").Build();
   EXPECT_EQ("contents-0", m0.data());
   EXPECT_TRUE(m0.attributes().empty());
   EXPECT_TRUE(m0.ordering_key().empty());
   EXPECT_TRUE(m0.message_id().empty());
 
-  auto const m1 = Message::FromData("contents-1");
+  auto const m1 = MessageBuilder{}.SetData("contents-1").Build();
   EXPECT_EQ("contents-1", m1.data());
 
   EXPECT_NE(m0, m1);
@@ -46,11 +52,13 @@ TEST(Message, FromData) {
   EXPECT_EQ(m0, move);
 }
 
-TEST(Message, FromAttributesIterator) {
+TEST(Message, SetAttributesIteratorSimple) {
   std::map<std::string, std::string> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
 
-  auto const m0 = Message::FromAttributes(attributes.begin(), attributes.end());
+  auto const m0 = MessageBuilder{}
+                      .SetAttributes(attributes.begin(), attributes.end())
+                      .Build();
   EXPECT_TRUE(m0.data().empty());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -59,8 +67,9 @@ TEST(Message, FromAttributesIterator) {
   EXPECT_TRUE(m0.message_id().empty());
 }
 
-TEST(Message, FromAttributesVectorStdPair) {
-  auto const m0 = Message::FromAttributes({{"k0", "v0"}, {"k1", "v1"}});
+TEST(Message, SetAttributesVectorStdPairSimple) {
+  auto const m0 =
+      MessageBuilder{}.SetAttributes({{"k0", "v0"}, {"k1", "v1"}}).Build();
   EXPECT_TRUE(m0.data().empty());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k0", "v0"),
@@ -69,26 +78,29 @@ TEST(Message, FromAttributesVectorStdPair) {
   EXPECT_TRUE(m0.message_id().empty());
 }
 
-TEST(Message, FromAttributesVectorStdTuple) {
+TEST(Message, SetAttributesVectorStdTupleSimple) {
   using tuple = std::tuple<std::string, std::string>;
   std::vector<tuple> const attributes({tuple("k1", "v1"), tuple("k2", "v2")});
-  auto const m0 = Message::FromAttributes(attributes);
+  auto const m0 = MessageBuilder{}.SetAttributes(attributes).Build();
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
                                    std::make_pair("k2", "v2")));
 }
 
 TEST(Message, SetData) {
-  auto const m0 = Message::SetData(Message::FromData("original"), "changed");
+  auto const m0 =
+      MessageBuilder{}.SetData("original").SetData("changed").Build();
   EXPECT_EQ("changed", m0.data());
 }
 
 TEST(Message, SetAttributesIterator) {
   std::map<std::string, std::string> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
-  auto const m0 = Message::SetAttributes(
-      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
-      attributes.begin(), attributes.end());
+  auto const m0 = MessageBuilder{}
+                      .SetData("original")
+                      .SetAttributes({{"k0", "v0"}})
+                      .SetAttributes(attributes.begin(), attributes.end())
+                      .Build();
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -98,9 +110,11 @@ TEST(Message, SetAttributesIterator) {
 TEST(Message, SetAttributesVectorStdPair) {
   std::vector<std::pair<std::string, std::string>> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
-  auto const m0 = Message::SetAttributes(
-      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
-      attributes);
+  auto const m0 = MessageBuilder{}
+                      .SetData("original")
+                      .SetAttributes({{"k0", "v0"}})
+                      .SetAttributes(attributes)
+                      .Build();
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -110,9 +124,11 @@ TEST(Message, SetAttributesVectorStdPair) {
 TEST(Message, SetAttributesVectorStdTuple) {
   using tuple = std::tuple<std::string, std::string>;
   std::vector<tuple> const attributes({tuple("k1", "v1"), tuple("k2", "v2")});
-  auto const m0 = Message::SetAttributes(
-      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
-      attributes);
+  auto const m0 = MessageBuilder{}
+                      .SetData("original")
+                      .SetAttributes({{"k0", "v0"}})
+                      .SetAttributes(attributes)
+                      .Build();
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -120,7 +136,7 @@ TEST(Message, SetAttributesVectorStdTuple) {
 }
 
 TEST(Message, DataMove) {
-  auto m0 = Message::FromData("contents-0");
+  auto m0 = MessageBuilder{}.SetData("contents-0").Build();
   std::string const d = std::move(m0).data();
   EXPECT_EQ("contents-0", d);
 }
@@ -158,8 +174,10 @@ TEST(Message, FromProto) {
 }
 
 TEST(Message, OutputStream) {
-  Message const m = Message::SetAttributes(Message::FromData("test-only-data"),
-                                           {{"k0", "v0"}, {"k1", "v1"}});
+  Message const m = MessageBuilder{}
+                        .SetAttributes({{"k0", "v0"}, {"k1", "v1"}})
+                        .SetData("test-only-data")
+                        .Build();
   std::ostringstream os;
   os << m;
   auto const actual = std::move(os).str();
