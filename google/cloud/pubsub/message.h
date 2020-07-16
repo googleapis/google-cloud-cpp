@@ -19,7 +19,6 @@
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <iosfwd>
 #include <map>
-#include <tuple>
 #include <vector>
 
 namespace google {
@@ -64,21 +63,25 @@ class Message {
   /// Change the attributes in @p m to those in the range [@p begin, @p end)
   template <typename Iterator>
   static Message SetAttributes(Message m, Iterator begin, Iterator end) {
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
     m.proto_.clear_attributes();
     for (auto kv = begin; kv != end; ++kv) {
       using std::get;
-      (*m.proto_.mutable_attributes())[get<0>(*kv)] = get<1>(*kv);
+      m.proto_.mutable_attributes()->insert(
+          value_type(get<0>(*kv), get<1>(*kv)));
     }
     return m;
   }
 
   /// Change the attributes in @p m to the values in @p v
   static Message SetAttributes(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
       Message m, std::vector<std::pair<std::string, std::string>> v) {
     using value_type =
         google::protobuf::Map<std::string, std::string>::value_type;
     m.proto_.clear_attributes();
-    for (auto& kv : std::move(v)) {
+    for (auto& kv : v) {
       m.proto_.mutable_attributes()->insert(
           value_type(std::move(kv.first), std::move(kv.second)));
     }
@@ -152,7 +155,8 @@ class Message {
  private:
   Message() = default;
 
-  Message(::google::pubsub::v1::PubsubMessage m) : proto_(std::move(m)) {}
+  explicit Message(::google::pubsub::v1::PubsubMessage m)
+      : proto_(std::move(m)) {}
 
   friend Message pubsub_internal::FromProto(
       ::google::pubsub::v1::PubsubMessage m);
