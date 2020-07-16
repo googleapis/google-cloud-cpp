@@ -64,6 +64,7 @@ class Message {
   /// Change the attributes in @p m to those in the range [@p begin, @p end)
   template <typename Iterator>
   static Message SetAttributes(Message m, Iterator begin, Iterator end) {
+    m.proto_.clear_attributes();
     for (auto kv = begin; kv != end; ++kv) {
       using std::get;
       (*m.proto_.mutable_attributes())[get<0>(*kv)] = get<1>(*kv);
@@ -76,7 +77,8 @@ class Message {
       Message m, std::vector<std::pair<std::string, std::string>> v) {
     using value_type =
         google::protobuf::Map<std::string, std::string>::value_type;
-    for (auto& kv : v) {
+    m.proto_.clear_attributes();
+    for (auto& kv : std::move(v)) {
       m.proto_.mutable_attributes()->insert(
           value_type(std::move(kv.first), std::move(kv.second)));
     }

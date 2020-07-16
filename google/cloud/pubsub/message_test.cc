@@ -85,8 +85,9 @@ TEST(Message, SetData) {
 TEST(Message, SetAttributesIterator) {
   std::map<std::string, std::string> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
-  auto const m0 = Message::SetAttributes(Message::FromData("original"),
-                                         attributes.begin(), attributes.end());
+  auto const m0 = Message::SetAttributes(
+      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
+      attributes.begin(), attributes.end());
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -96,8 +97,9 @@ TEST(Message, SetAttributesIterator) {
 TEST(Message, SetAttributesVectorStdPair) {
   std::vector<std::pair<std::string, std::string>> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
-  auto const m0 =
-      Message::SetAttributes(Message::FromData("original"), attributes);
+  auto const m0 = Message::SetAttributes(
+      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
+      attributes);
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
@@ -107,8 +109,9 @@ TEST(Message, SetAttributesVectorStdPair) {
 TEST(Message, SetAttributesVectorStdTuple) {
   std::vector<std::tuple<std::string, std::string>> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
-  auto const m0 =
-      Message::SetAttributes(Message::FromData("original"), attributes);
+  auto const m0 = Message::SetAttributes(
+      Message::SetData(Message::FromAttributes({{"k0", "v0"}}), "original"),
+      attributes);
   EXPECT_EQ("original", m0.data());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
