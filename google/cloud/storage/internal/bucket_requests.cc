@@ -120,6 +120,20 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       }
       result.condition_.noncurrent_time_before.emplace(std::move(day));
     }
+    if (condition.count("daysSinceCustomTime") != 0) {
+      result.condition_.days_since_custom_time.emplace(
+          internal::ParseIntField(condition, "daysSinceCustomTime"));
+    }
+    if (condition.count("customTimeBefore") != 0) {
+      auto const date = condition.value("customTimeBefore", "");
+      absl::CivilDay day;
+      if (!absl::ParseCivilTime(date, &day)) {
+        return Status(
+            StatusCode::kInvalidArgument,
+            "Cannot parse customTimeBefore value (" + date + ") as a date");
+      }
+      result.condition_.custom_time_before.emplace(std::move(day));
+    }
   }
   return result;
 }
