@@ -25,10 +25,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class MockAckHandler : public pubsub::AckHandler::Impl {
  public:
-  ~MockAckHandler() override = default;
-  MOCK_METHOD(Status, ack, (), (override));
-  MOCK_METHOD(Status, nack, (), (override));
-  MOCK_METHOD(std::string, ack_id, (), (const override));
+  MOCK_METHOD0(ack, Status());
+  MOCK_METHOD0(nack, Status());
+  MOCK_CONST_METHOD0(ack_id, std::string());
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
