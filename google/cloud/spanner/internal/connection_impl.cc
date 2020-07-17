@@ -303,6 +303,8 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
 RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams params) {
+  // TODO(#4516): Handle !s.ok().
+
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return MakeStatusOnlyResult<RowStream>(std::move(prepare_status));
@@ -365,6 +367,8 @@ RowStream ConnectionImpl::ReadImpl(
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams const& params, PartitionOptions const& partition_options) {
+  // TODO(#4516): Handle !s.ok().
+
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
   auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
@@ -421,6 +425,8 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
+  // TODO(#4516): Handle !s.ok().
+
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
@@ -589,6 +595,8 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     PartitionQueryParams const& params) {
+  // TODO(#4516): Handle !s.ok().
+
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
   auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
@@ -639,6 +647,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, ExecuteBatchDmlParams params) {
+  // TODO(#4516): Handle !s.ok().
+
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return prepare_status;
@@ -683,6 +693,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, ExecutePartitionedDmlParams params) {
+  // TODO(#4516): Handle !s.ok().
+
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return prepare_status;
