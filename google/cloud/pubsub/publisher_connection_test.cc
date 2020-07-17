@@ -26,6 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::testing::_;
+using ::testing::HasSubstr;
 
 TEST(PublisherConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
@@ -69,7 +70,12 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
           ->Publish({topic.FullName(),
                      MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
+  // It is very unlikely we will see this in production, it would indicate a bug
+  // in the Cloud Pub/Sub service where we successfully published N events, but
+  // we received M != N message ids back.
   EXPECT_EQ(StatusCode::kUnknown, response.status().code());
+  EXPECT_THAT(response.status().message(),
+              HasSubstr("mismatched message id count"));
 }
 
 TEST(PublisherConnectionTest, HandleError) {
