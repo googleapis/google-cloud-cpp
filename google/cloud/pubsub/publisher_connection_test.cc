@@ -90,6 +90,7 @@ TEST(PublisherConnectionTest, HandleError) {
                      MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_EQ("uh-oh", response.status().message());
 }
 
 }  // namespace
