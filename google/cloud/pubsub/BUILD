@@ -43,6 +43,20 @@ cc_library(
     ],
 )
 
+load(":pubsub_client_mocks.bzl", "pubsub_client_mocks_hdrs", "pubsub_client_mocks_srcs")
+
+cc_library(
+    name = "pubsub_client_mocks",
+    srcs = pubsub_client_mocks_srcs,
+    hdrs = pubsub_client_mocks_hdrs,
+    deps = [
+        ":pubsub_client",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+    ],
+)
+
 load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 [cc_test(
@@ -50,6 +64,7 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     srcs = [test],
     deps = [
         ":pubsub_client",
+        ":pubsub_client_mocks",
         ":pubsub_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",

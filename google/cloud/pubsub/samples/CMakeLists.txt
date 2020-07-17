@@ -84,7 +84,7 @@ function (pubsub_client_define_samples)
         google_cloud_cpp_set_target_name(target "pubsub" "${fname}")
         set_tests_properties(
             ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-production")
+                                 "integration-test;integration-test-emulator")
     endforeach ()
 endfunction ()
 

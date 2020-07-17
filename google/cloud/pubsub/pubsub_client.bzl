@@ -17,6 +17,7 @@
 """Automatically generated source lists for pubsub_client - DO NOT EDIT."""
 
 pubsub_client_hdrs = [
+    "ack_handler.h",
     "connection_options.h",
     "create_subscription_builder.h",
     "create_topic_builder.h",
@@ -26,6 +27,7 @@ pubsub_client_hdrs = [
     "internal/user_agent_prefix.h",
     "message.h",
     "publisher_connection.h",
+    "subscriber_connection.h",
     "subscription.h",
     "subscription_admin_client.h",
     "subscription_admin_connection.h",
@@ -37,6 +39,7 @@ pubsub_client_hdrs = [
 ]
 
 pubsub_client_srcs = [
+    "ack_handler.cc",
     "connection_options.cc",
     "internal/emulator_overrides.cc",
     "internal/publisher_stub.cc",
@@ -44,6 +47,7 @@ pubsub_client_srcs = [
     "internal/user_agent_prefix.cc",
     "message.cc",
     "publisher_connection.cc",
+    "subscriber_connection.cc",
     "subscription.cc",
     "subscription_admin_client.cc",
     "subscription_admin_connection.cc",
