@@ -56,7 +56,6 @@ RUN cmake -Hlibcxxabi-10.0.0.src -B.build-libcxxabi -GNinja -Wno-dev \
     -DLLVM_CONFIG_PATH=/usr/bin/llvm-config \
     -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release  \
     -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-#RUN cmake --build .build-libcxxabi --target check-cxxabi
 RUN cmake --build .build-libcxxabi --target install-cxxabi
 
 # After libc++abi is installed, compile test and install the libc++ library
