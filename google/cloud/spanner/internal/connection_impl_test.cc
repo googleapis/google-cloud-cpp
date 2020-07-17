@@ -125,7 +125,7 @@ void SetTransactionInvalid(Transaction& txn) {
       txn,
       [](SessionHolder&, optional<spanner_proto::TransactionSelector>& selector,
          std::int64_t) {
-        selector = {};
+        selector.reset();
         return 0;
       });
 }
