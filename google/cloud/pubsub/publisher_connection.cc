@@ -24,10 +24,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 PublisherConnection::~PublisherConnection() = default;
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    ConnectionOptions const& options) {
+    Topic topic, ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
-  return pubsub_internal::MakePublisherConnection(std::move(stub));
+  return pubsub_internal::MakePublisherConnection(std::move(topic),
+                                                  std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -39,13 +40,15 @@ namespace {
 class PublisherConnectionImpl : public pubsub::PublisherConnection {
  public:
   explicit PublisherConnectionImpl(
-      std::shared_ptr<pubsub_internal::PublisherStub> stub)
-      : stub_(std::move(stub)) {}
+      pubsub::Topic topic, std::shared_ptr<pubsub_internal::PublisherStub> stub)
+      : topic_(std::move(topic)),
+        topic_full_name_(topic_.FullName()),
+        stub_(std::move(stub)) {}
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
     grpc::ClientContext context;
     google::pubsub::v1::PublishRequest request;
-    request.set_topic(std::move(p.full_topic_name));
+    request.set_topic(topic_full_name_);
     *request.add_messages() = pubsub_internal::ToProto(std::move(p.message));
     auto r = stub_->Publish(context, request);
     using Result = StatusOr<std::string>;
@@ -58,13 +61,16 @@ class PublisherConnectionImpl : public pubsub::PublisherConnection {
   }
 
  private:
+  pubsub::Topic topic_;
+  std::string topic_full_name_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
 };
 }  // namespace
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    std::shared_ptr<PublisherStub> stub) {
-  return std::make_shared<PublisherConnectionImpl>(std::move(stub));
+    pubsub::Topic topic, std::shared_ptr<PublisherStub> stub) {
+  return std::make_shared<PublisherConnectionImpl>(std::move(topic),
+                                                   std::move(stub));
 }
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

@@ -1,0 +1,131 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_H
+
+#include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/publisher_options.h"
+#include "google/cloud/pubsub/version.h"
+
+namespace google {
+namespace cloud {
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+/**
+ * Publish messages to the Cloud Pub/Sub service.
+ *
+ * This class is used to publish message to a given topic, with a fixed
+ * configuration such as credentials, batching, background threads, etc.
+ * Applications that publish messages to multiple topics need to create separate
+ * instances of this class. Applications wanting to publish events with
+ * different batching configuration also need to create separate instances.
+ *
+ * @see https://cloud.google.com/pubsub for an overview of the Cloud Pub/Sub
+ *   service.
+ *
+ * @par Performance
+ *
+ * `Publisher` objects are relatively cheap to create, copy, and move. However,
+ * each `Publisher` object must be created with a
+ * `std::shared_ptr<PublisherConnection>`, which itself is relatively expensive
+ * to create. Therefore, connection instances should be shared when possible.
+ * See the `MakePublisherConnection()` method and the `PublisherConnection`
+ * interface for more details.
+ *
+ * @par Thread Safety
+ *
+ * Instances of this class created via copy-construction or copy-assignment
+ * share the underlying pool of connections. Access to these copies via multiple
+ * threads is guaranteed to work. Two threads operating on the same instance of
+ * this class is not guaranteed to work.
+ *
+ * @par Background Threads
+ *
+ * This class uses the background threads configured via `ConnectionOptions`.
+ * Applications can create their own pool of background threads by (a) creating
+ * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
+ * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
+ * attaching any number of threads to the completion queue.
+ *
+ * TODO(#4586) - add an example on how to do this.
+ *
+ * @par Asynchronous Functions
+ *
+ * Some of the member functions in this class return a `future<T>` (or
+ * `future<StatusOr<T>>`) object.  Readers are probably familiar with
+ * [`std::future<T>`][std-future-link], our version adds a `.then()` function to
+ * attach a callback to the future, which is invoked when the future is
+ * satisfied. This function returns a `future<U>` where `U` is the return value
+ * of the attached function. More details in the #google::cloud::v1::future
+ * documentation.
+ *
+ * @par Error Handling
+ *
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Please consult the #google::cloud::v1::StatusOr
+ * documentation for more details.
+ *
+ * @code
+ * namespace pubsub = ::google::cloud::pubsub;
+ *
+ * auto topic = pubsub::Topic("my-project", "my-topic");
+ * auto publisher = pubsub::Publisher(MakePublisherConnection(topic));
+ * auto id = publisher->Publish(
+ *     pubsub::MessageBuilder{}.SetData("my-data").Build());
+ * id.then([](future<std::string> f) {
+ *     std::cout << "published with id = " << f.get() << "\n";
+ * });
+ * @endcode
+ *
+ * [std-future-link]: https://en.cppreference.com/w/cpp/thread/future
+ */
+class Publisher {
+ public:
+  Publisher(std::shared_ptr<PublisherConnection> connection,
+            PublisherOptions options = {});
+
+  //@{
+  Publisher(Publisher const&) = default;
+  Publisher& operator=(Publisher const&) = default;
+  Publisher(Publisher&&) noexcept = default;
+  Publisher& operator=(Publisher&&) noexcept = default;
+  //@}
+
+  /**
+   * Publishes a message to this publisher's topic
+   *
+   * @par
+   * Note that the message maybe be batched based on the Publisher's
+   *
+   * @return a future that becomes satisfied when the message is published or on
+   *     a unrecoverable error.
+   */
+  future<StatusOr<std::string>> Publish(Message m) {
+    return connection_->Publish({std::move(m)});
+  }
+
+ private:
+  std::shared_ptr<PublisherConnection> connection_;
+};
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_H

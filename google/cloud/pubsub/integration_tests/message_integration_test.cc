@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
@@ -59,16 +59,14 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       CreateSubscriptionBuilder(subscription, topic));
   ASSERT_STATUS_OK(subscription_metadata);
 
-  auto publisher = MakePublisherConnection();
+  auto publisher = Publisher(MakePublisherConnection(topic));
   auto subscriber = MakeSubscriberConnection();
 
   std::mutex mu;
   std::vector<std::string> ids;
   for (auto const* data : {"message-0", "message-1", "message-2"}) {
-    auto response = publisher
-                        ->Publish({topic.FullName(),
-                                   MessageBuilder{}.SetData(data).Build()})
-                        .get();
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
     EXPECT_STATUS_OK(response);
     if (response) {
       std::lock_guard<std::mutex> lk(mu);

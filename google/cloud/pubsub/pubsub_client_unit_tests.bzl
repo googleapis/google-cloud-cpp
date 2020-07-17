@@ -24,6 +24,8 @@ pubsub_client_unit_tests = [
     "internal/user_agent_prefix_test.cc",
     "message_test.cc",
     "publisher_connection_test.cc",
+    "publisher_option_test.cc",
+    "publisher_test.cc",
     "subscriber_connection_test.cc",
     "subscription_test.cc",
     "topic_test.cc",
