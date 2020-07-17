@@ -129,12 +129,15 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
   )
 
+  # TODO(#4536) - restore the GCS+gRPC integration tests
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
     -- //google/cloud/...:all \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
     -//google/cloud/storage/examples:storage_service_account_samples \
+    -//google/cloud/storage/examples:storage_grpc_samples \
+    -//google/cloud/storage/tests:grpc_integration_test \
     -//google/cloud/storage/tests:service_account_integration_test
 
 fi
