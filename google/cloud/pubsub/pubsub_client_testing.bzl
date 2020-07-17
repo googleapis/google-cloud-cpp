@@ -17,6 +17,7 @@
 """Automatically generated source lists for pubsub_client_testing - DO NOT EDIT."""
 
 pubsub_client_testing_hdrs = [
+    "testing/mock_publisher_stub.h",
     "testing/random_names.h",
 ]
 

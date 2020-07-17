@@ -40,6 +40,8 @@ add_library(
     internal/user_agent_prefix.h
     message.cc
     message.h
+    publisher_connection.cc
+    publisher_connection.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
@@ -83,8 +85,10 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    add_library(pubsub_client_testing # cmake-format: sort
-                testing/random_names.cc testing/random_names.h)
+    add_library(
+        pubsub_client_testing # cmake-format: sort
+        testing/mock_publisher_stub.h testing/random_names.cc
+        testing/random_names.h)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils
@@ -101,6 +105,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/emulator_overrides_test.cc
         internal/user_agent_prefix_test.cc
         message_test.cc
+        publisher_connection_test.cc
         subscription_test.cc
         topic_test.cc)
 
