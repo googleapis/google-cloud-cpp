@@ -234,22 +234,21 @@ TEST(CreateHashValidator, ReadOnlyCrc32c) {
   EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
-TEST(CreateHashValidator, ReadOnlyMD5) {
+TEST(CreateHashValidator, ReadDisableCrc32cTrue) {
   auto validator = CreateHashValidator(
       ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(DisableCrc32cChecksum(true)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_EQ(kQuickFoxMD5Hash, result.computed);
+  EXPECT_TRUE(result.computed.empty());
 }
 
-TEST(CreateHashValidator, ReadBoth) {
+TEST(CreateHashValidator, ReadWithoutConstructors) {
   auto validator =
       CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object"));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, ReadDisableCrc32cFalse) {
@@ -258,8 +257,7 @@ TEST(CreateHashValidator, ReadDisableCrc32cFalse) {
           .set_multiple_options(DisableCrc32cChecksum(false)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, ReadDisableMD5False) {
@@ -278,8 +276,7 @@ TEST(CreateHashValidator, ReadDisableCrc32cDefaultConstructor) {
                               .set_multiple_options(DisableCrc32cChecksum()));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, ReadDisableMD5DefaultConstructor) {
@@ -288,8 +285,7 @@ TEST(CreateHashValidator, ReadDisableMD5DefaultConstructor) {
                               .set_multiple_options(DisableMD5Hash()));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, WriteNull) {
@@ -311,22 +307,21 @@ TEST(CreateHashValidator, WriteOnlyCrc32c) {
   EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
-TEST(CreateHashValidator, WriteOnlyMD5) {
+TEST(CreateHashValidator, WriteDisableCrc32cTrue) {
   auto validator = CreateHashValidator(
       ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(DisableCrc32cChecksum(true)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_EQ(kQuickFoxMD5Hash, result.computed);
+  EXPECT_TRUE(result.computed.empty());
 }
 
-TEST(CreateHashValidator, WriteBoth) {
+TEST(CreateHashValidator, WriteWithoutConstrutors) {
   auto validator =
       CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object"));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, WriteBothFalse) {
@@ -346,8 +341,7 @@ TEST(CreateHashValidator, WriteBothDefaultConstructor) {
           .set_multiple_options(DisableCrc32cChecksum(), DisableMD5Hash()));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, WriteDisableCrc32False) {
@@ -356,8 +350,7 @@ TEST(CreateHashValidator, WriteDisableCrc32False) {
           .set_multiple_options(DisableCrc32cChecksum(false)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, WriteDisableMD5False) {
@@ -376,8 +369,7 @@ TEST(CreateHashValidator, WriteDisableCrc32cDefaultConstructor) {
                               .set_multiple_options(DisableCrc32cChecksum()));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
 TEST(CreateHashValidator, WriteDisableMD5DefaultConstructor) {
@@ -386,8 +378,7 @@ TEST(CreateHashValidator, WriteDisableMD5DefaultConstructor) {
                               .set_multiple_options(DisableMD5Hash()));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
-  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 }  // namespace
 }  // namespace internal
