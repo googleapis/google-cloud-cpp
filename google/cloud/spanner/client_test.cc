@@ -701,7 +701,7 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
   return internal::Visit(
       arg,
       [&](internal::SessionHolder& session,
-          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
+          optional<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (session) {
           *result_listener << "has session " << session->session_name();
           return false;
@@ -714,7 +714,7 @@ MATCHER_P(HasSession, name, "bound to expected session") {
   return internal::Visit(
       arg,
       [&](internal::SessionHolder& session,
-          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
+          optional<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
           return false;
@@ -728,13 +728,13 @@ MATCHER_P(HasSession, name, "bound to expected session") {
       });
 }
 
-MATCHER(HasBegin, "not bound to a transaction-id or a non-ok status") {
+MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
   return internal::Visit(
       arg,
       [&](internal::SessionHolder&,
-          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
+          optional<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         if (!s) {
-          *result_listener << "has status " << s.status();
+          *result_listener << "has been invalidated";
           return false;
         }
         if (!s->has_begin()) {
@@ -752,7 +752,7 @@ MATCHER(HasBegin, "not bound to a transaction-id or a non-ok status") {
 bool SetSessionName(Transaction const& txn, std::string name) {
   return internal::Visit(
       txn, [&name](internal::SessionHolder& session,
-                   StatusOr<google::spanner::v1::TransactionSelector>&,
+                   optional<google::spanner::v1::TransactionSelector>&,
                    std::int64_t) {
         session = internal::MakeDissociatedSessionHolder(std::move(name));
         return true;
@@ -762,7 +762,7 @@ bool SetSessionName(Transaction const& txn, std::string name) {
 bool SetTransactionId(Transaction const& txn, std::string id) {
   return internal::Visit(
       txn, [&id](internal::SessionHolder&,
-                 StatusOr<google::spanner::v1::TransactionSelector>& s,
+                 optional<google::spanner::v1::TransactionSelector>& s,
                  std::int64_t) {
         s->set_id(std::move(id));  // only valid when s.ok()
         return true;

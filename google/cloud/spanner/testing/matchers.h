@@ -44,7 +44,7 @@ MATCHER_P2(
   return google::cloud::spanner::internal::Visit(
       arg,
       [&](google::cloud::spanner::internal::SessionHolder& session,
-          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
+          optional<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         bool result = true;
         if (!session) {
           *result_listener << "Session ID missing (expected " << session_id
@@ -56,9 +56,8 @@ MATCHER_P2(
           result = false;
         }
         if (!s) {
-          *result_listener << "Transaction ID missing (expected "
-                           << transaction_id << " but found status "
-                           << s.status() << ")";
+          *result_listener << "Transaction invalid (expected " << transaction_id
+                           << ")";
           result = false;
         } else if (s->id() != transaction_id) {
           *result_listener << "Transaction ID mismatch: " << s->id()
