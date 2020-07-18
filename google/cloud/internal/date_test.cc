@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/internal/date.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -43,7 +42,6 @@ TEST(Date, DateFromStringFailure) {
 
 }  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/internal/date.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include <cerrno>
@@ -367,7 +367,7 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
 
 google::protobuf::Value Value::MakeValueProto(Date d) {
   google::protobuf::Value v;
-  v.set_string_value(internal::DateToString(d));
+  v.set_string_value(google::cloud::internal::DateToString(d));
   return v;
 }
 
@@ -493,7 +493,7 @@ StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing DATE");
   }
-  return internal::DateFromString(pv.string_value());
+  return google::cloud::internal::DateFromString(pv.string_value());
 }
 
 }  // namespace SPANNER_CLIENT_NS

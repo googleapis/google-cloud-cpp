@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/internal/date.h"
 #include <array>
 #include <cinttypes>
 #include <cstdio>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string DateToString(Date d) {
@@ -56,7 +55,6 @@ StatusOr<Date> DateFromString(std::string const& s) {
 #include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

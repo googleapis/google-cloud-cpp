@@ -65,6 +65,18 @@ load(
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
 
+load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchmarks")
+
+[cc_test(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_common",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in google_cloud_cpp_common_benchmarks]
+
 load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
 cc_library(

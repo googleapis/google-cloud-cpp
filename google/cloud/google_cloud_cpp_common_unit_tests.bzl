@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_common_unit_tests = [
+    "date_test.cc",
     "future_generic_test.cc",
     "future_generic_then_test.cc",
     "future_void_test.cc",
@@ -25,6 +26,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/backoff_policy_test.cc",
     "internal/big_endian_test.cc",
     "internal/compiler_info_test.cc",
+    "internal/date_test.cc",
     "internal/env_test.cc",
     "internal/filesystem_test.cc",
     "internal/format_time_point_test.cc",
