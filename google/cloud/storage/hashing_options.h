@@ -46,21 +46,21 @@ struct MD5HashValue
 std::string ComputeMD5Hash(std::string const& payload);
 
 /**
- * Disable MD5 Hashing computations.
+ * Disable or enable MD5 Hashing computations.
  *
- * By default the GCS client library computes MD5 hashes in all
- * `Client::InsertObject` calls. The application can disable the hash
- * computation by passing this parameter.
+ * By default MD5 Hashing computations is disabled.
+ * Default constructor DisableMD5Hash() also disables MD5 Hashing computations.
+ * You must explicitly pass `DisableMD5Hash(false)` to enable MD5Hash.
  *
- * @warning Disabling MD5 hashing exposes your application to data corruption.
- *   We recommend that all uploads to GCS are protected by the supported
- *   checksums and/or hashes.
+ * @warning Disabling MD5 hashing and Crc32cChecksum at the same time exposes
+ *   your application to data corruption. We recommend that all uploads to GCS
+ *   are protected by the supported checksums and/or hashes.
  */
 struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
-  DisableMD5Hash() = default;
+  DisableMD5Hash() : DisableMD5Hash(true) {}
   static char const* name() { return "disable-md5-hash"; }
 };
 
