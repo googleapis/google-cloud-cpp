@@ -50,7 +50,7 @@ std::string ComputeMD5Hash(std::string const& payload);
  *
  * By default MD5 Hashing computations is disabled.
  * Default constructor DisableMD5Hash() also disables MD5 Hashing computations.
- * You must explicitly pass `DisableMD5Hash(false)` to enable MD5Hash.
+ * You must explicitly pass `EnableMD5Hash()` to enable MD5Hash.
  *
  * @warning Disabling MD5 hashing and Crc32cChecksum at the same time exposes
  *   your application to data corruption. We recommend that all uploads to GCS
@@ -63,6 +63,14 @@ struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   DisableMD5Hash() : DisableMD5Hash(true) {}
   static char const* name() { return "disable-md5-hash"; }
 };
+
+/**
+ * Enable MD5 Hashing computations.
+ *
+ * Use this function where the option `DisableMD5Hash` is expected to enable MD5
+ * Hashing computations.
+ */
+inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
 
 /**
  * Provide a pre-computed MD5 hash value to an upload or download request.

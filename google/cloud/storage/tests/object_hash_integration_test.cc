@@ -106,10 +106,9 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
-    ASSERT_TRUE(insert_meta->has_metadata("x_testbench_md5"));
-    auto expected_md5 = ComputeMD5Hash(LoremIpsum());
-    EXPECT_EQ(expected_md5, insert_meta->metadata("x_testbench_md5"));
+    // It should be `simple` because there is no MD5Hash computation.
+    EXPECT_EQ("simple", insert_meta->metadata("x_testbench_upload"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -423,13 +422,12 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(false),
+      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
       IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
-      DisableMD5Hash(false),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -466,13 +464,13 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(false),
+      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
       IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
-      DisableMD5Hash(false), IfMetagenerationNotMatch(0),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
+      IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -509,14 +507,13 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   auto contents = MakeRandomData(1024 * 1024);
 
   // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, contents, DisableMD5Hash(false),
-      IfGenerationMatch(0), Projection::Full());
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
-      DisableMD5Hash(false),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
@@ -545,14 +542,14 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   auto contents = MakeRandomData(1024 * 1024);
 
   // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, contents, DisableMD5Hash(false),
-      IfGenerationMatch(0), Projection::Full());
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
-      DisableMD5Hash(false), IfMetagenerationNotMatch(0),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
+      IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
@@ -581,8 +578,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 
   // Create a stream to upload an object.
   ObjectWriteStream stream = client->WriteObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
-      DisableMD5Hash(false), IfGenerationMatch(0),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
+      IfGenerationMatch(0),
       CustomHeader("x-goog-testbench-instructions",
                    "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";

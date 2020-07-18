@@ -510,9 +510,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   }
 
   // If the application has set an explicit hash value we need to use multipart
-  // uploads.
-  if (!request.HasOption<DisableMD5Hash>() &&
-      !request.HasOption<DisableCrc32cChecksum>()) {
+  // uploads. We check `DisableCrc32cChecksum` only because `DisableMD5Hash`
+  // always has a value.
+  if (!request.HasOption<DisableCrc32cChecksum>()) {
     return InsertObjectMediaMultipart(request);
   }
 
