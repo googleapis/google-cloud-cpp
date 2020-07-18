@@ -825,7 +825,9 @@ Status ConnectionImpl::RollbackImpl(
   }
   if (s->has_begin()) {
     // There is nothing to rollback if a transaction id has not yet been
-    // assigned, so we just succeed without making an RPC.
+    // assigned, so we just succeed without making an RPC. But we also cause
+    // all future (non-rollback) operations on the transaction to fail.
+    s.reset();
     return Status();
   }
 
