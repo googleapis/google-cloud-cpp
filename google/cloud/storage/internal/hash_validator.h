@@ -106,14 +106,15 @@ class ResumableUploadRequest;
  * @{
  * The requests accepted by `CreateHashValidator` can be configured with the
  * `DisableMD5Hash` and `DisableCrc32Checksum` options. You must explicitly
- * pass these options to disable each respectively.
+ * pass `DisableCrc32Checksum` to disable Crc32cChecksum. MD5Hash is disabled by
+ * default. You must explicitly pass `EnableMD5Hash()` to enable MD5Hash.
  *
  * The valid combinations are:
  * - If neither `DisableMD5Hash(true)` nor `DisableCrc32cChecksum(true)` are
- *   provided, then both MD5Hash and Crc32Checksum are used.
+ *   provided, then only Crc32cChecksum is used.
  * - If only `DisableMD5Hash(true)` is provided, then only Crc32cChecksum is
  *   used.
- * - If only `DisableCrc32c(true)` is provided, then only MD5Hash is used.
+ * - If only `DisableCrc32c(true)` is provided, then neither are used.
  * - If both `DisableMD5Hash(true)` and `DisableCrc32cChecksum(true)` are
  *   provided, then neither are used.
  *
