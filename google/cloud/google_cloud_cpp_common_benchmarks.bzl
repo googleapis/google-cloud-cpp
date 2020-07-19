@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +16,6 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-spanner_client_benchmarks = [
-    "bytes_benchmark.cc",
-    "internal/merge_chunk_benchmark.cc",
-    "internal/time_format_benchmark.cc",
-    "numeric_benchmark.cc",
-    "row_benchmark.cc",
+google_cloud_cpp_common_benchmarks = [
+    "internal/date_benchmark.cc",
 ]

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/date.h"
-#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/date.h"
+#include "google/cloud/internal/date.h"
 #include <array>
+#include <iostream>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 
@@ -64,7 +64,6 @@ std::ostream& operator<<(std::ostream& os, Date const& date) {
   return os << internal::DateToString(date);
 }
 
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

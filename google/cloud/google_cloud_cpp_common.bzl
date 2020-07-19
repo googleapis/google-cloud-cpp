@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_common - DO NOT EDIT."""
 
 google_cloud_cpp_common_hdrs = [
+    "date.h",
     "future.h",
     "future_generic.h",
     "future_void.h",
@@ -28,6 +29,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/build_info.h",
     "internal/compiler_info.h",
     "internal/conjunction.h",
+    "internal/date.h",
     "internal/diagnostics_pop.inc",
     "internal/diagnostics_push.inc",
     "internal/disable_msvc_crt_secure_warnings.inc",
@@ -62,10 +64,12 @@ google_cloud_cpp_common_hdrs = [
 ]
 
 google_cloud_cpp_common_srcs = [
+    "date.cc",
     "iam_bindings.cc",
     "iam_policy.cc",
     "internal/backoff_policy.cc",
     "internal/compiler_info.cc",
+    "internal/date.cc",
     "internal/filesystem.cc",
     "internal/format_time_point.cc",
     "internal/future_impl.cc",
