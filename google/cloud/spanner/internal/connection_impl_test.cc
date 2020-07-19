@@ -90,11 +90,12 @@ MATCHER_P(BatchCreateSessionsRequestHasDatabase, database,
   return arg.database() == database.FullName();
 }
 
-// Matches a spanner::Transaction that is marked "is_bad()"
+// Matches a spanner::Transaction that is bound to a "bad" session"
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               google::spanner::v1::TransactionSelector&, std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          optional<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session";
           return false;
@@ -107,12 +108,24 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
       });
 }
 
-// Helper to set the Transaction's ID.
+// Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(Transaction& txn, std::string tid) {
+  internal::Visit(txn,
+                  [&tid](SessionHolder&,
+                         optional<spanner_proto::TransactionSelector>& selector,
+                         std::int64_t) {
+                    selector->set_id(std::move(tid));
+                    return 0;
+                  });
+}
+
+// Helper to mark the Transaction as invalid.
+void SetTransactionInvalid(Transaction& txn) {
   internal::Visit(
-      txn, [&tid](SessionHolder&, spanner_proto::TransactionSelector& selector,
-                  std::int64_t) {
-        selector.set_id(std::move(tid));
+      txn,
+      [](SessionHolder&, optional<spanner_proto::TransactionSelector>& selector,
+         std::int64_t) {
+        selector.reset();
         return 0;
       });
 }
@@ -1504,6 +1517,27 @@ TEST(ConnectionImplTest, CommitCommitTooManyTransientFailures) {
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
 }
 
+TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
+  EXPECT_CALL(*mock, BeginTransaction(_, _)).Times(0);
+  EXPECT_CALL(*mock, Commit(_, _)).Times(0);
+
+  // Committing an invalidated transaction is a unilateral error.
+  auto txn = MakeReadWriteTransaction();
+  SetTransactionInvalid(txn);
+
+  auto commit = conn->Commit({txn});
+  EXPECT_FALSE(commit.ok());
+  auto status = commit.status();
+  EXPECT_EQ(StatusCode::kUnknown, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("To be determined"));
+}
+
 TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
@@ -1594,6 +1628,7 @@ TEST(ConnectionImplTest, RollbackGetSessionFailure) {
   auto conn = MakeConnection(
       db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = MakeReadWriteTransaction();
+  SetTransactionId(txn, "test-txn-id");
   auto rollback = conn->Rollback({txn});
   EXPECT_EQ(StatusCode::kPermissionDenied, rollback.code());
   EXPECT_THAT(rollback.message(), HasSubstr("uh-oh in GetSession"));
@@ -1604,13 +1639,7 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
   std::string const session_name = "test-session-name";
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
-      .WillOnce([&db, &session_name](
-                    grpc::ClientContext&,
-                    spanner_proto::BatchCreateSessionsRequest const& request) {
-        EXPECT_EQ(db.FullName(), request.database());
-        return MakeSessionsResponse({session_name});
-      });
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
   auto conn = MakeConnection(
@@ -1625,13 +1654,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
   std::string const session_name = "test-session-name";
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
-      .WillOnce([&db, &session_name](
-                    grpc::ClientContext&,
-                    spanner_proto::BatchCreateSessionsRequest const& request) {
-        EXPECT_EQ(db.FullName(), request.database());
-        return MakeSessionsResponse({session_name});
-      });
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
   auto conn = MakeConnection(
@@ -1731,6 +1754,23 @@ TEST(ConnectionImplTest, RollbackSuccess) {
       db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, transaction_id);
+  auto rollback = conn->Rollback({txn});
+  EXPECT_STATUS_OK(rollback);
+}
+
+TEST(ConnectionImplTest, RollbackSuccessInvalidatedTransaction) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
+  EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
+
+  // Rolling back an invalidated transaction is a unilateral success.
+  auto txn = MakeReadWriteTransaction();
+  SetTransactionInvalid(txn);
+
   auto rollback = conn->Rollback({txn});
   EXPECT_STATUS_OK(rollback);
 }

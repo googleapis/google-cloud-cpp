@@ -17,7 +17,6 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <algorithm>
-#include <cassert>
 #include <iterator>
 #include <utility>
 
