@@ -17,8 +17,8 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <memory>
 
@@ -139,7 +139,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   }
 
   // Do not copy the PRNG, we get two benefits:
-  //  - This works around a bug triggered by MSVC + Abseil optional (we do not
+  //  - This works around a bug triggered by MSVC + absl::optional (we do not
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
@@ -154,7 +154,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::microseconds current_delay_range_;
   std::chrono::microseconds maximum_delay_;
   double scaling_;
-  optional<DefaultPRNG> generator_;
+  absl::optional<DefaultPRNG> generator_;
 };
 
 }  // namespace internal

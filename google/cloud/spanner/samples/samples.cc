@@ -29,7 +29,7 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
 #include <regex>
@@ -297,7 +297,7 @@ void AddDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
   auto result = client.SetIamPolicy(
       in,
       [&new_reader](google::iam::v1::Policy current)
-          -> google::cloud::optional<google::iam::v1::Policy> {
+          -> absl::optional<google::iam::v1::Policy> {
         // Find (or create) the binding for "roles/spanner.databaseReader".
         auto& binding = [&current]() -> google::iam::v1::Binding& {
           auto role_pos = std::find_if(
@@ -354,7 +354,7 @@ void RemoveDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
   auto result = client.SetIamPolicy(
       in,
       [&reader](google::iam::v1::Policy current)
-          -> google::cloud::optional<google::iam::v1::Policy> {
+          -> absl::optional<google::iam::v1::Policy> {
         // Find the binding for "roles/spanner.databaseReader".
         auto role_pos =
             std::find_if(current.mutable_bindings()->begin(),
@@ -1317,9 +1317,9 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
       "SELECT SingerId, AlbumId, MarketingBudget, LastUpdateTime"
       "  FROM Albums"
       " ORDER BY LastUpdateTime DESC");
-  using RowType = std::tuple<std::int64_t, std::int64_t,
-                             google::cloud::optional<std::int64_t>,
-                             google::cloud::optional<spanner::Timestamp>>;
+  using RowType =
+      std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>,
+                 absl::optional<spanner::Timestamp>>;
 
   auto rows = client.ExecuteQuery(select);
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
@@ -1443,8 +1443,8 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, MarketingBudget FROM Albums");
 
-  using RowType = std::tuple<std::int64_t, std::int64_t,
-                             google::cloud::optional<std::int64_t>>;
+  using RowType =
+      std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
@@ -1494,8 +1494,8 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
       " WHERE AlbumTitle >= @start_title AND AlbumTitle < @end_title",
       {{"start_title", spanner::Value("Aardvark")},
        {"end_title", spanner::Value("Goo")}});
-  using RowType = std::tuple<std::int64_t, std::string,
-                             google::cloud::optional<std::int64_t>>;
+  using RowType =
+      std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
@@ -1560,8 +1560,8 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
   auto rows =
       client.Read("Albums", google::cloud::spanner::KeySet::All(),
                   {"AlbumId", "AlbumTitle", "MarketingBudget"}, read_options);
-  using RowType = std::tuple<std::int64_t, std::string,
-                             google::cloud::optional<std::int64_t>>;
+  using RowType =
+      std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
@@ -1951,7 +1951,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
                         std::int64_t singer_id) -> StatusOr<std::int64_t> {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(album_id, singer_id));
     auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
-    using RowType = std::tuple<google::cloud::optional<std::int64_t>>;
+    using RowType = std::tuple<absl::optional<std::int64_t>>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     if (!row) return row.status();
     auto const budget = std::get<0>(*row);

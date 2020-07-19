@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
+#include "absl/types/optional.h"
 #include <functional>
 #include <memory>
 
@@ -55,7 +56,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   ~PartialResultSetResume() override = default;
 
   void TryCancel() override;
-  optional<google::spanner::v1::PartialResultSet> Read() override;
+  absl::optional<google::spanner::v1::PartialResultSet> Read() override;
   Status Finish() override;
 
  private:
@@ -65,7 +66,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
   std::string last_resume_token_;
   std::unique_ptr<PartialResultSetReader> child_;
-  optional<Status> last_status_;
+  absl::optional<Status> last_status_;
 };
 
 }  // namespace internal

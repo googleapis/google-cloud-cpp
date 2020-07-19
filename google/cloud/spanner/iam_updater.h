@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_IAM_UPDATER_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <google/iam/v1/policy.pb.h>
 #include <functional>
 
@@ -25,8 +25,8 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-using IamUpdater =
-    std::function<optional<google::iam::v1::Policy>(google::iam::v1::Policy)>;
+using IamUpdater = std::function<absl::optional<google::iam::v1::Policy>(
+    google::iam::v1::Policy)>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

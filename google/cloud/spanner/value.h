@@ -22,8 +22,8 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/v1/type.pb.h>
@@ -80,10 +80,10 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  *
  * @see https://cloud.google.com/spanner/docs/commit-timestamp
  *
- * Callers may create instances by passing any of the supported values (shown
- * in the table above) to the constructor. "Null" values are created using the
- * `MakeNullValue<T>()` factory function or by passing an empty `optional<T>`
- * to the Value constructor..
+ * Callers may create instances by passing any of the supported values
+ * (shown in the table above) to the constructor. "Null" values are created
+ * using the `MakeNullValue<T>()` factory function or by passing an empty
+ * `absl::optional<T>` to the Value constructor..
  *
  * @par Example with a non-null value
  *
@@ -102,7 +102,8 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
  * StatusOr<std::int64_t> i = v.get<std::int64_t>();
  * assert(!i.ok());  // Can't get the value because v is null
- * StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
+ * StatusOr < absl::optional<std::int64_t> j =
+ *     v.get<absl::optional<std::int64_t>>();
  * assert(j.ok());  // OK because an empty option can represent the null
  * assert(!j->has_value());  // v held no value.
  * @endcode
@@ -112,13 +113,13 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * All of the supported types (above) are "nullable". A null is created in one
  * of two ways:
  *
- * 1. Passing an `optional<T>()` with no value to `Value`'s constructor.
+ * 1. Passing an `absl::optional<T>()` with no value to `Value`'s constructor.
  * 2. Using the `MakeNullValue<T>()` helper function (defined below).
  *
- * Nulls can be retrieved from a `Value::get<T>` by specifying the type `T` as
- * a `optional<U>`. The returned optional will either be empty (indicating
- * null) or it will contain the actual value. See the documentation for
- * `Value::get<T>` below for more details.
+ * Nulls can be retrieved from a `Value::get<T>` by specifying the type `T`
+ * as an `absl::optional<U>`. The returned optional will either be empty
+ * (indicating null) or it will contain the actual value. See the documentation
+ * for `Value::get<T>` below for more details.
  *
  * @par Spanner Arrays (i.e., `std::vector<T>`)
  *
@@ -222,7 +223,7 @@ class Value {
    * a null instance with the specified type `T`.
    */
   template <typename T>
-  explicit Value(optional<T> opt)
+  explicit Value(absl::optional<T> opt)
       : Value(PrivateConstructor{}, std::move(opt)) {}
 
   /**
@@ -262,7 +263,7 @@ class Value {
    *
    * Returns a non-OK status IFF:
    *
-   * * The contained value is "null", and `T` is not an `optional`.
+   * * The contained value is "null", and `T` is not an `absl::optional`.
    * * There is an error converting the contained value to `T`.
    *
    * @par Example
@@ -280,8 +281,8 @@ class Value {
    * if (!i) {
    *   std::cerr << "Could not get integer: " << i.status();
    * }
-   *
-   * StatusOr<optional<std::int64_t>> j = v.get<optional<std::int64_t>();
+   * StatusOr<absl::optional<std::int64_t>> j =
+   *     v.get<absl::optional<std::int64_t>>();
    * assert(j.ok());  // Since we know the types match in this example
    * assert(!v->has_value());  // Since we know v was null in this example
    * @endcode
@@ -333,11 +334,11 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
  private:
-  // Metafunction that returns true if `T` is an optional<U>
+  // Metafunction that returns true if `T` is an absl::optional<U>
   template <typename T>
   struct IsOptional : std::false_type {};
   template <typename T>
-  struct IsOptional<optional<T>> : std::true_type {};
+  struct IsOptional<absl::optional<T>> : std::true_type {};
 
   // Metafunction that returns true if `T` is a std::vector<U>
   template <typename T>
@@ -357,7 +358,8 @@ class Value {
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
   template <typename T>
-  static bool TypeProtoIs(optional<T>, google::spanner::v1::Type const& type) {
+  static bool TypeProtoIs(absl::optional<T>,
+                          google::spanner::v1::Type const& type) {
     return TypeProtoIs(T{}, type);
   }
   template <typename T>
@@ -406,7 +408,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
-  static google::spanner::v1::Type MakeTypeProto(optional<T> const&) {
+  static google::spanner::v1::Type MakeTypeProto(absl::optional<T> const&) {
     return MakeTypeProto(T{});
   }
   template <typename T>
@@ -466,7 +468,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
-  static google::protobuf::Value MakeValueProto(optional<T> opt) {
+  static google::protobuf::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
     google::protobuf::Value v;
     v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
@@ -532,14 +534,14 @@ class Value {
   static StatusOr<Date> GetValue(Date, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
   template <typename T, typename V>
-  static StatusOr<optional<T>> GetValue(optional<T> const&, V&& pv,
-                                        google::spanner::v1::Type const& pt) {
+  static StatusOr<absl::optional<T>> GetValue(
+      absl::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() == google::protobuf::Value::kNullValue) {
-      return optional<T>{};
+      return absl::optional<T>{};
     }
     auto value = GetValue(T{}, std::forward<V>(pv), pt);
     if (!value) return std::move(value).status();
-    return optional<T>{*std::move(value)};
+    return absl::optional<T>{*std::move(value)};
   }
   template <typename T, typename V>
   static StatusOr<std::vector<T>> GetValue(
@@ -645,13 +647,13 @@ class Value {
 /**
  * Factory to construct a "null" Value of the specified type `T`.
  *
- * This is equivalent to passing an `optional<T>` without a value to the
- * constructor, though this factory may be easier to invoke and result in
- * clearer code at the call site.
+ * This is equivalent to passing an `absl::optional<T>` without a value to
+ * the constructor, though this factory may be easier to invoke and result
+ * in clearer code at the call site.
  */
 template <typename T>
 Value MakeNullValue() {
-  return Value(optional<T>{});
+  return Value(absl::optional<T>{});
 }
 
 }  // namespace SPANNER_CLIENT_NS

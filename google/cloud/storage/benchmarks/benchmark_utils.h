@@ -18,7 +18,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
 #include <sstream>
@@ -60,7 +60,7 @@ std::size_t ParseBufferSize(std::string const& val);
 std::chrono::seconds ParseDuration(std::string const& val);
 
 /// Parse a string as a boolean, with a default value if the string is empty.
-google::cloud::optional<bool> ParseBoolean(std::string const& val);
+absl::optional<bool> ParseBoolean(std::string const& val);
 
 /// Defines a command-line option.
 struct OptionDescriptor {

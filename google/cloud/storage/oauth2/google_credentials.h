@@ -18,7 +18,7 @@
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <memory>
 #include <set>
 
@@ -112,9 +112,8 @@ CreateServiceAccountCredentialsFromFilePath(std::string const& path);
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromFilePath(
-    std::string const& path,
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject);
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject);
 
 /**
  * Creates a ServiceAccountCredentials from a JSON file at the specified path.
@@ -147,10 +146,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path,
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject,
-    ChannelOptions const& options = {});
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, ChannelOptions const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a P12 file at the specified path.
@@ -183,10 +180,8 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
-    std::string const& path,
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject,
-    ChannelOptions const& options = {});
+    std::string const& path, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, ChannelOptions const& options = {});
 //@}
 
 /**
@@ -234,9 +229,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject,
-    ChannelOptions const& options = {});
+    absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, ChannelOptions const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
@@ -271,10 +265,8 @@ CreateServiceAccountCredentialsFromJsonContents(
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents,
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject,
-    ChannelOptions const& options = {});
+    std::string const& contents, absl::optional<std::set<std::string>> scopes,
+    absl::optional<std::string> subject, ChannelOptions const& options = {});
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();

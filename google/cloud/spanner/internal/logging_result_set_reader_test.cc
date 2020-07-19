@@ -76,9 +76,8 @@ TEST_F(LoggingResultSetReaderTest, Read) {
         result.set_resume_token("test-token");
         return result;
       })
-      .WillOnce([] {
-        return google::cloud::optional<spanner_proto::PartialResultSet>{};
-      });
+      .WillOnce(
+          [] { return absl::optional<spanner_proto::PartialResultSet>{}; });
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   auto result = reader.Read();
   ASSERT_TRUE(result.has_value());

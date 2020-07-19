@@ -93,9 +93,9 @@ MATCHER_P(BatchCreateSessionsRequestHasDatabase, database,
 // Matches a spanner::Transaction that is bound to a "bad" session"
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
   return internal::Visit(
-      arg,
-      [&](internal::SessionHolder& session,
-          optional<google::spanner::v1::TransactionSelector>&, std::int64_t) {
+      arg, [&](internal::SessionHolder& session,
+               absl::optional<google::spanner::v1::TransactionSelector>&,
+               std::int64_t) {
         if (!session) {
           *result_listener << "has no session";
           return false;
@@ -110,21 +110,21 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
 
 // Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(Transaction& txn, std::string tid) {
-  internal::Visit(txn,
-                  [&tid](SessionHolder&,
-                         optional<spanner_proto::TransactionSelector>& selector,
-                         std::int64_t) {
-                    selector->set_id(std::move(tid));
-                    return 0;
-                  });
+  internal::Visit(
+      txn, [&tid](SessionHolder&,
+                  absl::optional<spanner_proto::TransactionSelector>& selector,
+                  std::int64_t) {
+        selector->set_id(std::move(tid));
+        return 0;
+      });
 }
 
 // Helper to mark the Transaction as invalid.
 void SetTransactionInvalid(Transaction& txn) {
   internal::Visit(
-      txn,
-      [](SessionHolder&, optional<spanner_proto::TransactionSelector>& selector,
-         std::int64_t) {
+      txn, [](SessionHolder&,
+              absl::optional<spanner_proto::TransactionSelector>& selector,
+              std::int64_t) {
         selector.reset();
         return 0;
       });
@@ -547,7 +547,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
 TEST(ConnectionImplTest, QueryOptions) {
   auto constexpr kQueryOptionsProp =
       &spanner_proto::ExecuteSqlRequest::query_options;
-  std::vector<optional<std::string>> const optimizer_versions = {
+  std::vector<absl::optional<std::string>> const optimizer_versions = {
       {}, "", "some-version"};
 
   for (auto const& version : optimizer_versions) {

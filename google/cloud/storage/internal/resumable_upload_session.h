@@ -19,8 +19,8 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <cstdint>
 #include <iosfwd>
 #include <string>
@@ -92,7 +92,7 @@ struct ResumableUploadResponse {
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
-  optional<google::cloud::storage::ObjectMetadata> payload;
+  absl::optional<google::cloud::storage::ObjectMetadata> payload;
   UploadState upload_state;
   std::string annotations;
 };

@@ -41,7 +41,7 @@ using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-using ReadReturn = optional<spanner_proto::PartialResultSet>;
+using ReadReturn = absl::optional<spanner_proto::PartialResultSet>;
 
 struct MockFactory {
   MOCK_METHOD1(MakeReader, std::unique_ptr<PartialResultSetReader>(
@@ -84,7 +84,7 @@ TEST(PartialResultSetResume, Success) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&response] { return ReadReturn(response); })
-            .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+            .WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
         return mock;
       });

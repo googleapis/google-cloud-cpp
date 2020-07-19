@@ -67,8 +67,10 @@ class MockConnection : public spanner::Connection {
 class MockResultSetSource : public spanner::internal::ResultSourceInterface {
  public:
   MOCK_METHOD0(NextRow, StatusOr<spanner::Row>());
-  MOCK_METHOD0(Metadata, optional<google::spanner::v1::ResultSetMetadata>());
-  MOCK_CONST_METHOD0(Stats, optional<google::spanner::v1::ResultSetStats>());
+  MOCK_METHOD0(Metadata,
+               absl::optional<google::spanner::v1::ResultSetMetadata>());
+  MOCK_CONST_METHOD0(Stats,
+                     absl::optional<google::spanner::v1::ResultSetStats>());
 };
 
 }  // namespace SPANNER_CLIENT_NS

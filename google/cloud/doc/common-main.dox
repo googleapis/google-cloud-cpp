@@ -10,8 +10,6 @@ Client Libraries. Including:
   operation.
 - [StatusOr<T>](@ref google::cloud::v1::StatusOr) returns a value on success
   and a `Status` on error.
-- [optional<T>](@ref google::cloud::v1::optional) a backport of `std::optional`
-  for C++11.
 - [future<T>](@ref google::cloud::v1::future) and
   [promise<T>](@ref google::cloud::v1::promise) futures (a holder that will
   receive a value asynchronously) and promises (the counterpart of a future,

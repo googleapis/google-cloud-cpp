@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAM_READER_H
 
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -35,14 +35,14 @@ class StreamReader {
 
   // Reads the next value from the stream.
   //
-  // If a value exists, an optional containing the value is returned.
+  // If a value exists, an absl::optional containing the value is returned.
   //
-  // If the end of the stream is reached, an empty optional is
+  // If the end of the stream is reached, an empty absl::optional is
   // returned.
   //
   // Any non-OK status signals that something went wrong reading from
   // the stream.
-  virtual google::cloud::StatusOr<google::cloud::optional<T>> NextValue() = 0;
+  virtual google::cloud::StatusOr<absl::optional<T>> NextValue() = 0;
 };
 
 }  // namespace internal

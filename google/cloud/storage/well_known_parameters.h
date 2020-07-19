@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/ios_flags_saver.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <cstdint>
 #include <iomanip>
 #include <string>
@@ -49,7 +49,7 @@ class WellKnownParameter {
   }
 
  private:
-  google::cloud::optional<T> value_;
+  absl::optional<T> value_;
 };
 
 template <typename P, typename T>

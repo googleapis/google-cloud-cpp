@@ -22,7 +22,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
@@ -41,9 +41,9 @@ struct ServiceAccountCredentialsInfo {
   std::string private_key;
   std::string token_uri;
   // If no set is supplied, a default set of scopes will be used.
-  google::cloud::optional<std::set<std::string>> scopes;
+  absl::optional<std::set<std::string>> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
-  google::cloud::optional<std::string> subject;
+  absl::optional<std::string> subject;
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.

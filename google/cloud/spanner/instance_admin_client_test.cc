@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/mocks/mock_instance_admin_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -177,7 +178,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
   auto actual =
       client.SetIamPolicy(Instance("test-project", "test-instance"),
                           [](google::iam::v1::Policy const&) {
-                            return optional<google::iam::v1::Policy>{};
+                            return absl::optional<google::iam::v1::Policy>{};
                           });
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
@@ -199,7 +200,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccNoUpdates) {
       client.SetIamPolicy(Instance("test-project", "test-instance"),
                           [](google::iam::v1::Policy const& p) {
                             EXPECT_EQ("test-etag", p.etag());
-                            return optional<google::iam::v1::Policy>{};
+                            return absl::optional<google::iam::v1::Policy>{};
                           });
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ("test-etag", actual->etag());

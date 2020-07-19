@@ -38,7 +38,7 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
-  return UploadGenericChunk(buffers, optional<std::uint64_t>());
+  return UploadGenericChunk(buffers, absl::optional<std::uint64_t>());
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
@@ -48,7 +48,8 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
 
 StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::UploadGenericChunk(
-    ConstBufferSequence buffers, optional<std::uint64_t> const& upload_size) {
+    ConstBufferSequence buffers,
+    absl::optional<std::uint64_t> const& upload_size) {
   bool const is_final_chunk = upload_size.has_value();
   char const* const func = is_final_chunk ? "UploadFinalChunk" : "UploadChunk";
   std::uint64_t next_byte = session_->next_expected_byte();

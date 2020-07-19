@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/memory/memory.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -27,22 +28,22 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-/// SFINAE matcher for `future<StatusOr<optional<T>>>`, false branch.
+/// SFINAE matcher for `future<StatusOr<absl::optional<T>>>`, false branch.
 template <typename Future>
 struct MatchesFutureStatusOrOptionalResponse : public std::false_type {};
 
-/// SFINAE matcher for `future<StatusOr<optional<T>>>`, true branch.
+/// SFINAE matcher for `future<StatusOr<absl::optional<T>>>`, true branch.
 template <typename R>
-struct MatchesFutureStatusOrOptionalResponse<future<StatusOr<optional<R>>>>
-    : public std::true_type {};
+struct MatchesFutureStatusOrOptionalResponse<
+    future<StatusOr<absl::optional<R>>>> : public std::true_type {};
 
-/// Extractor of `T` from `future<StatusOr<optional<T>>>`
+/// Extractor of `T` from `future<StatusOr<absl::optional<T>>>`
 template <typename T>
 struct ResponseFromFutureStatusOrOptionalResponse;
 
 template <typename T>
 struct ResponseFromFutureStatusOrOptionalResponse<
-    future<StatusOr<optional<T>>>> {
+    future<StatusOr<absl::optional<T>>>> {
   using type = T;
 };
 
@@ -51,7 +52,7 @@ struct ResponseFromFutureStatusOrOptionalResponse<
  *
  * It should be invocable with
  * `(CompletionQueue&, std::unique_ptr<ClientContext>)` and return a
- * `future<StatusOr<optional<T>>>`. The semantics should be:
+ * `future<StatusOr<absl::optional<T>>>`. The semantics should be:
  *       - on error return a non-ok status,
  *       - on successfully checking that the polled operation is not finished,
  *         return an empty option
@@ -69,8 +70,8 @@ struct PollableOperationRequestTraits {
       Operation, CompletionQueue&, std::unique_ptr<grpc::ClientContext>>;
   static_assert(
       MatchesFutureStatusOrOptionalResponse<ReturnType>::value,
-      "A pollable operation should return future<StatusOr<optional<T>>>");
-  /// `T`, assuming that `Operation` returns `future<StatusOr<optional<T>>>`
+      "A pollable operation should return future<StatusOr<absl::optional<T>>>");
+  /// `T`, assuming `Operation` returns `future<StatusOr<absl::optional<T>>>`
   using ResponseType =
       typename ResponseFromFutureStatusOrOptionalResponse<ReturnType>::type;
 };
@@ -108,7 +109,7 @@ class PollAsyncOpFuture {
 
   /// The callback for a completed request, successful or not.
   static void OnCompletion(std::shared_ptr<PollAsyncOpFuture> self,
-                           StatusOr<optional<Response>> result) {
+                           StatusOr<absl::optional<Response>> result) {
     if (result && *result) {
       self->final_result_.set_value(**std::move(result));
       return;
@@ -154,7 +155,7 @@ class PollAsyncOpFuture {
     self->metadata_update_policy_.Setup(*context);
 
     self->operation_(self->cq_, std::move(context))
-        .then([self](future<StatusOr<optional<Response>>> fut) {
+        .then([self](future<StatusOr<absl::optional<Response>>> fut) {
           OnCompletion(self, fut.get());
         });
   }

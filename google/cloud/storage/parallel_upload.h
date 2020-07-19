@@ -23,6 +23,7 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/status_or.h"
 #include "absl/memory/memory.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>
@@ -78,7 +79,7 @@ struct CreateParallelUploadShards;
  */
 template <typename T, typename Tuple, typename Enable = void>
 struct ExtractFirstOccurenceOfTypeImpl {
-  optional<T> operator()(Tuple const&) { return optional<T>(); }
+  absl::optional<T> operator()(Tuple const&) { return absl::optional<T>(); }
 };
 
 template <typename T, typename... Options>
@@ -87,13 +88,13 @@ struct ExtractFirstOccurenceOfTypeImpl<
     typename std::enable_if<
         Among<typename std::decay<Options>::type...>::template TPred<
             typename std::decay<T>::type>::value>::type> {
-  optional<T> operator()(std::tuple<Options...> const& tuple) {
+  absl::optional<T> operator()(std::tuple<Options...> const& tuple) {
     return std::get<0>(StaticTupleFilter<Among<T>::template TPred>(tuple));
   }
 };
 
 template <typename T, typename Tuple>
-optional<T> ExtractFirstOccurenceOfType(Tuple const& tuple) {
+absl::optional<T> ExtractFirstOccurenceOfType(Tuple const& tuple) {
   return ExtractFirstOccurenceOfTypeImpl<T, Tuple>()(tuple);
 }
 
@@ -210,7 +211,7 @@ class ParallelUploadStateImpl
   struct StreamInfo {
     std::string object_name;
     std::string resumable_session_id;
-    optional<ComposeSourceObject> composition_arg;
+    absl::optional<ComposeSourceObject> composition_arg;
     bool finished;
   };
 
@@ -230,7 +231,7 @@ class ParallelUploadStateImpl
   // Tracks how many streams are still written to.
   std::size_t num_unfinished_streams_;
   std::vector<StreamInfo> streams_;
-  google::cloud::optional<StatusOr<ObjectMetadata>> res_;
+  absl::optional<StatusOr<ObjectMetadata>> res_;
   Status cleanup_status_;
   std::string custom_data_;
   std::string resumable_session_id_;

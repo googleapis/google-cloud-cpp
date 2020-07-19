@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "absl/types/optional.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
 
@@ -44,7 +45,7 @@ class AsyncLongrunningOperation {
 
   // The semantics of the value returned by the future is as follows:
   // - outer status is the attempt's status (e.g. couldn't reach CBT)
-  // - the `optional<>` is empty if the poll has not finished
+  // - the `absl::optional<>` is empty if the poll has not finished
   // - the inner StatusOr is the overall result of the longrunning operation
   //
   // The reason for such an obscure return value is that we want to use it in
@@ -53,18 +54,18 @@ class AsyncLongrunningOperation {
   // the polled operation and (c) successfully checking that the longrunning
   // operation has not yet finished. For that reason, for (a) we communicate
   // errors in the outer `StatusOr<>`, for (b) in the inner `StatusOr<>` and for
-  // (c) via an empty `optional<>`.
+  // (c) via an empty `absl::optional<>`.
   //
-  // One could argue that it could be `future<StatusOr<optional<Response>>>`
+  // One could argue it could be `future<StatusOr<absl::optional<Response>>>`
   // instead.  However, if the final error from the longrunning operation was a
   // retriable error, `StartAsyncPollOp` would keep querying that operation.
   // That would be incorrect, hence the extra `StatusOr<>`.
-  future<StatusOr<optional<StatusOr<Response>>>> operator()(
+  future<StatusOr<absl::optional<StatusOr<Response>>>> operator()(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context) {
     if (operation_.done()) {
       // The operation supplied in the ctor can be already completed. In such a
       // case, we shouldn't send the RPC - we already have the response.
-      return make_ready_future<StatusOr<optional<StatusOr<Response>>>>(
+      return make_ready_future<StatusOr<absl::optional<StatusOr<Response>>>>(
           FinalResult());
     }
     google::longrunning::GetOperationRequest request;
@@ -78,33 +79,33 @@ class AsyncLongrunningOperation {
             },
             std::move(request), std::move(context))
         .then([this](future<StatusOr<google::longrunning::Operation>> fut)
-                  -> StatusOr<optional<StatusOr<Response>>> {
+                  -> StatusOr<absl::optional<StatusOr<Response>>> {
           auto res = fut.get();
           if (!res) {
             return res.status();
           }
           operation_.Swap(&(*res));
           if (!operation_.done()) {
-            return optional<StatusOr<Response>>();
+            return absl::optional<StatusOr<Response>>();
           }
           return FinalResult();
         });
   }
 
  private:
-  StatusOr<optional<StatusOr<Response>>> FinalResult() {
+  StatusOr<absl::optional<StatusOr<Response>>> FinalResult() {
     if (operation_.has_error()) {
-      return optional<StatusOr<Response>>(
+      return absl::optional<StatusOr<Response>>(
           Status(static_cast<StatusCode>(operation_.error().code()),
                  operation_.error().message()));
     }
     Response res;
     if (!operation_.response().UnpackTo(&res)) {
-      return optional<StatusOr<Response>>(
+      return absl::optional<StatusOr<Response>>(
           Status(StatusCode::kInternal,
                  "Longrunning operation's result didn't parse."));
     }
-    return optional<StatusOr<Response>>(std::move(res));
+    return absl::optional<StatusOr<Response>>(std::move(res));
   }
 
   std::shared_ptr<Client> client_;

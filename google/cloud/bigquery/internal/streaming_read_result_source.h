@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/read_result.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
 #include <memory>
 
@@ -39,7 +40,7 @@ class StreamingReadResultSource : public ReadResultSource {
         offset_(0),
         fraction_consumed_(0) {}
 
-  StatusOr<optional<Row>> NextRow() override;
+  StatusOr<absl::optional<Row>> NextRow() override;
   std::size_t CurrentOffset() override { return offset_; }
   double FractionConsumed() override { return fraction_consumed_; }
 
@@ -48,7 +49,8 @@ class StreamingReadResultSource : public ReadResultSource {
       StreamReader<google::cloud::bigquery::storage::v1beta1::ReadRowsResponse>>
       reader_;
 
-  optional<google::cloud::bigquery::storage::v1beta1::ReadRowsResponse> curr_;
+  absl::optional<google::cloud::bigquery::storage::v1beta1::ReadRowsResponse>
+      curr_;
   std::int64_t offset_in_curr_response_;
   std::size_t offset_;
   double fraction_consumed_;

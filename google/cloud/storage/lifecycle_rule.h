@@ -18,8 +18,8 @@
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/parse_rfc3339.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <iosfwd>
 #include <utility>
@@ -76,11 +76,11 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs);
 
 /// Implement a wrapper for Lifecycle Conditions.
 struct LifecycleRuleCondition {
-  google::cloud::optional<std::int32_t> age;
-  google::cloud::optional<std::chrono::system_clock::time_point> created_before;
-  google::cloud::optional<bool> is_live;
-  google::cloud::optional<std::vector<std::string>> matches_storage_class;
-  google::cloud::optional<std::int32_t> num_newer_versions;
+  absl::optional<std::int32_t> age;
+  absl::optional<std::chrono::system_clock::time_point> created_before;
+  absl::optional<bool> is_live;
+  absl::optional<std::vector<std::string>> matches_storage_class;
+  absl::optional<std::int32_t> num_newer_versions;
 };
 
 inline bool operator==(LifecycleRuleCondition const& lhs,

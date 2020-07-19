@@ -17,8 +17,8 @@
 
 #include "google/cloud/bigquery/row.h"
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <functional>
 #include <memory>
 
@@ -64,7 +64,8 @@ class RowSet {
 
    private:
     friend RowSet;
-    explicit Iterator(std::function<StatusOr<optional<RowType>>()>* source)
+    explicit Iterator(
+        std::function<StatusOr<absl::optional<RowType>>()>* source)
         : source_(source) {
       if (source_) {
         Advance();
@@ -83,14 +84,14 @@ class RowSet {
       }
     }
 
-    std::function<StatusOr<optional<RowType>>()>* source_;
+    std::function<StatusOr<absl::optional<RowType>>()>* source_;
     StatusOr<RowType> curr_;
   };
 
   using value_type = StatusOr<RowType>;
   using iterator = Iterator<value_type>;
 
-  explicit RowSet(std::function<StatusOr<optional<RowType>>()> source)
+  explicit RowSet(std::function<StatusOr<absl::optional<RowType>>()> source)
       : source_(std::move(source)) {}
 
   iterator begin() { return iterator(&source_); }
@@ -98,7 +99,7 @@ class RowSet {
   iterator end() { return iterator(nullptr); }
 
  private:
-  std::function<StatusOr<optional<RowType>>()> source_;
+  std::function<StatusOr<absl::optional<RowType>>()> source_;
 };
 
 }  // namespace BIGQUERY_CLIENT_NS

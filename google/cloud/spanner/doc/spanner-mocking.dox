@@ -50,8 +50,8 @@ returned one value at a time, even if a row contains multiple values.
 
 @snippet mock_execute_query.cc simulate-streaming-results
 
-Note that the last value in the stream is indicated by an optional without a
-value:
+Note that the last value in the stream is indicated by an absl::optional
+without a value:
 
 @snippet mock_execute_query.cc simulate-streaming-end
 

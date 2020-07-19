@@ -49,7 +49,7 @@ MATCHER_P(IsValidAndEquals, expected,
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   Status finish_status(StatusCode::kInvalidArgument, "invalid");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
 
@@ -79,7 +79,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   Status finish_status(StatusCode::kCancelled, "cancelled");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
   // The first call to NextRow() yields a row but the second gives an error.
@@ -119,7 +119,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -196,7 +196,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -319,7 +319,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
       .WillOnce(Return(response[2]))
       .WillOnce(Return(response[3]))
       .WillOnce(Return(response[4]))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -374,7 +374,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
       .WillOnce(Return(response[2]))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -438,7 +438,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
       .WillOnce(Return(response[2]))
       .WillOnce(Return(response[3]))
       .WillOnce(Return(response[4]))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -575,7 +575,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(response[0]))
       .WillOnce(Return(response[1]))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -698,7 +698,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
       .WillOnce(Return(response[2]))
       .WillOnce(Return(response[3]))
       .WillOnce(Return(response[4]))
-      .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
+      .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
   auto context = absl::make_unique<grpc::ClientContext>();

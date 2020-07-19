@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_IS_PROTO_EQUAL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_IS_PROTO_EQUAL_H
 
-#include "google/cloud/optional.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/message.h>
 #include <gmock/gmock.h>
 
@@ -25,11 +25,12 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-optional<std::string> CompareProtos(google::protobuf::Message const& arg,
-                                    google::protobuf::Message const& value);
+absl::optional<std::string> CompareProtos(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value);
 
 MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
-  optional<std::string> delta = CompareProtos(arg, value);
+  absl::optional<std::string> delta = CompareProtos(arg, value);
   if (delta.has_value()) {
     *result_listener << "\n" << *delta;
   }

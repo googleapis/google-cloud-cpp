@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
+#include "absl/types/optional.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
   ~LoggingResultSetReader() override = default;
 
   void TryCancel() override;
-  optional<google::spanner::v1::PartialResultSet> Read() override;
+  absl::optional<google::spanner::v1::PartialResultSet> Read() override;
   Status Finish() override;
 
  private:

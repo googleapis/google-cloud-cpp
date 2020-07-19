@@ -66,7 +66,7 @@ TEST(PatchBuilderTest, Int) {
 
 TEST(PatchBuilderTest, OptionalBool) {
   PatchBuilder builder;
-  using bopt = google::cloud::optional<bool>;
+  using bopt = absl::optional<bool>;
   builder.AddOptionalField("set-value", bopt(false), bopt(true));
   builder.AddOptionalField("unset-value", bopt(false), bopt());
   builder.AddOptionalField("untouched-value", bopt(true), bopt(true));
@@ -80,7 +80,7 @@ TEST(PatchBuilderTest, OptionalBool) {
 
 TEST(PatchBuilderTest, OptionalInt) {
   PatchBuilder builder;
-  using opt = google::cloud::optional<std::int64_t>;
+  using opt = absl::optional<std::int64_t>;
   builder.AddOptionalField("set-value", opt(0), opt(42));
   builder.AddOptionalField("unset-value", opt(42), opt());
   builder.AddOptionalField("untouched-value", opt(7), opt(7));

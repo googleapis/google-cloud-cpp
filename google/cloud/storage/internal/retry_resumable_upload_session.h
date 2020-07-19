@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
+#include "absl/types/optional.h"
 #include <memory>
 
 namespace google {
@@ -55,7 +56,8 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   // Retry either UploadChunk or either UploadFinalChunk. Note that we need a
   // copy of the buffers because on some retries they need to be modified.
   StatusOr<ResumableUploadResponse> UploadGenericChunk(
-      ConstBufferSequence buffers, optional<std::uint64_t> const& upload_size);
+      ConstBufferSequence buffers,
+      absl::optional<std::uint64_t> const& upload_size);
 
   // Reset the current session using previously cloned policies.
   StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,

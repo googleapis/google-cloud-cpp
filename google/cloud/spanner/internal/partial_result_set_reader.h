@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_READER_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status.h"
+#include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -42,7 +42,7 @@ class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual optional<google::spanner::v1::PartialResultSet> Read() = 0;
+  virtual absl::optional<google::spanner::v1::PartialResultSet> Read() = 0;
   virtual Status Finish() = 0;
 };
 

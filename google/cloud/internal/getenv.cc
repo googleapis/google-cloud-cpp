@@ -27,7 +27,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-optional<std::string> GetEnv(char const* variable) {
+absl::optional<std::string> GetEnv(char const* variable) {
 #if _WIN32
   // On Windows, std::getenv() is not thread-safe. It returns a pointer that
   // can be invalidated by _putenv_s(). We must use the thread-safe alternative,
@@ -40,9 +40,9 @@ optional<std::string> GetEnv(char const* variable) {
   char* buffer = std::getenv(variable);
 #endif  // _WIN32
   if (buffer == nullptr) {
-    return optional<std::string>();
+    return absl::optional<std::string>();
   }
-  return optional<std::string>(std::string{buffer});
+  return absl::optional<std::string>(std::string{buffer});
 }
 
 }  // namespace internal

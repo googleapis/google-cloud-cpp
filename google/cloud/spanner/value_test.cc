@@ -15,8 +15,8 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/testing/matchers.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
@@ -62,8 +62,8 @@ void TestBasicSemantics(T init) {
   Value const null = MakeNullValue<T>();
 
   EXPECT_FALSE(null.get<T>().ok());
-  EXPECT_STATUS_OK(null.get<optional<T>>());
-  EXPECT_EQ(optional<T>{}, *null.get<optional<T>>());
+  EXPECT_STATUS_OK(null.get<absl::optional<T>>());
+  EXPECT_EQ(absl::optional<T>{}, *null.get<absl::optional<T>>());
 
   Value copy_null = null;
   EXPECT_EQ(copy_null, null);
@@ -80,11 +80,11 @@ void TestBasicSemantics(T init) {
   EXPECT_EQ(null_protos.second.null_value(),
             google::protobuf::NullValue::NULL_VALUE);
 
-  Value const not_null{optional<T>(init)};
+  Value const not_null{absl::optional<T>(init)};
   EXPECT_STATUS_OK(not_null.get<T>());
   EXPECT_EQ(init, *not_null.get<T>());
-  EXPECT_STATUS_OK(not_null.get<optional<T>>());
-  EXPECT_EQ(init, **not_null.get<optional<T>>());
+  EXPECT_STATUS_OK(not_null.get<absl::optional<T>>());
+  EXPECT_EQ(init, **not_null.get<absl::optional<T>>());
 }
 
 TEST(Value, BasicSemantics) {
@@ -92,7 +92,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<bool>(5, x));
-    std::vector<optional<bool>> v(5, x);
+    std::vector<absl::optional<bool>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -103,7 +103,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: std::int64_t " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::int64_t>(5, x));
-    std::vector<optional<std::int64_t>> v(5, x);
+    std::vector<absl::optional<std::int64_t>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -115,7 +115,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<double>(5, x));
-    std::vector<optional<double>> v(5, x);
+    std::vector<absl::optional<double>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -125,7 +125,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::string>(5, x));
-    std::vector<optional<std::string>> v(5, x);
+    std::vector<absl::optional<std::string>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -135,7 +135,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: Bytes " + x.get<std::string>());
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<Bytes>(5, x));
-    std::vector<optional<Bytes>> v(5, x);
+    std::vector<absl::optional<Bytes>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -152,7 +152,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: google::cloud::spanner::Numeric " + x.ToString());
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<Numeric>(5, x));
-    std::vector<optional<Numeric>> v(5, x);
+    std::vector<absl::optional<Numeric>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -174,7 +174,7 @@ TEST(Value, BasicSemantics) {
       TestBasicSemantics(ts);
       std::vector<Timestamp> v(5, ts);
       TestBasicSemantics(v);
-      std::vector<optional<Timestamp>> ov(5, ts);
+      std::vector<absl::optional<Timestamp>> ov(5, ts);
       ov.resize(10);
       TestBasicSemantics(ov);
     }
@@ -193,7 +193,7 @@ TEST(Value, BasicSemantics) {
                  internal::DateToString(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<Date>(5, x));
-    std::vector<optional<Date>> v(5, x);
+    std::vector<absl::optional<Date>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -202,7 +202,7 @@ TEST(Value, BasicSemantics) {
   auto const x = CommitTimestamp{};
   TestBasicSemantics(x);
   TestBasicSemantics(std::vector<CommitTimestamp>(5, x));
-  std::vector<optional<CommitTimestamp>> v(5, x);
+  std::vector<absl::optional<CommitTimestamp>> v(5, x);
   v.resize(10);
   TestBasicSemantics(v);
 }
@@ -266,7 +266,7 @@ TEST(Value, RvalueGetString) {
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
 TEST(Value, RvalueGetOptoinalString) {
-  using Type = optional<std::string>;
+  using Type = absl::optional<std::string>;
   Type const data = std::string(128, 'x');
   Value v(data);
 
@@ -526,9 +526,9 @@ TEST(Value, SpannerStruct) {
   EXPECT_STATUS_OK(v1.get<T2>());
   EXPECT_STATUS_OK(v2.get<T1>());
 
-  Value v_null(optional<T1>{});
-  EXPECT_FALSE(v_null.get<optional<T1>>()->has_value());
-  EXPECT_FALSE(v_null.get<optional<T2>>()->has_value());
+  Value v_null(absl::optional<T1>{});
+  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
 
   EXPECT_NE(v1, v_null);
   EXPECT_NE(v2, v_null);
@@ -559,7 +559,7 @@ TEST(Value, SpannerStruct) {
   EXPECT_STATUS_OK(v5.get<T5>());
   EXPECT_EQ(empty, *v5.get<T5>());
 
-  auto crazy = tuple<tuple<std::vector<optional<bool>>>>{};
+  auto crazy = tuple<tuple<std::vector<absl::optional<bool>>>>{};
   using T6 = decltype(crazy);
   Value v6(crazy);
   EXPECT_STATUS_OK(v6.get<T6>());
@@ -573,7 +573,7 @@ TEST(Value, SpannerStruct) {
 
 TEST(Value, SpannerStructWithNull) {
   auto v1 = Value(std::make_tuple(123, true));
-  auto v2 = Value(std::make_tuple(123, optional<bool>{}));
+  auto v2 = Value(std::make_tuple(123, absl::optional<bool>{}));
 
   auto protos1 = internal::ToProto(v1);
   auto protos2 = internal::ToProto(v2);
@@ -954,15 +954,15 @@ TEST(Value, GetBadDate) {
 }
 
 TEST(Value, GetBadOptional) {
-  Value v(optional<double>{});
+  Value v(absl::optional<double>{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<optional<double>>().ok());
+  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<optional<double>>().ok());
+  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<optional<double>>().ok());
+  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
 }
 
 TEST(Value, GetBadArray) {
@@ -1100,7 +1100,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<Numeric>{2}), "[0, 0]", normal},
       {Value(std::vector<Date>{2}), "[1970-01-01, 1970-01-01]", normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
-      {Value(std::vector<optional<double>>{1, {}, 2}), "[1, NULL, 2]", normal},
+      {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
+       normal},
 
       // Tests null arrays
       {MakeNullValue<std::vector<bool>>(), "NULL", normal},
@@ -1137,10 +1138,12 @@ TEST(Value, OutputStream) {
        "((([a, b, c])))", hex},
 
       // Tests struct with null members
-      {Value(std::make_tuple(optional<bool>{})), "(NULL)", normal},
-      {Value(std::make_tuple(optional<bool>{}, 123)), "(NULL, 123)", normal},
-      {Value(std::make_tuple(optional<bool>{}, 123)), "(NULL, 7b)", hex},
-      {Value(std::make_tuple(optional<bool>{}, optional<std::int64_t>{})),
+      {Value(std::make_tuple(absl::optional<bool>{})), "(NULL)", normal},
+      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 123)",
+       normal},
+      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 7b)", hex},
+      {Value(std::make_tuple(absl::optional<bool>{},
+                             absl::optional<std::int64_t>{})),
        "(NULL, NULL)", normal},
 
       // Tests null structs

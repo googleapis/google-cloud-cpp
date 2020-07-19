@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_BOUNDED_QUEUE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_BOUNDED_QUEUE_H
 
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <condition_variable>
 #include <deque>
 #include <mutex>
@@ -39,7 +39,7 @@ class BoundedQueue {
     cv_write_.notify_all();
   }
 
-  google::cloud::optional<T> Pop() {
+  absl::optional<T> Pop() {
     std::unique_lock<std::mutex> lk(mu_);
     cv_read_.wait(lk, [this]() { return is_shutdown_ || !empty(); });
     if (empty()) return {};

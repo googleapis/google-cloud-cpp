@@ -6,11 +6,12 @@
 absent from the responses received from the server. Furthermore, the application
 can use the `fields` query parameter to select a subset of the fields in a
 response. A natural question is whether the fields should be represented as
-`optional<T>`. That is, whether the class to represent object attributes should
-look like this:
+`absl::optional<T>`. That is, whether the class to represent object attributes
+should look like this:
 
 ```C++
-class ObjectMetadata { public:
+class ObjectMetadata {
+ public:
   std::string const& name() const;
   std::chrono::system_clock::time_point time_created() const;
   CustomerEncryption const& customer_encryption() const;
@@ -20,11 +21,11 @@ class ObjectMetadata { public:
 or it should look like this:
 
 ```C++
-using google::cloud::optional;
-class ObjectMetadata { public:
-  optional<std::string> const& name() const;
-  optional<std::chrono::system_clock::time_point> time_created() const;
-  optional<CustomerEncryption> const& customer_encryption() const;
+class ObjectMetadata {
+ public:
+  absl::optional<std::string> const& name() const;
+  absl::optional<std::chrono::system_clock::time_point> time_created() const;
+  absl::optional<CustomerEncryption> const& customer_encryption() const;
 };
 ```
 
@@ -36,10 +37,10 @@ class ObjectMetadata { public:
   present and an empty array we just use `std::vector<>`.
 * For integer and boolean fields we default to `0` (and `false`) if the field
   is not present.
-* For object fields we default to wrapping the field in `optional<>`.
+* For object fields we default to wrapping the field in `absl::optional<>`.
 
-For fields wrapped in `optional<>` we offer convenience functions to make it
-easier to operate on these fields. For a field called `foo` these are:
+For fields wrapped in `absl::optional<>` we offer convenience functions to make
+it easier to operate on these fields. For a field called `foo` these are:
 
 * `has_foo()` returns true if the field is set.
 * `foo()` returns the field value if set, the behavior is undefined if the value

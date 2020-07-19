@@ -15,10 +15,10 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
 #include <dlfcn.h>
@@ -180,11 +180,11 @@ class SymbolInterceptor {
 
   SendPtr orig_send_;
   RecvPtr orig_recv_;
-  optional<int> last_seen_send_fd_;
-  optional<FailDesc> fail_send_;
+  absl::optional<int> last_seen_send_fd_;
+  absl::optional<FailDesc> fail_send_;
   std::size_t num_failed_send_;
-  optional<int> last_seen_recv_fd_;
-  optional<FailDesc> fail_recv_;
+  absl::optional<int> last_seen_recv_fd_;
+  absl::optional<FailDesc> fail_recv_;
   std::size_t num_failed_recv_;
 };
 

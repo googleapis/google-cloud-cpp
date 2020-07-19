@@ -137,7 +137,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
    * - PERMISSION_DENIED if returned && *returned && !**returned
    * - `SampleRowKeysResponse` with row_key equal to **returned otherwise
    */
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> SimulateCall(
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> SimulateCall(
       std::function<void(google::longrunning::Operation&, grpc::Status&)> const&
           response_filler,
       google::longrunning::Operation op) {
@@ -182,7 +182,7 @@ TEST_F(AsyncLongrunningOperationTest, Success) {
   google::longrunning::Operation op;
   op.set_name("test_operation_id");
 
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res =
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> res =
       SimulateCall(OperationFinishedSuccessfully, op);
 
   ASSERT_STATUS_OK(res);
@@ -195,7 +195,7 @@ TEST_F(AsyncLongrunningOperationTest, Unfinished) {
   google::longrunning::Operation op;
   op.set_name("test_operation_id");
 
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
       [](google::longrunning::Operation& response, grpc::Status& status) {
         status = grpc::Status();
         response.set_name("test_operation_id");
@@ -211,7 +211,7 @@ TEST_F(AsyncLongrunningOperationTest, FinishedFailure) {
   google::longrunning::Operation op;
   op.set_name("test_operation_id");
 
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
       [](google::longrunning::Operation& response, grpc::Status& status) {
         status = grpc::Status();
         response.set_name("test_operation_id");
@@ -233,7 +233,7 @@ TEST_F(AsyncLongrunningOperationTest, PollExhausted) {
   google::longrunning::Operation op;
   op.set_name("test_operation_id");
 
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
       [](google::longrunning::Operation&, grpc::Status& status) {
         status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "oh no");
       },
@@ -253,7 +253,7 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
       operation(client_, std::move(op));
   auto fut = operation(cq_, std::move(context_));
   EXPECT_TRUE(cq_impl_->empty());
-  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = fut.get();
+  StatusOr<absl::optional<StatusOr<SampleRowKeysResponse>>> res = fut.get();
 
   ASSERT_STATUS_OK(res);
   ASSERT_TRUE(*res);

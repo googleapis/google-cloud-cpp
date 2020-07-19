@@ -18,8 +18,8 @@
 #include "google/cloud/bigquery/internal/stream_reader.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
 #include <grpcpp/create_channel.h>
@@ -38,7 +38,6 @@ constexpr auto kRoutingHeader = "x-goog-request-params";
 namespace bigquerystorage_proto = ::google::cloud::bigquery::storage::v1beta1;
 
 using ::google::cloud::MakeStatusFromRpcError;
-using ::google::cloud::optional;
 using ::google::cloud::StatusOr;
 
 // An implementation of StreamReader for gRPC unary-streaming methods.
@@ -49,16 +48,16 @@ class GrpcStreamReader : public StreamReader<T> {
                    std::unique_ptr<grpc::ClientReaderInterface<T>> reader)
       : context_(std::move(context)), reader_(std::move(reader)) {}
 
-  StatusOr<optional<T>> NextValue() override {
+  StatusOr<absl::optional<T>> NextValue() override {
     T t;
     if (reader_->Read(&t)) {
-      return optional<T>(t);
+      return absl::optional<T>(t);
     }
     grpc::Status grpc_status = reader_->Finish();
     if (!grpc_status.ok()) {
       return MakeStatusFromRpcError(grpc_status);
     }
-    return optional<T>();
+    return absl::optional<T>();
   }
 
  private:

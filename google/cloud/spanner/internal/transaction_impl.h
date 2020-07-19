@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
 #include <cstdint>
@@ -35,7 +35,7 @@ namespace internal {
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&,
-    optional<google::spanner::v1::TransactionSelector>&, std::int64_t>;
+    absl::optional<google::spanner::v1::TransactionSelector>&, std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -80,7 +80,7 @@ class TransactionImpl {
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(google::cloud::internal::is_invocable<
                       Functor, SessionHolder&,
-                      optional<google::spanner::v1::TransactionSelector>&,
+                      absl::optional<google::spanner::v1::TransactionSelector>&,
                       std::int64_t>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
@@ -135,7 +135,7 @@ class TransactionImpl {
   std::mutex mu_;
   std::condition_variable cond_;
   SessionHolder session_;
-  optional<google::spanner::v1::TransactionSelector> selector_;
+  absl::optional<google::spanner::v1::TransactionSelector> selector_;
   std::int64_t seqno_;
 };
 

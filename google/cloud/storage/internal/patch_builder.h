@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -74,7 +74,7 @@ class PatchBuilder {
    * Add a boolean field to the patch.
    *
    * There is no `bool` value used to represent `null`, if you want to delete
-   * boolean fields use the `optional<bool>` overload.
+   * boolean fields use the `absl::optional<bool>` overload.
    */
   PatchBuilder& AddBoolField(char const* field_name, bool lhs, bool rhs) {
     if (lhs == rhs) return *this;
@@ -112,8 +112,8 @@ class PatchBuilder {
    */
   template <typename T>
   PatchBuilder& AddOptionalField(char const* field_name,
-                                 google::cloud::optional<T> const& lhs,
-                                 google::cloud::optional<T> const& rhs) {
+                                 absl::optional<T> const& lhs,
+                                 absl::optional<T> const& rhs) {
     if (lhs == rhs) return *this;
     if (!rhs.has_value()) {
       patch_[field_name] = nullptr;

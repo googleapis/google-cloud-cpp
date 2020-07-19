@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -206,7 +207,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccGetFailure) {
 
   DatabaseAdminClient client(mock);
   auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const&) {
-    return optional<google::iam::v1::Policy>{};
+    return absl::optional<google::iam::v1::Policy>{};
   });
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
@@ -226,7 +227,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccNoUpdates) {
   DatabaseAdminClient client(mock);
   auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const& p) {
     EXPECT_EQ("test-etag", p.etag());
-    return optional<google::iam::v1::Policy>{};
+    return absl::optional<google::iam::v1::Policy>{};
   });
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ("test-etag", actual->etag());

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/tracing_options.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <algorithm>
 #include <cstdint>
 #include <string>
@@ -23,7 +23,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-optional<bool> ParseBoolean(std::string const& str) {
+absl::optional<bool> ParseBoolean(std::string const& str) {
   for (const auto t : {"Y", "y", "T", "t", "1", "on"}) {
     if (str == t) return true;
   }
@@ -33,7 +33,7 @@ optional<bool> ParseBoolean(std::string const& str) {
   return {};
 }
 
-optional<std::int64_t> ParseInteger(std::string const& str) {
+absl::optional<std::int64_t> ParseInteger(std::string const& str) {
   std::size_t econv = -1;
   auto val = std::stoll(str, &econv);
   if (econv != str.size()) return {};

@@ -16,8 +16,8 @@
 #include "google/cloud/bigquery/read_result.h"
 #include "google/cloud/bigquery/row.h"
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <memory>
 
 namespace google {
@@ -30,7 +30,7 @@ namespace {
 namespace bigquerystorage_proto = ::google::cloud::bigquery::storage::v1beta1;
 }  // namespace
 
-StatusOr<optional<Row>> StreamingReadResultSource::NextRow() {
+StatusOr<absl::optional<Row>> StreamingReadResultSource::NextRow() {
   if (!curr_ || offset_in_curr_response_ == curr_->row_count()) {
     // Either no response has ever been read from the server or the previous
     // call to this function consumed the last row in the last response.
@@ -39,7 +39,7 @@ StatusOr<optional<Row>> StreamingReadResultSource::NextRow() {
       return next.status();
     }
     if (!next.value()) {
-      return optional<Row>();
+      return absl::optional<Row>();
     }
     curr_ = std::move(next.value());
     offset_in_curr_response_ = 0;
@@ -57,7 +57,7 @@ StatusOr<optional<Row>> StreamingReadResultSource::NextRow() {
       (progress.at_response_end() - progress.at_response_start()) *
           offset_in_curr_response_ * 1.0 / curr_->row_count();
 
-  return optional<Row>(Row());
+  return absl::optional<Row>(Row());
 }
 
 }  // namespace internal

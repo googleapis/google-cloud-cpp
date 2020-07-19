@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
 #include <utility>
@@ -138,7 +138,7 @@ class CommonMetadata {
   std::string kind_;
   std::int64_t metageneration_{0};
   std::string name_;
-  google::cloud::optional<Owner> owner_;
+  absl::optional<Owner> owner_;
   std::string self_link_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;
