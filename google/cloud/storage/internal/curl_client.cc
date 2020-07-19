@@ -510,9 +510,10 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   }
 
   // If the application has set an explicit hash value we need to use multipart
-  // uploads. We check `DisableCrc32cChecksum` only because `DisableMD5Hash`
-  // always has a value.
-  if (!request.HasOption<DisableCrc32cChecksum>()) {
+  // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
+  // dependent on each other.
+  if (!request.GetOption<DisableMD5Hash>().value() ||
+      !request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
     return InsertObjectMediaMultipart(request);
   }
 
@@ -1192,13 +1193,13 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (request.HasOption<MD5HashValue>()) {
     builder.AddHeader("x-goog-hash: md5=" +
                       request.GetOption<MD5HashValue>().value());
-  } else if (!request.HasOption<DisableMD5Hash>()) {
+  } else if (!request.GetOption<DisableMD5Hash>().value()) {
     builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
   }
   if (request.HasOption<Crc32cChecksumValue>()) {
     builder.AddHeader("x-goog-hash: crc32c=" +
                       request.GetOption<Crc32cChecksumValue>().value());
-  } else if (!request.HasOption<DisableCrc32cChecksum>()) {
+  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
     builder.AddHeader("x-goog-hash: crc32c=" +
                       ComputeCrc32cChecksum(request.contents()));
   }
@@ -1317,13 +1318,13 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   }
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
-  } else {
+  } else if (!request.GetOption<DisableMD5Hash>().value()) {
     metadata["md5Hash"] = ComputeMD5Hash(request.contents());
   }
 
   if (request.HasOption<Crc32cChecksumValue>()) {
     metadata["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
-  } else {
+  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
     metadata["crc32c"] = ComputeCrc32cChecksum(request.contents());
   }
 

@@ -100,14 +100,14 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
         // contents.
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
-  // The count should be 0 because there is no MD5Hash computation.
-  EXPECT_EQ(0, count);
+  // The count should be greater then 0 because there is Crc32cChecksum
+  // computations.
+  EXPECT_LE(1, count);
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    // It should be `simple` because there is no MD5Hash computation.
-    EXPECT_EQ("simple", insert_meta->metadata("x_testbench_upload"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
@@ -171,12 +171,14 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
         // contents.
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
-  EXPECT_EQ(0, count);
+  // The count should be greater then 0 because there is Crc32cChecksum
+  // computations.
+  EXPECT_LE(1, count);
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("simple", insert_meta->metadata("x_testbench_upload"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
