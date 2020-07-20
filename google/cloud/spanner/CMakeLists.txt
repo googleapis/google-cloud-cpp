@@ -58,7 +58,6 @@ add_library(
     database_admin_client.h
     database_admin_connection.cc
     database_admin_connection.h
-    date.cc
     date.h
     iam_updater.h
     instance.cc
@@ -81,8 +80,6 @@ add_library(
     internal/database_admin_metadata.h
     internal/database_admin_stub.cc
     internal/database_admin_stub.h
-    internal/date.cc
-    internal/date.h
     internal/instance_admin_logging.cc
     internal/instance_admin_logging.h
     internal/instance_admin_metadata.cc
@@ -265,7 +262,6 @@ function (spanner_client_define_tests)
         database_admin_client_test.cc
         database_admin_connection_test.cc
         database_test.cc
-        date_test.cc
         instance_admin_client_test.cc
         instance_admin_connection_test.cc
         instance_test.cc
@@ -275,7 +271,6 @@ function (spanner_client_define_tests)
         internal/connection_impl_test.cc
         internal/database_admin_logging_test.cc
         internal/database_admin_metadata_test.cc
-        internal/date_test.cc
         internal/instance_admin_logging_test.cc
         internal/instance_admin_metadata_test.cc
         internal/log_wrapper_test.cc
@@ -354,12 +349,8 @@ function (spanner_client_define_benchmarks)
 
     set(spanner_client_benchmarks
         # cmake-format: sortable
-        bytes_benchmark.cc
-        internal/date_benchmark.cc
-        internal/merge_chunk_benchmark.cc
-        internal/time_format_benchmark.cc
-        numeric_benchmark.cc
-        row_benchmark.cc)
+        bytes_benchmark.cc internal/merge_chunk_benchmark.cc
+        internal/time_format_benchmark.cc numeric_benchmark.cc row_benchmark.cc)
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
     # the list in two places.

@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DATE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DATE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DATE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DATE_H
 
-#include "google/cloud/spanner/date.h"
-#include "google/cloud/spanner/version.h"
+#include "google/cloud/date.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
@@ -39,9 +38,8 @@ std::string DateToString(Date d);
 StatusOr<Date> DateFromString(std::string const& s);
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DATE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DATE_H

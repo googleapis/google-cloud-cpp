@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/date.h"
+#include "google/cloud/date.h"
 #include <gmock/gmock.h>
 #include <sstream>
 #include <vector>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 TEST(Date, Basics) {
@@ -101,7 +100,6 @@ TEST(Date, OutputStream) {
 }
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

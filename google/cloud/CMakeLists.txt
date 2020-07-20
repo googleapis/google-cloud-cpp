@@ -103,6 +103,8 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    date.cc
+    date.h
     future.h
     future_generic.h
     future_void.h
@@ -118,6 +120,8 @@ add_library(
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/conjunction.h
+    internal/date.cc
+    internal/date.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_msvc_crt_secure_warnings.inc
@@ -185,9 +189,38 @@ create_bazel_config(google_cloud_cpp_common YEAR 2018)
 
 add_subdirectory(testing_util)
 
+# Define the benchmarks in a function so we have a new scope for variable names.
+function (google_cloud_cpp_common_define_benchmarks)
+    find_package(benchmark CONFIG REQUIRED)
+
+    set(google_cloud_cpp_common_benchmarks # cmake-format: sortable
+                                           internal/date_benchmark.cc)
+
+    # Export the list of benchmarks to a .bzl file so we do not need to maintain
+    # the list in two places.
+    export_list_to_bazel("google_cloud_cpp_common_benchmarks.bzl"
+                         "google_cloud_cpp_common_benchmarks" YEAR "2020")
+
+    # Create a custom target so we can say "build all the benchmarks"
+    add_custom_target(google-cloud-cpp-common-benchmarks)
+
+    # Generate a target for each benchmark.
+    foreach (fname ${google_cloud_cpp_common_benchmarks})
+        google_cloud_cpp_add_executable(target "common" "${fname}")
+        add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(${target} PRIVATE google_cloud_cpp_common
+                                                benchmark::benchmark_main)
+        google_cloud_cpp_add_common_options(${target})
+
+        add_dependencies(google-cloud-cpp-common-benchmarks ${target})
+    endforeach ()
+endfunction ()
+
 if (BUILD_TESTING)
+    google_cloud_cpp_common_define_benchmarks()
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        date_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
@@ -196,6 +229,7 @@ if (BUILD_TESTING)
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
+        internal/date_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc

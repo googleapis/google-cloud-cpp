@@ -646,7 +646,10 @@ class GcsObject(object):
         )
         meta = revision.metadata.setdefault("metadata", {})
         meta["x_testbench_upload"] = "multipart"
-        meta["x_testbench_md5"] = resource.get("md5Hash", "")
+        if "md5Hash" in resource:
+            # We should return `x_testbench_md5` only when the user enables
+            # `MD5Hash` computations.
+            meta["x_testbench_md5"] = resource.get("md5Hash")
         meta["x_testbench_crc32c"] = resource.get("crc32c", "")
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(resource)

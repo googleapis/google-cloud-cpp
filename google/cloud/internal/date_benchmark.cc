@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/internal/date.h"
 #include <benchmark/benchmark.h>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -54,7 +53,6 @@ BENCHMARK(BM_DateFromString);
 
 }  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

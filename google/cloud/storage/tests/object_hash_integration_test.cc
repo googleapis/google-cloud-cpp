@@ -44,7 +44,7 @@ class ObjectHashIntegrationTest
   std::string bucket_name_;
 };
 
-/// @test Verify that MD5 hashes are computed by default.
+/// @test Verify that MD5 hashes are disabled by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
@@ -67,14 +67,14 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
                     [](std::string const& line) {
                       return line.rfind("x-goog-hash: md5=", 0) == 0;
                     });
-  // The count could be > 1 if there was a retry.
-  EXPECT_LE(1, count);
+  // The count should be 0 because there is no MD5Hash computation.
+  EXPECT_EQ(0, count);
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
-/// @test Verify that MD5 hashes are computed by default.
+/// @test Verify that MD5 hashes are disabled by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
@@ -100,16 +100,15 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
         // contents.
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
-  // The count could be > 1 if there was a retry.
+  // The count should be greater then 0 because there is Crc32cChecksum
+  // computations.
   EXPECT_LE(1, count);
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
-    ASSERT_TRUE(insert_meta->has_metadata("x_testbench_md5"));
-    auto expected_md5 = ComputeMD5Hash(LoremIpsum());
-    EXPECT_EQ(expected_md5, insert_meta->metadata("x_testbench_md5"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -172,12 +171,14 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
         // contents.
         return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
       });
-  EXPECT_EQ(0, count);
+  // The count should be greater then 0 because there is Crc32cChecksum
+  // computations.
+  EXPECT_LE(1, count);
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("simple", insert_meta->metadata("x_testbench_upload"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
@@ -185,7 +186,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
   ASSERT_STATUS_OK(status);
 }
 
-/// @test Verify that MD5 hashes are computed by default on downloads.
+/// @test Verify that MD5 hashes are disabled by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -204,13 +205,13 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->md5_hash()));
+  EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
-/// @test Verify that MD5 hashes are computed by default on downloads.
+/// @test Verify that MD5 hashes are disabled by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -230,7 +231,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->md5_hash()));
+  EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -290,7 +291,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
   ASSERT_STATUS_OK(status);
 }
 
-/// @test Verify that MD5 hashes are computed by default on uploads.
+/// @test Verify that MD5 hashes are disabled by default on uploads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -310,7 +311,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   os.Close();
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
+  EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -336,7 +337,7 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
 
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
+  EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -422,13 +423,13 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
+      IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -464,13 +465,13 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
+      IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
@@ -509,12 +510,12 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents,
+      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
@@ -544,12 +545,12 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents,
+      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
@@ -578,11 +579,11 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
-  ObjectWriteStream stream =
-      client->WriteObject(bucket_name_, object_name,
-                          DisableCrc32cChecksum(true), IfGenerationMatch(0),
-                          CustomHeader("x-goog-testbench-instructions",
-                                       "inject-upload-data-error"));
+  ObjectWriteStream stream = client->WriteObject(
+      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
+      IfGenerationMatch(0),
+      CustomHeader("x-goog-testbench-instructions",
+                   "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/internal/date.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
@@ -190,7 +190,7 @@ TEST(Value, BasicSemantics) {
            Date(2262, 4, 12)    // after system_clock limit
        }) {
     SCOPED_TRACE("Testing: google::cloud::spanner::Date " +
-                 internal::DateToString(x));
+                 google::cloud::internal::DateToString(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<Date>(5, x));
     std::vector<absl::optional<Date>> v(5, x);
@@ -720,7 +720,8 @@ TEST(Value, ProtoConversionDate) {
     auto const p = internal::ToProto(v);
     EXPECT_EQ(v, internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::DATE, p.first.code());
-    EXPECT_EQ(internal::DateToString(x), p.second.string_value());
+    EXPECT_EQ(google::cloud::internal::DateToString(x),
+              p.second.string_value());
   }
 }
 
