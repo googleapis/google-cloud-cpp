@@ -416,8 +416,6 @@ class TableAdmin {
   /**
    * Parameters for `CreateBackup` and `AsyncCreateBackup`.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -458,8 +456,6 @@ class TableAdmin {
   /**
    * Create a new backup of a table in the instance.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param params instance of `CreateBackupParams`.
    *
    * @par Idempotency
@@ -474,8 +470,6 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to create a new backup of a table in the
    * instance.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
@@ -504,8 +498,6 @@ class TableAdmin {
   /**
    * Get information about a single backup.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -530,8 +522,6 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to get information about a single backup.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
@@ -546,8 +536,7 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
    * @param backup_id the name of the backup relative to the cluster specified.
    *     The full backup name is
-   *
-   `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *    `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
    *     where PROJECT_ID is obtained from the associated AdminClient,
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
    *     CLUSTER_ID is the cluster_id previously specified.
@@ -568,8 +557,6 @@ class TableAdmin {
 
   /**
    * Parameters for `UpdateBackup` and `AsyncUpdateBackup`.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
@@ -603,8 +590,6 @@ class TableAdmin {
   /**
    * Updates a backup of a table in the instance.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param params instance of `UpdateBackupParams`.
    *
    * @par Idempotency
@@ -619,8 +604,6 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to update a backup of a table in the
    * instance.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
@@ -649,8 +632,6 @@ class TableAdmin {
   /**
    * Delete a backup.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -675,8 +656,6 @@ class TableAdmin {
   /**
    * Delete a backup.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
    *
    * @par Idempotency
@@ -689,8 +668,6 @@ class TableAdmin {
 
   /**
    * Sends an asynchronous request to delete a backup.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
@@ -728,8 +705,6 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to delete a backup.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
@@ -755,8 +730,6 @@ class TableAdmin {
 
   /**
    * Parameters for `ListBackups` and `AsyncListBackups`.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    */
   struct ListBackupsParams {
     ListBackupsParams() = default;
@@ -856,8 +829,6 @@ class TableAdmin {
   /**
    * Retrieves a list of backups.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param params instance of `ListBackupsParams`.
    *
    * @par Idempotency
@@ -871,8 +842,6 @@ class TableAdmin {
 
   /**
    * Sends an asynchronous request to retrieve a list of backups.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
@@ -900,8 +869,6 @@ class TableAdmin {
 
   /**
    * Parameters for `RestoreTable` and `AsyncRestoreTable`.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @param table_id the name of the table relative to the instance managed by
    *     this object. The full table name is
@@ -939,8 +906,6 @@ class TableAdmin {
   /**
    * Restore a backup into a new table in the instance.
    *
-   * @warning This feature is not GA, it is subject to change without notice.
-   *
    * @param params instance of `RestoreTableParams`.
    *
    * @par Idempotency
@@ -955,8 +920,6 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to restore a backup into a new table in the
    * instance.
-   *
-   * @warning This feature is not GA, it is subject to change without notice.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
