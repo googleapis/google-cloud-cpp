@@ -30,6 +30,8 @@ inline namespace SPANNER_CLIENT_NS {
  * We use `absl::CivilDay` to represent a "date". Direct use of
  * `absl::CivilDay` is recommended. This alias exists for backward
  * compatibility.
+ *
+ * @see https://abseil.io/docs/cpp/guides/time#civil-times
  */
 using Date = ::absl::CivilDay;
 
