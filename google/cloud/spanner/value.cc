@@ -488,8 +488,9 @@ StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
   return CommitTimestamp{};
 }
 
-StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay, google::protobuf::Value const& pv,
-                               google::spanner::v1::Type const&) {
+StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
+                                         google::protobuf::Value const& pv,
+                                         google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing DATE");
   }
