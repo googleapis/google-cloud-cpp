@@ -15,6 +15,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -24,17 +25,43 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-using google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 
-TEST(TimeUtils, ConvertTimepointToProtoTimestamp) {
-  auto const epoch = std::chrono::system_clock::from_time_t(0);
-  auto t = epoch + std::chrono::seconds(123) + std::chrono::nanoseconds(456000);
-  auto proto_timestamp = ToProtoTimestamp(t);
-  EXPECT_EQ(123, proto_timestamp.seconds());
-  EXPECT_EQ(456000, proto_timestamp.nanos());
+google::protobuf::Timestamp MakeProto(std::int64_t sec, std::int32_t nsec) {
+  google::protobuf::Timestamp ts;
+  ts.set_seconds(sec);
+  ts.set_nanos(nsec);
+  return ts;
 }
 
-TEST(TimeUtils, ConvertProtoTimestampToChronoTimePoint) {
+TEST(TimeUtils, ToProtoTimestamp) {
+  // Define a few constants and lambdas to make the test cases below read
+  // nicely with minimal wrapping.
+  auto const epoch = std::chrono::system_clock::from_time_t(0);
+  auto const& sec = [](std::int64_t n) { return std::chrono::seconds(n); };
+  auto const& ns = [](std::int64_t n) { return std::chrono::nanoseconds(n); };
+
+  struct {
+    std::chrono::system_clock::time_point tp;
+    google::protobuf::Timestamp expected;
+  } test_case[] = {
+      {epoch - sec(1), MakeProto(-1, 0)},
+      {epoch - sec(1) + ns(1), MakeProto(-1, 1)},
+      {epoch - ns(1), MakeProto(-1, 999999999)},
+      {epoch, MakeProto(0, 0)},
+      {epoch + ns(1), MakeProto(0, 1)},
+      {epoch + sec(1), MakeProto(1, 0)},
+      {epoch + sec(1) + ns(1), MakeProto(1, 1)},
+  };
+
+  for (auto const& tc : test_case) {
+    SCOPED_TRACE("Time point: " + absl::FormatTime(absl::FromChrono(tc.tp)));
+    auto const p = ToProtoTimestamp(tc.tp);
+    EXPECT_THAT(p, IsProtoEqual(tc.expected));
+  }
+}
+
+TEST(TimeUtils, ToChronoTimePoint) {
   google::protobuf::Timestamp proto_timestamp;
   proto_timestamp.set_seconds(867);
   proto_timestamp.set_nanos(530900);
@@ -48,7 +75,7 @@ TEST(TimeUtils, ConvertProtoTimestampToChronoTimePoint) {
   EXPECT_EQ(timepoint, expected);
 }
 
-TEST(TimeUtils, ConvertProtoTimestampToAbseilTime) {
+TEST(TimeUtils, ToAbslTime) {
   google::protobuf::Timestamp proto_timestamp;
   proto_timestamp.set_seconds(867);
   proto_timestamp.set_nanos(530900);
