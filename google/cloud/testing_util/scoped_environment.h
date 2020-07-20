@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_ENVIRONMENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_ENVIRONMENT_H
 
-#include "google/cloud/optional.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <string>
 
 namespace google {
@@ -31,10 +31,11 @@ class ScopedEnvironment {
  public:
   /**
    * Set the @p variable environment variable to @p value. If @value is
-   * an unset optional then the variable is unset. The previous value of
-   * the variable will be restored upon destruction.
+   * an unset absl::optional then the variable is unset. The previous value
+   * of the variable will be restored upon destruction.
    */
-  ScopedEnvironment(std::string variable, optional<std::string> const& value);
+  ScopedEnvironment(std::string variable,
+                    absl::optional<std::string> const& value);
 
   ~ScopedEnvironment();
 
@@ -46,7 +47,7 @@ class ScopedEnvironment {
 
  private:
   std::string variable_;
-  optional<std::string> prev_value_;
+  absl::optional<std::string> prev_value_;
 };
 
 }  // namespace testing_util

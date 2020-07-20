@@ -18,8 +18,8 @@
 #include "google/cloud/bigquery/row.h"
 #include "google/cloud/bigquery/row_set.h"
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -30,7 +30,7 @@ namespace internal {
 class ReadResultSource {
  public:
   virtual ~ReadResultSource() = default;
-  virtual StatusOr<optional<Row>> NextRow() = 0;
+  virtual StatusOr<absl::optional<Row>> NextRow() = 0;
   virtual std::size_t CurrentOffset() = 0;
   virtual double FractionConsumed() = 0;
 };

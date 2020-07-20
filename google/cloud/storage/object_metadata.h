@@ -19,8 +19,8 @@
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <map>
 
 namespace google {
@@ -43,8 +43,8 @@ struct CustomerEncryption {
 /// Defines one of the source objects for a compose operation.
 struct ComposeSourceObject {
   std::string object_name;
-  google::cloud::optional<std::int64_t> generation;
-  google::cloud::optional<std::int64_t> if_generation_match;
+  absl::optional<std::int64_t> generation;
+  absl::optional<std::int64_t> if_generation_match;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
@@ -249,7 +249,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string content_language_;
   std::string content_type_;
   std::string crc32c_;
-  google::cloud::optional<CustomerEncryption> customer_encryption_;
+  absl::optional<CustomerEncryption> customer_encryption_;
   bool event_based_hold_{false};
   std::int64_t generation_{0};
   std::string kms_key_name_;

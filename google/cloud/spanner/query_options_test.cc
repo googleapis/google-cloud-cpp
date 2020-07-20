@@ -34,7 +34,7 @@ TEST(QueryOptionsTest, OptimizerVersion) {
   copy.set_optimizer_version("foo");
   EXPECT_NE(copy, default_constructed);
 
-  copy.set_optimizer_version(optional<std::string>{});
+  copy.set_optimizer_version(absl::optional<std::string>{});
   EXPECT_EQ(copy, default_constructed);
 }
 

@@ -159,8 +159,8 @@ class ParallelUploadTest : public ::testing::Test {
 
   void ExpectCreateSessionFailure(
       std::string const& object_name, Status status,
-      optional<std::string> const& resumable_session_id =
-          optional<std::string>()) {
+      absl::optional<std::string> const& resumable_session_id =
+          absl::optional<std::string>()) {
     EXPECT_FALSE(status.ok())
         << "Expect either a failure or an actual MockResumableUploadSession";
     session_mocks_.emplace(std::move(status));
@@ -169,8 +169,8 @@ class ParallelUploadTest : public ::testing::Test {
 
   testing::MockResumableUploadSession& ExpectCreateFailingSession(
       std::string const& object_name, Status status,
-      optional<std::string> const& resumable_session_id =
-          optional<std::string>()) {
+      absl::optional<std::string> const& resumable_session_id =
+          absl::optional<std::string>()) {
     auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
@@ -192,9 +192,10 @@ class ParallelUploadTest : public ::testing::Test {
 
   testing::MockResumableUploadSession& ExpectCreateSession(
       std::string const& object_name, int generation,
-      optional<std::string> const& expected_content = optional<std::string>(),
-      optional<std::string> const& resumable_session_id =
-          optional<std::string>()) {
+      absl::optional<std::string> const& expected_content =
+          absl::optional<std::string>(),
+      absl::optional<std::string> const& resumable_session_id =
+          absl::optional<std::string>()) {
     auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
@@ -233,8 +234,8 @@ class ParallelUploadTest : public ::testing::Test {
 
   testing::MockResumableUploadSession& ExpectCreateSessionToSuspend(
       std::string const& object_name,
-      optional<std::string> const& resumable_session_id =
-          optional<std::string>()) {
+      absl::optional<std::string> const& resumable_session_id =
+          absl::optional<std::string>()) {
     auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
@@ -257,9 +258,10 @@ class ParallelUploadTest : public ::testing::Test {
       ClientOptions(oauth2::CreateAnonymousCredentials());
 
  private:
-  void AddNewExpectation(std::string const& object_name,
-                         optional<std::string> const& resumable_session_id =
-                             optional<std::string>()) {
+  void AddNewExpectation(
+      std::string const& object_name,
+      absl::optional<std::string> const& resumable_session_id =
+          absl::optional<std::string>()) {
     EXPECT_CALL(*raw_client_mock_, CreateResumableSession(_))
         .WillOnce(
             [this, object_name, resumable_session_id](
@@ -287,8 +289,8 @@ class ParallelUploadTest : public ::testing::Test {
 auto create_composition_check =
     [](std::vector<std::pair<std::string, int>> source_objects,
        std::string const& dest_obj, StatusOr<ObjectMetadata> const& res,
-       optional<std::int64_t> const& expected_if_gen_match =
-           optional<std::int64_t>()) {
+       absl::optional<std::int64_t> const& expected_if_gen_match =
+           absl::optional<std::int64_t>()) {
       internal::nl::json json_source_objects;
       for (auto& obj : source_objects) {
         json_source_objects.emplace_back(internal::nl::json{
@@ -554,14 +556,14 @@ TEST_F(ParallelUploadTest, BrokenStream) {
 }
 
 TEST(FirstOccurenceTest, Basic) {
-  EXPECT_EQ(optional<std::string>(),
+  EXPECT_EQ(absl::optional<std::string>(),
             ExtractFirstOccurenceOfType<std::string>(std::tuple<>()));
-  EXPECT_EQ(optional<std::string>(),
+  EXPECT_EQ(absl::optional<std::string>(),
             ExtractFirstOccurenceOfType<std::string>(std::make_tuple(5, 5.5)));
-  EXPECT_EQ(optional<std::string>("foo"),
+  EXPECT_EQ(absl::optional<std::string>("foo"),
             ExtractFirstOccurenceOfType<std::string>(
                 std::make_tuple(std::string("foo"), std::string("bar"))));
-  EXPECT_EQ(optional<std::string>("foo"),
+  EXPECT_EQ(absl::optional<std::string>("foo"),
             ExtractFirstOccurenceOfType<std::string>(
                 std::make_tuple(5, 6, std::string("foo"), std::string("bar"))));
 }

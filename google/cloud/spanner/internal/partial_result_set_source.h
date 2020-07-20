@@ -19,9 +19,9 @@
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -49,11 +49,11 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
 
   StatusOr<Row> NextRow() override;
 
-  optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return metadata_;
   }
 
-  optional<google::spanner::v1::ResultSetStats> Stats() const override {
+  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return stats_;
   }
 
@@ -65,10 +65,10 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   Status ReadFromStream();
 
   std::unique_ptr<PartialResultSetReader> reader_;
-  optional<google::spanner::v1::ResultSetMetadata> metadata_;
-  optional<google::spanner::v1::ResultSetStats> stats_;
+  absl::optional<google::spanner::v1::ResultSetMetadata> metadata_;
+  absl::optional<google::spanner::v1::ResultSetStats> stats_;
   std::deque<google::protobuf::Value> buffer_;
-  optional<google::protobuf::Value> chunk_;
+  absl::optional<google::protobuf::Value> chunk_;
   std::shared_ptr<std::vector<std::string>> columns_;
   bool finished_ = false;
 };

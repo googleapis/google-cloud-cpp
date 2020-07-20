@@ -23,9 +23,11 @@ namespace internal {
 
 void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
 
-optional<google::spanner::v1::PartialResultSet> PartialResultSetResume::Read() {
+absl::optional<google::spanner::v1::PartialResultSet>
+PartialResultSetResume::Read() {
   do {
-    optional<google::spanner::v1::PartialResultSet> result = child_->Read();
+    absl::optional<google::spanner::v1::PartialResultSet> result =
+        child_->Read();
     if (result) {
       last_resume_token_ = result->resume_token();
       return result;

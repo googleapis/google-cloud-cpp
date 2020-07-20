@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -82,10 +83,10 @@ TEST(MutationsTest, InsertSimple) {
 
 TEST(MutationsTest, InsertComplex) {
   Mutation empty;
-  auto builder =
-      InsertMutationBuilder("table-name", {"col1", "col2", "col3"})
-          .AddRow({Value(42), Value("foo"), Value(false)})
-          .EmplaceRow(optional<std::int64_t>(), "bar", optional<bool>{});
+  auto builder = InsertMutationBuilder("table-name", {"col1", "col2", "col3"})
+                     .AddRow({Value(42), Value("foo"), Value(false)})
+                     .EmplaceRow(absl::optional<std::int64_t>(), "bar",
+                                 absl::optional<bool>{});
   Mutation insert = builder.Build();
   Mutation moved = std::move(builder).Build();
   EXPECT_EQ(insert, moved);
@@ -143,10 +144,10 @@ TEST(MutationsTest, UpdateSimple) {
 
 TEST(MutationsTest, UpdateComplex) {
   Mutation empty;
-  auto builder =
-      UpdateMutationBuilder("table-name", {"col_a", "col_b"})
-          .AddRow({Value(std::vector<std::string>{}), Value(7.0)})
-          .EmplaceRow(std::vector<std::string>{"a", "b"}, optional<double>{});
+  auto builder = UpdateMutationBuilder("table-name", {"col_a", "col_b"})
+                     .AddRow({Value(std::vector<std::string>{}), Value(7.0)})
+                     .EmplaceRow(std::vector<std::string>{"a", "b"},
+                                 absl::optional<double>{});
   Mutation update = builder.Build();
   Mutation moved = std::move(builder).Build();
   EXPECT_EQ(update, moved);

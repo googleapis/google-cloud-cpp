@@ -28,8 +28,8 @@
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <string>
 #include <vector>
 
@@ -75,7 +75,7 @@ class Connection {
     KeySet keys;
     std::vector<std::string> columns;
     ReadOptions read_options;
-    google::cloud::optional<std::string> partition_token;
+    absl::optional<std::string> partition_token;
   };
 
   /// Wrap the arguments to `PartitionRead()`.
@@ -90,7 +90,7 @@ class Connection {
     Transaction transaction;
     SqlStatement statement;
     QueryOptions query_options;
-    google::cloud::optional<std::string> partition_token;
+    absl::optional<std::string> partition_token;
   };
 
   /// Wrap the arguments to `ExecutePartitionedDml()`.

@@ -21,7 +21,7 @@
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <map>
 #include <tuple>
 #include <utility>
@@ -91,7 +91,7 @@ inline bool operator>=(BucketBilling const& lhs, BucketBilling const& rhs) {
  *     on how to set and troubleshoot CORS settings.
  */
 struct CorsEntry {
-  google::cloud::optional<std::int64_t> max_age_seconds;
+  absl::optional<std::int64_t> max_age_seconds;
   std::vector<std::string> method;
   std::vector<std::string> origin;
   std::vector<std::string> response_header;
@@ -208,8 +208,8 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
  */
 struct BucketIamConfiguration {
-  google::cloud::optional<BucketPolicyOnly> bucket_policy_only;
-  google::cloud::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
+  absl::optional<BucketPolicyOnly> bucket_policy_only;
+  absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
 };
 
 //@{
@@ -532,7 +532,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_billing() const { return billing_.has_value(); }
   BucketBilling const& billing() const { return *billing_; }
-  google::cloud::optional<BucketBilling> const& billing_as_optional() const {
+  absl::optional<BucketBilling> const& billing_as_optional() const {
     return billing_;
   }
   BucketMetadata& set_billing(BucketBilling const& v) {
@@ -627,8 +627,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_encryption() const { return encryption_.has_value(); }
   BucketEncryption const& encryption() const { return *encryption_; }
-  google::cloud::optional<BucketEncryption> const& encryption_as_optional()
-      const {
+  absl::optional<BucketEncryption> const& encryption_as_optional() const {
     return encryption_;
   }
   BucketMetadata& set_encryption(BucketEncryption v) {
@@ -662,8 +661,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   BucketIamConfiguration const& iam_configuration() const {
     return *iam_configuration_;
   }
-  google::cloud::optional<BucketIamConfiguration> const&
-  iam_configuration_as_optional() const {
+  absl::optional<BucketIamConfiguration> const& iam_configuration_as_optional()
+      const {
     return iam_configuration_;
   }
   BucketMetadata& set_iam_configuration(BucketIamConfiguration v) {
@@ -721,8 +720,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    */
   bool has_lifecycle() const { return lifecycle_.has_value(); }
   BucketLifecycle const& lifecycle() const { return *lifecycle_; }
-  google::cloud::optional<BucketLifecycle> const& lifecycle_as_optional()
-      const {
+  absl::optional<BucketLifecycle> const& lifecycle_as_optional() const {
     return lifecycle_;
   }
   BucketMetadata& set_lifecycle(BucketLifecycle v) {
@@ -747,7 +745,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for logging configuration.
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
-  google::cloud::optional<BucketLogging> const& logging_as_optional() const {
+  absl::optional<BucketLogging> const& logging_as_optional() const {
     return logging_;
   }
   BucketMetadata& set_logging(BucketLogging v) {
@@ -780,8 +778,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   BucketRetentionPolicy const& retention_policy() const {
     return *retention_policy_;
   }
-  google::cloud::optional<BucketRetentionPolicy> const&
-  retention_policy_as_optional() const {
+  absl::optional<BucketRetentionPolicy> const& retention_policy_as_optional()
+      const {
     return retention_policy_;
   }
   BucketMetadata& set_retention_policy(BucketRetentionPolicy v) {
@@ -818,7 +816,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   //@{
   /// @name Accessors and modifiers for versioning configuration.
-  google::cloud::optional<BucketVersioning> const& versioning() const {
+  absl::optional<BucketVersioning> const& versioning() const {
     return versioning_;
   }
   bool has_versioning() const { return versioning_.has_value(); }
@@ -834,7 +832,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_.reset();
     return *this;
   }
-  BucketMetadata& set_versioning(google::cloud::optional<BucketVersioning> v) {
+  BucketMetadata& set_versioning(absl::optional<BucketVersioning> v) {
     versioning_ = std::move(v);
     return *this;
   }
@@ -844,7 +842,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// @name Accessors and modifiers for website configuration.
   bool has_website() const { return website_.has_value(); }
   BucketWebsite const& website() const { return *website_; }
-  google::cloud::optional<BucketWebsite> const& website_as_optional() const {
+  absl::optional<BucketWebsite> const& website_as_optional() const {
     return website_;
   }
   BucketMetadata& set_website(BucketWebsite v) {
@@ -869,21 +867,21 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
-  google::cloud::optional<BucketBilling> billing_;
+  absl::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
   bool default_event_based_hold_ = false;
   std::vector<ObjectAccessControl> default_acl_;
-  google::cloud::optional<BucketEncryption> encryption_;
-  google::cloud::optional<BucketIamConfiguration> iam_configuration_;
+  absl::optional<BucketEncryption> encryption_;
+  absl::optional<BucketIamConfiguration> iam_configuration_;
   std::map<std::string, std::string> labels_;
-  google::cloud::optional<BucketLifecycle> lifecycle_;
+  absl::optional<BucketLifecycle> lifecycle_;
   std::string location_;
   std::string location_type_;
-  google::cloud::optional<BucketLogging> logging_;
+  absl::optional<BucketLogging> logging_;
   std::int64_t project_number_{0};
-  google::cloud::optional<BucketRetentionPolicy> retention_policy_;
-  google::cloud::optional<BucketVersioning> versioning_;
-  google::cloud::optional<BucketWebsite> website_;
+  absl::optional<BucketRetentionPolicy> retention_policy_;
+  absl::optional<BucketVersioning> versioning_;
+  absl::optional<BucketWebsite> website_;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

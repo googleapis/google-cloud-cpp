@@ -20,8 +20,9 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-optional<std::string> CompareProtos(google::protobuf::Message const& arg,
-                                    google::protobuf::Message const& value) {
+absl::optional<std::string> CompareProtos(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);

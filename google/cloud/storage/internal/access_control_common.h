@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status.h"
+#include "absl/types/optional.h"
 #include <utility>
 
 namespace google {
@@ -117,7 +117,7 @@ class AccessControlCommon {
 
   bool has_project_team() const { return project_team_.has_value(); }
   ProjectTeam const& project_team() const { return *project_team_; }
-  google::cloud::optional<ProjectTeam> const& project_team_as_optional() const {
+  absl::optional<ProjectTeam> const& project_team_as_optional() const {
     return project_team_;
   }
 
@@ -140,7 +140,7 @@ class AccessControlCommon {
   std::string etag_;
   std::string id_;
   std::string kind_;
-  google::cloud::optional<ProjectTeam> project_team_;
+  absl::optional<ProjectTeam> project_team_;
   std::string role_;
   std::string self_link_;
 };

@@ -28,8 +28,8 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <queue>
 
@@ -405,13 +405,13 @@ class AsyncRowReader : public std::enable_shared_from_this<
   /**
    * The promise to the underlying stream to either continue reading or cancel.
    *
-   * If the optional is empty, it means that either the whole scan is finished
-   * or the underlying layers are already trying to fetch more data.
+   * If the absl::optional is empty, it means that either the whole scan is
+   * finished or the underlying layers are already trying to fetch more data.
    *
-   * If the optional is not empty, the lower layers are waiting for this to be
-   * satisfied before they start fetching more data.
+   * If the absl::optional is not empty, the lower layers are waiting for this
+   * to be satisfied before they start fetching more data.
    */
-  optional<promise<bool>> continue_reading_;
+  absl::optional<promise<bool>> continue_reading_;
   /// The final status of the operation.
   bool whole_op_finished_;
   /**

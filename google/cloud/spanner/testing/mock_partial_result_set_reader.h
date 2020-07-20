@@ -28,7 +28,7 @@ class MockPartialResultSetReader
     : public spanner::internal::PartialResultSetReader {
  public:
   MOCK_METHOD0(TryCancel, void());
-  MOCK_METHOD0(Read, optional<google::spanner::v1::PartialResultSet>());
+  MOCK_METHOD0(Read, absl::optional<google::spanner::v1::PartialResultSet>());
   MOCK_METHOD0(Finish, Status());
 };
 

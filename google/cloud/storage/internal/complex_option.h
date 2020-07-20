@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPLEX_OPTION_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <iostream>
 
 namespace google {
@@ -53,7 +53,7 @@ class ComplexOption {
   }
 
  private:
-  google::cloud::optional<T> value_;
+  absl::optional<T> value_;
 };
 
 template <typename Derived, typename T>

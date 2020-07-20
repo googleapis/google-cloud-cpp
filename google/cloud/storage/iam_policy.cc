@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/iam_policy.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <sstream>
 
 namespace google {
@@ -228,7 +228,7 @@ struct NativeIamBinding::Impl {
     if (!status.ok()) {
       return status;
     }
-    optional<NativeExpression> condition;
+    absl::optional<NativeExpression> condition;
     auto condition_it = json.find("condition");
     if (condition_it != json.end()) {
       auto parsed_condition = NativeExpression::Impl::CreateFromJson(
@@ -258,13 +258,14 @@ struct NativeIamBinding::Impl {
 
   internal::nl::json native_json;
   std::vector<std::string> members;
-  optional<NativeExpression> condition;
+  absl::optional<NativeExpression> condition;
 };
 
 NativeIamBinding::NativeIamBinding(std::string role,
                                    std::vector<std::string> members)
     : pimpl_(new Impl{internal::nl::json{{"role", std::move(role)}},
-                      std::move(members), optional<NativeExpression>()}) {}
+                      std::move(members), absl::optional<NativeExpression>()}) {
+}
 
 NativeIamBinding::NativeIamBinding(std::string role,
                                    std::vector<std::string> members,

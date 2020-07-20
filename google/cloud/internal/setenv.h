@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SETENV_H
 
-#include "google/cloud/optional.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -42,9 +42,9 @@ void SetEnv(char const* variable, char const* value);
 /**
  * Set the @p variable environment variable to @p value.
  *
- * If @value is an unset optional then the variable is unset.
+ * If @value is an unset absl::optional then the variable is unset.
  */
-void SetEnv(char const* variable, optional<std::string> value);
+void SetEnv(char const* variable, absl::optional<std::string> value);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

@@ -27,6 +27,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/iam_policy.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <future>
 #include <memory>
 
@@ -847,9 +848,9 @@ class TableAdmin {
     google::bigtable::admin::v2::ListBackupsRequest AsProto(
         std::string const& instance_name) const;
 
-    optional<std::string> cluster_id;
-    optional<std::string> filter;
-    optional<std::string> order_by;
+    absl::optional<std::string> cluster_id;
+    absl::optional<std::string> filter;
+    absl::optional<std::string> order_by;
   };
 
   /**

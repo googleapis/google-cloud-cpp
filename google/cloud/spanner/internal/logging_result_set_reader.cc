@@ -27,7 +27,8 @@ void LoggingResultSetReader::TryCancel() {
   GCP_LOG(DEBUG) << __func__ << "() >> (void)";
 }
 
-optional<google::spanner::v1::PartialResultSet> LoggingResultSetReader::Read() {
+absl::optional<google::spanner::v1::PartialResultSet>
+LoggingResultSetReader::Read() {
   GCP_LOG(DEBUG) << __func__ << "() << (void)";
   auto result = impl_->Read();
   if (!result) {

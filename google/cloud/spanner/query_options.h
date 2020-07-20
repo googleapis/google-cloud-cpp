@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <string>
 
 namespace google {
@@ -39,7 +39,7 @@ class QueryOptions {
   QueryOptions& operator=(QueryOptions&&) = default;
 
   /// Returns the optimizer version
-  optional<std::string> const& optimizer_version() const {
+  absl::optional<std::string> const& optimizer_version() const {
     return optimizer_version_;
   }
 
@@ -48,7 +48,7 @@ class QueryOptions {
    * the empty string will use the database default. Use the string "latest" to
    * use the latest available optimizer version.
    */
-  QueryOptions& set_optimizer_version(optional<std::string> version) {
+  QueryOptions& set_optimizer_version(absl::optional<std::string> version) {
     optimizer_version_ = std::move(version);
     return *this;
   }
@@ -62,7 +62,7 @@ class QueryOptions {
   }
 
  private:
-  optional<std::string> optimizer_version_;
+  absl::optional<std::string> optimizer_version_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

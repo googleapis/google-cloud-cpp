@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/results.h"
-#include "google/cloud/optional.h"
+#include "absl/types/optional.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <memory>
 #include <string>
@@ -25,7 +25,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-optional<Timestamp> GetReadTimestamp(
+absl::optional<Timestamp> GetReadTimestamp(
     std::unique_ptr<internal::ResultSourceInterface> const& source) {
   auto metadata = source->Metadata();
   if (metadata.has_value() && metadata->has_transaction() &&
@@ -33,7 +33,7 @@ optional<Timestamp> GetReadTimestamp(
     return internal::TimestampFromProto(
         metadata->transaction().read_timestamp());
   }
-  return optional<Timestamp>();
+  return absl::optional<Timestamp>();
 }
 
 std::int64_t GetRowsModified(
@@ -41,7 +41,7 @@ std::int64_t GetRowsModified(
   return source->Stats()->row_count_exact();
 }
 
-optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
+absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
     std::unique_ptr<internal::ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_stats()) {
@@ -55,7 +55,7 @@ optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
   return {};
 }
 
-optional<spanner::ExecutionPlan> GetExecutionPlan(
+absl::optional<spanner::ExecutionPlan> GetExecutionPlan(
     std::unique_ptr<internal::ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_plan()) {
@@ -65,11 +65,11 @@ optional<spanner::ExecutionPlan> GetExecutionPlan(
 }
 }  // namespace
 
-optional<Timestamp> RowStream::ReadTimestamp() const {
+absl::optional<Timestamp> RowStream::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 
-optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
+absl::optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 
@@ -81,21 +81,22 @@ std::int64_t ProfileDmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }
 
-optional<std::unordered_map<std::string, std::string>>
+absl::optional<std::unordered_map<std::string, std::string>>
 ProfileQueryResult::ExecutionStats() const {
   return GetExecutionStats(source_);
 }
 
-optional<spanner::ExecutionPlan> ProfileQueryResult::ExecutionPlan() const {
+absl::optional<spanner::ExecutionPlan> ProfileQueryResult::ExecutionPlan()
+    const {
   return GetExecutionPlan(source_);
 }
 
-optional<std::unordered_map<std::string, std::string>>
+absl::optional<std::unordered_map<std::string, std::string>>
 ProfileDmlResult::ExecutionStats() const {
   return GetExecutionStats(source_);
 }
 
-optional<spanner::ExecutionPlan> ProfileDmlResult::ExecutionPlan() const {
+absl::optional<spanner::ExecutionPlan> ProfileDmlResult::ExecutionPlan() const {
   return GetExecutionPlan(source_);
 }
 

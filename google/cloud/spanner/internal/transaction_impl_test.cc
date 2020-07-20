@@ -75,7 +75,7 @@ class Client {
                  std::vector<std::string> const& columns) {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
-                    optional<TransactionSelector>& selector,
+                    absl::optional<TransactionSelector>& selector,
                     std::int64_t seqno) {
       return this->Read(session, selector, seqno, table, keys, columns);
     };
@@ -92,9 +92,9 @@ class Client {
 
  private:
   ResultSet Read(SessionHolder& session,
-                 optional<TransactionSelector>& selector, std::int64_t seqno,
-                 std::string const& table, KeySet const& keys,
-                 std::vector<std::string> const& columns);
+                 absl::optional<TransactionSelector>& selector,
+                 std::int64_t seqno, std::string const& table,
+                 KeySet const& keys, std::vector<std::string> const& columns);
 
   Mode mode_;
   Timestamp read_timestamp_;
@@ -110,7 +110,7 @@ class Client {
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
 ResultSet Client::Read(SessionHolder& session,
-                       optional<TransactionSelector>& selector,
+                       absl::optional<TransactionSelector>& selector,
                        std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   bool fail_with_throw = false;

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/types/optional.h"
 #include <cctype>
 #include <future>
 #include <limits>
@@ -88,7 +89,7 @@ std::chrono::seconds ParseDuration(std::string const& val) {
   return std::chrono::seconds(s);
 }
 
-google::cloud::optional<bool> ParseBoolean(std::string const& val) {
+absl::optional<bool> ParseBoolean(std::string const& val) {
   if (val.empty()) {
     return {};
   }
