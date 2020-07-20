@@ -22,8 +22,8 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include "absl/time/civil_time.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/v1/type.pb.h>
