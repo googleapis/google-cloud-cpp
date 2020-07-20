@@ -16,6 +16,7 @@
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include "absl/time/civil_time.h"
+#include "absl/time/time.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
@@ -139,9 +140,11 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       return os << internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::TypeCode::TIMESTAMP:
-    case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
+
+    case google::spanner::v1::TypeCode::DATE:
+      return os << internal::FromProto(t, v).get<absl::CivilDay>().value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
       const char* delimiter = "";
@@ -367,7 +370,11 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
 
 google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   google::protobuf::Value v;
-  v.set_string_value(absl::FormatCivilTime(d));
+  // absl::FormatCivilTime doesn't pad the year to 4-digits, which Spanner
+  // needs as part of its RFC-3339 requirement.
+  auto const utc = absl::UTCTimeZone();
+  auto const t = absl::FromCivil(d, utc);
+  v.set_string_value(absl::FormatTime("%E4Y-%m-%d", t, utc));
   return v;
 }
 
