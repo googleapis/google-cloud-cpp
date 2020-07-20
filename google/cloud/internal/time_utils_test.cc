@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -22,6 +23,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
+
+using google::cloud::testing_util::IsProtoEqual;
 
 TEST(TimeUtils, ConvertTimepointToProtoTimestamp) {
   auto const epoch = std::chrono::system_clock::from_time_t(0);
@@ -43,6 +46,24 @@ TEST(TimeUtils, ConvertProtoTimestampToChronoTimePoint) {
       std::chrono::duration_cast<std::chrono::system_clock::duration>(
           std::chrono::seconds(867) + std::chrono::nanoseconds(530900));
   EXPECT_EQ(timepoint, expected);
+}
+
+TEST(TimeUtils, ConvertProtoTimestampToAbseilTime) {
+  google::protobuf::Timestamp proto_timestamp;
+  proto_timestamp.set_seconds(867);
+  proto_timestamp.set_nanos(530900);
+  auto const actual = ToAbslTime(proto_timestamp);
+  auto const expected = absl::FromUnixSeconds(867) + absl::Nanoseconds(530900);
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TimeUtils, ConvertAbslTimeToProtoTimestamp) {
+  google::protobuf::Timestamp expected;
+  expected.set_seconds(867);
+  expected.set_nanos(530900);
+  auto const t = absl::FromUnixSeconds(867) + absl::Nanoseconds(530900);
+  auto const actual = ToProtoTimestamp(t);
+  EXPECT_THAT(expected, IsProtoEqual(actual));
 }
 
 }  // namespace

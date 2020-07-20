@@ -210,6 +210,54 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
   }
 }
 
+TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
+  std::vector<LifecycleRuleCondition> test_values{
+      LifecycleRule::MaxAge(30),
+      LifecycleRule::CreatedBefore(absl::CivilDay(2020, 7, 26)),
+      LifecycleRule::IsLive(false),
+      LifecycleRule::MatchesStorageClassArchive(),
+      LifecycleRule::MatchesStorageClasses(
+          {storage_class::Standard(), storage_class::Nearline()}),
+      LifecycleRule::MatchesStorageClassStandard(),
+      // Skip this one because it requires creating a regional bucket (the
+      // default is multi-regional US), and that felt like too much of a hassle
+      //   LifecycleRule::MatchesStorageClassRegional(),
+      LifecycleRule::MatchesStorageClassMultiRegional(),
+      LifecycleRule::MatchesStorageClassNearline(),
+      LifecycleRule::MatchesStorageClassColdline(),
+      LifecycleRule::MatchesStorageClassDurableReducedAvailability(),
+  };
+
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  std::string bucket_name = MakeRandomBucketName();
+
+  auto original = client->CreateBucketForProject(bucket_name, project_id_,
+                                                 BucketMetadata{});
+  ASSERT_STATUS_OK(original);
+  EXPECT_EQ(bucket_name, original->name());
+
+  for (auto const& condition : test_values) {
+    std::ostringstream os;
+    os << "testing with " << condition;
+    auto const str = std::move(os).str();
+    SCOPED_TRACE(str);
+
+    auto updated = client->PatchBucket(
+        bucket_name, BucketMetadataPatchBuilder{}.SetLifecycle({{LifecycleRule{
+                         condition, LifecycleRule::Delete()}}}));
+    // We do not use an ASSERT_STATUS_OK() here because we want to continue and
+    // delete the temporary bucket.
+    EXPECT_STATUS_OK(updated);
+    if (updated) {
+      EXPECT_TRUE(updated->has_lifecycle()) << "updated = " << *updated;
+    }
+  }
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_F(BucketIntegrationTest, FullPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();

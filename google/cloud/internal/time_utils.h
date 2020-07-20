@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TIME_UTILS_H
 
 #include "google/cloud/version.h"
+#include "absl/time/time.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <chrono>
 
@@ -41,6 +42,20 @@ google::protobuf::Timestamp ToProtoTimestamp(
   // because the arithmetic used to compute nanos precludes it from having a
   // value > 1,000,000,000.
   ts.set_nanos(static_cast<std::int32_t>(nanos.count()));
+  return ts;
+}
+
+inline absl::Time ToAbslTime(google::protobuf::Timestamp const& ts) {
+  return absl::FromUnixSeconds(ts.seconds()) + absl::Nanoseconds(ts.nanos());
+}
+
+inline google::protobuf::Timestamp ToProtoTimestamp(absl::Time t) {
+  auto const seconds = absl::ToUnixSeconds(t);
+  auto const nanos =
+      absl::ToInt64Nanoseconds(t - absl::FromUnixSeconds(seconds));
+  google::protobuf::Timestamp ts;
+  ts.set_seconds(seconds);
+  ts.set_nanos(static_cast<std::int32_t>(nanos));
   return ts;
 }
 

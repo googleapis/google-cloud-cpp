@@ -21,11 +21,13 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
+#include "absl/strings/str_format.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   auto join = [](char const* sep, std::vector<std::string> const& list) {
     if (list.empty()) {
@@ -415,7 +417,8 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     }
     if (c.created_before.has_value()) {
       condition["createdBefore"] =
-          google::cloud::internal::FormatRfc3339(*c.created_before);
+          absl::StrFormat("%04d-%02d-%02d", c.created_before->year(),
+                          c.created_before->month(), c.created_before->day());
     }
     if (c.is_live.has_value()) {
       condition["isLive"] = *c.is_live;

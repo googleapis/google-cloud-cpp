@@ -298,7 +298,7 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
 # runtime deps of the absl::optional target (http://github.com/abseil/abseil-cpp
 # /blob/4a851046a0102cd986a5714a1af8deef28a544c4/absl/types/CMakeLists.txt#L164)
 set(GOOGLE_CLOUD_CPP_PC_LIBS
-    "-lgoogle_cloud_cpp_common -labsl_bad_optional_access")
+    "-lgoogle_cloud_cpp_common -labsl_time -labsl_bad_optional_access")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -345,7 +345,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/time_utils.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
-        PUBLIC absl::memory googleapis-c++::rpc_status_protos
+        PUBLIC absl::memory absl::time googleapis-c++::rpc_status_protos
                google_cloud_cpp_common gRPC::grpc++ gRPC::grpc)
     google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
     target_include_directories(
