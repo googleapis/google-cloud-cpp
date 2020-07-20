@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/testing/matchers.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>

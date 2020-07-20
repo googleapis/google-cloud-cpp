@@ -16,11 +16,12 @@
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include "absl/time/civil_time.h"
-#include "absl/time/time.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
+#include <iomanip>
 #include <ios>
+#include <sstream>
 #include <string>
 
 namespace google {
@@ -372,9 +373,11 @@ google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   google::protobuf::Value v;
   // absl::FormatCivilTime doesn't pad the year to 4-digits, which Spanner
   // needs as part of its RFC-3339 requirement.
-  auto const utc = absl::UTCTimeZone();
-  auto const t = absl::FromCivil(d, utc);
-  v.set_string_value(absl::FormatTime("%E4Y-%m-%d", t, utc));
+  std::ostringstream ss;
+  ss << std::setfill('0') << std::setw(4) << d.year() << '-';
+  ss << std::setfill('0') << std::setw(2) << d.month() << '-';
+  ss << std::setfill('0') << std::setw(2) << d.day();
+  v.set_string_value(std::move(ss).str());
   return v;
 }
 
