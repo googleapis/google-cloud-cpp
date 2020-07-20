@@ -13,13 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/internal/date.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
+#include "absl/time/civil_time.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
+#include <iomanip>
 #include <ios>
+#include <sstream>
 #include <string>
 
 namespace google {
@@ -139,9 +141,11 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       return os << internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::TypeCode::TIMESTAMP:
-    case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
+
+    case google::spanner::v1::TypeCode::DATE:
+      return os << internal::FromProto(t, v).get<absl::CivilDay>().value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
       const char* delimiter = "";
@@ -224,7 +228,7 @@ bool Value::TypeProtoIs(CommitTimestamp,
   return type.code() == google::spanner::v1::TypeCode::TIMESTAMP;
 }
 
-bool Value::TypeProtoIs(Date, google::spanner::v1::Type const& type) {
+bool Value::TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::DATE;
 }
 
@@ -293,7 +297,7 @@ google::spanner::v1::Type Value::MakeTypeProto(CommitTimestamp) {
   return t;
 }
 
-google::spanner::v1::Type Value::MakeTypeProto(Date) {
+google::spanner::v1::Type Value::MakeTypeProto(absl::CivilDay) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::DATE);
   return t;
@@ -365,9 +369,15 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(Date d) {
+google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   google::protobuf::Value v;
-  v.set_string_value(google::cloud::internal::DateToString(d));
+  // absl::FormatCivilTime doesn't pad the year to 4-digits, which Spanner
+  // needs as part of its RFC-3339 requirement.
+  std::ostringstream ss;
+  ss << std::setfill('0') << std::setw(4) << d.year() << '-';
+  ss << std::setfill('0') << std::setw(2) << d.month() << '-';
+  ss << std::setfill('0') << std::setw(2) << d.day();
+  v.set_string_value(std::move(ss).str());
   return v;
 }
 
@@ -488,12 +498,17 @@ StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
   return CommitTimestamp{};
 }
 
-StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
-                               google::spanner::v1::Type const&) {
+StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
+                                         google::protobuf::Value const& pv,
+                                         google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing DATE");
   }
-  return google::cloud::internal::DateFromString(pv.string_value());
+  auto const& s = pv.string_value();
+  absl::CivilDay day;
+  if (absl::ParseCivilTime(s, &day)) return day;
+  return Status(StatusCode::kInvalidArgument,
+                s + ": Failed to match RFC3339 full-date");
 }
 
 }  // namespace SPANNER_CLIENT_NS

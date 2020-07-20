@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "absl/memory/memory.h"
+#include "absl/time/civil_time.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <algorithm>
 #include <chrono>
@@ -292,14 +293,15 @@ struct BytesTraits {
 };
 
 struct DateTraits {
-  using native_type = spanner::Date;
+  using native_type = absl::CivilDay;
   static std::string SpannerDataType() { return "DATE"; }
   static std::string TableSuffix() { return "date"; }
   static native_type MakeRandomValue(
       google::cloud::internal::DefaultPRNG& generator) {
-    return {std::uniform_int_distribution<std::int64_t>(1, 2000)(generator),
-            std::uniform_int_distribution<int>(1, 12)(generator),
-            std::uniform_int_distribution<int>(1, 28)(generator)};
+    return native_type{
+        std::uniform_int_distribution<std::int64_t>(1, 2000)(generator),
+        std::uniform_int_distribution<int>(1, 12)(generator),
+        std::uniform_int_distribution<int>(1, 28)(generator)};
   }
 };
 

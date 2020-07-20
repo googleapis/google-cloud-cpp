@@ -16,13 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H
 
 #include "google/cloud/spanner/bytes.h"
-#include "google/cloud/spanner/date.h"
 #include "google/cloud/spanner/internal/tuple_utils.h"
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
+#include "absl/time/civil_time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -64,7 +64,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * BYTES        | `google::cloud::spanner::Bytes`
  * NUMERIC      | `google::cloud::spanner::Numeric`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
- * DATE         | `google::cloud::spanner::Date`
+ * DATE         | `absl::CivilDay`
  * ARRAY        | `std::vector<T>`  // [1]
  * STRUCT       | `std::tuple<Ts...>`
  *
@@ -195,7 +195,8 @@ class Value {
   explicit Value(CommitTimestamp v)
       : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
-  explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(absl::CivilDay v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
    * Constructs an instance from common C++ literal types that closely, though
@@ -353,7 +354,7 @@ class Value {
   static bool TypeProtoIs(double, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Timestamp, google::spanner::v1::Type const&);
   static bool TypeProtoIs(CommitTimestamp, google::spanner::v1::Type const&);
-  static bool TypeProtoIs(Date, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
@@ -404,7 +405,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(Numeric const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
-  static google::spanner::v1::Type MakeTypeProto(Date);
+  static google::spanner::v1::Type MakeTypeProto(absl::CivilDay);
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
@@ -464,7 +465,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(Numeric n);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
-  static google::protobuf::Value MakeValueProto(Date d);
+  static google::protobuf::Value MakeValueProto(absl::CivilDay d);
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
@@ -531,8 +532,9 @@ class Value {
   static StatusOr<CommitTimestamp> GetValue(CommitTimestamp,
                                             google::protobuf::Value const&,
                                             google::spanner::v1::Type const&);
-  static StatusOr<Date> GetValue(Date, google::protobuf::Value const&,
-                                 google::spanner::v1::Type const&);
+  static StatusOr<absl::CivilDay> GetValue(absl::CivilDay,
+                                           google::protobuf::Value const&,
+                                           google::spanner::v1::Type const&);
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(
       absl::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {

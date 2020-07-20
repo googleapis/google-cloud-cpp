@@ -202,12 +202,12 @@ TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadDate) {
-  std::vector<Date> const data = {
-      Date(1, 1, 1),       //
-      Date(161, 3, 8),     //
-      Date(),              //
-      Date(2019, 11, 21),  //
-      Date(9999, 12, 31),  //
+  std::vector<absl::CivilDay> const data = {
+      absl::CivilDay(1, 1, 1),       //
+      absl::CivilDay(161, 3, 8),     //
+      absl::CivilDay(),              //
+      absl::CivilDay(2019, 11, 21),  //
+      absl::CivilDay(9999, 12, 31),  //
   };
   auto result = WriteReadData(*client_, data, "DateValue");
   ASSERT_STATUS_OK(result);
@@ -287,13 +287,13 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
-  std::vector<std::vector<Date>> const data = {
-      std::vector<Date>{},
-      std::vector<Date>{Date()},
-      std::vector<Date>{
-          Date(1, 1, 1),
-          Date(),
-          Date(9999, 12, 31),
+  std::vector<std::vector<absl::CivilDay>> const data = {
+      std::vector<absl::CivilDay>{},
+      std::vector<absl::CivilDay>{absl::CivilDay()},
+      std::vector<absl::CivilDay>{
+          absl::CivilDay(1, 1, 1),
+          absl::CivilDay(),
+          absl::CivilDay(9999, 12, 31),
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayDateValue");

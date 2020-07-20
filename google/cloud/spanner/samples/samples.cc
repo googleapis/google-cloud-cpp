@@ -1142,9 +1142,9 @@ void MakeInsertMutation(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {
@@ -1276,11 +1276,11 @@ void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(2, 42, spanner::Date(2017, 12, 23), 7000,
+          .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23), 7000,
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {

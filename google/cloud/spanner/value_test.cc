@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/testing/matchers.h"
-#include "google/cloud/internal/date.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
@@ -181,19 +180,18 @@ TEST(Value, BasicSemantics) {
   }
 
   for (auto x : {
-           Date(1582, 10, 15),  // start of Gregorian calendar
-           Date(1677, 9, 21),   // before system_clock limit
-           Date(1901, 12, 13),  // around min 32-bit seconds limit
-           Date(1970, 1, 1),    // the unix epoch
-           Date(2019, 6, 21),   // contemporary
-           Date(2038, 1, 19),   // around max 32-bit seconds limit
-           Date(2262, 4, 12)    // after system_clock limit
+           absl::CivilDay(1582, 10, 15),  // start of Gregorian calendar
+           absl::CivilDay(1677, 9, 21),   // before system_clock limit
+           absl::CivilDay(1901, 12, 13),  // around min 32-bit seconds limit
+           absl::CivilDay(1970, 1, 1),    // the unix epoch
+           absl::CivilDay(2019, 6, 21),   // contemporary
+           absl::CivilDay(2038, 1, 19),   // around max 32-bit seconds limit
+           absl::CivilDay(2262, 4, 12)    // after system_clock limit
        }) {
-    SCOPED_TRACE("Testing: google::cloud::spanner::Date " +
-                 google::cloud::internal::DateToString(x));
+    SCOPED_TRACE("Testing: absl::CivilDay " + absl::FormatCivilTime(x));
     TestBasicSemantics(x);
-    TestBasicSemantics(std::vector<Date>(5, x));
-    std::vector<absl::optional<Date>> v(5, x);
+    TestBasicSemantics(std::vector<absl::CivilDay>(5, x));
+    std::vector<absl::optional<absl::CivilDay>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -215,7 +213,7 @@ TEST(Value, Equality) {
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
       {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
-      {Value(Date(1970, 1, 1)), Value(Date(2020, 3, 15))},
+      {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
       {Value(std::make_tuple(false, 123, "foo")),
@@ -708,20 +706,19 @@ TEST(Value, ProtoConversionTimestamp) {
 
 TEST(Value, ProtoConversionDate) {
   for (auto x : {
-           Date(1582, 10, 15),  // start of Gregorian calendar
-           Date(1677, 9, 21),   // before system_clock limit
-           Date(1901, 12, 13),  // around min 32-bit seconds limit
-           Date(1970, 1, 1),    // the unix epoch
-           Date(2019, 6, 21),   // contemporary
-           Date(2038, 1, 19),   // around max 32-bit seconds limit
-           Date(2262, 4, 12)    // after system_clock limit
+           absl::CivilDay(1582, 10, 15),  // start of Gregorian calendar
+           absl::CivilDay(1677, 9, 21),   // before system_clock limit
+           absl::CivilDay(1901, 12, 13),  // around min 32-bit seconds limit
+           absl::CivilDay(1970, 1, 1),    // the unix epoch
+           absl::CivilDay(2019, 6, 21),   // contemporary
+           absl::CivilDay(2038, 1, 19),   // around max 32-bit seconds limit
+           absl::CivilDay(2262, 4, 12)    // after system_clock limit
        }) {
     Value const v(x);
     auto const p = internal::ToProto(v);
     EXPECT_EQ(v, internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::DATE, p.first.code());
-    EXPECT_EQ(google::cloud::internal::DateToString(x),
-              p.second.string_value());
+    EXPECT_EQ(absl::FormatCivilTime(x), p.second.string_value());
   }
 }
 
@@ -937,21 +934,21 @@ TEST(Value, GetBadCommitTimestamp) {
 }
 
 TEST(Value, GetBadDate) {
-  Value v(Date{});
+  Value v(absl::CivilDay{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<Date>().ok());
+  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<Date>().ok());
+  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<Date>().ok());
+  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<Date>().ok());
+  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<Date>().ok());
+  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
 }
 
 TEST(Value, GetBadOptional) {
@@ -1063,7 +1060,7 @@ TEST(Value, OutputStream) {
       {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
-      {Value(Date()), "1970-01-01", normal},
+      {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
       // Tests string quoting: No quotes for scalars; quotes within aggregates
@@ -1086,7 +1083,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
       {MakeNullValue<Numeric>(), "NULL", normal},
-      {MakeNullValue<Date>(), "NULL", normal},
+      {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
 
       // Tests arrays
@@ -1099,7 +1096,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
       {Value(std::vector<Numeric>{2}), "[0, 0]", normal},
-      {Value(std::vector<Date>{2}), "[1970-01-01, 1970-01-01]", normal},
+      {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
+       normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
        normal},
@@ -1111,7 +1109,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
-      {MakeNullValue<std::vector<Date>>(), "NULL", normal},
+      {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
 
       // Tests structs
@@ -1152,7 +1150,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
       {MakeNullValue<std::tuple<bool, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<Numeric, Date>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<Numeric, absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::tuple<std::vector<bool>>>(), "NULL", normal},
   };
 
@@ -1209,9 +1207,9 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(MakeNumeric(42).value());
 
   // Date
-  StreamMatchesValueStream(Date(1, 1, 1));
-  StreamMatchesValueStream(Date());
-  StreamMatchesValueStream(Date(9999, 12, 31));
+  StreamMatchesValueStream(absl::CivilDay(1, 1, 1));
+  StreamMatchesValueStream(absl::CivilDay());
+  StreamMatchesValueStream(absl::CivilDay(9999, 12, 31));
 
   // Timestamp
   StreamMatchesValueStream(Timestamp());
