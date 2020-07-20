@@ -224,7 +224,7 @@ bool Value::TypeProtoIs(CommitTimestamp,
   return type.code() == google::spanner::v1::TypeCode::TIMESTAMP;
 }
 
-bool Value::TypeProtoIs(Date, google::spanner::v1::Type const& type) {
+bool Value::TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::DATE;
 }
 
@@ -293,7 +293,7 @@ google::spanner::v1::Type Value::MakeTypeProto(CommitTimestamp) {
   return t;
 }
 
-google::spanner::v1::Type Value::MakeTypeProto(Date) {
+google::spanner::v1::Type Value::MakeTypeProto(absl::CivilDay) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::DATE);
   return t;
@@ -365,7 +365,7 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(Date d) {
+google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   google::protobuf::Value v;
   v.set_string_value(absl::FormatCivilTime(d));
   return v;
@@ -488,7 +488,7 @@ StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
   return CommitTimestamp{};
 }
 
-StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
+StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay, google::protobuf::Value const& pv,
                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing DATE");

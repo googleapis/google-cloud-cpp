@@ -23,7 +23,14 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-/// Alias exists for backward compability.
+/**
+ * Represents a date in the proleptic Gregorian calendar as a triple of
+ * year, month (1-12), and day (1-31).
+ *
+ * We use `absl::CivilDay` to represent a "date". Direct use of
+ * `absl::CivilDay` is recommended. This alias exists for backward
+ * compatibility.
+ */
 using Date = ::absl::CivilDay;
 
 }  // namespace SPANNER_CLIENT_NS
