@@ -519,6 +519,7 @@ class TableAdmin {
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
       std::string const& cluster_id, std::string const& backup_id);
 
+  // clang-format off
   /**
    * Sends an asynchronous request to get information about a single backup.
    *
@@ -536,7 +537,7 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
    * @param backup_id the name of the backup relative to the cluster specified.
    *     The full backup name is
-   *    `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
    *     where PROJECT_ID is obtained from the associated AdminClient,
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
    *     CLUSTER_ID is the cluster_id previously specified.
@@ -551,6 +552,7 @@ class TableAdmin {
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
    */
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
       CompletionQueue& cq, std::string const& cluster_id,
       std::string const& backup_id);
