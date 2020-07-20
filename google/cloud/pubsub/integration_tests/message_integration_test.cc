@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher.h"
-#include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -60,7 +60,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   ASSERT_STATUS_OK(subscription_metadata);
 
   auto publisher = Publisher(MakePublisherConnection(topic));
-  auto subscriber = MakeSubscriberConnection();
+  auto subscriber = Subscriber(MakeSubscriberConnection());
 
   std::mutex mu;
   std::vector<std::string> ids;
@@ -90,7 +90,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
     }
   };
 
-  auto result = subscriber->Subscribe({subscription.FullName(), handler});
+  auto result = subscriber.Subscribe(subscription, handler);
   // Wait until there are no more ids pending, then cancel the subscription and
   // get its status.
   ids_empty.get_future().get();

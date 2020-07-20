@@ -48,6 +48,7 @@ add_library(
     publisher_connection.h
     publisher_options.cc
     publisher_options.h
+    subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
     subscription.cc
@@ -93,7 +94,8 @@ add_library(pubsub_client_mocks INTERFACE)
 target_sources(
     pubsub_client_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h)
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
 target_link_libraries(
     pubsub_client_mocks
     INTERFACE googleapis-c++::pubsub_client google_cloud_cpp_testing
@@ -140,6 +142,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_option_test.cc
         publisher_test.cc
         subscriber_connection_test.cc
+        subscriber_test.cc
         subscription_test.cc
         topic_test.cc)
 
