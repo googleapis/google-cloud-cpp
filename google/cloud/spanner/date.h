@@ -16,21 +16,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_DATE_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/date.h"
+#include "absl/time/civil_time.h"
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-/**
- * Represents a date in the proleptic Gregorian calendar as a triple of
- * year, month (1-12), and day (1-31).
- *
- * Standard C++11 lacks a good "date" abstraction, so we supply a simple
- * implementation of a YMD triple.
- */
-using Date = ::google::cloud::Date;
+/// Alias exists for backward compability.
+using Date = ::absl::CivilDay;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

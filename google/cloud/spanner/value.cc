@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/internal/date.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
+#include "absl/time/civil_time.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
@@ -367,7 +367,7 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
 
 google::protobuf::Value Value::MakeValueProto(Date d) {
   google::protobuf::Value v;
-  v.set_string_value(google::cloud::internal::DateToString(d));
+  v.set_string_value(absl::FormatCivilTime(d));
   return v;
 }
 
@@ -493,7 +493,11 @@ StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing DATE");
   }
-  return google::cloud::internal::DateFromString(pv.string_value());
+  auto const& s = pv.string_value();
+  absl::CivilDay day;
+  if (absl::ParseCivilTime(s, &day)) return day;
+  return Status(StatusCode::kInvalidArgument,
+                s + ": Failed to match RFC3339 full-date");
 }
 
 }  // namespace SPANNER_CLIENT_NS

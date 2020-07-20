@@ -159,8 +159,13 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     spanner_client
-    PUBLIC absl::memory absl::numeric absl::strings google_cloud_cpp_grpc_utils
-           google_cloud_cpp_common googleapis-c++::spanner_protos)
+    PUBLIC absl::memory
+           absl::numeric
+           absl::strings
+           absl::time
+           google_cloud_cpp_grpc_utils
+           google_cloud_cpp_common
+           googleapis-c++::spanner_protos)
 set_target_properties(
     spanner_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
                               SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")

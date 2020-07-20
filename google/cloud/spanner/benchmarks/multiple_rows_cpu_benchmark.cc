@@ -297,9 +297,10 @@ struct DateTraits {
   static std::string TableSuffix() { return "date"; }
   static native_type MakeRandomValue(
       google::cloud::internal::DefaultPRNG& generator) {
-    return {std::uniform_int_distribution<std::int64_t>(1, 2000)(generator),
-            std::uniform_int_distribution<int>(1, 12)(generator),
-            std::uniform_int_distribution<int>(1, 28)(generator)};
+    return native_type{
+        std::uniform_int_distribution<std::int64_t>(1, 2000)(generator),
+        std::uniform_int_distribution<int>(1, 12)(generator),
+        std::uniform_int_distribution<int>(1, 28)(generator)};
   }
 };
 
