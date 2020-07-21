@@ -32,18 +32,20 @@ TEST(PublisherConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
-  EXPECT_CALL(*mock, Publish(_, _))
-      .WillOnce([&](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
         EXPECT_EQ("test-data-0", request.messages(0).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
-        return make_status_or(response);
+        return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -55,14 +57,16 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
-  EXPECT_CALL(*mock, Publish(_, _))
-      .WillOnce(
-          [&](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
-            google::pubsub::v1::PublishResponse response;
-            return make_status_or(response);
-          });
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const&) {
+        google::pubsub::v1::PublishResponse response;
+        return make_ready_future(make_status_or(response));
+      });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -78,14 +82,16 @@ TEST(PublisherConnectionTest, HandleError) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
-  EXPECT_CALL(*mock, Publish(_, _))
-      .WillOnce(
-          [&](grpc::ClientContext&, google::pubsub::v1::PublishRequest const&) {
-            return StatusOr<google::pubsub::v1::PublishResponse>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const&) {
+        return make_ready_future(StatusOr<google::pubsub::v1::PublishResponse>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
+      });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();

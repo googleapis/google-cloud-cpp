@@ -65,7 +65,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    pubsub::Topic topic, std::shared_ptr<PublisherStub> stub);
+    pubsub::Topic topic, std::shared_ptr<PublisherStub> stub,
+    pubsub::ConnectionOptions const& options);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
