@@ -96,8 +96,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class Publisher {
  public:
-  Publisher(std::shared_ptr<PublisherConnection> connection,
-            PublisherOptions options = {});
+  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions options = {});
 
   //@{
   Publisher(Publisher const&) = default;
