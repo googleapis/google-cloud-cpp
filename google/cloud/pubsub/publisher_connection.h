@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
@@ -53,11 +54,14 @@ class PublisherConnection {
  *
  * @param topic the Cloud Pub/Sub topic used by the returned
  *     `PublisherConnection`.
- * @param options (optional) configure the `PublisherConnection` created by
- *     this function.
+ * @param options configure the batching policy and other parameters in the
+ *     returned connection.
+ * @param connection_options (optional) general configuration for this
+ *    connection, this type is also used to configure `pubsub::Subscriber`.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Topic topic, ConnectionOptions const& options = ConnectionOptions());
+    Topic topic, PublisherOptions options,
+    ConnectionOptions const& connection_options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -65,8 +69,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    pubsub::Topic topic, std::shared_ptr<PublisherStub> stub,
-    pubsub::ConnectionOptions const& options);
+    pubsub::Topic topic, pubsub::PublisherOptions options,
+    std::shared_ptr<PublisherStub> stub,
+    pubsub::ConnectionOptions const& connection_options);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
