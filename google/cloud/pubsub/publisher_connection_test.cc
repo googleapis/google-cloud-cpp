@@ -43,11 +43,9 @@ TEST(PublisherConnectionTest, Basic) {
         return make_status_or(response);
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
   auto response =
-      publisher
-          ->Publish({topic.FullName(),
-                     MessageBuilder{}.SetData("test-data-0").Build()})
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ("test-message-id-0", *response);
@@ -64,11 +62,9 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
             return make_status_or(response);
           });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
   auto response =
-      publisher
-          ->Publish({topic.FullName(),
-                     MessageBuilder{}.SetData("test-data-0").Build()})
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
   // It is very unlikely we will see this in production, it would indicate a bug
   // in the Cloud Pub/Sub service where we successfully published N events, but
@@ -89,11 +85,9 @@ TEST(PublisherConnectionTest, HandleError) {
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(mock);
+  auto publisher = pubsub_internal::MakePublisherConnection(topic, mock);
   auto response =
-      publisher
-          ->Publish({topic.FullName(),
-                     MessageBuilder{}.SetData("test-message-0").Build()})
+      publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
   EXPECT_EQ("uh-oh", response.status().message());

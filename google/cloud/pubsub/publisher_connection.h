@@ -36,7 +36,6 @@ class PublisherConnection {
   virtual ~PublisherConnection() = 0;
 
   struct PublishParams {
-    std::string full_topic_name;
     Message message;
   };
   virtual future<StatusOr<std::string>> Publish(PublishParams p) = 0;
@@ -52,11 +51,13 @@ class PublisherConnection {
  *
  * @see `PublisherConnection`
  *
+ * @param topic the Cloud Pub/Sub topic used by the returned
+ *     `PublisherConnection`.
  * @param options (optional) configure the `PublisherConnection` created by
  *     this function.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    Topic topic, ConnectionOptions const& options = ConnectionOptions());
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -64,7 +65,7 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    std::shared_ptr<PublisherStub> stub);
+    pubsub::Topic topic, std::shared_ptr<PublisherStub> stub);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

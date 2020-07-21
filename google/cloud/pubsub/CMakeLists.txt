@@ -42,8 +42,12 @@ add_library(
     internal/user_agent_prefix.h
     message.cc
     message.h
+    publisher.cc
+    publisher.h
     publisher_connection.cc
     publisher_connection.h
+    publisher_options.cc
+    publisher_options.h
     subscriber_connection.cc
     subscriber_connection.h
     subscription.cc
@@ -86,8 +90,10 @@ create_bazel_config(pubsub_client YEAR "2020")
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(pubsub_client_mocks INTERFACE)
-target_sources(pubsub_client_mocks
-               INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h)
+target_sources(
+    pubsub_client_mocks
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h)
 target_link_libraries(
     pubsub_client_mocks
     INTERFACE googleapis-c++::pubsub_client google_cloud_cpp_testing
@@ -131,6 +137,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/user_agent_prefix_test.cc
         message_test.cc
         publisher_connection_test.cc
+        publisher_option_test.cc
+        publisher_test.cc
         subscriber_connection_test.cc
         subscription_test.cc
         topic_test.cc)
