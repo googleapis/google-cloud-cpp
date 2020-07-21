@@ -25,39 +25,28 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+// These functions convert between an `absl::Time` and a
+// `google::protobuf::Timestamp` proto. The required format for the Timestamp
+// proto is documented in this file:
+// https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/timestamp.proto
+//
+// In particular, the Timestamp proto must:
+// * be in the range ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
+// * have a non-negative nanos() field, even for times before the Unix epoch
+//
+// `absl::Time` has a greater range and precision than the proto. Any
+// `absl::Time` values outside of the proto's supported range will be capped at
+// the min/max proto value. Any additional precision will be floored.
+//
+absl::Time ToAbslTime(google::protobuf::Timestamp const& proto);
+google::protobuf::Timestamp ToProtoTimestamp(absl::Time t);
+
+// Same as above, but converts to/from `std::chrono::system_clock::time_point`
+// and `google::protobuf::Timestamp`.
 std::chrono::system_clock::time_point ToChronoTimePoint(
-    google::protobuf::Timestamp const& ts);
-
-template <typename Duration>
+    google::protobuf::Timestamp const& proto);
 google::protobuf::Timestamp ToProtoTimestamp(
-    std::chrono::time_point<std::chrono::system_clock, Duration> const& tp) {
-  auto d = tp.time_since_epoch();
-  using std::chrono::duration_cast;
-  auto seconds = duration_cast<std::chrono::seconds>(d);
-  auto nanos = duration_cast<std::chrono::nanoseconds>(d - seconds);
-  google::protobuf::Timestamp ts;
-  ts.set_seconds(seconds.count());
-  // Some platforms use 64 bit integers to represent nanos.count(). The proto
-  // field is only 32 bits. It is safe here to perform this narrowing cast
-  // because the arithmetic used to compute nanos precludes it from having a
-  // value > 1,000,000,000.
-  ts.set_nanos(static_cast<std::int32_t>(nanos.count()));
-  return ts;
-}
-
-inline absl::Time ToAbslTime(google::protobuf::Timestamp const& ts) {
-  return absl::FromUnixSeconds(ts.seconds()) + absl::Nanoseconds(ts.nanos());
-}
-
-inline google::protobuf::Timestamp ToProtoTimestamp(absl::Time t) {
-  auto const seconds = absl::ToUnixSeconds(t);
-  auto const nanos =
-      absl::ToInt64Nanoseconds(t - absl::FromUnixSeconds(seconds));
-  google::protobuf::Timestamp ts;
-  ts.set_seconds(seconds);
-  ts.set_nanos(static_cast<std::int32_t>(nanos));
-  return ts;
-}
+    std::chrono::system_clock::time_point const& tp);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
