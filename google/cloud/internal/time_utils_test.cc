@@ -50,6 +50,9 @@ TEST(TimeUtils, AbseilTime) {
   auto const sec = [](std::int64_t n) { return absl::Seconds(n); };
   auto const ns = [](std::int64_t n) { return absl::Nanoseconds(n); };
 
+  // The min/max values that are allowed to be encoded in a Timestamp proto:
+  // ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
+  // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
   auto const min_proto = MakeProto(-62135596800, 0);
   auto const max_proto = MakeProto(253402300799, 999999999);
 

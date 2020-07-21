@@ -29,6 +29,7 @@ absl::Time ToAbslTime(google::protobuf::Timestamp const& proto) {
 google::protobuf::Timestamp ToProtoTimestamp(absl::Time t) {
   // The min/max values that are allowed to be encoded in a Timestamp proto:
   // ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
+  // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
   auto constexpr kMinTime = absl::FromUnixSeconds(-62135596800);
   auto const kMaxTime =  // NOLINT(readability-identifier-naming)
       absl::FromUnixSeconds(253402300799) + absl::Nanoseconds(999999999);
