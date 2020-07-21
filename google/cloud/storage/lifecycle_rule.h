@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/status_or.h"
+#include "absl/time/civil_time.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <iosfwd>
@@ -77,7 +78,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs);
 /// Implement a wrapper for Lifecycle Conditions.
 struct LifecycleRuleCondition {
   absl::optional<std::int32_t> age;
-  absl::optional<std::chrono::system_clock::time_point> created_before;
+  absl::optional<absl::CivilDay> created_before;
   absl::optional<bool> is_live;
   absl::optional<std::vector<std::string>> matches_storage_class;
   absl::optional<std::int32_t> num_newer_versions;
@@ -164,15 +165,7 @@ class LifecycleRule {
     return result;
   }
 
-  static LifecycleRuleCondition CreatedBefore(std::string const& timestamp) {
-    LifecycleRuleCondition result;
-    result.created_before.emplace(
-        google::cloud::internal::ParseRfc3339(timestamp));
-    return result;
-  }
-
-  static LifecycleRuleCondition CreatedBefore(
-      std::chrono::system_clock::time_point date) {
+  static LifecycleRuleCondition CreatedBefore(absl::CivilDay date) {
     LifecycleRuleCondition result;
     result.created_before.emplace(std::move(date));
     return result;

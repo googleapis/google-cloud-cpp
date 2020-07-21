@@ -21,12 +21,14 @@
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
+#include "absl/time/time.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -1058,8 +1060,9 @@ google::storage::v1::Bucket::Lifecycle::Rule::Condition GrpcClient::ToProto(
     result.set_age(*rhs.age);
   }
   if (rhs.created_before.has_value()) {
+    auto const t = absl::FromCivil(*rhs.created_before, absl::UTCTimeZone());
     *result.mutable_created_before() =
-        google::cloud::internal::ToProtoTimestamp(*rhs.created_before);
+        google::cloud::internal::ToProtoTimestamp(t);
   }
   if (rhs.is_live.has_value()) {
     result.mutable_is_live()->set_value(*rhs.is_live);
@@ -1082,8 +1085,8 @@ LifecycleRuleCondition GrpcClient::FromProto(
     result.age = rhs.age();
   }
   if (rhs.has_created_before()) {
-    result.created_before =
-        google::cloud::internal::ToChronoTimePoint(rhs.created_before());
+    auto const t = google::cloud::internal::ToAbslTime(rhs.created_before());
+    result.created_before = absl::ToCivilDay(t, absl::UTCTimeZone());
   }
   if (rhs.has_is_live()) {
     result.is_live = rhs.is_live().value();

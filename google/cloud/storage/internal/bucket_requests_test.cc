@@ -35,6 +35,32 @@ TEST(LifecycleRuleParserTest, ParseFailure) {
   EXPECT_FALSE(actual.ok());
 }
 
+TEST(LifecycleRuleParserTest, ParseCreatedBeforeFailure) {
+  auto actual = LifecycleRuleParser::FromString(R"js({
+    "condition": {
+      "createdBefore": "xxxx"
+    }
+  })js");
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(LifecycleRuleParserTest, ParseFull) {
+  auto actual = LifecycleRuleParser::FromString(R"js({
+    "action": {
+      "type": "SetStorageClass",
+      "setStorageClass": "COLDLINE"
+    }
+    "condition": {
+      "age": 30,
+      "createdBefore": "2020-07-20",
+      "isLive": "false",
+      "matchesStorageClass": ["STANDARD", "NEARLINE"],
+      "numNewerVersions": 3
+    }
+  })js");
+  EXPECT_FALSE(actual.ok());
+}
+
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataParserTest, ParseFailure) {
   auto actual = internal::BucketMetadataParser::FromString("{123");

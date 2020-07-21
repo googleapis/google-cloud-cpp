@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/lifecycle_rule.h"
-#include "google/cloud/storage/internal/metadata_parser.h"
 #include <algorithm>
 #include <iostream>
 
@@ -70,8 +69,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
     sep = ", ";
   }
   if (rhs.created_before.has_value()) {
-    os << sep
-       << "created_before=" << rhs.created_before->time_since_epoch().count();
+    os << sep << "created_before=" << *rhs.created_before;
     sep = ", ";
   }
   if (rhs.is_live.has_value()) {
@@ -111,9 +109,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
       *result.created_before =
           std::max(*result.created_before, *rhs.created_before);
     } else {
-      auto tmp = *rhs.created_before;
-      result.created_before.emplace(
-          std::forward<std::chrono::system_clock::time_point>(tmp));
+      result.created_before.emplace(std::move(*rhs.created_before));
     }
   }
   if (rhs.is_live.has_value()) {

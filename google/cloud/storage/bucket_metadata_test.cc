@@ -125,7 +125,7 @@ BucketMetadata CreateBucketMetadataForTest() {
           }
         }, {
           "condition": {
-            "createdBefore": "2016-01-01T00:00:00Z"
+            "createdBefore": "2016-01-01"
           },
           "action": {
             "type": "Delete"
@@ -228,7 +228,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(expected_action_0, actual.lifecycle().rule.at(0).action());
 
   LifecycleRuleCondition expected_condition_1 =
-      LifecycleRule::CreatedBefore("2016-01-01T00:00:00Z");
+      LifecycleRule::CreatedBefore(absl::CivilDay(2016, 1, 1));
   EXPECT_EQ(expected_condition_1, actual.lifecycle().rule.at(1).condition());
 
   LifecycleRuleAction expected_action_1 = LifecycleRule::Delete();
@@ -421,7 +421,7 @@ TEST(BucketMetadataTest, ToJsonString) {
             rule.value("action", internal::nl::json{}));
 
   rule = actual["lifecycle"]["rule"][1];
-  EXPECT_EQ(internal::nl::json({{"createdBefore", "2016-01-01T00:00:00Z"}}),
+  EXPECT_EQ(internal::nl::json({{"createdBefore", "2016-01-01"}}),
             rule.value("condition", internal::nl::json{}));
   EXPECT_EQ(internal::nl::json({{"type", "Delete"}}),
             rule.value("action", internal::nl::json{}));
@@ -579,7 +579,8 @@ TEST(BucketMetadataTest, SetDefaultEventBasedHold) {
   EXPECT_THAT(os.str(), HasSubstr("default_event_based_hold"));
 }
 
-/// @test Verify we can make changes to one DefaultObjectAcl in BucketMetadata.
+/// @test Verify we can make changes to one DefaultObjectAcl in
+/// BucketMetadata.
 TEST(BucketMetadataTest, MutableDefaultObjectAcl) {
   auto expected = CreateBucketMetadataForTest();
   EXPECT_EQ("OWNER", expected.default_acl().at(0).role());

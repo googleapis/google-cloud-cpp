@@ -15,6 +15,7 @@
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/storage_class.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,7 +27,7 @@ LifecycleRule CreateLifecycleRuleForTest() {
   std::string text = R"""({
       "condition": {
         "age": 42,
-        "createdBefore": "2018-07-23T12:00:00Z",
+        "createdBefore": "2018-07-23",
         "isLive": true,
         "matchesStorageClass": [ "STANDARD" ],
         "numNewerVersions": 7
@@ -81,7 +82,7 @@ TEST(LifecycleRuleTest, ConditionCompare) {
   EXPECT_EQ(LifecycleRule::MaxAge(42), LifecycleRule::MaxAge(42));
   EXPECT_NE(LifecycleRule::MaxAge(42), LifecycleRule::MaxAge(7));
   EXPECT_NE(LifecycleRule::MaxAge(42),
-            LifecycleRule::CreatedBefore("2018-07-23T12:00:00Z"));
+            LifecycleRule::CreatedBefore(absl::CivilDay(2018, 7, 23)));
   EXPECT_NE(LifecycleRule::MaxAge(42), LifecycleRule::IsLive(true));
   EXPECT_NE(LifecycleRule::MaxAge(42),
             LifecycleRule::MatchesStorageClassStandard());
@@ -116,18 +117,9 @@ TEST(LifecycleRuleTest, MaxAge) {
   EXPECT_EQ(42, condition.age.value());
 }
 
-/// @test Verify that LifecycleRule::CreatedBefore(string) works as expected.
-TEST(LifecycleRuleTest, CreatedBeforeString) {
-  auto condition = LifecycleRule::CreatedBefore("2018-07-01T12:00:00Z");
-  ASSERT_TRUE(condition.created_before.has_value());
-  auto expected = google::cloud::internal::ParseRfc3339("2018-07-01T12:00:00Z");
-  EXPECT_EQ(expected, condition.created_before.value());
-}
-
-/// @test Verify that LifecycleRule::CreatedBefore(time_point) works as
-/// expected.
+/// @test Verify that LifecycleRule::CreatedBefore(Date) works as expected.
 TEST(LifecycleRuleTest, CreatedBeforeTimePoint) {
-  auto expected = google::cloud::internal::ParseRfc3339("2018-07-01T12:00:00Z");
+  auto const expected = absl::CivilDay(2020, 7, 26);
   auto condition = LifecycleRule::CreatedBefore(expected);
   ASSERT_TRUE(condition.created_before.has_value());
   EXPECT_EQ(expected, condition.created_before.value());
@@ -258,8 +250,8 @@ TEST(LifecycleRuleTest, ConditionConjunctionAge) {
 
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
 TEST(LifecycleRuleTest, ConditionConjunctionCreatedBefore) {
-  auto c1 = LifecycleRule::CreatedBefore("2018-01-08T12:00:00Z");
-  auto c2 = LifecycleRule::CreatedBefore("2018-02-08T12:00:00Z");
+  auto c1 = LifecycleRule::CreatedBefore(absl::CivilDay(2018, 1, 8));
+  auto c2 = LifecycleRule::CreatedBefore(absl::CivilDay(2018, 2, 8));
   auto condition = LifecycleRule::ConditionConjunction(c1, c2);
   ASSERT_TRUE(condition.created_before.has_value());
   EXPECT_EQ(c2.created_before.value(), condition.created_before.value());
@@ -353,7 +345,7 @@ TEST(LifecycleRuleTest, Parsing) {
   LifecycleRuleCondition expected_condition =
       LifecycleRule::ConditionConjunction(
           LifecycleRule::MaxAge(42),
-          LifecycleRule::CreatedBefore("2018-07-23T12:00:00Z"),
+          LifecycleRule::CreatedBefore(absl::CivilDay(2018, 7, 23)),
           LifecycleRule::IsLive(true),
           LifecycleRule::MatchesStorageClassStandard(),
           LifecycleRule::NumNewerVersions(7));
