@@ -68,7 +68,6 @@ TEST(TimeUtils, AbseilTime) {
   } round_trip_cases[] = {
       {min_time, min_proto},
       {epoch - sec(1), MakeProto(-1, 0)},
-      {epoch - sec(1), MakeProto(-1, 0)},
       {epoch - sec(1) + ns(1), MakeProto(-1, 1)},
       {epoch - ns(1), MakeProto(-1, 999999999)},
       {epoch, MakeProto(0, 0)},
@@ -109,7 +108,7 @@ TEST(TimeUtils, ChronoTime) {
   auto const contemporary = absl::ToChronoTime(
       TimeFromString("2020-07-21T11:33:03.123456000Z").value());
   // Note: we do not test the proto min/max values here because we don't know
-  // if chrono's system_clock can represent that value (it likely can't).
+  // if std::chrono::system_clock::time_point can represent that value.
 
   struct {
     std::chrono::system_clock::time_point t;
