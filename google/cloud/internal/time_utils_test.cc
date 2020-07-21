@@ -50,10 +50,12 @@ TEST(TimeUtils, AbseilTime) {
   auto const sec = [](std::int64_t n) { return absl::Seconds(n); };
   auto const ns = [](std::int64_t n) { return absl::Nanoseconds(n); };
 
-  auto const min_time = TimeFromString("0001-01-01T00:00:00Z").value();
-  auto const max_time = TimeFromString("9999-12-31T23:59:59Z").value();
   auto const min_proto = MakeProto(-62135596800, 0);
-  auto const max_proto = MakeProto(253402300799, 0);
+  auto const max_proto = MakeProto(253402300799, 999999999);
+
+  auto const min_time = TimeFromString("0001-01-01T00:00:00Z").value();
+  auto const max_time =
+      TimeFromString("9999-12-31T23:59:59.999999999Z").value();
   auto const contemporary =
       TimeFromString("2020-07-21T11:33:03.123456789Z").value();
 

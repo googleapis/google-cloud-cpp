@@ -31,7 +31,7 @@ namespace internal {
 // https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/timestamp.proto
 //
 // In particular, the Timestamp proto must:
-// * be in the range 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive
+// * be in the range ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
 // * have a non-negative nanos() field, even for times before the Unix epoch
 //
 // `absl::Time` has a greater range and precision than the proto. Any
@@ -47,7 +47,7 @@ google::protobuf::Timestamp ToProtoTimestamp(absl::Time t);
 // https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/timestamp.proto
 //
 // In particular, the Timestamp proto must:
-// * be in the range 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive
+// * be in the range ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
 // * have a non-negative nanos() field, even for times before the Unix epoch
 //
 // If the time_point has a greater range than the proto, values outside the
