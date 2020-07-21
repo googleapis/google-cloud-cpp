@@ -27,6 +27,7 @@ pubsub_client_unit_tests = [
     "publisher_option_test.cc",
     "publisher_test.cc",
     "subscriber_connection_test.cc",
+    "subscriber_test.cc",
     "subscription_test.cc",
     "topic_test.cc",
 ]
