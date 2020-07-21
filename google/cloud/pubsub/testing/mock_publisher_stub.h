@@ -45,8 +45,11 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
                google::pubsub::v1::DeleteTopicRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::PublishResponse>, Publish,
-              (grpc::ClientContext&, google::pubsub::v1::PublishRequest const&),
+  MOCK_METHOD(future<StatusOr<google::pubsub::v1::PublishResponse>>,
+              AsyncPublish,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::pubsub::v1::PublishRequest const&),
               (override));
 };
 

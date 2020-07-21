@@ -62,13 +62,17 @@ class DefaultPublisherStub : public PublisherStub {
     return {};
   }
 
-  StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& context,
+  future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PublishRequest const& request) override {
-    google::pubsub::v1::PublishResponse response;
-    auto status = grpc_stub_->Publish(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               google::pubsub::v1::PublishRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return grpc_stub_->AsyncPublish(context, request, cq);
+        },
+        request, std::move(context));
   }
 
  private:

@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 
@@ -55,8 +56,9 @@ class PublisherStub {
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
   /// Publish a batch of messages.
-  virtual StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& client_context,
+  virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> client_context,
       google::pubsub::v1::PublishRequest const& request) = 0;
 };
 
