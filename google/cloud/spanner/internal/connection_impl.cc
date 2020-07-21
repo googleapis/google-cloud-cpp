@@ -317,13 +317,17 @@ Status ConnectionImpl::BeginTransaction(
     SessionHolder& session,
     absl::optional<spanner_proto::TransactionSelector>& s, char const* func,
     bool is_partitioned_dml) {
+  if (!s) {
+    return Status(StatusCode::kInternal,
+                  "Invalid transaction in BeginTransaction");
+  }
   spanner_proto::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   if (is_partitioned_dml) {
     *begin.mutable_options()->mutable_partitioned_dml() =
         spanner_proto::TransactionOptions_PartitionedDml();
   } else {
-    if (!s && !s->has_begin() && !s->has_single_use()) {
+    if (!s->has_begin() && !s->has_single_use()) {
       return Status(StatusCode::kInternal,
                     "Invalid transaction state for BeginTransaction");
     }
