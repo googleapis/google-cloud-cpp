@@ -303,10 +303,15 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
 
 /**
  * Performs an explicit `BeginTransaction` in cases where that is needed.
+ * This method must be called in the context of a `Transaction::Visit` functor.
  *
- * @p func is used to identify the calling function for logging purposes and
- * should generally be passed the value of __func__.
- * @p is_partitioned_dml whether this is a Partitioned DML transaction.
+ * @param session,ts the parameters passed to the `Visit` functor.
+ * @param func identifies the calling function for logging purposes.
+ *   It should generally be passed the value of the __func__ macro.
+ * @param is_partitioned_dml whether this is a Partitioned DML transaction.
+ *
+ * @returns an error `Status` on failure, otherwise `OK` with `s.id()` set
+ * to the returned transaction ID.
  */
 Status ConnectionImpl::BeginTransaction(
     SessionHolder& session,
