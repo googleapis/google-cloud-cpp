@@ -117,6 +117,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   tm.tm_hour = hours;
   tm.tm_min = minutes;
   tm.tm_sec = seconds;
+  tm.tm_isdst = 0;  // Force use of the "standard" UTC offset.
   return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 }
 
@@ -201,13 +202,14 @@ std::chrono::system_clock::time_point ParseRfc3339(
   static std::chrono::seconds const kLocalTimeOffset = []() {
     auto now = std::time(nullptr);
     std::tm lcl;
-// The standard C++ function to convert time_t to a struct tm is not thread
-// safe (it holds global storage), use some OS specific stuff here:
+    // The standard C++ function to convert time_t to a struct tm is not thread
+    // safe (it holds global storage), use some OS specific stuff here:
 #if _WIN32
     gmtime_s(&lcl, &now);
 #else
     gmtime_r(&now, &lcl);
-#endif  // _WIN32
+#endif                 // _WIN32
+    lcl.tm_isdst = 0;  // Force use of the "standard" UTC offset.
     return std::chrono::seconds(mktime(&lcl) - now);
   }();
 
