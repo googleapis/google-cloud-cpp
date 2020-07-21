@@ -41,18 +41,8 @@ namespace internal {
 absl::Time ToAbslTime(google::protobuf::Timestamp const& proto);
 google::protobuf::Timestamp ToProtoTimestamp(absl::Time t);
 
-// These functions convert between a `std::chrono::system_clock::time_point`
-// and a `google::protobuf::Timestamp` proto. The required format for the
-// Timestamp proto is documented in this file:
-// https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/timestamp.proto
-//
-// In particular, the Timestamp proto must:
-// * be in the range ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
-// * have a non-negative nanos() field, even for times before the Unix epoch
-//
-// If the time_point has a greater range than the proto, values outside the
-// proto range will be capped at the min/max proto values. Any additional
-// precision will be floored.
+// Same as above, but converts to/from `std::chrono::system_clock::time_point`
+// and `google::protobuf::Timestamp`.
 std::chrono::system_clock::time_point ToChronoTimePoint(
     google::protobuf::Timestamp const& proto);
 google::protobuf::Timestamp ToProtoTimestamp(
