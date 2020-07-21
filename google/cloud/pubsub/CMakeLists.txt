@@ -26,6 +26,8 @@ include(GoogleCloudCppCommon)
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     pubsub_client # cmake-format: sort
+    ack_handler.cc
+    ack_handler.h
     connection_options.cc
     connection_options.h
     create_subscription_builder.h
@@ -42,6 +44,8 @@ add_library(
     message.h
     publisher_connection.cc
     publisher_connection.h
+    subscriber_connection.cc
+    subscriber_connection.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
@@ -77,6 +81,26 @@ add_library(googleapis-c++::pubsub_client ALIAS pubsub_client)
 include(CreateBazelConfig)
 create_bazel_config(pubsub_client YEAR "2020")
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
+# that they need absolute paths for their sources.
+add_library(pubsub_client_mocks INTERFACE)
+target_sources(pubsub_client_mocks
+               INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h)
+target_link_libraries(
+    pubsub_client_mocks
+    INTERFACE googleapis-c++::pubsub_client google_cloud_cpp_testing
+              GTest::gmock_main GTest::gmock GTest::gtest)
+create_bazel_config(pubsub_client_mocks YEAR "2020")
+target_include_directories(
+    pubsub_client_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(pubsub_client_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_pubsub_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -87,8 +111,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     add_library(
         pubsub_client_testing # cmake-format: sort
-        testing/mock_publisher_stub.h testing/random_names.cc
-        testing/random_names.h)
+        testing/mock_publisher_stub.h testing/mock_subscriber_stub.h
+        testing/random_names.cc testing/random_names.h)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils
@@ -100,12 +124,14 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     set(pubsub_client_unit_tests
         # cmake-format: sort
+        ack_handler_test.cc
         create_subscription_builder_test.cc
         create_topic_builder_test.cc
         internal/emulator_overrides_test.cc
         internal/user_agent_prefix_test.cc
         message_test.cc
         publisher_connection_test.cc
+        subscriber_connection_test.cc
         subscription_test.cc
         topic_test.cc)
 
@@ -119,7 +145,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE pubsub_client_testing
+            PRIVATE pubsub_client_mocks
+                    pubsub_client_testing
                     googleapis-c++::pubsub_client
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
@@ -183,6 +210,8 @@ install(
             COMPONENT google_cloud_cpp_pubsub_development)
 
 google_cloud_cpp_install_headers("pubsub_client" "include/google/cloud/pubsub")
+google_cloud_cpp_install_headers("pubsub_client_mocks"
+                                 "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})

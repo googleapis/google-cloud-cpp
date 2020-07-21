@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -60,33 +60,9 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   ASSERT_STATUS_OK(subscription_metadata);
 
   auto publisher = MakePublisherConnection();
-  auto subscriber =
-      pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
+  auto subscriber = MakeSubscriberConnection();
 
-  auto pull =
-      [&]() -> StatusOr<std::vector<google::pubsub::v1::ReceivedMessage>> {
-    grpc::ClientContext context;
-    google::pubsub::v1::PullRequest request;
-    request.set_subscription(subscription.FullName());
-    request.set_max_messages(5);
-    auto response = subscriber->Pull(context, request);
-    if (!response) return std::move(response).status();
-    std::vector<google::pubsub::v1::ReceivedMessage> messages;
-    messages.reserve(response->received_messages_size());
-    for (auto& m : *response->mutable_received_messages()) {
-      messages.push_back(std::move(m));
-    }
-    return messages;
-  };
-
-  auto ack = [&](std::string const& id) -> Status {
-    grpc::ClientContext context;
-    google::pubsub::v1::AcknowledgeRequest request;
-    request.set_subscription(subscription.FullName());
-    request.add_ack_ids(id);
-    return subscriber->Acknowledge(context, request);
-  };
-
+  std::mutex mu;
   std::vector<std::string> ids;
   for (auto const* data : {"message-0", "message-1", "message-2"}) {
     auto response = publisher
@@ -95,27 +71,33 @@ TEST(MessageIntegrationTest, PublishPullAck) {
                         .get();
     EXPECT_STATUS_OK(response);
     if (response) {
+      std::lock_guard<std::mutex> lk(mu);
       ids.push_back(*std::move(response));
     }
   }
   EXPECT_FALSE(ids.empty());
 
-  while (!ids.empty()) {
-    auto messages = pull();
-    ASSERT_STATUS_OK(messages);
-
-    for (auto const& m : *messages) {
-      SCOPED_TRACE("Search for message " + m.DebugString());
-      auto i = std::find(ids.begin(), ids.end(), m.message().message_id());
-      EXPECT_STATUS_OK(ack(m.ack_id()));
-      if (i != ids.end()) {
-        ids.erase(i);
-      } else {
-        FAIL() << "Cannot find message id=" << m.message().message_id()
-               << " to erase";
-      }
+  promise<void> ids_empty;
+  auto handler = [&](pubsub::Message const& m, AckHandler h) {
+    SCOPED_TRACE("Search for message " + m.message_id());
+    EXPECT_STATUS_OK(std::move(h).ack());
+    std::lock_guard<std::mutex> lk(mu);
+    auto i = std::find(ids.begin(), ids.end(), m.message_id());
+    if (i != ids.end()) {
+      // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
+      // perfectly possible, in that case the message would not be in the list
+      // of pending ids.
+      ids.erase(i);
+      if (ids.empty()) ids_empty.set_value();
     }
-  }
+  };
+
+  auto result = subscriber->Subscribe({subscription.FullName(), handler});
+  // Wait until there are no more ids pending, then cancel the subscription and
+  // get its status.
+  ids_empty.get_future().get();
+  result.cancel();
+  EXPECT_STATUS_OK(result.get());
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   ASSERT_STATUS_OK(delete_response);
