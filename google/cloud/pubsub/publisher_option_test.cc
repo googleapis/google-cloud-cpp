@@ -33,7 +33,7 @@ TEST(PublisherOptions, Batching) {
   EXPECT_EQ(123, b.maximum_batch_bytes());
   auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::seconds(12));
-  EXPECT_EQ(expected.count(), b.maximum_hold_time().count());
+  EXPECT_EQ(expected, b.maximum_hold_time());
 }
 
 TEST(PublisherOptions, PublisherOptions) {
@@ -46,7 +46,7 @@ TEST(PublisherOptions, PublisherOptions) {
   EXPECT_TRUE(o.message_ordering());
   auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::seconds(12));
-  EXPECT_EQ(expected.count(), o.batching_config().maximum_hold_time().count());
+  EXPECT_EQ(expected, o.batching_config().maximum_hold_time());
 }
 
 }  // namespace

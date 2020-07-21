@@ -66,7 +66,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * Some of the member functions in this class return a `future<T>` (or
  * `future<StatusOr<T>>`) object.  Readers are probably familiar with
- * [`std::future<T>`][std-future-link], our version adds a `.then()` function to
+ * [`std::future<T>`][std-future-link]. Our version adds a `.then()` function to
  * attach a callback to the future, which is invoked when the future is
  * satisfied. This function returns a `future<U>` where `U` is the return value
  * of the attached function. More details in the #google::cloud::v1::future
@@ -111,6 +111,7 @@ class Publisher {
    *
    * @par
    * Note that the message maybe be batched based on the Publisher's
+   * configuration, the message may not be immediately sent.
    *
    * @return a future that becomes satisfied when the message is published or on
    *     a unrecoverable error.
