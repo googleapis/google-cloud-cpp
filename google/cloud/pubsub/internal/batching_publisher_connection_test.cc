@@ -98,9 +98,13 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
         return make_ready_future(make_status_or(response));
       });
 
+  // Use our own completion queue, initially inactive, to avoid race conditions
+  // due to the zero-maximum-hold-time timer expiring.
+  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq));
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -118,8 +122,13 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
+  std::thread t([&cq] { cq.Run(); });
+
   r0.get();
   r1.get();
+
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
@@ -141,12 +150,17 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
       });
 
   auto constexpr kMaxMessageBytes = sizeof("test-data-N") + 2;
+  // Use our own completion queue, initially inactive, to avoid race conditions
+  // due to the zero-maximum-hold-time timer expiring.
+  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::BatchingConfig{}
           .set_maximum_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
-      mock, pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      mock,
+      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq));
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -164,8 +178,13 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
+  std::thread t([&cq] { cq.Run(); });
+
   r0.get();
   r1.get();
+
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
@@ -186,11 +205,14 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
         return make_ready_future(make_status_or(response));
       });
 
+  // Use our own completion queue, initially inactive, to avoid race conditions
+  // due to the maximum-hold-time timer expiring.
+  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::BatchingConfig{}
-          .set_maximum_message_count(4)
-          .set_maximum_hold_time(std::chrono::milliseconds(500)),
+          .set_maximum_hold_time(std::chrono::milliseconds(5))
+          .set_maximum_message_count(4),
       mock, pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto r0 =
       publisher
@@ -209,8 +231,13 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
+  std::thread t([&cq] { cq.Run(); });
+
   r0.get();
   r1.get();
+
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, HandleError) {
@@ -219,9 +246,9 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
   EXPECT_CALL(*mock, AsyncPublish(_, _, _))
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::PublishRequest const&) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(
             StatusOr<google::pubsub::v1::PublishResponse>(error_status));
       });
@@ -251,9 +278,9 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   pubsub::Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish(_, _, _))
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::PublishRequest const&) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         return make_ready_future(make_status_or(response));
       });
