@@ -33,6 +33,7 @@ class ContainingPublisherConnection : public PublisherConnection {
   future<StatusOr<std::string>> Publish(PublishParams p) override {
     return child_->Publish(std::move(p));
   }
+  void Flush(FlushParams p) override { child_->Flush(std::move(p)); }
 
  private:
   std::shared_ptr<BackgroundThreads> background_;

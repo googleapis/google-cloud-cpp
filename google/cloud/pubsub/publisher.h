@@ -120,6 +120,19 @@ class Publisher {
     return connection_->Publish({std::move(m)});
   }
 
+  /**
+   * Flush any unpublished messages.
+   *
+   * As applications can configure a `Publisher` to buffer messages, it is
+   * sometimes useful to flush them before any of the normal criteria to send
+   * the RPCs is met.
+   *
+   * @note This function does not return any status or error codes, the
+   *     application can use the `future<StatusOr<std::string>>` returned in
+   *     each `Publish()` call to find out what the results are.
+   */
+  void Flush() { connection_->Flush({}); }
+
  private:
   std::shared_ptr<PublisherConnection> connection_;
 };

@@ -236,6 +236,79 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
   t.join();
 }
 
+TEST(BatchingPublisherConnectionTest, BatchByFlush) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(2, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        EXPECT_EQ("test-data-1", request.messages(1).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        response.add_message_ids("test-message-id-1");
+        return make_ready_future(make_status_or(response));
+      })
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        google::pubsub::v1::PublishResponse response;
+        for (auto const& m : request.messages()) {
+          response.add_message_ids("ack-for-" + m.data());
+        }
+        return make_ready_future(make_status_or(response));
+      });
+
+  // Use our own completion queue, initially inactive, to avoid race conditions
+  // due to the maximum-hold-time timer expiring.
+  google::cloud::CompletionQueue cq;
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::BatchingConfig{}
+          .set_maximum_hold_time(std::chrono::milliseconds(5))
+          .set_maximum_message_count(4),
+      mock, cq);
+
+  std::vector<future<void>> results;
+  for (auto i : {0, 1}) {
+    results.push_back(
+        publisher
+            ->Publish({pubsub::MessageBuilder{}
+                           .SetData("test-data-" + std::to_string(i))
+                           .Build()})
+            .then([i](future<StatusOr<std::string>> f) {
+              auto r = f.get();
+              ASSERT_STATUS_OK(r);
+              EXPECT_EQ("test-message-id-" + std::to_string(i), *r);
+            }));
+  }
+
+  // Trigger the first `.WillOnce()` expectation.  CQ is not running yet, so the
+  // flush cannot be explained by a timer, and the message count is too low.
+  publisher->Flush({});
+
+  for (auto i : {2, 3, 4}) {
+    auto data = std::string{"test-data-"} + std::to_string(i);
+    results.push_back(
+        publisher->Publish({pubsub::MessageBuilder{}.SetData(data).Build()})
+            .then([data](future<StatusOr<std::string>> f) {
+              auto r = f.get();
+              ASSERT_STATUS_OK(r);
+              EXPECT_EQ("ack-for-" + data, *r);
+            }));
+  }
+
+  std::thread t([&cq] { cq.Run(); });
+  for (auto& r : results) r.get();
+  cq.Shutdown();
+  t.join();
+}
+
 TEST(BatchingPublisherConnectionTest, HandleError) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");

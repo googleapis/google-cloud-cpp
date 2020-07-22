@@ -27,6 +27,8 @@ class MockPublisherConnection : public pubsub::PublisherConnection {
  public:
   MOCK_METHOD(future<StatusOr<std::string>>, Publish,
               (pubsub::PublisherConnection::PublishParams), (override));
+  MOCK_METHOD(void, Flush, (pubsub::PublisherConnection::FlushParams),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

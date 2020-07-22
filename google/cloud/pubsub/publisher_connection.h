@@ -40,6 +40,9 @@ class PublisherConnection {
     Message message;
   };
   virtual future<StatusOr<std::string>> Publish(PublishParams p) = 0;
+
+  struct FlushParams {};
+  virtual void Flush(FlushParams) = 0;
 };
 
 /**
