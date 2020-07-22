@@ -42,6 +42,28 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class MessageBuilder;
 
 /**
+ * Defines the type for message data.
+ *
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for message data. We use this
+ * type to automatically detect what is the representation for this field and
+ * use the correct mapping.
+ *
+ * External users of the Cloud Pubsub C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
+ *
+ * In other words, external users of the Cloud Pubsub C++ client should simply
+ * write `std::string` where this type appears. For Google projects that must
+ * compile both inside and outside Google, this alias may be convenient.
+ */
+using PubsubMessageDataType = std::decay<decltype(
+    std::declval<google::pubsub::v1::PubsubMessage>().data())>::type;
+
+/**
  * The C++ representation for a Cloud Pub/Sub messages.
  *
  * Cloud Pub/Sub applications communicate to each other using messages. Note
@@ -52,8 +74,10 @@ class Message {
  public:
   /// @name accessors
   //@{
-  std::string const& data() const& { return proto_.data(); }
-  std::string&& data() && { return std::move(*proto_.mutable_data()); }
+  PubsubMessageDataType const& data() const& { return proto_.data(); }
+  PubsubMessageDataType&& data() && {
+    return std::move(*proto_.mutable_data());
+  }
   std::string const& message_id() const { return proto_.message_id(); }
   std::string const& ordering_key() const { return proto_.ordering_key(); }
   std::chrono::system_clock::time_point publish_time() const;
