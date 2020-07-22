@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
+#include <cmath>
 #include <cstdint>
 #include <limits>
 #include <sstream>
@@ -43,37 +44,6 @@ google::protobuf::Timestamp MakeProtoTimestamp(std::int64_t seconds,
   proto.set_seconds(seconds);
   proto.set_nanos(nanos);
   return proto;
-}
-
-Timestamp ToTimestamp(absl::Time t) {
-  return internal::TimestampFromRFC3339(absl::FormatTime(t)).value();
-}
-
-// The min/max values that are allowed to be encoded in a Timestamp proto:
-// ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
-// Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
-absl::Time MinTime() { return absl::FromUnixSeconds(-62135596800); }
-absl::Time MaxTime() {
-  return absl::FromUnixSeconds(253402300799) + absl::Nanoseconds(999999999);
-}
-
-// The min/max values that are allowed to be encoded in a Timestamp proto:
-// ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
-// Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
-google::protobuf::Timestamp MinProto() {
-  return MakeProtoTimestamp(-62135596800, 0);
-}
-google::protobuf::Timestamp MaxProto() {
-  return MakeProtoTimestamp(253402300799, 999999999);
-}
-
-Timestamp MinTimestamp() {
-  return internal::TimestampFromRFC3339("0001-01-01T00:00:00Z").value();
-}
-
-Timestamp MaxTimestamp() {
-  return internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z")
-      .value();
 }
 
 TEST(Timestamp, RegularSemantics) {
@@ -219,8 +189,6 @@ TEST(Timestamp, FromRFC3339Failure) {
   EXPECT_FALSE(internal::TimestampFromRFC3339("2019-06-21T16:52:22x00:00"));
   EXPECT_FALSE(internal::TimestampFromRFC3339("2019-06-21T16:52:22+ab:cd"));
   EXPECT_FALSE(internal::TimestampFromRFC3339("2019-06-21T16:52:22-24:60"));
-  /* EXPECT_FALSE(internal::TimestampFromRFC3339("2019-06-21T16:52:22+00:00:00"));
-   */
 }
 
 TEST(Timestamp, FromRFC3339Limit) {
@@ -232,24 +200,11 @@ TEST(Timestamp, FromRFC3339Limit) {
       internal::TimestampFromProto(MakeProtoTimestamp(253402300799, 999999999)),
       internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z").value());
 
-  // std::tm range limits (including -1900 tm_year bias).
-  EXPECT_EQ(
-      internal::TimestampFromProto(MakeProtoTimestamp(-67768040609740800, 0)),
-      internal::TimestampFromRFC3339("-2147481748-01-01T00:00:00.000000000Z")
-          .value());
-  EXPECT_EQ(
-      internal::TimestampFromProto(
-          MakeProtoTimestamp(67768036191676799, 999999999)),
-      internal::TimestampFromRFC3339("2147485547-12-31T23:59:59.999999999Z")
-          .value());
+  // One nanosecond before the lower bound is invalid.
+  EXPECT_FALSE(internal::TimestampFromRFC3339("0-12-31T23:59:59.999999999Z"));
 
-  /* // One nanosecond beyond std::tm range limits fails to parse. */
-  /* EXPECT_FALSE( */
-  /*     internal::TimestampFromRFC3339("-2147481749-12-31T23:59:59.999999999Z"));
-   */
-  /* EXPECT_FALSE( */
-  /*     internal::TimestampFromRFC3339("2147485548-01-01T00:00:00.000000000Z"));
-   */
+  // One nanosecond passed the upper bound is invalid.
+  EXPECT_FALSE(internal::TimestampFromRFC3339("10000-01-01T00:00:00Z"));
 }
 
 TEST(Timestamp, ToRFC3339) {
@@ -317,24 +272,6 @@ TEST(Timestamp, ToRFC3339Limit) {
   EXPECT_EQ("9999-12-31T23:59:59.999999999Z",
             internal::TimestampToRFC3339(internal::TimestampFromProto(
                 MakeProtoTimestamp(253402300799, 999999999))));
-
-  // std::tm range limits (including -1900 tm_year bias).
-  EXPECT_EQ("-2147481748-01-01T00:00:00Z",
-            internal::TimestampToRFC3339(internal::TimestampFromProto(
-                MakeProtoTimestamp(-67768040609740800, 0))));
-  EXPECT_EQ("2147485547-12-31T23:59:59.999999999Z",
-            internal::TimestampToRFC3339(internal::TimestampFromProto(
-                MakeProtoTimestamp(67768036191676799, 999999999))));
-
-  /* // One nanosecond beyond std::tm range limits gives unspecified behavior.
-   */
-  /* // Here we expect that we *do not* observe the "right" outputs. */
-  /* EXPECT_NE("-2147481749-12-31T23:59:59.999999999Z", */
-  /*           internal::TimestampToRFC3339(internal::TimestampFromProto( */
-  /*               MakeProtoTimestamp(-67768040609740801, 999999999)))); */
-  /* EXPECT_NE("2147485548-01-01T00:00:00", */
-  /*           internal::TimestampToRFC3339(internal::TimestampFromProto( */
-  /*               MakeProtoTimestamp(67768036191676800, 0)))); */
 }
 
 TEST(Timestamp, FromProto) {
@@ -356,45 +293,15 @@ TEST(Timestamp, FromProto) {
 }
 
 TEST(Timestamp, FromProtoLimit) {
-  EXPECT_EQ(MinTimestamp(), internal::TimestampFromProto(MinProto()));
-  EXPECT_EQ(MaxTimestamp(), internal::TimestampFromProto(MaxProto()));
-
-  EXPECT_EQ(MinTimestamp(), ToTimestamp(MinTime()));
-  EXPECT_EQ(MaxTimestamp(), ToTimestamp(MaxTime()));
-
-  // Q: Should spanner::Timestamp clamp?
-  /* EXPECT_EQ(MinTimestamp(), ToTimestamp(MinTime() - absl::Nanoseconds(1)));
-   */
-
-  /* // Least, normalized protobuf::Timestamp (but beyond documented range). */
-  /* auto proto = internal::TimestampToProto(internal::TimestampFromProto( */
-  /*     MakeProtoTimestamp(std::numeric_limits<std::int64_t>::min(), 0))); */
-  /* EXPECT_EQ(std::numeric_limits<std::int64_t>::min(), proto.seconds()); */
-  /* EXPECT_EQ(0, proto.nanos()); */
-
-  /* // Trying to go one nanosecond earlier still produces the least-normalized.
-   */
-  /* proto = internal::TimestampToProto(internal::TimestampFromProto( */
-  /*     MakeProtoTimestamp(std::numeric_limits<std::int64_t>::min(), 0 - 1)));
-   */
-  /* EXPECT_EQ(std::numeric_limits<std::int64_t>::min(), proto.seconds()); */
-  /* EXPECT_EQ(0, proto.nanos()); */
-
-  /* // Largest, normalized protobuf::Timestamp (but beyond documented range).
-   */
-  /* proto = internal::TimestampToProto(internal::TimestampFromProto( */
-  /*     MakeProtoTimestamp(std::numeric_limits<std::int64_t>::max(),
-   * 999999999))); */
-  /* EXPECT_EQ(std::numeric_limits<std::int64_t>::max(), proto.seconds()); */
-  /* EXPECT_EQ(999999999, proto.nanos()); */
-
-  /* // Trying to go one nanosecond later still produces the largest-normalized.
-   */
-  /* proto = internal::TimestampToProto( */
-  /*     internal::TimestampFromProto(MakeProtoTimestamp( */
-  /*         std::numeric_limits<std::int64_t>::max(), 999999999 + 1))); */
-  /* EXPECT_EQ(std::numeric_limits<std::int64_t>::max(), proto.seconds()); */
-  /* EXPECT_EQ(999999999, proto.nanos()); */
+  // The min/max values that are allowed to be encoded in a Timestamp proto:
+  // ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
+  // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
+  EXPECT_EQ(internal::TimestampFromRFC3339("0001-01-01T00:00:00Z").value(),
+            internal::TimestampFromProto(MakeProtoTimestamp(-62135596800, 0)));
+  EXPECT_EQ(
+      internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z").value(),
+      internal::TimestampFromProto(
+          MakeProtoTimestamp(253402300799, 999999999)));
 }
 
 TEST(Timestamp, ToProto) {
@@ -443,53 +350,23 @@ TEST(Timestamp, FromChrono) {  // i.e., MakeTimestamp(sys_time<Duration>)
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789LL * 60, 0)),
       MakeTimestamp(tp4).value());
 
-  auto const tp5 = kUnixEpoch + std::chrono::hours(2123456789);
-  EXPECT_EQ(internal::TimestampFromProto(
-                MakeProtoTimestamp(2123456789LL * 60 * 60, 0)),
-            MakeTimestamp(tp5).value());
-
-  auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
+  auto const tp5 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123456789)),
-      MakeTimestamp(tp6).value());
+      MakeTimestamp(tp5).value());
 
-  auto const tp7 = kUnixEpoch - std::chrono::seconds(2123456789) +
+  auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123456000)),
-      MakeTimestamp(tp7).value());
+      MakeTimestamp(tp6).value());
 
-  auto const tp8 = kUnixEpoch - std::chrono::seconds(2123456789) +
+  auto const tp7 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::milliseconds(123);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123000000)),
-      MakeTimestamp(tp8).value());
-
-  auto const tp9 = kUnixEpoch - std::chrono::minutes(2123456789);
-  EXPECT_EQ(
-      internal::TimestampFromProto(MakeProtoTimestamp(-2123456789LL * 60, 0)),
-      MakeTimestamp(tp9).value());
-
-  auto const tp10 = kUnixEpoch - std::chrono::hours(2123456789);
-  EXPECT_EQ(internal::TimestampFromProto(
-                MakeProtoTimestamp(-2123456789LL * 60 * 60, 0)),
-            MakeTimestamp(tp10).value());
-
-  /* // A chrono duration that can hold values beyond the resolution of
-   * Timestamp. */
-  /* using picoseconds = std::chrono::duration<std::int64_t, std::pico>; */
-
-  /* auto const tp11 = */
-  /*     kUnixEpoch + std::chrono::seconds(123) + picoseconds(123456789); */
-  /* EXPECT_EQ(internal::TimestampFromProto(MakeProtoTimestamp(123, 123456)), */
-  /*           MakeTimestamp(tp11).value()); */
-
-  /* auto const tp12 = */
-  /*     kUnixEpoch - std::chrono::seconds(123) + picoseconds(123456789); */
-  /* EXPECT_EQ(internal::TimestampFromProto(MakeProtoTimestamp(-123, 123457)),
-   */
-  /*           MakeTimestamp(tp12).value()); */
+      MakeTimestamp(tp7).value());
 }
 
 TEST(Timestamp, FromChronoOverflow) {
@@ -547,9 +424,12 @@ TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
   auto const tp9 = kUnixEpoch - std::chrono::seconds(2123456789);
   EXPECT_EQ(tp9, ts_neg.get<sys_time<std::chrono::seconds>>().value());
 
-  // JGM: the result floors now, but the expectation does not.
-  /* auto const tp10 = kUnixEpoch - std::chrono::hours(2123456789 / 60 / 60); */
-  /* EXPECT_EQ(tp10, ts_neg.get<sys_time<std::chrono::hours>>().value()); */
+  // Timestamps drop precision by flooring toward negative infinity. Therefore,
+  // we need to craft our expectation by making sure our division also floors.
+  auto const floored_hours =
+      static_cast<std::chrono::hours::rep>(std::floor(-2123456789. / 60 / 60));
+  auto const tp10 = kUnixEpoch + std::chrono::hours(floored_hours);
+  EXPECT_EQ(tp10, ts_neg.get<sys_time<std::chrono::hours>>().value());
 
   // The limit of a 64-bit count of nanoseconds (assuming the system_clock
   // epoch is the Unix epoch).
@@ -558,22 +438,6 @@ TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
   auto const tp11 = kUnixEpoch + std::chrono::seconds(9223372036) +
                     std::chrono::nanoseconds(854775807);
   EXPECT_EQ(tp11, ts11.get<sys_time<std::chrono::nanoseconds>>().value());
-
-  /* // A chrono duration that can hold values beyond the resolution of
-   * Timestamp. */
-  /* using picoseconds = std::chrono::duration<std::int64_t, std::pico>; */
-
-  /* auto const ts12 = */
-  /*     internal::TimestampFromProto(MakeProtoTimestamp(123, 123456)); */
-  /* auto const tp12 = */
-  /*     kUnixEpoch + std::chrono::seconds(123) + picoseconds(123456000); */
-  /* EXPECT_EQ(tp12, ts12.get<sys_time<picoseconds>>().value()); */
-
-  /* auto const ts13 = */
-  /*     internal::TimestampFromProto(MakeProtoTimestamp(-123, 123456)); */
-  /* auto const tp13 = */
-  /*     kUnixEpoch - std::chrono::seconds(123) + picoseconds(123456000); */
-  /* EXPECT_EQ(tp13, ts13.get<sys_time<picoseconds>>().value()); */
 }
 
 TEST(Timestamp, ToChronoOverflow) {
@@ -597,6 +461,13 @@ TEST(Timestamp, ToChronoOverflow) {
   auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_FALSE(tp3.ok());
   EXPECT_THAT(tp3.status().message(), HasSubstr("positive overflow"));
+
+  // A chrono duration that can hold values beyond the resolution of Timestamp.
+  using picoseconds = std::chrono::duration<std::int64_t, std::pico>;
+  auto const ts4 = internal::TimestampFromProto(MakeProtoTimestamp(123, 456));
+  auto const tp4 = ts4.get<sys_time<picoseconds>>();
+  EXPECT_FALSE(tp4.ok());
+  EXPECT_THAT(tp4.status().message(), HasSubstr("unsupported duration ratio"));
 }
 
 }  // namespace

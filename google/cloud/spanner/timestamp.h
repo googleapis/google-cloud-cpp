@@ -61,6 +61,8 @@ protobuf::Timestamp TimestampToProto(Timestamp);
  *
  * A `Timestamp` can be converted back to a standard representation using
  * `ts.get<T>()`.
+ *
+ * @see https://cloud.google.com/spanner/docs/data-types#timestamp_type
  */
 class Timestamp {
  public:
@@ -109,6 +111,8 @@ class Timestamp {
    * Supported destination types are:
    *   - `google::cloud::spanner::sys_time<Duration>` (`Duration::rep` may
    *      not be wider than `std::intmax_t`.)
+   *   - `absl::Time` - Since absl::Time can represent all possible `Timestamp`
+   *      values, `get<absl::Time>()` never returns an error.
    *
    * @par Example
    *
@@ -126,20 +130,18 @@ class Timestamp {
  private:
   template <typename Duration>
   friend StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
+  friend StatusOr<Timestamp> MakeTimestamp(absl::Time);
 
   friend StatusOr<Timestamp> internal::TimestampFromRFC3339(std::string const&);
   friend std::string internal::TimestampToRFC3339(Timestamp);
   friend Timestamp internal::TimestampFromProto(protobuf::Timestamp const&);
   friend protobuf::Timestamp internal::TimestampToProto(Timestamp);
 
-  explicit Timestamp(absl::Time t) : t_(t) {}
-
   // Conversion from/to RFC3339 string.
   static StatusOr<Timestamp> FromRFC3339(std::string const&);
   std::string ToRFC3339() const;
 
-  // Conversion from/to `protobuf::Timestamp`. These conversions never fail,
-  // but may accept/produce protobufs outside their documented range.
+  // Conversion from/to `protobuf::Timestamp`.
   static Timestamp FromProto(protobuf::Timestamp const&);
   protobuf::Timestamp ToProto() const;
 
@@ -149,25 +151,28 @@ class Timestamp {
     return std::chrono::time_point_cast<Duration>(
         sys_time<Duration>::clock::from_time_t(0));
   }
-  static StatusOr<Timestamp> FromRatio(std::intmax_t count,
-                                       std::intmax_t numerator,
-                                       std::intmax_t denominator);
+  static StatusOr<Timestamp> FromRatio(std::intmax_t count, std::intmax_t num,
+                                       std::intmax_t den);
   StatusOr<std::intmax_t> ToRatio(std::intmax_t min, std::intmax_t max,
-                                  std::intmax_t numerator,
-                                  std::intmax_t denominator) const;
+                                  std::intmax_t num, std::intmax_t den) const;
 
   // Conversion to a `std::chrono::time_point` on the system clock. May
   // produce out-of-range errors, depending on the properties of `Duration`
   // and the `std::chrono::system_clock` epoch.
   template <typename Duration>
   StatusOr<sys_time<Duration>> ConvertTo(sys_time<Duration> const&) const {
-    auto s = ToRatio(std::numeric_limits<typename Duration::rep>::min(),
-                     std::numeric_limits<typename Duration::rep>::max(),
-                     Duration::period::num, Duration::period::den);
-    if (!s) return std::move(s).status();
-    return Timestamp::UnixEpoch<Duration>() +
-           Duration(static_cast<typename Duration::rep>(*s));
+    using Rep = typename Duration::rep;
+    auto count = ToRatio(std::numeric_limits<Rep>::min(),
+                         std::numeric_limits<Rep>::max(), Duration::period::num,
+                         Duration::period::den);
+    if (!count) return std::move(count).status();
+    return UnixEpoch<Duration>() + Duration(static_cast<Rep>(*count));
   }
+
+  // Conversion to an `absl::Time`. Can never fail.
+  StatusOr<absl::Time> ConvertTo(absl::Time) const { return t_; }
+
+  explicit Timestamp(absl::Time t) : t_(t) {}
 
   absl::Time t_;
 };
@@ -183,6 +188,13 @@ StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const& tp) {
   return Timestamp::FromRatio((tp - Timestamp::UnixEpoch<Duration>()).count(),
                               Duration::period::num, Duration::period::den);
 }
+
+/**
+ * Construct a `Timestamp` from an `absl::Time`. May produce out-of-range
+ * errors if the given time is beyond the range supported by `Timestamp` (see
+ * class comments above).
+ */
+StatusOr<Timestamp> MakeTimestamp(absl::Time);
 
 /**
  * A sentinel type used to update a commit timestamp column.

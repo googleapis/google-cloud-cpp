@@ -31,6 +31,12 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
+// Timestamp objects are always formatted in UTC, and we always format them
+// with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
+// accept, thus the use of '%Ez' in kParseSpec.
+auto constexpr kFormatSpec = "%E4Y-%m-%dT%H:%M:%E*SZ";
+auto constexpr kParseSpec = "%Y-%m-%dT%H:%M:%E*S%Ez";
+
 Status InvalidArgument(std::string message) {
   return Status(StatusCode::kInvalidArgument, std::move(message));
 }
@@ -47,23 +53,28 @@ Status NegativeOverflow(std::string const& type) {
   return OutOfRange(type + " negative overflow");
 }
 
+Status BadDuration(std::intmax_t num, std::intmax_t den) {
+  return OutOfRange("unsupported duration ratio: " + std::to_string(num) + "/" +
+                    std::to_string(den));
+}
+
 }  // namespace
 
 StatusOr<Timestamp> Timestamp::FromRFC3339(std::string const& s) {
   absl::Time t;
   std::string err;
-  if (absl::ParseTime(absl::RFC3339_full, s, &t, &err)) return Timestamp(t);
+  if (absl::ParseTime(kParseSpec, s, &t, &err)) return MakeTimestamp(t);
   return InvalidArgument(s + ": " + err);
 }
 
 std::string Timestamp::ToRFC3339() const {
-  // We want an RFC-3339 compatible format that always ends with 'Z'
-  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-  return absl::FormatTime(kFormat, t_, absl::UTCTimeZone());
+  return absl::FormatTime(kFormatSpec, t_, absl::UTCTimeZone());
 }
 
+// Note: This function requires the `proto` argument to be within the
+// documented valid range for `protobuf::Timestamp`.
 Timestamp Timestamp::FromProto(protobuf::Timestamp const& proto) {
-  return Timestamp(google::cloud::internal::ToAbslTime(proto));
+  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto)).value();
 }
 
 protobuf::Timestamp Timestamp::ToProto() const {
@@ -71,26 +82,36 @@ protobuf::Timestamp Timestamp::ToProto() const {
 }
 
 StatusOr<Timestamp> Timestamp::FromRatio(std::intmax_t const count,
-                                         std::intmax_t const numerator,
-                                         std::intmax_t const denominator) {
-  constexpr auto kDestType = "google::cloud::spanner::Timestamp";
-  auto const period = absl::Seconds(numerator) / denominator;
-  auto const unix_duration = count * period;
-  auto const t = absl::UnixEpoch() + unix_duration;
-  if (t == absl::InfiniteFuture()) return PositiveOverflow(kDestType);
-  if (t == absl::InfinitePast()) return NegativeOverflow(kDestType);
-  return Timestamp(t);
+                                         std::intmax_t const num,
+                                         std::intmax_t const den) {
+  auto const period = absl::Seconds(num) / den;
+  if (period == absl::ZeroDuration()) return BadDuration(num, den);
+  return MakeTimestamp(absl::UnixEpoch() + count * period);
 }
 
 StatusOr<std::intmax_t> Timestamp::ToRatio(std::intmax_t min, std::intmax_t max,
-                                           std::intmax_t numerator,
-                                           std::intmax_t denominator) const {
+                                           std::intmax_t num,
+                                           std::intmax_t den) const {
   constexpr auto kDestType = "std::chrono::time_point";
-  auto const period = absl::Seconds(numerator) / denominator;
-  auto const unix_duration = absl::Floor(t_ - absl::UnixEpoch(), period);
-  if (unix_duration > max * period) return PositiveOverflow(kDestType);
-  if (unix_duration < min * period) return NegativeOverflow(kDestType);
-  return unix_duration / period;
+  auto const period = absl::Seconds(num) / den;
+  if (period == absl::ZeroDuration()) return BadDuration(num, den);
+  auto const duration = absl::Floor(t_ - absl::UnixEpoch(), period);
+  if (duration > max * period) return PositiveOverflow(kDestType);
+  if (duration < min * period) return NegativeOverflow(kDestType);
+  return duration / period;
+}
+
+StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
+  constexpr auto kDestType = "google::cloud::spanner::Timestamp";
+  // The min/max values that are allowed to in a Timestamp:
+  // ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
+  // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
+  auto constexpr kMinTime = absl::FromUnixSeconds(-62135596800);
+  auto const kMaxTime =  // NOLINT(readability-identifier-naming)
+      absl::FromUnixSeconds(253402300799) + absl::Nanoseconds(999999999);
+  if (t > kMaxTime) return PositiveOverflow(kDestType);
+  if (t < kMinTime) return NegativeOverflow(kDestType);
+  return Timestamp(t);
 }
 
 namespace internal {
