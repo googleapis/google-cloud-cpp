@@ -305,22 +305,21 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
  * Performs an explicit `BeginTransaction` in cases where that is needed.
  * This method must be called in the context of a `Transaction::Visit` functor.
  *
- * @param session,ts the parameters passed to the `Visit` functor.
+ * @param session identifies the Session to use.
+ * @param s the `Transaction` selector. Must be valid (contain a value). If
+ *   @p is_partitioned_dml is `false` then `s::selector` must contain either
+ *   `begin` or `single_use`.
  * @param func identifies the calling function for logging purposes.
  *   It should generally be passed the value of the __func__ macro.
  * @param is_partitioned_dml whether this is a Partitioned DML transaction.
  *
- * @returns an error `Status` on failure, otherwise `OK` with `s.id()` set
- * to the returned transaction ID.
+ * @returns an error `Status` on failure with `s` marked invalid (reset).
+ *   otherwise `OK` with `s->id()` set to the returned transaction ID.
  */
 Status ConnectionImpl::BeginTransaction(
     SessionHolder& session,
     absl::optional<spanner_proto::TransactionSelector>& s, char const* func,
     bool is_partitioned_dml) {
-  if (!s) {
-    return Status(StatusCode::kInternal,
-                  "Invalid transaction in BeginTransaction");
-  }
   spanner_proto::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   if (is_partitioned_dml) {
@@ -344,6 +343,7 @@ Status ConnectionImpl::BeginTransaction(
       },
       begin, func);
   if (!response) {
+    s.reset();  // Mark the transaction invalid.
     auto status = std::move(response).status();
     if (internal::IsSessionNotFound(status)) session->set_bad();
     return status;
