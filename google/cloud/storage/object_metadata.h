@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <map>

@@ -16,11 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H
 
 #include "google/cloud/spanner/bytes.h"
+#include "google/cloud/spanner/date.h"
 #include "google/cloud/spanner/internal/tuple_utils.h"
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/time/civil_time.h"
 #include "absl/types/optional.h"

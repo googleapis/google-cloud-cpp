@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/row.h"
 #include "google/cloud/bigquery/row_set.h"
 #include "google/cloud/bigquery/version.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 

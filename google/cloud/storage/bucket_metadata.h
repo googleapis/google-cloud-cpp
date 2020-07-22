@@ -21,6 +21,7 @@
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <map>
 #include <tuple>

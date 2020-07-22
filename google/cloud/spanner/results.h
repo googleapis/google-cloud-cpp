@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
 #include <memory>
