@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <algorithm>
 #include <cstdint>

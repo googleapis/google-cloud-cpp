@@ -18,6 +18,7 @@
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/time/civil_time.h"
 #include "absl/types/optional.h"

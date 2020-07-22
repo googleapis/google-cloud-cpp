@@ -18,6 +18,7 @@
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <memory>
 #include <set>

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_PARTITION_OPTIONS_H
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
 

@@ -22,6 +22,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include "absl/types/optional.h"
 #include <condition_variable>
 #include <ctime>
