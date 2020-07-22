@@ -137,7 +137,7 @@ TEST(Message, SetAttributesVectorStdTuple) {
 
 TEST(Message, DataMove) {
   auto m0 = MessageBuilder{}.SetData("contents-0").Build();
-  std::string const d = std::move(m0).data();
+  auto const d = std::move(m0).data();
   EXPECT_EQ("contents-0", d);
 }
 
