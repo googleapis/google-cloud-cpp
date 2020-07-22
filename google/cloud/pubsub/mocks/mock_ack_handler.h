@@ -25,8 +25,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class MockAckHandler : public pubsub::AckHandler::Impl {
  public:
-  MOCK_METHOD0(ack, Status());
-  MOCK_METHOD0(nack, Status());
+  MOCK_METHOD0(ack, void());
+  MOCK_METHOD0(nack, void());
   MOCK_CONST_METHOD0(ack_id, std::string());
 };
 

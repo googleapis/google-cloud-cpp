@@ -35,17 +35,17 @@ TEST(AckHandlerTest, AckId) {
 TEST(AckHandlerTest, Ack) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
   auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
-  EXPECT_CALL(*mock, ack()).WillOnce(Return(expected));
+  EXPECT_CALL(*mock, ack()).Times(1);
   AckHandler handler(std::move(mock));
-  EXPECT_EQ(expected, std::move(handler).ack());
+  ASSERT_NO_FATAL_FAILURE(std::move(handler).ack());
 }
 
 TEST(AckHandlerTest, Nack) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
   auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
-  EXPECT_CALL(*mock, nack()).WillOnce(Return(expected));
+  EXPECT_CALL(*mock, nack()).Times(1);
   AckHandler handler(std::move(mock));
-  EXPECT_EQ(expected, std::move(handler).nack());
+  ASSERT_NO_FATAL_FAILURE(std::move(handler).nack());
 }
 
 }  // namespace

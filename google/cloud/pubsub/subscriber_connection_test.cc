@@ -60,7 +60,7 @@ TEST(SubscriberConnectionTest, Basic) {
   auto handler = [&](Message const& m, AckHandler h) {
     EXPECT_EQ("test-message-id-0", m.message_id());
     EXPECT_EQ("test-ack-id-0", h.ack_id());
-    EXPECT_STATUS_OK(std::move(h).ack());
+    ASSERT_NO_FATAL_FAILURE(std::move(h).ack());
     if (received_one.test_and_set()) return;
     waiter.set_value();
   };

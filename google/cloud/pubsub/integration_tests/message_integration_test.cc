@@ -78,7 +78,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   promise<void> ids_empty;
   auto handler = [&](pubsub::Message const& m, AckHandler h) {
     SCOPED_TRACE("Search for message " + m.message_id());
-    EXPECT_STATUS_OK(std::move(h).ack());
+    ASSERT_NO_FATAL_FAILURE(std::move(h).ack());
     std::lock_guard<std::mutex> lk(mu);
     auto i = std::find(ids.begin(), ids.end(), m.message_id());
     if (i != ids.end()) {

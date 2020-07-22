@@ -48,16 +48,15 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
 
   ~AckHandlerImpl() override = default;
 
-  Status ack() override {
+  void ack() override {
     grpc::ClientContext context;
     google::pubsub::v1::AcknowledgeRequest request;
     request.set_subscription(std::move(subscription_));
     request.add_ack_ids(std::move(ack_id_));
-    return stub_->Acknowledge(context, request);
+    (void)stub_->Acknowledge(context, request);
   }
-  Status nack() override {
+  void nack() override {
     // TODO(#4553) - implement nacks
-    return Status{};
   }
 
   std::string ack_id() const override { return ack_id_; }
