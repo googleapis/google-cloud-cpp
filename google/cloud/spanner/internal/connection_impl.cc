@@ -326,10 +326,6 @@ Status ConnectionImpl::BeginTransaction(
     *begin.mutable_options()->mutable_partitioned_dml() =
         spanner_proto::TransactionOptions_PartitionedDml();
   } else {
-    if (!s->has_begin() && !s->has_single_use()) {
-      return Status(StatusCode::kInternal,
-                    "Invalid transaction state for BeginTransaction");
-    }
     *begin.mutable_options() = s->has_begin() ? s->begin() : s->single_use();
   }
 
