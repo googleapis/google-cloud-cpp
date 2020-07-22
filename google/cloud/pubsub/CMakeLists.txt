@@ -32,6 +32,8 @@ add_library(
     connection_options.h
     create_subscription_builder.h
     create_topic_builder.h
+    internal/default_ack_handler_impl.cc
+    internal/default_ack_handler_impl.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
     internal/publisher_stub.cc
@@ -135,6 +137,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         ack_handler_test.cc
         create_subscription_builder_test.cc
         create_topic_builder_test.cc
+        internal/default_ack_handler_impl_test.cc
         internal/emulator_overrides_test.cc
         internal/user_agent_prefix_test.cc
         message_test.cc

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/internal/default_ack_handler_impl.h"
 #include "absl/memory/memory.h"
 #include <memory>
 #include <mutex>
@@ -37,35 +38,6 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
-class AckHandlerImpl : public pubsub::AckHandler::Impl {
- public:
-  AckHandlerImpl(std::shared_ptr<pubsub_internal::SubscriberStub> s,
-                 std::string subsription, std::string ack_id)
-      : stub_(std::move(s)),
-        subscription_(std::move(subsription)),
-        ack_id_(std::move(ack_id)) {}
-
-  ~AckHandlerImpl() override = default;
-
-  void ack() override {
-    grpc::ClientContext context;
-    google::pubsub::v1::AcknowledgeRequest request;
-    request.set_subscription(std::move(subscription_));
-    request.add_ack_ids(std::move(ack_id_));
-    (void)stub_->Acknowledge(context, request);
-  }
-  void nack() override {
-    // TODO(#4553) - implement nacks
-  }
-
-  std::string ack_id() const override { return ack_id_; }
-
- private:
-  std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
-  std::string subscription_;
-  std::string ack_id_;
-};
 
 class SubscriptionSession
     : public std::enable_shared_from_this<SubscriptionSession> {
@@ -113,7 +85,7 @@ class SubscriptionSession
         return;
       }
       for (auto m : *r->mutable_received_messages()) {
-        auto handler = absl::make_unique<AckHandlerImpl>(
+        auto handler = absl::make_unique<DefaultAckHandlerImpl>(
             stub_, params_.full_subscription_name,
             std::move(*m.mutable_ack_id()));
         // TODO(#4555) - these should be scheduled via the completion queue
