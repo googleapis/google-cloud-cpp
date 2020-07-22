@@ -36,15 +36,15 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class AckHandler {
  public:
   /// Acknowledge the message and return any (unrecoverablee) RPC errors
-  Status ack() && {
+  void ack() && {
     auto impl = std::move(impl_);
-    return impl->ack();
+    impl->ack();
   }
 
   /// Reject the message and return any (unrecoverable) RPC errors
-  Status nack() && {
+  void nack() && {
     auto impl = std::move(impl_);
-    return impl->nack();
+    impl->nack();
   }
 
   /// The Cloud Pub/Sub acknowledge ID, useful for debugging and logging.
@@ -55,9 +55,9 @@ class AckHandler {
    public:
     virtual ~Impl() = 0;
     /// The implementation for `AckHandler::ack()`
-    virtual Status ack() = 0;
+    virtual void ack() = 0;
     /// The implementation for `AckHandler::nack()`
-    virtual Status nack() = 0;
+    virtual void nack() = 0;
     /// The implementation for `AckHandler::ack_id()`
     virtual std::string ack_id() const = 0;
   };
