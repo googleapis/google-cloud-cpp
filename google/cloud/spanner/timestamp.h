@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/time/time.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <chrono>
 #include <cstdint>
@@ -38,15 +39,6 @@ class Timestamp;  // defined below
 template <typename Duration>
 using sys_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
 
-/**
- * Construct a `Timestamp` from a `std::chrono::time_point` on the system
- * clock. May produce out-of-range errors, depending on the properties of
- * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
- * not be wider than `std::intmax_t`.
- */
-template <typename Duration>
-StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
-
 namespace internal {
 
 // Internal forward declarations to befriend.
@@ -60,9 +52,9 @@ protobuf::Timestamp TimestampToProto(Timestamp);
 /**
  * A representation of the Spanner TIMESTAMP type: An instant in time.
  *
- * A `Timestamp` represents an absolute point in time (i.e., is independent
- * of any time zone), with at least nanosecond precision, and with a range of
- * at least 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.
+ * A `Timestamp` represents an absolute point in time (i.e., is independent of
+ * any time zone), with at least nanosecond precision, and with a range of
+ * 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z inclusive.
  *
  * The `MakeTimestamp(src)` factory function(s) should be used to construct
  * `Timestamp` values from standard representations of absolute time.
@@ -73,7 +65,7 @@ protobuf::Timestamp TimestampToProto(Timestamp);
 class Timestamp {
  public:
   /// Default construction yields 1970-01-01T00:00:00Z.
-  Timestamp() : Timestamp(0, 0) {}
+  Timestamp() : Timestamp(absl::UnixEpoch()) {}
 
   /// @name Regular value type, supporting copy, assign, move.
   ///@{
@@ -86,13 +78,13 @@ class Timestamp {
   /// @name Relational operators
   ///@{
   friend bool operator==(Timestamp const& a, Timestamp const& b) {
-    return std::make_tuple(a.sec_, a.nsec_) == std::make_tuple(b.sec_, b.nsec_);
+    return a.t_ == b.t_;
   }
   friend bool operator!=(Timestamp const& a, Timestamp const& b) {
     return !(a == b);
   }
   friend bool operator<(Timestamp const& a, Timestamp const& b) {
-    return std::make_tuple(a.sec_, a.nsec_) < std::make_tuple(b.sec_, b.nsec_);
+    return a.t_ < b.t_;
   }
   friend bool operator<=(Timestamp const& a, Timestamp const& b) {
     return !(b < a);
@@ -140,13 +132,7 @@ class Timestamp {
   friend Timestamp internal::TimestampFromProto(protobuf::Timestamp const&);
   friend protobuf::Timestamp internal::TimestampToProto(Timestamp);
 
-  // Arguments must have already been normalized.
-  Timestamp(std::int64_t sec, std::int32_t nsec) : sec_(sec), nsec_(nsec) {}
-
-  // Build a `Timestamp` from raw counts of seconds/nanoseconds since the Unix
-  // epoch (minus leap seconds), like a C++17 `std::timespec` but out-of-range
-  // `nsec` values are normalized. Fails if the time cannot be represented.
-  static StatusOr<Timestamp> FromCounts(std::intmax_t sec, std::intmax_t nsec);
+  explicit Timestamp(absl::Time t) : t_(t) {}
 
   // Conversion from/to RFC3339 string.
   static StatusOr<Timestamp> FromRFC3339(std::string const&);
@@ -175,21 +161,23 @@ class Timestamp {
   // and the `std::chrono::system_clock` epoch.
   template <typename Duration>
   StatusOr<sys_time<Duration>> ConvertTo(sys_time<Duration> const&) const {
-    auto const count =
-        ToRatio(std::numeric_limits<typename Duration::rep>::min(),
-                std::numeric_limits<typename Duration::rep>::max(),
-                Duration::period::num, Duration::period::den);
-    if (!count) return count.status();
+    auto s = ToRatio(std::numeric_limits<typename Duration::rep>::min(),
+                     std::numeric_limits<typename Duration::rep>::max(),
+                     Duration::period::num, Duration::period::den);
+    if (!s) return std::move(s).status();
     return Timestamp::UnixEpoch<Duration>() +
-           Duration(static_cast<typename Duration::rep>(*count));
+           Duration(static_cast<typename Duration::rep>(*s));
   }
 
-  std::int64_t sec_;   // The number of seconds that have elapsed since
-                       // 1970-01-01T00:00:00Z, minus leap seconds.
-  std::int32_t nsec_;  // The number of nanoseconds [0..999999999] that
-                       // have elapsed within that second.
+  absl::Time t_;
 };
 
+/**
+ * Construct a `Timestamp` from a `std::chrono::time_point` on the system
+ * clock. May produce out-of-range errors, depending on the properties of
+ * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
+ * not be wider than `std::intmax_t`.
+ */
 template <typename Duration>
 StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const& tp) {
   return Timestamp::FromRatio((tp - Timestamp::UnixEpoch<Duration>()).count(),
