@@ -142,6 +142,29 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
+                     std::vector<std::string> const& argv) {
+  //! [example-status-or]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+    // The actual type of `topic` is
+    // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
+    // we expect it'll most often be declared with auto like this.
+    for (auto const& topic : client.ListTopics(project_id)) {
+      // Use `topic` like a smart pointer; check it before dereferencing
+      if (!topic) {
+        // `topic` doesn't contain a value, so `.status()` will contain error
+        // info
+        std::cerr << topic.status();
+        break;
+      }
+      std::cout << topic->DebugString() << "\n";
+    }
+  }
+  //! [example-status-or]
+  (std::move(client), argv.at(0));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -163,6 +186,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning CreateTopic() sample\n";
   CreateTopic(publisher_client, {project_id, topic_id});
+
+  std::cout << "\nRunning the StatusOr example" << std::endl;
+  ExampleStatusOr(publisher_client, {project_id});
 
   std::cout << "\nRunning ListTopics() sample\n";
   ListTopics(publisher_client, {project_id});
