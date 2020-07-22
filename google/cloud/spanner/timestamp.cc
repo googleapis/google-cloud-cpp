@@ -60,27 +60,6 @@ Status BadDuration(std::intmax_t num, std::intmax_t den) {
 
 }  // namespace
 
-StatusOr<Timestamp> Timestamp::FromRFC3339(std::string const& s) {
-  absl::Time t;
-  std::string err;
-  if (absl::ParseTime(kParseSpec, s, &t, &err)) return MakeTimestamp(t);
-  return InvalidArgument(s + ": " + err);
-}
-
-std::string Timestamp::ToRFC3339() const {
-  return absl::FormatTime(kFormatSpec, t_, absl::UTCTimeZone());
-}
-
-// Note: This function requires the `proto` argument to be within the
-// documented valid range for `protobuf::Timestamp`.
-Timestamp Timestamp::FromProto(protobuf::Timestamp const& proto) {
-  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto)).value();
-}
-
-protobuf::Timestamp Timestamp::ToProto() const {
-  return google::cloud::internal::ToProtoTimestamp(t_);
-}
-
 StatusOr<Timestamp> Timestamp::FromRatio(std::intmax_t const count,
                                          std::intmax_t const num,
                                          std::intmax_t const den) {
@@ -114,19 +93,34 @@ StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
   return Timestamp(t);
 }
 
+std::ostream& operator<<(std::ostream& os, Timestamp ts) {
+  return os << internal::TimestampToRFC3339(ts);
+}
+
 namespace internal {
 
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const& s) {
-  return Timestamp::FromRFC3339(s);
+  absl::Time t;
+  std::string err;
+  if (absl::ParseTime(kParseSpec, s, &t, &err)) return MakeTimestamp(t);
+  return InvalidArgument(s + ": " + err);
 }
 
-std::string TimestampToRFC3339(Timestamp ts) { return ts.ToRFC3339(); }
+std::string TimestampToRFC3339(Timestamp ts) {
+  auto const t = ts.get<absl::Time>().value();  // Cannot fail.
+  return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
+}
 
+// Note: This function requires the `proto` argument to be within the
+// documented valid range for `protobuf::Timestamp`.
 Timestamp TimestampFromProto(protobuf::Timestamp const& proto) {
-  return Timestamp::FromProto(proto);
+  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto)).value();
 }
 
-protobuf::Timestamp TimestampToProto(Timestamp ts) { return ts.ToProto(); }
+protobuf::Timestamp TimestampToProto(Timestamp ts) {
+  auto const t = ts.get<absl::Time>().value();  // Cannot fail.
+  return google::cloud::internal::ToProtoTimestamp(t);
+}
 
 }  // namespace internal
 

@@ -31,23 +31,11 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-class Timestamp;  // defined below
-
 /**
  * Convenience alias. `std::chrono::sys_time` since C++20.
  */
 template <typename Duration>
 using sys_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
-
-namespace internal {
-
-// Internal forward declarations to befriend.
-StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
-std::string TimestampToRFC3339(Timestamp);
-Timestamp TimestampFromProto(protobuf::Timestamp const&);
-protobuf::Timestamp TimestampToProto(Timestamp);
-
-}  // namespace internal
 
 /**
  * A representation of the Spanner TIMESTAMP type: An instant in time.
@@ -100,9 +88,7 @@ class Timestamp {
   ///@}
 
   /// @name Output streaming
-  friend std::ostream& operator<<(std::ostream& os, Timestamp ts) {
-    return os << ts.ToRFC3339();
-  }
+  friend std::ostream& operator<<(std::ostream& os, Timestamp ts);
 
   /**
    * Convert the `Timestamp` to the user-specified template type. Fails if
@@ -131,19 +117,6 @@ class Timestamp {
   template <typename Duration>
   friend StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
   friend StatusOr<Timestamp> MakeTimestamp(absl::Time);
-
-  friend StatusOr<Timestamp> internal::TimestampFromRFC3339(std::string const&);
-  friend std::string internal::TimestampToRFC3339(Timestamp);
-  friend Timestamp internal::TimestampFromProto(protobuf::Timestamp const&);
-  friend protobuf::Timestamp internal::TimestampToProto(Timestamp);
-
-  // Conversion from/to RFC3339 string.
-  static StatusOr<Timestamp> FromRFC3339(std::string const&);
-  std::string ToRFC3339() const;
-
-  // Conversion from/to `protobuf::Timestamp`.
-  static Timestamp FromProto(protobuf::Timestamp const&);
-  protobuf::Timestamp ToProto() const;
 
   // Helpers for `std::chrono::time_point` conversions.
   template <typename Duration>
@@ -205,6 +178,15 @@ struct CommitTimestamp {
   friend bool operator==(CommitTimestamp, CommitTimestamp) { return true; }
   friend bool operator!=(CommitTimestamp, CommitTimestamp) { return false; }
 };
+
+namespace internal {
+
+StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
+std::string TimestampToRFC3339(Timestamp);
+Timestamp TimestampFromProto(protobuf::Timestamp const&);
+protobuf::Timestamp TimestampToProto(Timestamp);
+
+}  // namespace internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
