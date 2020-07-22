@@ -379,6 +379,28 @@ class ResumableUploadRequest
 std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
 
 /**
+ * A request to cancle a resumable upload.
+ */
+class DeleteResumableUploadRequest
+    : public GenericObjectRequest<DeleteResumableUploadRequest> {
+ public:
+  DeleteResumableUploadRequest() = default;
+
+  DeleteResumableUploadRequest(std::string bucket_name, std::string object_name,
+                               std::string upload_id)
+      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
+        upload_id_(std::move(upload_id)) {}
+
+  std::string const& upload_id() const { return upload_id_; }
+
+ private:
+  std::string upload_id_;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         DeleteResumableUploadRequest const& r);
+
+/**
  * A request to send one chunk in an upload session.
  */
 class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {

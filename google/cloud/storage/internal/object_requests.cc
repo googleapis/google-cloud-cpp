@@ -580,6 +580,13 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         DeleteResumableUploadRequest const& r) {
+  os << "DeleteResumableUploadRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name() << ", upload_id=" << r.upload_id();
+  return os << "}";
+}
+
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";

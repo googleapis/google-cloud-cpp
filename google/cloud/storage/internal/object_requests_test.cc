@@ -504,6 +504,21 @@ TEST(ObjectRequestsTest, ResumableUpload) {
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
+TEST(ObjectRequestsTest, DeleteResumableUpload) {
+  DeleteResumableUploadRequest request("source-bucket", "source-object",
+                                       "source-upload-id");
+  EXPECT_EQ("source-bucket", request.bucket_name());
+  EXPECT_EQ("source-object", request.object_name());
+  EXPECT_EQ("source-upload-id", request.upload_id());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("source-bucket"));
+  EXPECT_THAT(actual, HasSubstr("source-object"));
+  EXPECT_THAT(actual, HasSubstr("source-upload-id"));
+}
+
 TEST(ObjectRequestsTest, UploadChunk) {
   std::string const url =
       "https://storage.googleapis.com/upload/storage/v1/b/"
