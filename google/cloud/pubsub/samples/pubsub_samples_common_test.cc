@@ -24,7 +24,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
-TEST(PubSubSamplesCommon, PublisherCommand) {
+TEST(PubSubSamplesCommon, TopicAdminCommand) {
   using ::google::cloud::testing_util::Usage;
 
   // Pretend we are using the emulator to avoid loading the default
@@ -40,7 +40,7 @@ TEST(PubSubSamplesCommon, PublisherCommand) {
     EXPECT_EQ("b", argv[1]);
   };
   auto const actual =
-      CreatePublisherCommand("command-name", {"foo", "bar"}, command);
+      CreateTopicAdminCommand("command-name", {"foo", "bar"}, command);
   EXPECT_EQ("command-name", actual.first);
   EXPECT_THROW(
       try { actual.second({}); } catch (Usage const& ex) {
@@ -55,7 +55,7 @@ TEST(PubSubSamplesCommon, PublisherCommand) {
   EXPECT_EQ(1, call_count);
 }
 
-TEST(PubSubSamplesCommon, SubscriberCommand) {
+TEST(PubSubSamplesCommon, SubscriptionAdminCommand) {
   using ::google::cloud::testing_util::Usage;
 
   // Pretend we are using the emulator to avoid loading the default
@@ -71,7 +71,7 @@ TEST(PubSubSamplesCommon, SubscriberCommand) {
     EXPECT_EQ("b", argv[1]);
   };
   auto const actual =
-      CreateSubscriberCommand("command-name", {"foo", "bar"}, command);
+      CreateSubscriptionAdminCommand("command-name", {"foo", "bar"}, command);
   EXPECT_EQ("command-name", actual.first);
   EXPECT_THROW(
       try { actual.second({}); } catch (Usage const& ex) {

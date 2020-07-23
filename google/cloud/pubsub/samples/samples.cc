@@ -210,24 +210,24 @@ void AutoRun(std::vector<std::string> const& argv) {
 }  // namespace
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
-  using ::google::cloud::pubsub::examples::CreatePublisherCommand;
-  using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
+  using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
+  using ::google::cloud::pubsub::examples::CreateTopicAdminCommand;
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreatePublisherCommand("create-topic", {"project-id", "topic-id"},
-                             CreateTopic),
-      CreatePublisherCommand("list-topics", {"project-id"}, ListTopics),
-      CreatePublisherCommand("delete-topic", {"project-id", "topic-id"},
-                             DeleteTopic),
-      CreateSubscriberCommand("create-subscription",
-                              {"project-id", "topic-id", "subscription-id"},
-                              CreateSubscription),
-      CreateSubscriberCommand("list-subscriptions", {"project-id"},
-                              ListSubscriptions),
-      CreateSubscriberCommand("delete-subscription",
-                              {"project-id", "subscription-id"},
-                              DeleteSubscription),
+      CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
+                              CreateTopic),
+      CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
+      CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
+                              DeleteTopic),
+      CreateSubscriptionAdminCommand(
+          "create-subscription", {"project-id", "topic-id", "subscription-id"},
+          CreateSubscription),
+      CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
+                                     ListSubscriptions),
+      CreateSubscriptionAdminCommand("delete-subscription",
+                                     {"project-id", "subscription-id"},
+                                     DeleteSubscription),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

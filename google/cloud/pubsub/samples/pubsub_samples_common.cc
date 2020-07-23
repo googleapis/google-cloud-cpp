@@ -20,9 +20,9 @@ namespace cloud {
 namespace pubsub {
 namespace examples {
 
-google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
+google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
-    PublisherCommand const& command) {
+    TopicAdminCommand const& command) {
   auto adapter = [=](std::vector<std::string> const& argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != arg_names.size()) {
@@ -41,9 +41,10 @@ google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
                                                            std::move(adapter)};
 }
 
-google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
-    std::string const& name, std::vector<std::string> const& arg_names,
-    SubscriberCommand const& command) {
+google::cloud::testing_util::Commands::value_type
+CreateSubscriptionAdminCommand(std::string const& name,
+                               std::vector<std::string> const& arg_names,
+                               SubscriptionAdminCommand const& command) {
   auto adapter = [=](std::vector<std::string> const& argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != arg_names.size()) {

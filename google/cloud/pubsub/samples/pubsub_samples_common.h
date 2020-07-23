@@ -24,19 +24,21 @@ namespace cloud {
 namespace pubsub {
 namespace examples {
 
-using PublisherCommand = std::function<void(
+using TopicAdminCommand = std::function<void(
     google::cloud::pubsub::TopicAdminClient, std::vector<std::string> const&)>;
-using SubscriberCommand =
+
+google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    TopicAdminCommand const& command);
+
+using SubscriptionAdminCommand =
     std::function<void(google::cloud::pubsub::SubscriptionAdminClient,
                        std::vector<std::string> const&)>;
 
-google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
-    std::string const& name, std::vector<std::string> const& arg_names,
-    PublisherCommand const& command);
-
-google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
-    std::string const& name, std::vector<std::string> const& arg_names,
-    SubscriberCommand const& command);
+google::cloud::testing_util::Commands::value_type
+CreateSubscriptionAdminCommand(std::string const& name,
+                               std::vector<std::string> const& arg_names,
+                               SubscriptionAdminCommand const& command);
 
 }  // namespace examples
 }  // namespace pubsub
