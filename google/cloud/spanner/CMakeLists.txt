@@ -112,8 +112,6 @@ add_library(
     internal/spanner_stub.h
     internal/status_utils.cc
     internal/status_utils.h
-    internal/time_format.cc
-    internal/time_format.h
     internal/transaction_impl.cc
     internal/transaction_impl.h
     internal/tuple_utils.h
@@ -290,7 +288,6 @@ function (spanner_client_define_tests)
         internal/session_pool_test.cc
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc
-        internal/time_format_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
         keys_test.cc
@@ -355,7 +352,7 @@ function (spanner_client_define_benchmarks)
     set(spanner_client_benchmarks
         # cmake-format: sortable
         bytes_benchmark.cc internal/merge_chunk_benchmark.cc
-        internal/time_format_benchmark.cc numeric_benchmark.cc row_benchmark.cc)
+        numeric_benchmark.cc row_benchmark.cc)
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
     # the list in two places.

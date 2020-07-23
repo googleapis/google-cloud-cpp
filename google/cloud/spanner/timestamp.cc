@@ -13,15 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/spanner/internal/time_format.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status.h"
-#include <array>
-#include <cstdlib>
-#include <cstring>
-#include <iomanip>
-#include <limits>
-#include <sstream>
 #include <string>
 
 namespace google {
