@@ -823,7 +823,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   auto timestamp = internal::TimestampFromProto(response->commit_timestamp());
   if (timestamp) {
     CommitResult r;
-    r.commit_timestamp = *timestamp;
+    r.commit_timestamp = *std::move(timestamp);
     return r;
   }
   return std::move(timestamp).status();
