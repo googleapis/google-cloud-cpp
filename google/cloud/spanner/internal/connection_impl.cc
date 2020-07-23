@@ -820,10 +820,13 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     if (internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
-  CommitResult r;
-  r.commit_timestamp =
-      internal::TimestampFromProto(response->commit_timestamp());
-  return r;
+  auto timestamp = internal::TimestampFromProto(response->commit_timestamp());
+  if (timestamp) {
+    CommitResult r;
+    r.commit_timestamp = *timestamp;
+    return r;
+  }
+  return std::move(timestamp).status();
 }
 
 Status ConnectionImpl::RollbackImpl(

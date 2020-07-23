@@ -97,10 +97,8 @@ std::string TimestampToRFC3339(Timestamp ts) {
   return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
 }
 
-// Note: This function requires the `proto` argument to be within the
-// documented valid range for `protobuf::Timestamp`.
-Timestamp TimestampFromProto(protobuf::Timestamp const& proto) {
-  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto)).value();
+StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const& proto) {
+  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto));
 }
 
 protobuf::Timestamp TimestampToProto(Timestamp ts) {

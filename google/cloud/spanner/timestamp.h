@@ -186,7 +186,7 @@ namespace internal {
 
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
 std::string TimestampToRFC3339(Timestamp);
-Timestamp TimestampFromProto(protobuf::Timestamp const&);
+StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const&);
 protobuf::Timestamp TimestampToProto(Timestamp);
 
 }  // namespace internal
