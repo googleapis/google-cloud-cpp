@@ -470,6 +470,64 @@ TEST(Timestamp, ToChronoOverflow) {
   EXPECT_THAT(tp4.status().message(), HasSubstr("unsupported duration ratio"));
 }
 
+TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
+  // Some constants and lambdas to make the test cases below more succinct.
+  auto const s = [](std::int64_t n) { return absl::Seconds(n); };
+  auto const ns = [](std::int64_t n) { return absl::Nanoseconds(n); };
+  auto const epoch = absl::UnixEpoch();
+  auto const contemporary =
+      absl::FromUnixSeconds(2123456789) + absl::Nanoseconds(123456789);
+
+  struct {
+    absl::Time t;
+    google::protobuf::Timestamp proto;
+  } round_trip_cases[] = {
+      {epoch - s(123) - ns(456), MakeProtoTimestamp(-124, 1000000000 - 456)},
+      {epoch - s(123), MakeProtoTimestamp(-123, 0)},
+      {epoch - s(1), MakeProtoTimestamp(-1, 0)},
+      {epoch - ns(1), MakeProtoTimestamp(-1, 999999999)},
+      {epoch, MakeProtoTimestamp(0, 0)},
+      {epoch + ns(1), MakeProtoTimestamp(0, 1)},
+      {epoch + s(1), MakeProtoTimestamp(1, 0)},
+      {epoch + s(123), MakeProtoTimestamp(123, 0)},
+      {epoch + ns(456), MakeProtoTimestamp(0, 456)},
+      {epoch + s(123) + ns(456), MakeProtoTimestamp(123, 456)},
+      {contemporary, MakeProtoTimestamp(2123456789, 123456789)},
+  };
+
+  for (auto const& tc : round_trip_cases) {
+    SCOPED_TRACE("Time: " + absl::FormatTime(tc.t));
+    auto const ts = MakeTimestamp(tc.t).value();
+    EXPECT_EQ(ts, internal::TimestampFromProto(tc.proto));
+    auto const t = ts.get<absl::Time>().value(); 
+    EXPECT_EQ(t, tc.t);
+  }
+}
+
+TEST(Timestamp, FromAbslTimeOverflow) {  // i.e., MakeTimestamp(absl::Time)
+  auto const min_timestamp =
+      internal::TimestampFromRFC3339("0001-01-01T00:00:00Z").value();
+  auto const max_timestamp =
+      internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z").value();
+
+  auto const min_time = min_timestamp.get<absl::Time>().value();
+  auto const max_time = max_timestamp.get<absl::Time>().value();
+
+  // First show that the min and max absl::Time values are within range.
+  EXPECT_TRUE(MakeTimestamp(min_time));
+  EXPECT_TRUE(MakeTimestamp(max_time));
+
+  // One nanosecond before the min time is out of range.
+  EXPECT_FALSE(MakeTimestamp(min_time - absl::Nanoseconds(1)));
+
+  // One nanosecond after the max time is out of range.
+  EXPECT_FALSE(MakeTimestamp(max_time + absl::Nanoseconds(1)));
+
+  // Of course, infinities are out of range.
+  EXPECT_FALSE(MakeTimestamp(absl::InfinitePast()));
+  EXPECT_FALSE(MakeTimestamp(absl::InfiniteFuture()));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -42,7 +42,7 @@ using sys_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
  *
  * A `Timestamp` represents an absolute point in time (i.e., is independent of
  * any time zone), with at least nanosecond precision, and with a range of
- * 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z inclusive.
+ * 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z, inclusive.
  *
  * The `MakeTimestamp(src)` factory function(s) should be used to construct
  * `Timestamp` values from standard representations of absolute time.
@@ -97,8 +97,8 @@ class Timestamp {
    * Supported destination types are:
    *   - `google::cloud::spanner::sys_time<Duration>` (`Duration::rep` may
    *      not be wider than `std::intmax_t`.)
-   *   - `absl::Time` - Since absl::Time can represent all possible `Timestamp`
-   *      values, `get<absl::Time>()` never returns an error.
+   *   - `absl::Time` - Since `absl::Time` can represent all possible
+   *     `Timestamp` values, `get<absl::Time>()` never returns an error.
    *
    * @par Example
    *

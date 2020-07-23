@@ -31,12 +31,6 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
-// Timestamp objects are always formatted in UTC, and we always format them
-// with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
-// accept, thus the use of '%Ez' in kParseSpec.
-auto constexpr kFormatSpec = "%E4Y-%m-%dT%H:%M:%E*SZ";
-auto constexpr kParseSpec = "%Y-%m-%dT%H:%M:%E*S%Ez";
-
 Status InvalidArgument(std::string message) {
   return Status(StatusCode::kInvalidArgument, std::move(message));
 }
@@ -98,6 +92,12 @@ std::ostream& operator<<(std::ostream& os, Timestamp ts) {
 }
 
 namespace internal {
+
+// Timestamp objects are always formatted in UTC, and we always format them
+// with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
+// accept, thus the use of '%Ez' in kParseSpec.
+auto constexpr kFormatSpec = "%E4Y-%m-%dT%H:%M:%E*SZ";
+auto constexpr kParseSpec = "%Y-%m-%dT%H:%M:%E*S%Ez";
 
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const& s) {
   absl::Time t;
