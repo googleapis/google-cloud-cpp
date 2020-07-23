@@ -96,7 +96,7 @@ class Timestamp {
    *
    * Supported destination types are:
    *   - `google::cloud::spanner::sys_time<Duration>` - `Duration::rep` may not
-   *      be wider than `std::intmax_t`, and `Duration::period` may be no more
+   *      be wider than `std::int64_t`, and `Duration::period` may be no more
    *      precise than `std::nano`.
    *   - `absl::Time` - Since `absl::Time` can represent all possible
    *     `Timestamp` values, `get<absl::Time>()` never returns an error.
@@ -117,8 +117,8 @@ class Timestamp {
  private:
   friend StatusOr<Timestamp> MakeTimestamp(absl::Time);
 
-  StatusOr<std::intmax_t> ToRatio(std::intmax_t min, std::intmax_t max,
-                                  std::intmax_t num, std::intmax_t den) const;
+  StatusOr<std::int64_t> ToRatio(std::int64_t min, std::int64_t max,
+                                 std::int64_t num, std::int64_t den) const;
 
   // Conversion to a `std::chrono::time_point` on the system clock. May
   // produce out-of-range errors, depending on the properties of `Duration`
@@ -157,7 +157,7 @@ StatusOr<Timestamp> MakeTimestamp(absl::Time);
  * Construct a `Timestamp` from a `std::chrono::time_point` on the system
  * clock. May produce out-of-range errors, depending on the properties of
  * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
- * not be wider than `std::intmax_t`. Requires that `Duration::period` is no
+ * not be wider than `std::int64_t`. Requires that `Duration::period` is no
  * more precise than `std::nano`.
  */
 template <typename Duration>

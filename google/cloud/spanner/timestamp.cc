@@ -49,9 +49,9 @@ Status NegativeOverflow(std::string const& type) {
 
 }  // namespace
 
-StatusOr<std::intmax_t> Timestamp::ToRatio(std::intmax_t min, std::intmax_t max,
-                                           std::intmax_t num,
-                                           std::intmax_t den) const {
+StatusOr<std::int64_t> Timestamp::ToRatio(std::int64_t min, std::int64_t max,
+                                          std::int64_t num,
+                                          std::int64_t den) const {
   constexpr auto kDestType = "std::chrono::time_point";
   auto const period = absl::Seconds(num) / den;
   auto const duration = absl::Floor(t_ - absl::UnixEpoch(), period);
