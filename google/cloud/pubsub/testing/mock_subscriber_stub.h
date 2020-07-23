@@ -54,6 +54,11 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
               (grpc::ClientContext&,
                google::pubsub::v1::AcknowledgeRequest const&),
               (override));
+
+  MOCK_METHOD(Status, ModifyAckDeadline,
+              (grpc::ClientContext&,
+               google::pubsub::v1::ModifyAckDeadlineRequest const&),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -64,6 +64,11 @@ class SubscriberStub {
   virtual Status Acknowledge(
       grpc::ClientContext& context,
       google::pubsub::v1::AcknowledgeRequest const& request) = 0;
+
+  /// Modify the ACK deadline.
+  virtual Status ModifyAckDeadline(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
 };
 
 /**

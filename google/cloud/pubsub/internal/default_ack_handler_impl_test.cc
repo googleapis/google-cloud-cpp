@@ -24,7 +24,7 @@ namespace {
 
 using ::testing::_;
 
-TEST(DefaultAckHandlerTest, Basic) {
+TEST(DefaultAckHandlerTest, Ack) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, Acknowledge(_, _))
       .WillOnce([](grpc::ClientContext&,
@@ -38,6 +38,23 @@ TEST(DefaultAckHandlerTest, Basic) {
   DefaultAckHandlerImpl handler(mock, "test-subscription", "test-ack-id");
   EXPECT_EQ("test-ack-id", handler.ack_id());
   ASSERT_NO_FATAL_FAILURE(handler.ack());
+}
+
+TEST(DefaultAckHandlerTest, Nack) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, ModifyAckDeadline(_, _))
+      .WillOnce(
+          [](grpc::ClientContext&,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+            EXPECT_EQ("test-subscription", request.subscription());
+            EXPECT_EQ(1, request.ack_ids_size());
+            EXPECT_EQ("test-ack-id", request.ack_ids(0));
+            EXPECT_EQ(0, request.ack_deadline_seconds());
+            return Status{};
+          });
+
+  DefaultAckHandlerImpl handler(mock, "test-subscription", "test-ack-id");
+  EXPECT_EQ("test-ack-id", handler.ack_id());
   ASSERT_NO_FATAL_FAILURE(handler.nack());
 }
 
