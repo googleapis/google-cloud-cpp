@@ -705,20 +705,32 @@ TEST(Value, ProtoConversionTimestamp) {
 }
 
 TEST(Value, ProtoConversionDate) {
-  for (auto x : {
-           absl::CivilDay(1582, 10, 15),  // start of Gregorian calendar
-           absl::CivilDay(1677, 9, 21),   // before system_clock limit
-           absl::CivilDay(1901, 12, 13),  // around min 32-bit seconds limit
-           absl::CivilDay(1970, 1, 1),    // the unix epoch
-           absl::CivilDay(2019, 6, 21),   // contemporary
-           absl::CivilDay(2038, 1, 19),   // around max 32-bit seconds limit
-           absl::CivilDay(2262, 4, 12)    // after system_clock limit
-       }) {
-    Value const v(x);
+  struct {
+    absl::CivilDay day;
+    std::string expected;
+  } test_cases[] = {
+      {absl::CivilDay(-9999, 1, 2), "-9999-01-02"},
+      {absl::CivilDay(-999, 1, 2), "-999-01-02"},
+      {absl::CivilDay(-1, 1, 2), "-001-01-02"},
+      {absl::CivilDay(0, 1, 2), "0000-01-02"},
+      {absl::CivilDay(1, 1, 2), "0001-01-02"},
+      {absl::CivilDay(999, 1, 2), "0999-01-02"},
+      {absl::CivilDay(1582, 10, 15), "1582-10-15"},
+      {absl::CivilDay(1677, 9, 21), "1677-09-21"},
+      {absl::CivilDay(1901, 12, 13), "1901-12-13"},
+      {absl::CivilDay(1970, 1, 1), "1970-01-01"},
+      {absl::CivilDay(2019, 6, 21), "2019-06-21"},
+      {absl::CivilDay(2038, 1, 19), "2038-01-19"},
+      {absl::CivilDay(2262, 4, 12), "2262-04-12"},
+  };
+
+  for (auto const& tc : test_cases) {
+    SCOPED_TRACE("CivilDay: " + absl::FormatCivilTime(tc.day));
+    Value const v(tc.day);
     auto const p = internal::ToProto(v);
     EXPECT_EQ(v, internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::DATE, p.first.code());
-    EXPECT_EQ(absl::FormatCivilTime(x), p.second.string_value());
+    EXPECT_EQ(tc.expected, p.second.string_value());
   }
 }
 
