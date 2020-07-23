@@ -23,6 +23,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <map>
 
 namespace google {
 namespace cloud {
@@ -56,21 +57,22 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       [topic_admin, &topic]() mutable { topic_admin.DeleteTopic(topic); });
 
   auto subscription_metadata = subscription_admin.CreateSubscription(
-      CreateSubscriptionBuilder(subscription, topic));
+      CreateSubscriptionBuilder(subscription, topic)
+          .set_ack_deadline(std::chrono::seconds(10)));
   ASSERT_STATUS_OK(subscription_metadata);
 
   auto publisher = Publisher(MakePublisherConnection(topic, {}));
   auto subscriber = Subscriber(MakeSubscriberConnection());
 
   std::mutex mu;
-  std::vector<std::string> ids;
+  std::map<std::string, int> ids;
   for (auto const* data : {"message-0", "message-1", "message-2"}) {
     auto response =
         publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
     EXPECT_STATUS_OK(response);
     if (response) {
       std::lock_guard<std::mutex> lk(mu);
-      ids.push_back(*std::move(response));
+      ids.emplace(*std::move(response), 0);
     }
   }
   EXPECT_FALSE(ids.empty());
@@ -78,16 +80,22 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   promise<void> ids_empty;
   auto handler = [&](pubsub::Message const& m, AckHandler h) {
     SCOPED_TRACE("Search for message " + m.message_id());
-    ASSERT_NO_FATAL_FAILURE(std::move(h).ack());
     std::lock_guard<std::mutex> lk(mu);
-    auto i = std::find(ids.begin(), ids.end(), m.message_id());
-    if (i != ids.end()) {
-      // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
-      // perfectly possible, in that case the message would not be in the list
-      // of pending ids.
-      ids.erase(i);
-      if (ids.empty()) ids_empty.set_value();
+    auto i = ids.find(m.message_id());
+    // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
+    // perfectly possible, in that case the message would not be in the map of
+    // of pending ids.
+    if (i == ids.end()) return;
+    // The first time just NACK the message to exercise that path, we expect
+    // Cloud Pub/Sub to retry.
+    if (i->second == 0) {
+      std::move(h).nack();
+      ++i->second;
+      return;
     }
+    std::move(h).ack();
+    ids.erase(i);
+    if (ids.empty()) ids_empty.set_value();
   };
 
   auto result = subscriber.Subscribe(subscription, handler);

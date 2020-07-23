@@ -80,6 +80,15 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
+  Status ModifyAckDeadline(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    google::protobuf::Empty response;
+    auto status = grpc_stub_->ModifyAckDeadline(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return {};
+  }
+
  private:
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };

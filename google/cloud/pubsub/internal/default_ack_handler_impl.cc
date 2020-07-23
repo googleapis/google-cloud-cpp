@@ -28,7 +28,12 @@ void DefaultAckHandlerImpl::ack() {
 }
 
 void DefaultAckHandlerImpl::nack() {
-  // TODO(#4553) - implement nacks
+  grpc::ClientContext context;
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(std::move(subscription_));
+  request.add_ack_ids(std::move(ack_id_));
+  request.set_ack_deadline_seconds(0);
+  (void)stub_->ModifyAckDeadline(context, request);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
