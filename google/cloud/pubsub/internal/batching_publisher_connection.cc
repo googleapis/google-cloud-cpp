@@ -128,7 +128,7 @@ void BatchingPublisherConnection::Flush(std::unique_lock<std::mutex> lk) {
   batch.waiters.reserve(pending_.size());
   google::pubsub::v1::PublishRequest request;
   request.set_topic(topic_full_name_);
-  request.mutable_messages()->Reserve(pending_.size());
+  request.mutable_messages()->Reserve(static_cast<int>(pending_.size()));
 
   for (auto& i : pending_) {
     batch.waiters.push_back(std::move(i.response));
