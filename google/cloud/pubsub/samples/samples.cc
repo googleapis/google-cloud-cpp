@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <atomic>
 #include <tuple>
 #include <utility>
 
@@ -165,6 +166,59 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0));
 }
 
+void Publish(google::cloud::pubsub::Publisher publisher,
+             std::vector<std::string> const&) {
+  //! [START pubsub_publish] [publish]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    auto message_id = publisher.Publish(
+        pubsub::MessageBuilder{}.SetData("Hello World!").Build());
+    auto done = message_id.then([](future<StatusOr<std::string>> f) {
+      auto id = f.get();
+      if (!id) throw std::runtime_error(id.status().message());
+      std::cout << "Hello World! published with id=" << *id << "\n";
+    });
+    // Block until the message is published
+    done.get();
+  }
+  //! [END pubsub_publish] [publish]
+  (std::move(publisher));
+}
+
+void Subscribe(google::cloud::pubsub::Subscriber subscriber,
+               google::cloud::pubsub::Subscription const& subscription,
+               std::vector<std::string> const&) {
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  //! [START pubsub_subscriber_async_pull] [subscribe]
+  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+    std::atomic<int> count{0};
+    auto result = subscriber.Subscribe(
+        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::cout << "Received message " << m << "\n";
+          std::move(h).ack();
+          ++count;
+        });
+    // Wait for 60 seconds, an unrecoverable error, or at least one message
+    // received, whichever happens first.
+    for (int i = 0; i != 60; ++i) {
+      auto const s = std::chrono::seconds(1);
+      if (result.wait_for(s) != std::future_status::timeout) break;
+      if (count.load() != 0) break;
+    }
+    // Cancel the subscription
+    result.cancel();
+    // Report any final status
+    std::cout << "Message count = " << count.load()
+              << ", status = " << result.get() << "\n";
+  }
+  //! [END pubsub_subscriber_async_pull] [subscribe]
+  (std::move(subscriber), std::move(subscription));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -179,37 +233,57 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
 
-  google::cloud::pubsub::TopicAdminClient publisher_client(
+  google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
-  google::cloud::pubsub::SubscriptionAdminClient subscriber_client(
+  google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
   std::cout << "\nRunning CreateTopic() sample" << std::endl;
-  CreateTopic(publisher_client, {project_id, topic_id});
+  CreateTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
-  ExampleStatusOr(publisher_client, {project_id});
+  ExampleStatusOr(topic_admin_client, {project_id});
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
-  ListTopics(publisher_client, {project_id});
+  ListTopics(topic_admin_client, {project_id});
 
   std::cout << "\nRunning CreateSubscription() sample" << std::endl;
-  CreateSubscription(subscriber_client,
+  CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
   std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
-  ListSubscriptions(subscriber_client, {project_id});
+  ListSubscriptions(subscription_admin_client, {project_id});
+
+  auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
+  auto publisher = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          topic,
+          google::cloud::pubsub::PublisherOptions{}.set_batching_config(
+              google::cloud::pubsub::BatchingConfig{}.set_maximum_message_count(
+                  1))));
+  auto subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
+  auto subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection());
+
+  std::cout << "\nRunning Publish() sample" << std::endl;
+  Publish(publisher, {});
+
+  std::cout << "\nRunning Subscribe() sample" << std::endl;
+  Subscribe(subscriber, subscription, {});
 
   std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
-  DeleteSubscription(subscriber_client, {project_id, subscription_id});
+  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
   std::cout << "\nRunning delete-topic sample" << std::endl;
-  DeleteTopic(publisher_client, {project_id, topic_id});
+  DeleteTopic(topic_admin_client, {project_id, topic_id});
 }
 
 }  // namespace
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
+  using ::google::cloud::pubsub::examples::CreatePublisherCommand;
+  using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
   using ::google::cloud::pubsub::examples::CreateTopicAdminCommand;
   using ::google::cloud::testing_util::Example;
@@ -228,6 +302,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand("delete-subscription",
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
+      CreatePublisherCommand("publish", {}, Publish),
+      CreateSubscriberCommand("subscribe", {}, Subscribe),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
