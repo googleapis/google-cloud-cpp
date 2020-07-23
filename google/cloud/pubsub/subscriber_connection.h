@@ -36,10 +36,12 @@ class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
+  // TODO(#4556) - consider a lighter weight type-erasure
+  using CallbackType = std::function<void(Message, AckHandler)>;
+
   struct SubscribeParams {
     std::string full_subscription_name;
-    // TODO(#4556) - consider a lighter weight type-erasure
-    std::function<void(Message, AckHandler)> callback;
+    CallbackType callback;
   };
   virtual future<Status> Subscribe(SubscribeParams p) = 0;
 };
@@ -67,7 +69,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub);
+    std::shared_ptr<SubscriberStub> stub,
+    pubsub::ConnectionOptions const& options);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
