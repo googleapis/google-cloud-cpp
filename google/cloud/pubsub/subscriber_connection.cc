@@ -15,9 +15,10 @@
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/internal/default_ack_handler_impl.h"
 #include "absl/memory/memory.h"
+#include <algorithm>
+#include <deque>
 #include <memory>
 #include <mutex>
-#include <thread>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0);
-  return pubsub_internal::MakeSubscriberConnection(std::move(stub));
+  return pubsub_internal::MakeSubscriberConnection(std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -43,10 +44,13 @@ class SubscriptionSession
     : public std::enable_shared_from_this<SubscriptionSession> {
  public:
   SubscriptionSession(std::shared_ptr<pubsub_internal::SubscriberStub> s,
+                      google::cloud::CompletionQueue executor,
                       pubsub::SubscriberConnection::SubscribeParams p)
-      : stub_(std::move(s)), params_(std::move(p)) {}
+      : stub_(std::move(s)),
+        executor_(std::move(executor)),
+        params_(std::move(p)) {}
 
-  std::pair<std::thread, future<Status>> Start() {
+  future<Status> Start() {
     auto self = shared_from_this();
     std::weak_ptr<SubscriptionSession> w(self);
     result_ = promise<Status>{[w] {
@@ -54,52 +58,86 @@ class SubscriptionSession
       if (!self) return;
       self->Cancel();
     }};
-    // TODO(#4554) - use the completion queue and asynchronous requests
-    return {std::thread([self] { self->Run(); }), result_.get_future()};
+    executor_.RunAsync([self] { self->PullOne(); });
+    return result_.get_future();
   }
 
+ private:
   void Cancel() {
     std::lock_guard<std::mutex> lk(mu_);
     shutdown_ = true;
   }
-  void Run() {
-    for (;;) {
-      {
-        std::lock_guard<std::mutex> lk(mu_);
-        if (shutdown_) {
-          result_.set_value(Status{});
-          return;
-        }
-      }
-      grpc::ClientContext context;
-      context.set_deadline(std::chrono::system_clock::now() +
-                           std::chrono::milliseconds(500));
-      google::pubsub::v1::PullRequest request;
-      request.set_subscription(params_.full_subscription_name);
-      request.set_max_messages(1);
-      auto r = stub_->Pull(context, request);
-      // For now we poll every 500ms to terminate this loop gracefully
-      if (r.status().code() == StatusCode::kDeadlineExceeded) continue;
-      if (!r) {
-        result_.set_value(std::move(r).status());
-        return;
-      }
-      for (auto m : *r->mutable_received_messages()) {
-        auto handler = absl::make_unique<DefaultAckHandlerImpl>(
-            stub_, params_.full_subscription_name,
-            std::move(*m.mutable_ack_id()));
-        // TODO(#4555) - these should be scheduled via the completion queue
-        params_.callback(FromProto(std::move(*m.mutable_message())),
-                         pubsub::AckHandler(std::move(handler)));
-      }
+
+  void PullOne() {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (!messages_.empty()) {
+      HandleQueue(std::move(lk));
+      return;
     }
+
+    if (shutdown_) {
+      result_.set_value(Status{});
+      return;
+    }
+
+    // TODO(#4554) - use the completion queue and asynchronous requests
+    auto self = shared_from_this();
+    lk.unlock();
+
+    grpc::ClientContext context;
+    context.set_deadline(std::chrono::system_clock::now() +
+                         std::chrono::milliseconds(500));
+    google::pubsub::v1::PullRequest request;
+    request.set_subscription(params_.full_subscription_name);
+    request.set_max_messages(1);
+    auto r = stub_->Pull(context, request);
+    // TODO(#4554) - for now we poll every 500ms to close the session gracefully
+    if (r.status().code() == StatusCode::kDeadlineExceeded) {
+      executor_.RunAsync([self] { self->PullOne(); });
+      return;
+    }
+    if (!r) {
+      result_.set_value(std::move(r).status());
+      return;
+    }
+
+    lk.lock();
+    std::move(r->mutable_received_messages()->begin(),
+              r->mutable_received_messages()->end(),
+              std::back_inserter(messages_));
+    lk.unlock();
+
+    executor_.RunAsync([self] { self->HandleQueue(); });
   }
 
- private:
+  void HandleQueue() { HandleQueue(std::unique_lock<std::mutex>(mu_)); }
+
+  void HandleQueue(std::unique_lock<std::mutex> lk) {
+    auto self = shared_from_this();
+    if (messages_.empty()) {
+      executor_.RunAsync([self] { self->PullOne(); });
+      return;
+    }
+    auto m = std::move(messages_.front());
+    messages_.pop_front();
+    lk.unlock();
+
+    auto handler_impl = absl::make_unique<DefaultAckHandlerImpl>(
+        stub_, params_.full_subscription_name, std::move(*m.mutable_ack_id()));
+    params_.callback(FromProto(std::move(*m.mutable_message())),
+                     pubsub::AckHandler(std::move(handler_impl)));
+
+    // After the callback re-schedule ourselves.
+    // TODO(#4652) - support parallel scheduling of callbacks
+    executor_.RunAsync([self] { self->HandleQueue(); });
+  }
+
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
+  google::cloud::CompletionQueue executor_;
   pubsub::SubscriberConnection::SubscribeParams params_;
   std::mutex mu_;
   bool shutdown_ = false;
+  std::deque<google::pubsub::v1::ReceivedMessage> messages_;
   promise<Status> result_;
 };
 
@@ -107,29 +145,29 @@ namespace {
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberConnectionImpl(
-      std::shared_ptr<pubsub_internal::SubscriberStub> stub)
-      : stub_(std::move(stub)) {}
+      std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+      pubsub::ConnectionOptions const& options)
+      : stub_(std::move(stub)),
+        background_(options.background_threads_factory()()) {}
 
-  ~SubscriberConnectionImpl() override {
-    for (auto& t : tasks_) t.join();
-  }
+  ~SubscriberConnectionImpl() override = default;
 
   future<Status> Subscribe(SubscribeParams p) override {
-    auto session = std::make_shared<SubscriptionSession>(stub_, std::move(p));
-    auto r = session->Start();
-    tasks_.push_back(std::move(r.first));
-    return std::move(r.second);
+    auto session = std::make_shared<SubscriptionSession>(
+        stub_, background_->cq(), std::move(p));
+    return session->Start();
   }
 
  private:
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
-  std::vector<std::thread> tasks_;
+  std::shared_ptr<BackgroundThreads> background_;
 };
 }  // namespace
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub) {
-  return std::make_shared<SubscriberConnectionImpl>(std::move(stub));
+    std::shared_ptr<SubscriberStub> stub,
+    pubsub::ConnectionOptions const& options) {
+  return std::make_shared<SubscriberConnectionImpl>(std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
