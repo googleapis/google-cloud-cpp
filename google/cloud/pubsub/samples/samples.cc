@@ -155,7 +155,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
       if (!topic) {
         // `topic` doesn't contain a value, so `.status()` will contain error
         // info
-        std::cerr << topic.status();
+        std::cerr << topic.status() << "\n";
         break;
       }
       std::cout << topic->DebugString() << "\n";
@@ -184,26 +184,26 @@ void AutoRun(std::vector<std::string> const& argv) {
   google::cloud::pubsub::SubscriptionAdminClient subscriber_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
-  std::cout << "\nRunning CreateTopic() sample\n";
+  std::cout << "\nRunning CreateTopic() sample" << std::endl;
   CreateTopic(publisher_client, {project_id, topic_id});
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(publisher_client, {project_id});
 
-  std::cout << "\nRunning ListTopics() sample\n";
+  std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(publisher_client, {project_id});
 
-  std::cout << "\nRunning CreateSubscription() sample\n";
+  std::cout << "\nRunning CreateSubscription() sample" << std::endl;
   CreateSubscription(subscriber_client,
                      {project_id, topic_id, subscription_id});
 
-  std::cout << "\nRunning ListSubscriptions() sample\n";
+  std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
   ListSubscriptions(subscriber_client, {project_id});
 
-  std::cout << "\nRunning DeleteSubscription() sample\n";
+  std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
   DeleteSubscription(subscriber_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning delete-topic sample\n";
+  std::cout << "\nRunning delete-topic sample" << std::endl;
   DeleteTopic(publisher_client, {project_id, topic_id});
 }
 

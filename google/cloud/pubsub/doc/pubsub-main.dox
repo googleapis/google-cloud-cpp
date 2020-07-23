@@ -5,7 +5,7 @@
 The Cloud Pusb/Sub C++ Client library offers types and functions to use Cloud
 Pub/Sub from C++11 applications.
 
-This library requires a C++11 compiler, it is supported (and tested) on multiple
+This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, macOS, and Windows.
 
 ## Quickstart
@@ -16,7 +16,7 @@ using the C++ client library.
 ### Before you begin
 
 1. Select or create a Google Cloud Platform (GCP) project using the
-   [manage resource page][resource-link]. Make a note of the project id, you
+   [manage resource page][resource-link]. Make a note of the project id as you
    will need to use it later.
 2. Make sure that [billing is enabled][billing-link] for your project.
 3. Learn about [key terms and concepts][concepts-link] for Cloud Pub/Sub.
@@ -63,13 +63,8 @@ behaviors in the library.
   environment variable.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
-  calls, the library injects an additional Stub decorator that prints each gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
-  `Client::ProfileQuery()`. This can produce a lot of output, so use with
-  caution!
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
