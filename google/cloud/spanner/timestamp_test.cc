@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/timestamp.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
-#include <cmath>
 #include <cstdint>
 #include <limits>
 #include <sstream>
@@ -519,9 +518,8 @@ TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
 
   // Timestamps drop precision by flooring toward negative infinity. Therefore,
   // we need to craft our expectation by making sure our division also floors.
-  auto const floored_hours =
-      static_cast<std::chrono::hours::rep>(std::floor(-2123456789. / 60 / 60));
-  auto const tp10 = kUnixEpoch + std::chrono::hours(floored_hours);
+  auto const tp10 =
+      kUnixEpoch - std::chrono::hours((2123456789 + 3600 - 1) / 3600);
   EXPECT_EQ(tp10, ts_neg.get<sys_time<std::chrono::hours>>().value());
 
   // The limit of a 64-bit count of nanoseconds (assuming the system_clock
@@ -556,6 +554,28 @@ TEST(Timestamp, ToChronoOverflow) {
   auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_FALSE(tp3.ok());
   EXPECT_THAT(tp3.status().message(), HasSubstr("positive overflow"));
+
+  // Uses a small duration (8-bits of seconds) to clearly demonstrate that we
+  // detect potential overflow into the Duration's rep.
+  using Sec8Bit = std::chrono::duration<std::int8_t, std::ratio<1>>;
+  auto const ts4 =
+      internal::TimestampFromProto(MakeProtoTimestamp(127, 0)).value();
+  auto const tp4 = ts4.get<sys_time<Sec8Bit>>();
+  EXPECT_TRUE(tp4);  // An in-range value succeeds.
+
+  // One beyond the capacity for (signed) 8-bits of seconds would overflow.
+  auto const ts5 =
+      internal::TimestampFromProto(MakeProtoTimestamp(128, 0)).value();
+  auto const tp5 = ts5.get<sys_time<Sec8Bit>>();
+  EXPECT_FALSE(tp5);
+  EXPECT_THAT(tp5.status().message(), HasSubstr("positive overflow"));
+
+  // One less than the capacity for (signed) 8-bits of seconds would overflow.
+  auto const ts6 =
+      internal::TimestampFromProto(MakeProtoTimestamp(-129, 0)).value();
+  auto const tp6 = ts6.get<sys_time<Sec8Bit>>();
+  EXPECT_FALSE(tp6);
+  EXPECT_THAT(tp6.status().message(), HasSubstr("negative overflow"));
 }
 
 TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
