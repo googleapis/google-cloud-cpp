@@ -24,7 +24,6 @@
 #include <limits>
 #include <ostream>
 #include <string>
-#include <tuple>
 
 namespace google {
 namespace cloud {
