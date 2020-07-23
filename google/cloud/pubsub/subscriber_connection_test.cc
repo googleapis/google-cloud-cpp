@@ -137,6 +137,7 @@ TEST(SubscriberConnectionTest, ScheduleCallbacks) {
   std::generate_n(std::back_inserter(tasks), 4,
                   [&] { return std::thread([&cq] { cq.Run(); }); });
   std::set<std::thread::id> ids;
+  auto const main_id = std::this_thread::get_id();
   std::transform(tasks.begin(), tasks.end(), std::inserter(ids, ids.end()),
                  [](std::thread const& t) { return t.get_id(); });
 
@@ -144,6 +145,9 @@ TEST(SubscriberConnectionTest, ScheduleCallbacks) {
   auto handler = [&](Message const& m, AckHandler h) {
     EXPECT_EQ("test-message-id-" + std::to_string(expected_message_id),
               m.message_id());
+    auto pos = ids.find(std::this_thread::get_id());
+    EXPECT_NE(ids.end(), pos);
+    EXPECT_NE(main_id, std::this_thread::get_id());
     std::move(h).ack();
     ++expected_message_id;
   };
