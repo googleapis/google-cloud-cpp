@@ -59,7 +59,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       CreateSubscriptionBuilder(subscription, topic));
   ASSERT_STATUS_OK(subscription_metadata);
 
-  auto publisher = Publisher(MakePublisherConnection(topic));
+  auto publisher = Publisher(MakePublisherConnection(topic, {}));
   auto subscriber = Subscriber(MakeSubscriberConnection());
 
   std::mutex mu;

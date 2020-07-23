@@ -45,7 +45,7 @@ TEST(PublisherConnectionTest, Basic) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -66,7 +66,7 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -91,7 +91,7 @@ TEST(PublisherConnectionTest, HandleError) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();

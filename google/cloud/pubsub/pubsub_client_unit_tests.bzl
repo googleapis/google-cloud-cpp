@@ -20,6 +20,7 @@ pubsub_client_unit_tests = [
     "ack_handler_test.cc",
     "create_subscription_builder_test.cc",
     "create_topic_builder_test.cc",
+    "internal/batching_publisher_connection_test.cc",
     "internal/default_ack_handler_impl_test.cc",
     "internal/emulator_overrides_test.cc",
     "internal/user_agent_prefix_test.cc",
