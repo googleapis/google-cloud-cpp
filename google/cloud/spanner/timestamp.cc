@@ -47,27 +47,13 @@ Status NegativeOverflow(std::string const& type) {
   return OutOfRange(type + " negative overflow");
 }
 
-Status BadDuration(std::intmax_t num, std::intmax_t den) {
-  return OutOfRange("unsupported duration ratio: " + std::to_string(num) + "/" +
-                    std::to_string(den));
-}
-
 }  // namespace
-
-StatusOr<Timestamp> Timestamp::FromRatio(std::intmax_t const count,
-                                         std::intmax_t const num,
-                                         std::intmax_t const den) {
-  auto const period = absl::Seconds(num) / den;
-  if (period == absl::ZeroDuration()) return BadDuration(num, den);
-  return MakeTimestamp(absl::UnixEpoch() + count * period);
-}
 
 StatusOr<std::intmax_t> Timestamp::ToRatio(std::intmax_t min, std::intmax_t max,
                                            std::intmax_t num,
                                            std::intmax_t den) const {
   constexpr auto kDestType = "std::chrono::time_point";
   auto const period = absl::Seconds(num) / den;
-  if (period == absl::ZeroDuration()) return BadDuration(num, den);
   auto const duration = absl::Floor(t_ - absl::UnixEpoch(), period);
   if (duration > max * period) return PositiveOverflow(kDestType);
   if (duration < min * period) return NegativeOverflow(kDestType);

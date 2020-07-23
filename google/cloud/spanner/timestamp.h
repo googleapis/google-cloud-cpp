@@ -95,8 +95,9 @@ class Timestamp {
    * `*this` cannot be represented as a `T`.
    *
    * Supported destination types are:
-   *   - `google::cloud::spanner::sys_time<Duration>` (`Duration::rep` may
-   *      not be wider than `std::intmax_t`.)
+   *   - `google::cloud::spanner::sys_time<Duration>` - `Duration::rep` may not
+   *      be wider than `std::intmax_t`, and `Duration::period` may be no more
+   *      precise than `std::nano`.
    *   - `absl::Time` - Since `absl::Time` can represent all possible
    *     `Timestamp` values, `get<absl::Time>()` never returns an error.
    *
@@ -114,18 +115,8 @@ class Timestamp {
   }
 
  private:
-  template <typename Duration>
-  friend StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
   friend StatusOr<Timestamp> MakeTimestamp(absl::Time);
 
-  // Helpers for `std::chrono::time_point` conversions.
-  template <typename Duration>
-  static sys_time<Duration> UnixEpoch() {
-    return std::chrono::time_point_cast<Duration>(
-        sys_time<Duration>::clock::from_time_t(0));
-  }
-  static StatusOr<Timestamp> FromRatio(std::intmax_t count, std::intmax_t num,
-                                       std::intmax_t den);
   StatusOr<std::intmax_t> ToRatio(std::intmax_t min, std::intmax_t max,
                                   std::intmax_t num, std::intmax_t den) const;
 
@@ -135,11 +126,16 @@ class Timestamp {
   template <typename Duration>
   StatusOr<sys_time<Duration>> ConvertTo(sys_time<Duration> const&) const {
     using Rep = typename Duration::rep;
-    auto count = ToRatio(std::numeric_limits<Rep>::min(),
-                         std::numeric_limits<Rep>::max(), Duration::period::num,
-                         Duration::period::den);
+    using Period = typename Duration::period;
+    static_assert(std::ratio_greater_equal<Period, std::nano>::value,
+                  "Duration must be no more precise than std::nano");
+    auto count =
+        ToRatio(std::numeric_limits<Rep>::min(),
+                std::numeric_limits<Rep>::max(), Period::num, Period::den);
     if (!count) return std::move(count).status();
-    return UnixEpoch<Duration>() + Duration(static_cast<Rep>(*count));
+    auto const unix_epoch = std::chrono::time_point_cast<Duration>(
+        sys_time<Duration>::clock::from_time_t(0));
+    return unix_epoch + Duration(static_cast<Rep>(*count));
   }
 
   // Conversion to an `absl::Time`. Can never fail.
@@ -151,23 +147,30 @@ class Timestamp {
 };
 
 /**
- * Construct a `Timestamp` from a `std::chrono::time_point` on the system
- * clock. May produce out-of-range errors, depending on the properties of
- * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
- * not be wider than `std::intmax_t`.
- */
-template <typename Duration>
-StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const& tp) {
-  return Timestamp::FromRatio((tp - Timestamp::UnixEpoch<Duration>()).count(),
-                              Duration::period::num, Duration::period::den);
-}
-
-/**
  * Construct a `Timestamp` from an `absl::Time`. May produce out-of-range
  * errors if the given time is beyond the range supported by `Timestamp` (see
  * class comments above).
  */
 StatusOr<Timestamp> MakeTimestamp(absl::Time);
+
+/**
+ * Construct a `Timestamp` from a `std::chrono::time_point` on the system
+ * clock. May produce out-of-range errors, depending on the properties of
+ * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
+ * not be wider than `std::intmax_t`. Requires that `Duration::period` is no
+ * more precise than `std::nano`.
+ */
+template <typename Duration>
+StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const& tp) {
+  using Period = typename Duration::period;
+  static_assert(std::ratio_greater_equal<Period, std::nano>::value,
+                "Duration must be no more precise than std::nano");
+  auto const unix_epoch = std::chrono::time_point_cast<Duration>(
+      sys_time<Duration>::clock::from_time_t(0));
+  auto const period = absl::Seconds(Period::num) / Period::den;
+  auto const count = (tp - unix_epoch).count();
+  return MakeTimestamp(absl::UnixEpoch() + count * period);
+}
 
 /**
  * A sentinel type used to update a commit timestamp column.

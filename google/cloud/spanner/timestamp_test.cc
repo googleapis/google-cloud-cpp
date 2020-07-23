@@ -461,13 +461,6 @@ TEST(Timestamp, ToChronoOverflow) {
   auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_FALSE(tp3.ok());
   EXPECT_THAT(tp3.status().message(), HasSubstr("positive overflow"));
-
-  // A chrono duration that can hold values beyond the resolution of Timestamp.
-  using picoseconds = std::chrono::duration<std::int64_t, std::pico>;
-  auto const ts4 = internal::TimestampFromProto(MakeProtoTimestamp(123, 456));
-  auto const tp4 = ts4.get<sys_time<picoseconds>>();
-  EXPECT_FALSE(tp4.ok());
-  EXPECT_THAT(tp4.status().message(), HasSubstr("unsupported duration ratio"));
 }
 
 TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
