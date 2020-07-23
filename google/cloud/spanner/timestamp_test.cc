@@ -492,7 +492,7 @@ TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
     SCOPED_TRACE("Time: " + absl::FormatTime(tc.t));
     auto const ts = MakeTimestamp(tc.t).value();
     EXPECT_EQ(ts, internal::TimestampFromProto(tc.proto));
-    auto const t = ts.get<absl::Time>().value(); 
+    auto const t = ts.get<absl::Time>().value();
     EXPECT_EQ(t, tc.t);
   }
 }
