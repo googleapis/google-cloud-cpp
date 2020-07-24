@@ -16,6 +16,11 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+// OpenCensus generates too many warnings with MSVC
+#include "google/cloud/internal/diagnostics_push.inc"
+#if _MSC_VER
+#pragma warning(disable : 4081; disable : 4267)
+#endif  // _MSC_VER
 #include "opencensus/exporters/stats/stackdriver/stackdriver_exporter.h"
 #include "opencensus/exporters/stats/stdout/stdout_exporter.h"
 #include "opencensus/exporters/trace/stackdriver/stackdriver_exporter.h"
@@ -23,6 +28,8 @@
 #include "opencensus/stats/stats.h"
 #include "opencensus/trace/sampler.h"
 #include "opencensus/trace/trace_config.h"
+// Restore warnings after the OpenCensus includes
+#include "google/cloud/internal/diagnostics_pop.inc"
 #include <grpcpp/opencensus.h>
 
 int main(int argc, char* argv[]) try {
