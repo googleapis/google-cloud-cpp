@@ -68,9 +68,9 @@ class TransactionImpl {
   // If the TransactionSelector is in the "begin" state and the operation
   // successfully allocates a transaction ID, then the functor must assign
   // that ID to the selector. If the functor fails to allocate a transaction
-  // ID then it should assign the status of the failing operation to the
-  // selector. All of this is independent of whether the functor itself
-  // succeeds.
+  // ID then it must assign a `Status` that indicates why transaction
+  // allocation failed (i.e. the result of `BeginTransaction`) to the parameter.
+  // All of this is independent of whether the functor itself succeeds.
   //
   // If the TransactionSelector is not in the "begin" state then the functor
   // must not modify it. Rather it should use either the transaction ID or

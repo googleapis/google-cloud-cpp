@@ -57,8 +57,10 @@ MATCHER_P2(
           result = false;
         }
         if (!s) {
-          *result_listener << "Transaction invalid (expected " << transaction_id
-                           << ")";
+          *result_listener << "Transaction ID missing (expected "
+                           << transaction_id << " but found status "
+                           << s.status() << ")";
+
           result = false;
         } else if (s->id() != transaction_id) {
           *result_listener << "Transaction ID mismatch: " << s->id()

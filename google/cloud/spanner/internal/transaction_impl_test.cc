@@ -97,7 +97,6 @@ class Client {
                  std::vector<std::string> const& columns);
 
   Mode mode_;
-  const Status failed_txn_status_{StatusCode::kInternal, "Bad transaction"};
   Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
@@ -114,17 +113,21 @@ ResultSet Client::Read(SessionHolder& session,
                        StatusOr<TransactionSelector>& selector,
                        std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
+  // when we mark a transaction invalid, we use this Status.
+  const Status failed_txn_status(StatusCode::kInternal, "Bad transaction");
+
   bool fail_with_throw = false;
   if (!selector) {
     std::unique_lock<std::mutex> lock(mu_);
-    // we should only get here in "transaction invalidated" mode.
-    if (mode_ == Mode::kReadFailsAndTxnInvalidated) {
-      EXPECT_EQ(selector.status(), failed_txn_status_);
-      // visits always valid
-      ++valid_visits_;
-      fail_with_throw = (valid_visits_ % 2 == 0);
-    } else {
-      ADD_FAILURE() << "Unexpected mode_ " << static_cast<int>(mode_);
+    switch (mode_) {
+      case Mode::kReadSucceeds:  // visits never valid
+      case Mode::kReadFailsAndTxnRemainsBegin:
+        break;
+      case Mode::kReadFailsAndTxnInvalidated:
+        EXPECT_EQ(selector.status(), failed_txn_status);
+        ++valid_visits_;
+        fail_with_throw = (valid_visits_ % 2 == 0);
+        break;
     }
   } else if (selector->has_begin()) {
     EXPECT_THAT(session, IsNull());
@@ -157,7 +160,7 @@ ResultSet Client::Read(SessionHolder& session,
         break;
       case Mode::kReadFailsAndTxnInvalidated:
         // `begin` -> `error`, calls now parallelized
-        selector = failed_txn_status_;
+        selector = failed_txn_status;
         break;
     }
   } else {
