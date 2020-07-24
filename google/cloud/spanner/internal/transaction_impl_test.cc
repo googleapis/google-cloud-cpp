@@ -92,9 +92,9 @@ class Client {
 
  private:
   ResultSet Read(SessionHolder& session,
-                 StatusOr<TransactionSelector>& selector,
-                 std::int64_t seqno, std::string const& table,
-                 KeySet const& keys, std::vector<std::string> const& columns);
+                 StatusOr<TransactionSelector>& selector, std::int64_t seqno,
+                 std::string const& table, KeySet const& keys,
+                 std::vector<std::string> const& columns);
 
   Mode mode_;
   const Status failed_txn_status_{StatusCode::kInternal, "Bad transaction"};

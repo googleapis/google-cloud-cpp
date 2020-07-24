@@ -700,9 +700,9 @@ TEST(ClientTest, CommitMutations) {
 
 MATCHER(DoesNotHaveSession, "not bound to a session") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (session) {
           *result_listener << "has session " << session->session_name();
           return false;
@@ -713,9 +713,9 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
 
 MATCHER_P(HasSession, name, "bound to expected session") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
           return false;
@@ -731,9 +731,9 @@ MATCHER_P(HasSession, name, "bound to expected session") {
 
 MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder&,
-               StatusOr<google::spanner::v1::TransactionSelector>& s,
-               std::int64_t) {
+      arg,
+      [&](internal::SessionHolder&,
+          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         if (!s) {
           *result_listener << "has status " << s.status();
           return false;

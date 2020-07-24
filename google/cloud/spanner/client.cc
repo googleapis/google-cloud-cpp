@@ -240,10 +240,9 @@ StatusOr<CommitResult> Client::Commit(
     if (internal::IsSessionNotFound(status)) {
       // Marks the session bad and creates a new Transaction for the next loop.
       internal::Visit(
-          txn,
-          [](internal::SessionHolder& s,
-             StatusOr<google::spanner::v1::TransactionSelector> const&,
-             std::int64_t) {
+          txn, [](internal::SessionHolder& s,
+                  StatusOr<google::spanner::v1::TransactionSelector> const&,
+                  std::int64_t) {
             if (s) s->set_bad();
             return true;
           });

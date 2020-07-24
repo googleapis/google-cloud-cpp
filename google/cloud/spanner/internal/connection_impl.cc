@@ -180,10 +180,9 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
     ExecutePartitionedDmlParams params) {
   auto txn = MakeReadOnlyTransaction();
   return internal::Visit(
-      txn,
-      [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::TransactionSelector>& s,
-                      std::int64_t seqno) {
+      txn, [this, &params](SessionHolder& session,
+                           StatusOr<spanner_proto::TransactionSelector>& s,
+                           std::int64_t seqno) {
         return ExecutePartitionedDmlImpl(session, s, seqno, std::move(params));
       });
 }
@@ -302,8 +301,8 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
 }
 
 RowStream ConnectionImpl::ReadImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, ReadParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    ReadParams params) {
   // TODO(#4516): Handle !s.
 
   auto prepare_status = PrepareSession(session);
@@ -366,8 +365,7 @@ RowStream ConnectionImpl::ReadImpl(
 }
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams const& params, PartitionOptions const& partition_options) {
   // TODO(#4516): Handle !s.
 
@@ -421,9 +419,8 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
@@ -464,9 +461,8 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
 
 template <typename ResultType>
 ResultType ConnectionImpl::CommonQueryImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
@@ -516,17 +512,15 @@ ResultType ConnectionImpl::CommonQueryImpl(
 }
 
 RowStream ConnectionImpl::ExecuteQueryImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params) {
   return CommonQueryImpl<RowStream>(session, s, seqno, std::move(params),
                                     spanner_proto::ExecuteSqlRequest::NORMAL);
 }
 
 ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params) {
   return CommonQueryImpl<ProfileQueryResult>(
       session, s, seqno, std::move(params),
       spanner_proto::ExecuteSqlRequest::PROFILE);
@@ -534,9 +528,8 @@ ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
 
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   auto function_name = __func__;
   auto prepare_status = PrepareSession(session);
@@ -573,26 +566,23 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
 }
 
 StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params) {
   return CommonDmlImpl<DmlResult>(session, s, seqno, std::move(params),
                                   spanner_proto::ExecuteSqlRequest::NORMAL);
 }
 
 StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params) {
   return CommonDmlImpl<ProfileDmlResult>(
       session, s, seqno, std::move(params),
       spanner_proto::ExecuteSqlRequest::PROFILE);
 }
 
 StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    SqlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, SqlParams params) {
   auto result =
       CommonDmlImpl<ProfileDmlResult>(session, s, seqno, std::move(params),
                                       spanner_proto::ExecuteSqlRequest::PLAN);
@@ -603,8 +593,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 }
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     PartitionQueryParams const& params) {
   // TODO(#4516): Handle !s.
 
@@ -656,9 +645,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 }
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    ExecuteBatchDmlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, ExecuteBatchDmlParams params) {
   // TODO(#4516): Handle !s.
 
   auto prepare_status = PrepareSession(session);
@@ -703,9 +691,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 }
 
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
-    ExecutePartitionedDmlParams params) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
+    std::int64_t seqno, ExecutePartitionedDmlParams params) {
   // TODO(#4516): Handle !s.
 
   auto prepare_status = PrepareSession(session);
@@ -764,8 +751,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
 }
 
 StatusOr<CommitResult> ConnectionImpl::CommitImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s,
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     CommitParams params) {
   if (!s.ok()) {
     // Fail the commit if the transaction has been invalidated.
@@ -826,8 +812,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
 }
 
 Status ConnectionImpl::RollbackImpl(
-    SessionHolder& session,
-    StatusOr<spanner_proto::TransactionSelector>& s) {
+    SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s) {
   if (!s.ok()) {
     return s.status();
   }

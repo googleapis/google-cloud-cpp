@@ -102,10 +102,9 @@ TEST(Transaction, SessionAffinity) {
   auto a_session = internal::MakeDissociatedSessionHolder("SessionAffinity");
   Transaction a = MakeReadWriteTransaction();
   internal::Visit(
-      a,
-      [&a_session](internal::SessionHolder& session,
-                   StatusOr<google::spanner::v1::TransactionSelector>& s,
-                   std::int64_t) {
+      a, [&a_session](internal::SessionHolder& session,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
+                      std::int64_t) {
         EXPECT_FALSE(session);
         EXPECT_TRUE(s->has_begin());
         session = a_session;
@@ -114,10 +113,9 @@ TEST(Transaction, SessionAffinity) {
       });
   Transaction b = MakeReadWriteTransaction(a);
   internal::Visit(
-      b,
-      [&a_session](internal::SessionHolder& session,
-                   StatusOr<google::spanner::v1::TransactionSelector>& s,
-                   std::int64_t) {
+      b, [&a_session](internal::SessionHolder& session,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
+                      std::int64_t) {
         EXPECT_EQ(a_session, session);  // session affinity
         EXPECT_TRUE(s->has_begin());    // but a new transaction
         return 0;

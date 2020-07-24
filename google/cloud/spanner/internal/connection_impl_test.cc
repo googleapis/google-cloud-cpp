@@ -94,9 +94,9 @@ MATCHER_P(BatchCreateSessionsRequestHasDatabase, database,
 // Matches a spanner::Transaction that is bound to a "bad" session"
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
   return internal::Visit(
-      arg, [&](internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::int64_t) {
+      arg,
+      [&](internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session";
           return false;
@@ -111,13 +111,13 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
 
 // Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(Transaction& txn, std::string tid) {
-  internal::Visit(
-      txn, [&tid](SessionHolder&,
-                  StatusOr<spanner_proto::TransactionSelector>& selector,
-                  std::int64_t) {
-        selector->set_id(std::move(tid));
-        return 0;
-      });
+  internal::Visit(txn,
+                  [&tid](SessionHolder&,
+                         StatusOr<spanner_proto::TransactionSelector>& selector,
+                         std::int64_t) {
+                    selector->set_id(std::move(tid));
+                    return 0;
+                  });
 }
 
 // Helper to mark the Transaction as invalid.
