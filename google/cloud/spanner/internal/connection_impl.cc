@@ -821,12 +821,10 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     return status;
   }
   auto timestamp = internal::TimestampFromProto(response->commit_timestamp());
-  if (timestamp) {
-    CommitResult r;
-    r.commit_timestamp = *std::move(timestamp);
-    return r;
-  }
-  return std::move(timestamp).status();
+  if (!timestamp) return std::move(timestamp).status();
+  CommitResult r;
+  r.commit_timestamp = *std::move(timestamp);
+  return r;
 }
 
 Status ConnectionImpl::RollbackImpl(
