@@ -54,9 +54,9 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
         return make_ready_future(make_status_or(response));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}, mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      topic, pubsub::BatchingConfig{}, mock, bg.cq());
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
@@ -102,9 +102,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   // due to the zero-maximum-hold-time timer expiring.
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()}
-          .DisableBackgroundThreads(cq));
+      topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock, cq);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -158,9 +156,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
       pubsub::BatchingConfig{}
           .set_maximum_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
-      mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()}
-          .DisableBackgroundThreads(cq));
+      mock, cq);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -213,7 +209,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
       pubsub::BatchingConfig{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_message_count(4),
-      mock, pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      mock, cq);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -253,9 +249,10 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
             StatusOr<google::pubsub::v1::PublishResponse>(error_status));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      bg.cq());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
     EXPECT_EQ(error_status, r.status());
@@ -285,9 +282,10 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
         return make_ready_future(make_status_or(response));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
-      pubsub::ConnectionOptions{grpc::InsecureChannelCredentials()});
+      bg.cq());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
     EXPECT_EQ(StatusCode::kUnknown, r.status().code());

@@ -44,8 +44,9 @@ TEST(PublisherConnectionTest, Basic) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
+  auto publisher =
+      pubsub_internal::MakePublisherConnection(topic, {}, mock, bg.cq());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -65,8 +66,9 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
+  auto publisher =
+      pubsub_internal::MakePublisherConnection(topic, {}, mock, bg.cq());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -90,8 +92,9 @@ TEST(PublisherConnectionTest, HandleError) {
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
+  auto publisher =
+      pubsub_internal::MakePublisherConnection(topic, {}, mock, bg.cq());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
