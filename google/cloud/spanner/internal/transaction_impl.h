@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
-#include "absl/types/optional.h"
+#include "google/cloud/status_or.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
 #include <cstdint>
@@ -35,7 +35,7 @@ namespace internal {
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&,
-    absl::optional<google::spanner::v1::TransactionSelector>&, std::int64_t>;
+    StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -68,8 +68,9 @@ class TransactionImpl {
   // If the TransactionSelector is in the "begin" state and the operation
   // successfully allocates a transaction ID, then the functor must assign
   // that ID to the selector. If the functor fails to allocate a transaction
-  // ID then it should place the selector into an error state. All of this
-  // is independent of whether the functor itself succeeds.
+  // ID then it must assign a `Status` that indicates why transaction
+  // allocation failed (i.e. the result of `BeginTransaction`) to the parameter.
+  // All of this is independent of whether the functor itself succeeds.
   //
   // If the TransactionSelector is not in the "begin" state then the functor
   // must not modify it. Rather it should use either the transaction ID or
@@ -80,7 +81,7 @@ class TransactionImpl {
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(google::cloud::internal::is_invocable<
                       Functor, SessionHolder&,
-                      absl::optional<google::spanner::v1::TransactionSelector>&,
+                      StatusOr<google::spanner::v1::TransactionSelector>&,
                       std::int64_t>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
@@ -135,7 +136,7 @@ class TransactionImpl {
   std::mutex mu_;
   std::condition_variable cond_;
   SessionHolder session_;
-  absl::optional<google::spanner::v1::TransactionSelector> selector_;
+  StatusOr<google::spanner::v1::TransactionSelector> selector_;
   std::int64_t seqno_;
 };
 
