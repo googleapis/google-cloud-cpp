@@ -62,31 +62,55 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
-  StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& context,
+  future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PullRequest const& request) override {
-    google::pubsub::v1::PullResponse response;
-    auto status = grpc_stub_->Pull(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               google::pubsub::v1::PullRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return grpc_stub_->AsyncPull(context, request, cq);
+        },
+        request, std::move(context));
   }
 
-  Status Acknowledge(
-      grpc::ClientContext& context,
+  future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::AcknowledgeRequest const& request) override {
-    google::protobuf::Empty response;
-    auto status = grpc_stub_->Acknowledge(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return {};
+    return cq
+        .MakeUnaryRpc(
+            [this](grpc::ClientContext* context,
+                   google::pubsub::v1::AcknowledgeRequest const& request,
+                   grpc::CompletionQueue* cq) {
+              return grpc_stub_->AsyncAcknowledge(context, request, cq);
+            },
+            request, std::move(context))
+        .then([](future<StatusOr<google::protobuf::Empty>> f) {
+          auto r = f.get();
+          if (!r) return std::move(r).status();
+          return Status{};
+        });
   }
 
-  Status ModifyAckDeadline(
-      grpc::ClientContext& context,
+  future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
-    google::protobuf::Empty response;
-    auto status = grpc_stub_->ModifyAckDeadline(&context, request, &response);
-    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-    return {};
+    return cq
+        .MakeUnaryRpc(
+            [this](grpc::ClientContext* context,
+                   google::pubsub::v1::ModifyAckDeadlineRequest const& request,
+                   grpc::CompletionQueue* cq) {
+              return grpc_stub_->AsyncModifyAckDeadline(context, request, cq);
+            },
+            request, std::move(context))
+        .then([](future<StatusOr<google::protobuf::Empty>> f) {
+          auto r = f.get();
+          if (!r) return std::move(r).status();
+          return Status{};
+        });
   }
 
  private:

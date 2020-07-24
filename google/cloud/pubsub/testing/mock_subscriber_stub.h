@@ -46,17 +46,21 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::DeleteSubscriptionRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::PullResponse>, Pull,
-              (grpc::ClientContext&, google::pubsub::v1::PullRequest const&),
+  MOCK_METHOD(future<StatusOr<google::pubsub::v1::PullResponse>>, AsyncPull,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::pubsub::v1::PullRequest const&),
               (override));
 
-  MOCK_METHOD(Status, Acknowledge,
-              (grpc::ClientContext&,
+  MOCK_METHOD(future<Status>, AsyncAcknowledge,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
                google::pubsub::v1::AcknowledgeRequest const&),
               (override));
 
-  MOCK_METHOD(Status, ModifyAckDeadline,
-              (grpc::ClientContext&,
+  MOCK_METHOD(future<Status>, AsyncModifyAckDeadline,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
                google::pubsub::v1::ModifyAckDeadlineRequest const&),
               (override));
 };

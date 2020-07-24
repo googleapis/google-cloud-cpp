@@ -56,18 +56,21 @@ class SubscriberStub {
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
   /// Pull a batch of messages.
-  virtual StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& client_context,
+  virtual future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> client_context,
       google::pubsub::v1::PullRequest const& request) = 0;
 
   /// Acknowledge one or more messages.
-  virtual Status Acknowledge(
-      grpc::ClientContext& context,
+  virtual future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> client_context,
       google::pubsub::v1::AcknowledgeRequest const& request) = 0;
 
   /// Modify the ACK deadline.
-  virtual Status ModifyAckDeadline(
-      grpc::ClientContext& context,
+  virtual future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> client_context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
 };
 

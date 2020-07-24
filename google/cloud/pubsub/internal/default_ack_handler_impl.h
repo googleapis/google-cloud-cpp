@@ -40,6 +40,7 @@ class DefaultAckHandlerImpl : public pubsub::AckHandler::Impl {
   std::string ack_id() const override { return ack_id_; }
 
  private:
+  google::cloud::CompletionQueue cq_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::string subscription_;
   std::string ack_id_;
