@@ -36,7 +36,7 @@ class ClientOptionsTest : public ::testing::Test {
 
   std::string CreateRandomFileName() {
     // When running on the internal Google CI systems we cannot write to the
-    // local directory, GTest has a good temporary directory in that case.
+    // local directory. GTest has a good temporary directory in that case.
     return ::testing::TempDir() +
            google::cloud::internal::Sample(
                generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789") +
