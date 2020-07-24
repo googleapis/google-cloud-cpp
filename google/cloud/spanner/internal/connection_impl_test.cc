@@ -1536,8 +1536,8 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
 
   // Committing an invalidated transaction is a unilateral error.
   auto txn = MakeReadWriteTransaction();
-  SetTransactionInvalid(
-      txn, Status(Status(StatusCode::kAlreadyExists, "constraint error")));
+  SetTransactionInvalid(txn,
+                        Status(StatusCode::kAlreadyExists, "constraint error"));
 
   auto commit = conn->Commit({txn});
   EXPECT_FALSE(commit.ok());
@@ -1777,8 +1777,8 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
 
   // Rolling back an invalidated transaction is a unilateral success.
   auto txn = MakeReadWriteTransaction();
-  SetTransactionInvalid(
-      txn, Status(Status(StatusCode::kAlreadyExists, "constraint error")));
+  SetTransactionInvalid(txn,
+                        Status(StatusCode::kAlreadyExists, "constraint error"));
 
   auto rollback_status = conn->Rollback({txn});
   EXPECT_EQ(StatusCode::kAlreadyExists, rollback_status.code());
@@ -2486,8 +2486,8 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
 
   // Committing an invalidated transaction is a unilateral error.
   auto txn = MakeReadWriteTransaction();
-  SetTransactionInvalid(txn, Status(Status(StatusCode::kInvalidArgument,
-                                           "BeginTransaction failed")));
+  SetTransactionInvalid(
+      txn, Status(StatusCode::kInvalidArgument, "BeginTransaction failed"));
   // All operations on an invalid transaction should return the error that
   // invalidated it, without actually making a RPC.
 
