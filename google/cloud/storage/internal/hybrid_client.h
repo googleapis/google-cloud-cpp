@@ -81,6 +81,8 @@ class HybridClient : public RawClient {
       ResumableUploadRequest const& request) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
       std::string const& upload_id) override;
+  StatusOr<EmptyResponse> DeleteResumableUpload(
+      DeleteResumableUploadRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

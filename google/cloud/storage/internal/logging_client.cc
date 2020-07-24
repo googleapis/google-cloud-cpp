@@ -219,6 +219,12 @@ LoggingClient::RestoreResumableSession(std::string const& request) {
       *client_, &RawClient::RestoreResumableSession, request, __func__);
 }
 
+StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
+    DeleteResumableUploadRequest const& request) {
+  return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,
+                  __func__);
+}
+
 StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBucketAcl, request, __func__);

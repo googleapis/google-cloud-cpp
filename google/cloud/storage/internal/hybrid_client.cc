@@ -149,6 +149,11 @@ HybridClient::RestoreResumableSession(std::string const& upload_id) {
   return grpc_->RestoreResumableSession(upload_id);
 }
 
+StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
+    DeleteResumableUploadRequest const& request) {
+  return curl_->DeleteResumableUpload(request);
+}
+
 StatusOr<ListBucketAclResponse> HybridClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   return curl_->ListBucketAcl(request);
