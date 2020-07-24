@@ -98,6 +98,10 @@ class ConnectionImpl : public Connection {
   Status PrepareSession(SessionHolder& session,
                         bool dissociate_from_pool = false);
 
+  StatusOr<google::spanner::v1::Transaction> BeginTransaction(
+      SessionHolder& session, google::spanner::v1::TransactionOptions options,
+      char const* func);
+
   RowStream ReadImpl(SessionHolder& session,
                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                      ReadParams params);
