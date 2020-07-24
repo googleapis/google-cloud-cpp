@@ -80,7 +80,7 @@ TEST(Transaction, Visit) {
   std::int64_t a_seqno;
   internal::Visit(
       a, [&a_seqno](internal::SessionHolder& /*session*/,
-                    absl::optional<google::spanner::v1::TransactionSelector>& s,
+                    StatusOr<google::spanner::v1::TransactionSelector>& s,
                     std::int64_t seqno) {
         EXPECT_TRUE(s->has_begin());
         EXPECT_TRUE(s->begin().has_read_only());
@@ -90,7 +90,7 @@ TEST(Transaction, Visit) {
       });
   internal::Visit(
       a, [a_seqno](internal::SessionHolder& /*session*/,
-                   absl::optional<google::spanner::v1::TransactionSelector>& s,
+                   StatusOr<google::spanner::v1::TransactionSelector>& s,
                    std::int64_t seqno) {
         EXPECT_EQ("test-txn-id", s->id());
         EXPECT_GT(seqno, a_seqno);
@@ -104,7 +104,7 @@ TEST(Transaction, SessionAffinity) {
   internal::Visit(
       a,
       [&a_session](internal::SessionHolder& session,
-                   absl::optional<google::spanner::v1::TransactionSelector>& s,
+                   StatusOr<google::spanner::v1::TransactionSelector>& s,
                    std::int64_t) {
         EXPECT_FALSE(session);
         EXPECT_TRUE(s->has_begin());
@@ -116,7 +116,7 @@ TEST(Transaction, SessionAffinity) {
   internal::Visit(
       b,
       [&a_session](internal::SessionHolder& session,
-                   absl::optional<google::spanner::v1::TransactionSelector>& s,
+                   StatusOr<google::spanner::v1::TransactionSelector>& s,
                    std::int64_t) {
         EXPECT_EQ(a_session, session);  // session affinity
         EXPECT_TRUE(s->has_begin());    // but a new transaction

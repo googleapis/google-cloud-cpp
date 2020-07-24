@@ -108,7 +108,7 @@ RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t) {
         return ReadImpl(session, s, std::move(params));
       });
@@ -119,7 +119,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
   return internal::Visit(
       std::move(params.read_params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t) {
         return PartitionReadImpl(session, s, params.read_params,
                                  params.partition_options);
@@ -130,7 +130,7 @@ RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ExecuteQueryImpl(session, s, seqno, std::move(params));
       });
@@ -140,7 +140,7 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ExecuteDmlImpl(session, s, seqno, std::move(params));
       });
@@ -150,7 +150,7 @@ ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ProfileQueryImpl(session, s, seqno, std::move(params));
       });
@@ -160,7 +160,7 @@ StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDml(SqlParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ProfileDmlImpl(session, s, seqno, std::move(params));
       });
@@ -170,7 +170,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return AnalyzeSqlImpl(session, s, seqno, std::move(params));
       });
@@ -182,7 +182,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
   return internal::Visit(
       txn,
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ExecutePartitionedDmlImpl(session, s, seqno, std::move(params));
       });
@@ -193,7 +193,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t) {
         return PartitionQueryImpl(session, s, params);
       });
@@ -204,7 +204,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t seqno) {
         return ExecuteBatchDmlImpl(session, s, seqno, std::move(params));
       });
@@ -214,7 +214,7 @@ StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      absl::optional<spanner_proto::TransactionSelector>& s,
+                      StatusOr<spanner_proto::TransactionSelector>& s,
                       std::int64_t) {
         return this->CommitImpl(session, s, std::move(params));
       });
@@ -224,7 +224,7 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this](SessionHolder& session,
-             absl::optional<spanner_proto::TransactionSelector>& s,
+             StatusOr<spanner_proto::TransactionSelector>& s,
              std::int64_t) { return this->RollbackImpl(session, s); });
 }
 
@@ -303,7 +303,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
 
 RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, ReadParams params) {
+    StatusOr<spanner_proto::TransactionSelector>& s, ReadParams params) {
   // TODO(#4516): Handle !s.
 
   auto prepare_status = PrepareSession(session);
@@ -367,7 +367,7 @@ RowStream ConnectionImpl::ReadImpl(
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s,
+    StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams const& params, PartitionOptions const& partition_options) {
   // TODO(#4516): Handle !s.
 
@@ -422,7 +422,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
@@ -465,7 +465,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
 template <typename ResultType>
 ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   auto prepare_status = PrepareSession(session);
@@ -517,7 +517,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
 
 RowStream ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params) {
   return CommonQueryImpl<RowStream>(session, s, seqno, std::move(params),
                                     spanner_proto::ExecuteSqlRequest::NORMAL);
@@ -525,7 +525,7 @@ RowStream ConnectionImpl::ExecuteQueryImpl(
 
 ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params) {
   return CommonQueryImpl<ProfileQueryResult>(
       session, s, seqno, std::move(params),
@@ -535,7 +535,7 @@ ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   auto function_name = __func__;
@@ -574,7 +574,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
 
 StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params) {
   return CommonDmlImpl<DmlResult>(session, s, seqno, std::move(params),
                                   spanner_proto::ExecuteSqlRequest::NORMAL);
@@ -582,7 +582,7 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
 
 StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params) {
   return CommonDmlImpl<ProfileDmlResult>(
       session, s, seqno, std::move(params),
@@ -591,7 +591,7 @@ StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
 
 StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     SqlParams params) {
   auto result =
       CommonDmlImpl<ProfileDmlResult>(session, s, seqno, std::move(params),
@@ -604,7 +604,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s,
+    StatusOr<spanner_proto::TransactionSelector>& s,
     PartitionQueryParams const& params) {
   // TODO(#4516): Handle !s.
 
@@ -657,7 +657,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     ExecuteBatchDmlParams params) {
   // TODO(#4516): Handle !s.
 
@@ -704,7 +704,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
+    StatusOr<spanner_proto::TransactionSelector>& s, std::int64_t seqno,
     ExecutePartitionedDmlParams params) {
   // TODO(#4516): Handle !s.
 
@@ -765,12 +765,11 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
 
 StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s,
+    StatusOr<spanner_proto::TransactionSelector>& s,
     CommitParams params) {
-  if (!s) {
+  if (!s.ok()) {
     // Fail the commit if the transaction has been invalidated.
-    // TODO(#4516): Determine what status this should return.
-    return Status(StatusCode::kUnknown, "To be determined");
+    return s.status();
   }
 
   auto prepare_status = PrepareSession(session);
@@ -828,11 +827,9 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
 
 Status ConnectionImpl::RollbackImpl(
     SessionHolder& session,
-    absl::optional<spanner_proto::TransactionSelector>& s) {
-  if (!s) {
-    // There is nothing to rollback if the transaction has been invalidated,
-    // so we just succeed without making an RPC.
-    return Status();
+    StatusOr<spanner_proto::TransactionSelector>& s) {
+  if (!s.ok()) {
+    return s.status();
   }
   if (s->has_single_use()) {
     return Status(StatusCode::kInvalidArgument,
@@ -840,9 +837,11 @@ Status ConnectionImpl::RollbackImpl(
   }
   if (s->has_begin()) {
     // There is nothing to rollback if a transaction id has not yet been
-    // assigned, so we just succeed without making an RPC. But we also cause
-    // all future (non-rollback) operations on the transaction to fail.
-    s.reset();
+    // assigned, so we just succeed without making an RPC.
+    //
+    // TODO(#4516) to exactly match the backend behavior, we will need to do
+    // an explicit BeginTransaction followed by a Rollback here (can't be done
+    // in this PR due to a circular dependency between this PR and #4624).
     return Status();
   }
 

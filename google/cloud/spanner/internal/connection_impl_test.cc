@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -94,7 +95,7 @@ MATCHER_P(BatchCreateSessionsRequestHasDatabase, database,
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
   return internal::Visit(
       arg, [&](internal::SessionHolder& session,
-               absl::optional<google::spanner::v1::TransactionSelector>&,
+               StatusOr<google::spanner::v1::TransactionSelector>&,
                std::int64_t) {
         if (!session) {
           *result_listener << "has no session";
@@ -112,7 +113,7 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
 void SetTransactionId(Transaction& txn, std::string tid) {
   internal::Visit(
       txn, [&tid](SessionHolder&,
-                  absl::optional<spanner_proto::TransactionSelector>& selector,
+                  StatusOr<spanner_proto::TransactionSelector>& selector,
                   std::int64_t) {
         selector->set_id(std::move(tid));
         return 0;
@@ -120,12 +121,12 @@ void SetTransactionId(Transaction& txn, std::string tid) {
 }
 
 // Helper to mark the Transaction as invalid.
-void SetTransactionInvalid(Transaction& txn) {
+void SetTransactionInvalid(Transaction& txn, Status status) {
   internal::Visit(
-      txn, [](SessionHolder&,
-              absl::optional<spanner_proto::TransactionSelector>& selector,
-              std::int64_t) {
-        selector.reset();
+      txn, [&status](SessionHolder&,
+                     StatusOr<spanner_proto::TransactionSelector>& selector,
+                     std::int64_t) {
+        selector = std::move(status);
         return 0;
       });
 }
@@ -1529,13 +1530,14 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
 
   // Committing an invalidated transaction is a unilateral error.
   auto txn = MakeReadWriteTransaction();
-  SetTransactionInvalid(txn);
+  SetTransactionInvalid(
+      txn, Status(Status(StatusCode::kAlreadyExists, "constraint error")));
 
   auto commit = conn->Commit({txn});
   EXPECT_FALSE(commit.ok());
   auto status = commit.status();
-  EXPECT_EQ(StatusCode::kUnknown, commit.status().code());
-  EXPECT_THAT(commit.status().message(), HasSubstr("To be determined"));
+  EXPECT_EQ(StatusCode::kAlreadyExists, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("constraint error"));
 }
 
 TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
@@ -1758,7 +1760,7 @@ TEST(ConnectionImplTest, RollbackSuccess) {
   EXPECT_STATUS_OK(rollback);
 }
 
-TEST(ConnectionImplTest, RollbackSuccessInvalidatedTransaction) {
+TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
@@ -1769,10 +1771,12 @@ TEST(ConnectionImplTest, RollbackSuccessInvalidatedTransaction) {
 
   // Rolling back an invalidated transaction is a unilateral success.
   auto txn = MakeReadWriteTransaction();
-  SetTransactionInvalid(txn);
+  SetTransactionInvalid(
+      txn, Status(Status(StatusCode::kAlreadyExists, "constraint error")));
 
-  auto rollback = conn->Rollback({txn});
-  EXPECT_STATUS_OK(rollback);
+  auto rollback_status = conn->Rollback({txn});
+  EXPECT_EQ(StatusCode::kAlreadyExists, rollback_status.code());
+  EXPECT_THAT(rollback_status.message(), HasSubstr("constraint error"));
 }
 
 TEST(ConnectionImplTest, PartitionReadSuccess) {

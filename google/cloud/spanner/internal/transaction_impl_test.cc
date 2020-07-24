@@ -75,7 +75,7 @@ class Client {
                  std::vector<std::string> const& columns) {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
-                    absl::optional<TransactionSelector>& selector,
+                    StatusOr<TransactionSelector>& selector,
                     std::int64_t seqno) {
       return this->Read(session, selector, seqno, table, keys, columns);
     };
@@ -92,11 +92,12 @@ class Client {
 
  private:
   ResultSet Read(SessionHolder& session,
-                 absl::optional<TransactionSelector>& selector,
+                 StatusOr<TransactionSelector>& selector,
                  std::int64_t seqno, std::string const& table,
                  KeySet const& keys, std::vector<std::string> const& columns);
 
   Mode mode_;
+  const Status failed_txn_status_{StatusCode::kInternal, "Bad transaction"};
   Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
@@ -110,20 +111,20 @@ class Client {
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
 ResultSet Client::Read(SessionHolder& session,
-                       absl::optional<TransactionSelector>& selector,
+                       StatusOr<TransactionSelector>& selector,
                        std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   bool fail_with_throw = false;
   if (!selector) {
     std::unique_lock<std::mutex> lock(mu_);
-    switch (mode_) {
-      case Mode::kReadSucceeds:  // visits never valid
-        break;
-      case Mode::kReadFailsAndTxnRemainsBegin:  // visits always valid
-      case Mode::kReadFailsAndTxnInvalidated:
-        ++valid_visits_;
-        fail_with_throw = (valid_visits_ % 2 == 0);
-        break;
+    // we should only get here in "transaction invalidated" mode.
+    if (mode_ == Mode::kReadFailsAndTxnInvalidated) {
+      EXPECT_EQ(selector.status(), failed_txn_status_);
+      // visits always valid
+      ++valid_visits_;
+      fail_with_throw = (valid_visits_ % 2 == 0);
+    } else {
+      ADD_FAILURE() << "Unexpected mode_ " << static_cast<int>(mode_);
     }
   } else if (selector->has_begin()) {
     EXPECT_THAT(session, IsNull());
@@ -156,7 +157,7 @@ ResultSet Client::Read(SessionHolder& session,
         break;
       case Mode::kReadFailsAndTxnInvalidated:
         // `begin` -> `error`, calls now parallelized
-        selector = {};
+        selector = failed_txn_status_;
         break;
     }
   } else {
@@ -197,7 +198,7 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
   Transaction::ReadOnlyOptions opts(read_timestamp);
   Transaction txn(opts);
 
-  // Unused Read() parameeters.
+  // Unused Read() parameters.
   std::string const table{};
   KeySet const keys{};
   std::vector<std::string> const columns{};
