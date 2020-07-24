@@ -470,6 +470,10 @@ ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  if (!s.ok()) {
+    return MakeStatusOnlyResult<ResultType>(s.status());
+  }
+
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return MakeStatusOnlyResult<ResultType>(std::move(prepare_status));
@@ -537,6 +541,9 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  if (!s.ok()) {
+    return s.status();
+  }
   auto function_name = __func__;
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
