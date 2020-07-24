@@ -303,7 +303,9 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
 RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams params) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return MakeStatusOnlyResult<RowStream>(s.status());
+  }
 
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
@@ -367,7 +369,9 @@ RowStream ConnectionImpl::ReadImpl(
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     ReadParams const& params, PartitionOptions const& partition_options) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return s.status();
+  }
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
@@ -425,7 +429,9 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return s.status();
+  }
 
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
@@ -464,6 +470,10 @@ ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  if (!s.ok()) {
+    return MakeStatusOnlyResult<ResultType>(s.status());
+  }
+
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return MakeStatusOnlyResult<ResultType>(std::move(prepare_status));
@@ -531,6 +541,9 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  if (!s.ok()) {
+    return s.status();
+  }
   auto function_name = __func__;
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
@@ -595,7 +608,9 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     PartitionQueryParams const& params) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return s.status();
+  }
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
@@ -647,7 +662,9 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, ExecuteBatchDmlParams params) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return s.status();
+  }
 
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
@@ -693,7 +710,9 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, ExecutePartitionedDmlParams params) {
-  // TODO(#4516): Handle !s.
+  if (!s.ok()) {
+    return s.status();
+  }
 
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
