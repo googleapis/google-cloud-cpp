@@ -68,11 +68,14 @@ std::size_t DefaultConnectionPoolSize() {
 }  // namespace
 
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
+  return CreateDefaultClientOptions(ChannelOptions{});
+}
+
+StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
+    ChannelOptions const& channel_options) {
   auto creds = StorageDefaultCredentials();
-  if (!creds) {
-    return creds.status();
-  }
-  return ClientOptions(*creds);
+  if (!creds) return creds.status();
+  return ClientOptions(*creds, channel_options);
 }
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
