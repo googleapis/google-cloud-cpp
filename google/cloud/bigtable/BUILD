@@ -19,12 +19,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":bigtable_client.bzl", "bigtable_client_hdrs", "bigtable_client_srcs")
 
 cc_library(
     name = "bigtable_client",
     srcs = bigtable_client_srcs,
     hdrs = bigtable_client_hdrs,
+    copts = WERROR_COPTS,
     # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -44,6 +46,7 @@ cc_library(
     name = "bigtable_client_testing",
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":bigtable_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -59,6 +62,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":bigtable_client",
         ":bigtable_client_testing",
@@ -77,6 +81,7 @@ cc_test(
         "internal/readrowsparser_acceptance_tests.inc",
         "internal/readrowsparser_test.cc",
     ],
+    copts = WERROR_COPTS,
     deps = [
         ":bigtable_client",
         ":bigtable_client_testing",

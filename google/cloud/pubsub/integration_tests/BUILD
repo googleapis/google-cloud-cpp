@@ -16,6 +16,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
 load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
 
@@ -23,6 +24,7 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],
@@ -38,6 +40,7 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],

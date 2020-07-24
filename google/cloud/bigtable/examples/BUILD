@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":bigtable_examples_common.bzl", "bigtable_examples_common_hdrs", "bigtable_examples_common_srcs")
 
 cc_library(
     name = "bigtable_examples_common",
     srcs = bigtable_examples_common_srcs,
     hdrs = bigtable_examples_common_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -37,6 +39,7 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":bigtable_examples_common",
         "//google/cloud:google_cloud_cpp_common",
@@ -53,6 +56,7 @@ load(":bigtable_examples.bzl", "bigtable_examples")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],

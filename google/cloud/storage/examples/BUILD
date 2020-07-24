@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":storage_examples_common.bzl", "storage_examples_common_hdrs", "storage_examples_common_srcs")
 
 cc_library(
     name = "storage_examples_common",
     srcs = storage_examples_common_srcs,
     hdrs = storage_examples_common_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
@@ -34,6 +36,7 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":storage_examples_common",
         "//google/cloud:google_cloud_cpp_common",
@@ -49,6 +52,7 @@ load(":storage_examples.bzl", "storage_examples")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],

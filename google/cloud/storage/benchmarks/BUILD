@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":storage_benchmarks.bzl", "storage_benchmarks_hdrs", "storage_benchmarks_srcs")
 
 cc_library(
     name = "storage_benchmarks",
     srcs = storage_benchmarks_srcs,
     hdrs = storage_benchmarks_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -41,6 +43,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -67,6 +70,7 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

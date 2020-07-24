@@ -16,9 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
+
 cc_binary(
     name = "gcs2cbt",
     srcs = ["gcs2cbt.cc"],
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/storage:storage_client",

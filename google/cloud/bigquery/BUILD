@@ -14,12 +14,14 @@
 
 package(default_visibility = ["//visibility:public"])
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":bigquery_client.bzl", "bigquery_client_hdrs", "bigquery_client_srcs")
 
 cc_library(
     name = "bigquery_client",
     srcs = bigquery_client_srcs,
     hdrs = bigquery_client_hdrs,
+    copts = WERROR_COPTS,
     # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
@@ -35,6 +37,7 @@ cc_library(
     name = "bigquery_client_testing",
     srcs = bigquery_client_testing_srcs,
     hdrs = bigquery_client_testing_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":bigquery_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -48,6 +51,7 @@ load(":bigquery_client_unit_tests.bzl", "bigquery_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":bigquery_client",
         ":bigquery_client_testing",

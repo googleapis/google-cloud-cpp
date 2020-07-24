@@ -19,6 +19,8 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
+
 GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
     "/DWIN32_LEAN_AND_MEAN",
 ]
@@ -47,7 +49,7 @@ cc_library(
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
-    }),
+    }) + WERROR_COPTS,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
         ":nlohmann_json",
@@ -72,7 +74,7 @@ cc_library(
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
-    }),
+    }) + WERROR_COPTS,
     deps = [
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
@@ -97,7 +99,7 @@ cc_library(
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
-    }),
+    }) + WERROR_COPTS,
     deps = [
         ":nlohmann_json",
         ":storage_client",
@@ -119,7 +121,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
-    }),
+    }) + WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -146,7 +148,7 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
-    }),
+    }) + WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

@@ -16,6 +16,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(
     ":bigtable_client_integration_tests.bzl",
     "bigtable_client_integration_tests",
@@ -25,6 +26,7 @@ load(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],
@@ -41,6 +43,7 @@ load(
 cc_binary(
     name = "instance_admin_emulator",
     srcs = ["instance_admin_emulator.cc"],
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud/bigtable:bigtable_client",
     ],

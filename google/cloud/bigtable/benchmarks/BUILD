@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":bigtable_benchmark_common.bzl", "bigtable_benchmark_common_hdrs", "bigtable_benchmark_common_srcs")
 
 cc_library(
     name = "bigtable_benchmark_common",
     srcs = bigtable_benchmark_common_srcs,
     hdrs = bigtable_benchmark_common_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/bigtable:bigtable_client",
@@ -33,6 +35,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -52,6 +55,7 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

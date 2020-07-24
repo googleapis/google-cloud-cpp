@@ -16,6 +16,8 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
+
 # TODO(googleapis/google-cloud-cpp-common#171) - remove the backwards
 #     compatibility target.
 cc_library(
@@ -27,6 +29,7 @@ cc_library(
         "grpc_error_delegate.h",
         "version.h",
     ],
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",

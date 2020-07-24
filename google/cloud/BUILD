@@ -16,6 +16,8 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
+
 genrule(
     name = "generate_build_info",
     srcs = ["internal/build_info.cc.in"],
@@ -38,6 +40,7 @@ cc_library(
     name = "google_cloud_cpp_common",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/types:optional",
@@ -52,6 +55,7 @@ load(
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -70,6 +74,7 @@ load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchma
 [cc_test(
     name = benchmark.replace("/", "_").replace(".cc", ""),
     srcs = [benchmark],
+    copts = WERROR_COPTS,
     tags = ["benchmark"],
     deps = [
         ":google_cloud_cpp_common",
@@ -89,6 +94,7 @@ cc_library(
         for header in google_cloud_cpp_grpc_utils_hdrs
         if not "grpc_utils/" in header
     ],
+    copts = WERROR_COPTS,
     deps = [
         ":google_cloud_cpp_common",
         "@com_github_grpc_grpc//:grpc++",
@@ -104,6 +110,7 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":google_cloud_cpp_common",
         ":google_cloud_cpp_grpc_utils",

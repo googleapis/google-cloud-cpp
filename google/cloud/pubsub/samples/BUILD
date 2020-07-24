@@ -18,12 +18,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples_common_srcs")
 
 cc_library(
     name = "pubsub_samples_common",
     srcs = pubsub_samples_common_srcs,
     hdrs = pubsub_samples_common_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
@@ -37,6 +39,7 @@ load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":pubsub_samples_common",
         "//google/cloud:google_cloud_cpp_common",
@@ -53,6 +56,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],
@@ -67,6 +71,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":pubsub_samples_common",
         "//google/cloud:google_cloud_cpp_common",

@@ -12,20 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
-
-licenses(["notice"])  # Apache 2.0
-
-load("//bazel:werror_copts.bzl", "WERROR_COPTS")
-
-cc_test(
-    name = "common_install_test",
-    srcs = ["common_install_test.cc"],
-    copts = WERROR_COPTS,
-    deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "@com_google_googletest//:gtest_main",
+# These are the flags used to compile the library in our builds. They might
+# be too strict for most applications, but are helpful for us. We do not
+# require that applications use them, and are only enabled if Bazel if
+# invoked with `--define GOOGLE_CLOUD_CPP_ENABLE_WERROR=ON` on Windows.
+WERROR_COPTS = select({
+    "//bazel:msvc_werror": [
+        "/W3",
+        "/WX",
+        "/experimental:external",
+        "/external:W0",
+        "/external:anglebrackets",
     ],
-)
+    "//conditions:default": [
+    ],
+})

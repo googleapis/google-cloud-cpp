@@ -16,6 +16,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks_hdrs", "spanner_client_benchmarks_srcs")
 load(":spanner_client_benchmark_programs.bzl", "spanner_client_benchmark_programs")
 
@@ -23,6 +24,7 @@ cc_library(
     name = "spanner_client_benchmarks",
     srcs = spanner_client_benchmarks_srcs,
     hdrs = spanner_client_benchmarks_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client",
@@ -37,6 +39,7 @@ cc_library(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],

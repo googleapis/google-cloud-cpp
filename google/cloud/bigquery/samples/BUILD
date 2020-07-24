@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
+
 cc_binary(
     name = "read",
     srcs = [
         "read.cc",
     ],
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud/bigquery:bigquery_client",
     ],

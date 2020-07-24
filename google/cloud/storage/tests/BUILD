@@ -16,6 +16,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(
     ":storage_client_integration_tests.bzl",
     "storage_client_integration_tests",
@@ -25,6 +26,7 @@ load(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": [

@@ -19,12 +19,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":spanner_client.bzl", "spanner_client_hdrs", "spanner_client_srcs")
 
 cc_library(
     name = "spanner_client",
     srcs = spanner_client_srcs,
     hdrs = spanner_client_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -45,6 +47,7 @@ cc_library(
     name = "spanner_client_mocks",
     srcs = spanner_client_mocks_srcs,
     hdrs = spanner_client_mocks_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":spanner_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -59,6 +62,7 @@ cc_library(
     name = "spanner_client_testing",
     srcs = spanner_client_testing_srcs,
     hdrs = spanner_client_testing_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":spanner_client",
         ":spanner_client_mocks",
@@ -73,6 +77,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":spanner_client",
         ":spanner_client_mocks",
@@ -91,6 +96,7 @@ load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
 [cc_test(
     name = benchmark.replace("/", "_").replace(".cc", ""),
     srcs = [benchmark],
+    copts = WERROR_COPTS,
     tags = ["benchmark"],
     deps = [
         ":spanner_client",

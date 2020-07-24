@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":pubsub_client.bzl", "pubsub_client_hdrs", "pubsub_client_srcs")
 
 cc_library(
     name = "pubsub_client",
     srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -35,6 +37,7 @@ cc_library(
     name = "pubsub_client_testing",
     srcs = pubsub_client_testing_srcs,
     hdrs = pubsub_client_testing_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":pubsub_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -49,6 +52,7 @@ cc_library(
     name = "pubsub_client_mocks",
     srcs = pubsub_client_mocks_srcs,
     hdrs = pubsub_client_mocks_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         ":pubsub_client",
         "//google/cloud:google_cloud_cpp_common",
@@ -62,6 +66,7 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":pubsub_client",
         ":pubsub_client_mocks",

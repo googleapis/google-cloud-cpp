@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":firestore_client.bzl", "firestore_client_hdrs", "firestore_client_srcs")
 
 cc_library(
     name = "firestore_client",
     srcs = firestore_client_srcs,
     hdrs = firestore_client_hdrs,
+    copts = WERROR_COPTS,
     deps = [],
 )
 
@@ -30,6 +32,7 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

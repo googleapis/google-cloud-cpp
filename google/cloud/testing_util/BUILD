@@ -16,12 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
 cc_library(
     name = "google_cloud_cpp_testing",
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_absl//absl/debugging:failure_signal_handler",
@@ -35,6 +37,7 @@ load(":google_cloud_cpp_testing_unit_tests.bzl", "google_cloud_cpp_testing_unit_
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":google_cloud_cpp_testing",
         "//google/cloud:google_cloud_cpp_common",
@@ -48,6 +51,7 @@ cc_library(
     name = "google_cloud_cpp_testing_grpc",
     srcs = google_cloud_cpp_testing_grpc_srcs,
     hdrs = google_cloud_cpp_testing_grpc_hdrs,
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest_main",
@@ -60,6 +64,7 @@ load(":google_cloud_cpp_testing_grpc_unit_tests.bzl", "google_cloud_cpp_testing_
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         ":google_cloud_cpp_testing_grpc",
         "//google/cloud:google_cloud_cpp_common",

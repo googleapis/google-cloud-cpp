@@ -15,3 +15,14 @@
 licenses(["notice"])  # Apache v2
 
 package(default_visibility = ["//:__subpackages__"])
+
+# Determine if the code should be compiled with -Wall -Werror
+config_setting(
+    name = "msvc_werror",
+    define_values = {
+        "GOOGLE_CLOUD_CPP_ENABLE_WERROR": "ON",
+    },
+    values = {
+        "cpu": "x64_windows",
+    }
+)

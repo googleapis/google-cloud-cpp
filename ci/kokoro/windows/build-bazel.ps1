@@ -118,12 +118,13 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
 
 $test_flags = @("--test_output=errors",
                 "--verbose_failures=true",
-                "--keep_going")
-$build_flags = @("--keep_going")
+                "--keep_going",
+                "--define", "GOOGLE_CLOUD_CPP_ENABLE_WERROR=ON")
+$build_flags = @("--keep_going", "--define", "GOOGLE_CLOUD_CPP_ENABLE_WERROR=ON")
 
 if (${env:BUILD_NAME} -eq "bazel-release") {
     $test_flags+=("-c", "opt")
-    $build_flags+=("-c", "opt")
+    $build_flags+=("-c", "opt", "--define")
 }
 
 $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"

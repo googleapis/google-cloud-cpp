@@ -18,6 +18,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("//bazel:werror_copts.bzl", "WERROR_COPTS")
 load(":spanner_client_integration_samples.bzl", "spanner_client_integration_samples")
 load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 
@@ -25,6 +26,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = WERROR_COPTS,
     tags = [
         "integration-test",
     ],
@@ -40,6 +42,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = WERROR_COPTS,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client",

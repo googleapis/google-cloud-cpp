@@ -919,7 +919,7 @@ google::storage::v1::Bucket::Cors GrpcClient::ToProto(CorsEntry const& rhs) {
     result.add_response_header(v);
   }
   if (rhs.max_age_seconds.has_value()) {
-    result.set_max_age_seconds(*rhs.max_age_seconds);
+    result.set_max_age_seconds(static_cast<std::int32_t>(*rhs.max_age_seconds));
   }
   return result;
 }
