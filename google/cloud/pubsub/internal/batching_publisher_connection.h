@@ -31,11 +31,11 @@ class BatchingPublisherConnection
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::BatchingConfig batching_config,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      pubsub::ConnectionOptions const& connection_options) {
+      google::cloud::CompletionQueue cq) {
     return std::shared_ptr<BatchingPublisherConnection>(
         new BatchingPublisherConnection(std::move(topic),
                                         std::move(batching_config),
-                                        std::move(stub), connection_options));
+                                        std::move(stub), std::move(cq)));
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
@@ -44,13 +44,12 @@ class BatchingPublisherConnection
   explicit BatchingPublisherConnection(
       pubsub::Topic topic, pubsub::BatchingConfig batching_config,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      pubsub::ConnectionOptions const& connection_options)
+      google::cloud::CompletionQueue cq)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         batching_config_(std::move(batching_config)),
         stub_(std::move(stub)),
-        background_(connection_options.background_threads_factory()()),
-        cq_(background_->cq()) {}
+        cq_(std::move(cq)) {}
 
   void OnTimer();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
@@ -60,7 +59,6 @@ class BatchingPublisherConnection
   std::string topic_full_name_;
   pubsub::BatchingConfig batching_config_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
-  std::unique_ptr<BackgroundThreads> background_;
   google::cloud::CompletionQueue cq_;
 
   std::mutex mu_;

@@ -21,6 +21,24 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+namespace {
+class ContainingPublisherConnection : public PublisherConnection {
+ public:
+  ContainingPublisherConnection(std::shared_ptr<BackgroundThreads> background,
+                                std::shared_ptr<PublisherConnection> child)
+      : background_(std::move(background)), child_(std::move(child)) {}
+
+  ~ContainingPublisherConnection() override = default;
+
+  future<StatusOr<std::string>> Publish(PublishParams p) override {
+    return child_->Publish(std::move(p));
+  }
+
+ private:
+  std::shared_ptr<BackgroundThreads> background_;
+  std::shared_ptr<PublisherConnection> child_;
+};
+}  // namespace
 
 PublisherConnection::~PublisherConnection() = default;
 
@@ -29,9 +47,12 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
     ConnectionOptions const& connection_options) {
   auto stub = pubsub_internal::CreateDefaultPublisherStub(connection_options,
                                                           /*channel_id=*/0);
-  return pubsub_internal::MakePublisherConnection(
-      std::move(topic), std::move(options), std::move(stub),
-      connection_options);
+  auto background = connection_options.background_threads_factory()();
+  auto cq = background->cq();
+  return std::make_shared<ContainingPublisherConnection>(
+      std::move(background), pubsub_internal::MakePublisherConnection(
+                                 std::move(topic), std::move(options),
+                                 std::move(stub), std::move(cq)));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -42,11 +63,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
-    std::shared_ptr<PublisherStub> stub,
-    pubsub::ConnectionOptions const& connection_options) {
-  return BatchingPublisherConnection::Create(
-      std::move(topic), options.batching_config(), std::move(stub),
-      connection_options);
+    std::shared_ptr<PublisherStub> stub, google::cloud::CompletionQueue cq) {
+  return BatchingPublisherConnection::Create(std::move(topic),
+                                             options.batching_config(),
+                                             std::move(stub), std::move(cq));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
