@@ -146,6 +146,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # positives when run on headers. For more details, see issue #4230.
   git diff --diff-filter=d --name-only "${TARGET_BRANCH}" |
     grep -E "(${HEADER_FILTER_REGEX})|(${SOURCE_FILTER_REGEX})" |
+    grep -v google/cloud/bigtable/examples/opencensus |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
       -checks="-misc-unused-using-decls"
 fi
