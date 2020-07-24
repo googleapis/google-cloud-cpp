@@ -24,5 +24,5 @@ config_setting(
     },
     values = {
         "cpu": "x64_windows",
-    }
+    },
 )
