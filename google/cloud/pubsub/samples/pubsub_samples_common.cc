@@ -20,6 +20,54 @@ namespace cloud {
 namespace pubsub {
 namespace examples {
 
+google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    PublisherCommand const& command) {
+  auto adapter = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 2;
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != arg_names.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name << " <project-id> <topic-id>";
+      for (auto const& a : arg_names) {
+        os << " <" << a << ">";
+      }
+      throw google::cloud::testing_util::Usage{std::move(os).str()};
+    }
+    Topic const topic(argv.at(0), argv.at(1));
+    argv.erase(argv.begin(), argv.begin() + 2);
+    google::cloud::pubsub::Publisher client(
+        google::cloud::pubsub::MakePublisherConnection(topic, {}));
+    command(std::move(client), std::move(argv));
+  };
+  return google::cloud::testing_util::Commands::value_type{name,
+                                                           std::move(adapter)};
+}
+
+google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    SubscriberCommand const& command) {
+  auto adapter = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 2;
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != arg_names.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name << " <project-id> <subscription-id>";
+      for (auto const& a : arg_names) {
+        os << " <" << a << ">";
+      }
+      throw google::cloud::testing_util::Usage{std::move(os).str()};
+    }
+    google::cloud::pubsub::Subscriber client(
+        google::cloud::pubsub::MakeSubscriberConnection());
+    pubsub::Subscription subscription(argv.at(0), argv.at(1));
+    argv.erase(argv.begin(), argv.begin() + 2);
+    command(std::move(client), std::move(subscription), std::move(argv));
+  };
+  return google::cloud::testing_util::Commands::value_type{name,
+                                                           std::move(adapter)};
+}
+
 google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     TopicAdminCommand const& command) {

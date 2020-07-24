@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 
+#include "google/cloud/pubsub/publisher.h"
+#include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -24,16 +26,30 @@ namespace cloud {
 namespace pubsub {
 namespace examples {
 
-using TopicAdminCommand = std::function<void(
-    google::cloud::pubsub::TopicAdminClient, std::vector<std::string> const&)>;
+using PublisherCommand =
+    std::function<void(pubsub::Publisher, std::vector<std::string> const&)>;
+
+google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    PublisherCommand const& command);
+
+using SubscriberCommand = std::function<void(
+    pubsub::Subscriber, pubsub::Subscription const& subscription,
+    std::vector<std::string> const&)>;
+
+google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    SubscriberCommand const& command);
+
+using TopicAdminCommand = std::function<void(pubsub::TopicAdminClient,
+                                             std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     TopicAdminCommand const& command);
 
-using SubscriptionAdminCommand =
-    std::function<void(google::cloud::pubsub::SubscriptionAdminClient,
-                       std::vector<std::string> const&)>;
+using SubscriptionAdminCommand = std::function<void(
+    pubsub::SubscriptionAdminClient, std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type
 CreateSubscriptionAdminCommand(std::string const& name,
