@@ -116,10 +116,19 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     }
 }
 
+$warning_flags = @(
+    "--per_file_copt=^//google/cloud@-W3",
+    "--per_file_copt=^//google/cloud@-WX",
+    "--per_file_copt=^//google/cloud@-experimental:external",
+    "--per_file_copt=^//google/cloud@-external:W0",
+    "--per_file_copt=^//google/cloud@-external:anglebrackets"
+)
 $test_flags = @("--test_output=errors",
                 "--verbose_failures=true",
                 "--keep_going")
+$test_flags += $warning_flags
 $build_flags = @("--keep_going")
+$build_flags += $warning_flags
 
 if (${env:BUILD_NAME} -eq "bazel-release") {
     $test_flags+=("-c", "opt")
