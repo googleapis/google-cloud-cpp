@@ -28,12 +28,14 @@ namespace {
 absl::optional<Timestamp> GetReadTimestamp(
     std::unique_ptr<internal::ResultSourceInterface> const& source) {
   auto metadata = source->Metadata();
+  absl::optional<Timestamp> timestamp;
   if (metadata.has_value() && metadata->has_transaction() &&
       metadata->transaction().has_read_timestamp()) {
-    return internal::TimestampFromProto(
-        metadata->transaction().read_timestamp());
+    auto ts =
+        internal::TimestampFromProto(metadata->transaction().read_timestamp());
+    if (ts) timestamp = *std::move(ts);
   }
-  return absl::optional<Timestamp>();
+  return timestamp;
 }
 
 std::int64_t GetRowsModified(
