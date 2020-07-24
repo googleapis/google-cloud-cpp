@@ -128,7 +128,7 @@ $test_flags = @("--test_output=errors",
                 "--keep_going")
 $test_flags += $warning_flags
 $build_flags = @("--keep_going")
-$build_flags += $build_flags
+$build_flags += $warning_flags
 
 if (${env:BUILD_NAME} -eq "bazel-release") {
     $test_flags+=("-c", "opt")
