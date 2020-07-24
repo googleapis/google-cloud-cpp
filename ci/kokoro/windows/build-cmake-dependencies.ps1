@@ -58,7 +58,7 @@ if ($RunningCI -and (Test-Path "${vcpkg_dir}")) {
 }
 if (-not (Test-Path ${vcpkg_dir})) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
-    git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+    git clone --quiet --depth 10 --branch 2020.06 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red `
             "vcpkg git setup failed with exit code $LastExitCode"
