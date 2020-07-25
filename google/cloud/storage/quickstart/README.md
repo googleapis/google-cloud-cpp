@@ -46,7 +46,7 @@ https://cloud.google.com/docs/authentication/production
    ```bash
    bazel run :quickstart -- [GCP PROJECT] [BUCKET NAME]
    ```
-   
+
    Please use the plain bucket name. Do **not** include any `gs://` prefix, and
    keep in mind the [bucket naming restrictions][bucket-naming-link]. For
    example, bucket names cannot include forward slashes (`/`) or uppercase
@@ -84,7 +84,7 @@ https://cloud.google.com/docs/authentication/production
    ```bash
    .build/quickstart [GCP PROJECT] [BUCKET NAME]
    ```
-   
+
    Please use the plain bucket name. Do **not** include any `gs://` prefix, and
    keep in mind the [bucket naming restrictions][bucket-naming-link]. For
    example, bucket names cannot include forward slashes (`/`) or uppercase
