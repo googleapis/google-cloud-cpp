@@ -394,6 +394,14 @@ TEST_P(CurlClientTest, CreateResumableSession) {
   CheckStatus(actual);
 }
 
+TEST_P(CurlClientTest, DeleteResumableUpload) {
+  auto actual = client_
+                    ->DeleteResumableUpload(DeleteResumableUploadRequest(
+                        "test-bucket", "test-object", "test-upload-id"))
+                    .status();
+  CheckStatus(actual);
+}
+
 TEST_P(CurlClientTest, ListDefaultObjectAcl) {
   auto actual =
       client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"))

@@ -335,6 +335,11 @@ GrpcClient::RestoreResumableSession(std::string const& upload_id) {
   return std::move(response).status();
 }
 
+StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
+    DeleteResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
+}
+
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
     ListBucketAclRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
