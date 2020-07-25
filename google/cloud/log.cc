@@ -14,10 +14,8 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include "absl/time/time.h"
 #include <array>
-#include <cstdint>
-#include <ctime>
-#include <iomanip>
 
 namespace google {
 namespace cloud {
@@ -32,35 +30,14 @@ static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
 
 namespace {
 struct Timestamp {
-  explicit Timestamp(std::chrono::system_clock::time_point const& tp) {
-    auto const tt = std::chrono::system_clock::to_time_t(tp);
-#if defined(_WIN32)
-    gmtime_s(&tm, &tt);
-#else
-    gmtime_r(&tt, &tm);
-#endif
-    auto const ss = tp - std::chrono::system_clock::from_time_t(tt);
-    nanos = static_cast<std::int32_t>(
-        std::chrono::duration_cast<std::chrono::nanoseconds>(ss).count());
-  }
-  std::tm tm;
-  std::int32_t nanos;
+  explicit Timestamp(std::chrono::system_clock::time_point const& tp)
+      : t(absl::FromChrono(tp)) {}
+  absl::Time t;
 };
 
 std::ostream& operator<<(std::ostream& os, Timestamp const& ts) {
-  auto const prev = os.fill(' ');
-  auto constexpr kTmYearOffset = 1900;
-  os << std::setw(4) << ts.tm.tm_year + kTmYearOffset;
-  os.fill('0');
-  os << '-' << std::setw(2) << ts.tm.tm_mon + 1;
-  os << '-' << std::setw(2) << ts.tm.tm_mday;
-  os << 'T' << std::setw(2) << ts.tm.tm_hour;
-  os << ':' << std::setw(2) << ts.tm.tm_min;
-  os << ':' << std::setw(2) << ts.tm.tm_sec;
-  // NOLINTNEXTLINE(readability-magic-numbers)
-  os << '.' << std::setw(9) << ts.nanos << 'Z';
-  os.fill(prev);
-  return os;
+  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E9SZ";
+  return os << absl::FormatTime(kFormat, ts.t, absl::UTCTimeZone());
 }
 
 auto constexpr kSeverityCount = static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
