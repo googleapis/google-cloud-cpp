@@ -266,7 +266,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  *     for a more detailed overview of the requirements for generators.
  */
 template <typename Generator>
-static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
+EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
   constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
 
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -279,6 +279,7 @@ static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
                   [&uni, &gen] { return static_cast<char>(uni(gen)); });
   return EncryptionDataFromBinaryKey(key);
 }
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
