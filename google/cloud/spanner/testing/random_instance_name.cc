@@ -15,12 +15,12 @@
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <chrono>
-#include <ctime>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * Generate a random instance name for InstanceAdminClient CRUD tests.
  */
@@ -29,9 +29,8 @@ std::string RandomInstanceName(
   // An instance ID must be between 2 and 64 characters, fitting the regular
   // expression `[a-z][-a-z0-9]*[a-z0-9]`
   std::size_t const max_size = 64;
-  auto tm = google::cloud::internal::AsUtcTm(std::chrono::system_clock::now());
-  std::string date = "1970-01-01";
-  std::strftime(&date[0], date.size() + 1, "%Y-%m-%d", &tm);
+  auto now = std::chrono::system_clock::now();
+  std::string date = google::cloud::internal::FormatUtcDate(now);
   std::string prefix = "temporary-instance-" + date + "-";
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +

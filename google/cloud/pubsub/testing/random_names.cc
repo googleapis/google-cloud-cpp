@@ -15,7 +15,6 @@
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <chrono>
-#include <ctime>
 
 namespace google {
 namespace cloud {
@@ -25,9 +24,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
                           std::string const& prefix) {
   auto constexpr kMaxRandomTopicSuffixLength = 32;
-  auto tm = google::cloud::internal::AsUtcTm(std::chrono::system_clock::now());
-  std::string date = "1970-01-01";
-  std::strftime(&date[0], date.size() + 1, "%Y-%m-%d", &tm);
+  auto now = std::chrono::system_clock::now();
+  std::string date = google::cloud::internal::FormatUtcDate(now);
   auto suffix = google::cloud::internal::Sample(
       generator, kMaxRandomTopicSuffixLength, "abcdefghijklmnopqrstuvwxyz");
   auto p = prefix.empty() ? "cloud-cpp" : prefix;

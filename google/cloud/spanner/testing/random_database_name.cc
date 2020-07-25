@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/format_time_point.h"
-#include <ctime>
 
 namespace google {
 namespace cloud {
@@ -26,9 +25,7 @@ std::string RandomDatabasePrefixRegex() {
 }
 
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
-  auto tm = google::cloud::internal::AsUtcTm(tp);
-  std::string date = "1970-01-01";
-  std::strftime(&date[0], date.size() + 1, "%Y-%m-%d", &tm);
+  std::string date = google::cloud::internal::FormatUtcDate(tp);
   return "db-" + date + "-";
 }
 

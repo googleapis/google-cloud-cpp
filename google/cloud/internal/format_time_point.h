@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
 /**
  * Formats @p tp as a RFC-3339 timestamp.
  *
@@ -41,15 +42,15 @@ namespace internal {
  */
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp);
 
+/// Format a time point as YYYY-MM-DD.
+std::string FormatUtcDate(std::chrono::system_clock::time_point tp);
+
 /// Format a time point as required by V4 signed urls.
 std::string FormatV4SignedUrlTimestamp(
     std::chrono::system_clock::time_point tp);
 
 /// Format a time point to use in the scope of a V4 signed url.
 std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
-
-/// Return the `tm` struct for @p tp using UTC as the timezone.
-std::tm AsUtcTm(std::chrono::system_clock::time_point tp);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
