@@ -94,7 +94,6 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   void StartServer();
   void SetUp() override;
   void TearDown() override;
-  void ResetChannel();
 
   static char const kProjectId[];
   static char const kInstanceId[];
