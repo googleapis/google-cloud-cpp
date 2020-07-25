@@ -18,25 +18,18 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <algorithm>
 #include <cctype>
-#include <ctime>
 #include <iostream>
 #include <sstream>
 
 /// Supporting types and functions to implement `BenchmarkSetup`
 namespace {
-#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 std::string FormattedStartTime() {
-  auto start = std::chrono::system_clock::now();
-  std::time_t start_c = std::chrono::system_clock::to_time_t(start);
-  std::string formatted("YYYY-MM-DDTHH:SS:MMZ");
-  auto s = std::strftime(&formatted[0], formatted.size() + 1, "%FT%TZ",
-                         std::gmtime(&start_c));
-  formatted[s] = '\0';
-  return formatted;
+  return absl::FormatTime("%FT%TZ", absl::Now(), absl::UTCTimeZone());
 }
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::string FormattedAnnotations() {
   std::string notes = google::cloud::bigtable::version_string() + ";" +
