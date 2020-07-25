@@ -20,12 +20,14 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
-  return absl::ToTM(absl::FromChrono(tp), absl::UTCTimeZone());
-}
-
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
   auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
+  auto const t = absl::FromChrono(tp);
+  return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
+}
+
+std::string FormatUtcDate(std::chrono::system_clock::time_point tp) {
+  auto constexpr kFormat = "%E4Y-%m-%d";
   auto const t = absl::FromChrono(tp);
   return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
 }
