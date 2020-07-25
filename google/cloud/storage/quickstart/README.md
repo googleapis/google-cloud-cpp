@@ -47,6 +47,13 @@ https://cloud.google.com/docs/authentication/production
    bazel run :quickstart -- [GCP PROJECT] [BUCKET NAME]
    ```
 
+   Please use the plain bucket name. Do **not** include any `gs://` prefix, and
+   keep in mind the [bucket naming restrictions][bucket-naming-link]. For
+   example, bucket names cannot include forward slashes (`/`) or uppercase
+   letters.
+
+[bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
+
 ## Using with CMake
 
 1. Install CMake. The package managers for most Linux distributions include a
@@ -77,6 +84,11 @@ https://cloud.google.com/docs/authentication/production
    ```bash
    .build/quickstart [GCP PROJECT] [BUCKET NAME]
    ```
+
+   Please use the plain bucket name. Do **not** include any `gs://` prefix, and
+   keep in mind the [bucket naming restrictions][bucket-naming-link]. For
+   example, bucket names cannot include forward slashes (`/`) or uppercase
+   letters.
 
 ## Platform Specific Notes
 
