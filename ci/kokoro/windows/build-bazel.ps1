@@ -32,6 +32,8 @@ if ($missing.count -ge 1) {
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
+# We do this in C: (the boot disk) because T: (the tmpfs / build disk)
+# because T: is too small for the Bazel directory.
 $bazel_root="C:\b"
 if (-not (Test-Path $bazel_root)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
@@ -70,9 +72,13 @@ bazel $common_flags shutdown
 $download_dir = "T:\tmp"
 if (Test-Path env:TEMP) {
     $download_dir="${env:TEMP}"
-} elseif (-not $download_dir) {
+} elseif (-not (Test-Path "${download_dir}")) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create download directory ${download_dir}"
     Make-Item -Type "Directory" ${download_dir}
 }
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Using ${download_dir} as download directory"
+
+# Download and extract the cache tarball
 if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     gcloud auth activate-service-account --key-file `
         "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
@@ -113,24 +119,31 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
                 "Continue building without a cache"
         }
+        # Remove the tarball after extraction, this was about 25GiB on 2020-07, and consumes
+        # too much space in the boot disk.
+        Remove-Item -ErrorAction SilentlyContinue "${download_dir}/${CACHE_BASENAME}.tar"
+        Remove-Item -ErrorAction SilentlyContinue "${download_dir}/${CACHE_BASENAME}.7z"
     }
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG C:"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
-Get-ChildItem "C:\"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG T:"
-Get-ChildItem "T:\"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
-Get-ChildItem "${download_dir}"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir"
 Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
 Get-ChildItem "${bazel_root}"
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
 Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
 Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
 $ErrorActionPreference = "Stop"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
 
@@ -252,7 +265,29 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel 
 bazel $common_flags shutdown
 bazel shutdown
 
-if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-ChildItem "${bazel_root}"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
+
+# DEBUG DEBUG if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
+if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
@@ -285,7 +320,7 @@ if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
             "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "uploading Bazel cache."
-        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.7z" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z"
+        # DEBUG DEBUG gsutil -q cp "${download_dir}\${CACHE_BASENAME}.7z" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z"
         if ($LastExitCode) {
             # Just report these errors and continue, caching failures should
             # not break the build.
@@ -296,5 +331,27 @@ if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
         }
     }
 }
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-ChildItem "${bazel_root}"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
+
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
