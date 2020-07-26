@@ -99,6 +99,18 @@ if ($RunningCI -and $IsPR -and $HasBuildCache) {
     }
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bootstrap vcpkg."
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LastExitCode) {
@@ -133,9 +145,22 @@ foreach ($pkg in $packages) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 .\vcpkg.exe list
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
+
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
-if ($RunningCI -and $IsCI -and $HasBuildCache) {
+# DEBUG DEBUG if ($RunningCI -and $IsCI -and $HasBuildCache) {
+if ($True) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "zip vcpkg cache for upload."
     7z a vcpkg-installed.zip installed\ -bsp0
@@ -146,9 +171,9 @@ if ($RunningCI -and $IsCI -and $HasBuildCache) {
     } else {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "upload zip with vcpkg cache."
-        gcloud auth activate-service-account `
-            --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-        gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
+        # DEBUG DEBUG gcloud auth activate-service-account `
+        # DEBUG DEBUG    --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+        # DEBUG DEBUG gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
         if ($LastExitCode) {
             # Ignore errors, caching failures should not break the build.
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
@@ -160,3 +185,15 @@ if ($RunningCI -and $IsCI -and $HasBuildCache) {
       "vcpkg not updated IsCI = $IsCI, IsPR = $IsPR, " `
       "HasBuildCache = $HasBuildCache."
 }
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
+$ErrorActionPreference = "SilentlyContinue"
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
+Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
