@@ -99,18 +99,6 @@ if ($RunningCI -and $IsPR -and $HasBuildCache) {
     }
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
-$ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
-
-$ErrorActionPreference = "Stop"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
-
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bootstrap vcpkg."
 powershell -exec bypass scripts\bootstrap.ps1
 if ($LastExitCode) {
@@ -157,16 +145,6 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and spa
             @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
             @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
-$ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
-
-$ErrorActionPreference = "Stop"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
-
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
 # DEBUG DEBUG if ($RunningCI -and $IsCI -and $HasBuildCache) {
@@ -201,13 +179,3 @@ Get-CimInstance -Class CIM_LogicalDisk | `
     Select-Object -Property DeviceID, DriveType, VolumeName, `
         @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
         @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
-$ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
-
-$ErrorActionPreference = "Stop"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"

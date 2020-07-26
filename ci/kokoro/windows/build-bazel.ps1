@@ -136,16 +136,19 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
-Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
 Get-ChildItem "${bazel_root}"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
-Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 $ErrorActionPreference = "Stop"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
@@ -278,16 +281,19 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
-Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
 Get-ChildItem "${bazel_root}"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
-Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 $ErrorActionPreference = "Stop"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
@@ -348,16 +354,19 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
-Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
 Get-ChildItem "${bazel_root}"
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
-Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length  | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 $ErrorActionPreference = "Stop"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
