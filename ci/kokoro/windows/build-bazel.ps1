@@ -116,6 +116,24 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     }
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG C:"
+$ErrorActionPreference = "SilentlyContinue"
+Get-ChildItem "C:\"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG T:"
+Get-ChildItem "T:\"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
+Get-ChildItem "${download_dir}"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir"
+Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-ChildItem "${bazel_root}"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Bazel Root ${bazel_root}"
+Get-Item "${bazel_root}"   | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+$ErrorActionPreference = "Stop"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
+
 $warning_flags = @(
     "--per_file_copt=^//google/cloud@-W3",
     "--per_file_copt=^//google/cloud@-WX",
