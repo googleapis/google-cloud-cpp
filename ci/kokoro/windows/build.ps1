@@ -105,6 +105,12 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $BuildScript = "build-quickstart-cmake.ps1"
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 $ScriptLocation = Split-Path $PSCommandPath -Parent
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building dependencies for $BuildName build"
@@ -114,11 +120,25 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk -ErrorAction SilentlyContinue | `
+    Select-Object -ErrorAction SilentlyContinue `
+        -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running build script for $BuildName build"
 powershell -exec bypass "${ScriptLocation}/${BuildScript}"
 # Save the build exit code, we want to delete the artifacts
 # even if the build fails.
 $BuildExitCode = $LastExitCode
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk -ErrorAction SilentlyContinue | `
+    Select-Object -ErrorAction SilentlyContinue `
+        -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 # Remove most things from the artifacts directory. Kokoro copies these files
 # *very* slowly on Windows, and then ignores most of them :shrug:

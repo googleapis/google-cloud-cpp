@@ -126,11 +126,14 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     }
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
 Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
@@ -265,11 +268,14 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel 
 bazel $common_flags shutdown
 bazel shutdown
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
 Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
@@ -332,11 +338,14 @@ if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
     }
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG Download Dir ${download_dir}"
 Get-Item "${download_dir}" | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum

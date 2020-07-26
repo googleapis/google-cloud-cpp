@@ -145,11 +145,21 @@ foreach ($pkg in $packages) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 .\vcpkg.exe list
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup vcpkg buildtrees"
+Get-ChildItem -Recurse -File `
+        -ErrorAction SilentlyContinue `
+        -Path "buildtrees" | `
+    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+    Get-CimInstance -Class CIM_LogicalDisk | `
+        Select-Object -Property DeviceID, DriveType, VolumeName, `
+            @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+            @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
 Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
@@ -186,14 +196,18 @@ if ($True) {
       "HasBuildCache = $HasBuildCache."
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
+
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG"
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG DISK SPACE"
-Get-CimInstance -Class CIM_LogicalDisk | Select-Object -Property DeviceID, DriveType, VolumeName, @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG DEBUG DEBUG cwd"
-Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, Sum
+Get-Item "." | Get-ChildItem -Recurse | Measure-Object -Sum Length | Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 $ErrorActionPreference = "Stop"
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DEBUG END"
