@@ -36,7 +36,8 @@ TEST(DefaultAckHandlerTest, Ack) {
         return make_ready_future(Status{});
       });
 
-  DefaultAckHandlerImpl handler(mock, "test-subscription", "test-ack-id");
+  google::cloud::CompletionQueue cq;
+  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id");
   EXPECT_EQ("test-ack-id", handler.ack_id());
   ASSERT_NO_FATAL_FAILURE(handler.ack());
 }
@@ -55,7 +56,8 @@ TEST(DefaultAckHandlerTest, Nack) {
             return make_ready_future(Status{});
           });
 
-  DefaultAckHandlerImpl handler(mock, "test-subscription", "test-ack-id");
+  google::cloud::CompletionQueue cq;
+  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id");
   EXPECT_EQ("test-ack-id", handler.ack_id());
   ASSERT_NO_FATAL_FAILURE(handler.nack());
 }

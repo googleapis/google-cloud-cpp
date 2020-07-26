@@ -94,7 +94,6 @@ class SubscriptionSession
   }
 
   void OnPull(StatusOr<google::pubsub::v1::PullResponse> r) {
-    auto self = shared_from_this();
     if (!r) {
       result_.set_value(std::move(r).status());
       return;
@@ -106,6 +105,7 @@ class SubscriptionSession
               std::back_inserter(messages_));
     lk.unlock();
 
+    auto self = shared_from_this();
     executor_.RunAsync([self] { self->HandleQueue(); });
   }
 
@@ -122,7 +122,8 @@ class SubscriptionSession
     lk.unlock();
 
     auto handler_impl = absl::make_unique<DefaultAckHandlerImpl>(
-        stub_, params_.full_subscription_name, std::move(*m.mutable_ack_id()));
+        executor_, stub_, params_.full_subscription_name,
+        std::move(*m.mutable_ack_id()));
     params_.callback(FromProto(std::move(*m.mutable_message())),
                      pubsub::AckHandler(std::move(handler_impl)));
 

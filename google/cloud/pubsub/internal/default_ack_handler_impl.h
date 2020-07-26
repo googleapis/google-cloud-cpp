@@ -26,9 +26,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class DefaultAckHandlerImpl : public pubsub::AckHandler::Impl {
  public:
-  DefaultAckHandlerImpl(std::shared_ptr<pubsub_internal::SubscriberStub> s,
+  DefaultAckHandlerImpl(google::cloud::CompletionQueue cq,
+                        std::shared_ptr<pubsub_internal::SubscriberStub> s,
                         std::string subscription, std::string ack_id)
-      : stub_(std::move(s)),
+      : cq_(std::move(cq)),
+        stub_(std::move(s)),
         subscription_(std::move(subscription)),
         ack_id_(std::move(ack_id)) {}
 
