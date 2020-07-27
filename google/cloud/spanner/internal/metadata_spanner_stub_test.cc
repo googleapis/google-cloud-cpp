@@ -99,10 +99,7 @@ TEST_F(MetadataSpannerStubTest, CreateSession) {
   MetadataSpannerStub stub(mock_, db_.FullName());
   grpc::ClientContext context;
   spanner_proto::CreateSessionRequest request;
-  request.set_database(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id");
+  request.set_database(db_.FullName());
   auto status = stub.CreateSession(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -113,17 +110,14 @@ TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
                        spanner_proto::BatchCreateSessionsRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.BatchCreateSessions",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
   MetadataSpannerStub stub(mock_, db_.FullName());
   grpc::ClientContext context;
   spanner_proto::BatchCreateSessionsRequest request;
-  request.set_database(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id");
+  request.set_database(db_.FullName());
   request.set_session_count(3);
   auto status = stub.BatchCreateSessions(context, request);
   EXPECT_EQ(TransientError(), status.status());
@@ -135,7 +129,7 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
                        spanner_proto::GetSessionRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.GetSession",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -157,17 +151,14 @@ TEST_F(MetadataSpannerStubTest, ListSessions) {
                        spanner_proto::ListSessionsRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.ListSessions",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
   MetadataSpannerStub stub(mock_, db_.FullName());
   grpc::ClientContext context;
   spanner_proto::ListSessionsRequest request;
-  request.set_database(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id");
+  request.set_database(db_.FullName());
   auto status = stub.ListSessions(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -178,7 +169,7 @@ TEST_F(MetadataSpannerStubTest, DeleteSession) {
                        spanner_proto::DeleteSessionRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.DeleteSession",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -204,7 +195,7 @@ TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
                        spanner_proto::ExecuteSqlRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.ExecuteStreamingSql",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
       });
@@ -231,7 +222,7 @@ TEST_F(MetadataSpannerStubTest, StreamingRead) {
                        spanner_proto::ReadRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.StreamingRead",
-            expected_api_client_header_));
+            expected_api_client_header_, db_.FullName()));
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
       });
