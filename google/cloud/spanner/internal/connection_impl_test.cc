@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
@@ -54,6 +55,7 @@ namespace {
 #endif
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -107,12 +109,6 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
         }
         return true;
       });
-}
-
-MATCHER_P2(StatusContains, code, message_substr,
-           "Status has expected code and message substring") {
-  return arg.code() == code &&
-         arg.message().find(message_substr) != std::string::npos;
 }
 
 // Helper to set the Transaction's ID. Requires selector.ok().
@@ -1480,15 +1476,15 @@ TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
       .WillOnce(Return(
           Status(StatusCode::kInvalidArgument, "BeginTransaction failed")));
   auto txn = MakeReadWriteTransaction();
-  EXPECT_THAT(
-      conn->Commit({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Commit({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
   // Retrying the operation should also fail with the same error, without making
   // an additional `BeginTransaction` call.
-  EXPECT_THAT(
-      conn->Commit({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Commit({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 }
 
 TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
@@ -2514,49 +2510,52 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
 
   EXPECT_THAT(
       conn->Read({txn, "table", KeySet::All(), {"Column"}}).begin()->status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->PartitionRead({{txn, "table", KeySet::All(), {"Column"}}}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->PartitionRead({{txn, "table", KeySet::All(), {"Column"}}}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
   EXPECT_THAT(
       conn->ExecuteQuery({txn, SqlStatement("select 1")}).begin()->status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->ExecuteDml({txn, SqlStatement("delete * from table")}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->ExecuteDml({txn, SqlStatement("delete * from table")}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
   EXPECT_THAT(
       conn->ProfileQuery({txn, SqlStatement("select 1")}).begin()->status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->ProfileDml({txn, SqlStatement("delete * from table")}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->ProfileDml({txn, SqlStatement("delete * from table")}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->AnalyzeSql({txn, SqlStatement("select * from table")}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->AnalyzeSql({txn, SqlStatement("select * from table")}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
   // ExecutePartitionedDml creates its own transaction so it's not tested here.
 
-  EXPECT_THAT(
-      conn->PartitionQuery({txn, SqlStatement("select * from table")}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->PartitionQuery({txn, SqlStatement("select * from table")}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->ExecuteBatchDml({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->ExecuteBatchDml({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->Commit({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Commit({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(
-      conn->Rollback({txn}),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Rollback({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 }
 
 #if defined(__GNUC__) || defined(__clang__)

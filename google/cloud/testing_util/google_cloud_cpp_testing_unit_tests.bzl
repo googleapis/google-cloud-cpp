@@ -21,4 +21,5 @@ google_cloud_cpp_testing_unit_tests = [
     "crash_handler_test.cc",
     "example_driver_test.cc",
     "scoped_environment_test.cc",
+    "status_matchers_test.cc",
 ]

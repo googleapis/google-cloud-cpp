@@ -27,6 +27,7 @@ google_cloud_cpp_testing_hdrs = [
     "expect_future_error.h",
     "scoped_environment.h",
     "scoped_thread.h",
+    "status_matchers.h",
     "testing_types.h",
 ]
 
