@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_ack_handler_impl.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -20,20 +21,20 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 void DefaultAckHandlerImpl::ack() {
-  grpc::ClientContext context;
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(std::move(subscription_));
   request.add_ack_ids(std::move(ack_id_));
-  (void)stub_->Acknowledge(context, request);
+  (void)stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
+                                request);
 }
 
 void DefaultAckHandlerImpl::nack() {
-  grpc::ClientContext context;
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(std::move(subscription_));
   request.add_ack_ids(std::move(ack_id_));
   request.set_ack_deadline_seconds(0);
-  (void)stub_->ModifyAckDeadline(context, request);
+  (void)stub_->AsyncModifyAckDeadline(
+      cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -80,33 +80,32 @@ class SubscriptionSession
       return;
     }
 
-    // TODO(#4554) - use the completion queue and asynchronous requests
     auto self = shared_from_this();
     lk.unlock();
 
-    grpc::ClientContext context;
-    context.set_deadline(std::chrono::system_clock::now() +
-                         std::chrono::milliseconds(500));
+    auto context = absl::make_unique<grpc::ClientContext>();
     google::pubsub::v1::PullRequest request;
     request.set_subscription(params_.full_subscription_name);
     request.set_max_messages(1);
-    auto r = stub_->Pull(context, request);
-    // TODO(#4554) - for now we poll every 500ms to close the session gracefully
-    if (r.status().code() == StatusCode::kDeadlineExceeded) {
-      executor_.RunAsync([self] { self->PullOne(); });
-      return;
-    }
+    stub_->AsyncPull(executor_, std::move(context), request)
+        .then([self](future<StatusOr<google::pubsub::v1::PullResponse>> f) {
+          self->OnPull(f.get());
+        });
+  }
+
+  void OnPull(StatusOr<google::pubsub::v1::PullResponse> r) {
     if (!r) {
       result_.set_value(std::move(r).status());
       return;
     }
 
-    lk.lock();
+    std::unique_lock<std::mutex> lk(mu_);
     std::move(r->mutable_received_messages()->begin(),
               r->mutable_received_messages()->end(),
               std::back_inserter(messages_));
     lk.unlock();
 
+    auto self = shared_from_this();
     executor_.RunAsync([self] { self->HandleQueue(); });
   }
 
@@ -123,7 +122,8 @@ class SubscriptionSession
     lk.unlock();
 
     auto handler_impl = absl::make_unique<DefaultAckHandlerImpl>(
-        stub_, params_.full_subscription_name, std::move(*m.mutable_ack_id()));
+        executor_, stub_, params_.full_subscription_name,
+        std::move(*m.mutable_ack_id()));
     params_.callback(FromProto(std::move(*m.mutable_message())),
                      pubsub::AckHandler(std::move(handler_impl)));
 

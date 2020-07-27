@@ -31,28 +31,30 @@ TEST(SubscriberConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
 
-  EXPECT_CALL(*mock, Pull(_, _))
+  EXPECT_CALL(*mock, AsyncPull(_, _, _))
       .Times(AtLeast(1))
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
                           google::pubsub::v1::PullRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
         google::pubsub::v1::PullResponse response;
         auto& m = *response.add_received_messages();
         m.set_ack_id("test-ack-id-0");
         m.mutable_message()->set_message_id("test-message-id-0");
-        return make_status_or(response);
+        return make_ready_future(make_status_or(response));
       });
-  EXPECT_CALL(*mock, Acknowledge(_, _))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
       .Times(AtLeast(1))
       .WillRepeatedly(
-          [&](grpc::ClientContext&,
+          [&](google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>,
               google::pubsub::v1::AcknowledgeRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription());
             EXPECT_FALSE(request.ack_ids().empty());
             for (auto& id : request.ack_ids()) {
               EXPECT_EQ("test-ack-id-0", id);
             }
-            return Status{};
+            return make_ready_future(Status{});
           });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(mock, {});
@@ -76,12 +78,14 @@ TEST(SubscriberConnectionTest, PullFailure) {
   Subscription const subscription("test-project", "test-subscription");
 
   auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
-  EXPECT_CALL(*mock, Pull(_, _))
+  EXPECT_CALL(*mock, AsyncPull(_, _, _))
       .Times(AtLeast(1))
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
                           google::pubsub::v1::PullRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
-        return StatusOr<google::pubsub::v1::PullResponse>(expected);
+        return make_ready_future(
+            StatusOr<google::pubsub::v1::PullResponse>(expected));
       });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(mock, {});
@@ -97,9 +101,10 @@ TEST(SubscriberConnectionTest, ScheduleCallbacks) {
 
   std::mutex mu;
   int count = 0;
-  EXPECT_CALL(*mock, Pull(_, _))
+  EXPECT_CALL(*mock, AsyncPull(_, _, _))
       .Times(AtLeast(1))
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
                           google::pubsub::v1::PullRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
         google::pubsub::v1::PullResponse response;
@@ -111,21 +116,22 @@ TEST(SubscriberConnectionTest, ScheduleCallbacks) {
                                               std::to_string(count));
           ++count;
         }
-        return make_status_or(response);
+        return make_ready_future(make_status_or(response));
       });
 
   std::atomic<int> expected_ack_id{0};
-  EXPECT_CALL(*mock, Acknowledge(_, _))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
       .Times(AtLeast(1))
       .WillRepeatedly(
-          [&](grpc::ClientContext&,
+          [&](google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>,
               google::pubsub::v1::AcknowledgeRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription());
             for (auto const& a : request.ack_ids()) {
               EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
               ++expected_ack_id;
             }
-            return Status{};
+            return make_ready_future(Status{});
           });
 
   google::cloud::CompletionQueue cq;
