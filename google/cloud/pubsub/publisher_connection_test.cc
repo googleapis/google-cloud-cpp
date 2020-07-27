@@ -54,6 +54,32 @@ TEST(PublisherConnectionTest, Basic) {
   EXPECT_EQ("test-message-id-0", *response);
 }
 
+TEST(PublisherConnectionTest, OrderingKey) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        return make_ready_future(make_status_or(response));
+      });
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, PublisherOptions{}.enable_message_ordering(), mock, bg.cq());
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ("test-message-id-0", *response);
+}
+
 TEST(PublisherConnectionTest, HandleInvalidResponse) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");

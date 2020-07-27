@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include <memory>
 
@@ -65,6 +66,13 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
     std::shared_ptr<PublisherStub> stub, google::cloud::CompletionQueue cq) {
+  if (options.message_ordering()) {
+    auto factory = [topic, options, stub, cq](std::string const&) {
+      return BatchingPublisherConnection::Create(
+          topic, options.batching_config(), stub, cq);
+    };
+    return OrderingKeyPublisherConnection::Create(std::move(factory));
+  }
   return BatchingPublisherConnection::Create(std::move(topic),
                                              options.batching_config(),
                                              std::move(stub), std::move(cq));

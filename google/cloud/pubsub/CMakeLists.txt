@@ -38,6 +38,8 @@ add_library(
     internal/default_ack_handler_impl.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
+    internal/ordering_key_publisher_connection.cc
+    internal/ordering_key_publisher_connection.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/subscriber_stub.cc
@@ -142,6 +144,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/batching_publisher_connection_test.cc
         internal/default_ack_handler_impl_test.cc
         internal/emulator_overrides_test.cc
+        internal/ordering_key_publisher_connection_test.cc
         internal/user_agent_prefix_test.cc
         message_test.cc
         publisher_connection_test.cc
