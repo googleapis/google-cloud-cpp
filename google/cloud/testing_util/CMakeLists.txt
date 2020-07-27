@@ -33,6 +33,7 @@ if (BUILD_TESTING)
         scoped_environment.cc
         scoped_environment.h
         scoped_thread.h
+        status_matchers.h
         testing_types.cc
         testing_types.h)
     target_link_libraries(
@@ -46,7 +47,7 @@ if (BUILD_TESTING)
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
         assert_ok_test.cc crash_handler_test.cc example_driver_test.cc
-        scoped_environment_test.cc)
+        scoped_environment_test.cc status_matchers_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
