@@ -55,7 +55,14 @@ check_library() {
   (
     cd "${BINARY_DIR}"
     zcat "${reference_file}" >"${old_dump_file}"
+    # We ignore all symbols in internal namespaces, because these are not part
+    # of our public API. We do this by specifying a regex that matches against
+    # the mangled symbol names. For example, 8 is the number of characters in
+    # the string "internal", and it should again be followed by some other
+    # number indicating the length of the symbol within the "internal"
+    # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
     abi-compliance-checker \
+      -skip-internal-symbols "(8internal|15pubsub_internal)\d" \
       -src -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}"
   )
   if [[ $? != 0 ]]; then
