@@ -1470,6 +1470,27 @@ TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
   EXPECT_THAT(txn, HasBadSession());
 }
 
+TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeLimitedRetryConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(
+          Status(StatusCode::kInvalidArgument, "BeginTransaction failed")));
+  auto txn = MakeReadWriteTransaction();
+  EXPECT_THAT(
+      conn->Commit({txn}).status(),
+      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+
+  // Retrying the operation should also fail with the same error, without making
+  // an additional `BeginTransaction` call.
+  EXPECT_THAT(
+      conn->Commit({txn}).status(),
+      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+}
+
 TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 

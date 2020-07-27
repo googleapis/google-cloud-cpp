@@ -87,6 +87,18 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
       std::move(retry_policy), std::move(backoff_policy)));
 }
 
+spanner_proto::TransactionOptions TransactionOptionsFromSelector(
+    spanner_proto::TransactionSelector const& s) {
+  return s.has_begin() ? s.begin() : s.single_use();
+}
+
+spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
+  spanner_proto::TransactionOptions options;
+  *options.mutable_partitioned_dml() =
+      spanner_proto::TransactionOptions_PartitionedDml();
+  return options;
+}
+
 ConnectionImpl::ConnectionImpl(Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
                                ConnectionOptions const& options,
@@ -298,6 +310,38 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
     session = std::move(*session_or);
   }
   return Status();
+}
+
+/**
+ * Performs an explicit `BeginTransaction` in cases where that is needed.
+ *
+ * @param session identifies the Session to use.
+ * @param options `TransactionOptions` to use in the request.
+ * @param func identifies the calling function for logging purposes.
+ *   It should generally be passed the value of `__func__`.
+ */
+StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
+    SessionHolder& session, spanner_proto::TransactionOptions options,
+    char const* func) {
+  spanner_proto::BeginTransactionRequest begin;
+  begin.set_session(session->session_name());
+  *begin.mutable_options() = std::move(options);
+
+  auto stub = session_pool_->GetStub(*session);
+  auto response = internal::RetryLoop(
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
+      [&stub](grpc::ClientContext& context,
+              spanner_proto::BeginTransactionRequest const& request) {
+        return stub->BeginTransaction(context, request);
+      },
+      begin, func);
+  if (!response) {
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
+  }
+  return *response;
 }
 
 RowStream ConnectionImpl::ReadImpl(
@@ -718,26 +762,13 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   if (!prepare_status.ok()) {
     return prepare_status;
   }
-
-  spanner_proto::BeginTransactionRequest begin_request;
-  begin_request.set_session(session->session_name());
-  *begin_request.mutable_options()->mutable_partitioned_dml() =
-      spanner_proto::TransactionOptions_PartitionedDml();
-  auto stub = session_pool_->GetStub(*session);
-  auto begin_response = internal::RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
-      [&stub](grpc::ClientContext& context,
-              spanner_proto::BeginTransactionRequest const& request) {
-        return stub->BeginTransaction(context, request);
-      },
-      begin_request, __func__);
-  if (!begin_response) {
-    auto status = std::move(begin_response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
-    return status;
+  auto begin =
+      BeginTransaction(session, PartitionedDmlTransactionOptions(), __func__);
+  if (!begin.ok()) {
+    s = begin.status();  // invalidate the transaction
+    return begin.status();
   }
-  s->set_id(begin_response->id());
+  s->set_id(begin->id());
 
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
@@ -748,6 +779,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
+  auto stub = session_pool_->GetStub(*session);
   auto response = internal::RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
@@ -789,24 +821,13 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   }
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
-    spanner_proto::BeginTransactionRequest begin;
-    begin.set_session(session->session_name());
-    *begin.mutable_options() = s->has_begin() ? s->begin() : s->single_use();
-    auto stub = session_pool_->GetStub(*session);
-    auto response = internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
-        [&stub](grpc::ClientContext& context,
-                spanner_proto::BeginTransactionRequest const& request) {
-          return stub->BeginTransaction(context, request);
-        },
-        begin, __func__);
-    if (!response) {
-      auto status = std::move(response).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
-      return status;
+    auto begin =
+        BeginTransaction(session, TransactionOptionsFromSelector(*s), __func__);
+    if (!begin.ok()) {
+      s = begin.status();  // invalidate the transaction
+      return begin.status();
     }
-    s->set_id(response->id());
+    s->set_id(begin->id());
   }
   request.set_transaction_id(s->id());
 
