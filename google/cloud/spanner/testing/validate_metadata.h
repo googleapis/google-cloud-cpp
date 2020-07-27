@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
+#include "absl/types/optional.h"
 #include <grpcpp/client_context.h>
 #include <string>
 
@@ -37,14 +38,18 @@ inline namespace SPANNER_CLIENT_NS {
  * @param method a gRPC method which which this context will be passed to
  * @param api_client_header expected value for the x-goog-api-client metadata
  *     header.
+ * @param resource_prefix_header if specified, this is the expected value for
+ *     the google-cloud-resource-prefix metadata header.
  *
  * @warning the `context` will be destroyed and shouldn't be used after passing
  *     it to this function.
  *
  * @return an OK status if the `context` is properly set up
  */
-Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        std::string const& api_client_header);
+Status IsContextMDValid(
+    grpc::ClientContext& context, std::string const& method,
+    std::string const& api_client_header,
+    absl::optional<std::string> resource_prefix_header = {});
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

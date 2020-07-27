@@ -25,8 +25,11 @@ namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-MetadataSpannerStub::MetadataSpannerStub(std::shared_ptr<SpannerStub> child)
-    : child_(std::move(child)), api_client_header_(ApiClientHeader()) {}
+MetadataSpannerStub::MetadataSpannerStub(std::shared_ptr<SpannerStub> child,
+                                         std::string db_resource_header)
+    : child_(std::move(child)),
+      api_client_header_(ApiClientHeader()),
+      db_resource_header_(std::move(db_resource_header)) {}
 
 StatusOr<spanner_proto::Session> MetadataSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
@@ -163,6 +166,7 @@ void MetadataSpannerStub::SetMetadata(grpc::ClientContext& context,
                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  context.AddMetadata("google-cloud-resource-prefix", db_resource_header_);
 }
 
 }  // namespace internal

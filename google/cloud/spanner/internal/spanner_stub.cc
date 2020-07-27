@@ -284,7 +284,8 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 
 }  // namespace
 
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(ConnectionOptions options,
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
+                                                      ConnectionOptions options,
                                                       int channel_id) {
   options = internal::EmulatorOverrides(std::move(options));
 
@@ -299,7 +300,7 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(ConnectionOptions options,
 
   std::shared_ptr<SpannerStub> stub =
       std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
-  stub = std::make_shared<MetadataSpannerStub>(std::move(stub));
+  stub = std::make_shared<MetadataSpannerStub>(std::move(stub), db.FullName());
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

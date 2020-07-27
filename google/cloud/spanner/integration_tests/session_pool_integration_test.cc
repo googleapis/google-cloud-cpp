@@ -54,7 +54,8 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto const db = GetDatabase();
-  auto stub = CreateDefaultSpannerStub(ConnectionOptions{}, /*channel_id=*/0);
+  auto stub =
+      CreateDefaultSpannerStub(db, ConnectionOptions{}, /*channel_id=*/0);
   auto session_pool =
       MakeSessionPool(db, {stub}, SessionPoolOptions{}, cq,
                       LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone(),
