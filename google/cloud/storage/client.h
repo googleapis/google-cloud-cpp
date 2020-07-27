@@ -1244,6 +1244,24 @@ class Client {
   }
 
   /**
+   * Cancel a resumable upload.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object that is uploading.
+   * @param upload_id the id of the resumable upload.
+   *
+   * @par Idempotency
+   * This operation is idempotent.
+   */
+  Status DeleteResumableUpload(std::string const& bucket_name,
+                               std::string const& object_name,
+                               std::string const& upload_id) {
+    internal::DeleteResumableUploadRequest request(bucket_name, object_name,
+                                                   upload_id);
+    return raw_client_->DeleteResumableUpload(request).status();
+  }
+
+  /**
    * Downloads a Cloud Storage object to a file.
    *
    * @param bucket_name the name of the bucket that contains the object.
