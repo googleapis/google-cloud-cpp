@@ -14,9 +14,9 @@
 
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -27,7 +27,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
-using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;

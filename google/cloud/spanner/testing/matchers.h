@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <memory>
@@ -28,15 +27,6 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
-
-MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  auto const result = differencer.Compare(arg, value);
-  *result_listener << "\n" << delta;
-  return result;
-}
 
 /// Verifies a `Transaction` has the expected Session and Transaction IDs
 MATCHER_P2(

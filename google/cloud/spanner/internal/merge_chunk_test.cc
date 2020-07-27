@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/merge_chunk.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/struct.pb.h>
 #include <gmock/gmock.h>
 #include <string>
@@ -27,7 +27,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
-using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 
 //
 // MakeProtoValue() is an overloaded helper function for creating

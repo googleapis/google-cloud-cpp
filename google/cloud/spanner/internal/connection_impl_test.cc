@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
@@ -55,6 +56,7 @@ namespace {
 #endif
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -556,7 +558,7 @@ TEST(ConnectionImplTest, QueryOptions) {
   for (auto const& version : optimizer_versions) {
     spanner_proto::ExecuteSqlRequest::QueryOptions qo;
     if (version) qo.set_optimizer_version(*version);
-    auto m = Property(kQueryOptionsProp, spanner_testing::IsProtoEqual(qo));
+    auto m = Property(kQueryOptionsProp, IsProtoEqual(qo));
     auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
     EXPECT_CALL(*mock, BatchCreateSessions(_, _))
         .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -749,7 +751,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
 
   auto plan = result.ExecutionPlan();
   ASSERT_TRUE(plan);
-  EXPECT_THAT(*plan, spanner_testing::IsProtoEqual(expected_plan));
+  EXPECT_THAT(*plan, IsProtoEqual(expected_plan));
 
   std::vector<std::pair<const std::string, std::string>> expected_stats;
   expected_stats.emplace_back("elapsed_time", "42 secs");
@@ -874,7 +876,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
 
   auto plan = result->ExecutionPlan();
   ASSERT_TRUE(plan);
-  EXPECT_THAT(*plan, spanner_testing::IsProtoEqual(expected_plan));
+  EXPECT_THAT(*plan, IsProtoEqual(expected_plan));
 
   std::vector<std::pair<const std::string, std::string>> expected_stats;
   expected_stats.emplace_back("elapsed_time", "42 secs");
@@ -973,7 +975,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedPlan, &expected_plan));
 
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, spanner_testing::IsProtoEqual(expected_plan));
+  EXPECT_THAT(*result, IsProtoEqual(expected_plan));
 }
 
 TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
@@ -1840,9 +1842,8 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   ASSERT_TRUE(
       TextFormat::ParseFromString(kTextPartitionRequest, &partition_request));
 
-  EXPECT_CALL(
-      *mock_spanner_stub,
-      PartitionRead(_, spanner_testing::IsProtoEqual(partition_request)))
+  EXPECT_CALL(*mock_spanner_stub,
+              PartitionRead(_, IsProtoEqual(partition_request)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
@@ -1948,9 +1949,8 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   google::spanner::v1::PartitionQueryRequest partition_request;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kTextPartitionRequest, &partition_request));
-  EXPECT_CALL(
-      *mock_spanner_stub,
-      PartitionQuery(_, spanner_testing::IsProtoEqual(partition_request)))
+  EXPECT_CALL(*mock_spanner_stub,
+              PartitionQuery(_, IsProtoEqual(partition_request)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 

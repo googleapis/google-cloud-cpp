@@ -329,6 +329,7 @@ function (spanner_client_define_tests)
                     absl::numeric
                     googleapis-c++::spanner_client
                     google_cloud_cpp_testing
+                    google_cloud_cpp_testing_grpc
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)

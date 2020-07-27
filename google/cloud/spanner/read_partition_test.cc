@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -47,6 +48,7 @@ class ReadPartitionTester {
 namespace {
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
@@ -64,7 +66,7 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
-              spanner_testing::IsProtoEqual(internal::ToProto(KeySet::All())));
+              IsProtoEqual(internal::ToProto(KeySet::All())));
   EXPECT_EQ(column_names, actual_partition.ColumnNames());
 }
 
@@ -86,7 +88,7 @@ TEST(ReadPartitionTest, Constructor) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
-              spanner_testing::IsProtoEqual(internal::ToProto(KeySet::All())));
+              IsProtoEqual(internal::ToProto(KeySet::All())));
   EXPECT_EQ(column_names, actual_partition.ColumnNames());
   EXPECT_EQ(read_options, actual_partition.ReadOptions());
 }
@@ -135,7 +137,7 @@ TEST(ReadPartitionTest, SerializeDeserialize) {
   EXPECT_EQ(expected_partition.SessionId(), actual_partition.SessionId());
   EXPECT_EQ(expected_partition.TableName(), actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
-              spanner_testing::IsProtoEqual(expected_partition.KeySet()));
+              IsProtoEqual(expected_partition.KeySet()));
   EXPECT_EQ(expected_partition.ColumnNames(), actual_partition.ColumnNames());
   EXPECT_EQ(expected_partition.ReadOptions(), actual_partition.ReadOptions());
 }
