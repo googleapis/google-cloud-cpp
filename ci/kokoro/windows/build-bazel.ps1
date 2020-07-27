@@ -33,7 +33,7 @@ if ($missing.count -ge 1) {
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
 # We do this in C: (the boot disk) because T: (the tmpfs / build disk)
-# because T: is too small for the Bazel directory.
+# is too small for the Bazel directory.
 $bazel_root="C:\b"
 if (-not (Test-Path $bazel_root)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
