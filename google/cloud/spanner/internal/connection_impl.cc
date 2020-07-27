@@ -318,7 +318,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
  * @param session identifies the Session to use.
  * @param options `TransactionOptions` to use in the request.
  * @param func identifies the calling function for logging purposes.
- *   It should generally be passed the value of the __func__ macro.
+ *   It should generally be passed the value of `__func__`.
  */
 StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, spanner_proto::TransactionOptions options,
