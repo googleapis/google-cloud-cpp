@@ -14,9 +14,9 @@
 
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -26,7 +26,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;

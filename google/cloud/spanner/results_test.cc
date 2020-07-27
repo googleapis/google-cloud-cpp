@@ -14,9 +14,9 @@
 
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -33,6 +33,7 @@ namespace {
 namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::spanner_mocks::MockResultSetSource;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::Eq;
 using ::testing::Return;
@@ -196,8 +197,7 @@ TEST(ProfileQueryResult, ExecutionPlan) {
   EXPECT_CALL(*mock_source, Stats()).WillRepeatedly(Return(stats));
 
   ProfileQueryResult query_result(std::move(mock_source));
-  EXPECT_THAT(*query_result.ExecutionPlan(),
-              spanner_testing::IsProtoEqual(stats.query_plan()));
+  EXPECT_THAT(*query_result.ExecutionPlan(), IsProtoEqual(stats.query_plan()));
 }
 
 TEST(DmlResult, RowsModified) {

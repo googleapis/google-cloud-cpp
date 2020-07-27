@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/keys.h"
-#include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <google/spanner/v1/keys.pb.h>
 #include <gmock/gmock.h>
@@ -25,6 +25,8 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(KeyTest, ConstructionCopyAssign) {
   Key key1;
@@ -121,7 +123,7 @@ TEST(KeySetTest, NoKeys) {
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString("", &expected));
   KeySet no_keys;
   ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
-  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+  EXPECT_THAT(result, IsProtoEqual(expected));
   EXPECT_EQ(internal::FromProto(expected), no_keys);
 }
 
@@ -133,7 +135,7 @@ TEST(KeySetTest, AllKeys) {
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
   auto all_keys = KeySet::All();
   ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
-  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+  EXPECT_THAT(result, IsProtoEqual(expected));
   EXPECT_EQ(internal::FromProto(expected), all_keys);
 }
 

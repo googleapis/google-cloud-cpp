@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -33,8 +33,8 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;

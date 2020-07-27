@@ -14,12 +14,12 @@
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,7 +28,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::EndsWith;
 
 /// @test Verify the basic CRUD operations for databases work.

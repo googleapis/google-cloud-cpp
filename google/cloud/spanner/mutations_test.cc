@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/keys.h"
-#include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -35,7 +35,7 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
 
