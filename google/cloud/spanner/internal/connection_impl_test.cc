@@ -1476,15 +1476,15 @@ TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
       .WillOnce(Return(
           Status(StatusCode::kInvalidArgument, "BeginTransaction failed")));
   auto txn = MakeReadWriteTransaction();
-  EXPECT_THAT(
-      conn->Commit({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Commit({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 
   // Retrying the operation should also fail with the same error, without making
   // an additional `BeginTransaction` call.
-  EXPECT_THAT(
-      conn->Commit({txn}).status(),
-      StatusContains(StatusCode::kInvalidArgument, "BeginTransaction failed"));
+  EXPECT_THAT(conn->Commit({txn}),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("BeginTransaction failed")));
 }
 
 TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
