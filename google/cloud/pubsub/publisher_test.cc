@@ -32,8 +32,10 @@ TEST(PublisherTest, PublishSimple) {
         EXPECT_EQ("test-data-0", p.message.data());
         return make_ready_future(StatusOr<std::string>("test-id-0"));
       });
+  EXPECT_CALL(*mock, Flush(_)).Times(1);
 
   Publisher publisher(mock);
+  publisher.Flush();
   auto id =
       publisher.Publish(pubsub::MessageBuilder{}.SetData("test-data-0").Build())
           .get();

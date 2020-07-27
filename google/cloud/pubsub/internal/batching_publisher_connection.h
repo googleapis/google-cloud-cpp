@@ -39,6 +39,7 @@ class BatchingPublisherConnection
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
+  void Flush(FlushParams) override;
 
  private:
   explicit BatchingPublisherConnection(
@@ -53,7 +54,7 @@ class BatchingPublisherConnection
 
   void OnTimer();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
-  void Flush(std::unique_lock<std::mutex> lk);
+  void FlushImpl(std::unique_lock<std::mutex> lk);
 
   pubsub::Topic topic_;
   std::string topic_full_name_;

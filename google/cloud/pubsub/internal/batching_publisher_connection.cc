@@ -73,16 +73,20 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
   return f;
 }
 
+void BatchingPublisherConnection::Flush(FlushParams) {
+  FlushImpl(std::unique_lock<std::mutex>(mu_));
+}
+
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   if (pending_.size() >= batching_config_.maximum_message_count()) {
-    Flush(std::move(lk));
+    FlushImpl(std::move(lk));
     return;
   }
   auto const bytes = std::accumulate(
       pending_.begin(), pending_.end(), std::size_t{0},
       [](std::size_t a, Item const& b) { return a + b.message.data().size(); });
   if (bytes >= batching_config_.maximum_batch_bytes()) {
-    Flush(std::move(lk));
+    FlushImpl(std::move(lk));
     return;
   }
   // If the batch is empty obviously we do not need a timer, and if it has more
@@ -115,10 +119,10 @@ void BatchingPublisherConnection::OnTimer() {
     // even if we attempt to cancel them. This test is more robust.
     return;
   }
-  Flush(std::move(lk));
+  FlushImpl(std::move(lk));
 }
 
-void BatchingPublisherConnection::Flush(std::unique_lock<std::mutex> lk) {
+void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   if (pending_.empty()) return;
 
   auto context = absl::make_unique<grpc::ClientContext>();
