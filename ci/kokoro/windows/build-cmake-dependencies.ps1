@@ -147,8 +147,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and spa
 
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
-# DEBUG DEBUG if ($RunningCI -and $IsCI -and $HasBuildCache) {
-if ($True) {
+if ($RunningCI -and $IsCI -and $HasBuildCache) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "zip vcpkg cache for upload."
     7z a vcpkg-installed.zip installed\ -bsp0
@@ -159,9 +158,9 @@ if ($True) {
     } else {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "upload zip with vcpkg cache."
-        # DEBUG DEBUG gcloud auth activate-service-account `
-        # DEBUG DEBUG    --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-        # DEBUG DEBUG gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
+        gcloud auth activate-service-account `
+           --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+        gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
         if ($LastExitCode) {
             # Ignore errors, caching failures should not break the build.
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
