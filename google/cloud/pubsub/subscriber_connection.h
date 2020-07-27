@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/pubsub/subscription_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <functional>
@@ -42,6 +43,7 @@ class SubscriberConnection {
   struct SubscribeParams {
     std::string full_subscription_name;
     CallbackType callback;
+    SubscriptionOptions options;
   };
   virtual future<Status> Subscribe(SubscribeParams p) = 0;
 };
