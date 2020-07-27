@@ -76,7 +76,7 @@ Set-Location "${vcpkg_dir}"
 
 # If BUILD_CACHE is set (which typically is on Kokoro builds), try
 # to download and extract the build cache.
-if ($RunningCI -and $IsPR -and $HasBuildCache) {
+if ($RunningCI -and $HasBuildCache) {
     gcloud auth activate-service-account `
         --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
