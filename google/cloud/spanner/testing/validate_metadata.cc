@@ -35,7 +35,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 // gcc-4.8 and earlier have broken regexes - ignore the tests there.
 Status IsContextMDValid(grpc::ClientContext&, std::string const&,
-                        std::string const&) {
+                        std::string const&, absl::optional<std::string>) {
   return Status();
 }
 
@@ -223,7 +223,8 @@ StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
  * the curly braces.
  */
 Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        std::string const& api_client_header) {
+                        std::string const& api_client_header,
+                        absl::optional<std::string> resource_prefix_header) {
   auto headers = GetMetadata(context);
 
   // Extract the metadata from `x-goog-request-params` header in context.
@@ -267,6 +268,20 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                   "Expected x-goog-api-client to be " + api_client_header +
                       ", was " + found_api_client_header->second);
   }
+
+  if (resource_prefix_header) {
+    std::string const header = "google-cloud-resource-prefix";
+    auto it = headers.find(header);
+    if (it == headers.end()) {
+      return Status(StatusCode::kInvalidArgument, header + " not found");
+    }
+    if (it->second != *resource_prefix_header) {
+      return Status(StatusCode::kInvalidArgument,
+                    header + " expected to be " + *resource_prefix_header +
+                        ", but was " + it->second);
+    }
+  }
+
   return Status();
 }
 

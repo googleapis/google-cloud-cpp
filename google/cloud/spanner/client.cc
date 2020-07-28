@@ -336,7 +336,7 @@ std::shared_ptr<Connection> MakeConnection(
   stubs.reserve(num_channels);
   for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
     stubs.push_back(
-        internal::CreateDefaultSpannerStub(connection_options, channel_id));
+        internal::CreateDefaultSpannerStub(db, connection_options, channel_id));
   }
   return internal::MakeConnection(
       db, std::move(stubs), connection_options, std::move(session_pool_options),

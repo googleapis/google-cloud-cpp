@@ -481,7 +481,7 @@ class ExperimentImpl {
       clients.emplace_back(
           spanner::Client(spanner::MakeConnection(database, options)));
       stubs.emplace_back(spanner::internal::CreateDefaultSpannerStub(
-          options, /*channel_id=*/0));
+          database, options, /*channel_id=*/0));
       std::cout << '.' << std::flush;
     }
     std::cout << " DONE\n";

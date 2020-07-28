@@ -29,7 +29,8 @@ namespace internal {
  */
 class MetadataSpannerStub : public SpannerStub {
  public:
-  explicit MetadataSpannerStub(std::shared_ptr<SpannerStub> child);
+  explicit MetadataSpannerStub(std::shared_ptr<SpannerStub> child,
+                               std::string resource_prefix_header);
   ~MetadataSpannerStub() override = default;
 
   StatusOr<google::spanner::v1::Session> CreateSession(
@@ -100,6 +101,7 @@ class MetadataSpannerStub : public SpannerStub {
 
   std::shared_ptr<SpannerStub> child_;
   std::string api_client_header_;
+  std::string resource_prefix_header_;
 };
 
 }  // namespace internal

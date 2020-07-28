@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H
 
 #include "google/cloud/spanner/connection_options.h"
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/status.h"
@@ -122,7 +123,8 @@ class SpannerStub {
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(ConnectionOptions options,
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
+                                                      ConnectionOptions options,
                                                       int channel_id);
 
 }  // namespace internal
