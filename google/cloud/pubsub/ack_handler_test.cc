@@ -25,16 +25,32 @@ namespace {
 
 using ::testing::Return;
 
+TEST(AckHandlerTest, AutoNack) {
+  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  EXPECT_CALL(*mock, nack()).Times(1);
+  { AckHandler handler(std::move(mock)); }
+}
+
+TEST(AckHandlerTest, AutoNackMove) {
+  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  EXPECT_CALL(*mock, ack()).Times(1);
+  {
+    AckHandler handler(std::move(mock));
+    AckHandler moved = std::move(handler);
+    std::move(moved).ack();
+  }
+}
+
 TEST(AckHandlerTest, AckId) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, ack_id()).WillOnce(Return("test-id"));
+  EXPECT_CALL(*mock, nack()).Times(1);
   AckHandler handler(std::move(mock));
   EXPECT_EQ("test-id", handler.ack_id());
 }
 
 TEST(AckHandlerTest, Ack) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
-  auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
   EXPECT_CALL(*mock, ack()).Times(1);
   AckHandler handler(std::move(mock));
   ASSERT_NO_FATAL_FAILURE(std::move(handler).ack());
@@ -42,7 +58,6 @@ TEST(AckHandlerTest, Ack) {
 
 TEST(AckHandlerTest, Nack) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
-  auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
   EXPECT_CALL(*mock, nack()).Times(1);
   AckHandler handler(std::move(mock));
   ASSERT_NO_FATAL_FAILURE(std::move(handler).nack());

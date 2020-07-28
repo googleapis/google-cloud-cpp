@@ -29,6 +29,10 @@ static_assert(std::is_move_assignable<AckHandler>::value,
 static_assert(std::is_move_constructible<AckHandler>::value,
               "AckHandler should be MoveConstructible");
 
+AckHandler::~AckHandler() {
+  if (impl_) impl_->nack();
+}
+
 AckHandler::Impl::~Impl() = default;
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

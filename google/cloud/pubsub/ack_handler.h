@@ -35,6 +35,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class AckHandler {
  public:
+  ~AckHandler();
+
+  AckHandler(AckHandler&&) noexcept = default;
+  AckHandler& operator=(AckHandler&&) noexcept = default;
+
   /// Acknowledge the message and return any (unrecoverablee) RPC errors
   void ack() && {
     auto impl = std::move(impl_);
