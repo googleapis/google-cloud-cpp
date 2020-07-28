@@ -33,6 +33,8 @@ readonly LIBRARY="$2"
 exec > >(sed -e "s,^,${LIBRARY}: ,")
 exec 2>&1
 
+# This script is only run on a Fedora-based build, so it's fine that this
+# setting is not portable.
 export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig"
 
 readonly LIBDIR="$(pkg-config "${LIBRARY}" --variable=libdir)"
