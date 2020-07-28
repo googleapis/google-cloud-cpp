@@ -26,7 +26,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::AtLeast;
-using ::testing::AtMost;
+using ::testing::InSequence;
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacks) {
@@ -124,34 +124,51 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
     }
     return make_ready_future(make_status_or(response));
   };
-  EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
 
-  // This receives a message, verify that it is the next message in the sequence
-  // and then sets up the expectations for the next set of calls (mostly
-  // AsyncPull).
-  std::atomic<int> expected_message_id{0};
-  auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-    SCOPED_TRACE("Running for message" + m.message_id());
-    EXPECT_EQ("test-message-id-" + std::to_string(expected_message_id),
-              m.message_id());
-    auto ack_id = "test-ack-id-" + std::to_string(expected_message_id);
+  {
+    InSequence sequence;
+
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
     EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .WillOnce(
-            [ack_id](google::cloud::CompletionQueue&,
-                     std::unique_ptr<grpc::ClientContext>,
-                     google::pubsub::v1::AcknowledgeRequest const& request) {
-              for (auto const& a : request.ack_ids()) {
-                EXPECT_EQ(ack_id, a);
-              }
-              return make_ready_future(Status{});
-            });
-    if (expected_message_id > 0 && expected_message_id % 3 == 2) {
-      EXPECT_CALL(*mock, AsyncPull(_, _, _))
-          .Times(AtMost(1))
-          .WillRepeatedly(generate_3);
+        .Times(3)
+        .WillRepeatedly([](google::cloud::CompletionQueue&,
+                           std::unique_ptr<grpc::ClientContext>,
+                           google::pubsub::v1::AcknowledgeRequest const&) {
+          return make_ready_future(Status{});
+        });
+
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+        .Times(3)
+        .WillRepeatedly([](google::cloud::CompletionQueue&,
+                           std::unique_ptr<grpc::ClientContext>,
+                           google::pubsub::v1::AcknowledgeRequest const&) {
+          return make_ready_future(Status{});
+        });
+
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+        .Times(3)
+        .WillRepeatedly([](google::cloud::CompletionQueue&,
+                           std::unique_ptr<grpc::ClientContext>,
+                           google::pubsub::v1::AcknowledgeRequest const&) {
+          return make_ready_future(Status{});
+        });
+  }
+
+  promise<void> enough_messages;
+  std::atomic<int> received_counter{0};
+  auto constexpr kMaximumMessages = 9;
+  auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+    auto c = received_counter.load();
+    EXPECT_LE(c, kMaximumMessages);
+    SCOPED_TRACE("Running for message " + m.message_id() +
+                 ", counter=" + std::to_string(c));
+    EXPECT_EQ("test-message-id-" + std::to_string(c), m.message_id());
+    if (++received_counter == kMaximumMessages) {
+      enough_messages.set_value();
     }
     std::move(h).ack();
-    ++expected_message_id;
   };
 
   google::cloud::CompletionQueue cq;
@@ -159,11 +176,9 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
   auto session =
       SubscriptionSession::Create(mock, cq, {subscription.FullName(), handler});
   auto response = session->Start();
-  while (expected_message_id.load() < 50) {
-    auto s = response.wait_for(std::chrono::milliseconds(5));
-    if (s != std::future_status::timeout) break;
-  }
-  response.cancel();
+  enough_messages.get_future()
+      .then([&](future<void>) { response.cancel(); })
+      .get();
   EXPECT_STATUS_OK(response.get());
 
   cq.Shutdown();
