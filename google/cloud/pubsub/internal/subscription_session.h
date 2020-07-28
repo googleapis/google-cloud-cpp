@@ -42,6 +42,8 @@ class SubscriptionSession
 
   future<Status> Start();
 
+  void MessageHandled(std::size_t message_size);
+
  private:
   SubscriptionSession(std::shared_ptr<pubsub_internal::SubscriberStub> s,
                       google::cloud::CompletionQueue executor,
