@@ -96,6 +96,12 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log "Running the integration tests"
 
+  if [[ -n "${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}" ]]; then
+    bazel_args+=(
+      "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT}"
+    )
+  fi
+
   bazel_args+=(
     # Common configuration
     "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"

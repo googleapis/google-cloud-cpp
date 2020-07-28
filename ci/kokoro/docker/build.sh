@@ -524,6 +524,12 @@ if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}" ]]; then
   docker_flags+=("--env" "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-}")
 fi
 
+if [[ -n "${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}" ]]; then
+  docker_flags+=(
+    "--env" "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT}"
+  )
+fi
+
 # Optionally allow the docker container to use the host's networking in order
 # to take advantage of potentially non-trivial network configurations (e.g.,
 # DNS cache) that might be a PITA to duplicate within the container itself.
