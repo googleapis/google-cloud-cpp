@@ -1249,15 +1249,20 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object that is uploading.
    * @param upload_id the id of the resumable upload.
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `UserProject`.
    *
    * @par Idempotency
-   * This operation is idempotent.
+   * This operation is always idempotent because it only acts on a specific
+   * `upload_id`.
    */
   Status DeleteResumableUpload(std::string const& bucket_name,
                                std::string const& object_name,
-                               std::string const& upload_id) {
+                               std::string const& upload_id,
+                               Options&&... options) {
     internal::DeleteResumableUploadRequest request(bucket_name, object_name,
                                                    upload_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteResumableUpload(request).status();
   }
 

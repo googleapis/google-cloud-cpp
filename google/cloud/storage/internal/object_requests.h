@@ -382,7 +382,7 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
  * A request to cancel a resumable upload.
  */
 class DeleteResumableUploadRequest
-    : public GenericObjectRequest<DeleteResumableUploadRequest> {
+    : public GenericObjectRequest<DeleteResumableUploadRequest, UserProject> {
  public:
   DeleteResumableUploadRequest() = default;
 
