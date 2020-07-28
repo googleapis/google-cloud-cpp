@@ -415,16 +415,13 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
 
-  auto make_reader = []() {
+  auto make_reader = [] {
     grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
     auto reader = absl::make_unique<MockGrpcReader>();
     EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc_status));
     return reader;
   };
-  // TODO(salty) some interaction between the spanner calls and the reader
-  // calls seems to confuse gmock and cause some flakiness. Does explicitly
-  // sequencing them fix the issue?
   auto reader1 = make_reader();
   auto reader2 = make_reader();
   ::testing::Sequence s;
@@ -748,8 +745,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
   EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
 }
 
-// Tests that a Transaction that fails to begin does not successfully commit -
-// that would violate atomicity since the first DML statement did not execute.
+// Tests that a Transaction that fails to begin does not successfully commit.
+// That would violate atomicity since the first DML statement did not execute.
 TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
@@ -765,7 +762,7 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
     // The first `ExecuteDml` call tries to implicitly begin the transaction
     // via `ExecuteSql`, and then explicitly via `BeginTransaction`. Both fail,
     // and we should receive no further RPC calls - since the transaction is
-    // not valid ther client fails any subsequent operations itself.
+    // not valid the client fails any subsequent operations itself.
     EXPECT_CALL(*mock, ExecuteSql(_, _)).WillOnce(Return(status));
     EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(status));
   }
