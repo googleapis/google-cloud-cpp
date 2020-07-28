@@ -775,7 +775,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         },
         request, __func__);
     if (s->has_begin()) {
-      if (response->result_sets_size() > 0 &&
+      if (response.ok() && response->result_sets_size() > 0 &&
           response->result_sets(0).metadata().has_transaction()) {
         s->set_id(response->result_sets(0).metadata().transaction().id());
       } else {
