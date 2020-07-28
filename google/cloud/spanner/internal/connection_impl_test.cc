@@ -422,22 +422,29 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
     EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc_status));
     return reader;
   };
-  {
-    InSequence seq;
-    EXPECT_CALL(*mock, BatchCreateSessions(_, _))
-        .WillOnce(
-            [&db](grpc::ClientContext&,
-                  spanner_proto::BatchCreateSessionsRequest const& request) {
-              EXPECT_EQ(db.FullName(), request.database());
-              return MakeSessionsResponse({"test-session-name"});
-            });
-    EXPECT_CALL(*mock, StreamingRead(_, _))
-        .WillOnce(Return(ByMove(make_reader())));
-    EXPECT_CALL(*mock, BeginTransaction(_, _))
-        .WillOnce(Return(MakeTestTransaction()));
-    EXPECT_CALL(*mock, StreamingRead(_, _))
-        .WillOnce(Return(ByMove(make_reader())));
-  }
+  // TODO(salty) some interaction between the spanner calls and the reader
+  // calls seems to confuse gmock and cause some flakiness. Does explicitly
+  // sequencing them fix the issue?
+  auto reader1 = make_reader();
+  auto reader2 = make_reader();
+  ::testing::Sequence s;
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .InSequence(s)
+      .WillOnce(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return MakeSessionsResponse({"test-session-name"});
+          });
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(reader1))));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .InSequence(s)
+      .WillOnce(Return(MakeTestTransaction()));
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(reader2))));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read({txn, "table", KeySet::All(), {"UserId", "UserName"}});
@@ -1221,7 +1228,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("session-name", "1234567890"));
 }
 
-TEST(ConnectionImplTest, ExecuteBatchDmlPermanmentFailure) {
+TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
