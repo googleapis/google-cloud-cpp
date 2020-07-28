@@ -715,7 +715,15 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
   }
   builder.AddQueryParameter("uploadType", "resumable");
   builder.AddQueryParameter("upload_id", request.upload_id());
-  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
+  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess &&
+      response->status_code != 499) {
+    return AsStatus(*response);
+  }
+  return EmptyResponse{};
 }
 
 StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
