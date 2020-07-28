@@ -148,6 +148,17 @@ class MessageBuilder {
     return std::move(*this);
   }
 
+  /// Create the message with ordering key @p key
+  MessageBuilder& SetOrderingKey(std::string key) & {
+    proto_.set_ordering_key(std::move(key));
+    return *this;
+  }
+
+  /// Create the message with ordering key @p key
+  MessageBuilder&& SetOrderingKey(std::string key) && {
+    return std::move(SetOrderingKey(std::move(key)));
+  }
+
   /// Create a message with the attributes from the range [@p begin, @p end)
   template <typename Iterator>
   MessageBuilder& SetAttributes(Iterator begin, Iterator end) & {

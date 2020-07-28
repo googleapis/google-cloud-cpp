@@ -52,6 +52,23 @@ TEST(Message, SetDataSimple) {
   EXPECT_EQ(m0, move);
 }
 
+TEST(Message, SetOrderingKey) {
+  auto const m0 = MessageBuilder{}.SetOrderingKey("key-0").Build();
+  EXPECT_EQ("key-0", m0.ordering_key());
+  EXPECT_TRUE(m0.attributes().empty());
+  EXPECT_TRUE(m0.data().empty());
+  EXPECT_TRUE(m0.message_id().empty());
+
+  auto const m1 = MessageBuilder{}.SetOrderingKey("key-1").Build();
+  EXPECT_EQ("key-1", m1.ordering_key());
+
+  EXPECT_NE(m0, m1);
+  Message copy(m0);
+  EXPECT_EQ(m0, copy);
+  Message move(std::move(copy));
+  EXPECT_EQ(m0, move);
+}
+
 TEST(Message, SetAttributesIteratorSimple) {
   std::map<std::string, std::string> const attributes(
       {{"k1", "v1"}, {"k2", "v2"}});
