@@ -371,11 +371,18 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
     /bin/false
   fi
 
-  # Checking the ABI requires installation, so this is the first opportunity to
-  # run the check.
-  env -C "${PROJECT_ROOT}" \
-    PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig" \
-    ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}"
+  if [[ "${CHECK_ABI:-}" == "yes" ]]; then
+    io::log_yellow "Checking ABI compatibility."
+    libraries=(
+      "bigtable_client"
+      "google_cloud_cpp_common"
+      "google_cloud_cpp_grpc_utils"
+      "spanner_client"
+      "storage_client"
+    )
+    echo "${libraries[@]}" | xargs -n 1 -P "${NCPU}" \
+      env -C "${PROJECT_ROOT}" ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}"
+  fi
 fi
 
 # If document generation is enabled, run it now.

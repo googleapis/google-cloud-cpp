@@ -19,78 +19,57 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module lib/io.sh
 
-if [[ $# != 1 ]]; then
-  echo "Usage: $(basename "$0") <binary-directory>"
+if [[ $# != 2 ]]; then
+  echo "Usage: $(basename "$0") <binary-directory> <library>"
   exit 1
 fi
 
 readonly BINARY_DIR="$1"
+readonly LIBRARY="$2"
 
-if [[ "${CHECK_ABI:-}" != "yes" ]]; then
-  echo
-  io::log_yellow "Skipping ABI check as it is disabled for this build."
-  exit 0
+# This script is invoked several times in parallel using xargs -P. To make the
+# interleaved output from the commands below more readable we'll prepend the
+# library name to every line of stdout and stderr for the rest of this script.
+exec > >(sed -e "s,^,${LIBRARY}: ,")
+exec 2>&1
+
+# This script is only run on a Fedora-based build, so it's fine that this
+# setting is not portable.
+export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig"
+
+readonly LIBDIR="$(pkg-config "${LIBRARY}" --variable=libdir)"
+readonly INCLUDEDIR="$(pkg-config "${LIBRARY}" --variable=includedir)"
+readonly LIBRARY_PATH="${LIBDIR}/lib${LIBRARY}.so"
+readonly ACTUAL_DUMP_FILE="${LIBRARY}.actual.abi.dump"
+readonly ACTUAL_DUMP_PATH="${BINARY_DIR}/${ACTUAL_DUMP_FILE}"
+readonly EXPECTED_DUMP_FILE="${LIBRARY}.expected.abi.dump"
+readonly EXPECTED_DUMP_PATH="${PROJECT_ROOT}/ci/test-abi/${EXPECTED_DUMP_FILE}.gz"
+
+# If we were asked to update the expected ABI files, generate them then exit.
+if [[ "${UPDATE_ABI}" == "yes" ]]; then
+  io::log "Updating expected ABI dump for ${LIBRARY}"
+  abi-dumper "${LIBRARY_PATH}" \
+    -public-headers "${INCLUDEDIR}" \
+    -lver "expected" \
+    -o "${ACTUAL_DUMP_PATH}" &&
+    gzip -c "${ACTUAL_DUMP_PATH}" >"${EXPECTED_DUMP_PATH}"
+  exit $?
 fi
 
-check_library() {
-  local library=$1
-  local return_status=0
+io::log "Checking ABI of ${LIBRARY}"
+abi-dumper "${LIBRARY_PATH}" \
+  -public-headers "${INCLUDEDIR}" \
+  -lver "actual" \
+  -o "${ACTUAL_DUMP_PATH}"
 
-  echo
-  io::log_yellow "Checking ABI for ${library} library."
-  libdir="$(pkg-config "${library}" --variable=libdir)"
-  includedir="$(pkg-config "${library}" --variable=includedir)"
-  new_dump_file="${library}.actual.abi.dump"
-  old_dump_file="${library}.expected.abi.dump"
-  reference_file="${PROJECT_ROOT}/ci/test-abi/${old_dump_file}.gz"
-  abi-dumper "${libdir}/lib${library}.so" \
-    -public-headers "${includedir}" \
-    -lver "current" \
-    -o "${BINARY_DIR}/${new_dump_file}"
-
-  # We want to collect the data for as many libraries as possible, do not exit
-  # on the first error.
-  set +e
-
-  (
-    cd "${BINARY_DIR}"
-    zcat "${reference_file}" >"${old_dump_file}"
-    # We ignore all symbols in internal namespaces, because these are not part
-    # of our public API. We do this by specifying a regex that matches against
-    # the mangled symbol names. For example, 8 is the number of characters in
-    # the string "internal", and it should again be followed by some other
-    # number indicating the length of the symbol within the "internal"
-    # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
-    abi-compliance-checker \
-      -skip-internal-symbols "(8internal|15pubsub_internal)\d" \
-      -src -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}"
-  )
-  if [[ $? != 0 ]]; then
-    return_status=1
-  fi
-  set -e
-
-  if [[ "${UPDATE_ABI}" == "yes" ]]; then
-    abi-dumper "${libdir}/lib${library}.so" \
-      -public-headers "${includedir}" \
-      -lver "reference" -o "${BINARY_DIR}/${new_dump_file}"
-    gzip -c "${BINARY_DIR}/${new_dump_file}" >"${reference_file}"
-  fi
-  return ${return_status}
-}
-
-exit_status=0
-# We are keeping the library list alphabetical for now, there is no preferred
-# order otherwise.
-libraries=(
-  "bigtable_client"
-  "google_cloud_cpp_common"
-  "google_cloud_cpp_grpc_utils"
-  "spanner_client"
-  "storage_client"
-)
-for library in "${libraries[@]}"; do
-  check_library "${library}" || exit_status=1
-done
-
-exit ${exit_status}
+cd "${BINARY_DIR}"
+zcat "${EXPECTED_DUMP_PATH}" >"${EXPECTED_DUMP_FILE}"
+# We ignore all symbols in internal namespaces, because these are not part
+# of our public API. We do this by specifying a regex that matches against
+# the mangled symbol names. For example, 8 is the number of characters in
+# the string "internal", and it should again be followed by some other
+# number indicating the length of the symbol within the "internal"
+# namespace. See: https://en.wikipedia.org/wiki/Name_mangling
+abi-compliance-checker \
+  -skip-internal-symbols "(8internal|15pubsub_internal)\d" \
+  -src -l "${LIBRARY}" -old "${EXPECTED_DUMP_FILE}" -new "${ACTUAL_DUMP_FILE}"
