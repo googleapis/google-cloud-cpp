@@ -1256,6 +1256,7 @@ class Client {
    * This operation is always idempotent because it only acts on a specific
    * `upload_id`.
    */
+  template <typename... Options>
   Status DeleteResumableUpload(std::string const& bucket_name,
                                std::string const& object_name,
                                std::string const& upload_id,
