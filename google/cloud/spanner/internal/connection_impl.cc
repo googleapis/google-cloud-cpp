@@ -87,16 +87,20 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
       std::move(retry_policy), std::move(backoff_policy)));
 }
 
-spanner_proto::TransactionOptions TransactionOptionsFromSelector(
-    spanner_proto::TransactionSelector const& s) {
-  return s.has_begin() ? s.begin() : s.single_use();
-}
-
 spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
   spanner_proto::TransactionOptions options;
   *options.mutable_partitioned_dml() =
       spanner_proto::TransactionOptions_PartitionedDml();
   return options;
+}
+
+// Operations that set `TransactionSelector::begin` in the request and receive
+// a malformed response that does not contain a `Transaction` should invalidate
+// the transaction with and also return this status.
+Status MissingTransactionStatus(std::string const& operation) {
+  return Status(StatusCode::kInternal,
+                "Begin transaction requested but no transaction returned (in " +
+                    operation + ").");
 }
 
 ConnectionImpl::ConnectionImpl(Database db,
@@ -388,26 +392,37 @@ RowStream ConnectionImpl::ReadImpl(
     }
     return reader;
   };
-  auto rpc = absl::make_unique<PartialResultSetResume>(
-      std::move(factory), Idempotency::kIdempotent,
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone());
-  auto reader = PartialResultSetSource::Create(std::move(rpc));
-  if (!reader.ok()) {
-    auto status = std::move(reader).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
-    return MakeStatusOnlyResult<RowStream>(std::move(status));
-  }
-  if (s->has_begin()) {
-    auto metadata = (*reader)->Metadata();
-    if (!metadata || metadata->transaction().id().empty()) {
-      return MakeStatusOnlyResult<RowStream>(
-          Status(StatusCode::kInternal,
-                 "Begin transaction requested but no transaction returned (in "
-                 "Read)."));
+  for (;;) {
+    auto rpc = absl::make_unique<PartialResultSetResume>(
+        factory, Idempotency::kIdempotent, retry_policy_prototype_->clone(),
+        backoff_policy_prototype_->clone());
+    auto reader = PartialResultSetSource::Create(std::move(rpc));
+    if (s->has_begin()) {
+      if (reader.ok()) {
+        auto metadata = (*reader)->Metadata();
+        if (!metadata || !metadata->has_transaction()) {
+          s = MissingTransactionStatus(__func__);
+          return MakeStatusOnlyResult<RowStream>(s.status());
+        }
+        s->set_id(metadata->transaction().id());
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
+      }
     }
-    s->set_id(metadata->transaction().id());
+
+    if (!reader.ok()) {
+      auto status = std::move(reader).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return MakeStatusOnlyResult<RowStream>(std::move(status));
+    }
+    return RowStream(*std::move(reader));
   }
-  return RowStream(*std::move(reader));
 }
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
@@ -436,33 +451,49 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_partition_options() = internal::ToProto(partition_options);
 
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
-      [&stub](grpc::ClientContext& context,
-              spanner_proto::PartitionReadRequest const& request) {
-        return stub->PartitionRead(context, request);
-      },
-      request, __func__);
-  if (!response.ok()) {
-    auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
-    return status;
-  }
+  for (;;) {
+    auto response = internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
+        [&stub](grpc::ClientContext& context,
+                spanner_proto::PartitionReadRequest const& request) {
+          return stub->PartitionRead(context, request);
+        },
+        request, __func__);
+    if (s->has_begin()) {
+      if (response.ok()) {
+        if (!response->has_transaction()) {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
+        }
+        s->set_id(response->transaction().id());
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
+      }
+    }
 
-  if (s->has_begin()) {
-    s->set_id(response->transaction().id());
-  }
+    if (!response.ok()) {
+      auto status = std::move(response).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
 
-  std::vector<ReadPartition> read_partitions;
-  for (auto& partition : response->partitions()) {
-    read_partitions.push_back(internal::MakeReadPartition(
-        response->transaction().id(), session->session_name(),
-        partition.partition_token(), params.table, params.keys, params.columns,
-        params.read_options));
-  }
+    std::vector<ReadPartition> read_partitions;
+    for (auto& partition : response->partitions()) {
+      read_partitions.push_back(internal::MakeReadPartition(
+          response->transaction().id(), session->session_name(),
+          partition.partition_token(), params.table, params.keys,
+          params.columns, params.read_options));
+    }
 
-  return read_partitions;
+    return read_partitions;
+  }
 }
 
 template <typename ResultType>
@@ -494,19 +525,32 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     request.mutable_query_options()->set_optimizer_version(
         *params.query_options.optimizer_version());
   }
-  auto reader = retry_resume_fn(request);
-  if (!reader.ok()) {
-    return std::move(reader).status();
-  }
-  if (s->has_begin()) {
-    auto metadata = (*reader)->Metadata();
-    if (!metadata || metadata->transaction().id().empty()) {
-      return Status(StatusCode::kInternal,
-                    "Begin transaction requested but no transaction returned.");
+
+  for (;;) {
+    auto reader = retry_resume_fn(request);
+    if (s->has_begin()) {
+      if (reader.ok()) {
+        auto metadata = (*reader)->Metadata();
+        if (!metadata || !metadata->has_transaction()) {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
+        }
+        s->set_id(metadata->transaction().id());
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
+      }
     }
-    s->set_id(metadata->transaction().id());
+    if (!reader.ok()) {
+      return std::move(reader).status();
+    }
+    return ResultType(std::move(*reader));
   }
-  return ResultType(std::move(*reader));
 }
 
 template <typename ResultType>
@@ -675,32 +719,46 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
       internal::ToProto(std::move(params.partition_options));
 
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
-      [&stub](grpc::ClientContext& context,
-              spanner_proto::PartitionQueryRequest const& request) {
-        return stub->PartitionQuery(context, request);
-      },
-      request, __func__);
-  if (!response.ok()) {
-    auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
-    return status;
-  }
+  for (;;) {
+    auto response = internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
+        [&stub](grpc::ClientContext& context,
+                spanner_proto::PartitionQueryRequest const& request) {
+          return stub->PartitionQuery(context, request);
+        },
+        request, __func__);
+    if (s->has_begin()) {
+      if (response.ok()) {
+        if (!response->has_transaction()) {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
+        }
+        s->set_id(response->transaction().id());
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
+      }
+    }
+    if (!response.ok()) {
+      auto status = std::move(response).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
 
-  if (s->has_begin()) {
-    s->set_id(response->transaction().id());
+    std::vector<QueryPartition> query_partitions;
+    for (auto& partition : response->partitions()) {
+      query_partitions.push_back(internal::MakeQueryPartition(
+          response->transaction().id(), session->session_name(),
+          partition.partition_token(), params.statement));
+    }
+    return query_partitions;
   }
-
-  std::vector<QueryPartition> query_partitions;
-  for (auto& partition : response->partitions()) {
-    query_partitions.push_back(internal::MakeQueryPartition(
-        response->transaction().id(), session->session_name(),
-        partition.partition_token(), params.statement));
-  }
-
-  return query_partitions;
 }
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
@@ -724,31 +782,45 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   }
 
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
-      [&stub](grpc::ClientContext& context,
-              spanner_proto::ExecuteBatchDmlRequest const& request) {
-        return stub->ExecuteBatchDml(context, request);
-      },
-      request, __func__);
-  if (!response) {
-    auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
-    return status;
+  for (;;) {
+    auto response = internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
+        [&stub](grpc::ClientContext& context,
+                spanner_proto::ExecuteBatchDmlRequest const& request) {
+          return stub->ExecuteBatchDml(context, request);
+        },
+        request, __func__);
+    if (s->has_begin()) {
+      if (response.ok()) {
+        if (response->result_sets_size() < 1 ||
+            !response->result_sets(0).metadata().has_transaction()) {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
+        }
+        s->set_id(response->result_sets(0).metadata().transaction().id());
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
+      }
+    }
+    if (!response) {
+      auto status = std::move(response).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
+    BatchDmlResult result;
+    result.status = google::cloud::MakeStatusFromRpcError(response->status());
+    for (auto const& result_set : response->result_sets()) {
+      result.stats.push_back({result_set.stats().row_count_exact()});
+    }
+    return result;
   }
-
-  if (response->result_sets_size() > 0 && s->has_begin()) {
-    s->set_id(response->result_sets(0).metadata().transaction().id());
-  }
-
-  BatchDmlResult result;
-  result.status = google::cloud::MakeStatusFromRpcError(response->status());
-  for (auto const& result_set : response->result_sets()) {
-    result.stats.push_back({result_set.stats().row_count_exact()});
-  }
-
-  return result;
 }
 
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
@@ -821,8 +893,8 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   }
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
-    auto begin =
-        BeginTransaction(session, TransactionOptionsFromSelector(*s), __func__);
+    auto begin = BeginTransaction(
+        session, s->has_begin() ? s->begin() : s->single_use(), __func__);
     if (!begin.ok()) {
       s = begin.status();  // invalidate the transaction
       return begin.status();
@@ -865,9 +937,8 @@ Status ConnectionImpl::RollbackImpl(
     // There is nothing to rollback if a transaction id has not yet been
     // assigned, so we just succeed without making an RPC.
     //
-    // TODO(#4516) to exactly match the backend behavior, we will need to do
-    // an explicit BeginTransaction followed by a Rollback here (can't be done
-    // in this PR due to a circular dependency between this PR and #4624).
+    // TODO(#4705) to exactly match the backend behavior, we will need to do
+    // an explicit BeginTransaction followed by a Rollback here.
     return Status();
   }
 
