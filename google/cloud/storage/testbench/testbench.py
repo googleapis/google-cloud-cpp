@@ -835,6 +835,25 @@ def resumable_upload_chunk(bucket_name):
     return bucket.receive_upload_chunk(gcs_url, flask.request)
 
 
+@upload.route("/b/<bucket_name>/o", methods=["DELETE"])
+def delete_resumable_upload(bucket_name):
+    upload_type = flask.request.args.get("uploadType")
+    if upload_type != "resumable":
+        raise error_response.ErrorResponse(
+            "testbench can delete resumable uploadType only", status_code=400
+        )
+    upload_id = flask.request.args.get("upload_id")
+    if upload_id is None:
+        raise error_response.ErrorResponse(
+            "missing upload_id in delete_resumable_upload", status_code=400
+        )
+    bucket = testbench_utils.lookup_bucket(bucket_name)
+    if upload_id not in bucket.resumable_uploads:
+        raise error_response.ErrorResponse("upload_id does not exist", status_code=404)
+    bucket.resumable_uploads.pop(upload_id)
+    return testbench_utils.filtered_response(flask.request, {})
+
+
 # Define the WSGI application to handle (a few) requests in the XML API.
 XMLAPI_HANDLER_PATH = "/xmlapi"
 xmlapi = flask.Flask(__name__)

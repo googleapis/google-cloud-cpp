@@ -805,6 +805,31 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
   ASSERT_FALSE(status.ok());
 }
 
+TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto stream = client->WriteObject(bucket_name_, object_name,
+                                    NewResumableUploadSession());
+  auto session_id = stream.resumable_session_id();
+
+  stream << "This data will not get uploaded, it is too small\n";
+  std::move(stream).Suspend();
+
+  auto status = client->DeleteResumableUpload(session_id);
+  EXPECT_STATUS_OK(status);
+
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(client_options);
+  Client client_resumable(client_options->set_maximum_simple_upload_size(0));
+  auto stream_resumable = client_resumable.WriteObject(
+      bucket_name_, object_name, RestoreResumableUploadSession(session_id));
+  stream_resumable << LoremIpsum();
+  stream_resumable.Close();
+  EXPECT_FALSE(stream_resumable.metadata().status().ok());
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

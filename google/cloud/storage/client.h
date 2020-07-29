@@ -1244,6 +1244,26 @@ class Client {
   }
 
   /**
+   * Cancel a resumable upload.
+   *
+   * @param upload_session_url the url of the upload session. Returned by
+   * `ObjectWriteStream::resumable_session_id`.
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent because it only acts on a specific
+   * `upload_session_url`.
+   */
+  template <typename... Options>
+  Status DeleteResumableUpload(std::string const& upload_session_url,
+                               Options&&... options) {
+    internal::DeleteResumableUploadRequest request(upload_session_url);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->DeleteResumableUpload(request).status();
+  }
+
+  /**
    * Downloads a Cloud Storage object to a file.
    *
    * @param bucket_name the name of the bucket that contains the object.
