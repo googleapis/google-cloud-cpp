@@ -84,8 +84,10 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
     auto pos = ids.find(std::this_thread::get_id());
     EXPECT_NE(ids.end(), pos);
     EXPECT_NE(main_id, std::this_thread::get_id());
-    std::move(h).ack();
+    // Increment the counter before acking, as the ack() may trigger a new call
+    // before this function gets to run.
     ++expected_message_id;
+    std::move(h).ack();
   };
 
   auto session =
