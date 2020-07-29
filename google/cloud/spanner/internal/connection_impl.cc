@@ -400,12 +400,11 @@ RowStream ConnectionImpl::ReadImpl(
     if (s->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
-        if (metadata && metadata->has_transaction()) {
-          s->set_id(metadata->transaction().id());
-        } else {
+        if (!metadata || !metadata->has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return MakeStatusOnlyResult<RowStream>(s.status());
         }
+        s->set_id(metadata->transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(), __func__);
         if (begin.ok()) {
@@ -463,12 +462,11 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
         request, __func__);
     if (s->has_begin()) {
       if (response.ok()) {
-        if (response->has_transaction()) {
-          s->set_id(response->transaction().id());
-        } else {
+        if (!response->has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return s.status();
         }
+        s->set_id(response->transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(), __func__);
         if (begin.ok()) {
@@ -533,13 +531,11 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     if (s->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
-        if (metadata && metadata->has_transaction()) {
-          s->set_id(metadata->transaction().id());
-        } else {
-          // Did not receive a transaction despite requesting one.
+        if (!metadata || !metadata->has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return s.status();
         }
+        s->set_id(metadata->transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(), __func__);
         if (begin.ok()) {
@@ -734,12 +730,11 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
         request, __func__);
     if (s->has_begin()) {
       if (response.ok()) {
-        if (response->has_transaction()) {
-          s->set_id(response->transaction().id());
-        } else {
+        if (!response->has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return s.status();
         }
+        s->set_id(response->transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(), __func__);
         if (begin.ok()) {
@@ -798,13 +793,12 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         request, __func__);
     if (s->has_begin()) {
       if (response.ok()) {
-        if (response->result_sets_size() > 0 &&
-            response->result_sets(0).metadata().has_transaction()) {
-          s->set_id(response->result_sets(0).metadata().transaction().id());
-        } else {
+        if (response->result_sets_size() < 1 ||
+            !response->result_sets(0).metadata().has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return s.status();
         }
+        s->set_id(response->result_sets(0).metadata().transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(), __func__);
         if (begin.ok()) {
