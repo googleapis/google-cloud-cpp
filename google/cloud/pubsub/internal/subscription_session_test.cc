@@ -29,7 +29,6 @@ using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Expectation;
 using ::testing::InSequence;
-using ::testing::StartsWith;
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacks) {
