@@ -44,7 +44,8 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
             [ordering_key](
                 pubsub::PublisherConnection::PublishParams const& p) {
               EXPECT_EQ(ordering_key, p.message.ordering_key());
-              auto ack_id = p.message.ordering_key() + "#" + p.message.data();
+              auto ack_id = p.message.ordering_key() + "#" +
+                            std::string(p.message.data());
               return make_ready_future(make_status_or(ack_id));
             });
     EXPECT_CALL(*mock, Flush(_)).Times(2);
