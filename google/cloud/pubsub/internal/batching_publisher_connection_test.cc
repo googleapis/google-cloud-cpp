@@ -259,7 +259,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
         EXPECT_EQ(topic.FullName(), request.topic());
         google::pubsub::v1::PublishResponse response;
         for (auto const& m : request.messages()) {
-          response.add_message_ids("ack-for-" + m.data());
+          response.add_message_ids("ack-for-" + std::string(m.data()));
         }
         return make_ready_future(make_status_or(response));
       });
