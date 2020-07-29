@@ -325,9 +325,6 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
       .WillOnce(generate_ack_response)
       .WillOnce(generate_ack_response)
       .WillOnce(generate_ack_response);
-//  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-//      .After(modify_ack_2)
-//      .WillRepeatedly(ignore_modify_ack_deadline);
 
   promise<void> enough_messages;
   std::atomic<int> expected_message_id{0};
