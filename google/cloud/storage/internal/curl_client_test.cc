@@ -396,8 +396,8 @@ TEST_P(CurlClientTest, CreateResumableSession) {
 
 TEST_P(CurlClientTest, DeleteResumableUpload) {
   auto actual = client_
-                    ->DeleteResumableUpload(DeleteResumableUploadRequest(
-                        "test-bucket", "test-object", "test-upload-id"))
+                    ->DeleteResumableUpload(
+                        DeleteResumableUploadRequest("test-upload-session-url"))
                     .status();
   CheckStatus(actual);
 }

@@ -382,19 +382,16 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
  * A request to cancel a resumable upload.
  */
 class DeleteResumableUploadRequest
-    : public GenericObjectRequest<DeleteResumableUploadRequest, UserProject> {
+    : public GenericRequest<DeleteResumableUploadRequest, UserProject> {
  public:
   DeleteResumableUploadRequest() = default;
+  explicit DeleteResumableUploadRequest(std::string upload_session_url)
+      : upload_session_url_(std::move(upload_session_url)) {}
 
-  DeleteResumableUploadRequest(std::string bucket_name, std::string object_name,
-                               std::string upload_id)
-      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        upload_id_(std::move(upload_id)) {}
-
-  std::string const& upload_id() const { return upload_id_; }
+  std::string const& upload_session_url() const { return upload_session_url_; }
 
  private:
-  std::string upload_id_;
+  std::string upload_session_url_;
 };
 
 std::ostream& operator<<(std::ostream& os,

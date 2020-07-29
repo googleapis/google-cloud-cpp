@@ -813,14 +813,11 @@ TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
   auto stream = client->WriteObject(bucket_name_, object_name,
                                     NewResumableUploadSession());
   auto session_id = stream.resumable_session_id();
-  auto upload_id =
-      session_id.substr(session_id.find("upload_id=") + strlen("upload_id="));
 
   stream << "This data will not get uploaded, it is too small\n";
   std::move(stream).Suspend();
 
-  auto status =
-      client->DeleteResumableUpload(bucket_name_, object_name, upload_id);
+  auto status = client->DeleteResumableUpload(session_id);
   EXPECT_STATUS_OK(status);
 
   auto client_options = ClientOptions::CreateDefaultClientOptions();

@@ -505,18 +505,13 @@ TEST(ObjectRequestsTest, ResumableUpload) {
 }
 
 TEST(ObjectRequestsTest, DeleteResumableUpload) {
-  DeleteResumableUploadRequest request("source-bucket", "source-object",
-                                       "source-upload-id");
-  EXPECT_EQ("source-bucket", request.bucket_name());
-  EXPECT_EQ("source-object", request.object_name());
-  EXPECT_EQ("source-upload-id", request.upload_id());
+  DeleteResumableUploadRequest request("source-upload-session-url");
+  EXPECT_EQ("source-upload-session-url", request.upload_session_url());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("source-bucket"));
-  EXPECT_THAT(actual, HasSubstr("source-object"));
-  EXPECT_THAT(actual, HasSubstr("source-upload-id"));
+  EXPECT_THAT(actual, HasSubstr("source-upload-session-url"));
 }
 
 TEST(ObjectRequestsTest, UploadChunk) {

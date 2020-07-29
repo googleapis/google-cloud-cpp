@@ -707,14 +707,11 @@ CurlClient::RestoreResumableSession(std::string const& session_id) {
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
-  CurlRequestBuilder builder(
-      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
   auto status = SetupBuilderCommon(builder, "DELETE");
   if (!status.ok()) {
     return status;
   }
-  builder.AddQueryParameter("uploadType", "resumable");
-  builder.AddQueryParameter("upload_id", request.upload_id());
   auto response = builder.BuildRequest().MakeRequest(std::string{});
   if (!response.ok()) {
     return std::move(response).status();
