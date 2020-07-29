@@ -27,6 +27,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::AtLeast;
+using ::testing::Expectation;
 using ::testing::InSequence;
 using ::testing::StartsWith;
 
@@ -228,101 +229,105 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       };
+  auto ignore_modify_ack_deadline =
+      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      };
 
   promise<void> deadline_0_updated;
   promise<void> deadline_1_updated;
   promise<void> deadline_2_updated;
-  {
-    InSequence sequence;
 
-    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
-    // This may happen 0 or more times, depending on timing.
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-        .WillRepeatedly(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-              EXPECT_GE(3, request.ack_ids_size());
-              for (auto const& a : request.ack_ids()) {
-                EXPECT_THAT(a, StartsWith("test-ack-id-"));
-              }
-              return make_ready_future(Status{});
-            });
+  Expectation pull_0 =
+      EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
 
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .Times(2)
-        .WillRepeatedly(generate_ack_response);
-    // After 2 acks the handler will block, which will (eventually) expire the
-    // timer and create a update on the AckDeadline and trigger this
-    // expectation. Here we release the handler to wait on the next event.
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-        .WillOnce(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-              EXPECT_EQ(1, request.ack_ids_size());
-              if (request.ack_ids_size() == 1) {
-                EXPECT_EQ("test-ack-id-2", request.ack_ids(0));
-              }
-              // Allow callback to make progress.
-              deadline_0_updated.set_value();
-              return make_ready_future(Status{});
-            })
-        .WillRepeatedly(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-              // Rarely we will get additional timers triggered and this
-              // function will be called, that is fine.
-              return make_ready_future(Status{});
-            });
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .WillOnce(generate_ack_response);
-    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .Times(2)
-        .WillRepeatedly(generate_ack_response);
-    // Here the handler blocks for two deadline updates
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-        .WillOnce(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-              EXPECT_EQ(1, request.ack_ids_size());
-              if (request.ack_ids_size() == 1) {
-                EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
-              }
-              // Allow callback to make progress.
-              deadline_1_updated.set_value();
-              return make_ready_future(Status{});
-            })
-        .WillOnce(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-              EXPECT_EQ(1, request.ack_ids_size());
-              if (request.ack_ids_size() == 1) {
-                EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
-              }
-              // Allow callback to make progress.
-              deadline_2_updated.set_value();
-              return make_ready_future(Status{});
-            })
-        .WillRepeatedly(
-            [&](google::cloud::CompletionQueue&,
-                std::unique_ptr<grpc::ClientContext>,
-                google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-              // Rarely we will get additional timers triggered and this
-              // function will be called, that is fine.
-              return make_ready_future(Status{});
-            });
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .WillOnce(generate_ack_response);
-    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
-    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-        .Times(3)
-        .WillRepeatedly(generate_ack_response);
-  }
+  // This may happen 0 or more times, depending on timing.
+  Expectation modify_ack_0 = EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+                                 .WillRepeatedly(ignore_modify_ack_deadline);
+
+  Expectation acks_0 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+                           .Times(2)
+                           .WillRepeatedly(generate_ack_response);
+
+  // After 2 acks the handler will block, which will (eventually) expire the
+  // timer and create a update on the AckDeadline and trigger this
+  // expectation. Here we release the handler to wait on the next event.
+  Expectation modify_ack_1 =
+      EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+          .After(modify_ack_0, acks_0)
+          .WillOnce(
+              [&](google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+                EXPECT_EQ(1, request.ack_ids_size());
+                if (request.ack_ids_size() == 1) {
+                  EXPECT_EQ("test-ack-id-2", request.ack_ids(0));
+                }
+                // Allow callback to make progress.
+                deadline_0_updated.set_value();
+                return make_ready_future(Status{});
+              })
+          .WillRepeatedly(
+              // Rarely we will get additional timers triggered, ignore them.
+              ignore_modify_ack_deadline);
+
+  Expectation acks_1 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+                           .After(modify_ack_1)
+                           .WillOnce(generate_ack_response);
+
+  EXPECT_CALL(*mock, AsyncPull(_, _, _)).After(acks_1).WillOnce(generate_3);
+  Expectation acks_2 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+                           .After(acks_1)
+                           .WillOnce(generate_ack_response)
+                           .WillOnce(generate_ack_response);
+
+  // Here the handler blocks for two deadline updates
+  Expectation modify_ack_2 =
+      EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+          .After(acks_2)
+          .WillOnce(
+              [&](google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+                EXPECT_EQ(1, request.ack_ids_size());
+                if (request.ack_ids_size() == 1) {
+                  EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
+                }
+                // Allow callback to make progress.
+                deadline_1_updated.set_value();
+                return make_ready_future(Status{});
+              })
+          .WillOnce(
+              [&](google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+                EXPECT_EQ(1, request.ack_ids_size());
+                if (request.ack_ids_size() == 1) {
+                  EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
+                }
+                // Allow callback to make progress.
+                deadline_2_updated.set_value();
+                return make_ready_future(Status{});
+              })
+          .WillRepeatedly(ignore_modify_ack_deadline);
+
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+      .After(modify_ack_2)
+      .WillOnce(generate_ack_response);
+
+  Expectation pull_2 = EXPECT_CALL(*mock, AsyncPull(_, _, _))
+                           .After(modify_ack_2)
+                           .WillOnce(generate_3);
+
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+      .After(pull_2)
+      .WillOnce(generate_ack_response)
+      .WillOnce(generate_ack_response)
+      .WillOnce(generate_ack_response);
+//  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+//      .After(modify_ack_2)
+//      .WillRepeatedly(ignore_modify_ack_deadline);
 
   promise<void> enough_messages;
   std::atomic<int> expected_message_id{0};
@@ -363,7 +368,7 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
 
   cq.Shutdown();
   for (auto& t : pool) t.join();
-}  // namespace
+}
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
