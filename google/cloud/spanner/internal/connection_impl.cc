@@ -97,7 +97,7 @@ spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
 // Operations that set `TransactionSelector::begin` in the request and receive
 // a malformed response that does not contain a `Transaction` should invalidate
 // the transaction with and also return this status.
-Status MissingTransactionStatus(std::string operation) {
+Status MissingTransactionStatus(std::string const& operation) {
   return Status(StatusCode::kInternal,
                 "Begin transaction requested but no transaction returned (in " +
                     operation + ").");
