@@ -68,6 +68,7 @@ using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Property;
 using ::testing::Return;
+using ::testing::Sequence;
 using ::testing::SetArgPointee;
 using ::testing::StartsWith;
 using ::testing::UnorderedPointwise;
@@ -424,7 +425,9 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   };
   auto reader1 = make_reader();
   auto reader2 = make_reader();
-  ::testing::Sequence s;
+  // n.b. these calls are explicitly sequenced because using the scoped
+  // `InSequence` object causes gmock to get confused by the reader calls.
+  Sequence s;
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .InSequence(s)
       .WillOnce(
@@ -446,8 +449,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read({txn, "table", KeySet::All(), {"UserId", "UserName"}});
   for (auto& row : rows) {
-    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
-    EXPECT_THAT(row.status().message(), HasSubstr("uh-oh"));
+    EXPECT_THAT(row,
+                StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
   }
 }
 
@@ -753,7 +756,8 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
   auto conn = MakeConnection(
       db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
 
-  Status status(StatusCode::kInvalidArgument, "cannot begin transaction");
+  Status op_status(StatusCode::kInvalidArgument, "ExecuteSql status");
+  Status begin_status(StatusCode::kInvalidArgument, "BeginTransaction status");
   {
     InSequence seq;
     EXPECT_CALL(*mock, BatchCreateSessions(_, _))
@@ -763,17 +767,42 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
     // via `ExecuteSql`, and then explicitly via `BeginTransaction`. Both fail,
     // and we should receive no further RPC calls - since the transaction is
     // not valid the client fails any subsequent operations itself.
-    EXPECT_CALL(*mock, ExecuteSql(_, _)).WillOnce(Return(status));
-    EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(status));
+    EXPECT_CALL(*mock, ExecuteSql(_, _)).WillOnce(Return(op_status));
+    EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(begin_status));
   }
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  // The first operation fails with the status of the operation's RPC
+  // (`ExecuteSql` in this case).
   EXPECT_THAT(conn->ExecuteDml({txn, SqlStatement("some statement")}),
-              StatusIs(status.code(), HasSubstr(status.message())));
+              StatusIs(op_status.code(), HasSubstr(op_status.message())));
+  // Subsequent operations fail with the status of `BeginTransaction`.
   EXPECT_THAT(conn->ExecuteDml({txn, SqlStatement("another statement")}),
-              StatusIs(status.code(), HasSubstr(status.message())));
+              StatusIs(begin_status.code(), HasSubstr(begin_status.message())));
   EXPECT_THAT(conn->Commit({txn, {}}),
-              StatusIs(status.code(), HasSubstr(status.message())));
+              StatusIs(begin_status.code(), HasSubstr(begin_status.message())));
+}
+
+TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  // Return an otherwise valid response that does not contain a transaction.
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString("metadata: {}", &response));
+  EXPECT_CALL(*mock, ExecuteSql(_, _)).WillOnce(Return(response));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  EXPECT_THAT(
+      conn->ExecuteDml({txn, SqlStatement("select 1")}),
+      StatusIs(StatusCode::kInternal,
+               HasSubstr(
+                   "Begin transaction requested but no transaction returned")));
 }
 
 TEST(ConnectionImplTest, ProfileQuerySuccess) {
@@ -1235,7 +1264,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
         .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
     Status status(StatusCode::kPermissionDenied, "uh-oh in ExecuteBatchDml");
-
     EXPECT_CALL(*mock, ExecuteBatchDml(_, _)).WillOnce(Return(status));
     EXPECT_CALL(*mock, BeginTransaction(_, _))
         .WillOnce(Return(MakeTestTransaction()));

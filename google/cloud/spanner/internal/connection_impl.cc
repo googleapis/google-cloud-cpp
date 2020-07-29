@@ -94,6 +94,15 @@ spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
   return options;
 }
 
+// Operations that set `TransactionSelector::begin` in the request and receive
+// a malformed response that does not contain a `Transaction` should invalidate
+// the transaction with and also return this status.
+Status MissingTransactionStatus(std::string operation) {
+  return Status(StatusCode::kInternal,
+                "Begin transaction requested but no transaction returned (in " +
+                    operation + ").");
+}
+
 ConnectionImpl::ConnectionImpl(Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
                                ConnectionOptions const& options,
@@ -389,19 +398,22 @@ RowStream ConnectionImpl::ReadImpl(
         backoff_policy_prototype_->clone());
     auto reader = PartialResultSetSource::Create(std::move(rpc));
     if (s->has_begin()) {
-      auto metadata = reader.ok() ? (*reader)->Metadata() : absl::nullopt;
-      if (metadata && metadata->has_transaction()) {
-        s->set_id(metadata->transaction().id());
-      } else {
-        // A transaction should have been returned but was not.
-        auto begin = BeginTransaction(session, s->begin(), __func__);
-        if (!begin.ok()) {
-          s = begin.status();  // invalidate the transaction
-          return MakeStatusOnlyResult<RowStream>(begin.status());
+      if (reader.ok()) {
+        auto metadata = (*reader)->Metadata();
+        if (metadata && metadata->has_transaction()) {
+          s->set_id(metadata->transaction().id());
+        } else {
+          s = MissingTransactionStatus(__func__);
+          return MakeStatusOnlyResult<RowStream>(s.status());
         }
-        s->set_id(begin->id());
-        *request.mutable_transaction() = *s;
-        continue;
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
       }
     }
 
@@ -450,18 +462,21 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
         },
         request, __func__);
     if (s->has_begin()) {
-      if (response.ok() && response->has_transaction()) {
-        s->set_id(response->transaction().id());
-      } else {
-        // A transaction should have been returned but was not.
-        auto begin = BeginTransaction(session, s->begin(), __func__);
-        if (!begin.ok()) {
-          s = begin.status();  // invalidate the transaction
-          return begin.status();
+      if (response.ok()) {
+        if (response->has_transaction()) {
+          s->set_id(response->transaction().id());
+        } else {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
         }
-        s->set_id(begin->id());
-        *request.mutable_transaction() = *s;
-        continue;
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
       }
     }
 
@@ -516,19 +531,23 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   for (;;) {
     auto reader = retry_resume_fn(request);
     if (s->has_begin()) {
-      auto metadata = reader.ok() ? (*reader)->Metadata() : absl::nullopt;
-      if (metadata && metadata->has_transaction()) {
-        s->set_id(metadata->transaction().id());
-      } else {
-        // A transaction should have been returned but was not.
-        auto begin = BeginTransaction(session, s->begin(), __func__);
-        if (!begin.ok()) {
-          s = begin.status();  // invalidate the transaction
-          return begin.status();
+      if (reader.ok()) {
+        auto metadata = (*reader)->Metadata();
+        if (metadata && metadata->has_transaction()) {
+          s->set_id(metadata->transaction().id());
+        } else {
+          // Did not receive a transaction despite requesting one.
+          s = MissingTransactionStatus(__func__);
+          return s.status();
         }
-        s->set_id(begin->id());
-        *request.mutable_transaction() = *s;
-        continue;
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
       }
     }
     if (!reader.ok()) {
@@ -714,18 +733,21 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
         },
         request, __func__);
     if (s->has_begin()) {
-      if (response.ok() && response->has_transaction()) {
-        s->set_id(response->transaction().id());
-      } else {
-        // A transaction should have been returned but was not.
-        auto begin = BeginTransaction(session, s->begin(), __func__);
-        if (!begin.ok()) {
-          s = begin.status();  // invalidate the transaction
-          return begin.status();
+      if (response.ok()) {
+        if (response->has_transaction()) {
+          s->set_id(response->transaction().id());
+        } else {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
         }
-        s->set_id(begin->id());
-        *request.mutable_transaction() = *s;
-        continue;
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
       }
     }
     if (!response.ok()) {
@@ -775,19 +797,22 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         },
         request, __func__);
     if (s->has_begin()) {
-      if (response.ok() && response->result_sets_size() > 0 &&
-          response->result_sets(0).metadata().has_transaction()) {
-        s->set_id(response->result_sets(0).metadata().transaction().id());
-      } else {
-        // A transaction should have been returned but was not.
-        auto begin = BeginTransaction(session, s->begin(), __func__);
-        if (!begin.ok()) {
-          s = begin.status();  // invalidate the transaction
-          return begin.status();
+      if (response.ok()) {
+        if (response->result_sets_size() > 0 &&
+            response->result_sets(0).metadata().has_transaction()) {
+          s->set_id(response->result_sets(0).metadata().transaction().id());
+        } else {
+          s = MissingTransactionStatus(__func__);
+          return s.status();
         }
-        s->set_id(begin->id());
-        *request.mutable_transaction() = *s;
-        continue;
+      } else {
+        auto begin = BeginTransaction(session, s->begin(), __func__);
+        if (begin.ok()) {
+          s->set_id(begin->id());
+          *request.mutable_transaction() = *s;
+          continue;
+        }
+        s = begin.status();  // invalidate the transaction
       }
     }
     if (!response) {
