@@ -21,6 +21,37 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+class NotifyWhenMessageHandled : public pubsub::AckHandler::Impl {
+ public:
+  explicit NotifyWhenMessageHandled(
+      std::weak_ptr<SubscriptionSession> session,
+      std::unique_ptr<pubsub::AckHandler::Impl> child, std::size_t message_size)
+      : session_(std::move(session)),
+        child_(std::move(child)),
+        message_size_(message_size) {}
+  ~NotifyWhenMessageHandled() override = default;
+
+  void ack() override {
+    child_->ack();
+    NotifySession();
+  }
+  void nack() override {
+    child_->nack();
+    NotifySession();
+  }
+  std::string ack_id() const override { return child_->ack_id(); }
+
+ private:
+  void NotifySession() {
+    auto session = session_.lock();
+    if (session) session->MessageHandled(message_size_);
+  }
+
+  std::weak_ptr<SubscriptionSession> session_;
+  std::unique_ptr<pubsub::AckHandler::Impl> child_;
+  std::size_t message_size_;
+};
+
 future<Status> SubscriptionSession::Start() {
   auto self = shared_from_this();
   std::weak_ptr<SubscriptionSession> w(self);
@@ -31,6 +62,13 @@ future<Status> SubscriptionSession::Start() {
   }};
   executor_.RunAsync([self] { self->PullOne(); });
   return result_.get_future();
+}
+
+void SubscriptionSession::MessageHandled(std::size_t) {
+  auto self = shared_from_this();
+  // After the callback re-schedule ourselves.
+  // TODO(#4652) - support parallel scheduling of callbacks
+  executor_.RunAsync([self] { self->HandleQueue(); });
 }
 
 void SubscriptionSession::Cancel() {
@@ -93,15 +131,16 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
   messages_.pop_front();
   lk.unlock();
 
-  auto handler_impl = absl::make_unique<DefaultAckHandlerImpl>(
-      executor_, stub_, params_.full_subscription_name,
-      std::move(*m.mutable_ack_id()));
+  std::unique_ptr<pubsub::AckHandler::Impl> handler =
+      absl::make_unique<DefaultAckHandlerImpl>(executor_, stub_,
+                                               params_.full_subscription_name,
+                                               std::move(*m.mutable_ack_id()));
+  // TODO(#...) - use a better estimation for the message size.
+  auto const message_size = m.message().data().size();
+  handler = absl::make_unique<NotifyWhenMessageHandled>(
+      self, std::move(handler), message_size);
   params_.callback(FromProto(std::move(*m.mutable_message())),
-                   pubsub::AckHandler(std::move(handler_impl)));
-
-  // After the callback re-schedule ourselves.
-  // TODO(#4652) - support parallel scheduling of callbacks
-  executor_.RunAsync([self] { self->HandleQueue(); });
+                   pubsub::AckHandler(std::move(handler)));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

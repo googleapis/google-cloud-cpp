@@ -196,22 +196,24 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   //! [START pubsub_subscriber_async_pull] [subscribe]
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::atomic<int> count{0};
+    google::cloud::promise<void> received_message;
     auto result = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
-          std::move(h).ack();
+          // Signal the waiting thread to detach the subscription after the
+          // first message.
+          if (count.load() == 0) received_message.set_value();
           ++count;
+          // Only then ack the message, preventing any new requests from being
+          // issued.
+          std::move(h).ack();
         });
-    // Wait for 60 seconds, an unrecoverable error, or at least one message
-    // received, whichever happens first.
-    for (int i = 0; i != 60; ++i) {
-      auto const s = std::chrono::seconds(1);
-      if (result.wait_for(s) != std::future_status::timeout) break;
-      if (count.load() != 0) break;
-    }
-    // Cancel the subscription
-    result.cancel();
-    // Report any final status
+    // Cancel the subscription as soon as the first message is received, and
+    // block until that happens.
+    received_message.get_future()
+        .then([&result](google::cloud::future<void>) { result.cancel(); })
+        .get();
+    // Report any final status, blocking.
     std::cout << "Message count = " << count.load()
               << ", status = " << result.get() << "\n";
   }

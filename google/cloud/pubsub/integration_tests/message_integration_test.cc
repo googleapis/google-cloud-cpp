@@ -80,7 +80,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   promise<void> ids_empty;
   auto handler = [&](pubsub::Message const& m, AckHandler h) {
     SCOPED_TRACE("Search for message " + m.message_id());
-    std::lock_guard<std::mutex> lk(mu);
+    std::unique_lock<std::mutex> lk(mu);
     auto i = ids.find(m.message_id());
     // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
     // perfectly possible, in that case the message would not be in the map of
@@ -93,9 +93,10 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       ++i->second;
       return;
     }
-    std::move(h).ack();
     ids.erase(i);
     if (ids.empty()) ids_empty.set_value();
+    lk.unlock();
+    std::move(h).ack();
   };
 
   auto result = subscriber.Subscribe(subscription, handler);
