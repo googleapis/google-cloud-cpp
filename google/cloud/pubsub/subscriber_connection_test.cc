@@ -56,8 +56,18 @@ TEST(SubscriberConnectionTest, Basic) {
             }
             return make_ready_future(Status{});
           });
+  // Depending on timing this might be called, but it is very rare.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
 
-  auto subscriber = pubsub_internal::MakeSubscriberConnection(mock, {});
+  CompletionQueue cq;
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()}
+                .DisableBackgroundThreads(cq));
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -67,10 +77,16 @@ TEST(SubscriberConnectionTest, Basic) {
     if (received_one.test_and_set()) return;
     waiter.set_value();
   };
-  auto response = subscriber->Subscribe({subscription.FullName(), handler});
+  std::thread t([&cq] { cq.Run(); });
+  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());
+  // We need to explicitly cancel any pending timers (some of which may be quite
+  // long) left by the subscription.
+  cq.CancelAll();
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(SubscriberConnectionTest, PullFailure) {
@@ -88,9 +104,10 @@ TEST(SubscriberConnectionTest, PullFailure) {
             StatusOr<google::pubsub::v1::PullResponse>(expected));
       });
 
-  auto subscriber = pubsub_internal::MakeSubscriberConnection(mock, {});
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto handler = [&](Message const&, AckHandler const&) {};
-  auto response = subscriber->Subscribe({subscription.FullName(), handler});
+  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
   EXPECT_EQ(expected, response.get());
 }
 

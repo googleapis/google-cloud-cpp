@@ -38,6 +38,7 @@ pubsub_client_hdrs = [
     "subscription.h",
     "subscription_admin_client.h",
     "subscription_admin_connection.h",
+    "subscription_options.h",
     "topic.h",
     "topic_admin_client.h",
     "topic_admin_connection.h",
