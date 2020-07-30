@@ -1319,6 +1319,41 @@ TEST(ConnectionImplTest, ExecuteBatchDmlTooManyTransientFailures) {
               HasSubstr("try-again in ExecuteBatchDml"));
 }
 
+TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  {
+    InSequence seq;
+    EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+        .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+    // The `ExecuteBatchDml` call can succeed, but with no `ResultSet`s and an
+    // error status in the response.
+    auto constexpr kText =
+        R"pb(status: { code: 6 message: "failed to insert ..." })pb";
+    spanner_proto::ExecuteBatchDmlResponse response;
+    ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
+    EXPECT_CALL(
+        *mock, ExecuteBatchDml(
+                   _, ReadRequestHasSessionAndBeginTransaction("session-name")))
+        .WillOnce(Return(response));
+    EXPECT_CALL(*mock, BeginTransaction(_, _))
+        .WillOnce(Return(MakeTestTransaction("BD000001")));
+    EXPECT_CALL(*mock, ExecuteBatchDml(_, ReadRequestHasSessionAndTransactionId(
+                                              "session-name", "BD000001")))
+        .WillOnce(Return(response));
+  }
+
+  auto request = {SqlStatement("update ...")};
+  auto conn = MakeConnection(
+      db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  auto txn = MakeReadWriteTransaction();
+  auto result = conn->ExecuteBatchDml({txn, request});
+  EXPECT_STATUS_OK(result);
+  EXPECT_THAT(result->status, StatusIs(StatusCode::kAlreadyExists,
+                                       HasSubstr("failed to insert ...")));
+}
+
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
