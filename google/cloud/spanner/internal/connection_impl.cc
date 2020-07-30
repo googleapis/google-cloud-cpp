@@ -932,18 +932,19 @@ Status ConnectionImpl::RollbackImpl(
     return Status(StatusCode::kInvalidArgument,
                   "Cannot rollback a single-use transaction");
   }
-  if (s->has_begin()) {
-    // There is nothing to rollback if a transaction id has not yet been
-    // assigned, so we just succeed without making an RPC.
-    //
-    // TODO(#4705) to exactly match the backend behavior, we will need to do
-    // an explicit BeginTransaction followed by a Rollback here.
-    return Status();
-  }
 
   auto prepare_status = PrepareSession(session);
   if (!prepare_status.ok()) {
     return prepare_status;
+  }
+
+  if (s->has_begin()) {
+    auto begin = BeginTransaction(session, s->begin(), __func__);
+    if (!begin.ok()) {
+      s = begin.status();  // invalidate the transaction
+      return begin.status();
+    }
+    s->set_id(begin->id());
   }
 
   spanner_proto::RollbackRequest request;

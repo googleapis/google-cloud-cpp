@@ -1834,8 +1834,22 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
   std::string const session_name = "test-session-name";
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
-  EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return MakeSessionsResponse({"test-session-name"});
+          });
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(MakeTestTransaction("RollbackBeginTransaction")));
+  EXPECT_CALL(*mock, Rollback(_, _))
+      .WillOnce([](grpc::ClientContext&,
+                   spanner_proto::RollbackRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ("RollbackBeginTransaction", request.transaction_id());
+        return Status();
+      });
 
   auto conn = MakeConnection(
       db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
