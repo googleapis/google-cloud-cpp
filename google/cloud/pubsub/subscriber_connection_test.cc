@@ -78,7 +78,10 @@ TEST(SubscriberConnectionTest, Basic) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe(
+      {subscription.FullName(),
+       pubsub_internal::MakeSubscriberCallback(std::move(handler)),
+       {}});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());
@@ -107,7 +110,10 @@ TEST(SubscriberConnectionTest, PullFailure) {
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
       mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto handler = [&](Message const&, AckHandler const&) {};
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe(
+      {subscription.FullName(),
+       pubsub_internal::MakeSubscriberCallback(std::move(handler)),
+       {}});
   EXPECT_EQ(expected, response.get());
 }
 

@@ -98,7 +98,10 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   };
 
   auto session = SubscriptionSession::Create(
-      mock, cq, {subscription.FullName(), handler, {}});
+      mock, cq,
+      {subscription.FullName(),
+       pubsub_internal::MakeSubscriberCallback(std::move(handler)),
+       {}});
   auto response = session->Start();
   while (expected_ack_id.load() < 100) {
     auto s = response.wait_for(std::chrono::milliseconds(5));
@@ -189,7 +192,10 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto session = SubscriptionSession::Create(
-      mock, cq, {subscription.FullName(), handler, {}});
+      mock, cq,
+      {subscription.FullName(),
+       pubsub_internal::MakeSubscriberCallback(std::move(handler)),
+       {}});
   auto response = session->Start();
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
@@ -312,7 +318,8 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
 
   auto session = SubscriptionSession::Create(
       mock, cq,
-      {subscription.FullName(), handler,
+      {subscription.FullName(),
+       pubsub_internal::MakeSubscriberCallback(std::move(handler)),
        pubsub::SubscriptionOptions{}.set_max_deadline_time(
            std::chrono::seconds(60))});
   session->SetTestRefreshPeriod(std::chrono::milliseconds(50));

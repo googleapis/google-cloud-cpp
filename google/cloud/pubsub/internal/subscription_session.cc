@@ -159,8 +159,8 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
   auto const message_size = m.message().data().size();
   handler = absl::make_unique<NotifyWhenMessageHandled>(
       self, std::move(handler), message_size);
-  params_.callback(FromProto(std::move(*m.mutable_message())),
-                   pubsub::AckHandler(std::move(handler)));
+  params_.callback->exec(FromProto(std::move(*m.mutable_message())),
+                         pubsub::AckHandler(std::move(handler)));
 }
 
 void SubscriptionSession::RefreshAckDeadlines(std::unique_lock<std::mutex> lk) {

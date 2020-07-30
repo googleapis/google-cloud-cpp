@@ -38,15 +38,15 @@ TEST(SubscriberTest, SubscribeSimple) {
         {
           auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
           EXPECT_CALL(*ack, ack()).Times(1);
-          p.callback(pubsub::MessageBuilder{}.SetData("do-ack").Build(),
-                     AckHandler(std::move(ack)));
+          p.callback->exec(pubsub::MessageBuilder{}.SetData("do-ack").Build(),
+                           AckHandler(std::move(ack)));
         }
 
         {
           auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
           EXPECT_CALL(*ack, nack()).Times(1);
-          p.callback(pubsub::MessageBuilder{}.SetData("do-nack").Build(),
-                     AckHandler(std::move(ack)));
+          p.callback->exec(pubsub::MessageBuilder{}.SetData("do-nack").Build(),
+                           AckHandler(std::move(ack)));
         }
 
         return make_ready_future(Status{});
@@ -63,6 +63,50 @@ TEST(SubscriberTest, SubscribeSimple) {
                                  }
                                })
                     .get();
+  ASSERT_STATUS_OK(status);
+}
+
+/// @test Verify Subscriber::Subscribe() supports move-only callables.
+TEST(SubscriberTest, SubscribeMoveOnly) {
+  Subscription const subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
+  EXPECT_CALL(*mock, Subscribe(_))
+      .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
+        EXPECT_EQ(subscription.FullName(), p.full_subscription_name);
+
+        {
+          auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
+          EXPECT_CALL(*ack, ack()).Times(1);
+          p.callback->exec(pubsub::MessageBuilder{}.SetData("do-ack").Build(),
+                           AckHandler(std::move(ack)));
+        }
+
+        {
+          auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
+          EXPECT_CALL(*ack, nack()).Times(1);
+          p.callback->exec(pubsub::MessageBuilder{}.SetData("do-nack").Build(),
+                           AckHandler(std::move(ack)));
+        }
+
+        return make_ready_future(Status{});
+      });
+
+  struct MoveOnly {
+    MoveOnly(MoveOnly const&) = delete;
+    MoveOnly& operator=(MoveOnly const&) = delete;
+    MoveOnly(MoveOnly&&) noexcept = default;
+    MoveOnly& operator=(MoveOnly&&) noexcept = default;
+
+    void operator()(Message const& m, AckHandler h) {
+      if (m.data() == "do-nack") {
+        std::move(h).nack();
+      } else {
+        std::move(h).ack();
+      }
+    }
+  };
+  Subscriber subscriber(mock);
+  auto status = subscriber.Subscribe(subscription, MoveOnly{}).get();
   ASSERT_STATUS_OK(status);
 }
 

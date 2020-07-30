@@ -24,6 +24,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <functional>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -37,12 +38,16 @@ class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
-  // TODO(#4556) - consider a lighter weight type-erasure
-  using CallbackType = std::function<void(Message, AckHandler)>;
+  // Type-erase `void(Message, AckHandler)` callables with support for move-only
+  // callables and with less overhead than `std::function<>`.
+  struct Callback {
+    virtual ~Callback() = default;
+    virtual void exec(Message, AckHandler) = 0;
+  };
 
   struct SubscribeParams {
     std::string full_subscription_name;
-    CallbackType callback;
+    std::unique_ptr<Callback> callback;
     SubscriptionOptions options;
   };
   virtual future<Status> Subscribe(SubscribeParams p) = 0;
@@ -73,6 +78,23 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     std::shared_ptr<SubscriberStub> stub,
     pubsub::ConnectionOptions const& options);
+
+template <typename Callable>
+std::unique_ptr<pubsub::SubscriberConnection::Callback> MakeSubscriberCallback(
+    Callable&& cb) {
+  class Wrapper : public pubsub::SubscriberConnection::Callback {
+   public:
+    explicit Wrapper(absl::decay_t<Callable> cb) : cb_(std::move(cb)) {}
+    ~Wrapper() override = default;
+    void exec(pubsub::Message m, pubsub::AckHandler h) override {
+      cb_(std::move(m), std::move(h));
+    }
+
+   private:
+    absl::decay_t<Callable> cb_;
+  };
+  return absl::make_unique<Wrapper>(std::forward<Callable>(cb));
+}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
