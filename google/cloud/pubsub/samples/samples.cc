@@ -221,6 +221,109 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   (std::move(subscriber), std::move(subscription));
 }
 
+void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2 || (argv.size() == 1 && argv[0] == "--help")) {
+    throw examples::Usage{
+        "custom-thread-pool-publisher <project-id> <topic-id>"};
+  }
+  //! [custom-thread-pool-publisher]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    // Create our own completion queue to run the background activity, such as
+    // flushing the publisher.
+    google::cloud::CompletionQueue cq;
+    // Setup 1 or more of threads to service this completion queue, these must
+    // remain running until all the work is done.
+    std::vector<std::thread> tasks;
+    std::generate_n(std::back_inserter(tasks), 4, [&cq] {
+      return std::thread(&google::cloud::CompletionQueue::Run, &cq);
+    });
+
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic), pubsub::PublisherOptions{},
+        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+
+    std::vector<future<void>> ids;
+    for (char const* data : {"1", "2", "3", "go!"}) {
+      ids.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([data](future<StatusOr<std::string>> f) {
+                auto s = f.get();
+                if (!s) return;
+                std::cout << "Sent '" << data << "' (" << *s << ")\n";
+              }));
+    }
+    publisher.Flush();
+    // Block until they are actually sent.
+    for (auto& id : ids) id.get();
+
+    // Shutdown the completion queue and join the threads
+    cq.Shutdown();
+    for (auto& t : tasks) t.join();
+  }
+  //! [custom-thread-pool-publisher]
+  (argv.at(0), argv.at(1));
+}
+
+void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2 || (argv.size() == 1 && argv[0] == "--help")) {
+    throw examples::Usage{
+        "custom-thread-pool-subscriber <project-id> <topic-id>"};
+  }
+  //! [custom-thread-pool-subscriber]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string subscription_id) {
+    // Create our own completion queue to run the background activity, such as
+    // flushing the publisher.
+    google::cloud::CompletionQueue cq;
+    // Setup 1 or more of threads to service this completion queue, these must
+    // remain running until all the work is done.
+    std::vector<std::thread> tasks;
+    std::generate_n(std::back_inserter(tasks), 4, [&cq] {
+      return std::thread(&google::cloud::CompletionQueue::Run, &cq);
+    });
+
+    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+    auto subscription =
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
+
+    std::mutex mu;
+    int count = 0;
+    google::cloud::promise<void> received_message;
+    auto result = subscriber.Subscribe(
+        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::cout << "Received message " << m << std::endl;
+          {
+            std::lock_guard<std::mutex> lk(mu);
+            if (++count == 4) received_message.set_value();
+          }
+          std::move(h).ack();
+        });
+    // Cancel the subscription as soon as the first message is received.
+    received_message.get_future()
+        .then([&result](google::cloud::future<void>) { result.cancel(); })
+        .get();
+    // Report any final status, blocking until the subscription loop completes,
+    // either with a failure or because it is canceled.
+    std::cout << "Message count = " << count << ", status=" << result.get()
+              << "\n";
+
+    // Shutdown the completion queue and join the threads
+    cq.Shutdown();
+    for (auto& t : tasks) t.join();
+  }
+  //! [custom-thread-pool-subscriber]
+  (argv.at(0), argv.at(1));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -234,6 +337,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
+  auto s2 = RandomSubscriptionId(generator);
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
@@ -274,6 +378,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, subscription, {});
 
+  std::cout << "\nRunning the CustomThreadPoolPublisher() sample" << std::endl;
+  CustomThreadPoolPublisher({project_id, topic_id});
+
+  std::cout << "\nRunning the CustomThreadPoolSubscriber() sample" << std::endl;
+  CustomThreadPoolSubscriber({project_id, subscription_id});
+
   std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
@@ -306,6 +416,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                      DeleteSubscription),
       CreatePublisherCommand("publish", {}, Publish),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
+      {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
+      {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
