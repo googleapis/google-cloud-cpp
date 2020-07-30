@@ -27,8 +27,6 @@ namespace {
 
 using ::testing::_;
 using ::testing::AtLeast;
-using ::testing::ElementsAre;
-using ::testing::Expectation;
 using ::testing::InSequence;
 
 /// @test Verify callbacks are scheduled in the background threads.
