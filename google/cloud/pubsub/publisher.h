@@ -60,7 +60,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
  * attaching any number of threads to the completion queue.
  *
- * TODO(#4586) - add an example on how to do this.
+ * @snippet samples.cc custom-thread-pool-publisher
  *
  * @par Asynchronous Functions
  *

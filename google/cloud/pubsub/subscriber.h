@@ -62,7 +62,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
  * attaching any number of threads to the completion queue.
  *
- * TODO(#4586) - add an example on how to do this.
+ * @snippet samples.cc custom-thread-pool-subscriber
  *
  * @par Asynchronous Functions
  *
@@ -109,7 +109,7 @@ class Subscriber {
   template <typename Callable>
   future<Status> Subscribe(Subscription const& subscription, Callable&& cb) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({subscription.FullName(), std::move(f)});
+    return connection_->Subscribe({subscription.FullName(), std::move(f), {}});
   }
 
  private:
