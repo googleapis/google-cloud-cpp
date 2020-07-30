@@ -100,7 +100,7 @@ spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
 Status MissingTransactionStatus(std::string const& operation) {
   return Status(StatusCode::kInternal,
                 "Begin transaction requested but no transaction returned (in " +
-                    operation + ").");
+                    operation + ")");
 }
 
 ConnectionImpl::ConnectionImpl(Database db,
