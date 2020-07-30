@@ -379,7 +379,7 @@ RowStream ConnectionImpl::ReadImpl(
   auto stub = session_pool_->GetStub(*session);
   auto const tracing_enabled = rpc_stream_tracing_enabled_;
   auto const tracing_options = tracing_options_;
-  auto factory = [stub, request, tracing_enabled,
+  auto factory = [stub, &request, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
     request.set_resume_token(resume_token);
     auto context = absl::make_unique<grpc::ClientContext>();

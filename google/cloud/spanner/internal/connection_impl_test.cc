@@ -436,13 +436,15 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
             EXPECT_EQ(db.FullName(), request.database());
             return MakeSessionsResponse({"test-session-name"});
           });
-  EXPECT_CALL(*mock, StreamingRead(_, _))
+  EXPECT_CALL(*mock, StreamingRead(_, ReadRequestHasSessionAndBeginTransaction(
+                                          "test-session-name")))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader1))));
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .InSequence(s)
-      .WillOnce(Return(MakeTestTransaction()));
-  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .WillOnce(Return(MakeTestTransaction("FEDCBA98")));
+  EXPECT_CALL(*mock, StreamingRead(_, ReadRequestHasSessionAndTransactionId(
+                                          "test-session-name", "FEDCBA98")))
       .InSequence(s)
       .WillOnce(Return(ByMove(std::move(reader2))));
 
