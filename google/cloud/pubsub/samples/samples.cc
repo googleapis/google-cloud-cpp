@@ -223,7 +223,7 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
 
 void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 2 || (argv.size() == 1 && argv[0] == "--help")) {
+  if (argv.size() != 2) {
     throw examples::Usage{
         "custom-thread-pool-publisher <project-id> <topic-id>"};
   }
@@ -235,11 +235,11 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
     // Create our own completion queue to run the background activity, such as
     // flushing the publisher.
     google::cloud::CompletionQueue cq;
-    // Setup 1 or more of threads to service this completion queue, these must
+    // Setup one or more of threads to service this completion queue. These must
     // remain running until all the work is done.
     std::vector<std::thread> tasks;
     std::generate_n(std::back_inserter(tasks), 4, [&cq] {
-      return std::thread(&google::cloud::CompletionQueue::Run, &cq);
+      return std::thread([cq]() mutable { cq.Run(); });
     });
 
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
@@ -271,7 +271,7 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
 
 void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 2 || (argv.size() == 1 && argv[0] == "--help")) {
+  if (argv.size() != 2) {
     throw examples::Usage{
         "custom-thread-pool-subscriber <project-id> <topic-id>"};
   }
@@ -283,11 +283,11 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     // Create our own completion queue to run the background activity, such as
     // flushing the publisher.
     google::cloud::CompletionQueue cq;
-    // Setup 1 or more of threads to service this completion queue, these must
+    // Setup one or more of threads to service this completion queue. These must
     // remain running until all the work is done.
     std::vector<std::thread> tasks;
     std::generate_n(std::back_inserter(tasks), 4, [&cq] {
-      return std::thread(&google::cloud::CompletionQueue::Run, &cq);
+      return std::thread([cq]() mutable { cq.Run(); });
     });
 
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
@@ -312,8 +312,8 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
         .then([&result](google::cloud::future<void>) { result.cancel(); })
         .get();
     // Report any final status, blocking until the subscription loop completes,
-    // either with a failure or because it is canceled.
-    std::cout << "Message count = " << count << ", status=" << result.get()
+    // either with a failure or because it was canceled.
+    std::cout << "Message count=" << count << ", status=" << result.get()
               << "\n";
 
     // Shutdown the completion queue and join the threads
@@ -337,7 +337,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
-  auto s2 = RandomSubscriptionId(generator);
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
