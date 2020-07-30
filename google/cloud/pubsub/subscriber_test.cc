@@ -92,6 +92,7 @@ TEST(SubscriberTest, SubscribeMoveOnly) {
       });
 
   struct MoveOnly {
+    MoveOnly() = default;
     MoveOnly(MoveOnly const&) = delete;
     MoveOnly& operator=(MoveOnly const&) = delete;
     MoveOnly(MoveOnly&&) noexcept = default;
@@ -106,7 +107,7 @@ TEST(SubscriberTest, SubscribeMoveOnly) {
     }
   };
   Subscriber subscriber(mock);
-  auto status = subscriber.Subscribe(subscription, MoveOnly{}).get();
+  auto status = subscriber.Subscribe(subscription, MoveOnly()).get();
   ASSERT_STATUS_OK(status);
 }
 
