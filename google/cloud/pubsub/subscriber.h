@@ -106,6 +106,23 @@ class Subscriber {
   explicit Subscriber(std::shared_ptr<SubscriberConnection> connection)
       : connection_(std::move(connection)) {}
 
+  /**
+   * Create a new session to receive messages from @p subscription.
+   *
+   * @note Callable must be CopyConstructible, as @p cb will be stored in a
+   *   [`std::function<>`][std-function-link].
+   *
+   * @param subscription the Cloud Pub/Sub subscription to receive messages from
+   * @param cb an object usable to construct a
+   *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`
+   * @return a future that is satisfied when the session will no longer receive
+   *     messages. For example because the was a unrecoverable error trying to
+   *     receive data. Calling `.cancel()` in this object will (eventually)
+   *     terminate the session too.
+   *
+   * [std-function-link]:
+   * https://en.cppreference.com/w/cpp/utility/functional/function
+   */
   template <typename Callable>
   future<Status> Subscribe(Subscription const& subscription, Callable&& cb) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
