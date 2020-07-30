@@ -27,6 +27,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::AtLeast;
+using ::testing::ElementsAre;
 using ::testing::Expectation;
 using ::testing::InSequence;
 
@@ -224,122 +225,83 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
     return make_ready_future(make_status_or(response));
   };
   auto generate_ack_response =
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         google::pubsub::v1::AcknowledgeRequest const&) {
+      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       };
-  auto ignore_modify_ack_deadline =
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        return make_ready_future(Status{});
-      };
+  // The basic expectations, pull some data, ack each message, pull more data,
+  // must be in a specific order.
+  {
+    InSequence sequence;
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+        .Times(3)
+        .WillRepeatedly(generate_ack_response);
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+        .Times(3)
+        .WillRepeatedly(generate_ack_response);
+    EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+    EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+        .Times(3)
+        .WillRepeatedly(generate_ack_response);
+  }
 
-  promise<void> deadline_0_updated;
-  promise<void> deadline_1_updated;
-  promise<void> deadline_2_updated;
+  // The expectations for timers and AsyncModifyAckDeadline are more complex.
+  // The setup is as follows:
+  // - The subscription handler stops after receiving specific messages,
+  //   e.g. test-ack-id-2.
+  // - Because it is stopped, the timer to update the deadlines will eventually
+  //   expire, and (again eventually) will contain only the messages that have
+  //   not been acked.
+  // - When that happens we signal the handler to continue.
+  //
+  // The set of points when to stop is expressed in this array of "tripwires":
+  struct Tripwire {
+    // When is this triggered
+    std::string const ack_id;
+    // How many times it needs to repeat before the barrier is lifted
+    int repeats;
+    // The barrier to wake up the waiting thread
+    promise<void> barrier;
+  } tripwires[] = {
+      {"test-ack-id-2", 1, {}},
+      {"test-ack-id-5", 2, {}},
+  };
+  std::mutex tripwires_mu;
 
-  Expectation pull_0 =
-      EXPECT_CALL(*mock, AsyncPull(_, _, _)).WillOnce(generate_3);
+  // This is how we mock all the AsyncModifyAckDeadline() calls, signaling the
+  // handler at the right points.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+      .WillRepeatedly(
+          [&](google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>,
+              google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
+            auto ids_are = [&r](std::string const& s) {
+              return r.ack_ids_size() == 1 && r.ack_ids(0) == s;
+            };
+            std::lock_guard<std::mutex> lk(tripwires_mu);
+            for (auto& tw : tripwires) {
+              if (!ids_are(tw.ack_id)) continue;
+              if (--tw.repeats == 0) tw.barrier.set_value();
+            }
+            return make_ready_future(Status{});
+          });
 
-  // This may happen 0 or more times, depending on timing.
-  Expectation modify_ack_0 = EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-                                 .WillRepeatedly(ignore_modify_ack_deadline);
-
-  Expectation acks_0 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-                           .Times(2)
-                           .WillRepeatedly(generate_ack_response);
-
-  // After 2 acks the handler will block, which will (eventually) expire the
-  // timer and create a update on the AckDeadline and trigger this
-  // expectation. Here we release the handler to wait on the next event.
-  Expectation modify_ack_1 =
-      EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-          .After(modify_ack_0, acks_0)
-          .WillOnce(
-              [&](google::cloud::CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>,
-                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-                EXPECT_EQ(1, request.ack_ids_size());
-                if (request.ack_ids_size() == 1) {
-                  EXPECT_EQ("test-ack-id-2", request.ack_ids(0));
-                }
-                // Allow callback to make progress.
-                deadline_0_updated.set_value();
-                return make_ready_future(Status{});
-              })
-          .WillRepeatedly(
-              // Rarely we will get additional timers triggered, ignore them.
-              ignore_modify_ack_deadline);
-
-  Expectation acks_1 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-                           .After(modify_ack_1)
-                           .WillOnce(generate_ack_response);
-
-  EXPECT_CALL(*mock, AsyncPull(_, _, _)).After(acks_1).WillOnce(generate_3);
-  Expectation acks_2 = EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-                           .After(acks_1)
-                           .WillOnce(generate_ack_response)
-                           .WillOnce(generate_ack_response);
-
-  // Here the handler blocks for two deadline updates
-  Expectation modify_ack_2 =
-      EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-          .After(acks_2)
-          .WillOnce(
-              [&](google::cloud::CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>,
-                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-                EXPECT_EQ(1, request.ack_ids_size());
-                if (request.ack_ids_size() == 1) {
-                  EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
-                }
-                // Allow callback to make progress.
-                deadline_1_updated.set_value();
-                return make_ready_future(Status{});
-              })
-          .WillOnce(
-              [&](google::cloud::CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>,
-                  google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-                EXPECT_EQ(1, request.ack_ids_size());
-                if (request.ack_ids_size() == 1) {
-                  EXPECT_EQ("test-ack-id-5", request.ack_ids(0));
-                }
-                // Allow callback to make progress.
-                deadline_2_updated.set_value();
-                return make_ready_future(Status{});
-              })
-          .WillRepeatedly(ignore_modify_ack_deadline);
-
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-      .After(modify_ack_2)
-      .WillOnce(generate_ack_response);
-
-  Expectation pull_2 = EXPECT_CALL(*mock, AsyncPull(_, _, _))
-                           .After(modify_ack_2)
-                           .WillOnce(generate_3);
-
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
-      .After(pull_2)
-      .WillOnce(generate_ack_response)
-      .WillOnce(generate_ack_response)
-      .WillOnce(generate_ack_response);
-
+  // Now unto the handler, basically it
   promise<void> enough_messages;
-  std::atomic<int> expected_message_id{0};
+  std::atomic<int> message_count{0};
   auto constexpr kMaximumMessages = 9;
   auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    auto const id = expected_message_id.load();
-    if (id == 2) {
-      deadline_0_updated.get_future().get();
+    for (auto& tw : tripwires) {
+      // Note the lack of locking, this is Okay because the values we use either
+      // never changes (`ack_id` is const) or they are thread-safe by design:
+      // (barrier is a promise<void> which better be thread-safe.
+      if (tw.ack_id == h.ack_id()) tw.barrier.get_future().get();
     }
-    if (id == 5) {
-      deadline_1_updated.get_future().get();
-      deadline_2_updated.get_future().get();
-    }
-    if (++expected_message_id == kMaximumMessages) {
-      enough_messages.set_value();
-    }
+    // When enough messages are received signal the main thread to stop the
+    // test.
+    if (++message_count == kMaximumMessages) enough_messages.set_value();
     std::move(h).ack();
   };
 
