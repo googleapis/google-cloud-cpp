@@ -109,7 +109,7 @@ class Subscriber {
   template <typename Callable>
   future<Status> Subscribe(Subscription const& subscription, Callable&& cb) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({subscription.FullName(), std::move(f)});
+    return connection_->Subscribe({subscription.FullName(), std::move(f), {}});
   }
 
  private:
