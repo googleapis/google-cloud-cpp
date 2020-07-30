@@ -49,7 +49,7 @@ class SubscriptionOptions {
 
   /// Set the maximum deadline for incoming messages.
   SubscriptionOptions& set_max_deadline_time(std::chrono::seconds d) {
-    max_deadline_time_ = std::chrono::duration_cast<std::chrono::seconds>(d);
+    max_deadline_time_ = d;
     return *this;
   }
 
