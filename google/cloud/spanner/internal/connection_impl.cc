@@ -792,9 +792,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         },
         request, __func__);
     if (s->has_begin()) {
-      if (response.ok()) {
-        if (response->result_sets_size() < 1 ||
-            !response->result_sets(0).metadata().has_transaction()) {
+      if (response.ok() && response->result_sets_size() > 0) {
+        if (!response->result_sets(0).metadata().has_transaction()) {
           s = MissingTransactionStatus(__func__);
           return s.status();
         }
