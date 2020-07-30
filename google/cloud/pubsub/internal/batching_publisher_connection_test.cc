@@ -26,6 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::testing::_;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
@@ -37,47 +38,52 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
                     std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(1, request.messages_size());
-        EXPECT_EQ("test-data-0", request.messages(0).data());
+        std::vector<std::string> data;
+        std::transform(request.messages().begin(), request.messages().end(),
+                       std::back_inserter(data),
+                       [](google::pubsub::v1::PubsubMessage const& m) {
+                         return std::string(m.data());
+                       });
+        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
-        return make_ready_future(make_status_or(response));
-      })
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(1, request.messages_size());
-        EXPECT_EQ("test-data-1", request.messages(0).data());
-        google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-1");
         return make_ready_future(make_status_or(response));
       });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}, mock, bg.cq());
+      topic,
+      pubsub::BatchingConfig{}
+          .set_maximum_message_count(4)
+          .set_maximum_hold_time(std::chrono::milliseconds(50)),
+      mock, bg.cq());
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
   // responses should be scheduled with any other work.
   auto const main_thread = std::this_thread::get_id();
-  publisher->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
-      .then([&](future<StatusOr<std::string>> f) {
-        auto r = f.get();
-        ASSERT_STATUS_OK(r);
-        EXPECT_EQ("test-message-id-0", *r);
-        EXPECT_NE(main_thread, std::this_thread::get_id());
-      })
-      .get();
-  publisher->Publish({pubsub::MessageBuilder{}.SetData("test-data-1").Build()})
-      .then([&](future<StatusOr<std::string>> f) {
-        auto r = f.get();
-        ASSERT_STATUS_OK(r);
-        EXPECT_EQ("test-message-id-1", *r);
-        EXPECT_NE(main_thread, std::this_thread::get_id());
-      })
-      .get();
+  std::vector<future<void>> published;
+  published.push_back(
+      publisher
+          ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
+          .then([&](future<StatusOr<std::string>> f) {
+            auto r = f.get();
+            ASSERT_STATUS_OK(r);
+            EXPECT_EQ("test-message-id-0", *r);
+            EXPECT_NE(main_thread, std::this_thread::get_id());
+          }));
+  published.push_back(
+      publisher
+          ->Publish({pubsub::MessageBuilder{}.SetData("test-data-1").Build()})
+          .then([&](future<StatusOr<std::string>> f) {
+            auto r = f.get();
+            ASSERT_STATUS_OK(r);
+            EXPECT_EQ("test-message-id-1", *r);
+            EXPECT_NE(main_thread, std::this_thread::get_id());
+          }));
+  publisher->Flush({});
+  for (auto& p : published) p.get();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
