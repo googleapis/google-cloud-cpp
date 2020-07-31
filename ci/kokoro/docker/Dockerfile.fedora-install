@@ -114,6 +114,12 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/build
+RUN curl -sSL -o include.zip https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip && \
+    unzip -qq include.zip && \
+    cp -r include/nlohmann /usr/local/include && \
+    cd /var/tmp && rm -fr build
+
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
