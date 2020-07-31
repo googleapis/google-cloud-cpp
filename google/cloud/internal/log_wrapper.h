@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOG_WRAPPER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOG_WRAPPER_H
 
-#include "google/cloud/tracing_options.h"
-#include "google/cloud/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/tracing_options.h"
+#include "google/cloud/version.h"
 #include <google/protobuf/message.h>
 #include <grpcpp/grpcpp.h>
 
