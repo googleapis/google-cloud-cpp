@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/log_wrapper.h"
+#include "google/cloud/internal/log_wrapper.h"
 #include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string DebugString(google::protobuf::Message const& m,
@@ -34,7 +33,6 @@ std::string DebugString(google::protobuf::Message const& m,
 }
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

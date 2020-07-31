@@ -30,6 +30,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/async_retry_unary_rpc.h",
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
+    "internal/log_wrapper.h",
     "internal/pagination_range.h",
     "internal/time_utils.h",
 ]
@@ -40,5 +41,6 @@ google_cloud_cpp_grpc_utils_srcs = [
     "grpc_error_delegate.cc",
     "internal/background_threads_impl.cc",
     "internal/completion_queue_impl.cc",
+    "internal/log_wrapper.cc",
     "internal/time_utils.cc",
 ]
