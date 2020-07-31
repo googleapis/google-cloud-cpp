@@ -48,6 +48,21 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
+# Workaround some flaky / broken tests in the CI builds, some of the
+# tests where (reported) successfully created during the build,
+# only to be missing when runing the tests. This is probably a toolchain
+# bug, and this seems to workaround it.
+$workaround_targets=(
+    # Failed around 2020-07-29
+    "storage_internal_tuple_filter_test",
+    # Failed around 2020-07-15
+    "storage_internal_nljson_use_third_party_test"
+)
+ForEach($target IN $workaround_targets) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
+    cmake --build "${binary_dir}" --config $env:CONFIG --target "${target}"
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling with CMake $env:CONFIG"
 cmake --build "${binary_dir}" --config $env:CONFIG
 if ($LastExitCode) {
