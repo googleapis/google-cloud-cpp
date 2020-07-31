@@ -14,17 +14,19 @@
 # limitations under the License.
 # ~~~
 
-function(find_nlohmann_json)
+function (find_nlohmann_json)
     find_package(nlohmann_json CONFIG QUIET)
     if (nlohmann_json_FOUND)
         return()
     endif ()
     # As a fall back, try finding the header, since this is a header-only
     # library that is all we need.
-    find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp" REQUIRED)
+    find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp"
+              REQUIRED)
     add_library(nlohmann_json::nlohmann_json INTERFACE)
-    target_include_directories(nlohmann_json::nlohmann_json
-            INTERFACE ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
-endfunction()
+    target_include_directories(
+        nlohmann_json::nlohmann_json
+        INTERFACE ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
+endfunction ()
 
 find_nlohmann_json()
