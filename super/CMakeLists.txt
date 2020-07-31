@@ -53,9 +53,13 @@ set_external_project_build_parallel_level(PARALLEL)
 set_external_project_vars()
 
 set(GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST
-    abseil-cpp-project grpc-project curl-project crc32c-project
-        nlohmann-json-project
-    googletest-project benchmark-project)
+    abseil-cpp-project
+    grpc-project
+    curl-project
+    crc32c-project
+    nlohmann-json-project
+    googletest-project
+    benchmark-project)
 
 include(ExternalProject)
 ExternalProject_Add(

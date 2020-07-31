@@ -23,5 +23,5 @@ cc_library(
         "include/nlohmann/**/*.hpp",
     ]),
     includes = ["include"],
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )

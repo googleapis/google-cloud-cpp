@@ -16,6 +16,5 @@
 
 find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp" REQUIRED)
 add_library(nlohmann_json INTERFACE)
-target_include_directories(
-    nlohmann_json
-    INTERFACE ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
+target_include_directories(nlohmann_json
+                           INTERFACE ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})

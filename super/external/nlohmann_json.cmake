@@ -20,37 +20,36 @@ if (NOT TARGET nlohmann-json-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL
-            "https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip")
+        "https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip")
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256
-            bfec46fc0cee01c509cf064d2254517e7fa80d1e7647fea37cf81d97c5682bdc)
+        bfec46fc0cee01c509cf064d2254517e7fa80d1e7647fea37cf81d97c5682bdc)
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
 
     include(ExternalProject)
     ExternalProject_Add(
-            nlohmann-json-project
-            EXCLUDE_FROM_ALL ON
-            PREFIX "${CMAKE_BINARY_DIR}/external/nlohmann_json"
-            INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
-            URL ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL}
-            URL_HASH SHA256=${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256}
-            LIST_SEPARATOR |
-            CONFIGURE_COMMAND
+        nlohmann-json-project
+        EXCLUDE_FROM_ALL ON
+        PREFIX "${CMAKE_BINARY_DIR}/external/nlohmann_json"
+        INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
+        URL ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256}
+        LIST_SEPARATOR |
+        CONFIGURE_COMMAND
             ""
             # ~~~
             # This is not great, we abuse the `build` step to create the target
             # directory. Unfortunately there is no way to specify two commands in
             # the install step.
             # ~~~
-            BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include
-            INSTALL_COMMAND
+        BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include
+        INSTALL_COMMAND
             ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/nlohmann
             <INSTALL_DIR>/include/nlohmann
-
             # TODO(#2874) - switch these to ON
-            LOG_DOWNLOAD OFF
-            LOG_CONFIGURE OFF
-            LOG_BUILD OFF
-            LOG_INSTALL OFF)
+        LOG_DOWNLOAD OFF
+        LOG_CONFIGURE OFF
+        LOG_BUILD OFF
+        LOG_INSTALL OFF)
 endif ()
