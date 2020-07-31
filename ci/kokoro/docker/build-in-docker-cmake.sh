@@ -136,7 +136,6 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # w.r.t. the target branch.
   TARGET_BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}"
   io::log_yellow "Build clang-tidy prerequisites"
-  ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target nlohmann_json_project
   ${CMAKE_COMMAND} --build "${BINARY_DIR}" --target google-cloud-cpp-protos
   io::log_yellow "Run clang-tidy on changed files in a presubmit build"
   HEADER_FILTER_REGEX=$(clang-tidy -dump-config |
