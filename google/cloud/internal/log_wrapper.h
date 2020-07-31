@@ -33,6 +33,12 @@ namespace internal {
 std::string DebugString(google::protobuf::Message const& m,
                         TracingOptions const& options);
 
+char const* DebugFutureStatus(std::future_status s);
+
+// Create a unique ID that can be used to match asynchronous requests/reponse
+// pairs.
+std::string RequestIdForLogging();
+
 template <typename T>
 struct IsStatusOr : public std::false_type {};
 template <typename T>
@@ -116,26 +122,60 @@ template <
     typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor, Request request, char const* where,
                   TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
+  // Because this is an asynchronous request we need a unique identifier so
+  // applications can match the request and response in the log.
+  auto prefix = std::string(where) + "(" + RequestIdForLogging() + ")";
+  GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, options);
   auto response = functor(std::move(request));
-  // We cannot log the value of the future, even when it is available, because
-  // the value can only be extracted once. But we can log if the future is
-  // satisfied.
-  auto status = response.wait_for(std::chrono::microseconds(0));
-  char const* msg = "a future in an unknown state";
-  switch (status) {
-    case std::future_status::ready:
-      msg = "a ready future";
-      break;
-    case std::future_status::timeout:
-      msg = "an unsatisfied future";
-      break;
-    case std::future_status::deferred:
-      msg = "a deferred future";
-      break;
-  }
-  GCP_LOG(DEBUG) << where << "() >> " << msg;
-  return response;
+  // Ideally we would have an ID to match the request with the asynchronous
+  // response, but for functions with this signature there is nothing that comes
+  // to mind.
+  GCP_LOG(DEBUG) << prefix << " >> future_status="
+                 << DebugFutureStatus(
+                        response.wait_for(std::chrono::microseconds(0)));
+  return response.then([prefix, options](decltype(response) f) {
+    auto response = f.get();
+    if (!response) {
+      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+    } else {
+      GCP_LOG(DEBUG) << prefix
+                     << " >> response=" << DebugString(*response, options);
+    }
+    return response;
+  });
+}
+
+template <
+    typename Functor, typename Request,
+    typename Result = google::cloud::internal::invoke_result_t<
+        Functor, google::cloud::CompletionQueue&,
+        std::unique_ptr<grpc::ClientContext>, Request const&>,
+    typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
+Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
+                  std::unique_ptr<grpc::ClientContext> context,
+                  Request const& request, char const* where,
+                  TracingOptions const& options) {
+  // Because this is an asynchronous request we need a unique identifier so
+  // applications can match the request and response in the log.
+  auto prefix = std::string(where) + "(" + RequestIdForLogging() + ")";
+  GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, options);
+  auto response = functor(cq, std::move(context), request);
+  // Ideally we would have an ID to match the request with the asynchronous
+  // response, but for functions with this signature there is nothing that comes
+  // to mind.
+  GCP_LOG(DEBUG) << prefix << " >> future_status="
+                 << DebugFutureStatus(
+                        response.wait_for(std::chrono::microseconds(0)));
+  return response.then([prefix, options](decltype(response) f) {
+    auto response = f.get();
+    if (!response) {
+      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+    } else {
+      GCP_LOG(DEBUG) << prefix
+                     << " >> response=" << DebugString(*response, options);
+    }
+    return response;
+  });
 }
 
 }  // namespace internal

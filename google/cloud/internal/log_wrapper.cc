@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/log_wrapper.h"
 #include <google/protobuf/text_format.h>
+#include <sstream>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -30,6 +32,32 @@ std::string DebugString(google::protobuf::Message const& m,
       options.truncate_string_field_longer_than());
   p.PrintToString(m, &str);
   return str;
+}
+
+std::string RequestIdForLogging() {
+  thread_local std::uint64_t generator = 0;
+  std::ostringstream os;
+  os << std::this_thread::get_id() << ":" << ++generator;
+  return std::move(os).str();
+}
+
+char const* DebugFutureStatus(std::future_status status) {
+  // We cannot log the value of the future, even when it is available, because
+  // the value can only be extracted once. But we can log if the future is
+  // satisfied.
+  char const* msg = "<invalid>";
+  switch (status) {
+    case std::future_status::ready:
+      msg = "ready";
+      break;
+    case std::future_status::timeout:
+      msg = "timeout";
+      break;
+    case std::future_status::deferred:
+      msg = "deferred";
+      break;
+  }
+  return msg;
 }
 
 }  // namespace internal
