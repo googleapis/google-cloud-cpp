@@ -23,12 +23,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::string GceMetadataHostname() {
-  auto maybe_hostname =
-      google::cloud::internal::GetEnv(GceMetadataHostnameEnvVar());
-  if (maybe_hostname.has_value()) {
-    return *maybe_hostname;
-  }
-  return "metadata.google.internal";
+  return google::cloud::internal::GetEnv(GceMetadataHostnameEnvVar())
+      .value_or("metadata.google.internal");
 }
 
 }  // namespace internal
