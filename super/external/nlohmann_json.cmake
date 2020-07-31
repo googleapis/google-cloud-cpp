@@ -20,9 +20,9 @@ if (NOT TARGET nlohmann-json-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL
-        "https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip")
+        "https://github.com/nlohmann/json/archive/v3.4.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256
-        bfec46fc0cee01c509cf064d2254517e7fa80d1e7647fea37cf81d97c5682bdc)
+        "c377963a95989270c943d522bfefe7b889ef5ed0e1e15d535fd6f6f16ed70732")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
@@ -36,20 +36,14 @@ if (NOT TARGET nlohmann-json-project)
         URL ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256}
         LIST_SEPARATOR |
-        CONFIGURE_COMMAND
-            ""
-            # ~~~
-            # This is not great, we abuse the `build` step to create the target
-            # directory. Unfortunately there is no way to specify two commands in
-            # the install step.
-            # ~~~
-        BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include
-        INSTALL_COMMAND
-            ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/nlohmann
-            <INSTALL_DIR>/include/nlohmann
-            # TODO(#2874) - switch these to ON
-        LOG_DOWNLOAD OFF
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF)
+        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CMAKE_FLAGS}
+            -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
+            -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+            -DBUILD_TESTING=OFF
+        BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 endif ()

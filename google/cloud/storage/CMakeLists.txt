@@ -230,7 +230,7 @@ target_link_libraries(
            absl::str_format
            absl::time
            google_cloud_cpp_common
-           nlohmann_json
+           nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
            Threads::Threads
@@ -288,7 +288,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PUBLIC storage_client
                google_cloud_cpp_grpc_utils
                google_cloud_cpp_common
-               nlohmann_json
+               nlohmann_json::nlohmann_json
                googleapis-c++::storage_protos
                gRPC::grpc++
                protobuf::libprotobuf
@@ -344,7 +344,7 @@ if (BUILD_TESTING)
         PUBLIC absl::memory
                storage_client_grpc
                storage_client
-               nlohmann_json
+               nlohmann_json::nlohmann_json
                GTest::gmock_main
                GTest::gmock
                GTest::gtest)
@@ -462,7 +462,7 @@ if (BUILD_TESTING)
                     GTest::gmock
                     GTest::gtest
                     CURL::libcurl
-                    nlohmann_json)
+                    nlohmann_json::nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
@@ -502,7 +502,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                         GTest::gmock
                         GTest::gtest
                         CURL::libcurl
-                        nlohmann_json)
+                        nlohmann_json::nlohmann_json)
             google_cloud_cpp_add_common_options(${target})
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
@@ -523,15 +523,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     # had to tradeoff readability vs. "making them compile everywhere".
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS nlohmann_json
-    EXPORT storage-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT storage-targets
