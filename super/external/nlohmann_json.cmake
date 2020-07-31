@@ -29,21 +29,25 @@ if (NOT TARGET nlohmann-json-project)
 
     if ("${CMAKE_VERSION}" VERSION_LESS 3.8)
         if (WIN32)
-            # patch may not be installed on Windows. It might be
-            # easier to upgrade CMake on that platform though.
-            message(
-            FATAL_ERROR
-            "Super builds on WIN32 require CMake >= 3.8."
-            " Please upgrade your CMake version.")
+            # patch may not be installed on Windows. It might be easier to
+            # upgrade CMake on that platform though.
+            message(FATAL_ERROR "Super builds on WIN32 require CMake >= 3.8."
+                                " Please upgrade your CMake version.")
         endif ()
         # nlohmann_json requires CMake >= 3.8, apparently to use the cxx_std_11
-        # property on its targets. We patch the CMakeLists.txt file to
-        # disable this feature. It is useful but using C++11 is a
-        # documented requirement.
-        message("nlohmann_json CMakeLists.txt file needs a patch ${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001")
-        set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND "patch" "-p1" "<" "${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001")
+        # property on its targets. We patch the CMakeLists.txt file to disable
+        # this feature. It is useful but using C++11 is a documented
+        # requirement.
+        message(
+            "nlohmann_json CMakeLists.txt file needs a patch ${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001"
+        )
+        set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND
+            "patch" "-p1" "<"
+            "${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001")
     else ()
-        message("nlohmann_json CMakeLists.txt file will NOT need a patch ${CMAKE_VERSION}")
+        message(
+            "nlohmann_json CMakeLists.txt file will NOT need a patch ${CMAKE_VERSION}"
+        )
         set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND "")
     endif ()
     include(ExternalProject)

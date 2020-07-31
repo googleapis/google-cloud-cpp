@@ -23,10 +23,12 @@ function (find_nlohmann_json)
     # library that is all we need.
     find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp"
               REQUIRED)
-    add_library(nlohmann_json::nlohmann_json INTERFACE)
-    target_include_directories(
-        nlohmann_json::nlohmann_json
-        INTERFACE ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
+    add_library(nlohmann_json::nlohmann_json UNKNOWN IMPORTED)
+    set_property(
+        TARGET nlohmann_json::nlohmann_json
+        APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                 ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
 endfunction ()
 
 find_nlohmann_json()

@@ -33,6 +33,7 @@ additional_commands = {
             "INSTALL_DIR": 1,
             "LIST_SEPARATOR": 1,
             "TEST_COMMAND": "+",
+            "PATCH_COMMAND": "+",
             "LOG_BUILD": 1,
             "LOG_CONFIGURE": 1,
             "LOG_DOWNLOAD": 1,
