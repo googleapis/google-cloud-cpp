@@ -115,9 +115,15 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL -o include.zip https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip && \
-    unzip -qq include.zip && \
-    cp -r include/nlohmann /usr/local/include && \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+    ldconfig && \
     cd /var/tmp && rm -fr build
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run

@@ -128,6 +128,27 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
     ldconfig
 # ```
 
+# #### nlohmann_json library
+
+# The project depends on the on nlohmann_json library. We use CMake to
+# install it as this installs the necessary CMake configuration files.
+# Note that this is a header-only library, and folks often install it
+# manually, that may work, but leaves you without support for CMake
+# pkg-config.
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+    ldconfig
+# ```
+
 FROM devtools AS install
 ARG NCPU=4
 ARG DISTRO="distro-name"
