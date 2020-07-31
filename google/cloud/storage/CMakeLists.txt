@@ -403,9 +403,7 @@ if (BUILD_TESTING)
         internal/logging_client_test.cc
         internal/logging_resumable_upload_session_test.cc
         internal/metadata_parser_test.cc
-        internal/nljson_use_after_third_party_test.cc
-        internal/nljson_use_third_party_test.cc
-        internal/notification_requests_test.cc
+            internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
         internal/object_requests_test.cc
         internal/object_streambuf_test.cc
@@ -560,10 +558,6 @@ install(
             COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)
-install(
-    FILES
-        ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
-    DESTINATION include/google/cloud/storage/internal)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
