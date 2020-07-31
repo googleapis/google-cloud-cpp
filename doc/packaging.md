@@ -952,8 +952,13 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
+    sed -i \
+        -e '1s/VERSION 3.8/VERSION 3.5/' \
+        -e '/^target_compile_features/d' \
+        CMakeLists.txt && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1206,6 +1211,10 @@ cd $HOME/Downloads
 wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
     tar -xzf v3.4.0.tar.gz && \
     cd json-3.4.0 && \
+    sed -i \
+        -e '1s/VERSION 3.8/VERSION 3.5/' \
+        -e '/^target_compile_features/d' \
+        CMakeLists.txt && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
