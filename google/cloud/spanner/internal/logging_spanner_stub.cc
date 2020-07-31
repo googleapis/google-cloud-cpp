@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
-#include "google/cloud/spanner/internal/log_wrapper.h"
+#include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
@@ -22,6 +22,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
+using ::google::cloud::internal::LogWrapper;
 
 StatusOr<spanner_proto::Session> LoggingSpannerStub::CreateSession(
     grpc::ClientContext& client_context,

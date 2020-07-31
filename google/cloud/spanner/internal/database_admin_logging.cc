@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/database_admin_logging.h"
-#include "google/cloud/spanner/internal/log_wrapper.h"
+#include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
@@ -22,6 +22,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
+using ::google::cloud::internal::LogWrapper;
 
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateDatabase(
     grpc::ClientContext& context, gcsa::CreateDatabaseRequest const& request) {

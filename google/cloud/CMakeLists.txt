@@ -341,6 +341,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/background_threads_impl.h
         internal/completion_queue_impl.cc
         internal/completion_queue_impl.h
+        internal/log_wrapper.cc
+        internal/log_wrapper.h
         internal/pagination_range.h
         internal/time_utils.cc
         internal/time_utils.h)
@@ -373,6 +375,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             grpc_error_delegate_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
+            internal/log_wrapper_test.cc
             internal/pagination_range_test.cc
             internal/time_utils_test.cc)
 
@@ -390,6 +393,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         google_cloud_cpp_testing
                         google_cloud_cpp_common
                         googleapis-c++::bigtable_protos
+                        googleapis-c++::spanner_protos
                         absl::variant
                         GTest::gmock_main
                         GTest::gmock

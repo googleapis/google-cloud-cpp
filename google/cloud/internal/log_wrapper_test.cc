@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/log_wrapper.h"
-#include "google/cloud/spanner/tracing_options.h"
+#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/tracing_options.h"
 #include <google/protobuf/text_format.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -69,10 +68,6 @@ TEST(LogWrapper, DefaultOptions) {
   // clang-format on
   EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
-
-// bool single_line_mode_ = true;
-// bool use_short_repeated_primitives_ = true;
-// std::int64_t truncate_string_field_longer_than_ = 128;
 
 TEST(LogWrapper, MultiLine) {
   TracingOptions tracing_options;
@@ -134,7 +129,6 @@ TEST(LogWrapper, Truncate) {
 
 }  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

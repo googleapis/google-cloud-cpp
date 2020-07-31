@@ -13,13 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
-#include "google/cloud/spanner/internal/log_wrapper.h"
+#include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
+using ::google::cloud::internal::DebugString;
 
 void LoggingResultSetReader::TryCancel() {
   GCP_LOG(DEBUG) << __func__ << "() << (void)";

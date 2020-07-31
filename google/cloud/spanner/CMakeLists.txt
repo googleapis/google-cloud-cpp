@@ -86,8 +86,6 @@ add_library(
     internal/instance_admin_metadata.h
     internal/instance_admin_stub.cc
     internal/instance_admin_stub.h
-    internal/log_wrapper.cc
-    internal/log_wrapper.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
     internal/logging_spanner_stub.cc
@@ -276,7 +274,6 @@ function (spanner_client_define_tests)
         internal/database_admin_metadata_test.cc
         internal/instance_admin_logging_test.cc
         internal/instance_admin_metadata_test.cc
-        internal/log_wrapper_test.cc
         internal/logging_result_set_reader_test.cc
         internal/logging_spanner_stub_test.cc
         internal/merge_chunk_test.cc

@@ -37,7 +37,6 @@ spanner_client_unit_tests = [
     "internal/database_admin_metadata_test.cc",
     "internal/instance_admin_logging_test.cc",
     "internal/instance_admin_metadata_test.cc",
-    "internal/log_wrapper_test.cc",
     "internal/logging_result_set_reader_test.cc",
     "internal/logging_spanner_stub_test.cc",
     "internal/merge_chunk_test.cc",

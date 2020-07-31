@@ -22,6 +22,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "grpc_error_delegate_test.cc",
     "internal/async_retry_unary_rpc_test.cc",
     "internal/background_threads_impl_test.cc",
+    "internal/log_wrapper_test.cc",
     "internal/pagination_range_test.cc",
     "internal/time_utils_test.cc",
 ]
