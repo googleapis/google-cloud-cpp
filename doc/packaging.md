@@ -275,8 +275,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -375,8 +376,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -535,8 +537,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -668,8 +671,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -800,8 +804,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1043,8 +1048,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1197,8 +1203,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1342,8 +1349,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1506,8 +1514,9 @@ pkg-config.
 
 ```bash
 cd $HOME/Downloads
-curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
+wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
+    tar -xzf v3.4.0.tar.gz && \
+    cd json-3.4.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
