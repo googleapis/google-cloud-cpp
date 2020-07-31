@@ -116,8 +116,8 @@ class Subscriber {
    * @param cb an object usable to construct a
    *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`
    * @return a future that is satisfied when the session will no longer receive
-   *     messages. For example because the was a unrecoverable error trying to
-   *     receive data. Calling `.cancel()` in this object will (eventually)
+   *     messages. For example because there was an unrecoverable error trying
+   *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session too.
    *
    * [std-function-link]:
