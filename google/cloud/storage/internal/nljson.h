@@ -26,7 +26,7 @@
 #include "google/cloud/storage/version.h"
 #include <nlohmann/json.hpp>
 
-// TODO(#2874) - clean this up, the bug in GTest was fixed circa 2017
+// TODO(#4748) - clean this up, the bug in GTest was fixed circa 2017
 //   https://github.com/google/googletest/pull/1186
 namespace nlohmann {
 //
@@ -42,14 +42,14 @@ namespace nlohmann {
 /// Prints json objects to output streams from within Google Test.
 inline void PrintTo(json const& j, std::ostream* os) { *os << j.dump(); }
 }  // namespace nlohmann
-#undef nlohmann
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace nl = ::nlohmann;
+// TODO(#4749) - we no longer need this alias, remove
+namespace nl = ::nlohmann;  // NOLINT(misc-unused-alias-decls)
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
