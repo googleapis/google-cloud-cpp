@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <cstring>
@@ -36,8 +37,10 @@ using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::StrEq;
 using ::testing::UnorderedElementsAre;
@@ -177,18 +180,16 @@ TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseMissingFields) {
   })""";
 
   auto status =
-      ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp, {}});
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+      ParseMetadataServerResponse(HttpResponse{200, svc_acct_info_resp, {}});
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk),
+                       HasSubstr("Could not find all required fields")));
 
   status =
       ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp2, {}});
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk),
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.

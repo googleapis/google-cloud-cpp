@@ -33,16 +33,16 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     auto payload =
         response.payload +
         "Could not find all required fields in response (email, scopes).";
-    return AsStatus(storage::internal::HttpResponse{response.status_code,
-                                                    payload, response.headers});
+    return AsStatus(storage::internal::HttpResponse{
+        storage::internal::HttpStatusCode::kMinInvalidCode, payload,
+        response.headers});
   }
   ServiceAccountMetadata metadata;
   // Do not update any state until all potential errors are handled.
   metadata.email = response_body.value("email", "");
   // We need to call the .get<>() helper because the conversion is ambiguous
   // otherwise.
-  metadata.scopes =
-      response_body["scopes"].template get<std::set<std::string>>();
+  metadata.scopes = response_body["scopes"].get<std::set<std::string>>();
   return metadata;
 }
 
