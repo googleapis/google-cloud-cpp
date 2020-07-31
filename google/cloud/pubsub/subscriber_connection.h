@@ -37,7 +37,6 @@ class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
-  // TODO(#4556) - consider a lighter weight type-erasure
   using CallbackType = std::function<void(Message, AckHandler)>;
 
   struct SubscribeParams {
