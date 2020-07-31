@@ -55,7 +55,7 @@ StatusOr<Numeric> MakeNumeric(std::string s);
  * `Numeric` values can be copied/assigned/moved, compared for equality, and
  * streamed.
  *
- * @note NUMERIC columns are not yet available for use in database schemas.
+ * @warning NUMERIC columns are not yet available for use in database schemas.
  *
  * @par Example
  *
