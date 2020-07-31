@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
+#include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/log.h"
 #include <memory>
 
 namespace google {
@@ -74,6 +76,11 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::PublisherLogging>(
+        std::move(stub), options.tracing_options());
+  }
   return std::make_shared<TopicAdminConnectionImpl>(std::move(stub));
 }
 
