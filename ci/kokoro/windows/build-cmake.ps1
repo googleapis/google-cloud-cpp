@@ -54,9 +54,7 @@ if ($LastExitCode) {
 # bug, and this seems to workaround it.
 $workaround_targets=(
     # Failed around 2020-07-29
-    "storage_internal_tuple_filter_test",
-    # Failed around 2020-07-15
-    "storage_internal_nljson_use_third_party_test"
+    "storage_internal_tuple_filter_test"
 )
 ForEach($target IN $workaround_targets) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
