@@ -23,20 +23,6 @@ GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
     "/DWIN32_LEAN_AND_MEAN",
 ]
 
-genrule(
-    name = "nlohmann_json_include_hierarchy",
-    srcs = ["@com_github_nlohmann_json_single_header//file"],
-    outs = ["google/cloud/storage/internal/nlohmann_json.hpp"],
-    cmd = "sed '20213,20247d' $< >$@",
-)
-
-cc_library(
-    name = "nlohmann_json",
-    hdrs = [":nlohmann_json_include_hierarchy"],
-    includes = ["."],
-    deps = [],
-)
-
 load(":storage_client.bzl", "storage_client_hdrs", "storage_client_srcs")
 load(":storage_client_grpc.bzl", "storage_client_grpc_hdrs", "storage_client_grpc_srcs")
 
@@ -50,13 +36,13 @@ cc_library(
     }),
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
-        ":nlohmann_json",
         ":storage_client",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
+        "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
@@ -74,12 +60,12 @@ cc_library(
         "//conditions:default": [],
     }),
     deps = [
-        ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
+        "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings:str_format",
         "@com_google_absl//absl/time",
@@ -99,7 +85,6 @@ cc_library(
         "//conditions:default": [],
     }),
     deps = [
-        ":nlohmann_json",
         ":storage_client",
         ":storage_client_grpc",
         "//google/cloud:google_cloud_cpp_common",
@@ -125,7 +110,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":nlohmann_json",
         ":storage_client",
         ":storage_client_testing",
         "//google/cloud:google_cloud_cpp_common",
@@ -152,7 +136,6 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":nlohmann_json",
         ":storage_client",
         ":storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
