@@ -42,8 +42,8 @@ if (NOT TARGET nlohmann-json-project)
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DBUILD_TESTING=OFF
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
-        LOG_DOWNLOAD ON
-        LOG_CONFIGURE ON
-        LOG_BUILD ON
-        LOG_INSTALL ON)
+        LOG_DOWNLOAD OFF
+        LOG_CONFIGURE OFF
+        LOG_BUILD OFF
+        LOG_INSTALL OFF)
 endif ()
