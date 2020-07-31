@@ -60,7 +60,7 @@ $workaround_targets=(
 )
 ForEach($target IN $workaround_targets) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
-    cmake --build "${binary_dir}" --config $env:CONFIG --target "storage_internal_tuple_filter_test"
+    cmake --build "${binary_dir}" --config $env:CONFIG --target "${target}"
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling with CMake $env:CONFIG"
