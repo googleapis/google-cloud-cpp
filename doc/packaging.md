@@ -162,10 +162,17 @@ cc_binary(
 
 | Library | Minimum version | Description |
 | ------- | --------------: | ----------- |
-| gRPC    | 1.16.x | gRPC++ for Cloud Bigtable |
-| libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
-| crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
-| OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
+| [gRPC][gRPC-gh] | 1.16.x | gRPC++ for Cloud Bigtable |
+| [libcurl][libcurl-gh] | 7.47.0  | HTTP client library for the Google Cloud Storage client |
+| [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
+| [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
+| [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
+
+[gRPC-gh]: https://github.com/grpc/grpc
+[libcurl-gh]: https://github.com/curl/curl
+[crc32c-gh]: https://github.com/google/crc32c
+[OpenSSL-gh]: https://github.com/openssl/openssl
+[nlohmann-json-gh]: https://github.com/nlohmann/json
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -258,6 +265,27 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
@@ -334,6 +362,27 @@ wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -476,6 +525,27 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
@@ -588,6 +658,27 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
@@ -696,6 +787,27 @@ wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -825,6 +937,27 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
@@ -897,6 +1030,27 @@ wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -1033,6 +1187,27 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile, test, and install `google-cloud-cpp`.
@@ -1154,6 +1329,27 @@ wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -1297,6 +1493,27 @@ wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### nlohmann_json library
+
+The project depends on the on nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and folks often install it
+manually, that may work, but leaves you without support for CMake
+pkg-config.
+
+```bash
+cd $HOME/Downloads
+curl -sSL https://github.com/nlohmann/json/archive/v3.4.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
