@@ -267,11 +267,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -368,11 +367,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -529,11 +527,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -663,11 +660,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -796,11 +792,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -944,11 +939,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -1045,11 +1039,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -1200,11 +1193,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -1350,11 +1342,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
@@ -1515,11 +1506,10 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-The project depends on the on nlohmann_json library. We use CMake to
+The project depends on the nlohmann_json library. We use CMake to
 install it as this installs the necessary CMake configuration files.
-Note that this is a header-only library, and folks often install it
-manually, that may work, but leaves you without support for CMake
-pkg-config.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads

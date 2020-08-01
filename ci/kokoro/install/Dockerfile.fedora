@@ -87,11 +87,10 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
 
 # #### nlohmann_json library
 
-# The project depends on the on nlohmann_json library. We use CMake to
+# The project depends on the nlohmann_json library. We use CMake to
 # install it as this installs the necessary CMake configuration files.
-# Note that this is a header-only library, and folks often install it
-# manually, that may work, but leaves you without support for CMake
-# pkg-config.
+# Note that this is a header-only library, and often installed manually.
+# This leaves your environment without support for CMake pkg-config.
 
 # ```bash
 WORKDIR /var/tmp/build

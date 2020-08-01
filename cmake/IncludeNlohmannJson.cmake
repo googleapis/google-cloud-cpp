@@ -19,7 +19,7 @@ function (find_nlohmann_json)
     if (nlohmann_json_FOUND)
         return()
     endif ()
-    # As a fall back, try finding the header, since this is a header-only
+    # As a fall back, try finding the header. Since this is a header-only
     # library that is all we need.
     find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp"
               REQUIRED)
