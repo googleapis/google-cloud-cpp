@@ -66,8 +66,8 @@ if (NOT TARGET nlohmann-json-project)
                    -DBUILD_TESTING=OFF
         PATCH_COMMAND "${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND}"
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
-        LOG_DOWNLOAD OFF
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF)
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 endif ()
