@@ -29,4 +29,5 @@ github-io-staging/
 ci/kokoro/install/ccache-contents/
 
 google/cloud/storage/testbench/__pycache__/
-google/cloud/storage/testbench/*.pyc
+google/cloud/storage/testbench_grpc/__pycache__/
+*.pyc
