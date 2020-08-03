@@ -14,8 +14,8 @@
 
 #include "google/cloud/internal/log_wrapper.h"
 #include <google/protobuf/text_format.h>
+#include <atomic>
 #include <sstream>
-#include <thread>
 
 namespace google {
 namespace cloud {
@@ -35,10 +35,8 @@ std::string DebugString(google::protobuf::Message const& m,
 }
 
 std::string RequestIdForLogging() {
-  static std::atomic<int> generator{0};
-  std::ostringstream os;
-  os << std::this_thread::get_id() << ":" << ++generator;
-  return std::move(os).str();
+  static std::atomic<std::uint64_t> generator{0};
+  return std::to_string(++generator);
 }
 
 char const* DebugFutureStatus(std::future_status status) {
