@@ -37,7 +37,7 @@ std::string RandomSubscriptionId(
 
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [create-topic]
+  //! [START pubsub_create_topic] [create-topic]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
@@ -48,13 +48,13 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
   }
-  //! [create-topic]
+  //! [END pubsub_create_topic] [create-topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ListTopics(google::cloud::pubsub::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
-  //! [list-topics]
+  //! [START pubsub_list_topics] [list-topics]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
@@ -67,13 +67,13 @@ void ListTopics(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "No topics found in project " << project_id << "\n";
     }
   }
-  //! [list-topics]
+  //! [END pubsub_list_topics] [list-topics]
   (std::move(client), argv.at(0));
 }
 
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
-  //! [delete-topic]
+  //! [START pubsub_delete_topic] [delete-topic]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
@@ -83,13 +83,13 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
 
     std::cout << "The topic was successfully deleted\n";
   }
-  //! [delete-topic]
+  //! [END pubsub_delete_topic] [delete-topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [create-subscription]
+  //! [START pubsub_create_pull_subscription] [create-subscription]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
@@ -103,13 +103,13 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
     std::cout << "The subscription was successfully created: "
               << subscription->DebugString() << "\n";
   }
-  //! [create-subscription]
+  //! [END pubsub_create_pull_subscription] [create-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
-  //! [list-subscriptions]
+  //! [START pubsub_list_subscriptions] [list-subscriptions]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     int count = 0;
@@ -123,13 +123,13 @@ void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
       std::cout << "No subscriptions found in project " << project_id << "\n";
     }
   }
-  //! [list-subscriptions]
+  //! [END pubsub_list_subscriptions] [list-subscriptions]
   (std::move(client), argv.at(0));
 }
 
 void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [delete-subscription]
+  //! [START pubsub_delete_subscription] [delete-subscription]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
@@ -139,7 +139,7 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
 
     std::cout << "The subscription was successfully deleted\n";
   }
-  //! [delete-subscription]
+  //! [END pubsub_delete_subscription] [delete-subscription]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
