@@ -79,6 +79,11 @@ class SubscriptionAdminConnection {
     Subscription subscription;
   };
 
+  /// Wrap the arguments for `UpdateSubscription()`
+  struct UpdateSubscriptionParams {
+    google::pubsub::v1::UpdateSubscriptionRequest request;
+  };
+
   /// Wrap the arguments for `ListSubscription()`
   struct ListSubscriptionsParams {
     std::string project_id;
@@ -97,6 +102,10 @@ class SubscriptionAdminConnection {
   /// Defines the interface for `SubscriptionAdminClient::GetSubscription()`
   virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
       GetSubscriptionParams) = 0;
+
+  /// Defines the interface for `SubscriptionAdminClient::UpdateSubscription()`
+  virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
+      UpdateSubscriptionParams) = 0;
 
   /// Defines the interface for `SubscriptionAdminClient::ListSubscriptions()`
   virtual ListSubscriptionsRange ListSubscriptions(ListSubscriptionsParams) = 0;
