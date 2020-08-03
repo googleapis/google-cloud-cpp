@@ -35,7 +35,7 @@ std::string DebugString(google::protobuf::Message const& m,
 }
 
 std::string RequestIdForLogging() {
-  thread_local std::uint64_t generator = 0;
+  static std::atomic<int> generator{0};
   std::ostringstream os;
   os << std::this_thread::get_id() << ":" << ++generator;
   return std::move(os).str();
