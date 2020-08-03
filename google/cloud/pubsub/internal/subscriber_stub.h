@@ -44,6 +44,11 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::Subscription const& request) = 0;
 
+  /// Get full metadata information about a subscription.
+  virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::GetSubscriptionRequest const& request) = 0;
+
   /// List existing subscriptions.
   virtual StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
   ListSubscriptions(

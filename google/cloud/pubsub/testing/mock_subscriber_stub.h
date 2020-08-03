@@ -35,6 +35,11 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
               (grpc::ClientContext&, google::pubsub::v1::Subscription const&),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Subscription>, GetSubscription,
+              (grpc::ClientContext&,
+               google::pubsub::v1::GetSubscriptionRequest const&),
+              (override));
+
   MOCK_METHOD(StatusOr<google::pubsub::v1::ListSubscriptionsResponse>,
               ListSubscriptions,
               (grpc::ClientContext&,
