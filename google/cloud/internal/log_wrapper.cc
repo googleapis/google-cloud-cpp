@@ -15,7 +15,6 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include <google/protobuf/text_format.h>
 #include <atomic>
-#include <sstream>
 
 namespace google {
 namespace cloud {
