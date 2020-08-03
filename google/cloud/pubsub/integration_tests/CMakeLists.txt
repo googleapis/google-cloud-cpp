@@ -42,8 +42,12 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         google_cloud_cpp_add_executable(target "pubsub" ${fname})
         target_link_libraries(
             ${target}
-            PRIVATE pubsub_client_testing googleapis-c++::pubsub_client
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+            PRIVATE pubsub_client_testing
+                    googleapis-c++::pubsub_client
+                    google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_testing
+                    GTest::gmock_main
+                    GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
 

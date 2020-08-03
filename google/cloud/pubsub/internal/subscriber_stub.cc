@@ -40,6 +40,17 @@ class DefaultSubscriberStub : public SubscriberStub {
     return response;
   }
 
+  StatusOr<google::pubsub::v1::Subscription> GetSubscription(
+      grpc::ClientContext& context,
+      google::pubsub::v1::GetSubscriptionRequest const& request) override {
+    google::pubsub::v1::Subscription response;
+    auto status = grpc_stub_->GetSubscription(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::pubsub::v1::ListSubscriptionsResponse> ListSubscriptions(
       grpc::ClientContext& context,
       google::pubsub::v1::ListSubscriptionsRequest const& request) override {

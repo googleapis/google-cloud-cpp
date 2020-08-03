@@ -31,6 +31,7 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
         "//google/cloud/pubsub:pubsub_client",
         "//google/cloud/pubsub:pubsub_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_integration_tests]

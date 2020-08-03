@@ -107,6 +107,23 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
+                     std::vector<std::string> const& argv) {
+  //! [get-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id) {
+    auto s = client.GetSubscription(
+        pubsub::Subscription(project_id, std::move(subscription_id)));
+    if (!s) throw std::runtime_error(s.status().message());
+
+    std::cout << "The subscription exists and its metadata is: "
+              << s->DebugString() << "\n";
+  }
+  //! [get-subscription]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
   //! [START pubsub_list_subscriptions] [list-subscriptions]
@@ -356,6 +373,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
+  std::cout << "\nRunning GetSubscription() sample" << std::endl;
+  GetSubscription(subscription_admin_client, {project_id, subscription_id});
+
   std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
   ListSubscriptions(subscription_admin_client, {project_id});
 
@@ -408,6 +428,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "create-subscription", {"project-id", "topic-id", "subscription-id"},
           CreateSubscription),
+      CreateSubscriptionAdminCommand("get-subscription",
+                                     {"project-id", "subscription-id"},
+                                     GetSubscription),
       CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
                                      ListSubscriptions),
       CreateSubscriptionAdminCommand("delete-subscription",

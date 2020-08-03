@@ -86,6 +86,21 @@ class SubscriptionAdminClient {
   }
 
   /**
+   * Get the metadata for an existing Cloud Pub/Sub subscription.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent. The library
+   * always retries this request.
+   *
+   * @par Example
+   * @snippet samples.cc get-subscription
+   */
+  StatusOr<google::pubsub::v1::Subscription> GetSubscription(
+      Subscription subscription) {
+    return connection_->GetSubscription({std::move(subscription)});
+  }
+
+  /**
    * List all the subscriptions for a given project id.
    *
    * @par Idempotency
