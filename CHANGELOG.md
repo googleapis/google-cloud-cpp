@@ -1,6 +1,66 @@
 # Changelog
 
-## v1.16.0 - TBD
+## v1.17.0 - TBD
+
+## v1.16.0 - 2020-08
+
+### Bigtable
+
+* doc: remove not GA warning from bigtable backup methods (#4601)
+* doc: restore quickstart's region tags (#4525)
+* fix: builds on 64-bit Windows (#4523)
+* fix: warnings under Windows+MSVC+x86 (#4515)
+* feat: `CompletionQueue::RunAsync` with no arguments (#4450)
+
+### Storage
+
+* fix: GCE credentials response handling (#4739)
+* feat: add a function to delete resumable upload in client (#4696)
+* doc: include guidelines for bucket names (#4688)
+* feat: add a function `DeleteResumableUpload` to `RawClient` (#4678)
+* fix: missing `CreateDefaultClientOptions` overload (#4677)
+* feat: a request type to delete pending resumable uploads (#4617)
+* fix!: incorrect type in OLM condition (#4597)
+* feat: disable MD5Hash by default (#4591)
+* feat: Add startOffset and endOffset (#4518)
+* fix: warnings under Windows+MSVC+x86 (#4515)
+* fix: avoid chunked transfer encoding (#4506)
+* fix: avoid unnecessary chunk to finalize uploads (#4504)
+* feat: Add `Client::ListObjectsAndPrefixes` (#4494)
+* fix: multiple problems under Windows+MSVC+x86 (#4502)
+* feat: reduce data copies in uploads (#4496)
+* fix: workaround min/max macros on Windows (#4490)
+* feat: reduce copies during uploads (#4489)
+* feat: Add `UploadFromOffset` and `UploadLimit` to `UploadFile` (#4473)
+* feat: HTTP requests with many buffers (#4480)
+* feat: Add `value_or()` to options params and headers (#4408)
+
+### Spanner
+
+* doc: note that NUMERIC columns are not yet available (#4738)
+* fix: begin a `has_begin` transaction in Rollback() (#4731)
+* fix: handle `ExecuteBatchDml` returning OK with no results (#4724)
+* fix: use the updated transaction id in `ReadImpl` (#4722)
+* fix: explicitly begin failed implicit begin transactions (#4706)
+* feat: add `google-cloud-resource-prefix` to non-admin operations (#4703)
+* feat: handle invalid transactions in `ConnectionImpl` methods
+* refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625)
+* feat: store a Status when invalidating Transactions (#4670)
+* fix: date formatting with negative years (#4614)
+* refactor!: use `absl::CivilDay` for "date" type (#4600)
+* refactor!: move `spanner::Date` to common library (#4594)
+* feat: support moving a `Transaction` into an error state (#4545)
+* feat: add `google::cloud::spanner::Numeric` (#4418)
+* fix: warnings under Windows+MSVC+x86 (#4515)
+
+### Common libraries
+
+* fix: timestamp proto encoding works before the epoch and with extreme values (#4611)
+* fix!: incorrect type in OLM condition (#4597)
+* refactor!: use `absl::CivilDay` for "date" type (#4600)
+* refactor!: move `spanner::Date` to common library (#4594)
+* feat: `CompletionQueue::RunAsync` with no arguments (#4450)
+* feat: log exceptions in example driver (#4453)
 
 ## v1.15.0 - 2020-07
 
