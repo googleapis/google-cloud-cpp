@@ -14,13 +14,18 @@
 
 ### Storage
 
+**BREAKING CHANGES**
+* fix!: incorrect type in OLM condition (#4597) **changed the
+  `created_before` field in `LifecycleRuleCondition` from a time
+   point to a date**
+
+**Other Changes**
 * fix: GCE credentials response handling (#4739)
 * feat: add a function to delete resumable upload in client (#4696)
 * doc: include guidelines for bucket names (#4688)
 * feat: add a function `DeleteResumableUpload` to `RawClient` (#4678)
 * fix: missing `CreateDefaultClientOptions` overload (#4677)
 * feat: a request type to delete pending resumable uploads (#4617)
-* fix!: incorrect type in OLM condition (#4597)
 * feat: disable MD5Hash by default (#4591)
 * feat: Add startOffset and endOffset (#4518)
 * fix: warnings under Windows+MSVC+x86 (#4515)
@@ -37,28 +42,48 @@
 
 ### Spanner
 
-* doc: note that NUMERIC columns are not yet available (#4738)
-* fix: begin a `has_begin` transaction in Rollback() (#4731)
-* fix: handle `ExecuteBatchDml` returning OK with no results (#4724)
-* fix: use the updated transaction id in `ReadImpl` (#4722)
-* fix: explicitly begin failed implicit begin transactions (#4706)
-* feat: add `google-cloud-resource-prefix` to non-admin operations (#4703)
-* feat: handle invalid transactions in `ConnectionImpl` methods
-* refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625)
-* feat: store a Status when invalidating Transactions (#4670)
-* fix: date formatting with negative years (#4614)
-* refactor!: use `absl::CivilDay` for "date" type (#4600)
+**BREAKING CHANGES**
+* refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625).
+  **spanner::Timestamp no longer allows construction from or
+  conversion to a chrono time point with picosecond precision**.
+* refactor!: use `absl::CivilDay` for "date" type (#4600). **absl::CivilDay's
+  constructors are explicit (by design), where as the old
+  google:cloud:spanner::Date 3-arg constructor was not explicit.**
 * refactor!: move `spanner::Date` to common library (#4594)
-* feat: support moving a `Transaction` into an error state (#4545)
+
+**Fix issue #4516:** atomicity is violated if the first operation in a RW
+  Transaction fails. If this occurs, the library now explicitly begins a new
+  transaction and retries the failed operation. This ensures subsequent
+  operations using the same `Transaction` object are in fact executed in the
+  same Spanner transaction.
+  * fix: begin a `has_begin` transaction in Rollback() (#4731)
+  * fix: handle `ExecuteBatchDml` returning OK with no results (#4724)
+  * fix: use the updated transaction id in `ReadImpl` (#4722)
+  * fix: explicitly begin failed implicit begin transactions (#4706)
+  * feat: handle invalid transactions in `ConnectionImpl` methods
+  * feat: store a Status when invalidating Transactions (#4670)
+  * feat: support moving a `Transaction` into an error state (#4545)
+
+**Other Changes**
+* doc: note that NUMERIC columns are not yet available (#4738)
+* feat: add `google-cloud-resource-prefix` to non-admin operations (#4703)
+* fix: date formatting with negative years (#4614)
 * feat: add `google::cloud::spanner::Numeric` (#4418)
 * fix: warnings under Windows+MSVC+x86 (#4515)
 
 ### Common libraries
 
-* fix: timestamp proto encoding works before the epoch and with extreme values (#4611)
-* fix!: incorrect type in OLM condition (#4597)
-* refactor!: use `absl::CivilDay` for "date" type (#4600)
+**BREAKING CHANGES**
+* refactor!: use `absl::CivilDay` for "date" type (#4600). **absl::CivilDay's
+  constructors are explicit (by design), where as the old
+  google:cloud:spanner::Date 3-arg constructor was not explicit.**
+* fix!: incorrect type in OLM condition (#4597) **changed the
+  `created_before` field in `LifecycleRuleCondition` from a time
+   point to a date**
 * refactor!: move `spanner::Date` to common library (#4594)
+
+**Other Changes**
+* fix: timestamp proto encoding works before the epoch and with extreme values (#4611)
 * feat: `CompletionQueue::RunAsync` with no arguments (#4450)
 * feat: log exceptions in example driver (#4453)
 
