@@ -105,10 +105,9 @@ if should_run_integration_tests; then
     else
       cd "${BINARY_DIR}"
     fi
-    # TODO(#4536) - restore the GCS+gRPC integration tests
     ctest \
       -L 'integration-test-production' \
-      -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test|storage_grpc_)' \
+      -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)' \
       --output-on-failure -j "${NCPU}"
   )
 fi
