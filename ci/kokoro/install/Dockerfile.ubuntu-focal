@@ -35,9 +35,9 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+RUN wget -q https://github.com/abseil/abseil-cpp/archive/184cf2524101310a0ba315c743e82cf45fccccf8.tar.gz && \
+    tar -xf 184cf2524101310a0ba315c743e82cf45fccccf8.tar.gz && \
+    cd abseil-cpp-184cf2524101310a0ba315c743e82cf45fccccf8 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
