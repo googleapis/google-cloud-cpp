@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H
 
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -111,6 +112,16 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+    pubsub::ConnectionOptions const& options,
+    std::shared_ptr<PublisherStub> stub);
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 

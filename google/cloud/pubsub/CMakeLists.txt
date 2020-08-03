@@ -160,6 +160,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         subscriber_connection_test.cc
         subscriber_test.cc
         subscription_test.cc
+        topic_admin_connection_test.cc
         topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

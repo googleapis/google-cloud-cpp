@@ -76,15 +76,27 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options) {
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
+  return pubsub_internal::MakeTopicAdminConnection(options, std::move(stub));
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+    pubsub::ConnectionOptions const& options,
+    std::shared_ptr<PublisherStub> stub) {
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
         std::move(stub), options.tracing_options());
   }
-  return std::make_shared<TopicAdminConnectionImpl>(std::move(stub));
+  return std::make_shared<pubsub::TopicAdminConnectionImpl>(std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

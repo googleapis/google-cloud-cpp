@@ -34,5 +34,6 @@ pubsub_client_unit_tests = [
     "subscriber_connection_test.cc",
     "subscriber_test.cc",
     "subscription_test.cc",
+    "topic_admin_connection_test.cc",
     "topic_test.cc",
 ]
