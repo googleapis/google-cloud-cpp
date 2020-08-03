@@ -161,7 +161,7 @@ struct SignedUrlTimestamp
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   SignedUrlTimestamp() = default;
-  static char const* name() { return "x-good-date"; }
+  static char const* name() { return "x-goog-date"; }
 };
 
 /**

@@ -150,7 +150,7 @@ class GcsObjectVersion(object):
         :param request:flask.Request the http request.
         :param prefix: str the prefix shared by the encryption headers,
             typically 'x-goog-encryption', but for rewrite requests it can be
-            'x-good-copy-source-encryption'.
+            'x-goog-copy-source-encryption'.
         :rtype:NoneType
         """
         key_header = prefix + "-key"
