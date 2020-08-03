@@ -15,8 +15,8 @@
 ### Storage
 
 **BREAKING CHANGES**
-* fix!: incorrect type in OLM condition (#4597) **changed the
-  `created_before` field in `LifecycleRuleCondition` from a time
+* fix!: incorrect type in OLM condition (#4597)\
+  **changed the `created_before` field in `LifecycleRuleCondition` from a time
    point to a date**
 
 **Other Changes**
@@ -43,26 +43,27 @@
 ### Spanner
 
 **BREAKING CHANGES**
-* refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625).
-  **spanner::Timestamp no longer allows construction from or
-  conversion to a chrono time point with picosecond precision**.
-* refactor!: use `absl::CivilDay` for "date" type (#4600). **absl::CivilDay's
-  constructors are explicit (by design), where as the old
-  google:cloud:spanner::Date 3-arg constructor was not explicit.**
+* refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625)\
+  **spanner::Timestamp no longer allows construction from or conversion to
+   a chrono time point with picosecond precision**.
+* refactor!: use `absl::CivilDay` for "date" type (#4600) \
+  **`absl::CivilDay's` constructors are explicit (by design), where as the old
+  `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
 * refactor!: move `spanner::Date` to common library (#4594)
 
-**Fix issue #4516:** atomicity is violated if the first operation in a RW
-  Transaction fails. If this occurs, the library now explicitly begins a new
-  transaction and retries the failed operation. This ensures subsequent
-  operations using the same `Transaction` object are in fact executed in the
-  same Spanner transaction.
-  * fix: begin a `has_begin` transaction in Rollback() (#4731)
-  * fix: handle `ExecuteBatchDml` returning OK with no results (#4724)
-  * fix: use the updated transaction id in `ReadImpl` (#4722)
-  * fix: explicitly begin failed implicit begin transactions (#4706)
-  * feat: handle invalid transactions in `ConnectionImpl` methods
-  * feat: store a Status when invalidating Transactions (#4670)
-  * feat: support moving a `Transaction` into an error state (#4545)
+**Fix issue #4516: atomicity is violated if the first operation in a RW
+  Transaction fails.**\
+  If this occurs, the library now explicitly begins a new transaction and
+  retries the failed operation. This ensures subsequent operations using the
+  same `Transaction` object are in fact executed in the same Spanner
+  transaction.
+* fix: begin a `has_begin` transaction in Rollback() (#4731)
+* fix: handle `ExecuteBatchDml` returning OK with no results (#4724)
+* fix: use the updated transaction id in `ReadImpl` (#4722)
+* fix: explicitly begin failed implicit begin transactions (#4706)
+* feat: handle invalid transactions in `ConnectionImpl` methods
+* feat: store a Status when invalidating Transactions (#4670)
+* feat: support moving a `Transaction` into an error state (#4545)
 
 **Other Changes**
 * doc: note that NUMERIC columns are not yet available (#4738)
@@ -74,11 +75,11 @@
 ### Common libraries
 
 **BREAKING CHANGES**
-* refactor!: use `absl::CivilDay` for "date" type (#4600). **absl::CivilDay's
-  constructors are explicit (by design), where as the old
-  google:cloud:spanner::Date 3-arg constructor was not explicit.**
-* fix!: incorrect type in OLM condition (#4597) **changed the
-  `created_before` field in `LifecycleRuleCondition` from a time
+* refactor!: use `absl::CivilDay` for "date" type (#4600).\
+  **`absl::CivilDay's` constructors are explicit (by design), where as the old
+  `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
+* fix!: incorrect type in OLM condition (#4597)\
+  **changed the `created_before` field in `LifecycleRuleCondition` from a time
    point to a date**
 * refactor!: move `spanner::Date` to common library (#4594)
 
