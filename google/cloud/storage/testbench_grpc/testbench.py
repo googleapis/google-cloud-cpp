@@ -19,8 +19,9 @@ import logging
 import testbench_utils
 from concurrent import futures
 from google.protobuf.empty_pb2 import Empty
-from google.cloud.storage_v1.proto import storage_pb2, storage_pb2_grpc, storage_resources_pb2, storage_resources_pb2_grpc
-from pprint import pprint
+from google.cloud.storage_v1.proto import storage_pb2_grpc, storage_resources_pb2_grpc
+from google.cloud.storage_v1.proto.storage_pb2 import *
+from google.cloud.storage_v1.proto.storage_resources_pb2 import *
 
 
 class StorageServicer(storage_pb2_grpc.StorageServicer):
@@ -28,26 +29,28 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
 
     def InsertBucket(self, request, context):
         name = request.bucket.name
+        bucket = Bucket()
         if testbench_utils.has_bucket(name):
             context.set_details("Bucket %s already exists" % name)
             context.set_code(grpc.StatusCode.ALREADY_EXISTS)
-            return storage_resources_pb2.Bucket()
-        bucket = storage_resources_pb2.Bucket(name=name, id=name)
-        return testbench_utils.insert_bucket(name, bucket)
+            return bucket
+        bucket.id = name
+        bucket.name = name
+        return testbench_utils.insert_bucket(bucket)
 
     def ListBuckets(self, request, context):
-        result = storage_resources_pb2.ListBucketsResponse(next_page_token="")
-        for name, bucket in testbench_utils.all_buckets():
+        result = ListBucketsResponse(next_page_token="")
+        for _, bucket in testbench_utils.all_buckets():
             result.items.append(bucket)
         return result
 
     def GetBucket(self, request, context):
         name = request.bucket
+        bucket = testbench_utils.get_bucket(name, Bucket())
         if not testbench_utils.has_bucket(name):
             context.set_details("Bucket %s does not exist" % name)
             context.set_code(grpc.StatusCode.NOT_FOUND)
-            return storage_resources_pb2.Bucket()
-        return testbench_utils.get_bucket(name)
+        return bucket
 
     def DeleteBucket(self, request, context):
         name = request.bucket
@@ -59,23 +62,29 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         return Empty()
 
     def InsertObject(self, request_iterator, context):
-        value = None
         for request in request_iterator:
-            # non-resumable uploads
+            # Non-resumable uploads
             if request.insert_object_spec is not None:
-                spec = request.insert_object_spec
-                value = spec.resource
-                content = request.checksummed_data.content
-                testbench_utils.insert_object(value, content)
-                # TODO(vnvo2409): Check for md5_hash and crc32c.
-            #TODO(vnvo2409): Resumable uploads
-        return value
+                insert_spec = request.insert_object_spec
+                # New object
+                if request.checksummed_data is not None:
+                    data = request.checksummed_data
+                    return testbench_utils.insert_object(insert_spec.resource, data)
 
     def GetObjectMedia(self, request, context):
         bucket_name = request.bucket
         object_name = request.object
-        value = testbench_utils.get_object(bucket_name, object_name)
-        yield storage_pb2.GetObjectMediaResponse(checksummed_data = {"content": value['content']})
+        if not testbench_utils.has_object(bucket_name, object_name):
+            context.set_details("Object %s does not exist" % object_name)
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            yield GetObjectMediaResponse()
+        object_data = testbench_utils.get_object(bucket_name, object_name).get("data")
+        object_value = testbench_utils.get_object(bucket_name, object_name).get(
+            "object"
+        )
+        yield GetObjectMediaResponse(
+            checksummed_data=object_data, metadata=object_value
+        )
 
     def DeleteObject(self, request, context):
         bucket_name = request.bucket
@@ -91,10 +100,11 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     storage_pb2_grpc.add_StorageServicer_to_server(StorageServicer(), server)
-    server.add_insecure_port('localhost:8585')
+    server.add_insecure_port("localhost:8585")
     server.start()
     server.wait_for_termination()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     logging.basicConfig()
     main()

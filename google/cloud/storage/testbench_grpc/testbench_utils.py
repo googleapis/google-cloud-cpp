@@ -17,44 +17,44 @@
 # Define the collection of Buckets indexed by <bucket_name>
 GCS_BUCKETS = dict()
 
+
 def has_bucket(bucket_name):
-    """Return True if the bucket already exists in the global collection."""
     return GCS_BUCKETS.get(bucket_name) is not None
 
-def insert_bucket(bucket_name, bucket):
-    """Insert (or replace) a new bucket into the global collection.
 
-    :param bucket_name:str the name of the bucket.
-    :param bucket:GcsBucket the bucket to insert.
-    """
-    GCS_BUCKETS[bucket_name] = bucket
+def insert_bucket(bucket):
+    GCS_BUCKETS[bucket.name] = bucket
     return bucket
 
-def all_buckets():
-    """Return a key,value iterator for all the buckets in the global collection.
 
-    :rtype:dict[str, GcsBucket]
-    """
+def all_buckets():
     return GCS_BUCKETS.items()
 
-def get_bucket(name):
-    return GCS_BUCKETS[name]
+
+def get_bucket(bucket_name, bucket=None):
+    return GCS_BUCKETS.get(bucket_name, bucket)
+
 
 def delete_bucket(name):
     del GCS_BUCKETS[name]
 
-# Define the collection of GcsObjects indexed by <bucket_name>/o/<object_name>
+
+# Define the collection of Objects indexed by <bucket_name>/o/<object_name>
 GCS_OBJECTS = dict()
 
-def insert_object(value, content):
-    GCS_OBJECTS[value.bucket + "/o/" + value.name] = {"object": value, "content": content}
+
+def insert_object(value, data):
+    GCS_OBJECTS[value.bucket + "/o/" + value.name] = {"object": value, "data": data}
     return value
 
-def get_object(bucket_name, object_name):
-    return GCS_OBJECTS[bucket_name + "/o/" + object_name]
+
+def get_object(bucket_name, object_name, value=None):
+    return GCS_OBJECTS.get(bucket_name + "/o/" + object_name, value)
+
 
 def has_object(bucket_name, object_name):
     return GCS_OBJECTS.get(bucket_name + "/o/" + object_name) is not None
+
 
 def delete_object(bucket_name, object_name):
     del GCS_OBJECTS[bucket_name + "/o/" + object_name]

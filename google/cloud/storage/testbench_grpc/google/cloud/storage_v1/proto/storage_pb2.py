@@ -6,6 +6,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -17,4373 +18,8809 @@ from google.iam.v1 import policy_pb2 as google_dot_iam_dot_v1_dot_policy__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import field_mask_pb2 as google_dot_protobuf_dot_field__mask__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
-from google.cloud.storage_v1.proto import storage_resources_pb2 as google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2
+from google.cloud.storage_v1.proto import (
+    storage_resources_pb2 as google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2,
+)
 from google.api import client_pb2 as google_dot_api_dot_client__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='google/cloud/storage_v1/proto/storage.proto',
-  package='google.storage.v1',
-  syntax='proto3',
-  serialized_options=b'\n\025com.google.storage.v1P\001Z8google.golang.org/genproto/googleapis/storage/v1;storage',
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+google/cloud/storage_v1/proto/storage.proto\x12\x11google.storage.v1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x35google/cloud/storage_v1/proto/storage_resources.proto\x1a\x17google/api/client.proto\"\x93\x01\n DeleteBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x90\x01\n\x1dGetBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xc5\x01\n InsertBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x03 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"}\n\x1fListBucketAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x8a\x02\n\x1fPatchBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12/\n\x0bupdate_mask\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xda\x01\n UpdateBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xf1\x01\n\x13\x44\x65leteBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xad\x02\n\x10GetBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x04 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x83\x03\n\x13InsertBucketRequest\x12J\n\x0epredefined_acl\x18\x01 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x02 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x14\n\x07project\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12=\n\nprojection\x18\x04 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12)\n\x06\x62ucket\x18\x06 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"q\n\x13ListChannelsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xe9\x01\n\x12ListBucketsRequest\x12\x13\n\x0bmax_results\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x0e\n\x06prefix\x18\x03 \x01(\t\x12\x14\n\x07project\x18\x04 \x01(\tB\x03\xe0\x41\x02\x12=\n\nprojection\x18\x05 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x99\x01\n\x1aLockRetentionPolicyRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x17if_metageneration_match\x18\x02 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xb4\x04\n\x12PatchBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x05 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\x06 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x08 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12/\n\x0bupdate_mask\x18\t \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x84\x04\n\x13UpdateBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x05 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\x06 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x08 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12\x45\n\x15\x63ommon_request_params\x18\t \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x88\x01\n\x12StopChannelRequest\x12+\n\x07\x63hannel\x18\x01 \x01(\x0b\x32\x1a.google.storage.v1.Channel\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x9a\x01\n\'DeleteDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x97\x01\n$GetDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xcc\x01\n\'InsertDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x03 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x84\x02\n&ListDefaultObjectAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x91\x02\n&PatchDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12/\n\x0bupdate_mask\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xe1\x01\n\'UpdateDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x92\x01\n\x19\x44\x65leteNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x0cnotification\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x8f\x01\n\x16GetNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x0cnotification\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xae\x01\n\x19InsertNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x35\n\x0cnotification\x18\x03 \x01(\x0b\x32\x1f.google.storage.v1.Notification\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"v\n\x18ListNotificationsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xbc\x01\n DeleteObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xb9\x01\n\x1dGetObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xee\x01\n InsertObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x45\n\x15object_access_control\x18\x05 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xa6\x01\n\x1fListObjectAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xb3\x02\n\x1fPatchObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15object_access_control\x18\x05 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x12/\n\x0bupdate_mask\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\"\xb4\x02\n UpdateObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15object_access_control\x18\x06 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x12/\n\x0bupdate_mask\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\"\xc6\x06\n\x14\x43omposeObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x03 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12.\n\x0b\x64\x65stination\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12M\n\x0esource_objects\x18\x0c \x03(\x0b\x32\x35.google.storage.v1.ComposeObjectRequest.SourceObjects\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x14\n\x0ckms_key_name\x18\x06 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\t \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x1a\xeb\x01\n\rSourceObjects\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\ngeneration\x18\x02 \x01(\x03\x12g\n\x14object_preconditions\x18\x03 \x01(\x0b\x32I.google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions\x1aO\n\x13ObjectPreconditions\x12\x38\n\x13if_generation_match\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\xb8\x08\n\x11\x43opyObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x03 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12?\n\x1aif_source_generation_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_generation_not_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_metageneration_match\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12G\n\"if_source_metageneration_not_match\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x0c \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x1a\n\rsource_bucket\x18\r \x01(\tB\x03\xe0\x41\x02\x12\x1a\n\rsource_object\x18\x0e \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x11source_generation\x18\x0f \x01(\x03\x12.\n\x0b\x64\x65stination\x18\x11 \x01(\x0b\x32\x19.google.storage.v1.Object\x12 \n\x18\x64\x65stination_kms_key_name\x18\x14 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\x12 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x13 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xf9\x03\n\x13\x44\x65leteObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tupload_id\x18\x03 \x01(\t\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12R\n\x1c\x63ommon_object_request_params\x18\n \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x87\x04\n\x15GetObjectMediaRequest\x12\x0e\n\x06\x62ucket\x18\x01 \x01(\t\x12\x0e\n\x06object\x18\x02 \x01(\t\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x13\n\x0bread_offset\x18\x04 \x01(\x03\x12\x12\n\nread_limit\x18\x05 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12R\n\x1c\x63ommon_object_request_params\x18\x0b \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0c \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xa2\x04\n\x10GetObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x08 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12R\n\x1c\x63ommon_object_request_params\x18\n \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xf9\x01\n\x16GetObjectMediaResponse\x12<\n\x10\x63hecksummed_data\x18\x01 \x01(\x0b\x32\".google.storage.v1.ChecksummedData\x12<\n\x10object_checksums\x18\x02 \x01(\x0b\x32\".google.storage.v1.ObjectChecksums\x12\x36\n\rcontent_range\x18\x03 \x01(\x0b\x32\x1f.google.storage.v1.ContentRange\x12+\n\x08metadata\x18\x04 \x01(\x0b\x32\x19.google.storage.v1.Object\"\xc2\x03\n\x10InsertObjectSpec\x12+\n\x08resource\x18\x01 \x01(\x0b\x32\x19.google.storage.v1.Object\x12J\n\x0epredefined_acl\x18\x02 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x07 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\"\x8f\x04\n\x13InsertObjectRequest\x12\x13\n\tupload_id\x18\x01 \x01(\tH\x00\x12\x41\n\x12insert_object_spec\x18\x02 \x01(\x0b\x32#.google.storage.v1.InsertObjectSpecH\x00\x12\x19\n\x0cwrite_offset\x18\x03 \x01(\x03\x42\x03\xe0\x41\x02\x12>\n\x10\x63hecksummed_data\x18\x04 \x01(\x0b\x32\".google.storage.v1.ChecksummedDataH\x01\x12=\n\treference\x18\x05 \x01(\x0b\x32(.google.storage.v1.GetObjectMediaRequestH\x01\x12<\n\x10object_checksums\x18\x06 \x01(\x0b\x32\".google.storage.v1.ObjectChecksums\x12\x14\n\x0c\x66inish_write\x18\x07 \x01(\x08\x12R\n\x1c\x63ommon_object_request_params\x18\x08 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\t \x01(\x0b\x32&.google.storage.v1.CommonRequestParamsB\x0f\n\rfirst_messageB\x06\n\x04\x64\x61ta\"\xb1\x02\n\x12ListObjectsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tdelimiter\x18\x02 \x01(\t\x12\"\n\x1ainclude_trailing_delimiter\x18\x03 \x01(\x08\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x12\n\npage_token\x18\x05 \x01(\t\x12\x0e\n\x06prefix\x18\x06 \x01(\t\x12=\n\nprojection\x18\x07 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x10\n\x08versions\x18\t \x01(\x08\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xcc\x01\n\x17QueryWriteStatusRequest\x12\x16\n\tupload_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12R\n\x1c\x63ommon_object_request_params\x18\x02 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"D\n\x18QueryWriteStatusResponse\x12\x16\n\x0e\x63ommitted_size\x18\x01 \x01(\x03\x12\x10\n\x08\x63omplete\x18\x02 \x01(\x08\"\xec\t\n\x14RewriteObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12 \n\x18\x64\x65stination_kms_key_name\x18\x03 \x01(\t\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12?\n\x1aif_source_generation_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_generation_not_match\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_metageneration_match\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12G\n\"if_source_metageneration_not_match\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12$\n\x1cmax_bytes_rewritten_per_call\x18\r \x01(\x03\x12=\n\nprojection\x18\x0e \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x15\n\rrewrite_token\x18\x0f \x01(\t\x12\x1a\n\rsource_bucket\x18\x10 \x01(\tB\x03\xe0\x41\x02\x12\x1a\n\rsource_object\x18\x11 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x11source_generation\x18\x12 \x01(\x03\x12)\n\x06object\x18\x14 \x01(\x0b\x32\x19.google.storage.v1.Object\x12(\n copy_source_encryption_algorithm\x18\x15 \x01(\t\x12\"\n\x1a\x63opy_source_encryption_key\x18\x16 \x01(\t\x12)\n!copy_source_encryption_key_sha256\x18\x17 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\x18 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x19 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x97\x01\n\x0fRewriteResponse\x12\x1d\n\x15total_bytes_rewritten\x18\x01 \x01(\x03\x12\x13\n\x0bobject_size\x18\x02 \x01(\x03\x12\x0c\n\x04\x64one\x18\x03 \x01(\x08\x12\x15\n\rrewrite_token\x18\x04 \x01(\t\x12+\n\x08resource\x18\x05 \x01(\x0b\x32\x19.google.storage.v1.Object\"\xf8\x01\n\x1aStartResumableWriteRequest\x12?\n\x12insert_object_spec\x18\x01 \x01(\x0b\x32#.google.storage.v1.InsertObjectSpec\x12R\n\x1c\x63ommon_object_request_params\x18\x03 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"0\n\x1bStartResumableWriteResponse\x12\x11\n\tupload_id\x18\x01 \x01(\t\"\xce\x05\n\x12PatchObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x08 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\t \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12/\n\x0bupdate_mask\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12R\n\x1c\x63ommon_object_request_params\x18\r \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0e \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x9e\x05\n\x13UpdateObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x08 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\t \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12R\n\x1c\x63ommon_object_request_params\x18\x0c \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\r \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xdd\x02\n\x16WatchAllObjectsRequest\x12\x0e\n\x06\x62ucket\x18\x01 \x01(\t\x12\x10\n\x08versions\x18\x02 \x01(\x08\x12\x11\n\tdelimiter\x18\x03 \x01(\t\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x0e\n\x06prefix\x18\x05 \x01(\t\x12\"\n\x1ainclude_trailing_delimiter\x18\x06 \x01(\x08\x12\x12\n\npage_token\x18\x07 \x01(\t\x12=\n\nprojection\x18\x08 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x07\x63hannel\x18\n \x01(\x0b\x32\x1a.google.storage.v1.Channel\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x81\x01\n\x1fGetProjectServiceAccountRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x9a\x01\n\x14\x43reateHmacKeyRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\"\n\x15service_account_email\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"]\n\x15\x43reateHmacKeyResponse\x12\x34\n\x08metadata\x18\x01 \x01(\x0b\x32\".google.storage.v1.HmacKeyMetadata\x12\x0e\n\x06secret\x18\x02 \x01(\t\"\x8e\x01\n\x14\x44\x65leteHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x8b\x01\n\x11GetHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xd8\x01\n\x13ListHmacKeysRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1d\n\x15service_account_email\x18\x02 \x01(\t\x12\x19\n\x11show_deleted_keys\x18\x03 \x01(\x08\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x12\n\npage_token\x18\x05 \x01(\t\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"b\n\x14ListHmacKeysResponse\x12\x17\n\x0fnext_page_token\x18\x01 \x01(\t\x12\x31\n\x05items\x18\x02 \x03(\x0b\x32\".google.storage.v1.HmacKeyMetadata\"\xc9\x01\n\x14UpdateHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x39\n\x08metadata\x18\x03 \x01(\x0b\x32\".google.storage.v1.HmacKeyMetadataB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x95\x01\n\x13GetIamPolicyRequest\x12\x37\n\x0biam_request\x18\x01 \x01(\x0b\x32\".google.iam.v1.GetIamPolicyRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\x95\x01\n\x13SetIamPolicyRequest\x12\x37\n\x0biam_request\x18\x01 \x01(\x0b\x32\".google.iam.v1.SetIamPolicyRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"\xa1\x01\n\x19TestIamPermissionsRequest\x12=\n\x0biam_request\x18\x01 \x01(\x0b\x32(.google.iam.v1.TestIamPermissionsRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\"p\n\x19\x43ommonObjectRequestParams\x12\x1c\n\x14\x65ncryption_algorithm\x18\x01 \x01(\t\x12\x16\n\x0e\x65ncryption_key\x18\x02 \x01(\t\x12\x1d\n\x15\x65ncryption_key_sha256\x18\x03 \x01(\t\"p\n\x13\x43ommonRequestParams\x12\x19\n\x0cuser_project\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\nquota_user\x18\x02 \x01(\t\x12*\n\x06\x66ields\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\"\xca\x05\n\x10ServiceConstants\"\xb5\x05\n\x06Values\x12\x16\n\x12VALUES_UNSPECIFIED\x10\x00\x12\x1b\n\x14MAX_READ_CHUNK_BYTES\x10\x80\x80\x80\x01\x12\x1c\n\x15MAX_WRITE_CHUNK_BYTES\x10\x80\x80\x80\x01\x12\x19\n\x12MAX_OBJECT_SIZE_MB\x10\x80\x80\xc0\x02\x12)\n$MAX_CUSTOM_METADATA_FIELD_NAME_BYTES\x10\x80\x08\x12*\n%MAX_CUSTOM_METADATA_FIELD_VALUE_BYTES\x10\x80 \x12)\n$MAX_CUSTOM_METADATA_TOTAL_SIZE_BYTES\x10\x80@\x12*\n$MAX_BUCKET_METADATA_TOTAL_SIZE_BYTES\x10\x80\xa0\x01\x12\'\n#MAX_NOTIFICATION_CONFIGS_PER_BUCKET\x10\x64\x12\"\n\x1eMAX_LIFECYCLE_RULES_PER_BUCKET\x10\x64\x12&\n\"MAX_NOTIFICATION_CUSTOM_ATTRIBUTES\x10\x05\x12\x31\n,MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_KEY_LENGTH\x10\x80\x02\x12\x33\n.MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_VALUE_LENGTH\x10\x80\x08\x12\x1c\n\x18MAX_LABELS_ENTRIES_COUNT\x10@\x12\x1f\n\x1bMAX_LABELS_KEY_VALUE_LENGTH\x10?\x12\x1f\n\x1aMAX_LABELS_KEY_VALUE_BYTES\x10\x80\x01\x12.\n)MAX_OBJECT_IDS_PER_DELETE_OBJECTS_REQUEST\x10\xe8\x07\x12\x1e\n\x1aSPLIT_TOKEN_MAX_VALID_DAYS\x10\x0e\x1a\x02\x10\x01\x32\x96\x30\n\x07Storage\x12j\n\x19\x44\x65leteBucketAccessControl\x12\x33.google.storage.v1.DeleteBucketAccessControlRequest\x1a\x16.google.protobuf.Empty\"\x00\x12t\n\x16GetBucketAccessControl\x12\x30.google.storage.v1.GetBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl\"\x00\x12z\n\x19InsertBucketAccessControl\x12\x33.google.storage.v1.InsertBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl\"\x00\x12\x85\x01\n\x18ListBucketAccessControls\x12\x32.google.storage.v1.ListBucketAccessControlsRequest\x1a\x33.google.storage.v1.ListBucketAccessControlsResponse\"\x00\x12z\n\x19UpdateBucketAccessControl\x12\x33.google.storage.v1.UpdateBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl\"\x00\x12x\n\x18PatchBucketAccessControl\x12\x32.google.storage.v1.PatchBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl\"\x00\x12P\n\x0c\x44\x65leteBucket\x12&.google.storage.v1.DeleteBucketRequest\x1a\x16.google.protobuf.Empty\"\x00\x12M\n\tGetBucket\x12#.google.storage.v1.GetBucketRequest\x1a\x19.google.storage.v1.Bucket\"\x00\x12S\n\x0cInsertBucket\x12&.google.storage.v1.InsertBucketRequest\x1a\x19.google.storage.v1.Bucket\"\x00\x12\x61\n\x0cListChannels\x12&.google.storage.v1.ListChannelsRequest\x1a\'.google.storage.v1.ListChannelsResponse\"\x00\x12^\n\x0bListBuckets\x12%.google.storage.v1.ListBucketsRequest\x1a&.google.storage.v1.ListBucketsResponse\"\x00\x12g\n\x19LockBucketRetentionPolicy\x12-.google.storage.v1.LockRetentionPolicyRequest\x1a\x19.google.storage.v1.Bucket\"\x00\x12U\n\x12GetBucketIamPolicy\x12&.google.storage.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12U\n\x12SetBucketIamPolicy\x12&.google.storage.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12u\n\x18TestBucketIamPermissions\x12,.google.storage.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse\"\x00\x12Q\n\x0bPatchBucket\x12%.google.storage.v1.PatchBucketRequest\x1a\x19.google.storage.v1.Bucket\"\x00\x12S\n\x0cUpdateBucket\x12&.google.storage.v1.UpdateBucketRequest\x1a\x19.google.storage.v1.Bucket\"\x00\x12N\n\x0bStopChannel\x12%.google.storage.v1.StopChannelRequest\x1a\x16.google.protobuf.Empty\"\x00\x12x\n DeleteDefaultObjectAccessControl\x12:.google.storage.v1.DeleteDefaultObjectAccessControlRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x82\x01\n\x1dGetDefaultObjectAccessControl\x12\x37.google.storage.v1.GetDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12\x88\x01\n InsertDefaultObjectAccessControl\x12:.google.storage.v1.InsertDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12\x93\x01\n\x1fListDefaultObjectAccessControls\x12\x39.google.storage.v1.ListDefaultObjectAccessControlsRequest\x1a\x33.google.storage.v1.ListObjectAccessControlsResponse\"\x00\x12\x86\x01\n\x1fPatchDefaultObjectAccessControl\x12\x39.google.storage.v1.PatchDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12\x88\x01\n UpdateDefaultObjectAccessControl\x12:.google.storage.v1.UpdateDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12\\\n\x12\x44\x65leteNotification\x12,.google.storage.v1.DeleteNotificationRequest\x1a\x16.google.protobuf.Empty\"\x00\x12_\n\x0fGetNotification\x12).google.storage.v1.GetNotificationRequest\x1a\x1f.google.storage.v1.Notification\"\x00\x12\x65\n\x12InsertNotification\x12,.google.storage.v1.InsertNotificationRequest\x1a\x1f.google.storage.v1.Notification\"\x00\x12p\n\x11ListNotifications\x12+.google.storage.v1.ListNotificationsRequest\x1a,.google.storage.v1.ListNotificationsResponse\"\x00\x12j\n\x19\x44\x65leteObjectAccessControl\x12\x33.google.storage.v1.DeleteObjectAccessControlRequest\x1a\x16.google.protobuf.Empty\"\x00\x12t\n\x16GetObjectAccessControl\x12\x30.google.storage.v1.GetObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12z\n\x19InsertObjectAccessControl\x12\x33.google.storage.v1.InsertObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12\x85\x01\n\x18ListObjectAccessControls\x12\x32.google.storage.v1.ListObjectAccessControlsRequest\x1a\x33.google.storage.v1.ListObjectAccessControlsResponse\"\x00\x12x\n\x18PatchObjectAccessControl\x12\x32.google.storage.v1.PatchObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12z\n\x19UpdateObjectAccessControl\x12\x33.google.storage.v1.UpdateObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl\"\x00\x12U\n\rComposeObject\x12\'.google.storage.v1.ComposeObjectRequest\x1a\x19.google.storage.v1.Object\"\x00\x12O\n\nCopyObject\x12$.google.storage.v1.CopyObjectRequest\x1a\x19.google.storage.v1.Object\"\x00\x12P\n\x0c\x44\x65leteObject\x12&.google.storage.v1.DeleteObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12M\n\tGetObject\x12#.google.storage.v1.GetObjectRequest\x1a\x19.google.storage.v1.Object\"\x00\x12i\n\x0eGetObjectMedia\x12(.google.storage.v1.GetObjectMediaRequest\x1a).google.storage.v1.GetObjectMediaResponse\"\x00\x30\x01\x12U\n\x0cInsertObject\x12&.google.storage.v1.InsertObjectRequest\x1a\x19.google.storage.v1.Object\"\x00(\x01\x12^\n\x0bListObjects\x12%.google.storage.v1.ListObjectsRequest\x1a&.google.storage.v1.ListObjectsResponse\"\x00\x12^\n\rRewriteObject\x12\'.google.storage.v1.RewriteObjectRequest\x1a\".google.storage.v1.RewriteResponse\"\x00\x12v\n\x13StartResumableWrite\x12-.google.storage.v1.StartResumableWriteRequest\x1a..google.storage.v1.StartResumableWriteResponse\"\x00\x12m\n\x10QueryWriteStatus\x12*.google.storage.v1.QueryWriteStatusRequest\x1a+.google.storage.v1.QueryWriteStatusResponse\"\x00\x12Q\n\x0bPatchObject\x12%.google.storage.v1.PatchObjectRequest\x1a\x19.google.storage.v1.Object\"\x00\x12S\n\x0cUpdateObject\x12&.google.storage.v1.UpdateObjectRequest\x1a\x19.google.storage.v1.Object\"\x00\x12U\n\x12GetObjectIamPolicy\x12&.google.storage.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12U\n\x12SetObjectIamPolicy\x12&.google.storage.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12u\n\x18TestObjectIamPermissions\x12,.google.storage.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse\"\x00\x12Z\n\x0fWatchAllObjects\x12).google.storage.v1.WatchAllObjectsRequest\x1a\x1a.google.storage.v1.Channel\"\x00\x12l\n\x11GetServiceAccount\x12\x32.google.storage.v1.GetProjectServiceAccountRequest\x1a!.google.storage.v1.ServiceAccount\"\x00\x12\x64\n\rCreateHmacKey\x12\'.google.storage.v1.CreateHmacKeyRequest\x1a(.google.storage.v1.CreateHmacKeyResponse\"\x00\x12R\n\rDeleteHmacKey\x12\'.google.storage.v1.DeleteHmacKeyRequest\x1a\x16.google.protobuf.Empty\"\x00\x12X\n\nGetHmacKey\x12$.google.storage.v1.GetHmacKeyRequest\x1a\".google.storage.v1.HmacKeyMetadata\"\x00\x12\x61\n\x0cListHmacKeys\x12&.google.storage.v1.ListHmacKeysRequest\x1a\'.google.storage.v1.ListHmacKeysResponse\"\x00\x12^\n\rUpdateHmacKey\x12\'.google.storage.v1.UpdateHmacKeyRequest\x1a\".google.storage.v1.HmacKeyMetadata\"\x00\x1a\xa7\x02\xca\x41\x16storage.googleapis.com\xd2\x41\x8a\x02https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/cloud-platform.read-only,https://www.googleapis.com/auth/devstorage.full_control,https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/devstorage.read_writeBS\n\x15\x63om.google.storage.v1P\x01Z8google.golang.org/genproto/googleapis/storage/v1;storageb\x06proto3'
-  ,
-  dependencies=[google_dot_api_dot_field__behavior__pb2.DESCRIPTOR,google_dot_iam_dot_v1_dot_iam__policy__pb2.DESCRIPTOR,google_dot_iam_dot_v1_dot_policy__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2.DESCRIPTOR,google_dot_api_dot_client__pb2.DESCRIPTOR,])
-
+    name="google/cloud/storage_v1/proto/storage.proto",
+    package="google.storage.v1",
+    syntax="proto3",
+    serialized_options=b"\n\025com.google.storage.v1P\001Z8google.golang.org/genproto/googleapis/storage/v1;storage",
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b'\n+google/cloud/storage_v1/proto/storage.proto\x12\x11google.storage.v1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x35google/cloud/storage_v1/proto/storage_resources.proto\x1a\x17google/api/client.proto"\x93\x01\n DeleteBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x90\x01\n\x1dGetBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xc5\x01\n InsertBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x03 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"}\n\x1fListBucketAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x8a\x02\n\x1fPatchBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12/\n\x0bupdate_mask\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xda\x01\n UpdateBucketAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x62ucket_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.BucketAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xf1\x01\n\x13\x44\x65leteBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xad\x02\n\x10GetBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x04 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x83\x03\n\x13InsertBucketRequest\x12J\n\x0epredefined_acl\x18\x01 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x02 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x14\n\x07project\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12=\n\nprojection\x18\x04 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12)\n\x06\x62ucket\x18\x06 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"q\n\x13ListChannelsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xe9\x01\n\x12ListBucketsRequest\x12\x13\n\x0bmax_results\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x0e\n\x06prefix\x18\x03 \x01(\t\x12\x14\n\x07project\x18\x04 \x01(\tB\x03\xe0\x41\x02\x12=\n\nprojection\x18\x05 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x99\x01\n\x1aLockRetentionPolicyRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x17if_metageneration_match\x18\x02 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xb4\x04\n\x12PatchBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x05 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\x06 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x08 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12/\n\x0bupdate_mask\x18\t \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x84\x04\n\x13UpdateBucketRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedBucketAcl\x12Y\n\x1dpredefined_default_object_acl\x18\x05 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\x06 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x08 \x01(\x0b\x32\x19.google.storage.v1.Bucket\x12\x45\n\x15\x63ommon_request_params\x18\t \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x88\x01\n\x12StopChannelRequest\x12+\n\x07\x63hannel\x18\x01 \x01(\x0b\x32\x1a.google.storage.v1.Channel\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x9a\x01\n\'DeleteDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x97\x01\n$GetDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xcc\x01\n\'InsertDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x03 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x84\x02\n&ListDefaultObjectAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12<\n\x17if_metageneration_match\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x91\x02\n&PatchDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12/\n\x0bupdate_mask\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xe1\x01\n\'UpdateDefaultObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15object_access_control\x18\x04 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x92\x01\n\x19\x44\x65leteNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x0cnotification\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x8f\x01\n\x16GetNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x0cnotification\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xae\x01\n\x19InsertNotificationRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x35\n\x0cnotification\x18\x03 \x01(\x0b\x32\x1f.google.storage.v1.Notification\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"v\n\x18ListNotificationsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xbc\x01\n DeleteObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xb9\x01\n\x1dGetObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xee\x01\n InsertObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x45\n\x15object_access_control\x18\x05 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xa6\x01\n\x1fListObjectAccessControlsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xb3\x02\n\x1fPatchObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15object_access_control\x18\x05 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x12/\n\x0bupdate_mask\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"\xb4\x02\n UpdateObjectAccessControlRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06\x65ntity\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x45\n\x15object_access_control\x18\x06 \x01(\x0b\x32&.google.storage.v1.ObjectAccessControl\x12\x45\n\x15\x63ommon_request_params\x18\x07 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x12/\n\x0bupdate_mask\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"\xc6\x06\n\x14\x43omposeObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x03 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12.\n\x0b\x64\x65stination\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12M\n\x0esource_objects\x18\x0c \x03(\x0b\x32\x35.google.storage.v1.ComposeObjectRequest.SourceObjects\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x14\n\x0ckms_key_name\x18\x06 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\t \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams\x1a\xeb\x01\n\rSourceObjects\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\ngeneration\x18\x02 \x01(\x03\x12g\n\x14object_preconditions\x18\x03 \x01(\x0b\x32I.google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions\x1aO\n\x13ObjectPreconditions\x12\x38\n\x13if_generation_match\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value"\xb8\x08\n\x11\x43opyObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x03 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12?\n\x1aif_source_generation_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_generation_not_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_metageneration_match\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12G\n"if_source_metageneration_not_match\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x0c \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x1a\n\rsource_bucket\x18\r \x01(\tB\x03\xe0\x41\x02\x12\x1a\n\rsource_object\x18\x0e \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x11source_generation\x18\x0f \x01(\x03\x12.\n\x0b\x64\x65stination\x18\x11 \x01(\x0b\x32\x19.google.storage.v1.Object\x12 \n\x18\x64\x65stination_kms_key_name\x18\x14 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\x12 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x13 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xf9\x03\n\x13\x44\x65leteObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tupload_id\x18\x03 \x01(\t\x12\x12\n\ngeneration\x18\x04 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12R\n\x1c\x63ommon_object_request_params\x18\n \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x87\x04\n\x15GetObjectMediaRequest\x12\x0e\n\x06\x62ucket\x18\x01 \x01(\t\x12\x0e\n\x06object\x18\x02 \x01(\t\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x13\n\x0bread_offset\x18\x04 \x01(\x03\x12\x12\n\nread_limit\x18\x05 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12R\n\x1c\x63ommon_object_request_params\x18\x0b \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0c \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xa2\x04\n\x10GetObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x08 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12R\n\x1c\x63ommon_object_request_params\x18\n \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xf9\x01\n\x16GetObjectMediaResponse\x12<\n\x10\x63hecksummed_data\x18\x01 \x01(\x0b\x32".google.storage.v1.ChecksummedData\x12<\n\x10object_checksums\x18\x02 \x01(\x0b\x32".google.storage.v1.ObjectChecksums\x12\x36\n\rcontent_range\x18\x03 \x01(\x0b\x32\x1f.google.storage.v1.ContentRange\x12+\n\x08metadata\x18\x04 \x01(\x0b\x32\x19.google.storage.v1.Object"\xc2\x03\n\x10InsertObjectSpec\x12+\n\x08resource\x18\x01 \x01(\x0b\x32\x19.google.storage.v1.Object\x12J\n\x0epredefined_acl\x18\x02 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12=\n\nprojection\x18\x07 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection"\x8f\x04\n\x13InsertObjectRequest\x12\x13\n\tupload_id\x18\x01 \x01(\tH\x00\x12\x41\n\x12insert_object_spec\x18\x02 \x01(\x0b\x32#.google.storage.v1.InsertObjectSpecH\x00\x12\x19\n\x0cwrite_offset\x18\x03 \x01(\x03\x42\x03\xe0\x41\x02\x12>\n\x10\x63hecksummed_data\x18\x04 \x01(\x0b\x32".google.storage.v1.ChecksummedDataH\x01\x12=\n\treference\x18\x05 \x01(\x0b\x32(.google.storage.v1.GetObjectMediaRequestH\x01\x12<\n\x10object_checksums\x18\x06 \x01(\x0b\x32".google.storage.v1.ObjectChecksums\x12\x14\n\x0c\x66inish_write\x18\x07 \x01(\x08\x12R\n\x1c\x63ommon_object_request_params\x18\x08 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\t \x01(\x0b\x32&.google.storage.v1.CommonRequestParamsB\x0f\n\rfirst_messageB\x06\n\x04\x64\x61ta"\xb1\x02\n\x12ListObjectsRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tdelimiter\x18\x02 \x01(\t\x12"\n\x1ainclude_trailing_delimiter\x18\x03 \x01(\x08\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x12\n\npage_token\x18\x05 \x01(\t\x12\x0e\n\x06prefix\x18\x06 \x01(\t\x12=\n\nprojection\x18\x07 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x10\n\x08versions\x18\t \x01(\x08\x12\x45\n\x15\x63ommon_request_params\x18\n \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xcc\x01\n\x17QueryWriteStatusRequest\x12\x16\n\tupload_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12R\n\x1c\x63ommon_object_request_params\x18\x02 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"D\n\x18QueryWriteStatusResponse\x12\x16\n\x0e\x63ommitted_size\x18\x01 \x01(\x03\x12\x10\n\x08\x63omplete\x18\x02 \x01(\x08"\xec\t\n\x14RewriteObjectRequest\x12\x1f\n\x12\x64\x65stination_bucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1f\n\x12\x64\x65stination_object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12 \n\x18\x64\x65stination_kms_key_name\x18\x03 \x01(\t\x12V\n\x1a\x64\x65stination_predefined_acl\x18\x04 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12\x38\n\x13if_generation_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12?\n\x1aif_source_generation_match\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_generation_not_match\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x43\n\x1eif_source_metageneration_match\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12G\n"if_source_metageneration_not_match\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12$\n\x1cmax_bytes_rewritten_per_call\x18\r \x01(\x03\x12=\n\nprojection\x18\x0e \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12\x15\n\rrewrite_token\x18\x0f \x01(\t\x12\x1a\n\rsource_bucket\x18\x10 \x01(\tB\x03\xe0\x41\x02\x12\x1a\n\rsource_object\x18\x11 \x01(\tB\x03\xe0\x41\x02\x12\x19\n\x11source_generation\x18\x12 \x01(\x03\x12)\n\x06object\x18\x14 \x01(\x0b\x32\x19.google.storage.v1.Object\x12(\n copy_source_encryption_algorithm\x18\x15 \x01(\t\x12"\n\x1a\x63opy_source_encryption_key\x18\x16 \x01(\t\x12)\n!copy_source_encryption_key_sha256\x18\x17 \x01(\t\x12R\n\x1c\x63ommon_object_request_params\x18\x18 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x19 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x97\x01\n\x0fRewriteResponse\x12\x1d\n\x15total_bytes_rewritten\x18\x01 \x01(\x03\x12\x13\n\x0bobject_size\x18\x02 \x01(\x03\x12\x0c\n\x04\x64one\x18\x03 \x01(\x08\x12\x15\n\rrewrite_token\x18\x04 \x01(\t\x12+\n\x08resource\x18\x05 \x01(\x0b\x32\x19.google.storage.v1.Object"\xf8\x01\n\x1aStartResumableWriteRequest\x12?\n\x12insert_object_spec\x18\x01 \x01(\x0b\x32#.google.storage.v1.InsertObjectSpec\x12R\n\x1c\x63ommon_object_request_params\x18\x03 \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x04 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"0\n\x1bStartResumableWriteResponse\x12\x11\n\tupload_id\x18\x01 \x01(\t"\xce\x05\n\x12PatchObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x08 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\t \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12/\n\x0bupdate_mask\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.FieldMask\x12R\n\x1c\x63ommon_object_request_params\x18\r \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\x0e \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x9e\x05\n\x13UpdateObjectRequest\x12\x13\n\x06\x62ucket\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x13\n\x06object\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\ngeneration\x18\x03 \x01(\x03\x12\x38\n\x13if_generation_match\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_generation_not_match\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12<\n\x17if_metageneration_match\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12@\n\x1bif_metageneration_not_match\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12J\n\x0epredefined_acl\x18\x08 \x01(\x0e\x32\x32.google.storage.v1.CommonEnums.PredefinedObjectAcl\x12=\n\nprojection\x18\t \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x08metadata\x18\x0b \x01(\x0b\x32\x19.google.storage.v1.Object\x12R\n\x1c\x63ommon_object_request_params\x18\x0c \x01(\x0b\x32,.google.storage.v1.CommonObjectRequestParams\x12\x45\n\x15\x63ommon_request_params\x18\r \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xdd\x02\n\x16WatchAllObjectsRequest\x12\x0e\n\x06\x62ucket\x18\x01 \x01(\t\x12\x10\n\x08versions\x18\x02 \x01(\x08\x12\x11\n\tdelimiter\x18\x03 \x01(\t\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x0e\n\x06prefix\x18\x05 \x01(\t\x12"\n\x1ainclude_trailing_delimiter\x18\x06 \x01(\x08\x12\x12\n\npage_token\x18\x07 \x01(\t\x12=\n\nprojection\x18\x08 \x01(\x0e\x32).google.storage.v1.CommonEnums.Projection\x12+\n\x07\x63hannel\x18\n \x01(\x0b\x32\x1a.google.storage.v1.Channel\x12\x45\n\x15\x63ommon_request_params\x18\x0b \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x81\x01\n\x1fGetProjectServiceAccountRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x9a\x01\n\x14\x43reateHmacKeyRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12"\n\x15service_account_email\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"]\n\x15\x43reateHmacKeyResponse\x12\x34\n\x08metadata\x18\x01 \x01(\x0b\x32".google.storage.v1.HmacKeyMetadata\x12\x0e\n\x06secret\x18\x02 \x01(\t"\x8e\x01\n\x14\x44\x65leteHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x8b\x01\n\x11GetHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x03 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xd8\x01\n\x13ListHmacKeysRequest\x12\x17\n\nproject_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x1d\n\x15service_account_email\x18\x02 \x01(\t\x12\x19\n\x11show_deleted_keys\x18\x03 \x01(\x08\x12\x13\n\x0bmax_results\x18\x04 \x01(\x05\x12\x12\n\npage_token\x18\x05 \x01(\t\x12\x45\n\x15\x63ommon_request_params\x18\x06 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"b\n\x14ListHmacKeysResponse\x12\x17\n\x0fnext_page_token\x18\x01 \x01(\t\x12\x31\n\x05items\x18\x02 \x03(\x0b\x32".google.storage.v1.HmacKeyMetadata"\xc9\x01\n\x14UpdateHmacKeyRequest\x12\x16\n\taccess_id\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x17\n\nproject_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12\x39\n\x08metadata\x18\x03 \x01(\x0b\x32".google.storage.v1.HmacKeyMetadataB\x03\xe0\x41\x02\x12\x45\n\x15\x63ommon_request_params\x18\x05 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x95\x01\n\x13GetIamPolicyRequest\x12\x37\n\x0biam_request\x18\x01 \x01(\x0b\x32".google.iam.v1.GetIamPolicyRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\x95\x01\n\x13SetIamPolicyRequest\x12\x37\n\x0biam_request\x18\x01 \x01(\x0b\x32".google.iam.v1.SetIamPolicyRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"\xa1\x01\n\x19TestIamPermissionsRequest\x12=\n\x0biam_request\x18\x01 \x01(\x0b\x32(.google.iam.v1.TestIamPermissionsRequest\x12\x45\n\x15\x63ommon_request_params\x18\x02 \x01(\x0b\x32&.google.storage.v1.CommonRequestParams"p\n\x19\x43ommonObjectRequestParams\x12\x1c\n\x14\x65ncryption_algorithm\x18\x01 \x01(\t\x12\x16\n\x0e\x65ncryption_key\x18\x02 \x01(\t\x12\x1d\n\x15\x65ncryption_key_sha256\x18\x03 \x01(\t"p\n\x13\x43ommonRequestParams\x12\x19\n\x0cuser_project\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x12\n\nquota_user\x18\x02 \x01(\t\x12*\n\x06\x66ields\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"\xca\x05\n\x10ServiceConstants"\xb5\x05\n\x06Values\x12\x16\n\x12VALUES_UNSPECIFIED\x10\x00\x12\x1b\n\x14MAX_READ_CHUNK_BYTES\x10\x80\x80\x80\x01\x12\x1c\n\x15MAX_WRITE_CHUNK_BYTES\x10\x80\x80\x80\x01\x12\x19\n\x12MAX_OBJECT_SIZE_MB\x10\x80\x80\xc0\x02\x12)\n$MAX_CUSTOM_METADATA_FIELD_NAME_BYTES\x10\x80\x08\x12*\n%MAX_CUSTOM_METADATA_FIELD_VALUE_BYTES\x10\x80 \x12)\n$MAX_CUSTOM_METADATA_TOTAL_SIZE_BYTES\x10\x80@\x12*\n$MAX_BUCKET_METADATA_TOTAL_SIZE_BYTES\x10\x80\xa0\x01\x12\'\n#MAX_NOTIFICATION_CONFIGS_PER_BUCKET\x10\x64\x12"\n\x1eMAX_LIFECYCLE_RULES_PER_BUCKET\x10\x64\x12&\n"MAX_NOTIFICATION_CUSTOM_ATTRIBUTES\x10\x05\x12\x31\n,MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_KEY_LENGTH\x10\x80\x02\x12\x33\n.MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_VALUE_LENGTH\x10\x80\x08\x12\x1c\n\x18MAX_LABELS_ENTRIES_COUNT\x10@\x12\x1f\n\x1bMAX_LABELS_KEY_VALUE_LENGTH\x10?\x12\x1f\n\x1aMAX_LABELS_KEY_VALUE_BYTES\x10\x80\x01\x12.\n)MAX_OBJECT_IDS_PER_DELETE_OBJECTS_REQUEST\x10\xe8\x07\x12\x1e\n\x1aSPLIT_TOKEN_MAX_VALID_DAYS\x10\x0e\x1a\x02\x10\x01\x32\x96\x30\n\x07Storage\x12j\n\x19\x44\x65leteBucketAccessControl\x12\x33.google.storage.v1.DeleteBucketAccessControlRequest\x1a\x16.google.protobuf.Empty"\x00\x12t\n\x16GetBucketAccessControl\x12\x30.google.storage.v1.GetBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl"\x00\x12z\n\x19InsertBucketAccessControl\x12\x33.google.storage.v1.InsertBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl"\x00\x12\x85\x01\n\x18ListBucketAccessControls\x12\x32.google.storage.v1.ListBucketAccessControlsRequest\x1a\x33.google.storage.v1.ListBucketAccessControlsResponse"\x00\x12z\n\x19UpdateBucketAccessControl\x12\x33.google.storage.v1.UpdateBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl"\x00\x12x\n\x18PatchBucketAccessControl\x12\x32.google.storage.v1.PatchBucketAccessControlRequest\x1a&.google.storage.v1.BucketAccessControl"\x00\x12P\n\x0c\x44\x65leteBucket\x12&.google.storage.v1.DeleteBucketRequest\x1a\x16.google.protobuf.Empty"\x00\x12M\n\tGetBucket\x12#.google.storage.v1.GetBucketRequest\x1a\x19.google.storage.v1.Bucket"\x00\x12S\n\x0cInsertBucket\x12&.google.storage.v1.InsertBucketRequest\x1a\x19.google.storage.v1.Bucket"\x00\x12\x61\n\x0cListChannels\x12&.google.storage.v1.ListChannelsRequest\x1a\'.google.storage.v1.ListChannelsResponse"\x00\x12^\n\x0bListBuckets\x12%.google.storage.v1.ListBucketsRequest\x1a&.google.storage.v1.ListBucketsResponse"\x00\x12g\n\x19LockBucketRetentionPolicy\x12-.google.storage.v1.LockRetentionPolicyRequest\x1a\x19.google.storage.v1.Bucket"\x00\x12U\n\x12GetBucketIamPolicy\x12&.google.storage.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\x00\x12U\n\x12SetBucketIamPolicy\x12&.google.storage.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\x00\x12u\n\x18TestBucketIamPermissions\x12,.google.storage.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\x00\x12Q\n\x0bPatchBucket\x12%.google.storage.v1.PatchBucketRequest\x1a\x19.google.storage.v1.Bucket"\x00\x12S\n\x0cUpdateBucket\x12&.google.storage.v1.UpdateBucketRequest\x1a\x19.google.storage.v1.Bucket"\x00\x12N\n\x0bStopChannel\x12%.google.storage.v1.StopChannelRequest\x1a\x16.google.protobuf.Empty"\x00\x12x\n DeleteDefaultObjectAccessControl\x12:.google.storage.v1.DeleteDefaultObjectAccessControlRequest\x1a\x16.google.protobuf.Empty"\x00\x12\x82\x01\n\x1dGetDefaultObjectAccessControl\x12\x37.google.storage.v1.GetDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12\x88\x01\n InsertDefaultObjectAccessControl\x12:.google.storage.v1.InsertDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12\x93\x01\n\x1fListDefaultObjectAccessControls\x12\x39.google.storage.v1.ListDefaultObjectAccessControlsRequest\x1a\x33.google.storage.v1.ListObjectAccessControlsResponse"\x00\x12\x86\x01\n\x1fPatchDefaultObjectAccessControl\x12\x39.google.storage.v1.PatchDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12\x88\x01\n UpdateDefaultObjectAccessControl\x12:.google.storage.v1.UpdateDefaultObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12\\\n\x12\x44\x65leteNotification\x12,.google.storage.v1.DeleteNotificationRequest\x1a\x16.google.protobuf.Empty"\x00\x12_\n\x0fGetNotification\x12).google.storage.v1.GetNotificationRequest\x1a\x1f.google.storage.v1.Notification"\x00\x12\x65\n\x12InsertNotification\x12,.google.storage.v1.InsertNotificationRequest\x1a\x1f.google.storage.v1.Notification"\x00\x12p\n\x11ListNotifications\x12+.google.storage.v1.ListNotificationsRequest\x1a,.google.storage.v1.ListNotificationsResponse"\x00\x12j\n\x19\x44\x65leteObjectAccessControl\x12\x33.google.storage.v1.DeleteObjectAccessControlRequest\x1a\x16.google.protobuf.Empty"\x00\x12t\n\x16GetObjectAccessControl\x12\x30.google.storage.v1.GetObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12z\n\x19InsertObjectAccessControl\x12\x33.google.storage.v1.InsertObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12\x85\x01\n\x18ListObjectAccessControls\x12\x32.google.storage.v1.ListObjectAccessControlsRequest\x1a\x33.google.storage.v1.ListObjectAccessControlsResponse"\x00\x12x\n\x18PatchObjectAccessControl\x12\x32.google.storage.v1.PatchObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12z\n\x19UpdateObjectAccessControl\x12\x33.google.storage.v1.UpdateObjectAccessControlRequest\x1a&.google.storage.v1.ObjectAccessControl"\x00\x12U\n\rComposeObject\x12\'.google.storage.v1.ComposeObjectRequest\x1a\x19.google.storage.v1.Object"\x00\x12O\n\nCopyObject\x12$.google.storage.v1.CopyObjectRequest\x1a\x19.google.storage.v1.Object"\x00\x12P\n\x0c\x44\x65leteObject\x12&.google.storage.v1.DeleteObjectRequest\x1a\x16.google.protobuf.Empty"\x00\x12M\n\tGetObject\x12#.google.storage.v1.GetObjectRequest\x1a\x19.google.storage.v1.Object"\x00\x12i\n\x0eGetObjectMedia\x12(.google.storage.v1.GetObjectMediaRequest\x1a).google.storage.v1.GetObjectMediaResponse"\x00\x30\x01\x12U\n\x0cInsertObject\x12&.google.storage.v1.InsertObjectRequest\x1a\x19.google.storage.v1.Object"\x00(\x01\x12^\n\x0bListObjects\x12%.google.storage.v1.ListObjectsRequest\x1a&.google.storage.v1.ListObjectsResponse"\x00\x12^\n\rRewriteObject\x12\'.google.storage.v1.RewriteObjectRequest\x1a".google.storage.v1.RewriteResponse"\x00\x12v\n\x13StartResumableWrite\x12-.google.storage.v1.StartResumableWriteRequest\x1a..google.storage.v1.StartResumableWriteResponse"\x00\x12m\n\x10QueryWriteStatus\x12*.google.storage.v1.QueryWriteStatusRequest\x1a+.google.storage.v1.QueryWriteStatusResponse"\x00\x12Q\n\x0bPatchObject\x12%.google.storage.v1.PatchObjectRequest\x1a\x19.google.storage.v1.Object"\x00\x12S\n\x0cUpdateObject\x12&.google.storage.v1.UpdateObjectRequest\x1a\x19.google.storage.v1.Object"\x00\x12U\n\x12GetObjectIamPolicy\x12&.google.storage.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\x00\x12U\n\x12SetObjectIamPolicy\x12&.google.storage.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\x00\x12u\n\x18TestObjectIamPermissions\x12,.google.storage.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\x00\x12Z\n\x0fWatchAllObjects\x12).google.storage.v1.WatchAllObjectsRequest\x1a\x1a.google.storage.v1.Channel"\x00\x12l\n\x11GetServiceAccount\x12\x32.google.storage.v1.GetProjectServiceAccountRequest\x1a!.google.storage.v1.ServiceAccount"\x00\x12\x64\n\rCreateHmacKey\x12\'.google.storage.v1.CreateHmacKeyRequest\x1a(.google.storage.v1.CreateHmacKeyResponse"\x00\x12R\n\rDeleteHmacKey\x12\'.google.storage.v1.DeleteHmacKeyRequest\x1a\x16.google.protobuf.Empty"\x00\x12X\n\nGetHmacKey\x12$.google.storage.v1.GetHmacKeyRequest\x1a".google.storage.v1.HmacKeyMetadata"\x00\x12\x61\n\x0cListHmacKeys\x12&.google.storage.v1.ListHmacKeysRequest\x1a\'.google.storage.v1.ListHmacKeysResponse"\x00\x12^\n\rUpdateHmacKey\x12\'.google.storage.v1.UpdateHmacKeyRequest\x1a".google.storage.v1.HmacKeyMetadata"\x00\x1a\xa7\x02\xca\x41\x16storage.googleapis.com\xd2\x41\x8a\x02https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/cloud-platform.read-only,https://www.googleapis.com/auth/devstorage.full_control,https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/devstorage.read_writeBS\n\x15\x63om.google.storage.v1P\x01Z8google.golang.org/genproto/googleapis/storage/v1;storageb\x06proto3',
+    dependencies=[
+        google_dot_api_dot_field__behavior__pb2.DESCRIPTOR,
+        google_dot_iam_dot_v1_dot_iam__policy__pb2.DESCRIPTOR,
+        google_dot_iam_dot_v1_dot_policy__pb2.DESCRIPTOR,
+        google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,
+        google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,
+        google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,
+        google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2.DESCRIPTOR,
+        google_dot_api_dot_client__pb2.DESCRIPTOR,
+    ],
+)
 
 
 _SERVICECONSTANTS_VALUES = _descriptor.EnumDescriptor(
-  name='Values',
-  full_name='google.storage.v1.ServiceConstants.Values',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='VALUES_UNSPECIFIED', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_READ_CHUNK_BYTES', index=1, number=2097152,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_WRITE_CHUNK_BYTES', index=2, number=2097152,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_OBJECT_SIZE_MB', index=3, number=5242880,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_CUSTOM_METADATA_FIELD_NAME_BYTES', index=4, number=1024,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_CUSTOM_METADATA_FIELD_VALUE_BYTES', index=5, number=4096,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_CUSTOM_METADATA_TOTAL_SIZE_BYTES', index=6, number=8192,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_BUCKET_METADATA_TOTAL_SIZE_BYTES', index=7, number=20480,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_NOTIFICATION_CONFIGS_PER_BUCKET', index=8, number=100,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_LIFECYCLE_RULES_PER_BUCKET', index=9, number=100,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_NOTIFICATION_CUSTOM_ATTRIBUTES', index=10, number=5,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_KEY_LENGTH', index=11, number=256,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_VALUE_LENGTH', index=12, number=1024,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_LABELS_ENTRIES_COUNT', index=13, number=64,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_LABELS_KEY_VALUE_LENGTH', index=14, number=63,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_LABELS_KEY_VALUE_BYTES', index=15, number=128,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='MAX_OBJECT_IDS_PER_DELETE_OBJECTS_REQUEST', index=16, number=1000,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='SPLIT_TOKEN_MAX_VALID_DAYS', index=17, number=14,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=b'\020\001',
-  serialized_start=18104,
-  serialized_end=18797,
+    name="Values",
+    full_name="google.storage.v1.ServiceConstants.Values",
+    filename=None,
+    file=DESCRIPTOR,
+    create_key=_descriptor._internal_create_key,
+    values=[
+        _descriptor.EnumValueDescriptor(
+            name="VALUES_UNSPECIFIED",
+            index=0,
+            number=0,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_READ_CHUNK_BYTES",
+            index=1,
+            number=2097152,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_WRITE_CHUNK_BYTES",
+            index=2,
+            number=2097152,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_OBJECT_SIZE_MB",
+            index=3,
+            number=5242880,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_CUSTOM_METADATA_FIELD_NAME_BYTES",
+            index=4,
+            number=1024,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_CUSTOM_METADATA_FIELD_VALUE_BYTES",
+            index=5,
+            number=4096,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_CUSTOM_METADATA_TOTAL_SIZE_BYTES",
+            index=6,
+            number=8192,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_BUCKET_METADATA_TOTAL_SIZE_BYTES",
+            index=7,
+            number=20480,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_NOTIFICATION_CONFIGS_PER_BUCKET",
+            index=8,
+            number=100,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_LIFECYCLE_RULES_PER_BUCKET",
+            index=9,
+            number=100,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_NOTIFICATION_CUSTOM_ATTRIBUTES",
+            index=10,
+            number=5,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_KEY_LENGTH",
+            index=11,
+            number=256,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_NOTIFICATION_CUSTOM_ATTRIBUTE_VALUE_LENGTH",
+            index=12,
+            number=1024,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_LABELS_ENTRIES_COUNT",
+            index=13,
+            number=64,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_LABELS_KEY_VALUE_LENGTH",
+            index=14,
+            number=63,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_LABELS_KEY_VALUE_BYTES",
+            index=15,
+            number=128,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="MAX_OBJECT_IDS_PER_DELETE_OBJECTS_REQUEST",
+            index=16,
+            number=1000,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="SPLIT_TOKEN_MAX_VALID_DAYS",
+            index=17,
+            number=14,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    containing_type=None,
+    serialized_options=b"\020\001",
+    serialized_start=18104,
+    serialized_end=18797,
 )
 _sym_db.RegisterEnumDescriptor(_SERVICECONSTANTS_VALUES)
 
 
 _DELETEBUCKETACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='DeleteBucketAccessControlRequest',
-  full_name='google.storage.v1.DeleteBucketAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteBucketAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.DeleteBucketAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteBucketAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=335,
-  serialized_end=482,
+    name="DeleteBucketAccessControlRequest",
+    full_name="google.storage.v1.DeleteBucketAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteBucketAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.DeleteBucketAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteBucketAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=335,
+    serialized_end=482,
 )
 
 
 _GETBUCKETACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='GetBucketAccessControlRequest',
-  full_name='google.storage.v1.GetBucketAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetBucketAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.GetBucketAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetBucketAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=485,
-  serialized_end=629,
+    name="GetBucketAccessControlRequest",
+    full_name="google.storage.v1.GetBucketAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetBucketAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.GetBucketAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetBucketAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=485,
+    serialized_end=629,
 )
 
 
 _INSERTBUCKETACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='InsertBucketAccessControlRequest',
-  full_name='google.storage.v1.InsertBucketAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.InsertBucketAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='bucket_access_control', full_name='google.storage.v1.InsertBucketAccessControlRequest.bucket_access_control', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertBucketAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=632,
-  serialized_end=829,
+    name="InsertBucketAccessControlRequest",
+    full_name="google.storage.v1.InsertBucketAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.InsertBucketAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="bucket_access_control",
+            full_name="google.storage.v1.InsertBucketAccessControlRequest.bucket_access_control",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertBucketAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=632,
+    serialized_end=829,
 )
 
 
 _LISTBUCKETACCESSCONTROLSREQUEST = _descriptor.Descriptor(
-  name='ListBucketAccessControlsRequest',
-  full_name='google.storage.v1.ListBucketAccessControlsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListBucketAccessControlsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListBucketAccessControlsRequest.common_request_params', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=831,
-  serialized_end=956,
+    name="ListBucketAccessControlsRequest",
+    full_name="google.storage.v1.ListBucketAccessControlsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListBucketAccessControlsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListBucketAccessControlsRequest.common_request_params",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=831,
+    serialized_end=956,
 )
 
 
 _PATCHBUCKETACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='PatchBucketAccessControlRequest',
-  full_name='google.storage.v1.PatchBucketAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.PatchBucketAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.PatchBucketAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='bucket_access_control', full_name='google.storage.v1.PatchBucketAccessControlRequest.bucket_access_control', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.PatchBucketAccessControlRequest.update_mask', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.PatchBucketAccessControlRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=959,
-  serialized_end=1225,
+    name="PatchBucketAccessControlRequest",
+    full_name="google.storage.v1.PatchBucketAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.PatchBucketAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.PatchBucketAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="bucket_access_control",
+            full_name="google.storage.v1.PatchBucketAccessControlRequest.bucket_access_control",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.PatchBucketAccessControlRequest.update_mask",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.PatchBucketAccessControlRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=959,
+    serialized_end=1225,
 )
 
 
 _UPDATEBUCKETACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='UpdateBucketAccessControlRequest',
-  full_name='google.storage.v1.UpdateBucketAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.UpdateBucketAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.UpdateBucketAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='bucket_access_control', full_name='google.storage.v1.UpdateBucketAccessControlRequest.bucket_access_control', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateBucketAccessControlRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1228,
-  serialized_end=1446,
+    name="UpdateBucketAccessControlRequest",
+    full_name="google.storage.v1.UpdateBucketAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.UpdateBucketAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.UpdateBucketAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="bucket_access_control",
+            full_name="google.storage.v1.UpdateBucketAccessControlRequest.bucket_access_control",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateBucketAccessControlRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1228,
+    serialized_end=1446,
 )
 
 
 _DELETEBUCKETREQUEST = _descriptor.Descriptor(
-  name='DeleteBucketRequest',
-  full_name='google.storage.v1.DeleteBucketRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteBucketRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.DeleteBucketRequest.if_metageneration_match', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.DeleteBucketRequest.if_metageneration_not_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteBucketRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1449,
-  serialized_end=1690,
+    name="DeleteBucketRequest",
+    full_name="google.storage.v1.DeleteBucketRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteBucketRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.DeleteBucketRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.DeleteBucketRequest.if_metageneration_not_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteBucketRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1449,
+    serialized_end=1690,
 )
 
 
 _GETBUCKETREQUEST = _descriptor.Descriptor(
-  name='GetBucketRequest',
-  full_name='google.storage.v1.GetBucketRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetBucketRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.GetBucketRequest.if_metageneration_match', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.GetBucketRequest.if_metageneration_not_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.GetBucketRequest.projection', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetBucketRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1693,
-  serialized_end=1994,
+    name="GetBucketRequest",
+    full_name="google.storage.v1.GetBucketRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetBucketRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.GetBucketRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.GetBucketRequest.if_metageneration_not_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.GetBucketRequest.projection",
+            index=3,
+            number=4,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetBucketRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1693,
+    serialized_end=1994,
 )
 
 
 _INSERTBUCKETREQUEST = _descriptor.Descriptor(
-  name='InsertBucketRequest',
-  full_name='google.storage.v1.InsertBucketRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.InsertBucketRequest.predefined_acl', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_default_object_acl', full_name='google.storage.v1.InsertBucketRequest.predefined_default_object_acl', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='project', full_name='google.storage.v1.InsertBucketRequest.project', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.InsertBucketRequest.projection', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.InsertBucketRequest.bucket', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertBucketRequest.common_request_params', index=5,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1997,
-  serialized_end=2384,
+    name="InsertBucketRequest",
+    full_name="google.storage.v1.InsertBucketRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.InsertBucketRequest.predefined_acl",
+            index=0,
+            number=1,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_default_object_acl",
+            full_name="google.storage.v1.InsertBucketRequest.predefined_default_object_acl",
+            index=1,
+            number=2,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="project",
+            full_name="google.storage.v1.InsertBucketRequest.project",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.InsertBucketRequest.projection",
+            index=3,
+            number=4,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.InsertBucketRequest.bucket",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertBucketRequest.common_request_params",
+            index=5,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1997,
+    serialized_end=2384,
 )
 
 
 _LISTCHANNELSREQUEST = _descriptor.Descriptor(
-  name='ListChannelsRequest',
-  full_name='google.storage.v1.ListChannelsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListChannelsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListChannelsRequest.common_request_params', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2386,
-  serialized_end=2499,
+    name="ListChannelsRequest",
+    full_name="google.storage.v1.ListChannelsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListChannelsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListChannelsRequest.common_request_params",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=2386,
+    serialized_end=2499,
 )
 
 
 _LISTBUCKETSREQUEST = _descriptor.Descriptor(
-  name='ListBucketsRequest',
-  full_name='google.storage.v1.ListBucketsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='max_results', full_name='google.storage.v1.ListBucketsRequest.max_results', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='page_token', full_name='google.storage.v1.ListBucketsRequest.page_token', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='prefix', full_name='google.storage.v1.ListBucketsRequest.prefix', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='project', full_name='google.storage.v1.ListBucketsRequest.project', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.ListBucketsRequest.projection', index=4,
-      number=5, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListBucketsRequest.common_request_params', index=5,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2502,
-  serialized_end=2735,
+    name="ListBucketsRequest",
+    full_name="google.storage.v1.ListBucketsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="max_results",
+            full_name="google.storage.v1.ListBucketsRequest.max_results",
+            index=0,
+            number=1,
+            type=5,
+            cpp_type=1,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="page_token",
+            full_name="google.storage.v1.ListBucketsRequest.page_token",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="prefix",
+            full_name="google.storage.v1.ListBucketsRequest.prefix",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="project",
+            full_name="google.storage.v1.ListBucketsRequest.project",
+            index=3,
+            number=4,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.ListBucketsRequest.projection",
+            index=4,
+            number=5,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListBucketsRequest.common_request_params",
+            index=5,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=2502,
+    serialized_end=2735,
 )
 
 
 _LOCKRETENTIONPOLICYREQUEST = _descriptor.Descriptor(
-  name='LockRetentionPolicyRequest',
-  full_name='google.storage.v1.LockRetentionPolicyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.LockRetentionPolicyRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.LockRetentionPolicyRequest.if_metageneration_match', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.LockRetentionPolicyRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2738,
-  serialized_end=2891,
+    name="LockRetentionPolicyRequest",
+    full_name="google.storage.v1.LockRetentionPolicyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.LockRetentionPolicyRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.LockRetentionPolicyRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.LockRetentionPolicyRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=2738,
+    serialized_end=2891,
 )
 
 
 _PATCHBUCKETREQUEST = _descriptor.Descriptor(
-  name='PatchBucketRequest',
-  full_name='google.storage.v1.PatchBucketRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.PatchBucketRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.PatchBucketRequest.if_metageneration_match', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.PatchBucketRequest.if_metageneration_not_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.PatchBucketRequest.predefined_acl', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_default_object_acl', full_name='google.storage.v1.PatchBucketRequest.predefined_default_object_acl', index=4,
-      number=5, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.PatchBucketRequest.projection', index=5,
-      number=6, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.PatchBucketRequest.metadata', index=6,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.PatchBucketRequest.update_mask', index=7,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.PatchBucketRequest.common_request_params', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2894,
-  serialized_end=3458,
+    name="PatchBucketRequest",
+    full_name="google.storage.v1.PatchBucketRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.PatchBucketRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.PatchBucketRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.PatchBucketRequest.if_metageneration_not_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.PatchBucketRequest.predefined_acl",
+            index=3,
+            number=4,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_default_object_acl",
+            full_name="google.storage.v1.PatchBucketRequest.predefined_default_object_acl",
+            index=4,
+            number=5,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.PatchBucketRequest.projection",
+            index=5,
+            number=6,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.PatchBucketRequest.metadata",
+            index=6,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.PatchBucketRequest.update_mask",
+            index=7,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.PatchBucketRequest.common_request_params",
+            index=8,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=2894,
+    serialized_end=3458,
 )
 
 
 _UPDATEBUCKETREQUEST = _descriptor.Descriptor(
-  name='UpdateBucketRequest',
-  full_name='google.storage.v1.UpdateBucketRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.UpdateBucketRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.UpdateBucketRequest.if_metageneration_match', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.UpdateBucketRequest.if_metageneration_not_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.UpdateBucketRequest.predefined_acl', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_default_object_acl', full_name='google.storage.v1.UpdateBucketRequest.predefined_default_object_acl', index=4,
-      number=5, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.UpdateBucketRequest.projection', index=5,
-      number=6, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.UpdateBucketRequest.metadata', index=6,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateBucketRequest.common_request_params', index=7,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3461,
-  serialized_end=3977,
+    name="UpdateBucketRequest",
+    full_name="google.storage.v1.UpdateBucketRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.UpdateBucketRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.UpdateBucketRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.UpdateBucketRequest.if_metageneration_not_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.UpdateBucketRequest.predefined_acl",
+            index=3,
+            number=4,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_default_object_acl",
+            full_name="google.storage.v1.UpdateBucketRequest.predefined_default_object_acl",
+            index=4,
+            number=5,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.UpdateBucketRequest.projection",
+            index=5,
+            number=6,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.UpdateBucketRequest.metadata",
+            index=6,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateBucketRequest.common_request_params",
+            index=7,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=3461,
+    serialized_end=3977,
 )
 
 
 _STOPCHANNELREQUEST = _descriptor.Descriptor(
-  name='StopChannelRequest',
-  full_name='google.storage.v1.StopChannelRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='channel', full_name='google.storage.v1.StopChannelRequest.channel', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.StopChannelRequest.common_request_params', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3980,
-  serialized_end=4116,
+    name="StopChannelRequest",
+    full_name="google.storage.v1.StopChannelRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="channel",
+            full_name="google.storage.v1.StopChannelRequest.channel",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.StopChannelRequest.common_request_params",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=3980,
+    serialized_end=4116,
 )
 
 
 _DELETEDEFAULTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='DeleteDefaultObjectAccessControlRequest',
-  full_name='google.storage.v1.DeleteDefaultObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteDefaultObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.DeleteDefaultObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteDefaultObjectAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4119,
-  serialized_end=4273,
+    name="DeleteDefaultObjectAccessControlRequest",
+    full_name="google.storage.v1.DeleteDefaultObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteDefaultObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.DeleteDefaultObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteDefaultObjectAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=4119,
+    serialized_end=4273,
 )
 
 
 _GETDEFAULTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='GetDefaultObjectAccessControlRequest',
-  full_name='google.storage.v1.GetDefaultObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetDefaultObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.GetDefaultObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetDefaultObjectAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4276,
-  serialized_end=4427,
+    name="GetDefaultObjectAccessControlRequest",
+    full_name="google.storage.v1.GetDefaultObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetDefaultObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.GetDefaultObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetDefaultObjectAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=4276,
+    serialized_end=4427,
 )
 
 
 _INSERTDEFAULTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='InsertDefaultObjectAccessControlRequest',
-  full_name='google.storage.v1.InsertDefaultObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.InsertDefaultObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.InsertDefaultObjectAccessControlRequest.object_access_control', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertDefaultObjectAccessControlRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4430,
-  serialized_end=4634,
+    name="InsertDefaultObjectAccessControlRequest",
+    full_name="google.storage.v1.InsertDefaultObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.InsertDefaultObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.InsertDefaultObjectAccessControlRequest.object_access_control",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertDefaultObjectAccessControlRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=4430,
+    serialized_end=4634,
 )
 
 
 _LISTDEFAULTOBJECTACCESSCONTROLSREQUEST = _descriptor.Descriptor(
-  name='ListDefaultObjectAccessControlsRequest',
-  full_name='google.storage.v1.ListDefaultObjectAccessControlsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListDefaultObjectAccessControlsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.ListDefaultObjectAccessControlsRequest.if_metageneration_match', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.ListDefaultObjectAccessControlsRequest.if_metageneration_not_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListDefaultObjectAccessControlsRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4637,
-  serialized_end=4897,
+    name="ListDefaultObjectAccessControlsRequest",
+    full_name="google.storage.v1.ListDefaultObjectAccessControlsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListDefaultObjectAccessControlsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.ListDefaultObjectAccessControlsRequest.if_metageneration_match",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.ListDefaultObjectAccessControlsRequest.if_metageneration_not_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListDefaultObjectAccessControlsRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=4637,
+    serialized_end=4897,
 )
 
 
 _PATCHDEFAULTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='PatchDefaultObjectAccessControlRequest',
-  full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest.object_access_control', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest.update_mask', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.PatchDefaultObjectAccessControlRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4900,
-  serialized_end=5173,
+    name="PatchDefaultObjectAccessControlRequest",
+    full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest.object_access_control",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest.update_mask",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.PatchDefaultObjectAccessControlRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=4900,
+    serialized_end=5173,
 )
 
 
 _UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='UpdateDefaultObjectAccessControlRequest',
-  full_name='google.storage.v1.UpdateDefaultObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.UpdateDefaultObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.UpdateDefaultObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.UpdateDefaultObjectAccessControlRequest.object_access_control', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateDefaultObjectAccessControlRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5176,
-  serialized_end=5401,
+    name="UpdateDefaultObjectAccessControlRequest",
+    full_name="google.storage.v1.UpdateDefaultObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.UpdateDefaultObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.UpdateDefaultObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.UpdateDefaultObjectAccessControlRequest.object_access_control",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateDefaultObjectAccessControlRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5176,
+    serialized_end=5401,
 )
 
 
 _DELETENOTIFICATIONREQUEST = _descriptor.Descriptor(
-  name='DeleteNotificationRequest',
-  full_name='google.storage.v1.DeleteNotificationRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteNotificationRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='notification', full_name='google.storage.v1.DeleteNotificationRequest.notification', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteNotificationRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5404,
-  serialized_end=5550,
+    name="DeleteNotificationRequest",
+    full_name="google.storage.v1.DeleteNotificationRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteNotificationRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="notification",
+            full_name="google.storage.v1.DeleteNotificationRequest.notification",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteNotificationRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5404,
+    serialized_end=5550,
 )
 
 
 _GETNOTIFICATIONREQUEST = _descriptor.Descriptor(
-  name='GetNotificationRequest',
-  full_name='google.storage.v1.GetNotificationRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetNotificationRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='notification', full_name='google.storage.v1.GetNotificationRequest.notification', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetNotificationRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5553,
-  serialized_end=5696,
+    name="GetNotificationRequest",
+    full_name="google.storage.v1.GetNotificationRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetNotificationRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="notification",
+            full_name="google.storage.v1.GetNotificationRequest.notification",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetNotificationRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5553,
+    serialized_end=5696,
 )
 
 
 _INSERTNOTIFICATIONREQUEST = _descriptor.Descriptor(
-  name='InsertNotificationRequest',
-  full_name='google.storage.v1.InsertNotificationRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.InsertNotificationRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='notification', full_name='google.storage.v1.InsertNotificationRequest.notification', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertNotificationRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5699,
-  serialized_end=5873,
+    name="InsertNotificationRequest",
+    full_name="google.storage.v1.InsertNotificationRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.InsertNotificationRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="notification",
+            full_name="google.storage.v1.InsertNotificationRequest.notification",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertNotificationRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5699,
+    serialized_end=5873,
 )
 
 
 _LISTNOTIFICATIONSREQUEST = _descriptor.Descriptor(
-  name='ListNotificationsRequest',
-  full_name='google.storage.v1.ListNotificationsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListNotificationsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListNotificationsRequest.common_request_params', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5875,
-  serialized_end=5993,
+    name="ListNotificationsRequest",
+    full_name="google.storage.v1.ListNotificationsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListNotificationsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListNotificationsRequest.common_request_params",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5875,
+    serialized_end=5993,
 )
 
 
 _DELETEOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='DeleteObjectAccessControlRequest',
-  full_name='google.storage.v1.DeleteObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.DeleteObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.DeleteObjectAccessControlRequest.object', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.DeleteObjectAccessControlRequest.generation', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteObjectAccessControlRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5996,
-  serialized_end=6184,
+    name="DeleteObjectAccessControlRequest",
+    full_name="google.storage.v1.DeleteObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.DeleteObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.DeleteObjectAccessControlRequest.object",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.DeleteObjectAccessControlRequest.generation",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteObjectAccessControlRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=5996,
+    serialized_end=6184,
 )
 
 
 _GETOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='GetObjectAccessControlRequest',
-  full_name='google.storage.v1.GetObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.GetObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.GetObjectAccessControlRequest.object', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.GetObjectAccessControlRequest.generation', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetObjectAccessControlRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6187,
-  serialized_end=6372,
+    name="GetObjectAccessControlRequest",
+    full_name="google.storage.v1.GetObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.GetObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.GetObjectAccessControlRequest.object",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.GetObjectAccessControlRequest.generation",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetObjectAccessControlRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=6187,
+    serialized_end=6372,
 )
 
 
 _INSERTOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='InsertObjectAccessControlRequest',
-  full_name='google.storage.v1.InsertObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.InsertObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.InsertObjectAccessControlRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.InsertObjectAccessControlRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.InsertObjectAccessControlRequest.object_access_control', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertObjectAccessControlRequest.common_request_params', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6375,
-  serialized_end=6613,
+    name="InsertObjectAccessControlRequest",
+    full_name="google.storage.v1.InsertObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.InsertObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.InsertObjectAccessControlRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.InsertObjectAccessControlRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.InsertObjectAccessControlRequest.object_access_control",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertObjectAccessControlRequest.common_request_params",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=6375,
+    serialized_end=6613,
 )
 
 
 _LISTOBJECTACCESSCONTROLSREQUEST = _descriptor.Descriptor(
-  name='ListObjectAccessControlsRequest',
-  full_name='google.storage.v1.ListObjectAccessControlsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListObjectAccessControlsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.ListObjectAccessControlsRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.ListObjectAccessControlsRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListObjectAccessControlsRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6616,
-  serialized_end=6782,
+    name="ListObjectAccessControlsRequest",
+    full_name="google.storage.v1.ListObjectAccessControlsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListObjectAccessControlsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.ListObjectAccessControlsRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.ListObjectAccessControlsRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListObjectAccessControlsRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=6616,
+    serialized_end=6782,
 )
 
 
 _PATCHOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='PatchObjectAccessControlRequest',
-  full_name='google.storage.v1.PatchObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.PatchObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.PatchObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.PatchObjectAccessControlRequest.object', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.PatchObjectAccessControlRequest.generation', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.PatchObjectAccessControlRequest.object_access_control', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.PatchObjectAccessControlRequest.common_request_params', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.PatchObjectAccessControlRequest.update_mask', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6785,
-  serialized_end=7092,
+    name="PatchObjectAccessControlRequest",
+    full_name="google.storage.v1.PatchObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.object",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.generation",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.object_access_control",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.common_request_params",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.PatchObjectAccessControlRequest.update_mask",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=6785,
+    serialized_end=7092,
 )
 
 
 _UPDATEOBJECTACCESSCONTROLREQUEST = _descriptor.Descriptor(
-  name='UpdateObjectAccessControlRequest',
-  full_name='google.storage.v1.UpdateObjectAccessControlRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.UpdateObjectAccessControlRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='entity', full_name='google.storage.v1.UpdateObjectAccessControlRequest.entity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.UpdateObjectAccessControlRequest.object', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.UpdateObjectAccessControlRequest.generation', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_access_control', full_name='google.storage.v1.UpdateObjectAccessControlRequest.object_access_control', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateObjectAccessControlRequest.common_request_params', index=5,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.UpdateObjectAccessControlRequest.update_mask', index=6,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7095,
-  serialized_end=7403,
+    name="UpdateObjectAccessControlRequest",
+    full_name="google.storage.v1.UpdateObjectAccessControlRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="entity",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.entity",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.object",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.generation",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_access_control",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.object_access_control",
+            index=4,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.common_request_params",
+            index=5,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.UpdateObjectAccessControlRequest.update_mask",
+            index=6,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=7095,
+    serialized_end=7403,
 )
 
 
 _COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS = _descriptor.Descriptor(
-  name='ObjectPreconditions',
-  full_name='google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions.if_generation_match', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=8165,
-  serialized_end=8244,
+    name="ObjectPreconditions",
+    full_name="google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions.if_generation_match",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        )
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=8165,
+    serialized_end=8244,
 )
 
 _COMPOSEOBJECTREQUEST_SOURCEOBJECTS = _descriptor.Descriptor(
-  name='SourceObjects',
-  full_name='google.storage.v1.ComposeObjectRequest.SourceObjects',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='google.storage.v1.ComposeObjectRequest.SourceObjects.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.ComposeObjectRequest.SourceObjects.generation', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_preconditions', full_name='google.storage.v1.ComposeObjectRequest.SourceObjects.object_preconditions', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=8009,
-  serialized_end=8244,
+    name="SourceObjects",
+    full_name="google.storage.v1.ComposeObjectRequest.SourceObjects",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="name",
+            full_name="google.storage.v1.ComposeObjectRequest.SourceObjects.name",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.ComposeObjectRequest.SourceObjects.generation",
+            index=1,
+            number=2,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_preconditions",
+            full_name="google.storage.v1.ComposeObjectRequest.SourceObjects.object_preconditions",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=8009,
+    serialized_end=8244,
 )
 
 _COMPOSEOBJECTREQUEST = _descriptor.Descriptor(
-  name='ComposeObjectRequest',
-  full_name='google.storage.v1.ComposeObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='destination_bucket', full_name='google.storage.v1.ComposeObjectRequest.destination_bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_object', full_name='google.storage.v1.ComposeObjectRequest.destination_object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_predefined_acl', full_name='google.storage.v1.ComposeObjectRequest.destination_predefined_acl', index=2,
-      number=3, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination', full_name='google.storage.v1.ComposeObjectRequest.destination', index=3,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_objects', full_name='google.storage.v1.ComposeObjectRequest.source_objects', index=4,
-      number=12, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.ComposeObjectRequest.if_generation_match', index=5,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.ComposeObjectRequest.if_metageneration_match', index=6,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='kms_key_name', full_name='google.storage.v1.ComposeObjectRequest.kms_key_name', index=7,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.ComposeObjectRequest.common_object_request_params', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ComposeObjectRequest.common_request_params', index=9,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_COMPOSEOBJECTREQUEST_SOURCEOBJECTS, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7406,
-  serialized_end=8244,
+    name="ComposeObjectRequest",
+    full_name="google.storage.v1.ComposeObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="destination_bucket",
+            full_name="google.storage.v1.ComposeObjectRequest.destination_bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_object",
+            full_name="google.storage.v1.ComposeObjectRequest.destination_object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_predefined_acl",
+            full_name="google.storage.v1.ComposeObjectRequest.destination_predefined_acl",
+            index=2,
+            number=3,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination",
+            full_name="google.storage.v1.ComposeObjectRequest.destination",
+            index=3,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_objects",
+            full_name="google.storage.v1.ComposeObjectRequest.source_objects",
+            index=4,
+            number=12,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.ComposeObjectRequest.if_generation_match",
+            index=5,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.ComposeObjectRequest.if_metageneration_match",
+            index=6,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="kms_key_name",
+            full_name="google.storage.v1.ComposeObjectRequest.kms_key_name",
+            index=7,
+            number=6,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.ComposeObjectRequest.common_object_request_params",
+            index=8,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ComposeObjectRequest.common_request_params",
+            index=9,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[_COMPOSEOBJECTREQUEST_SOURCEOBJECTS],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=7406,
+    serialized_end=8244,
 )
 
 
 _COPYOBJECTREQUEST = _descriptor.Descriptor(
-  name='CopyObjectRequest',
-  full_name='google.storage.v1.CopyObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='destination_bucket', full_name='google.storage.v1.CopyObjectRequest.destination_bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_object', full_name='google.storage.v1.CopyObjectRequest.destination_object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_predefined_acl', full_name='google.storage.v1.CopyObjectRequest.destination_predefined_acl', index=2,
-      number=3, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.CopyObjectRequest.if_generation_match', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.CopyObjectRequest.if_generation_not_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.CopyObjectRequest.if_metageneration_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.CopyObjectRequest.if_metageneration_not_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_generation_match', full_name='google.storage.v1.CopyObjectRequest.if_source_generation_match', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_generation_not_match', full_name='google.storage.v1.CopyObjectRequest.if_source_generation_not_match', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_metageneration_match', full_name='google.storage.v1.CopyObjectRequest.if_source_metageneration_match', index=9,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_metageneration_not_match', full_name='google.storage.v1.CopyObjectRequest.if_source_metageneration_not_match', index=10,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.CopyObjectRequest.projection', index=11,
-      number=12, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_bucket', full_name='google.storage.v1.CopyObjectRequest.source_bucket', index=12,
-      number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_object', full_name='google.storage.v1.CopyObjectRequest.source_object', index=13,
-      number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_generation', full_name='google.storage.v1.CopyObjectRequest.source_generation', index=14,
-      number=15, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination', full_name='google.storage.v1.CopyObjectRequest.destination', index=15,
-      number=17, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_kms_key_name', full_name='google.storage.v1.CopyObjectRequest.destination_kms_key_name', index=16,
-      number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.CopyObjectRequest.common_object_request_params', index=17,
-      number=18, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.CopyObjectRequest.common_request_params', index=18,
-      number=19, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=8247,
-  serialized_end=9327,
+    name="CopyObjectRequest",
+    full_name="google.storage.v1.CopyObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="destination_bucket",
+            full_name="google.storage.v1.CopyObjectRequest.destination_bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_object",
+            full_name="google.storage.v1.CopyObjectRequest.destination_object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_predefined_acl",
+            full_name="google.storage.v1.CopyObjectRequest.destination_predefined_acl",
+            index=2,
+            number=3,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_generation_match",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_generation_not_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_metageneration_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_metageneration_not_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_generation_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_source_generation_match",
+            index=7,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_generation_not_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_source_generation_not_match",
+            index=8,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_metageneration_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_source_metageneration_match",
+            index=9,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_metageneration_not_match",
+            full_name="google.storage.v1.CopyObjectRequest.if_source_metageneration_not_match",
+            index=10,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.CopyObjectRequest.projection",
+            index=11,
+            number=12,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_bucket",
+            full_name="google.storage.v1.CopyObjectRequest.source_bucket",
+            index=12,
+            number=13,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_object",
+            full_name="google.storage.v1.CopyObjectRequest.source_object",
+            index=13,
+            number=14,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_generation",
+            full_name="google.storage.v1.CopyObjectRequest.source_generation",
+            index=14,
+            number=15,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination",
+            full_name="google.storage.v1.CopyObjectRequest.destination",
+            index=15,
+            number=17,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_kms_key_name",
+            full_name="google.storage.v1.CopyObjectRequest.destination_kms_key_name",
+            index=16,
+            number=20,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.CopyObjectRequest.common_object_request_params",
+            index=17,
+            number=18,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.CopyObjectRequest.common_request_params",
+            index=18,
+            number=19,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=8247,
+    serialized_end=9327,
 )
 
 
 _DELETEOBJECTREQUEST = _descriptor.Descriptor(
-  name='DeleteObjectRequest',
-  full_name='google.storage.v1.DeleteObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.DeleteObjectRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.DeleteObjectRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upload_id', full_name='google.storage.v1.DeleteObjectRequest.upload_id', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.DeleteObjectRequest.generation', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.DeleteObjectRequest.if_generation_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.DeleteObjectRequest.if_generation_not_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.DeleteObjectRequest.if_metageneration_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.DeleteObjectRequest.if_metageneration_not_match', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.DeleteObjectRequest.common_object_request_params', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteObjectRequest.common_request_params', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=9330,
-  serialized_end=9835,
+    name="DeleteObjectRequest",
+    full_name="google.storage.v1.DeleteObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.DeleteObjectRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.DeleteObjectRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="upload_id",
+            full_name="google.storage.v1.DeleteObjectRequest.upload_id",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.DeleteObjectRequest.generation",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.DeleteObjectRequest.if_generation_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.DeleteObjectRequest.if_generation_not_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.DeleteObjectRequest.if_metageneration_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.DeleteObjectRequest.if_metageneration_not_match",
+            index=7,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.DeleteObjectRequest.common_object_request_params",
+            index=8,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteObjectRequest.common_request_params",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=9330,
+    serialized_end=9835,
 )
 
 
 _GETOBJECTMEDIAREQUEST = _descriptor.Descriptor(
-  name='GetObjectMediaRequest',
-  full_name='google.storage.v1.GetObjectMediaRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetObjectMediaRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.GetObjectMediaRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.GetObjectMediaRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='read_offset', full_name='google.storage.v1.GetObjectMediaRequest.read_offset', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='read_limit', full_name='google.storage.v1.GetObjectMediaRequest.read_limit', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.GetObjectMediaRequest.if_generation_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.GetObjectMediaRequest.if_generation_not_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.GetObjectMediaRequest.if_metageneration_match', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.GetObjectMediaRequest.if_metageneration_not_match', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.GetObjectMediaRequest.common_object_request_params', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetObjectMediaRequest.common_request_params', index=10,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=9838,
-  serialized_end=10357,
+    name="GetObjectMediaRequest",
+    full_name="google.storage.v1.GetObjectMediaRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetObjectMediaRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.GetObjectMediaRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.GetObjectMediaRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="read_offset",
+            full_name="google.storage.v1.GetObjectMediaRequest.read_offset",
+            index=3,
+            number=4,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="read_limit",
+            full_name="google.storage.v1.GetObjectMediaRequest.read_limit",
+            index=4,
+            number=5,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.GetObjectMediaRequest.if_generation_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.GetObjectMediaRequest.if_generation_not_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.GetObjectMediaRequest.if_metageneration_match",
+            index=7,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.GetObjectMediaRequest.if_metageneration_not_match",
+            index=8,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.GetObjectMediaRequest.common_object_request_params",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetObjectMediaRequest.common_request_params",
+            index=10,
+            number=12,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=9838,
+    serialized_end=10357,
 )
 
 
 _GETOBJECTREQUEST = _descriptor.Descriptor(
-  name='GetObjectRequest',
-  full_name='google.storage.v1.GetObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.GetObjectRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.GetObjectRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.GetObjectRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.GetObjectRequest.if_generation_match', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.GetObjectRequest.if_generation_not_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.GetObjectRequest.if_metageneration_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.GetObjectRequest.if_metageneration_not_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.GetObjectRequest.projection', index=7,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.GetObjectRequest.common_object_request_params', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetObjectRequest.common_request_params', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=10360,
-  serialized_end=10906,
+    name="GetObjectRequest",
+    full_name="google.storage.v1.GetObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.GetObjectRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.GetObjectRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.GetObjectRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.GetObjectRequest.if_generation_match",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.GetObjectRequest.if_generation_not_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.GetObjectRequest.if_metageneration_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.GetObjectRequest.if_metageneration_not_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.GetObjectRequest.projection",
+            index=7,
+            number=8,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.GetObjectRequest.common_object_request_params",
+            index=8,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetObjectRequest.common_request_params",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=10360,
+    serialized_end=10906,
 )
 
 
 _GETOBJECTMEDIARESPONSE = _descriptor.Descriptor(
-  name='GetObjectMediaResponse',
-  full_name='google.storage.v1.GetObjectMediaResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='checksummed_data', full_name='google.storage.v1.GetObjectMediaResponse.checksummed_data', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_checksums', full_name='google.storage.v1.GetObjectMediaResponse.object_checksums', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='content_range', full_name='google.storage.v1.GetObjectMediaResponse.content_range', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.GetObjectMediaResponse.metadata', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=10909,
-  serialized_end=11158,
+    name="GetObjectMediaResponse",
+    full_name="google.storage.v1.GetObjectMediaResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="checksummed_data",
+            full_name="google.storage.v1.GetObjectMediaResponse.checksummed_data",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_checksums",
+            full_name="google.storage.v1.GetObjectMediaResponse.object_checksums",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="content_range",
+            full_name="google.storage.v1.GetObjectMediaResponse.content_range",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.GetObjectMediaResponse.metadata",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=10909,
+    serialized_end=11158,
 )
 
 
 _INSERTOBJECTSPEC = _descriptor.Descriptor(
-  name='InsertObjectSpec',
-  full_name='google.storage.v1.InsertObjectSpec',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='resource', full_name='google.storage.v1.InsertObjectSpec.resource', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.InsertObjectSpec.predefined_acl', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.InsertObjectSpec.if_generation_match', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.InsertObjectSpec.if_generation_not_match', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.InsertObjectSpec.if_metageneration_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.InsertObjectSpec.if_metageneration_not_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.InsertObjectSpec.projection', index=6,
-      number=7, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=11161,
-  serialized_end=11611,
+    name="InsertObjectSpec",
+    full_name="google.storage.v1.InsertObjectSpec",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="resource",
+            full_name="google.storage.v1.InsertObjectSpec.resource",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.InsertObjectSpec.predefined_acl",
+            index=1,
+            number=2,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.InsertObjectSpec.if_generation_match",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.InsertObjectSpec.if_generation_not_match",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.InsertObjectSpec.if_metageneration_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.InsertObjectSpec.if_metageneration_not_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.InsertObjectSpec.projection",
+            index=6,
+            number=7,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=11161,
+    serialized_end=11611,
 )
 
 
 _INSERTOBJECTREQUEST = _descriptor.Descriptor(
-  name='InsertObjectRequest',
-  full_name='google.storage.v1.InsertObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='upload_id', full_name='google.storage.v1.InsertObjectRequest.upload_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='insert_object_spec', full_name='google.storage.v1.InsertObjectRequest.insert_object_spec', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='write_offset', full_name='google.storage.v1.InsertObjectRequest.write_offset', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='checksummed_data', full_name='google.storage.v1.InsertObjectRequest.checksummed_data', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reference', full_name='google.storage.v1.InsertObjectRequest.reference', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_checksums', full_name='google.storage.v1.InsertObjectRequest.object_checksums', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='finish_write', full_name='google.storage.v1.InsertObjectRequest.finish_write', index=6,
-      number=7, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.InsertObjectRequest.common_object_request_params', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.InsertObjectRequest.common_request_params', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='first_message', full_name='google.storage.v1.InsertObjectRequest.first_message',
-      index=0, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-    _descriptor.OneofDescriptor(
-      name='data', full_name='google.storage.v1.InsertObjectRequest.data',
-      index=1, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-  ],
-  serialized_start=11614,
-  serialized_end=12141,
+    name="InsertObjectRequest",
+    full_name="google.storage.v1.InsertObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="upload_id",
+            full_name="google.storage.v1.InsertObjectRequest.upload_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="insert_object_spec",
+            full_name="google.storage.v1.InsertObjectRequest.insert_object_spec",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="write_offset",
+            full_name="google.storage.v1.InsertObjectRequest.write_offset",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="checksummed_data",
+            full_name="google.storage.v1.InsertObjectRequest.checksummed_data",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="reference",
+            full_name="google.storage.v1.InsertObjectRequest.reference",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_checksums",
+            full_name="google.storage.v1.InsertObjectRequest.object_checksums",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="finish_write",
+            full_name="google.storage.v1.InsertObjectRequest.finish_write",
+            index=6,
+            number=7,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.InsertObjectRequest.common_object_request_params",
+            index=7,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.InsertObjectRequest.common_request_params",
+            index=8,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[
+        _descriptor.OneofDescriptor(
+            name="first_message",
+            full_name="google.storage.v1.InsertObjectRequest.first_message",
+            index=0,
+            containing_type=None,
+            create_key=_descriptor._internal_create_key,
+            fields=[],
+        ),
+        _descriptor.OneofDescriptor(
+            name="data",
+            full_name="google.storage.v1.InsertObjectRequest.data",
+            index=1,
+            containing_type=None,
+            create_key=_descriptor._internal_create_key,
+            fields=[],
+        ),
+    ],
+    serialized_start=11614,
+    serialized_end=12141,
 )
 
 
 _LISTOBJECTSREQUEST = _descriptor.Descriptor(
-  name='ListObjectsRequest',
-  full_name='google.storage.v1.ListObjectsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.ListObjectsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='delimiter', full_name='google.storage.v1.ListObjectsRequest.delimiter', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='include_trailing_delimiter', full_name='google.storage.v1.ListObjectsRequest.include_trailing_delimiter', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='max_results', full_name='google.storage.v1.ListObjectsRequest.max_results', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='page_token', full_name='google.storage.v1.ListObjectsRequest.page_token', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='prefix', full_name='google.storage.v1.ListObjectsRequest.prefix', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.ListObjectsRequest.projection', index=6,
-      number=7, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='versions', full_name='google.storage.v1.ListObjectsRequest.versions', index=7,
-      number=9, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListObjectsRequest.common_request_params', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=12144,
-  serialized_end=12449,
+    name="ListObjectsRequest",
+    full_name="google.storage.v1.ListObjectsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.ListObjectsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="delimiter",
+            full_name="google.storage.v1.ListObjectsRequest.delimiter",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="include_trailing_delimiter",
+            full_name="google.storage.v1.ListObjectsRequest.include_trailing_delimiter",
+            index=2,
+            number=3,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="max_results",
+            full_name="google.storage.v1.ListObjectsRequest.max_results",
+            index=3,
+            number=4,
+            type=5,
+            cpp_type=1,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="page_token",
+            full_name="google.storage.v1.ListObjectsRequest.page_token",
+            index=4,
+            number=5,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="prefix",
+            full_name="google.storage.v1.ListObjectsRequest.prefix",
+            index=5,
+            number=6,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.ListObjectsRequest.projection",
+            index=6,
+            number=7,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="versions",
+            full_name="google.storage.v1.ListObjectsRequest.versions",
+            index=7,
+            number=9,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListObjectsRequest.common_request_params",
+            index=8,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=12144,
+    serialized_end=12449,
 )
 
 
 _QUERYWRITESTATUSREQUEST = _descriptor.Descriptor(
-  name='QueryWriteStatusRequest',
-  full_name='google.storage.v1.QueryWriteStatusRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='upload_id', full_name='google.storage.v1.QueryWriteStatusRequest.upload_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.QueryWriteStatusRequest.common_object_request_params', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.QueryWriteStatusRequest.common_request_params', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=12452,
-  serialized_end=12656,
+    name="QueryWriteStatusRequest",
+    full_name="google.storage.v1.QueryWriteStatusRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="upload_id",
+            full_name="google.storage.v1.QueryWriteStatusRequest.upload_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.QueryWriteStatusRequest.common_object_request_params",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.QueryWriteStatusRequest.common_request_params",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=12452,
+    serialized_end=12656,
 )
 
 
 _QUERYWRITESTATUSRESPONSE = _descriptor.Descriptor(
-  name='QueryWriteStatusResponse',
-  full_name='google.storage.v1.QueryWriteStatusResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='committed_size', full_name='google.storage.v1.QueryWriteStatusResponse.committed_size', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='complete', full_name='google.storage.v1.QueryWriteStatusResponse.complete', index=1,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=12658,
-  serialized_end=12726,
+    name="QueryWriteStatusResponse",
+    full_name="google.storage.v1.QueryWriteStatusResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="committed_size",
+            full_name="google.storage.v1.QueryWriteStatusResponse.committed_size",
+            index=0,
+            number=1,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="complete",
+            full_name="google.storage.v1.QueryWriteStatusResponse.complete",
+            index=1,
+            number=2,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=12658,
+    serialized_end=12726,
 )
 
 
 _REWRITEOBJECTREQUEST = _descriptor.Descriptor(
-  name='RewriteObjectRequest',
-  full_name='google.storage.v1.RewriteObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='destination_bucket', full_name='google.storage.v1.RewriteObjectRequest.destination_bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_object', full_name='google.storage.v1.RewriteObjectRequest.destination_object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_kms_key_name', full_name='google.storage.v1.RewriteObjectRequest.destination_kms_key_name', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='destination_predefined_acl', full_name='google.storage.v1.RewriteObjectRequest.destination_predefined_acl', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.RewriteObjectRequest.if_generation_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.RewriteObjectRequest.if_generation_not_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.RewriteObjectRequest.if_metageneration_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.RewriteObjectRequest.if_metageneration_not_match', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_generation_match', full_name='google.storage.v1.RewriteObjectRequest.if_source_generation_match', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_generation_not_match', full_name='google.storage.v1.RewriteObjectRequest.if_source_generation_not_match', index=9,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_metageneration_match', full_name='google.storage.v1.RewriteObjectRequest.if_source_metageneration_match', index=10,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_source_metageneration_not_match', full_name='google.storage.v1.RewriteObjectRequest.if_source_metageneration_not_match', index=11,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='max_bytes_rewritten_per_call', full_name='google.storage.v1.RewriteObjectRequest.max_bytes_rewritten_per_call', index=12,
-      number=13, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.RewriteObjectRequest.projection', index=13,
-      number=14, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='rewrite_token', full_name='google.storage.v1.RewriteObjectRequest.rewrite_token', index=14,
-      number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_bucket', full_name='google.storage.v1.RewriteObjectRequest.source_bucket', index=15,
-      number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_object', full_name='google.storage.v1.RewriteObjectRequest.source_object', index=16,
-      number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='source_generation', full_name='google.storage.v1.RewriteObjectRequest.source_generation', index=17,
-      number=18, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.RewriteObjectRequest.object', index=18,
-      number=20, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='copy_source_encryption_algorithm', full_name='google.storage.v1.RewriteObjectRequest.copy_source_encryption_algorithm', index=19,
-      number=21, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='copy_source_encryption_key', full_name='google.storage.v1.RewriteObjectRequest.copy_source_encryption_key', index=20,
-      number=22, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='copy_source_encryption_key_sha256', full_name='google.storage.v1.RewriteObjectRequest.copy_source_encryption_key_sha256', index=21,
-      number=23, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.RewriteObjectRequest.common_object_request_params', index=22,
-      number=24, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.RewriteObjectRequest.common_request_params', index=23,
-      number=25, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=12729,
-  serialized_end=13989,
+    name="RewriteObjectRequest",
+    full_name="google.storage.v1.RewriteObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="destination_bucket",
+            full_name="google.storage.v1.RewriteObjectRequest.destination_bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_object",
+            full_name="google.storage.v1.RewriteObjectRequest.destination_object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_kms_key_name",
+            full_name="google.storage.v1.RewriteObjectRequest.destination_kms_key_name",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="destination_predefined_acl",
+            full_name="google.storage.v1.RewriteObjectRequest.destination_predefined_acl",
+            index=3,
+            number=4,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_generation_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_generation_not_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_metageneration_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_metageneration_not_match",
+            index=7,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_generation_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_source_generation_match",
+            index=8,
+            number=9,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_generation_not_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_source_generation_not_match",
+            index=9,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_metageneration_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_source_metageneration_match",
+            index=10,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_source_metageneration_not_match",
+            full_name="google.storage.v1.RewriteObjectRequest.if_source_metageneration_not_match",
+            index=11,
+            number=12,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="max_bytes_rewritten_per_call",
+            full_name="google.storage.v1.RewriteObjectRequest.max_bytes_rewritten_per_call",
+            index=12,
+            number=13,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.RewriteObjectRequest.projection",
+            index=13,
+            number=14,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="rewrite_token",
+            full_name="google.storage.v1.RewriteObjectRequest.rewrite_token",
+            index=14,
+            number=15,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_bucket",
+            full_name="google.storage.v1.RewriteObjectRequest.source_bucket",
+            index=15,
+            number=16,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_object",
+            full_name="google.storage.v1.RewriteObjectRequest.source_object",
+            index=16,
+            number=17,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="source_generation",
+            full_name="google.storage.v1.RewriteObjectRequest.source_generation",
+            index=17,
+            number=18,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.RewriteObjectRequest.object",
+            index=18,
+            number=20,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="copy_source_encryption_algorithm",
+            full_name="google.storage.v1.RewriteObjectRequest.copy_source_encryption_algorithm",
+            index=19,
+            number=21,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="copy_source_encryption_key",
+            full_name="google.storage.v1.RewriteObjectRequest.copy_source_encryption_key",
+            index=20,
+            number=22,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="copy_source_encryption_key_sha256",
+            full_name="google.storage.v1.RewriteObjectRequest.copy_source_encryption_key_sha256",
+            index=21,
+            number=23,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.RewriteObjectRequest.common_object_request_params",
+            index=22,
+            number=24,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.RewriteObjectRequest.common_request_params",
+            index=23,
+            number=25,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=12729,
+    serialized_end=13989,
 )
 
 
 _REWRITERESPONSE = _descriptor.Descriptor(
-  name='RewriteResponse',
-  full_name='google.storage.v1.RewriteResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='total_bytes_rewritten', full_name='google.storage.v1.RewriteResponse.total_bytes_rewritten', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object_size', full_name='google.storage.v1.RewriteResponse.object_size', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='done', full_name='google.storage.v1.RewriteResponse.done', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='rewrite_token', full_name='google.storage.v1.RewriteResponse.rewrite_token', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource', full_name='google.storage.v1.RewriteResponse.resource', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=13992,
-  serialized_end=14143,
+    name="RewriteResponse",
+    full_name="google.storage.v1.RewriteResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="total_bytes_rewritten",
+            full_name="google.storage.v1.RewriteResponse.total_bytes_rewritten",
+            index=0,
+            number=1,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object_size",
+            full_name="google.storage.v1.RewriteResponse.object_size",
+            index=1,
+            number=2,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="done",
+            full_name="google.storage.v1.RewriteResponse.done",
+            index=2,
+            number=3,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="rewrite_token",
+            full_name="google.storage.v1.RewriteResponse.rewrite_token",
+            index=3,
+            number=4,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="resource",
+            full_name="google.storage.v1.RewriteResponse.resource",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=13992,
+    serialized_end=14143,
 )
 
 
 _STARTRESUMABLEWRITEREQUEST = _descriptor.Descriptor(
-  name='StartResumableWriteRequest',
-  full_name='google.storage.v1.StartResumableWriteRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='insert_object_spec', full_name='google.storage.v1.StartResumableWriteRequest.insert_object_spec', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.StartResumableWriteRequest.common_object_request_params', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.StartResumableWriteRequest.common_request_params', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=14146,
-  serialized_end=14394,
+    name="StartResumableWriteRequest",
+    full_name="google.storage.v1.StartResumableWriteRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="insert_object_spec",
+            full_name="google.storage.v1.StartResumableWriteRequest.insert_object_spec",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.StartResumableWriteRequest.common_object_request_params",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.StartResumableWriteRequest.common_request_params",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=14146,
+    serialized_end=14394,
 )
 
 
 _STARTRESUMABLEWRITERESPONSE = _descriptor.Descriptor(
-  name='StartResumableWriteResponse',
-  full_name='google.storage.v1.StartResumableWriteResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='upload_id', full_name='google.storage.v1.StartResumableWriteResponse.upload_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=14396,
-  serialized_end=14444,
+    name="StartResumableWriteResponse",
+    full_name="google.storage.v1.StartResumableWriteResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="upload_id",
+            full_name="google.storage.v1.StartResumableWriteResponse.upload_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        )
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=14396,
+    serialized_end=14444,
 )
 
 
 _PATCHOBJECTREQUEST = _descriptor.Descriptor(
-  name='PatchObjectRequest',
-  full_name='google.storage.v1.PatchObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.PatchObjectRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.PatchObjectRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.PatchObjectRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.PatchObjectRequest.if_generation_match', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.PatchObjectRequest.if_generation_not_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.PatchObjectRequest.if_metageneration_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.PatchObjectRequest.if_metageneration_not_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.PatchObjectRequest.predefined_acl', index=7,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.PatchObjectRequest.projection', index=8,
-      number=9, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.PatchObjectRequest.metadata', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='update_mask', full_name='google.storage.v1.PatchObjectRequest.update_mask', index=10,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.PatchObjectRequest.common_object_request_params', index=11,
-      number=13, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.PatchObjectRequest.common_request_params', index=12,
-      number=14, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=14447,
-  serialized_end=15165,
+    name="PatchObjectRequest",
+    full_name="google.storage.v1.PatchObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.PatchObjectRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.PatchObjectRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.PatchObjectRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.PatchObjectRequest.if_generation_match",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.PatchObjectRequest.if_generation_not_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.PatchObjectRequest.if_metageneration_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.PatchObjectRequest.if_metageneration_not_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.PatchObjectRequest.predefined_acl",
+            index=7,
+            number=8,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.PatchObjectRequest.projection",
+            index=8,
+            number=9,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.PatchObjectRequest.metadata",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="update_mask",
+            full_name="google.storage.v1.PatchObjectRequest.update_mask",
+            index=10,
+            number=12,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.PatchObjectRequest.common_object_request_params",
+            index=11,
+            number=13,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.PatchObjectRequest.common_request_params",
+            index=12,
+            number=14,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=14447,
+    serialized_end=15165,
 )
 
 
 _UPDATEOBJECTREQUEST = _descriptor.Descriptor(
-  name='UpdateObjectRequest',
-  full_name='google.storage.v1.UpdateObjectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.UpdateObjectRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='object', full_name='google.storage.v1.UpdateObjectRequest.object', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='generation', full_name='google.storage.v1.UpdateObjectRequest.generation', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_match', full_name='google.storage.v1.UpdateObjectRequest.if_generation_match', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_generation_not_match', full_name='google.storage.v1.UpdateObjectRequest.if_generation_not_match', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_match', full_name='google.storage.v1.UpdateObjectRequest.if_metageneration_match', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='if_metageneration_not_match', full_name='google.storage.v1.UpdateObjectRequest.if_metageneration_not_match', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='predefined_acl', full_name='google.storage.v1.UpdateObjectRequest.predefined_acl', index=7,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.UpdateObjectRequest.projection', index=8,
-      number=9, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.UpdateObjectRequest.metadata', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_object_request_params', full_name='google.storage.v1.UpdateObjectRequest.common_object_request_params', index=10,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateObjectRequest.common_request_params', index=11,
-      number=13, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=15168,
-  serialized_end=15838,
+    name="UpdateObjectRequest",
+    full_name="google.storage.v1.UpdateObjectRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.UpdateObjectRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="object",
+            full_name="google.storage.v1.UpdateObjectRequest.object",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="generation",
+            full_name="google.storage.v1.UpdateObjectRequest.generation",
+            index=2,
+            number=3,
+            type=3,
+            cpp_type=2,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_match",
+            full_name="google.storage.v1.UpdateObjectRequest.if_generation_match",
+            index=3,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_generation_not_match",
+            full_name="google.storage.v1.UpdateObjectRequest.if_generation_not_match",
+            index=4,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_match",
+            full_name="google.storage.v1.UpdateObjectRequest.if_metageneration_match",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="if_metageneration_not_match",
+            full_name="google.storage.v1.UpdateObjectRequest.if_metageneration_not_match",
+            index=6,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="predefined_acl",
+            full_name="google.storage.v1.UpdateObjectRequest.predefined_acl",
+            index=7,
+            number=8,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.UpdateObjectRequest.projection",
+            index=8,
+            number=9,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.UpdateObjectRequest.metadata",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_object_request_params",
+            full_name="google.storage.v1.UpdateObjectRequest.common_object_request_params",
+            index=10,
+            number=12,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateObjectRequest.common_request_params",
+            index=11,
+            number=13,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=15168,
+    serialized_end=15838,
 )
 
 
 _WATCHALLOBJECTSREQUEST = _descriptor.Descriptor(
-  name='WatchAllObjectsRequest',
-  full_name='google.storage.v1.WatchAllObjectsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bucket', full_name='google.storage.v1.WatchAllObjectsRequest.bucket', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='versions', full_name='google.storage.v1.WatchAllObjectsRequest.versions', index=1,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='delimiter', full_name='google.storage.v1.WatchAllObjectsRequest.delimiter', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='max_results', full_name='google.storage.v1.WatchAllObjectsRequest.max_results', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='prefix', full_name='google.storage.v1.WatchAllObjectsRequest.prefix', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='include_trailing_delimiter', full_name='google.storage.v1.WatchAllObjectsRequest.include_trailing_delimiter', index=5,
-      number=6, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='page_token', full_name='google.storage.v1.WatchAllObjectsRequest.page_token', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='projection', full_name='google.storage.v1.WatchAllObjectsRequest.projection', index=7,
-      number=8, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='channel', full_name='google.storage.v1.WatchAllObjectsRequest.channel', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.WatchAllObjectsRequest.common_request_params', index=9,
-      number=11, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=15841,
-  serialized_end=16190,
+    name="WatchAllObjectsRequest",
+    full_name="google.storage.v1.WatchAllObjectsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="bucket",
+            full_name="google.storage.v1.WatchAllObjectsRequest.bucket",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="versions",
+            full_name="google.storage.v1.WatchAllObjectsRequest.versions",
+            index=1,
+            number=2,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="delimiter",
+            full_name="google.storage.v1.WatchAllObjectsRequest.delimiter",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="max_results",
+            full_name="google.storage.v1.WatchAllObjectsRequest.max_results",
+            index=3,
+            number=4,
+            type=5,
+            cpp_type=1,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="prefix",
+            full_name="google.storage.v1.WatchAllObjectsRequest.prefix",
+            index=4,
+            number=5,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="include_trailing_delimiter",
+            full_name="google.storage.v1.WatchAllObjectsRequest.include_trailing_delimiter",
+            index=5,
+            number=6,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="page_token",
+            full_name="google.storage.v1.WatchAllObjectsRequest.page_token",
+            index=6,
+            number=7,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="projection",
+            full_name="google.storage.v1.WatchAllObjectsRequest.projection",
+            index=7,
+            number=8,
+            type=14,
+            cpp_type=8,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="channel",
+            full_name="google.storage.v1.WatchAllObjectsRequest.channel",
+            index=8,
+            number=10,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.WatchAllObjectsRequest.common_request_params",
+            index=9,
+            number=11,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=15841,
+    serialized_end=16190,
 )
 
 
 _GETPROJECTSERVICEACCOUNTREQUEST = _descriptor.Descriptor(
-  name='GetProjectServiceAccountRequest',
-  full_name='google.storage.v1.GetProjectServiceAccountRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.GetProjectServiceAccountRequest.project_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetProjectServiceAccountRequest.common_request_params', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16193,
-  serialized_end=16322,
+    name="GetProjectServiceAccountRequest",
+    full_name="google.storage.v1.GetProjectServiceAccountRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.GetProjectServiceAccountRequest.project_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetProjectServiceAccountRequest.common_request_params",
+            index=1,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16193,
+    serialized_end=16322,
 )
 
 
 _CREATEHMACKEYREQUEST = _descriptor.Descriptor(
-  name='CreateHmacKeyRequest',
-  full_name='google.storage.v1.CreateHmacKeyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.CreateHmacKeyRequest.project_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='service_account_email', full_name='google.storage.v1.CreateHmacKeyRequest.service_account_email', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.CreateHmacKeyRequest.common_request_params', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16325,
-  serialized_end=16479,
+    name="CreateHmacKeyRequest",
+    full_name="google.storage.v1.CreateHmacKeyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.CreateHmacKeyRequest.project_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="service_account_email",
+            full_name="google.storage.v1.CreateHmacKeyRequest.service_account_email",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.CreateHmacKeyRequest.common_request_params",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16325,
+    serialized_end=16479,
 )
 
 
 _CREATEHMACKEYRESPONSE = _descriptor.Descriptor(
-  name='CreateHmacKeyResponse',
-  full_name='google.storage.v1.CreateHmacKeyResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.CreateHmacKeyResponse.metadata', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='secret', full_name='google.storage.v1.CreateHmacKeyResponse.secret', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16481,
-  serialized_end=16574,
+    name="CreateHmacKeyResponse",
+    full_name="google.storage.v1.CreateHmacKeyResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.CreateHmacKeyResponse.metadata",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="secret",
+            full_name="google.storage.v1.CreateHmacKeyResponse.secret",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16481,
+    serialized_end=16574,
 )
 
 
 _DELETEHMACKEYREQUEST = _descriptor.Descriptor(
-  name='DeleteHmacKeyRequest',
-  full_name='google.storage.v1.DeleteHmacKeyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='access_id', full_name='google.storage.v1.DeleteHmacKeyRequest.access_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.DeleteHmacKeyRequest.project_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.DeleteHmacKeyRequest.common_request_params', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16577,
-  serialized_end=16719,
+    name="DeleteHmacKeyRequest",
+    full_name="google.storage.v1.DeleteHmacKeyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="access_id",
+            full_name="google.storage.v1.DeleteHmacKeyRequest.access_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.DeleteHmacKeyRequest.project_id",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.DeleteHmacKeyRequest.common_request_params",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16577,
+    serialized_end=16719,
 )
 
 
 _GETHMACKEYREQUEST = _descriptor.Descriptor(
-  name='GetHmacKeyRequest',
-  full_name='google.storage.v1.GetHmacKeyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='access_id', full_name='google.storage.v1.GetHmacKeyRequest.access_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.GetHmacKeyRequest.project_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetHmacKeyRequest.common_request_params', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16722,
-  serialized_end=16861,
+    name="GetHmacKeyRequest",
+    full_name="google.storage.v1.GetHmacKeyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="access_id",
+            full_name="google.storage.v1.GetHmacKeyRequest.access_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.GetHmacKeyRequest.project_id",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetHmacKeyRequest.common_request_params",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16722,
+    serialized_end=16861,
 )
 
 
 _LISTHMACKEYSREQUEST = _descriptor.Descriptor(
-  name='ListHmacKeysRequest',
-  full_name='google.storage.v1.ListHmacKeysRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.ListHmacKeysRequest.project_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='service_account_email', full_name='google.storage.v1.ListHmacKeysRequest.service_account_email', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='show_deleted_keys', full_name='google.storage.v1.ListHmacKeysRequest.show_deleted_keys', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='max_results', full_name='google.storage.v1.ListHmacKeysRequest.max_results', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='page_token', full_name='google.storage.v1.ListHmacKeysRequest.page_token', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.ListHmacKeysRequest.common_request_params', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=16864,
-  serialized_end=17080,
+    name="ListHmacKeysRequest",
+    full_name="google.storage.v1.ListHmacKeysRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.ListHmacKeysRequest.project_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="service_account_email",
+            full_name="google.storage.v1.ListHmacKeysRequest.service_account_email",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="show_deleted_keys",
+            full_name="google.storage.v1.ListHmacKeysRequest.show_deleted_keys",
+            index=2,
+            number=3,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="max_results",
+            full_name="google.storage.v1.ListHmacKeysRequest.max_results",
+            index=3,
+            number=4,
+            type=5,
+            cpp_type=1,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="page_token",
+            full_name="google.storage.v1.ListHmacKeysRequest.page_token",
+            index=4,
+            number=5,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.ListHmacKeysRequest.common_request_params",
+            index=5,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=16864,
+    serialized_end=17080,
 )
 
 
 _LISTHMACKEYSRESPONSE = _descriptor.Descriptor(
-  name='ListHmacKeysResponse',
-  full_name='google.storage.v1.ListHmacKeysResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='next_page_token', full_name='google.storage.v1.ListHmacKeysResponse.next_page_token', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items', full_name='google.storage.v1.ListHmacKeysResponse.items', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17082,
-  serialized_end=17180,
+    name="ListHmacKeysResponse",
+    full_name="google.storage.v1.ListHmacKeysResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="next_page_token",
+            full_name="google.storage.v1.ListHmacKeysResponse.next_page_token",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="items",
+            full_name="google.storage.v1.ListHmacKeysResponse.items",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17082,
+    serialized_end=17180,
 )
 
 
 _UPDATEHMACKEYREQUEST = _descriptor.Descriptor(
-  name='UpdateHmacKeyRequest',
-  full_name='google.storage.v1.UpdateHmacKeyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='access_id', full_name='google.storage.v1.UpdateHmacKeyRequest.access_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='project_id', full_name='google.storage.v1.UpdateHmacKeyRequest.project_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='metadata', full_name='google.storage.v1.UpdateHmacKeyRequest.metadata', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.UpdateHmacKeyRequest.common_request_params', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17183,
-  serialized_end=17384,
+    name="UpdateHmacKeyRequest",
+    full_name="google.storage.v1.UpdateHmacKeyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="access_id",
+            full_name="google.storage.v1.UpdateHmacKeyRequest.access_id",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="project_id",
+            full_name="google.storage.v1.UpdateHmacKeyRequest.project_id",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="metadata",
+            full_name="google.storage.v1.UpdateHmacKeyRequest.metadata",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.UpdateHmacKeyRequest.common_request_params",
+            index=3,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17183,
+    serialized_end=17384,
 )
 
 
 _GETIAMPOLICYREQUEST = _descriptor.Descriptor(
-  name='GetIamPolicyRequest',
-  full_name='google.storage.v1.GetIamPolicyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='iam_request', full_name='google.storage.v1.GetIamPolicyRequest.iam_request', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.GetIamPolicyRequest.common_request_params', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17387,
-  serialized_end=17536,
+    name="GetIamPolicyRequest",
+    full_name="google.storage.v1.GetIamPolicyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="iam_request",
+            full_name="google.storage.v1.GetIamPolicyRequest.iam_request",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.GetIamPolicyRequest.common_request_params",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17387,
+    serialized_end=17536,
 )
 
 
 _SETIAMPOLICYREQUEST = _descriptor.Descriptor(
-  name='SetIamPolicyRequest',
-  full_name='google.storage.v1.SetIamPolicyRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='iam_request', full_name='google.storage.v1.SetIamPolicyRequest.iam_request', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.SetIamPolicyRequest.common_request_params', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17539,
-  serialized_end=17688,
+    name="SetIamPolicyRequest",
+    full_name="google.storage.v1.SetIamPolicyRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="iam_request",
+            full_name="google.storage.v1.SetIamPolicyRequest.iam_request",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.SetIamPolicyRequest.common_request_params",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17539,
+    serialized_end=17688,
 )
 
 
 _TESTIAMPERMISSIONSREQUEST = _descriptor.Descriptor(
-  name='TestIamPermissionsRequest',
-  full_name='google.storage.v1.TestIamPermissionsRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='iam_request', full_name='google.storage.v1.TestIamPermissionsRequest.iam_request', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='common_request_params', full_name='google.storage.v1.TestIamPermissionsRequest.common_request_params', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17691,
-  serialized_end=17852,
+    name="TestIamPermissionsRequest",
+    full_name="google.storage.v1.TestIamPermissionsRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="iam_request",
+            full_name="google.storage.v1.TestIamPermissionsRequest.iam_request",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="common_request_params",
+            full_name="google.storage.v1.TestIamPermissionsRequest.common_request_params",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17691,
+    serialized_end=17852,
 )
 
 
 _COMMONOBJECTREQUESTPARAMS = _descriptor.Descriptor(
-  name='CommonObjectRequestParams',
-  full_name='google.storage.v1.CommonObjectRequestParams',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='encryption_algorithm', full_name='google.storage.v1.CommonObjectRequestParams.encryption_algorithm', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='encryption_key', full_name='google.storage.v1.CommonObjectRequestParams.encryption_key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='encryption_key_sha256', full_name='google.storage.v1.CommonObjectRequestParams.encryption_key_sha256', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17854,
-  serialized_end=17966,
+    name="CommonObjectRequestParams",
+    full_name="google.storage.v1.CommonObjectRequestParams",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="encryption_algorithm",
+            full_name="google.storage.v1.CommonObjectRequestParams.encryption_algorithm",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="encryption_key",
+            full_name="google.storage.v1.CommonObjectRequestParams.encryption_key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="encryption_key_sha256",
+            full_name="google.storage.v1.CommonObjectRequestParams.encryption_key_sha256",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17854,
+    serialized_end=17966,
 )
 
 
 _COMMONREQUESTPARAMS = _descriptor.Descriptor(
-  name='CommonRequestParams',
-  full_name='google.storage.v1.CommonRequestParams',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='user_project', full_name='google.storage.v1.CommonRequestParams.user_project', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\340A\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='quota_user', full_name='google.storage.v1.CommonRequestParams.quota_user', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='fields', full_name='google.storage.v1.CommonRequestParams.fields', index=2,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=17968,
-  serialized_end=18080,
+    name="CommonRequestParams",
+    full_name="google.storage.v1.CommonRequestParams",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="user_project",
+            full_name="google.storage.v1.CommonRequestParams.user_project",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\002",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="quota_user",
+            full_name="google.storage.v1.CommonRequestParams.quota_user",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="fields",
+            full_name="google.storage.v1.CommonRequestParams.fields",
+            index=2,
+            number=4,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=17968,
+    serialized_end=18080,
 )
 
 
 _SERVICECONSTANTS = _descriptor.Descriptor(
-  name='ServiceConstants',
-  full_name='google.storage.v1.ServiceConstants',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-    _SERVICECONSTANTS_VALUES,
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=18083,
-  serialized_end=18797,
+    name="ServiceConstants",
+    full_name="google.storage.v1.ServiceConstants",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[],
+    extensions=[],
+    nested_types=[],
+    enum_types=[_SERVICECONSTANTS_VALUES],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=18083,
+    serialized_end=18797,
 )
 
-_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETBUCKETACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
-_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTBUCKETACCESSCONTROLSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
-_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
-_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_DELETEBUCKETREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEBUCKETREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEBUCKETREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETBUCKETREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETBUCKETREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETBUCKETREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_GETBUCKETREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTBUCKETREQUEST.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
-_INSERTBUCKETREQUEST.fields_by_name['predefined_default_object_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_INSERTBUCKETREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_INSERTBUCKETREQUEST.fields_by_name['bucket'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
-_INSERTBUCKETREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTCHANNELSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTBUCKETSREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_LISTBUCKETSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LOCKRETENTIONPOLICYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHBUCKETREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHBUCKETREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHBUCKETREQUEST.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
-_PATCHBUCKETREQUEST.fields_by_name['predefined_default_object_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_PATCHBUCKETREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_PATCHBUCKETREQUEST.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
-_PATCHBUCKETREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_PATCHBUCKETREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_UPDATEBUCKETREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEBUCKETREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEBUCKETREQUEST.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
-_UPDATEBUCKETREQUEST.fields_by_name['predefined_default_object_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_UPDATEBUCKETREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_UPDATEBUCKETREQUEST.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
-_UPDATEBUCKETREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_STOPCHANNELREQUEST.fields_by_name['channel'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL
-_STOPCHANNELREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_DELETENOTIFICATIONREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETNOTIFICATIONREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTNOTIFICATIONREQUEST.fields_by_name['notification'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION
-_INSERTNOTIFICATIONREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTNOTIFICATIONSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['object_access_control'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS.containing_type = _COMPOSEOBJECTREQUEST_SOURCEOBJECTS
-_COMPOSEOBJECTREQUEST_SOURCEOBJECTS.fields_by_name['object_preconditions'].message_type = _COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS
+_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "bucket_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
+)
+_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTBUCKETACCESSCONTROLSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "bucket_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
+)
+_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "bucket_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL
+)
+_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_DELETEBUCKETREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEBUCKETREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEBUCKETREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETBUCKETREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETBUCKETREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETBUCKETREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_GETBUCKETREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTBUCKETREQUEST.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
+)
+_INSERTBUCKETREQUEST.fields_by_name[
+    "predefined_default_object_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_INSERTBUCKETREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_INSERTBUCKETREQUEST.fields_by_name[
+    "bucket"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
+)
+_INSERTBUCKETREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTCHANNELSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTBUCKETSREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_LISTBUCKETSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LOCKRETENTIONPOLICYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHBUCKETREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHBUCKETREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHBUCKETREQUEST.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
+)
+_PATCHBUCKETREQUEST.fields_by_name[
+    "predefined_default_object_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_PATCHBUCKETREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_PATCHBUCKETREQUEST.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
+)
+_PATCHBUCKETREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_PATCHBUCKETREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDBUCKETACL
+)
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "predefined_default_object_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET
+)
+_UPDATEBUCKETREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_STOPCHANNELREQUEST.fields_by_name[
+    "channel"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL
+)
+_STOPCHANNELREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_DELETENOTIFICATIONREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETNOTIFICATIONREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTNOTIFICATIONREQUEST.fields_by_name[
+    "notification"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION
+)
+_INSERTNOTIFICATIONREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTNOTIFICATIONSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "object_access_control"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL
+)
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS.containing_type = (
+    _COMPOSEOBJECTREQUEST_SOURCEOBJECTS
+)
+_COMPOSEOBJECTREQUEST_SOURCEOBJECTS.fields_by_name[
+    "object_preconditions"
+].message_type = _COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS
 _COMPOSEOBJECTREQUEST_SOURCEOBJECTS.containing_type = _COMPOSEOBJECTREQUEST
-_COMPOSEOBJECTREQUEST.fields_by_name['destination_predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_COMPOSEOBJECTREQUEST.fields_by_name['destination'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_COMPOSEOBJECTREQUEST.fields_by_name['source_objects'].message_type = _COMPOSEOBJECTREQUEST_SOURCEOBJECTS
-_COMPOSEOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COMPOSEOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COMPOSEOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_COMPOSEOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_COPYOBJECTREQUEST.fields_by_name['destination_predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_COPYOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_source_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_source_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_source_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['if_source_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_COPYOBJECTREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_COPYOBJECTREQUEST.fields_by_name['destination'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_COPYOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_COPYOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_DELETEOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_DELETEOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_DELETEOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETOBJECTMEDIAREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTMEDIAREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTMEDIAREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTMEDIAREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTMEDIAREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_GETOBJECTMEDIAREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_GETOBJECTREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_GETOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_GETOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETOBJECTMEDIARESPONSE.fields_by_name['checksummed_data'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHECKSUMMEDDATA
-_GETOBJECTMEDIARESPONSE.fields_by_name['object_checksums'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTCHECKSUMS
-_GETOBJECTMEDIARESPONSE.fields_by_name['content_range'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CONTENTRANGE
-_GETOBJECTMEDIARESPONSE.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_INSERTOBJECTSPEC.fields_by_name['resource'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_INSERTOBJECTSPEC.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_INSERTOBJECTSPEC.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_INSERTOBJECTSPEC.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_INSERTOBJECTSPEC.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_INSERTOBJECTSPEC.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_INSERTOBJECTSPEC.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_INSERTOBJECTREQUEST.fields_by_name['insert_object_spec'].message_type = _INSERTOBJECTSPEC
-_INSERTOBJECTREQUEST.fields_by_name['checksummed_data'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHECKSUMMEDDATA
-_INSERTOBJECTREQUEST.fields_by_name['reference'].message_type = _GETOBJECTMEDIAREQUEST
-_INSERTOBJECTREQUEST.fields_by_name['object_checksums'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTCHECKSUMS
-_INSERTOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_INSERTOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_INSERTOBJECTREQUEST.oneofs_by_name['first_message'].fields.append(
-  _INSERTOBJECTREQUEST.fields_by_name['upload_id'])
-_INSERTOBJECTREQUEST.fields_by_name['upload_id'].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name['first_message']
-_INSERTOBJECTREQUEST.oneofs_by_name['first_message'].fields.append(
-  _INSERTOBJECTREQUEST.fields_by_name['insert_object_spec'])
-_INSERTOBJECTREQUEST.fields_by_name['insert_object_spec'].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name['first_message']
-_INSERTOBJECTREQUEST.oneofs_by_name['data'].fields.append(
-  _INSERTOBJECTREQUEST.fields_by_name['checksummed_data'])
-_INSERTOBJECTREQUEST.fields_by_name['checksummed_data'].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name['data']
-_INSERTOBJECTREQUEST.oneofs_by_name['data'].fields.append(
-  _INSERTOBJECTREQUEST.fields_by_name['reference'])
-_INSERTOBJECTREQUEST.fields_by_name['reference'].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name['data']
-_LISTOBJECTSREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_LISTOBJECTSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_QUERYWRITESTATUSREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_QUERYWRITESTATUSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_REWRITEOBJECTREQUEST.fields_by_name['destination_predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_REWRITEOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_source_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_source_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_source_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['if_source_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_REWRITEOBJECTREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_REWRITEOBJECTREQUEST.fields_by_name['object'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_REWRITEOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_REWRITEOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_REWRITERESPONSE.fields_by_name['resource'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_STARTRESUMABLEWRITEREQUEST.fields_by_name['insert_object_spec'].message_type = _INSERTOBJECTSPEC
-_STARTRESUMABLEWRITEREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_STARTRESUMABLEWRITEREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_PATCHOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_PATCHOBJECTREQUEST.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_PATCHOBJECTREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_PATCHOBJECTREQUEST.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_PATCHOBJECTREQUEST.fields_by_name['update_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_PATCHOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_PATCHOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_UPDATEOBJECTREQUEST.fields_by_name['if_generation_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEOBJECTREQUEST.fields_by_name['if_generation_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEOBJECTREQUEST.fields_by_name['if_metageneration_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEOBJECTREQUEST.fields_by_name['if_metageneration_not_match'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_UPDATEOBJECTREQUEST.fields_by_name['predefined_acl'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
-_UPDATEOBJECTREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_UPDATEOBJECTREQUEST.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
-_UPDATEOBJECTREQUEST.fields_by_name['common_object_request_params'].message_type = _COMMONOBJECTREQUESTPARAMS
-_UPDATEOBJECTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_WATCHALLOBJECTSREQUEST.fields_by_name['projection'].enum_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
-_WATCHALLOBJECTSREQUEST.fields_by_name['channel'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL
-_WATCHALLOBJECTSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETPROJECTSERVICEACCOUNTREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_CREATEHMACKEYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_CREATEHMACKEYRESPONSE.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
-_DELETEHMACKEYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETHMACKEYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTHMACKEYSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_LISTHMACKEYSRESPONSE.fields_by_name['items'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
-_UPDATEHMACKEYREQUEST.fields_by_name['metadata'].message_type = google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
-_UPDATEHMACKEYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_GETIAMPOLICYREQUEST.fields_by_name['iam_request'].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._GETIAMPOLICYREQUEST
-_GETIAMPOLICYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_SETIAMPOLICYREQUEST.fields_by_name['iam_request'].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._SETIAMPOLICYREQUEST
-_SETIAMPOLICYREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_TESTIAMPERMISSIONSREQUEST.fields_by_name['iam_request'].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSREQUEST
-_TESTIAMPERMISSIONSREQUEST.fields_by_name['common_request_params'].message_type = _COMMONREQUESTPARAMS
-_COMMONREQUESTPARAMS.fields_by_name['fields'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "destination_predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "destination"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "source_objects"
+].message_type = _COMPOSEOBJECTREQUEST_SOURCEOBJECTS
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_COMPOSEOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_COPYOBJECTREQUEST.fields_by_name[
+    "destination_predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_source_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_source_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_source_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "if_source_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_COPYOBJECTREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_COPYOBJECTREQUEST.fields_by_name[
+    "destination"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_COPYOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_COPYOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_DELETEOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_DELETEOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_DELETEOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_GETOBJECTMEDIAREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_GETOBJECTREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_GETOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_GETOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETOBJECTMEDIARESPONSE.fields_by_name[
+    "checksummed_data"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHECKSUMMEDDATA
+)
+_GETOBJECTMEDIARESPONSE.fields_by_name[
+    "object_checksums"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTCHECKSUMS
+)
+_GETOBJECTMEDIARESPONSE.fields_by_name[
+    "content_range"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CONTENTRANGE
+)
+_GETOBJECTMEDIARESPONSE.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_INSERTOBJECTSPEC.fields_by_name[
+    "resource"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_INSERTOBJECTSPEC.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_INSERTOBJECTSPEC.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_INSERTOBJECTSPEC.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_INSERTOBJECTSPEC.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_INSERTOBJECTSPEC.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_INSERTOBJECTSPEC.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "insert_object_spec"
+].message_type = _INSERTOBJECTSPEC
+_INSERTOBJECTREQUEST.fields_by_name[
+    "checksummed_data"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHECKSUMMEDDATA
+)
+_INSERTOBJECTREQUEST.fields_by_name["reference"].message_type = _GETOBJECTMEDIAREQUEST
+_INSERTOBJECTREQUEST.fields_by_name[
+    "object_checksums"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTCHECKSUMS
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_INSERTOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_INSERTOBJECTREQUEST.oneofs_by_name["first_message"].fields.append(
+    _INSERTOBJECTREQUEST.fields_by_name["upload_id"]
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "upload_id"
+].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name["first_message"]
+_INSERTOBJECTREQUEST.oneofs_by_name["first_message"].fields.append(
+    _INSERTOBJECTREQUEST.fields_by_name["insert_object_spec"]
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "insert_object_spec"
+].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name["first_message"]
+_INSERTOBJECTREQUEST.oneofs_by_name["data"].fields.append(
+    _INSERTOBJECTREQUEST.fields_by_name["checksummed_data"]
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "checksummed_data"
+].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name["data"]
+_INSERTOBJECTREQUEST.oneofs_by_name["data"].fields.append(
+    _INSERTOBJECTREQUEST.fields_by_name["reference"]
+)
+_INSERTOBJECTREQUEST.fields_by_name[
+    "reference"
+].containing_oneof = _INSERTOBJECTREQUEST.oneofs_by_name["data"]
+_LISTOBJECTSREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_LISTOBJECTSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_QUERYWRITESTATUSREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_QUERYWRITESTATUSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "destination_predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_source_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_source_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_source_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "if_source_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "object"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_REWRITEOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_REWRITERESPONSE.fields_by_name[
+    "resource"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_STARTRESUMABLEWRITEREQUEST.fields_by_name[
+    "insert_object_spec"
+].message_type = _INSERTOBJECTSPEC
+_STARTRESUMABLEWRITEREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_STARTRESUMABLEWRITEREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_PATCHOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_PATCHOBJECTREQUEST.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_PATCHOBJECTREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_PATCHOBJECTREQUEST.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_PATCHOBJECTREQUEST.fields_by_name[
+    "update_mask"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_PATCHOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_PATCHOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "if_generation_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "if_generation_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "if_metageneration_not_match"
+].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "predefined_acl"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PREDEFINEDOBJECTACL
+)
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT
+)
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "common_object_request_params"
+].message_type = _COMMONOBJECTREQUESTPARAMS
+_UPDATEOBJECTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_WATCHALLOBJECTSREQUEST.fields_by_name[
+    "projection"
+].enum_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._COMMONENUMS_PROJECTION
+)
+_WATCHALLOBJECTSREQUEST.fields_by_name[
+    "channel"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL
+)
+_WATCHALLOBJECTSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETPROJECTSERVICEACCOUNTREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_CREATEHMACKEYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_CREATEHMACKEYRESPONSE.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
+)
+_DELETEHMACKEYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETHMACKEYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTHMACKEYSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_LISTHMACKEYSRESPONSE.fields_by_name[
+    "items"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
+)
+_UPDATEHMACKEYREQUEST.fields_by_name[
+    "metadata"
+].message_type = (
+    google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA
+)
+_UPDATEHMACKEYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_GETIAMPOLICYREQUEST.fields_by_name[
+    "iam_request"
+].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._GETIAMPOLICYREQUEST
+_GETIAMPOLICYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_SETIAMPOLICYREQUEST.fields_by_name[
+    "iam_request"
+].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._SETIAMPOLICYREQUEST
+_SETIAMPOLICYREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_TESTIAMPERMISSIONSREQUEST.fields_by_name[
+    "iam_request"
+].message_type = google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSREQUEST
+_TESTIAMPERMISSIONSREQUEST.fields_by_name[
+    "common_request_params"
+].message_type = _COMMONREQUESTPARAMS
+_COMMONREQUESTPARAMS.fields_by_name[
+    "fields"
+].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
 _SERVICECONSTANTS_VALUES.containing_type = _SERVICECONSTANTS
-DESCRIPTOR.message_types_by_name['DeleteBucketAccessControlRequest'] = _DELETEBUCKETACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['GetBucketAccessControlRequest'] = _GETBUCKETACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['InsertBucketAccessControlRequest'] = _INSERTBUCKETACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['ListBucketAccessControlsRequest'] = _LISTBUCKETACCESSCONTROLSREQUEST
-DESCRIPTOR.message_types_by_name['PatchBucketAccessControlRequest'] = _PATCHBUCKETACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['UpdateBucketAccessControlRequest'] = _UPDATEBUCKETACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['DeleteBucketRequest'] = _DELETEBUCKETREQUEST
-DESCRIPTOR.message_types_by_name['GetBucketRequest'] = _GETBUCKETREQUEST
-DESCRIPTOR.message_types_by_name['InsertBucketRequest'] = _INSERTBUCKETREQUEST
-DESCRIPTOR.message_types_by_name['ListChannelsRequest'] = _LISTCHANNELSREQUEST
-DESCRIPTOR.message_types_by_name['ListBucketsRequest'] = _LISTBUCKETSREQUEST
-DESCRIPTOR.message_types_by_name['LockRetentionPolicyRequest'] = _LOCKRETENTIONPOLICYREQUEST
-DESCRIPTOR.message_types_by_name['PatchBucketRequest'] = _PATCHBUCKETREQUEST
-DESCRIPTOR.message_types_by_name['UpdateBucketRequest'] = _UPDATEBUCKETREQUEST
-DESCRIPTOR.message_types_by_name['StopChannelRequest'] = _STOPCHANNELREQUEST
-DESCRIPTOR.message_types_by_name['DeleteDefaultObjectAccessControlRequest'] = _DELETEDEFAULTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['GetDefaultObjectAccessControlRequest'] = _GETDEFAULTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['InsertDefaultObjectAccessControlRequest'] = _INSERTDEFAULTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['ListDefaultObjectAccessControlsRequest'] = _LISTDEFAULTOBJECTACCESSCONTROLSREQUEST
-DESCRIPTOR.message_types_by_name['PatchDefaultObjectAccessControlRequest'] = _PATCHDEFAULTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['UpdateDefaultObjectAccessControlRequest'] = _UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['DeleteNotificationRequest'] = _DELETENOTIFICATIONREQUEST
-DESCRIPTOR.message_types_by_name['GetNotificationRequest'] = _GETNOTIFICATIONREQUEST
-DESCRIPTOR.message_types_by_name['InsertNotificationRequest'] = _INSERTNOTIFICATIONREQUEST
-DESCRIPTOR.message_types_by_name['ListNotificationsRequest'] = _LISTNOTIFICATIONSREQUEST
-DESCRIPTOR.message_types_by_name['DeleteObjectAccessControlRequest'] = _DELETEOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['GetObjectAccessControlRequest'] = _GETOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['InsertObjectAccessControlRequest'] = _INSERTOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['ListObjectAccessControlsRequest'] = _LISTOBJECTACCESSCONTROLSREQUEST
-DESCRIPTOR.message_types_by_name['PatchObjectAccessControlRequest'] = _PATCHOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['UpdateObjectAccessControlRequest'] = _UPDATEOBJECTACCESSCONTROLREQUEST
-DESCRIPTOR.message_types_by_name['ComposeObjectRequest'] = _COMPOSEOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['CopyObjectRequest'] = _COPYOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['DeleteObjectRequest'] = _DELETEOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['GetObjectMediaRequest'] = _GETOBJECTMEDIAREQUEST
-DESCRIPTOR.message_types_by_name['GetObjectRequest'] = _GETOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['GetObjectMediaResponse'] = _GETOBJECTMEDIARESPONSE
-DESCRIPTOR.message_types_by_name['InsertObjectSpec'] = _INSERTOBJECTSPEC
-DESCRIPTOR.message_types_by_name['InsertObjectRequest'] = _INSERTOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['ListObjectsRequest'] = _LISTOBJECTSREQUEST
-DESCRIPTOR.message_types_by_name['QueryWriteStatusRequest'] = _QUERYWRITESTATUSREQUEST
-DESCRIPTOR.message_types_by_name['QueryWriteStatusResponse'] = _QUERYWRITESTATUSRESPONSE
-DESCRIPTOR.message_types_by_name['RewriteObjectRequest'] = _REWRITEOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['RewriteResponse'] = _REWRITERESPONSE
-DESCRIPTOR.message_types_by_name['StartResumableWriteRequest'] = _STARTRESUMABLEWRITEREQUEST
-DESCRIPTOR.message_types_by_name['StartResumableWriteResponse'] = _STARTRESUMABLEWRITERESPONSE
-DESCRIPTOR.message_types_by_name['PatchObjectRequest'] = _PATCHOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['UpdateObjectRequest'] = _UPDATEOBJECTREQUEST
-DESCRIPTOR.message_types_by_name['WatchAllObjectsRequest'] = _WATCHALLOBJECTSREQUEST
-DESCRIPTOR.message_types_by_name['GetProjectServiceAccountRequest'] = _GETPROJECTSERVICEACCOUNTREQUEST
-DESCRIPTOR.message_types_by_name['CreateHmacKeyRequest'] = _CREATEHMACKEYREQUEST
-DESCRIPTOR.message_types_by_name['CreateHmacKeyResponse'] = _CREATEHMACKEYRESPONSE
-DESCRIPTOR.message_types_by_name['DeleteHmacKeyRequest'] = _DELETEHMACKEYREQUEST
-DESCRIPTOR.message_types_by_name['GetHmacKeyRequest'] = _GETHMACKEYREQUEST
-DESCRIPTOR.message_types_by_name['ListHmacKeysRequest'] = _LISTHMACKEYSREQUEST
-DESCRIPTOR.message_types_by_name['ListHmacKeysResponse'] = _LISTHMACKEYSRESPONSE
-DESCRIPTOR.message_types_by_name['UpdateHmacKeyRequest'] = _UPDATEHMACKEYREQUEST
-DESCRIPTOR.message_types_by_name['GetIamPolicyRequest'] = _GETIAMPOLICYREQUEST
-DESCRIPTOR.message_types_by_name['SetIamPolicyRequest'] = _SETIAMPOLICYREQUEST
-DESCRIPTOR.message_types_by_name['TestIamPermissionsRequest'] = _TESTIAMPERMISSIONSREQUEST
-DESCRIPTOR.message_types_by_name['CommonObjectRequestParams'] = _COMMONOBJECTREQUESTPARAMS
-DESCRIPTOR.message_types_by_name['CommonRequestParams'] = _COMMONREQUESTPARAMS
-DESCRIPTOR.message_types_by_name['ServiceConstants'] = _SERVICECONSTANTS
+DESCRIPTOR.message_types_by_name[
+    "DeleteBucketAccessControlRequest"
+] = _DELETEBUCKETACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "GetBucketAccessControlRequest"
+] = _GETBUCKETACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "InsertBucketAccessControlRequest"
+] = _INSERTBUCKETACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "ListBucketAccessControlsRequest"
+] = _LISTBUCKETACCESSCONTROLSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "PatchBucketAccessControlRequest"
+] = _PATCHBUCKETACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "UpdateBucketAccessControlRequest"
+] = _UPDATEBUCKETACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name["DeleteBucketRequest"] = _DELETEBUCKETREQUEST
+DESCRIPTOR.message_types_by_name["GetBucketRequest"] = _GETBUCKETREQUEST
+DESCRIPTOR.message_types_by_name["InsertBucketRequest"] = _INSERTBUCKETREQUEST
+DESCRIPTOR.message_types_by_name["ListChannelsRequest"] = _LISTCHANNELSREQUEST
+DESCRIPTOR.message_types_by_name["ListBucketsRequest"] = _LISTBUCKETSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "LockRetentionPolicyRequest"
+] = _LOCKRETENTIONPOLICYREQUEST
+DESCRIPTOR.message_types_by_name["PatchBucketRequest"] = _PATCHBUCKETREQUEST
+DESCRIPTOR.message_types_by_name["UpdateBucketRequest"] = _UPDATEBUCKETREQUEST
+DESCRIPTOR.message_types_by_name["StopChannelRequest"] = _STOPCHANNELREQUEST
+DESCRIPTOR.message_types_by_name[
+    "DeleteDefaultObjectAccessControlRequest"
+] = _DELETEDEFAULTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "GetDefaultObjectAccessControlRequest"
+] = _GETDEFAULTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "InsertDefaultObjectAccessControlRequest"
+] = _INSERTDEFAULTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "ListDefaultObjectAccessControlsRequest"
+] = _LISTDEFAULTOBJECTACCESSCONTROLSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "PatchDefaultObjectAccessControlRequest"
+] = _PATCHDEFAULTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "UpdateDefaultObjectAccessControlRequest"
+] = _UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "DeleteNotificationRequest"
+] = _DELETENOTIFICATIONREQUEST
+DESCRIPTOR.message_types_by_name["GetNotificationRequest"] = _GETNOTIFICATIONREQUEST
+DESCRIPTOR.message_types_by_name[
+    "InsertNotificationRequest"
+] = _INSERTNOTIFICATIONREQUEST
+DESCRIPTOR.message_types_by_name["ListNotificationsRequest"] = _LISTNOTIFICATIONSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "DeleteObjectAccessControlRequest"
+] = _DELETEOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "GetObjectAccessControlRequest"
+] = _GETOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "InsertObjectAccessControlRequest"
+] = _INSERTOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "ListObjectAccessControlsRequest"
+] = _LISTOBJECTACCESSCONTROLSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "PatchObjectAccessControlRequest"
+] = _PATCHOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name[
+    "UpdateObjectAccessControlRequest"
+] = _UPDATEOBJECTACCESSCONTROLREQUEST
+DESCRIPTOR.message_types_by_name["ComposeObjectRequest"] = _COMPOSEOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["CopyObjectRequest"] = _COPYOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["DeleteObjectRequest"] = _DELETEOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["GetObjectMediaRequest"] = _GETOBJECTMEDIAREQUEST
+DESCRIPTOR.message_types_by_name["GetObjectRequest"] = _GETOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["GetObjectMediaResponse"] = _GETOBJECTMEDIARESPONSE
+DESCRIPTOR.message_types_by_name["InsertObjectSpec"] = _INSERTOBJECTSPEC
+DESCRIPTOR.message_types_by_name["InsertObjectRequest"] = _INSERTOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["ListObjectsRequest"] = _LISTOBJECTSREQUEST
+DESCRIPTOR.message_types_by_name["QueryWriteStatusRequest"] = _QUERYWRITESTATUSREQUEST
+DESCRIPTOR.message_types_by_name["QueryWriteStatusResponse"] = _QUERYWRITESTATUSRESPONSE
+DESCRIPTOR.message_types_by_name["RewriteObjectRequest"] = _REWRITEOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["RewriteResponse"] = _REWRITERESPONSE
+DESCRIPTOR.message_types_by_name[
+    "StartResumableWriteRequest"
+] = _STARTRESUMABLEWRITEREQUEST
+DESCRIPTOR.message_types_by_name[
+    "StartResumableWriteResponse"
+] = _STARTRESUMABLEWRITERESPONSE
+DESCRIPTOR.message_types_by_name["PatchObjectRequest"] = _PATCHOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["UpdateObjectRequest"] = _UPDATEOBJECTREQUEST
+DESCRIPTOR.message_types_by_name["WatchAllObjectsRequest"] = _WATCHALLOBJECTSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "GetProjectServiceAccountRequest"
+] = _GETPROJECTSERVICEACCOUNTREQUEST
+DESCRIPTOR.message_types_by_name["CreateHmacKeyRequest"] = _CREATEHMACKEYREQUEST
+DESCRIPTOR.message_types_by_name["CreateHmacKeyResponse"] = _CREATEHMACKEYRESPONSE
+DESCRIPTOR.message_types_by_name["DeleteHmacKeyRequest"] = _DELETEHMACKEYREQUEST
+DESCRIPTOR.message_types_by_name["GetHmacKeyRequest"] = _GETHMACKEYREQUEST
+DESCRIPTOR.message_types_by_name["ListHmacKeysRequest"] = _LISTHMACKEYSREQUEST
+DESCRIPTOR.message_types_by_name["ListHmacKeysResponse"] = _LISTHMACKEYSRESPONSE
+DESCRIPTOR.message_types_by_name["UpdateHmacKeyRequest"] = _UPDATEHMACKEYREQUEST
+DESCRIPTOR.message_types_by_name["GetIamPolicyRequest"] = _GETIAMPOLICYREQUEST
+DESCRIPTOR.message_types_by_name["SetIamPolicyRequest"] = _SETIAMPOLICYREQUEST
+DESCRIPTOR.message_types_by_name[
+    "TestIamPermissionsRequest"
+] = _TESTIAMPERMISSIONSREQUEST
+DESCRIPTOR.message_types_by_name[
+    "CommonObjectRequestParams"
+] = _COMMONOBJECTREQUESTPARAMS
+DESCRIPTOR.message_types_by_name["CommonRequestParams"] = _COMMONREQUESTPARAMS
+DESCRIPTOR.message_types_by_name["ServiceConstants"] = _SERVICECONSTANTS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-DeleteBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('DeleteBucketAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEBUCKETACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for DeleteBucketAccessControl.
-  
+DeleteBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteBucketAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEBUCKETACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for DeleteBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4395,16 +8832,19 @@ DeleteBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('Del
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteBucketAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteBucketAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteBucketAccessControlRequest)
 
-GetBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('GetBucketAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETBUCKETACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetBucketAccessControl.
-  
+GetBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "GetBucketAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETBUCKETACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4416,16 +8856,19 @@ GetBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('GetBuc
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetBucketAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetBucketAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(GetBucketAccessControlRequest)
 
-InsertBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('InsertBucketAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTBUCKETACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for InsertBucketAccessControl.
-  
+InsertBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertBucketAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTBUCKETACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for InsertBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4434,32 +8877,38 @@ InsertBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('Ins
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertBucketAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertBucketAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertBucketAccessControlRequest)
 
-ListBucketAccessControlsRequest = _reflection.GeneratedProtocolMessageType('ListBucketAccessControlsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTBUCKETACCESSCONTROLSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListBucketAccessControl.
-  
+ListBucketAccessControlsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListBucketAccessControlsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTBUCKETACCESSCONTROLSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListBucketAccessControlsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListBucketAccessControlsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListBucketAccessControlsRequest)
 
-PatchBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('PatchBucketAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PATCHBUCKETACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request for PatchBucketAccessControl.
-  
+PatchBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "PatchBucketAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PATCHBUCKETACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request for PatchBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4479,16 +8928,19 @@ PatchBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('Patc
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.PatchBucketAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.PatchBucketAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(PatchBucketAccessControlRequest)
 
-UpdateBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('UpdateBucketAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEBUCKETACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request for UpdateBucketAccessControl.
-  
+UpdateBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateBucketAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEBUCKETACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request for UpdateBucketAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4502,16 +8954,19 @@ UpdateBucketAccessControlRequest = _reflection.GeneratedProtocolMessageType('Upd
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateBucketAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateBucketAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateBucketAccessControlRequest)
 
-DeleteBucketRequest = _reflection.GeneratedProtocolMessageType('DeleteBucketRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEBUCKETREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for DeleteBucket.
-  
+DeleteBucketRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteBucketRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEBUCKETREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for DeleteBucket.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4524,16 +8979,19 @@ DeleteBucketRequest = _reflection.GeneratedProtocolMessageType('DeleteBucketRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteBucketRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteBucketRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteBucketRequest)
 
-GetBucketRequest = _reflection.GeneratedProtocolMessageType('GetBucketRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETBUCKETREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetBucket.
-  
+GetBucketRequest = _reflection.GeneratedProtocolMessageType(
+    "GetBucketRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETBUCKETREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetBucket.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4549,16 +9007,19 @@ GetBucketRequest = _reflection.GeneratedProtocolMessageType('GetBucketRequest', 
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetBucketRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetBucketRequest)
+    },
+)
 _sym_db.RegisterMessage(GetBucketRequest)
 
-InsertBucketRequest = _reflection.GeneratedProtocolMessageType('InsertBucketRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTBUCKETREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for InsertBucket.
-  
+InsertBucketRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertBucketRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTBUCKETREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for InsertBucket.
+
   Attributes:
       predefined_acl:
           Apply a predefined set of access controls to this bucket.
@@ -4577,32 +9038,38 @@ InsertBucketRequest = _reflection.GeneratedProtocolMessageType('InsertBucketRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertBucketRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertBucketRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertBucketRequest)
 
-ListChannelsRequest = _reflection.GeneratedProtocolMessageType('ListChannelsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTCHANNELSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListChannels.
-  
+ListChannelsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListChannelsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTCHANNELSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListChannels.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListChannelsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListChannelsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListChannelsRequest)
 
-ListBucketsRequest = _reflection.GeneratedProtocolMessageType('ListBucketsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTBUCKETSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListBuckets.
-  
+ListBucketsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListBucketsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTBUCKETSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListBuckets.
+
   Attributes:
       max_results:
           Maximum number of buckets to return in a single response. The
@@ -4620,16 +9087,19 @@ ListBucketsRequest = _reflection.GeneratedProtocolMessageType('ListBucketsReques
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListBucketsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListBucketsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListBucketsRequest)
 
-LockRetentionPolicyRequest = _reflection.GeneratedProtocolMessageType('LockRetentionPolicyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LOCKRETENTIONPOLICYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for LockRetentionPolicy.
-  
+LockRetentionPolicyRequest = _reflection.GeneratedProtocolMessageType(
+    "LockRetentionPolicyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LOCKRETENTIONPOLICYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for LockRetentionPolicy.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4639,16 +9109,19 @@ LockRetentionPolicyRequest = _reflection.GeneratedProtocolMessageType('LockReten
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.LockRetentionPolicyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.LockRetentionPolicyRequest)
+    },
+)
 _sym_db.RegisterMessage(LockRetentionPolicyRequest)
 
-PatchBucketRequest = _reflection.GeneratedProtocolMessageType('PatchBucketRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PATCHBUCKETREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request for PatchBucket method.
-  
+PatchBucketRequest = _reflection.GeneratedProtocolMessageType(
+    "PatchBucketRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PATCHBUCKETREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request for PatchBucket method.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4680,16 +9153,19 @@ PatchBucketRequest = _reflection.GeneratedProtocolMessageType('PatchBucketReques
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.PatchBucketRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.PatchBucketRequest)
+    },
+)
 _sym_db.RegisterMessage(PatchBucketRequest)
 
-UpdateBucketRequest = _reflection.GeneratedProtocolMessageType('UpdateBucketRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEBUCKETREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request for UpdateBucket method.
-  
+UpdateBucketRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateBucketRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEBUCKETREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request for UpdateBucket method.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4712,32 +9188,38 @@ UpdateBucketRequest = _reflection.GeneratedProtocolMessageType('UpdateBucketRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateBucketRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateBucketRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateBucketRequest)
 
-StopChannelRequest = _reflection.GeneratedProtocolMessageType('StopChannelRequest', (_message.Message,), {
-  'DESCRIPTOR' : _STOPCHANNELREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for StopChannel.
-  
+StopChannelRequest = _reflection.GeneratedProtocolMessageType(
+    "StopChannelRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _STOPCHANNELREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for StopChannel.
+
   Attributes:
       channel:
           The channel to be stopped.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.StopChannelRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.StopChannelRequest)
+    },
+)
 _sym_db.RegisterMessage(StopChannelRequest)
 
-DeleteDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('DeleteDefaultObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEDEFAULTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for DeleteDefaultObjectAccessControl.
-  
+DeleteDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteDefaultObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEDEFAULTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for DeleteDefaultObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4749,16 +9231,19 @@ DeleteDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageTy
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteDefaultObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteDefaultObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteDefaultObjectAccessControlRequest)
 
-GetDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('GetDefaultObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETDEFAULTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetDefaultObjectAccessControl.
-  
+GetDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "GetDefaultObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETDEFAULTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetDefaultObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4770,16 +9255,19 @@ GetDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetDefaultObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetDefaultObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(GetDefaultObjectAccessControlRequest)
 
-InsertDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('InsertDefaultObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTDEFAULTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for InsertDefaultObjectAccessControl.
-  
+InsertDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertDefaultObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTDEFAULTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for InsertDefaultObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4788,16 +9276,19 @@ InsertDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageTy
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertDefaultObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertDefaultObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertDefaultObjectAccessControlRequest)
 
-ListDefaultObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageType('ListDefaultObjectAccessControlsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTDEFAULTOBJECTACCESSCONTROLSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListDefaultObjectAccessControls.
-  
+ListDefaultObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListDefaultObjectAccessControlsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTDEFAULTOBJECTACCESSCONTROLSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListDefaultObjectAccessControls.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4810,16 +9301,19 @@ ListDefaultObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageTyp
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListDefaultObjectAccessControlsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListDefaultObjectAccessControlsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListDefaultObjectAccessControlsRequest)
 
-PatchDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('PatchDefaultObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PATCHDEFAULTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for PatchDefaultObjectAccessControl.
-  
+PatchDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "PatchDefaultObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PATCHDEFAULTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for PatchDefaultObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4842,16 +9336,19 @@ PatchDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageTyp
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.PatchDefaultObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.PatchDefaultObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(PatchDefaultObjectAccessControlRequest)
 
-UpdateDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('UpdateDefaultObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for UpdateDefaultObjectAccessControl.
-  
+UpdateDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateDefaultObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for UpdateDefaultObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4865,16 +9362,19 @@ UpdateDefaultObjectAccessControlRequest = _reflection.GeneratedProtocolMessageTy
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateDefaultObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateDefaultObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateDefaultObjectAccessControlRequest)
 
-DeleteNotificationRequest = _reflection.GeneratedProtocolMessageType('DeleteNotificationRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETENOTIFICATIONREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for DeleteNotification.
-  
+DeleteNotificationRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteNotificationRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETENOTIFICATIONREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for DeleteNotification.
+
   Attributes:
       bucket:
           Required. The parent bucket of the notification.
@@ -4883,16 +9383,19 @@ DeleteNotificationRequest = _reflection.GeneratedProtocolMessageType('DeleteNoti
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteNotificationRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteNotificationRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteNotificationRequest)
 
-GetNotificationRequest = _reflection.GeneratedProtocolMessageType('GetNotificationRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETNOTIFICATIONREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetNotification.
-  
+GetNotificationRequest = _reflection.GeneratedProtocolMessageType(
+    "GetNotificationRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETNOTIFICATIONREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetNotification.
+
   Attributes:
       bucket:
           Required. The parent bucket of the notification.
@@ -4901,16 +9404,19 @@ GetNotificationRequest = _reflection.GeneratedProtocolMessageType('GetNotificati
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetNotificationRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetNotificationRequest)
+    },
+)
 _sym_db.RegisterMessage(GetNotificationRequest)
 
-InsertNotificationRequest = _reflection.GeneratedProtocolMessageType('InsertNotificationRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTNOTIFICATIONREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for InsertNotification.
-  
+InsertNotificationRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertNotificationRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTNOTIFICATIONREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for InsertNotification.
+
   Attributes:
       bucket:
           Required. The parent bucket of the notification.
@@ -4919,32 +9425,38 @@ InsertNotificationRequest = _reflection.GeneratedProtocolMessageType('InsertNoti
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertNotificationRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertNotificationRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertNotificationRequest)
 
-ListNotificationsRequest = _reflection.GeneratedProtocolMessageType('ListNotificationsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTNOTIFICATIONSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListNotifications.
-  
+ListNotificationsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListNotificationsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTNOTIFICATIONSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListNotifications.
+
   Attributes:
       bucket:
           Required. Name of a Google Cloud Storage bucket.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListNotificationsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListNotificationsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListNotificationsRequest)
 
-DeleteObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('DeleteObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for DeleteObjectAccessControl.
-  
+DeleteObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for DeleteObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4961,16 +9473,19 @@ DeleteObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('Del
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteObjectAccessControlRequest)
 
-GetObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('GetObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetObjectAccessControl.
-  
+GetObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "GetObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -4987,16 +9502,19 @@ GetObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('GetObj
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(GetObjectAccessControlRequest)
 
-InsertObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('InsertObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for InsertObjectAccessControl.
-  
+InsertObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for InsertObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -5010,16 +9528,19 @@ InsertObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('Ins
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertObjectAccessControlRequest)
 
-ListObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageType('ListObjectAccessControlsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTOBJECTACCESSCONTROLSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListObjectAccessControls.
-  
+ListObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListObjectAccessControlsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTOBJECTACCESSCONTROLSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListObjectAccessControls.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -5031,16 +9552,19 @@ ListObjectAccessControlsRequest = _reflection.GeneratedProtocolMessageType('List
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListObjectAccessControlsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListObjectAccessControlsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListObjectAccessControlsRequest)
 
-PatchObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('PatchObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PATCHOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for PatchObjectAccessControl.
-  
+PatchObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "PatchObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PATCHOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for PatchObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -5068,16 +9592,19 @@ PatchObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('Patc
           a field while setting that field to a non-default value is an
           error.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.PatchObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.PatchObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(PatchObjectAccessControlRequest)
 
-UpdateObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('UpdateObjectAccessControlRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEOBJECTACCESSCONTROLREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for UpdateObjectAccessControl.
-  
+UpdateObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateObjectAccessControlRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEOBJECTACCESSCONTROLREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for UpdateObjectAccessControl.
+
   Attributes:
       bucket:
           Required. Name of a bucket.
@@ -5105,20 +9632,27 @@ UpdateObjectAccessControlRequest = _reflection.GeneratedProtocolMessageType('Upd
           a field while setting that field to a non-default value is an
           error.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateObjectAccessControlRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateObjectAccessControlRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateObjectAccessControlRequest)
 
-ComposeObjectRequest = _reflection.GeneratedProtocolMessageType('ComposeObjectRequest', (_message.Message,), {
+ComposeObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "ComposeObjectRequest",
+    (_message.Message,),
+    {
+        "SourceObjects": _reflection.GeneratedProtocolMessageType(
+            "SourceObjects",
+            (_message.Message,),
+            {
+                "ObjectPreconditions": _reflection.GeneratedProtocolMessageType(
+                    "ObjectPreconditions",
+                    (_message.Message,),
+                    {
+                        "DESCRIPTOR": _COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS,
+                        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+                        "__doc__": """Preconditions for a source object of a composition request.
 
-  'SourceObjects' : _reflection.GeneratedProtocolMessageType('SourceObjects', (_message.Message,), {
-
-    'ObjectPreconditions' : _reflection.GeneratedProtocolMessageType('ObjectPreconditions', (_message.Message,), {
-      'DESCRIPTOR' : _COMPOSEOBJECTREQUEST_SOURCEOBJECTS_OBJECTPRECONDITIONS,
-      '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-      ,
-      '__doc__': """Preconditions for a source object of a composition request.
-      
       Attributes:
           if_generation_match:
               Only perform the composition if the generation of the source
@@ -5126,14 +9660,13 @@ ComposeObjectRequest = _reflection.GeneratedProtocolMessageType('ComposeObjectRe
               and a generation are both specified, they must be the same
               value or the call will fail.
       """,
-      # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions)
-      })
-    ,
-    'DESCRIPTOR' : _COMPOSEOBJECTREQUEST_SOURCEOBJECTS,
-    '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-    ,
-    '__doc__': """Description of a source object for a composition request.
-    
+                        # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest.SourceObjects.ObjectPreconditions)
+                    },
+                ),
+                "DESCRIPTOR": _COMPOSEOBJECTREQUEST_SOURCEOBJECTS,
+                "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+                "__doc__": """Description of a source object for a composition request.
+
     Attributes:
         name:
             The source object’s name. All source objects must reside in
@@ -5143,14 +9676,13 @@ ComposeObjectRequest = _reflection.GeneratedProtocolMessageType('ComposeObjectRe
         object_preconditions:
             Conditions that must be met for this operation to execute.
     """,
-    # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest.SourceObjects)
-    })
-  ,
-  'DESCRIPTOR' : _COMPOSEOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ComposeObject.
-  
+                # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest.SourceObjects)
+            },
+        ),
+        "DESCRIPTOR": _COMPOSEOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ComposeObject.
+
   Attributes:
       destination_bucket:
           Required. Name of the bucket containing the source objects.
@@ -5184,18 +9716,21 @@ ComposeObjectRequest = _reflection.GeneratedProtocolMessageType('ComposeObjectRe
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ComposeObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(ComposeObjectRequest)
 _sym_db.RegisterMessage(ComposeObjectRequest.SourceObjects)
 _sym_db.RegisterMessage(ComposeObjectRequest.SourceObjects.ObjectPreconditions)
 
-CopyObjectRequest = _reflection.GeneratedProtocolMessageType('CopyObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _COPYOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for CopyObject.
-  
+CopyObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "CopyObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _COPYOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for CopyObject.
+
   Attributes:
       destination_bucket:
           Required. Name of the bucket in which to store the new object.
@@ -5264,17 +9799,20 @@ CopyObjectRequest = _reflection.GeneratedProtocolMessageType('CopyObjectRequest'
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.CopyObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.CopyObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(CopyObjectRequest)
 
-DeleteObjectRequest = _reflection.GeneratedProtocolMessageType('DeleteObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Message for deleting an object. Either ``bucket`` and ``object`` *or*
+DeleteObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Message for deleting an object. Either ``bucket`` and ``object`` *or*
   ``upload_id`` **must** be set (but not both).
-  
+
   Attributes:
       bucket:
           Required. Name of the bucket in which the object resides.
@@ -5311,16 +9849,19 @@ DeleteObjectRequest = _reflection.GeneratedProtocolMessageType('DeleteObjectRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteObjectRequest)
 
-GetObjectMediaRequest = _reflection.GeneratedProtocolMessageType('GetObjectMediaRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETOBJECTMEDIAREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetObjectMedia.
-  
+GetObjectMediaRequest = _reflection.GeneratedProtocolMessageType(
+    "GetObjectMediaRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETOBJECTMEDIAREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetObjectMedia.
+
   Attributes:
       bucket:
           The name of the bucket containing the object to read.
@@ -5368,16 +9909,19 @@ GetObjectMediaRequest = _reflection.GeneratedProtocolMessageType('GetObjectMedia
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectMediaRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectMediaRequest)
+    },
+)
 _sym_db.RegisterMessage(GetObjectMediaRequest)
 
-GetObjectRequest = _reflection.GeneratedProtocolMessageType('GetObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetObject.
-  
+GetObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "GetObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetObject.
+
   Attributes:
       bucket:
           Required. Name of the bucket in which the object resides.
@@ -5411,16 +9955,19 @@ GetObjectRequest = _reflection.GeneratedProtocolMessageType('GetObjectRequest', 
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(GetObjectRequest)
 
-GetObjectMediaResponse = _reflection.GeneratedProtocolMessageType('GetObjectMediaResponse', (_message.Message,), {
-  'DESCRIPTOR' : _GETOBJECTMEDIARESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Response message for GetObject.
-  
+GetObjectMediaResponse = _reflection.GeneratedProtocolMessageType(
+    "GetObjectMediaResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETOBJECTMEDIARESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Response message for GetObject.
+
   Attributes:
       checksummed_data:
           A portion of the data for the object. The service **may**
@@ -5440,17 +9987,20 @@ GetObjectMediaResponse = _reflection.GeneratedProtocolMessageType('GetObjectMedi
           Metadata of the object whose media is being returned. Only
           populated in the first response in the stream.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectMediaResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetObjectMediaResponse)
+    },
+)
 _sym_db.RegisterMessage(GetObjectMediaResponse)
 
-InsertObjectSpec = _reflection.GeneratedProtocolMessageType('InsertObjectSpec', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTOBJECTSPEC,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Describes an attempt to insert an object, possibly over multiple
+InsertObjectSpec = _reflection.GeneratedProtocolMessageType(
+    "InsertObjectSpec",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTOBJECTSPEC,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Describes an attempt to insert an object, possibly over multiple
   requests.
-  
+
   Attributes:
       resource:
           Destination object, including its name and its metadata.
@@ -5478,16 +10028,19 @@ InsertObjectSpec = _reflection.GeneratedProtocolMessageType('InsertObjectSpec', 
           the object resource specifies the ``acl`` property, when it
           defaults to ``full``.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectSpec)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectSpec)
+    },
+)
 _sym_db.RegisterMessage(InsertObjectSpec)
 
-InsertObjectRequest = _reflection.GeneratedProtocolMessageType('InsertObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INSERTOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Message for writing an object.
-  
+InsertObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "InsertObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _INSERTOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Message for writing an object.
+
   Attributes:
       first_message:
           The first message of each stream should set one of the
@@ -5548,16 +10101,19 @@ InsertObjectRequest = _reflection.GeneratedProtocolMessageType('InsertObjectRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.InsertObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(InsertObjectRequest)
 
-ListObjectsRequest = _reflection.GeneratedProtocolMessageType('ListObjectsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTOBJECTSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for ListObjects.
-  
+ListObjectsRequest = _reflection.GeneratedProtocolMessageType(
+    "ListObjectsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTOBJECTSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for ListObjects.
+
   Attributes:
       bucket:
           Required. Name of the bucket in which to look for objects.
@@ -5593,16 +10149,19 @@ ListObjectsRequest = _reflection.GeneratedProtocolMessageType('ListObjectsReques
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListObjectsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListObjectsRequest)
+    },
+)
 _sym_db.RegisterMessage(ListObjectsRequest)
 
-QueryWriteStatusRequest = _reflection.GeneratedProtocolMessageType('QueryWriteStatusRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYWRITESTATUSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request object for ``ByteStream.QueryWriteStatus``.
-  
+QueryWriteStatusRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryWriteStatusRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYWRITESTATUSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request object for ``ByteStream.QueryWriteStatus``.
+
   Attributes:
       upload_id:
           Required. The name of the resume token for the object whose
@@ -5613,16 +10172,19 @@ QueryWriteStatusRequest = _reflection.GeneratedProtocolMessageType('QueryWriteSt
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.QueryWriteStatusRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.QueryWriteStatusRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryWriteStatusRequest)
 
-QueryWriteStatusResponse = _reflection.GeneratedProtocolMessageType('QueryWriteStatusResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYWRITESTATUSRESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Response object for ``ByteStream.QueryWriteStatus``.
-  
+QueryWriteStatusResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryWriteStatusResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYWRITESTATUSRESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Response object for ``ByteStream.QueryWriteStatus``.
+
   Attributes:
       committed_size:
           The number of bytes that have been processed for the given
@@ -5632,16 +10194,19 @@ QueryWriteStatusResponse = _reflection.GeneratedProtocolMessageType('QueryWriteS
           ``InsertObjectRequest`` with ``finish_write`` set to true, and
           the server has processed that request.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.QueryWriteStatusResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.QueryWriteStatusResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryWriteStatusResponse)
 
-RewriteObjectRequest = _reflection.GeneratedProtocolMessageType('RewriteObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _REWRITEOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for RewriteObject.
-  
+RewriteObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "RewriteObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _REWRITEOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for RewriteObject.
+
   Attributes:
       destination_bucket:
           Required. Name of the bucket in which to store the new object.
@@ -5732,16 +10297,19 @@ RewriteObjectRequest = _reflection.GeneratedProtocolMessageType('RewriteObjectRe
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.RewriteObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.RewriteObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(RewriteObjectRequest)
 
-RewriteResponse = _reflection.GeneratedProtocolMessageType('RewriteResponse', (_message.Message,), {
-  'DESCRIPTOR' : _REWRITERESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """A rewrite response.
-  
+RewriteResponse = _reflection.GeneratedProtocolMessageType(
+    "RewriteResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _REWRITERESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """A rewrite response.
+
   Attributes:
       total_bytes_rewritten:
           The total bytes written so far, which can be used to provide a
@@ -5763,16 +10331,19 @@ RewriteResponse = _reflection.GeneratedProtocolMessageType('RewriteResponse', (_
           This property is present in the response only when copying
           completes.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.RewriteResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.RewriteResponse)
+    },
+)
 _sym_db.RegisterMessage(RewriteResponse)
 
-StartResumableWriteRequest = _reflection.GeneratedProtocolMessageType('StartResumableWriteRequest', (_message.Message,), {
-  'DESCRIPTOR' : _STARTRESUMABLEWRITEREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message StartResumableWrite.
-  
+StartResumableWriteRequest = _reflection.GeneratedProtocolMessageType(
+    "StartResumableWriteRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _STARTRESUMABLEWRITEREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message StartResumableWrite.
+
   Attributes:
       insert_object_spec:
           The destination bucket, object, and metadata, as well as any
@@ -5783,32 +10354,38 @@ StartResumableWriteRequest = _reflection.GeneratedProtocolMessageType('StartResu
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.StartResumableWriteRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.StartResumableWriteRequest)
+    },
+)
 _sym_db.RegisterMessage(StartResumableWriteRequest)
 
-StartResumableWriteResponse = _reflection.GeneratedProtocolMessageType('StartResumableWriteResponse', (_message.Message,), {
-  'DESCRIPTOR' : _STARTRESUMABLEWRITERESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Response object for ByteStream.StartResumableWrite.
-  
+StartResumableWriteResponse = _reflection.GeneratedProtocolMessageType(
+    "StartResumableWriteResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _STARTRESUMABLEWRITERESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Response object for ByteStream.StartResumableWrite.
+
   Attributes:
       upload_id:
           The upload_id of the newly started resumable write operation.
           This value should be copied into the
           ``InsertObjectRequest.upload_id`` field.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.StartResumableWriteResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.StartResumableWriteResponse)
+    },
+)
 _sym_db.RegisterMessage(StartResumableWriteResponse)
 
-PatchObjectRequest = _reflection.GeneratedProtocolMessageType('PatchObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PATCHOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for PatchObject.
-  
+PatchObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "PatchObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PATCHOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for PatchObject.
+
   Attributes:
       bucket:
           Required. Name of the bucket in which the object resides.
@@ -5855,16 +10432,19 @@ PatchObjectRequest = _reflection.GeneratedProtocolMessageType('PatchObjectReques
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.PatchObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.PatchObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(PatchObjectRequest)
 
-UpdateObjectRequest = _reflection.GeneratedProtocolMessageType('UpdateObjectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEOBJECTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for UpdateObject.
-  
+UpdateObjectRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateObjectRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEOBJECTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for UpdateObject.
+
   Attributes:
       bucket:
           Required. Name of the bucket in which the object resides.
@@ -5902,16 +10482,19 @@ UpdateObjectRequest = _reflection.GeneratedProtocolMessageType('UpdateObjectRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateObjectRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateObjectRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateObjectRequest)
 
-WatchAllObjectsRequest = _reflection.GeneratedProtocolMessageType('WatchAllObjectsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _WATCHALLOBJECTSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for WatchAllObjects.
-  
+WatchAllObjectsRequest = _reflection.GeneratedProtocolMessageType(
+    "WatchAllObjectsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _WATCHALLOBJECTSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for WatchAllObjects.
+
   Attributes:
       bucket:
           Name of the bucket in which to look for objects.
@@ -5949,31 +10532,37 @@ WatchAllObjectsRequest = _reflection.GeneratedProtocolMessageType('WatchAllObjec
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.WatchAllObjectsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.WatchAllObjectsRequest)
+    },
+)
 _sym_db.RegisterMessage(WatchAllObjectsRequest)
 
-GetProjectServiceAccountRequest = _reflection.GeneratedProtocolMessageType('GetProjectServiceAccountRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETPROJECTSERVICEACCOUNTREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request message for GetProjectServiceAccount.
-  
+GetProjectServiceAccountRequest = _reflection.GeneratedProtocolMessageType(
+    "GetProjectServiceAccountRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETPROJECTSERVICEACCOUNTREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request message for GetProjectServiceAccount.
+
   Attributes:
       project_id:
           Required. Project ID.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetProjectServiceAccountRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetProjectServiceAccountRequest)
+    },
+)
 _sym_db.RegisterMessage(GetProjectServiceAccountRequest)
 
-CreateHmacKeyRequest = _reflection.GeneratedProtocolMessageType('CreateHmacKeyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CREATEHMACKEYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Attributes:
+CreateHmacKeyRequest = _reflection.GeneratedProtocolMessageType(
+    "CreateHmacKeyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _CREATEHMACKEYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Attributes:
       project_id:
           Required. The project that the HMAC-owning service account
           lives in.
@@ -5982,33 +10571,39 @@ CreateHmacKeyRequest = _reflection.GeneratedProtocolMessageType('CreateHmacKeyRe
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.CreateHmacKeyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.CreateHmacKeyRequest)
+    },
+)
 _sym_db.RegisterMessage(CreateHmacKeyRequest)
 
-CreateHmacKeyResponse = _reflection.GeneratedProtocolMessageType('CreateHmacKeyResponse', (_message.Message,), {
-  'DESCRIPTOR' : _CREATEHMACKEYRESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Create hmac response. The only time the secret for an HMAC will be
+CreateHmacKeyResponse = _reflection.GeneratedProtocolMessageType(
+    "CreateHmacKeyResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _CREATEHMACKEYRESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Create hmac response. The only time the secret for an HMAC will be
   returned.
-  
+
   Attributes:
       metadata:
           Key metadata.
       secret:
           HMAC key secret material.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.CreateHmacKeyResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.CreateHmacKeyResponse)
+    },
+)
 _sym_db.RegisterMessage(CreateHmacKeyResponse)
 
-DeleteHmacKeyRequest = _reflection.GeneratedProtocolMessageType('DeleteHmacKeyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEHMACKEYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request object to delete a given HMAC key.
-  
+DeleteHmacKeyRequest = _reflection.GeneratedProtocolMessageType(
+    "DeleteHmacKeyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETEHMACKEYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request object to delete a given HMAC key.
+
   Attributes:
       access_id:
           Required. The identifying key for the HMAC to delete.
@@ -6017,16 +10612,19 @@ DeleteHmacKeyRequest = _reflection.GeneratedProtocolMessageType('DeleteHmacKeyRe
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteHmacKeyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.DeleteHmacKeyRequest)
+    },
+)
 _sym_db.RegisterMessage(DeleteHmacKeyRequest)
 
-GetHmacKeyRequest = _reflection.GeneratedProtocolMessageType('GetHmacKeyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETHMACKEYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request object to get metadata on a given HMAC key.
-  
+GetHmacKeyRequest = _reflection.GeneratedProtocolMessageType(
+    "GetHmacKeyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETHMACKEYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request object to get metadata on a given HMAC key.
+
   Attributes:
       access_id:
           Required. The identifying key for the HMAC to delete.
@@ -6035,16 +10633,19 @@ GetHmacKeyRequest = _reflection.GeneratedProtocolMessageType('GetHmacKeyRequest'
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetHmacKeyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetHmacKeyRequest)
+    },
+)
 _sym_db.RegisterMessage(GetHmacKeyRequest)
 
-ListHmacKeysRequest = _reflection.GeneratedProtocolMessageType('ListHmacKeysRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTHMACKEYSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request to fetch a list of HMAC keys under a given project.
-  
+ListHmacKeysRequest = _reflection.GeneratedProtocolMessageType(
+    "ListHmacKeysRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTHMACKEYSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request to fetch a list of HMAC keys under a given project.
+
   Attributes:
       project_id:
           Required. The project id to list HMAC keys for.
@@ -6062,16 +10663,19 @@ ListHmacKeysRequest = _reflection.GeneratedProtocolMessageType('ListHmacKeysRequ
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListHmacKeysRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListHmacKeysRequest)
+    },
+)
 _sym_db.RegisterMessage(ListHmacKeysRequest)
 
-ListHmacKeysResponse = _reflection.GeneratedProtocolMessageType('ListHmacKeysResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LISTHMACKEYSRESPONSE,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Hmac key list response with next page information.
-  
+ListHmacKeysResponse = _reflection.GeneratedProtocolMessageType(
+    "ListHmacKeysResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _LISTHMACKEYSRESPONSE,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Hmac key list response with next page information.
+
   Attributes:
       next_page_token:
           The continuation token, used to page through large result
@@ -6080,16 +10684,19 @@ ListHmacKeysResponse = _reflection.GeneratedProtocolMessageType('ListHmacKeysRes
       items:
           The list of items.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ListHmacKeysResponse)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ListHmacKeysResponse)
+    },
+)
 _sym_db.RegisterMessage(ListHmacKeysResponse)
 
-UpdateHmacKeyRequest = _reflection.GeneratedProtocolMessageType('UpdateHmacKeyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATEHMACKEYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Request object to update an HMAC key state.
-  
+UpdateHmacKeyRequest = _reflection.GeneratedProtocolMessageType(
+    "UpdateHmacKeyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATEHMACKEYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Request object to update an HMAC key state.
+
   Attributes:
       access_id:
           Required. The id of the HMAC key.
@@ -6100,67 +10707,79 @@ UpdateHmacKeyRequest = _reflection.GeneratedProtocolMessageType('UpdateHmacKeyRe
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateHmacKeyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.UpdateHmacKeyRequest)
+    },
+)
 _sym_db.RegisterMessage(UpdateHmacKeyRequest)
 
-GetIamPolicyRequest = _reflection.GeneratedProtocolMessageType('GetIamPolicyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETIAMPOLICYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """A wrapper around the IAM get policy request to support our
+GetIamPolicyRequest = _reflection.GeneratedProtocolMessageType(
+    "GetIamPolicyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GETIAMPOLICYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """A wrapper around the IAM get policy request to support our
   common_request_params.
-  
+
   Attributes:
       iam_request:
           The request sent to IAM.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.GetIamPolicyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.GetIamPolicyRequest)
+    },
+)
 _sym_db.RegisterMessage(GetIamPolicyRequest)
 
-SetIamPolicyRequest = _reflection.GeneratedProtocolMessageType('SetIamPolicyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _SETIAMPOLICYREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """A wrapper around the IAM set policy request to support our
+SetIamPolicyRequest = _reflection.GeneratedProtocolMessageType(
+    "SetIamPolicyRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _SETIAMPOLICYREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """A wrapper around the IAM set policy request to support our
   common_request_params.
-  
+
   Attributes:
       iam_request:
           The request sent to IAM.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.SetIamPolicyRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.SetIamPolicyRequest)
+    },
+)
 _sym_db.RegisterMessage(SetIamPolicyRequest)
 
-TestIamPermissionsRequest = _reflection.GeneratedProtocolMessageType('TestIamPermissionsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _TESTIAMPERMISSIONSREQUEST,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """A wrapper around the IAM test iam permissions request to support our
+TestIamPermissionsRequest = _reflection.GeneratedProtocolMessageType(
+    "TestIamPermissionsRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _TESTIAMPERMISSIONSREQUEST,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """A wrapper around the IAM test iam permissions request to support our
   common_request_params.
-  
+
   Attributes:
       iam_request:
           The request sent to IAM.
       common_request_params:
           A set of parameters common to all Storage API requests.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.TestIamPermissionsRequest)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.TestIamPermissionsRequest)
+    },
+)
 _sym_db.RegisterMessage(TestIamPermissionsRequest)
 
-CommonObjectRequestParams = _reflection.GeneratedProtocolMessageType('CommonObjectRequestParams', (_message.Message,), {
-  'DESCRIPTOR' : _COMMONOBJECTREQUESTPARAMS,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Parameters that can be passed to any object request.
-  
+CommonObjectRequestParams = _reflection.GeneratedProtocolMessageType(
+    "CommonObjectRequestParams",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _COMMONOBJECTREQUESTPARAMS,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Parameters that can be passed to any object request.
+
   Attributes:
       encryption_algorithm:
           Encryption algorithm used with Customer-Supplied Encryption
@@ -6172,16 +10791,19 @@ CommonObjectRequestParams = _reflection.GeneratedProtocolMessageType('CommonObje
           SHA256 hash of encryption key used with Customer-Supplied
           Encryption Keys feature.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.CommonObjectRequestParams)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.CommonObjectRequestParams)
+    },
+)
 _sym_db.RegisterMessage(CommonObjectRequestParams)
 
-CommonRequestParams = _reflection.GeneratedProtocolMessageType('CommonRequestParams', (_message.Message,), {
-  'DESCRIPTOR' : _COMMONREQUESTPARAMS,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Parameters that can be passed to any request.
-  
+CommonRequestParams = _reflection.GeneratedProtocolMessageType(
+    "CommonRequestParams",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _COMMONREQUESTPARAMS,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Parameters that can be passed to any request.
+
   Attributes:
       user_project:
           Required. Required when using buckets with Requestor Pays
@@ -6197,679 +10819,684 @@ CommonRequestParams = _reflection.GeneratedProtocolMessageType('CommonRequestPar
       fields:
           Subset of fields to include in the response.
   """,
-  # @@protoc_insertion_point(class_scope:google.storage.v1.CommonRequestParams)
-  })
+        # @@protoc_insertion_point(class_scope:google.storage.v1.CommonRequestParams)
+    },
+)
 _sym_db.RegisterMessage(CommonRequestParams)
 
-ServiceConstants = _reflection.GeneratedProtocolMessageType('ServiceConstants', (_message.Message,), {
-  'DESCRIPTOR' : _SERVICECONSTANTS,
-  '__module__' : 'google.cloud.storage_v1.proto.storage_pb2'
-  ,
-  '__doc__': """Shared constants.""",
-  # @@protoc_insertion_point(class_scope:google.storage.v1.ServiceConstants)
-  })
+ServiceConstants = _reflection.GeneratedProtocolMessageType(
+    "ServiceConstants",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _SERVICECONSTANTS,
+        "__module__": "google.cloud.storage_v1.proto.storage_pb2",
+        "__doc__": """Shared constants.""",
+        # @@protoc_insertion_point(class_scope:google.storage.v1.ServiceConstants)
+    },
+)
 _sym_db.RegisterMessage(ServiceConstants)
 
 
 DESCRIPTOR._options = None
-_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_GETBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_GETBUCKETACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_LISTBUCKETACCESSCONTROLSREQUEST.fields_by_name['bucket']._options = None
-_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_DELETEBUCKETREQUEST.fields_by_name['bucket']._options = None
-_GETBUCKETREQUEST.fields_by_name['bucket']._options = None
-_INSERTBUCKETREQUEST.fields_by_name['project']._options = None
-_LISTCHANNELSREQUEST.fields_by_name['bucket']._options = None
-_LISTBUCKETSREQUEST.fields_by_name['project']._options = None
-_LOCKRETENTIONPOLICYREQUEST.fields_by_name['bucket']._options = None
-_PATCHBUCKETREQUEST.fields_by_name['bucket']._options = None
-_UPDATEBUCKETREQUEST.fields_by_name['bucket']._options = None
-_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name['bucket']._options = None
-_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_DELETENOTIFICATIONREQUEST.fields_by_name['bucket']._options = None
-_DELETENOTIFICATIONREQUEST.fields_by_name['notification']._options = None
-_GETNOTIFICATIONREQUEST.fields_by_name['bucket']._options = None
-_GETNOTIFICATIONREQUEST.fields_by_name['notification']._options = None
-_INSERTNOTIFICATIONREQUEST.fields_by_name['bucket']._options = None
-_LISTNOTIFICATIONSREQUEST.fields_by_name['bucket']._options = None
-_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name['object']._options = None
-_GETOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_GETOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_GETOBJECTACCESSCONTROLREQUEST.fields_by_name['object']._options = None
-_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name['object']._options = None
-_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name['bucket']._options = None
-_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name['object']._options = None
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name['object']._options = None
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['bucket']._options = None
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['entity']._options = None
-_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name['object']._options = None
-_COMPOSEOBJECTREQUEST.fields_by_name['destination_bucket']._options = None
-_COMPOSEOBJECTREQUEST.fields_by_name['destination_object']._options = None
-_COPYOBJECTREQUEST.fields_by_name['destination_bucket']._options = None
-_COPYOBJECTREQUEST.fields_by_name['destination_object']._options = None
-_COPYOBJECTREQUEST.fields_by_name['source_bucket']._options = None
-_COPYOBJECTREQUEST.fields_by_name['source_object']._options = None
-_DELETEOBJECTREQUEST.fields_by_name['bucket']._options = None
-_DELETEOBJECTREQUEST.fields_by_name['object']._options = None
-_GETOBJECTREQUEST.fields_by_name['bucket']._options = None
-_GETOBJECTREQUEST.fields_by_name['object']._options = None
-_INSERTOBJECTREQUEST.fields_by_name['write_offset']._options = None
-_LISTOBJECTSREQUEST.fields_by_name['bucket']._options = None
-_QUERYWRITESTATUSREQUEST.fields_by_name['upload_id']._options = None
-_REWRITEOBJECTREQUEST.fields_by_name['destination_bucket']._options = None
-_REWRITEOBJECTREQUEST.fields_by_name['destination_object']._options = None
-_REWRITEOBJECTREQUEST.fields_by_name['source_bucket']._options = None
-_REWRITEOBJECTREQUEST.fields_by_name['source_object']._options = None
-_PATCHOBJECTREQUEST.fields_by_name['bucket']._options = None
-_PATCHOBJECTREQUEST.fields_by_name['object']._options = None
-_UPDATEOBJECTREQUEST.fields_by_name['bucket']._options = None
-_UPDATEOBJECTREQUEST.fields_by_name['object']._options = None
-_GETPROJECTSERVICEACCOUNTREQUEST.fields_by_name['project_id']._options = None
-_CREATEHMACKEYREQUEST.fields_by_name['project_id']._options = None
-_CREATEHMACKEYREQUEST.fields_by_name['service_account_email']._options = None
-_DELETEHMACKEYREQUEST.fields_by_name['access_id']._options = None
-_DELETEHMACKEYREQUEST.fields_by_name['project_id']._options = None
-_GETHMACKEYREQUEST.fields_by_name['access_id']._options = None
-_GETHMACKEYREQUEST.fields_by_name['project_id']._options = None
-_LISTHMACKEYSREQUEST.fields_by_name['project_id']._options = None
-_UPDATEHMACKEYREQUEST.fields_by_name['access_id']._options = None
-_UPDATEHMACKEYREQUEST.fields_by_name['project_id']._options = None
-_UPDATEHMACKEYREQUEST.fields_by_name['metadata']._options = None
-_COMMONREQUESTPARAMS.fields_by_name['user_project']._options = None
+_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_DELETEBUCKETACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_GETBUCKETACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_GETBUCKETACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_INSERTBUCKETACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_LISTBUCKETACCESSCONTROLSREQUEST.fields_by_name["bucket"]._options = None
+_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_PATCHBUCKETACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_UPDATEBUCKETACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_DELETEBUCKETREQUEST.fields_by_name["bucket"]._options = None
+_GETBUCKETREQUEST.fields_by_name["bucket"]._options = None
+_INSERTBUCKETREQUEST.fields_by_name["project"]._options = None
+_LISTCHANNELSREQUEST.fields_by_name["bucket"]._options = None
+_LISTBUCKETSREQUEST.fields_by_name["project"]._options = None
+_LOCKRETENTIONPOLICYREQUEST.fields_by_name["bucket"]._options = None
+_PATCHBUCKETREQUEST.fields_by_name["bucket"]._options = None
+_UPDATEBUCKETREQUEST.fields_by_name["bucket"]._options = None
+_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_GETDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST.fields_by_name["bucket"]._options = None
+_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_DELETENOTIFICATIONREQUEST.fields_by_name["bucket"]._options = None
+_DELETENOTIFICATIONREQUEST.fields_by_name["notification"]._options = None
+_GETNOTIFICATIONREQUEST.fields_by_name["bucket"]._options = None
+_GETNOTIFICATIONREQUEST.fields_by_name["notification"]._options = None
+_INSERTNOTIFICATIONREQUEST.fields_by_name["bucket"]._options = None
+_LISTNOTIFICATIONSREQUEST.fields_by_name["bucket"]._options = None
+_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_DELETEOBJECTACCESSCONTROLREQUEST.fields_by_name["object"]._options = None
+_GETOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_GETOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_GETOBJECTACCESSCONTROLREQUEST.fields_by_name["object"]._options = None
+_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_INSERTOBJECTACCESSCONTROLREQUEST.fields_by_name["object"]._options = None
+_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name["bucket"]._options = None
+_LISTOBJECTACCESSCONTROLSREQUEST.fields_by_name["object"]._options = None
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_PATCHOBJECTACCESSCONTROLREQUEST.fields_by_name["object"]._options = None
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name["bucket"]._options = None
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name["entity"]._options = None
+_UPDATEOBJECTACCESSCONTROLREQUEST.fields_by_name["object"]._options = None
+_COMPOSEOBJECTREQUEST.fields_by_name["destination_bucket"]._options = None
+_COMPOSEOBJECTREQUEST.fields_by_name["destination_object"]._options = None
+_COPYOBJECTREQUEST.fields_by_name["destination_bucket"]._options = None
+_COPYOBJECTREQUEST.fields_by_name["destination_object"]._options = None
+_COPYOBJECTREQUEST.fields_by_name["source_bucket"]._options = None
+_COPYOBJECTREQUEST.fields_by_name["source_object"]._options = None
+_DELETEOBJECTREQUEST.fields_by_name["bucket"]._options = None
+_DELETEOBJECTREQUEST.fields_by_name["object"]._options = None
+_GETOBJECTREQUEST.fields_by_name["bucket"]._options = None
+_GETOBJECTREQUEST.fields_by_name["object"]._options = None
+_INSERTOBJECTREQUEST.fields_by_name["write_offset"]._options = None
+_LISTOBJECTSREQUEST.fields_by_name["bucket"]._options = None
+_QUERYWRITESTATUSREQUEST.fields_by_name["upload_id"]._options = None
+_REWRITEOBJECTREQUEST.fields_by_name["destination_bucket"]._options = None
+_REWRITEOBJECTREQUEST.fields_by_name["destination_object"]._options = None
+_REWRITEOBJECTREQUEST.fields_by_name["source_bucket"]._options = None
+_REWRITEOBJECTREQUEST.fields_by_name["source_object"]._options = None
+_PATCHOBJECTREQUEST.fields_by_name["bucket"]._options = None
+_PATCHOBJECTREQUEST.fields_by_name["object"]._options = None
+_UPDATEOBJECTREQUEST.fields_by_name["bucket"]._options = None
+_UPDATEOBJECTREQUEST.fields_by_name["object"]._options = None
+_GETPROJECTSERVICEACCOUNTREQUEST.fields_by_name["project_id"]._options = None
+_CREATEHMACKEYREQUEST.fields_by_name["project_id"]._options = None
+_CREATEHMACKEYREQUEST.fields_by_name["service_account_email"]._options = None
+_DELETEHMACKEYREQUEST.fields_by_name["access_id"]._options = None
+_DELETEHMACKEYREQUEST.fields_by_name["project_id"]._options = None
+_GETHMACKEYREQUEST.fields_by_name["access_id"]._options = None
+_GETHMACKEYREQUEST.fields_by_name["project_id"]._options = None
+_LISTHMACKEYSREQUEST.fields_by_name["project_id"]._options = None
+_UPDATEHMACKEYREQUEST.fields_by_name["access_id"]._options = None
+_UPDATEHMACKEYREQUEST.fields_by_name["project_id"]._options = None
+_UPDATEHMACKEYREQUEST.fields_by_name["metadata"]._options = None
+_COMMONREQUESTPARAMS.fields_by_name["user_project"]._options = None
 _SERVICECONSTANTS_VALUES._options = None
 
 _STORAGE = _descriptor.ServiceDescriptor(
-  name='Storage',
-  full_name='google.storage.v1.Storage',
-  file=DESCRIPTOR,
-  index=0,
-  serialized_options=b'\312A\026storage.googleapis.com\322A\212\002https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/cloud-platform.read-only,https://www.googleapis.com/auth/devstorage.full_control,https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/devstorage.read_write',
-  create_key=_descriptor._internal_create_key,
-  serialized_start=18800,
-  serialized_end=24966,
-  methods=[
-  _descriptor.MethodDescriptor(
-    name='DeleteBucketAccessControl',
-    full_name='google.storage.v1.Storage.DeleteBucketAccessControl',
+    name="Storage",
+    full_name="google.storage.v1.Storage",
+    file=DESCRIPTOR,
     index=0,
-    containing_service=None,
-    input_type=_DELETEBUCKETACCESSCONTROLREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
+    serialized_options=b"\312A\026storage.googleapis.com\322A\212\002https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/cloud-platform.read-only,https://www.googleapis.com/auth/devstorage.full_control,https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/devstorage.read_write",
     create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetBucketAccessControl',
-    full_name='google.storage.v1.Storage.GetBucketAccessControl',
-    index=1,
-    containing_service=None,
-    input_type=_GETBUCKETACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertBucketAccessControl',
-    full_name='google.storage.v1.Storage.InsertBucketAccessControl',
-    index=2,
-    containing_service=None,
-    input_type=_INSERTBUCKETACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListBucketAccessControls',
-    full_name='google.storage.v1.Storage.ListBucketAccessControls',
-    index=3,
-    containing_service=None,
-    input_type=_LISTBUCKETACCESSCONTROLSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTBUCKETACCESSCONTROLSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateBucketAccessControl',
-    full_name='google.storage.v1.Storage.UpdateBucketAccessControl',
-    index=4,
-    containing_service=None,
-    input_type=_UPDATEBUCKETACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='PatchBucketAccessControl',
-    full_name='google.storage.v1.Storage.PatchBucketAccessControl',
-    index=5,
-    containing_service=None,
-    input_type=_PATCHBUCKETACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteBucket',
-    full_name='google.storage.v1.Storage.DeleteBucket',
-    index=6,
-    containing_service=None,
-    input_type=_DELETEBUCKETREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetBucket',
-    full_name='google.storage.v1.Storage.GetBucket',
-    index=7,
-    containing_service=None,
-    input_type=_GETBUCKETREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertBucket',
-    full_name='google.storage.v1.Storage.InsertBucket',
-    index=8,
-    containing_service=None,
-    input_type=_INSERTBUCKETREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListChannels',
-    full_name='google.storage.v1.Storage.ListChannels',
-    index=9,
-    containing_service=None,
-    input_type=_LISTCHANNELSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTCHANNELSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListBuckets',
-    full_name='google.storage.v1.Storage.ListBuckets',
-    index=10,
-    containing_service=None,
-    input_type=_LISTBUCKETSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTBUCKETSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='LockBucketRetentionPolicy',
-    full_name='google.storage.v1.Storage.LockBucketRetentionPolicy',
-    index=11,
-    containing_service=None,
-    input_type=_LOCKRETENTIONPOLICYREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetBucketIamPolicy',
-    full_name='google.storage.v1.Storage.GetBucketIamPolicy',
-    index=12,
-    containing_service=None,
-    input_type=_GETIAMPOLICYREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='SetBucketIamPolicy',
-    full_name='google.storage.v1.Storage.SetBucketIamPolicy',
-    index=13,
-    containing_service=None,
-    input_type=_SETIAMPOLICYREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='TestBucketIamPermissions',
-    full_name='google.storage.v1.Storage.TestBucketIamPermissions',
-    index=14,
-    containing_service=None,
-    input_type=_TESTIAMPERMISSIONSREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='PatchBucket',
-    full_name='google.storage.v1.Storage.PatchBucket',
-    index=15,
-    containing_service=None,
-    input_type=_PATCHBUCKETREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateBucket',
-    full_name='google.storage.v1.Storage.UpdateBucket',
-    index=16,
-    containing_service=None,
-    input_type=_UPDATEBUCKETREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='StopChannel',
-    full_name='google.storage.v1.Storage.StopChannel',
-    index=17,
-    containing_service=None,
-    input_type=_STOPCHANNELREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteDefaultObjectAccessControl',
-    full_name='google.storage.v1.Storage.DeleteDefaultObjectAccessControl',
-    index=18,
-    containing_service=None,
-    input_type=_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetDefaultObjectAccessControl',
-    full_name='google.storage.v1.Storage.GetDefaultObjectAccessControl',
-    index=19,
-    containing_service=None,
-    input_type=_GETDEFAULTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertDefaultObjectAccessControl',
-    full_name='google.storage.v1.Storage.InsertDefaultObjectAccessControl',
-    index=20,
-    containing_service=None,
-    input_type=_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListDefaultObjectAccessControls',
-    full_name='google.storage.v1.Storage.ListDefaultObjectAccessControls',
-    index=21,
-    containing_service=None,
-    input_type=_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTACCESSCONTROLSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='PatchDefaultObjectAccessControl',
-    full_name='google.storage.v1.Storage.PatchDefaultObjectAccessControl',
-    index=22,
-    containing_service=None,
-    input_type=_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateDefaultObjectAccessControl',
-    full_name='google.storage.v1.Storage.UpdateDefaultObjectAccessControl',
-    index=23,
-    containing_service=None,
-    input_type=_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteNotification',
-    full_name='google.storage.v1.Storage.DeleteNotification',
-    index=24,
-    containing_service=None,
-    input_type=_DELETENOTIFICATIONREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetNotification',
-    full_name='google.storage.v1.Storage.GetNotification',
-    index=25,
-    containing_service=None,
-    input_type=_GETNOTIFICATIONREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertNotification',
-    full_name='google.storage.v1.Storage.InsertNotification',
-    index=26,
-    containing_service=None,
-    input_type=_INSERTNOTIFICATIONREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListNotifications',
-    full_name='google.storage.v1.Storage.ListNotifications',
-    index=27,
-    containing_service=None,
-    input_type=_LISTNOTIFICATIONSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTNOTIFICATIONSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteObjectAccessControl',
-    full_name='google.storage.v1.Storage.DeleteObjectAccessControl',
-    index=28,
-    containing_service=None,
-    input_type=_DELETEOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetObjectAccessControl',
-    full_name='google.storage.v1.Storage.GetObjectAccessControl',
-    index=29,
-    containing_service=None,
-    input_type=_GETOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertObjectAccessControl',
-    full_name='google.storage.v1.Storage.InsertObjectAccessControl',
-    index=30,
-    containing_service=None,
-    input_type=_INSERTOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListObjectAccessControls',
-    full_name='google.storage.v1.Storage.ListObjectAccessControls',
-    index=31,
-    containing_service=None,
-    input_type=_LISTOBJECTACCESSCONTROLSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTACCESSCONTROLSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='PatchObjectAccessControl',
-    full_name='google.storage.v1.Storage.PatchObjectAccessControl',
-    index=32,
-    containing_service=None,
-    input_type=_PATCHOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateObjectAccessControl',
-    full_name='google.storage.v1.Storage.UpdateObjectAccessControl',
-    index=33,
-    containing_service=None,
-    input_type=_UPDATEOBJECTACCESSCONTROLREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ComposeObject',
-    full_name='google.storage.v1.Storage.ComposeObject',
-    index=34,
-    containing_service=None,
-    input_type=_COMPOSEOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='CopyObject',
-    full_name='google.storage.v1.Storage.CopyObject',
-    index=35,
-    containing_service=None,
-    input_type=_COPYOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteObject',
-    full_name='google.storage.v1.Storage.DeleteObject',
-    index=36,
-    containing_service=None,
-    input_type=_DELETEOBJECTREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetObject',
-    full_name='google.storage.v1.Storage.GetObject',
-    index=37,
-    containing_service=None,
-    input_type=_GETOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetObjectMedia',
-    full_name='google.storage.v1.Storage.GetObjectMedia',
-    index=38,
-    containing_service=None,
-    input_type=_GETOBJECTMEDIAREQUEST,
-    output_type=_GETOBJECTMEDIARESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='InsertObject',
-    full_name='google.storage.v1.Storage.InsertObject',
-    index=39,
-    containing_service=None,
-    input_type=_INSERTOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListObjects',
-    full_name='google.storage.v1.Storage.ListObjects',
-    index=40,
-    containing_service=None,
-    input_type=_LISTOBJECTSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='RewriteObject',
-    full_name='google.storage.v1.Storage.RewriteObject',
-    index=41,
-    containing_service=None,
-    input_type=_REWRITEOBJECTREQUEST,
-    output_type=_REWRITERESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='StartResumableWrite',
-    full_name='google.storage.v1.Storage.StartResumableWrite',
-    index=42,
-    containing_service=None,
-    input_type=_STARTRESUMABLEWRITEREQUEST,
-    output_type=_STARTRESUMABLEWRITERESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='QueryWriteStatus',
-    full_name='google.storage.v1.Storage.QueryWriteStatus',
-    index=43,
-    containing_service=None,
-    input_type=_QUERYWRITESTATUSREQUEST,
-    output_type=_QUERYWRITESTATUSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='PatchObject',
-    full_name='google.storage.v1.Storage.PatchObject',
-    index=44,
-    containing_service=None,
-    input_type=_PATCHOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateObject',
-    full_name='google.storage.v1.Storage.UpdateObject',
-    index=45,
-    containing_service=None,
-    input_type=_UPDATEOBJECTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetObjectIamPolicy',
-    full_name='google.storage.v1.Storage.GetObjectIamPolicy',
-    index=46,
-    containing_service=None,
-    input_type=_GETIAMPOLICYREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='SetObjectIamPolicy',
-    full_name='google.storage.v1.Storage.SetObjectIamPolicy',
-    index=47,
-    containing_service=None,
-    input_type=_SETIAMPOLICYREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='TestObjectIamPermissions',
-    full_name='google.storage.v1.Storage.TestObjectIamPermissions',
-    index=48,
-    containing_service=None,
-    input_type=_TESTIAMPERMISSIONSREQUEST,
-    output_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='WatchAllObjects',
-    full_name='google.storage.v1.Storage.WatchAllObjects',
-    index=49,
-    containing_service=None,
-    input_type=_WATCHALLOBJECTSREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetServiceAccount',
-    full_name='google.storage.v1.Storage.GetServiceAccount',
-    index=50,
-    containing_service=None,
-    input_type=_GETPROJECTSERVICEACCOUNTREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._SERVICEACCOUNT,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='CreateHmacKey',
-    full_name='google.storage.v1.Storage.CreateHmacKey',
-    index=51,
-    containing_service=None,
-    input_type=_CREATEHMACKEYREQUEST,
-    output_type=_CREATEHMACKEYRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='DeleteHmacKey',
-    full_name='google.storage.v1.Storage.DeleteHmacKey',
-    index=52,
-    containing_service=None,
-    input_type=_DELETEHMACKEYREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetHmacKey',
-    full_name='google.storage.v1.Storage.GetHmacKey',
-    index=53,
-    containing_service=None,
-    input_type=_GETHMACKEYREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ListHmacKeys',
-    full_name='google.storage.v1.Storage.ListHmacKeys',
-    index=54,
-    containing_service=None,
-    input_type=_LISTHMACKEYSREQUEST,
-    output_type=_LISTHMACKEYSRESPONSE,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='UpdateHmacKey',
-    full_name='google.storage.v1.Storage.UpdateHmacKey',
-    index=55,
-    containing_service=None,
-    input_type=_UPDATEHMACKEYREQUEST,
-    output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-])
+    serialized_start=18800,
+    serialized_end=24966,
+    methods=[
+        _descriptor.MethodDescriptor(
+            name="DeleteBucketAccessControl",
+            full_name="google.storage.v1.Storage.DeleteBucketAccessControl",
+            index=0,
+            containing_service=None,
+            input_type=_DELETEBUCKETACCESSCONTROLREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetBucketAccessControl",
+            full_name="google.storage.v1.Storage.GetBucketAccessControl",
+            index=1,
+            containing_service=None,
+            input_type=_GETBUCKETACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertBucketAccessControl",
+            full_name="google.storage.v1.Storage.InsertBucketAccessControl",
+            index=2,
+            containing_service=None,
+            input_type=_INSERTBUCKETACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListBucketAccessControls",
+            full_name="google.storage.v1.Storage.ListBucketAccessControls",
+            index=3,
+            containing_service=None,
+            input_type=_LISTBUCKETACCESSCONTROLSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTBUCKETACCESSCONTROLSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateBucketAccessControl",
+            full_name="google.storage.v1.Storage.UpdateBucketAccessControl",
+            index=4,
+            containing_service=None,
+            input_type=_UPDATEBUCKETACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="PatchBucketAccessControl",
+            full_name="google.storage.v1.Storage.PatchBucketAccessControl",
+            index=5,
+            containing_service=None,
+            input_type=_PATCHBUCKETACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKETACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteBucket",
+            full_name="google.storage.v1.Storage.DeleteBucket",
+            index=6,
+            containing_service=None,
+            input_type=_DELETEBUCKETREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetBucket",
+            full_name="google.storage.v1.Storage.GetBucket",
+            index=7,
+            containing_service=None,
+            input_type=_GETBUCKETREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertBucket",
+            full_name="google.storage.v1.Storage.InsertBucket",
+            index=8,
+            containing_service=None,
+            input_type=_INSERTBUCKETREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListChannels",
+            full_name="google.storage.v1.Storage.ListChannels",
+            index=9,
+            containing_service=None,
+            input_type=_LISTCHANNELSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTCHANNELSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListBuckets",
+            full_name="google.storage.v1.Storage.ListBuckets",
+            index=10,
+            containing_service=None,
+            input_type=_LISTBUCKETSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTBUCKETSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="LockBucketRetentionPolicy",
+            full_name="google.storage.v1.Storage.LockBucketRetentionPolicy",
+            index=11,
+            containing_service=None,
+            input_type=_LOCKRETENTIONPOLICYREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetBucketIamPolicy",
+            full_name="google.storage.v1.Storage.GetBucketIamPolicy",
+            index=12,
+            containing_service=None,
+            input_type=_GETIAMPOLICYREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="SetBucketIamPolicy",
+            full_name="google.storage.v1.Storage.SetBucketIamPolicy",
+            index=13,
+            containing_service=None,
+            input_type=_SETIAMPOLICYREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="TestBucketIamPermissions",
+            full_name="google.storage.v1.Storage.TestBucketIamPermissions",
+            index=14,
+            containing_service=None,
+            input_type=_TESTIAMPERMISSIONSREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="PatchBucket",
+            full_name="google.storage.v1.Storage.PatchBucket",
+            index=15,
+            containing_service=None,
+            input_type=_PATCHBUCKETREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateBucket",
+            full_name="google.storage.v1.Storage.UpdateBucket",
+            index=16,
+            containing_service=None,
+            input_type=_UPDATEBUCKETREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._BUCKET,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="StopChannel",
+            full_name="google.storage.v1.Storage.StopChannel",
+            index=17,
+            containing_service=None,
+            input_type=_STOPCHANNELREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteDefaultObjectAccessControl",
+            full_name="google.storage.v1.Storage.DeleteDefaultObjectAccessControl",
+            index=18,
+            containing_service=None,
+            input_type=_DELETEDEFAULTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetDefaultObjectAccessControl",
+            full_name="google.storage.v1.Storage.GetDefaultObjectAccessControl",
+            index=19,
+            containing_service=None,
+            input_type=_GETDEFAULTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertDefaultObjectAccessControl",
+            full_name="google.storage.v1.Storage.InsertDefaultObjectAccessControl",
+            index=20,
+            containing_service=None,
+            input_type=_INSERTDEFAULTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListDefaultObjectAccessControls",
+            full_name="google.storage.v1.Storage.ListDefaultObjectAccessControls",
+            index=21,
+            containing_service=None,
+            input_type=_LISTDEFAULTOBJECTACCESSCONTROLSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTACCESSCONTROLSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="PatchDefaultObjectAccessControl",
+            full_name="google.storage.v1.Storage.PatchDefaultObjectAccessControl",
+            index=22,
+            containing_service=None,
+            input_type=_PATCHDEFAULTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateDefaultObjectAccessControl",
+            full_name="google.storage.v1.Storage.UpdateDefaultObjectAccessControl",
+            index=23,
+            containing_service=None,
+            input_type=_UPDATEDEFAULTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteNotification",
+            full_name="google.storage.v1.Storage.DeleteNotification",
+            index=24,
+            containing_service=None,
+            input_type=_DELETENOTIFICATIONREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetNotification",
+            full_name="google.storage.v1.Storage.GetNotification",
+            index=25,
+            containing_service=None,
+            input_type=_GETNOTIFICATIONREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertNotification",
+            full_name="google.storage.v1.Storage.InsertNotification",
+            index=26,
+            containing_service=None,
+            input_type=_INSERTNOTIFICATIONREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._NOTIFICATION,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListNotifications",
+            full_name="google.storage.v1.Storage.ListNotifications",
+            index=27,
+            containing_service=None,
+            input_type=_LISTNOTIFICATIONSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTNOTIFICATIONSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteObjectAccessControl",
+            full_name="google.storage.v1.Storage.DeleteObjectAccessControl",
+            index=28,
+            containing_service=None,
+            input_type=_DELETEOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetObjectAccessControl",
+            full_name="google.storage.v1.Storage.GetObjectAccessControl",
+            index=29,
+            containing_service=None,
+            input_type=_GETOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertObjectAccessControl",
+            full_name="google.storage.v1.Storage.InsertObjectAccessControl",
+            index=30,
+            containing_service=None,
+            input_type=_INSERTOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListObjectAccessControls",
+            full_name="google.storage.v1.Storage.ListObjectAccessControls",
+            index=31,
+            containing_service=None,
+            input_type=_LISTOBJECTACCESSCONTROLSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTACCESSCONTROLSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="PatchObjectAccessControl",
+            full_name="google.storage.v1.Storage.PatchObjectAccessControl",
+            index=32,
+            containing_service=None,
+            input_type=_PATCHOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateObjectAccessControl",
+            full_name="google.storage.v1.Storage.UpdateObjectAccessControl",
+            index=33,
+            containing_service=None,
+            input_type=_UPDATEOBJECTACCESSCONTROLREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECTACCESSCONTROL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ComposeObject",
+            full_name="google.storage.v1.Storage.ComposeObject",
+            index=34,
+            containing_service=None,
+            input_type=_COMPOSEOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="CopyObject",
+            full_name="google.storage.v1.Storage.CopyObject",
+            index=35,
+            containing_service=None,
+            input_type=_COPYOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteObject",
+            full_name="google.storage.v1.Storage.DeleteObject",
+            index=36,
+            containing_service=None,
+            input_type=_DELETEOBJECTREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetObject",
+            full_name="google.storage.v1.Storage.GetObject",
+            index=37,
+            containing_service=None,
+            input_type=_GETOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetObjectMedia",
+            full_name="google.storage.v1.Storage.GetObjectMedia",
+            index=38,
+            containing_service=None,
+            input_type=_GETOBJECTMEDIAREQUEST,
+            output_type=_GETOBJECTMEDIARESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="InsertObject",
+            full_name="google.storage.v1.Storage.InsertObject",
+            index=39,
+            containing_service=None,
+            input_type=_INSERTOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListObjects",
+            full_name="google.storage.v1.Storage.ListObjects",
+            index=40,
+            containing_service=None,
+            input_type=_LISTOBJECTSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._LISTOBJECTSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="RewriteObject",
+            full_name="google.storage.v1.Storage.RewriteObject",
+            index=41,
+            containing_service=None,
+            input_type=_REWRITEOBJECTREQUEST,
+            output_type=_REWRITERESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="StartResumableWrite",
+            full_name="google.storage.v1.Storage.StartResumableWrite",
+            index=42,
+            containing_service=None,
+            input_type=_STARTRESUMABLEWRITEREQUEST,
+            output_type=_STARTRESUMABLEWRITERESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="QueryWriteStatus",
+            full_name="google.storage.v1.Storage.QueryWriteStatus",
+            index=43,
+            containing_service=None,
+            input_type=_QUERYWRITESTATUSREQUEST,
+            output_type=_QUERYWRITESTATUSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="PatchObject",
+            full_name="google.storage.v1.Storage.PatchObject",
+            index=44,
+            containing_service=None,
+            input_type=_PATCHOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateObject",
+            full_name="google.storage.v1.Storage.UpdateObject",
+            index=45,
+            containing_service=None,
+            input_type=_UPDATEOBJECTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._OBJECT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetObjectIamPolicy",
+            full_name="google.storage.v1.Storage.GetObjectIamPolicy",
+            index=46,
+            containing_service=None,
+            input_type=_GETIAMPOLICYREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="SetObjectIamPolicy",
+            full_name="google.storage.v1.Storage.SetObjectIamPolicy",
+            index=47,
+            containing_service=None,
+            input_type=_SETIAMPOLICYREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="TestObjectIamPermissions",
+            full_name="google.storage.v1.Storage.TestObjectIamPermissions",
+            index=48,
+            containing_service=None,
+            input_type=_TESTIAMPERMISSIONSREQUEST,
+            output_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="WatchAllObjects",
+            full_name="google.storage.v1.Storage.WatchAllObjects",
+            index=49,
+            containing_service=None,
+            input_type=_WATCHALLOBJECTSREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._CHANNEL,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetServiceAccount",
+            full_name="google.storage.v1.Storage.GetServiceAccount",
+            index=50,
+            containing_service=None,
+            input_type=_GETPROJECTSERVICEACCOUNTREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._SERVICEACCOUNT,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="CreateHmacKey",
+            full_name="google.storage.v1.Storage.CreateHmacKey",
+            index=51,
+            containing_service=None,
+            input_type=_CREATEHMACKEYREQUEST,
+            output_type=_CREATEHMACKEYRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="DeleteHmacKey",
+            full_name="google.storage.v1.Storage.DeleteHmacKey",
+            index=52,
+            containing_service=None,
+            input_type=_DELETEHMACKEYREQUEST,
+            output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetHmacKey",
+            full_name="google.storage.v1.Storage.GetHmacKey",
+            index=53,
+            containing_service=None,
+            input_type=_GETHMACKEYREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="ListHmacKeys",
+            full_name="google.storage.v1.Storage.ListHmacKeys",
+            index=54,
+            containing_service=None,
+            input_type=_LISTHMACKEYSREQUEST,
+            output_type=_LISTHMACKEYSRESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="UpdateHmacKey",
+            full_name="google.storage.v1.Storage.UpdateHmacKey",
+            index=55,
+            containing_service=None,
+            input_type=_UPDATEHMACKEYREQUEST,
+            output_type=google_dot_cloud_dot_storage__v1_dot_proto_dot_storage__resources__pb2._HMACKEYMETADATA,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+)
 _sym_db.RegisterServiceDescriptor(_STORAGE)
 
-DESCRIPTOR.services_by_name['Storage'] = _STORAGE
+DESCRIPTOR.services_by_name["Storage"] = _STORAGE
 
 # @@protoc_insertion_point(module_scope)
