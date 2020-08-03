@@ -14,6 +14,8 @@
 # limitations under the License.
 """Standalone helpers for the GCS+gRPC plugin test bench."""
 
+import base64
+
 # Define the collection of Buckets indexed by <bucket_name>
 GCS_BUCKETS = dict()
 
@@ -43,13 +45,23 @@ def delete_bucket(name):
 GCS_OBJECTS = dict()
 
 
-def insert_object(value, data):
-    GCS_OBJECTS[value.bucket + "/o/" + value.name] = {"object": value, "data": data}
-    return value
+def make_object_wrapper(object_value, content, finish_write=False):
+    return {
+        "object": object_value,
+        "content": content,
+        "crc32c": object_value.crc32c,
+        "md5_hash": object_value.md5_hash,
+        "finish_write": finish_write,
+    }
 
 
-def get_object(bucket_name, object_name, value=None):
-    return GCS_OBJECTS.get(bucket_name + "/o/" + object_name, value)
+def insert_object(bucket_name, object_name, object_wrapper):
+    GCS_OBJECTS[bucket_name + "/o/" + object_name] = object_wrapper
+    return object_wrapper["object"]
+
+
+def get_object(bucket_name, object_name, object_value=None):
+    return GCS_OBJECTS.get(bucket_name + "/o/" + object_name, object_value)
 
 
 def has_object(bucket_name, object_name):
@@ -58,3 +70,39 @@ def has_object(bucket_name, object_name):
 
 def delete_object(bucket_name, object_name):
     del GCS_OBJECTS[bucket_name + "/o/" + object_name]
+
+
+# Define the collection of upload_id indexed by <upload_id>
+GCS_UPLOAD_IDS = dict()
+
+
+def make_upload_wrapper(upload_id, bucket_name, object_name, content, complete=False):
+    return {
+        "upload_id": upload_id,
+        "content": content,
+        "complete": complete,
+        "bucket_name": bucket_name,
+        "object_name": object_name,
+    }
+
+
+def insert_upload(bucket_name, object_name):
+    upload_id = base64.b64encode(
+        bytearray(bucket_name + "/o/" + object_name, "utf-8")
+    ).decode("utf-8")
+    GCS_UPLOAD_IDS[upload_id] = make_upload_wrapper(
+        upload_id, bucket_name, object_name, bytearray("", "utf-8")
+    )
+    return upload_id
+
+
+def get_upload(upload_id, value=None):
+    return GCS_UPLOAD_IDS.get(upload_id, value)
+
+
+def has_upload(upload_id):
+    return GCS_UPLOAD_IDS.get(upload_id) is not None
+
+
+def delete_upload(upload_id):
+    del GCS_UPLOAD_IDS[upload_id]

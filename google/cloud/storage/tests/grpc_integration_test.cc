@@ -155,10 +155,10 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
-  if (UsingTestbench()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
-  }
+  // if (UsingTestbench()) {
+  //   EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+  //   EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  // }
 
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);

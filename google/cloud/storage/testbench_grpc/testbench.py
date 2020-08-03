@@ -18,10 +18,13 @@ import grpc
 import logging
 import testbench_utils
 from concurrent import futures
+from crc32c import crc32
 from google.protobuf.empty_pb2 import Empty
+from google.protobuf.wrappers_pb2 import UInt32Value
 from google.cloud.storage_v1.proto import storage_pb2_grpc, storage_resources_pb2_grpc
 from google.cloud.storage_v1.proto.storage_pb2 import *
 from google.cloud.storage_v1.proto.storage_resources_pb2 import *
+from hashlib import md5
 
 
 class StorageServicer(storage_pb2_grpc.StorageServicer):
@@ -62,14 +65,42 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         return Empty()
 
     def InsertObject(self, request_iterator, context):
+        content = bytearray("", "utf-8")
+        bucket_name = None
+        object_name = None
         for request in request_iterator:
-            # Non-resumable uploads
-            if request.insert_object_spec is not None:
-                insert_spec = request.insert_object_spec
-                # New object
-                if request.checksummed_data is not None:
-                    data = request.checksummed_data
-                    return testbench_utils.insert_object(insert_spec.resource, data)
+            first_message = request.WhichOneof("first_message")
+            if first_message == "upload_id":
+                upload_id = request.upload_id
+                if not testbench_utils.has_upload(upload_id):
+                    context.set_details("upload_id %s does not exist" % upload_id)
+                    context.set_code(grpc.StatusCode.NOT_FOUND)
+                    return Object()
+                wrapper = testbench_utils.get_upload(upload_id)
+                bucket_name = wrapper["bucket_name"]
+                object_name = wrapper["object_name"]
+                wrapper["content"] += request.checksummed_data.content
+                if request.finish_write:
+                    content = wrapper["content"]
+                    wrapper["complete"] = True
+                    break
+            else:
+                if first_message == "insert_object_spec":
+                    insert_spec = request.insert_object_spec
+                    bucket_name = insert_spec.resource.bucket
+                    object_name = insert_spec.resource.name
+                content += request.checksummed_data.content
+                if request.finish_write:
+                    break
+        result = Object(
+            name=object_name,
+            bucket=bucket_name,
+            crc32c=UInt32Value(value=crc32(content)),
+            md5_hash=md5(content).hexdigest(),
+            size=len(content),
+        )
+        wrapper = testbench_utils.make_object_wrapper(result, bytes(content), True)
+        return testbench_utils.insert_object(bucket_name, object_name, wrapper)
 
     def GetObjectMedia(self, request, context):
         bucket_name = request.bucket
@@ -78,12 +109,13 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             context.set_details("Object %s does not exist" % object_name)
             context.set_code(grpc.StatusCode.NOT_FOUND)
             yield GetObjectMediaResponse()
-        object_data = testbench_utils.get_object(bucket_name, object_name).get("data")
-        object_value = testbench_utils.get_object(bucket_name, object_name).get(
-            "object"
-        )
+        wrapper = testbench_utils.get_object(bucket_name, object_name)
         yield GetObjectMediaResponse(
-            checksummed_data=object_data, metadata=object_value
+            checksummed_data=ChecksummedData(content=wrapper["content"]),
+            metadata=wrapper["object"],
+            object_checksums=ObjectChecksums(
+                crc32c=wrapper["crc32c"], md5_hash=wrapper["md5_hash"]
+            ),
         )
 
     def DeleteObject(self, request, context):
@@ -95,6 +127,24 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         else:
             testbench_utils.delete_object(bucket_name, object_name)
         return Empty()
+
+    def StartResumableWrite(self, request, context):
+        object_value = request.insert_object_spec.resource
+        bucket_name = object_value.bucket
+        object_name = object_value.name
+        upload_id = testbench_utils.insert_upload(bucket_name, object_name)
+        return StartResumableWriteResponse(upload_id=upload_id)
+
+    def QueryWriteStatus(self, request, context):
+        upload_id = request.upload_id
+        if not testbench_utils.has_upload(upload_id):
+            context.set_details("upload_id %s does not exist" % upload_id)
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            return QueryWriteStatusResponse()
+        wrapper = testbench_utils.get_upload(upload_id)
+        return QueryWriteStatusResponse(
+            committed_size=len(wrapper["content"]), complete=wrapper["complete"]
+        )
 
 
 def main():
