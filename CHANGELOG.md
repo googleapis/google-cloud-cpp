@@ -45,7 +45,7 @@
 **BREAKING CHANGES**
 * refactor!: `spanner::Timestamp` implementing using `absl::Time` (#4625)\
   **spanner::Timestamp no longer allows construction from or conversion to
-   a chrono time point with picosecond precision**.
+   a chrono time point with picosecond precision**
 * refactor!: use `absl::CivilDay` for "date" type (#4600) \
   **`absl::CivilDay's` constructors are explicit (by design), where as the old
   `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
@@ -75,7 +75,7 @@
 ### Common libraries
 
 **BREAKING CHANGES**
-* refactor!: use `absl::CivilDay` for "date" type (#4600).\
+* refactor!: use `absl::CivilDay` for "date" type (#4600)\
   **`absl::CivilDay's` constructors are explicit (by design), where as the old
   `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
 * fix!: incorrect type in OLM condition (#4597)\
