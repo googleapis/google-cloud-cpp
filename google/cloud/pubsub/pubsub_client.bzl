@@ -19,7 +19,6 @@
 pubsub_client_hdrs = [
     "ack_handler.h",
     "connection_options.h",
-    "create_subscription_builder.h",
     "create_topic_builder.h",
     "internal/batching_publisher_connection.h",
     "internal/default_ack_handler_impl.h",
@@ -38,6 +37,7 @@ pubsub_client_hdrs = [
     "subscription.h",
     "subscription_admin_client.h",
     "subscription_admin_connection.h",
+    "subscription_mutation_builder.h",
     "subscription_options.h",
     "topic.h",
     "topic_admin_client.h",

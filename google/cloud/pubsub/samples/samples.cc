@@ -94,7 +94,7 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto subscription =
-        client.CreateSubscription(pubsub::CreateSubscriptionBuilder(
+        client.CreateSubscription(pubsub::SubscriptionMutationBuilder(
             pubsub::Subscription(project_id, std::move(subscription_id)),
             pubsub::Topic(project_id, std::move(topic_id))));
     if (!subscription)
