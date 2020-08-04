@@ -48,8 +48,7 @@
    a chrono time point with picosecond precision**
 * refactor!: use `absl::CivilDay` for "date" type (#4600) \
   **`absl::CivilDay's` constructors are explicit (by design), where as the old
-  `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
-* refactor!: move `spanner::Date` to common library (#4594)
+  `spanner::Date` 3-arg constructor was not explicit.**
 
 **Fix issue #4516: atomicity is violated if the first operation in a RW
   Transaction fails.**\
@@ -75,13 +74,9 @@
 ### Common libraries
 
 **BREAKING CHANGES**
-* refactor!: use `absl::CivilDay` for "date" type (#4600)\
-  **`absl::CivilDay's` constructors are explicit (by design), where as the old
-  `google::cloud::spanner::Date` 3-arg constructor was not explicit.**
 * fix!: incorrect type in OLM condition (#4597)\
   **changed the `created_before` field in `LifecycleRuleCondition` from a time
    point to a date**
-* refactor!: move `spanner::Date` to common library (#4594)
 
 **Other Changes**
 * fix: timestamp proto encoding works before the epoch and with extreme values (#4611)
