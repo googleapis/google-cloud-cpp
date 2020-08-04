@@ -26,23 +26,6 @@
 #include "google/cloud/storage/version.h"
 #include <nlohmann/json.hpp>
 
-// TODO(#4748) - clean this up, the bug in GTest was fixed circa 2017
-//   https://github.com/google/googletest/pull/1186
-namespace nlohmann {
-//
-// Google Test uses PrintTo (with many overloads) to print the results of failed
-// comparisons. Most of the time the default overloads for PrintTo() provided
-// by Google Test magically do the job picking a good way to print things, but
-// in this case there is a bug:
-//     https://github.com/nlohmann/json/issues/709
-// explicitly defining an overload, which must be in the namespace of the class,
-// works around the problem, see ADL for why it must be in the right namespace:
-//     https://en.wikipedia.org/wiki/Argument-dependent_name_lookup
-//
-/// Prints json objects to output streams from within Google Test.
-inline void PrintTo(json const& j, std::ostream* os) { *os << j.dump(); }
-}  // namespace nlohmann
-
 namespace google {
 namespace cloud {
 namespace storage {
