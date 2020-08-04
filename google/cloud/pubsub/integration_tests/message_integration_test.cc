@@ -57,8 +57,8 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       [topic_admin, &topic]() mutable { topic_admin.DeleteTopic(topic); });
 
   auto subscription_metadata = subscription_admin.CreateSubscription(
-      SubscriptionMutationBuilder(subscription, topic)
-          .set_ack_deadline(std::chrono::seconds(10)));
+      topic, subscription,
+      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
   ASSERT_STATUS_OK(subscription_metadata);
 
   auto publisher = Publisher(MakePublisherConnection(topic, {}));

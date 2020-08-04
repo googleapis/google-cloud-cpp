@@ -78,11 +78,15 @@ class SubscriptionAdminClient {
    * @par Example
    * @snippet samples.cc create-subscription
    *
-   * @param builder the configuration for the new subscription.
+   * @param topic the topic that the subscription will attach to
+   * @param subscription the name for the subscription
+   * @param builder any additional configuration for the subscription
    */
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      SubscriptionMutationBuilder builder) {
-    return connection_->CreateSubscription({std::move(builder).as_proto()});
+      Topic const& topic, Subscription const& subscription,
+      SubscriptionMutationBuilder builder = {}) {
+    return connection_->CreateSubscription(
+        {std::move(builder).BuildCreateSubscription(topic, subscription)});
   }
 
   /**

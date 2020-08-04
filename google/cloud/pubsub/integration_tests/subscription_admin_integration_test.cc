@@ -74,8 +74,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   Cleanup cleanup_topic{
       [&publisher_client, &topic] { publisher_client.DeleteTopic(topic); }};
 
-  auto create_response = client.CreateSubscription(
-      SubscriptionMutationBuilder(subscription, topic));
+  auto create_response = client.CreateSubscription(topic, subscription);
   ASSERT_STATUS_OK(create_response);
 
   auto get_response = client.GetSubscription(subscription);
@@ -96,9 +95,9 @@ TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
-  auto create_response = client.CreateSubscription(SubscriptionMutationBuilder(
-      Subscription("--invalid-project--", "--invalid-subscription--"),
-      Topic("--invalid-project--", "--invalid-topic--")));
+  auto create_response = client.CreateSubscription(
+      Topic("--invalid-project--", "--invalid-topic--"),
+      Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(create_response.ok());
 }
 
