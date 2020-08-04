@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_IAM_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_IAM_POLICY_H
 
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {

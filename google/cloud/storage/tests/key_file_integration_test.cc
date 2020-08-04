@@ -14,11 +14,11 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <fstream>
 
 namespace google {

@@ -16,12 +16,12 @@
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
 #include "absl/strings/str_format.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -230,10 +230,10 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  std::vector<internal::nl::json> array;
+  std::vector<nlohmann::json> array;
   array.reserve(v.size());
   for (auto const& a : v) {
-    array.emplace_back(internal::nl::json{
+    array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });
@@ -264,10 +264,10 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
   if (v.empty()) {
     return ResetCors();
   }
-  std::vector<internal::nl::json> array;
+  std::vector<nlohmann::json> array;
   array.reserve(v.size());
   for (auto const& a : v) {
-    internal::nl::json entry;
+    nlohmann::json entry;
     if (a.max_age_seconds.has_value()) {
       entry["maxAgeSeconds"] = *a.max_age_seconds;
     }
@@ -308,10 +308,10 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetDefaultAcl(
   if (v.empty()) {
     return ResetDefaultAcl();
   }
-  std::vector<internal::nl::json> array;
+  std::vector<nlohmann::json> array;
   array.reserve(v.size());
   for (auto const& a : v) {
-    array.emplace_back(internal::nl::json{
+    array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });
@@ -407,10 +407,10 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     return ResetLifecycle();
   }
   internal::PatchBuilder subpatch;
-  std::vector<internal::nl::json> array;
+  std::vector<nlohmann::json> array;
   array.reserve(v.rule.size());
   for (auto const& a : v.rule) {
-    internal::nl::json condition;
+    nlohmann::json condition;
     auto const& c = a.condition();
     if (c.age.has_value()) {
       condition["age"] = *c.age;
@@ -429,14 +429,14 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     if (c.num_newer_versions.has_value()) {
       condition["numNewerVersions"] = *c.num_newer_versions;
     }
-    internal::nl::json action;
+    nlohmann::json action;
     if (!a.action().type.empty()) {
       action["type"] = a.action().type;
     }
     if (!a.action().storage_class.empty()) {
       action["storageClass"] = a.action().storage_class;
     }
-    array.emplace_back(internal::nl::json{
+    array.emplace_back(nlohmann::json{
         {"action", action},
         {"condition", condition},
     });

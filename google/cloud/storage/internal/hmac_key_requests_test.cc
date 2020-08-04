@@ -65,12 +65,12 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
       "timeCreated": "2019-03-01T12:13:14Z",
       "updated": "2019-03-02T12:13:14Z"
 })""";
-  nl::json const json_object{
+  nlohmann::json const json_object{
       {"kind", "storage#hmacKey"},
       // To generate the secret use:
       //   echo -n "test-secret" | openssl base64
       {"secret", "dGVzdC1zZWNyZXQ="},
-      {"metadata", nl::json::parse(resource_text)},
+      {"metadata", nlohmann::json::parse(resource_text)},
   };
 
   std::string const text = json_object.dump();

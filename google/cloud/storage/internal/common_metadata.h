@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H
 
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <chrono>
 #include <map>
 #include <utility>
@@ -78,7 +78,7 @@ class CommonMetadata {
   CommonMetadata() = default;
 
   static Status ParseFromJson(CommonMetadata<Derived>& result,
-                              internal::nl::json const& json) {
+                              nlohmann::json const& json) {
     if (!json.is_object()) {
       return Status(StatusCode::kInvalidArgument, __func__);
     }
@@ -100,7 +100,7 @@ class CommonMetadata {
     return Status();
   }
   static StatusOr<CommonMetadata> ParseFromString(std::string const& payload) {
-    auto json = internal::nl::json::parse(payload);
+    auto json = nlohmann::json::parse(payload);
     return ParseFromJson(json);
   }
 

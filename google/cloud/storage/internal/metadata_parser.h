@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H
 
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
+#include <nlohmann/json.hpp>
 #include <chrono>
 
 namespace google {
@@ -31,19 +31,19 @@ namespace internal {
  * @return the value of @p field_name in @p json, or `false` if the field is not
  * present.
  */
-bool ParseBoolField(nl::json const& json, char const* field_name);
+bool ParseBoolField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an integer field, even if it is represented by a string type in the
  * JSON object.
  */
-std::int32_t ParseIntField(nl::json const& json, char const* field_name);
+std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an unsigned integer field, even if it is represented by a string type
  * in the JSON object.
  */
-std::uint32_t ParseUnsignedIntField(nl::json const& json,
+std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
                                     char const* field_name);
 
 /**
@@ -53,7 +53,7 @@ std::uint32_t ParseUnsignedIntField(nl::json const& json,
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-std::int64_t ParseLongField(nl::json const& json, char const* field_name);
+std::int64_t ParseLongField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an unsigned long integer field, even if it is represented by a string
@@ -62,7 +62,7 @@ std::int64_t ParseLongField(nl::json const& json, char const* field_name);
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-std::uint64_t ParseUnsignedLongField(nl::json const& json,
+std::uint64_t ParseUnsignedLongField(nlohmann::json const& json,
                                      char const* field_name);
 
 /**
@@ -72,7 +72,7 @@ std::uint64_t ParseUnsignedLongField(nl::json const& json,
  * not present.
  */
 std::chrono::system_clock::time_point ParseTimestampField(
-    nl::json const& json, char const* field_name);
+    nlohmann::json const& json, char const* field_name);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

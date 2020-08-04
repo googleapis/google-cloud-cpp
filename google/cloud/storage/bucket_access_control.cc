@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_access_control.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {

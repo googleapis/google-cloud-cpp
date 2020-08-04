@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_objects_reader.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -38,7 +38,7 @@ ObjectMetadata CreateElement(int index) {
   std::string name = id;
   std::string link =
       "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
-  internal::nl::json metadata{
+  nlohmann::json metadata{
       {"bucket", "test-bucket"},
       {"id", id},
       {"name", name},

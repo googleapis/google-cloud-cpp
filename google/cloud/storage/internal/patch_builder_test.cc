@@ -32,11 +32,11 @@ TEST(PatchBuilderTest, String) {
   builder.AddStringField("set-value", "", "new-value");
   builder.AddStringField("unset-value", "old-value", "");
   builder.AddStringField("untouched-value", "same-value", "same-value");
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", "new-value"},
       {"unset-value", nullptr},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -44,10 +44,10 @@ TEST(PatchBuilderTest, Bool) {
   PatchBuilder builder;
   builder.AddBoolField("set-value", true, false);
   builder.AddBoolField("untouched-value", false, false);
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", false},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -56,11 +56,11 @@ TEST(PatchBuilderTest, Int) {
   builder.AddIntField("set-value", std::int32_t(0), std::int32_t(42));
   builder.AddIntField("unset-value", std::int32_t(42), std::int32_t(0));
   builder.AddIntField("untouched-value", std::int32_t(7), std::int32_t(7));
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", 42},
       {"unset-value", nullptr},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -70,11 +70,11 @@ TEST(PatchBuilderTest, OptionalBool) {
   builder.AddOptionalField("set-value", bopt(false), bopt(true));
   builder.AddOptionalField("unset-value", bopt(false), bopt());
   builder.AddOptionalField("untouched-value", bopt(true), bopt(true));
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", true},
       {"unset-value", nullptr},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -85,12 +85,12 @@ TEST(PatchBuilderTest, OptionalInt) {
   builder.AddOptionalField("unset-value", opt(42), opt());
   builder.AddOptionalField("untouched-value", opt(7), opt(7));
   builder.AddOptionalField("set-to-zero", opt(1), opt(0));
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", 42},
       {"unset-value", nullptr},
       {"set-to-zero", 0},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -100,11 +100,11 @@ TEST(PatchBuilderTest, ArrayField) {
   builder.AddArrayField("set-value", vec{1, 2, 3}, vec{4, 2});
   builder.AddArrayField("unset-value", vec{4, 2}, vec{});
   builder.AddArrayField("untouched-value", vec{7, 6, 5}, vec{7, 6, 5});
-  nl::json expected{
+  nlohmann::json expected{
       {"set-value", {4, 2}},
       {"unset-value", nullptr},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -116,11 +116,11 @@ TEST(PatchBuilderTest, SubPatch) {
   subpatch.AddStringField("unset-value", "old-value", "");
   subpatch.AddStringField("untouched-value", "same-value", "same-value");
   builder.AddSubPatch("the-field", subpatch);
-  nl::json expected{
+  nlohmann::json expected{
       {"some-field", "new-value"},
       {"the-field", {{"set-value", "new-value"}, {"unset-value", nullptr}}},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -128,11 +128,11 @@ TEST(PatchBuilderTest, RemoveField) {
   PatchBuilder builder;
   builder.AddStringField("some-field", "", "new-value");
   builder.RemoveField("the-field");
-  nl::json expected{
+  nlohmann::json expected{
       {"some-field", "new-value"},
       {"the-field", nullptr},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -140,11 +140,11 @@ TEST(PatchBuilderTest, SetStringField) {
   PatchBuilder builder;
   builder.SetStringField("some-field", "new-value");
   builder.SetStringField("empty-field", "");
-  nl::json expected{
+  nlohmann::json expected{
       {"some-field", "new-value"},
       {"empty-field", ""},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -152,11 +152,11 @@ TEST(PatchBuilderTest, SetBoolField) {
   PatchBuilder builder;
   builder.SetBoolField("true-field", true);
   builder.SetBoolField("false-field", false);
-  nl::json expected{
+  nlohmann::json expected{
       {"true-field", true},
       {"false-field", false},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -170,13 +170,13 @@ TEST(PatchBuilderTest, SetIntField) {
   builder.SetIntField("field-64-0", std::int64_t(0));
   builder.SetIntField("field-u64-7", std::uint64_t(7));
   builder.SetIntField("field-u64-0", std::uint64_t(0));
-  nl::json expected{
+  nlohmann::json expected{
       {"field-32-7", std::int32_t(7)},   {"field-32-0", std::int32_t(0)},
       {"field-u32-7", std::uint32_t(7)}, {"field-u32-0", std::uint32_t(0)},
       {"field-64-7", std::int64_t(7)},   {"field-64-0", std::int64_t(0)},
       {"field-u64-7", std::uint64_t(7)}, {"field-u64-0", std::uint64_t(0)},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 
@@ -186,13 +186,13 @@ TEST(PatchBuilderTest, SetArrayField) {
   builder.SetArrayField("field-b", std::vector<std::string>{"foo", "bar"});
   builder.SetArrayField("field-c", std::vector<std::int32_t>{2, 3, 5, 7});
   builder.SetArrayField("field-d", std::vector<bool>{false, true, true});
-  nl::json expected{
+  nlohmann::json expected{
       {"field-a", std::vector<std::string>{}},
       {"field-b", std::vector<std::string>{"foo", "bar"}},
       {"field-c", std::vector<int>{2, 3, 5, 7}},
       {"field-d", std::vector<bool>{false, true, true}},
   };
-  nl::json actual = nl::json::parse(builder.ToString());
+  auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
 }  // namespace

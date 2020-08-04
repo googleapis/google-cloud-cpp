@@ -442,7 +442,7 @@ TEST(NativeIamPolicy, UnknownFields) {
     }
   )""");
   ASSERT_STATUS_OK(policy);
-  auto json = internal::nl::json::parse(policy->ToJson());
+  auto json = nlohmann::json::parse(policy->ToJson());
   EXPECT_EQ("opaque3", json["unknown_policy_field"]);
   EXPECT_EQ("opaque2", json["bindings"][0]["unknown_binding_field"]);
   EXPECT_EQ("opaque1", json["bindings"][0]["condition"]["unknown_expr_field"]);

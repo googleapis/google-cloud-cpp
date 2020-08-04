@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/format_time_point.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -114,10 +114,10 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  std::vector<internal::nl::json> array;
+  std::vector<nlohmann::json> array;
   array.reserve(v.size());
   for (auto const& a : v) {
-    array.emplace_back(internal::nl::json{
+    array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });

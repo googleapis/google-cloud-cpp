@@ -21,14 +21,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::string NotificationMetadata::JsonPayloadForInsert() const {
   // Required fields, always include them, even if empty.
-  internal::nl::json json{
+  nlohmann::json json{
       {"topic", topic()},
       {"payload_format", payload_format()},
   };
 
   // custom_attributes()
   if (!custom_attributes().empty()) {
-    internal::nl::json ca;
+    nlohmann::json ca;
     for (auto const& kv : custom_attributes()) {
       ca[kv.first] = kv.second;
     }
@@ -37,7 +37,7 @@ std::string NotificationMetadata::JsonPayloadForInsert() const {
 
   // event_types()
   if (!event_types().empty()) {
-    internal::nl::json events;
+    nlohmann::json events;
     for (auto const& v : event_types()) {
       events.push_back(v);
     }

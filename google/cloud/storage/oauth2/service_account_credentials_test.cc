@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_fake_clock.h"
@@ -22,6 +21,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <chrono>
 #include <cstdlib>
 #include <cstring>
@@ -218,12 +218,13 @@ TEST_F(ServiceAccountCredentialsTest,
             credentials.AuthorizationHeader().value());
 }
 
-/// @test Verify that nl::json::parse() failures are reported as is_discarded.
+/// @test Verify that nlohmann::json::parse() failures are reported as
+/// is_discarded.
 TEST_F(ServiceAccountCredentialsTest, JsonParsingFailure) {
   std::string config = R"""( not-a-valid-json-string )""";
-  // The documentation for nl::json::parse() is a bit ambiguous, so wrote a
-  // little test to verify it works as I expected.
-  internal::nl::json parsed = internal::nl::json::parse(config, nullptr, false);
+  // The documentation for nlohmann::json::parse() is a bit ambiguous, so wrote
+  // a little test to verify it works as I expected.
+  auto parsed = nlohmann::json::parse(config, nullptr, false);
   EXPECT_TRUE(parsed.is_discarded());
   EXPECT_FALSE(parsed.is_null());
 }
@@ -308,7 +309,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
 
   for (auto const& field :
        {"private_key_id", "private_key", "client_email", "token_uri"}) {
-    internal::nl::json json = internal::nl::json::parse(contents);
+    auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
     ASSERT_FALSE(actual) << "status=" << actual.status();
@@ -329,7 +330,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
 })""";
 
   for (auto const& field : {"private_key_id", "private_key", "client_email"}) {
-    internal::nl::json json = internal::nl::json::parse(contents);
+    auto json = nlohmann::json::parse(contents);
     json.erase(field);
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
     ASSERT_FALSE(actual) << "status=" << actual.status();
@@ -364,12 +365,12 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       auto payload_bytes = internal::UrlsafeBase64Decode(encoded_payload);
       std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
 
-      auto header = internal::nl::json::parse(header_str);
+      auto header = nlohmann::json::parse(header_str);
       EXPECT_EQ("RS256", header.value("alg", ""));
       EXPECT_EQ("JWT", header.value("typ", ""));
       EXPECT_EQ(info->private_key_id, header.value("kid", ""));
 
-      auto payload = internal::nl::json::parse(payload_str);
+      auto payload = nlohmann::json::parse(payload_str);
       EXPECT_EQ(timestamp, payload.value("iat", 0));
       EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
       EXPECT_EQ(info->client_email, payload.value("iss", ""));
@@ -377,9 +378,9 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
       // Hard-coded in this order in ServiceAccountCredentials class.
       std::string token = "mock-token-value-" + std::to_string(timestamp);
-      internal::nl::json response{{"token_type", "Mock-Type"},
-                                  {"access_token", token},
-                                  {"expires_in", 3600}};
+      nlohmann::json response{{"token_type", "Mock-Type"},
+                              {"access_token", token},
+                              {"expires_in", 3600}};
       return HttpResponse{200, response.dump(), {}};
     };
   };
@@ -746,12 +747,12 @@ TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   FakeClock::now_value_ = clock_value_1;
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
 
-  auto header = internal::nl::json::parse(components.first);
+  auto header = nlohmann::json::parse(components.first);
   EXPECT_EQ("RS256", header.value("alg", ""));
   EXPECT_EQ("JWT", header.value("typ", ""));
   EXPECT_EQ(info->private_key_id, header.value("kid", ""));
 
-  auto payload = internal::nl::json::parse(components.second);
+  auto payload = nlohmann::json::parse(components.second);
   EXPECT_EQ(clock_value_1, payload.value("iat", 0));
   EXPECT_EQ(clock_value_1 + 3600, payload.value("exp", 0));
   EXPECT_EQ(info->client_email, payload.value("iss", ""));

@@ -91,15 +91,15 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
 }
 
 std::string ParallelUploadPersistentState::ToString() const {
-  auto json_streams = internal::nl::json::array();
+  auto json_streams = nlohmann::json::array();
   for (auto const& stream : streams) {
-    json_streams.emplace_back(internal::nl::json{
-        {"name", stream.object_name},
-        {"resumable_session_id", stream.resumable_session_id}});
+    json_streams.emplace_back(
+        nlohmann::json{{"name", stream.object_name},
+                       {"resumable_session_id", stream.resumable_session_id}});
   }
-  auto res = internal::nl::json{{"streams", json_streams},
-                                {"expected_generation", expected_generation},
-                                {"destination", destination_object_name}};
+  auto res = nlohmann::json{{"streams", json_streams},
+                            {"expected_generation", expected_generation},
+                            {"destination", destination_object_name}};
   if (!custom_data.empty()) {
     res["custom_data"] = custom_data;
   }
@@ -110,7 +110,7 @@ StatusOr<ParallelUploadPersistentState>
 ParallelUploadPersistentState::FromString(std::string const& json_rep) {
   ParallelUploadPersistentState res;
 
-  auto json = internal::nl::json::parse(json_rep, nullptr, false);
+  auto json = nlohmann::json::parse(json_rep, nullptr, false);
   if (json.is_discarded()) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state is not a valid JSON.");
@@ -119,8 +119,8 @@ ParallelUploadPersistentState::FromString(std::string const& json_rep) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state is not a JSON object.");
   }
-  // nl::json doesn't allow for multiple keys with the same name, so there are
-  // either 0 or 1 elements with the same key.
+  // nlohmann::json doesn't allow for multiple keys with the same name, so there
+  // are either 0 or 1 elements with the same key.
   if (json.count("destination") != 1) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state doesn't contain a 'destination'.");
@@ -324,7 +324,7 @@ future<StatusOr<ObjectMetadata>> ParallelUploadStateImpl::WaitForCompletion()
 
 std::string ParallelFileUploadSplitPointsToString(
     std::vector<std::uintmax_t> const& split_points) {
-  auto json_rep = internal::nl::json::array();
+  auto json_rep = nlohmann::json::array();
   std::copy(split_points.begin(), split_points.end(),
             std::back_inserter(json_rep));
   return json_rep.dump();
@@ -332,7 +332,7 @@ std::string ParallelFileUploadSplitPointsToString(
 
 StatusOr<std::vector<std::uintmax_t>> ParallelFileUploadSplitPointsFromString(
     std::string const& s) {
-  auto json = internal::nl::json::parse(s, nullptr, false);
+  auto json = nlohmann::json::parse(s, nullptr, false);
   if (json.is_discarded()) {
     return Status(StatusCode::kInternal,
                   "Parallel upload file state is not a valid JSON.");

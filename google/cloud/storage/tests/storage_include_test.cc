@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 
 int main() {

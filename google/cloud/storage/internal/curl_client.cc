@@ -171,7 +171,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
   builder.AddQueryParameter("uploadType", "resumable");
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
-  nl::json resource;
+  nlohmann::json resource;
   if (request.template HasOption<WithObjectMetadata>()) {
     resource = ObjectMetadataJsonForInsert(
         request.template GetOption<WithObjectMetadata>().value());
@@ -765,7 +765,7 @@ StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  nl::json object;
+  nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
   return CheckedFromString<internal::BucketAccessControlParser>(
@@ -794,7 +794,7 @@ StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  nl::json patch;
+  nlohmann::json patch;
   patch["entity"] = request.entity();
   patch["role"] = request.role();
   return CheckedFromString<internal::BucketAccessControlParser>(
@@ -841,7 +841,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  nl::json object;
+  nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
   return CheckedFromString<ObjectAccessControlParser>(
@@ -889,7 +889,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  nl::json object;
+  nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
   return CheckedFromString<ObjectAccessControlParser>(
@@ -935,7 +935,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
   if (!status.ok()) {
     return status;
   }
-  nl::json object;
+  nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
   builder.AddHeader("Content-Type: application/json");
@@ -981,7 +981,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  nl::json object;
+  nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
   return CheckedFromString<ObjectAccessControlParser>(
@@ -1081,7 +1081,7 @@ StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
   if (!status.ok()) {
     return status;
   }
-  nl::json payload;
+  nlohmann::json payload;
   if (!request.resource().state().empty()) {
     payload["state"] = request.resource().state();
   }
@@ -1102,7 +1102,7 @@ StatusOr<SignBlobResponse> CurlClient::SignBlob(
   if (!status.ok()) {
     return status;
   }
-  nl::json payload;
+  nlohmann::json payload;
   payload["payload"] = request.base64_encoded_blob();
   if (!request.delegates().empty()) {
     payload["delegates"] = request.delegates();
@@ -1247,7 +1247,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
-  return internal::ObjectMetadataParser::FromJson(nl::json{
+  return internal::ObjectMetadataParser::FromJson(nlohmann::json{
       {"name", request.object_name()},
       {"bucket", request.bucket_name()},
   });
@@ -1329,7 +1329,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   //    complicated than it is worth.
   std::ostringstream writer;
 
-  nl::json metadata = nl::json::object();
+  nlohmann::json metadata = nlohmann::json::object();
   if (request.HasOption<WithObjectMetadata>()) {
     metadata = ObjectMetadataJsonForInsert(
         request.GetOption<WithObjectMetadata>().value());

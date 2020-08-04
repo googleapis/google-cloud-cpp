@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
@@ -22,6 +21,7 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/memory/memory.h"
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <iterator>
 #include <memory>
@@ -48,8 +48,6 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     absl::optional<std::set<std::string>> service_account_scopes,
     absl::optional<std::string> service_account_subject,
     ChannelOptions const& options) {
-  namespace nl = google::cloud::storage::internal::nl;
-
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -57,7 +55,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     return Status(StatusCode::kUnknown, "Cannot open credentials file " + path);
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
-  auto cred_json = nl::json::parse(contents, nullptr, false);
+  auto cred_json = nlohmann::json::parse(contents, nullptr, false);
   if (cred_json.is_discarded()) {
     // This is not a JSON file, try to load it as a P12 service account.
     auto info = ParseServiceAccountP12File(path);

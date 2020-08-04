@@ -14,11 +14,11 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/civil_time.h"
+#include <nlohmann/json.hpp>
 #include <sstream>
 
 namespace google {
@@ -27,8 +27,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-CorsEntry ParseCors(internal::nl::json const& json) {
-  auto parse_string_list = [](internal::nl::json const& json,
+CorsEntry ParseCors(nlohmann::json const& json) {
+  auto parse_string_list = [](nlohmann::json const& json,
                               char const* field_name) {
     std::vector<std::string> list;
     if (json.count(field_name) != 0) {
@@ -48,7 +48,7 @@ CorsEntry ParseCors(internal::nl::json const& json) {
   return result;
 }
 
-void SetIfNotEmpty(internal::nl::json& json, char const* key,
+void SetIfNotEmpty(nlohmann::json& json, char const* key,
                    std::string const& value) {
   if (value.empty()) {
     return;
@@ -57,7 +57,7 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
 }
 
 UniformBucketLevelAccess ParseUniformBucketLevelAccess(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   UniformBucketLevelAccess result;
   result.enabled = internal::ParseBoolField(json, "enabled");
   result.locked_time = internal::ParseTimestampField(json, "lockedTime");
@@ -67,7 +67,7 @@ UniformBucketLevelAccess ParseUniformBucketLevelAccess(
 }  // namespace
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -111,12 +111,12 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromString(
     std::string const& text) {
-  auto json = internal::nl::json::parse(text, nullptr, false);
+  auto json = nlohmann::json::parse(text, nullptr, false);
   return FromJson(json);
 }
 
 StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -252,16 +252,15 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
 
 StatusOr<BucketMetadata> BucketMetadataParser::FromString(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 
 std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
-  using ::google::cloud::storage::internal::nl::json;
-  json metadata_as_json;
+  nlohmann::json metadata_as_json;
   if (!meta.acl().empty()) {
     for (BucketAccessControl const& a : meta.acl()) {
-      json entry;
+      nlohmann::json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
       SetIfNotEmpty(entry, "role", a.role());
       metadata_as_json["acl"].emplace_back(std::move(entry));
@@ -270,7 +269,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
 
   if (!meta.cors().empty()) {
     for (CorsEntry const& v : meta.cors()) {
-      json cors_as_json;
+      nlohmann::json cors_as_json;
       if (v.max_age_seconds.has_value()) {
         cors_as_json["maxAgeSeconds"] = *v.max_age_seconds;
       }
@@ -288,7 +287,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   }
 
   if (meta.has_billing()) {
-    json b{
+    nlohmann::json b{
         {"requesterPays", meta.billing().requester_pays},
     };
     metadata_as_json["billing"] = std::move(b);
@@ -298,7 +297,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
 
   if (!meta.default_acl().empty()) {
     for (ObjectAccessControl const& a : meta.default_acl()) {
-      json entry;
+      nlohmann::json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
       SetIfNotEmpty(entry, "role", a.role());
       metadata_as_json["defaultObjectAcl"].emplace_back(std::move(entry));
@@ -306,16 +305,16 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   }
 
   if (meta.has_encryption()) {
-    json e;
+    nlohmann::json e;
     SetIfNotEmpty(e, "defaultKmsKeyName",
                   meta.encryption().default_kms_key_name);
     metadata_as_json["encryption"] = std::move(e);
   }
 
   if (meta.has_iam_configuration()) {
-    json c;
+    nlohmann::json c;
     if (meta.iam_configuration().uniform_bucket_level_access.has_value()) {
-      json ubla;
+      nlohmann::json ubla;
       ubla["enabled"] =
           meta.iam_configuration().uniform_bucket_level_access->enabled;
       // The lockedTime field is not mutable and should not be set by the client
@@ -327,7 +326,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // both fields are supported. At the moment both fields being set is
       // required but this is a workaround and will be fixed when the feature
       // GA's in GCS.
-      json bpo;
+      nlohmann::json bpo;
       bpo["enabled"] =
           meta.iam_configuration().uniform_bucket_level_access->enabled;
       // The lockedTime field is not mutable and should not be set by the client
@@ -341,12 +340,12 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
     // continual support for legacy applications.
     if (!meta.iam_configuration().uniform_bucket_level_access.has_value() &&
         meta.iam_configuration().bucket_policy_only.has_value()) {
-      json ubla;
+      nlohmann::json ubla;
       ubla["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
-      json bpo;
+      nlohmann::json bpo;
       bpo["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
@@ -356,7 +355,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   }
 
   if (!meta.labels().empty()) {
-    json labels_as_json;
+    nlohmann::json labels_as_json;
     for (auto const& kv : meta.labels()) {
       labels_as_json[kv.first] = kv.second;
     }
@@ -364,9 +363,9 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   }
 
   if (meta.has_lifecycle()) {
-    json rule;
+    nlohmann::json rule;
     for (LifecycleRule const& v : meta.lifecycle().rule) {
-      json condition;
+      nlohmann::json condition;
       auto const& c = v.condition();
       if (c.age) {
         condition["age"] = *c.age;
@@ -385,14 +384,14 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       if (c.num_newer_versions) {
         condition["numNewerVersions"] = *c.num_newer_versions;
       }
-      json action{{"type", v.action().type}};
+      nlohmann::json action{{"type", v.action().type}};
       if (!v.action().storage_class.empty()) {
         action["storageClass"] = v.action().storage_class;
       }
-      rule.emplace_back(json{{"condition", std::move(condition)},
-                             {"action", std::move(action)}});
+      rule.emplace_back(nlohmann::json{{"condition", std::move(condition)},
+                                       {"action", std::move(action)}});
     }
-    metadata_as_json["lifecycle"] = json{{"rule", std::move(rule)}};
+    metadata_as_json["lifecycle"] = nlohmann::json{{"rule", std::move(rule)}};
   }
 
   SetIfNotEmpty(metadata_as_json, "location", meta.location());
@@ -400,7 +399,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   SetIfNotEmpty(metadata_as_json, "locationType", meta.location_type());
 
   if (meta.has_logging()) {
-    json l;
+    nlohmann::json l;
     SetIfNotEmpty(l, "logBucket", meta.logging().log_bucket);
     SetIfNotEmpty(l, "logObjectPrefix", meta.logging().log_object_prefix);
     metadata_as_json["logging"] = std::move(l);
@@ -409,7 +408,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   SetIfNotEmpty(metadata_as_json, "name", meta.name());
 
   if (meta.has_retention_policy()) {
-    json r{
+    nlohmann::json r{
         {"retentionPeriod", meta.retention_policy().retention_period.count()}};
     metadata_as_json["retentionPolicy"] = std::move(r);
   }
@@ -418,11 +417,11 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
 
   if (meta.versioning().has_value()) {
     metadata_as_json["versioning"] =
-        json{{"enabled", meta.versioning()->enabled}};
+        nlohmann::json{{"enabled", meta.versioning()->enabled}};
   }
 
   if (meta.has_website()) {
-    json w;
+    nlohmann::json w;
     SetIfNotEmpty(w, "mainPageSuffix", meta.website().main_page_suffix);
     SetIfNotEmpty(w, "notFoundPage", meta.website().not_found_page);
     metadata_as_json["website"] = std::move(w);
@@ -439,7 +438,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
 
 StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -637,7 +636,7 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
 }
 
 StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
-  auto json = nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -694,16 +693,16 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
 SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
     std::string bucket_name, google::cloud::IamPolicy const& policy)
     : bucket_name_(std::move(bucket_name)) {
-  internal::nl::json iam{
+  nlohmann::json iam{
       {"kind", "storage#policy"},
       {"etag", policy.etag},
   };
-  internal::nl::json bindings;
+  nlohmann::json bindings;
   for (auto const& binding : policy.bindings) {
-    internal::nl::json b{
+    nlohmann::json b{
         {"role", binding.first},
     };
-    internal::nl::json m;
+    nlohmann::json m;
     for (auto const& member : binding.second) {
       m.emplace_back(member);
     }
@@ -752,7 +751,7 @@ std::ostream& operator<<(std::ostream& os,
 StatusOr<TestBucketIamPermissionsResponse>
 TestBucketIamPermissionsResponse::FromHttpResponse(std::string const& payload) {
   TestBucketIamPermissionsResponse result;
-  auto json = nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

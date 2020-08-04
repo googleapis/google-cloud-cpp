@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -23,8 +23,7 @@ namespace oauth2 {
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
-  auto credentials =
-      storage::internal::nl::json::parse(content, nullptr, false);
+  auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return Status(
         StatusCode::kInvalidArgument,
@@ -64,8 +63,7 @@ StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now) {
-  auto access_token =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
       access_token.count("id_token") == 0 ||

@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H
 
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -214,7 +214,7 @@ class PatchBuilder {
     return *this;
   }
 
-  nl::json patch_;
+  nlohmann::json patch_;
 };
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

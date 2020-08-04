@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_hmac_keys_reader.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -37,7 +37,7 @@ HmacKeyMetadata CreateElement(int index) {
   std::string id = "bucket-" + std::to_string(index);
   std::string name = id;
   std::string link = "https://storage.googleapis.com/storage/v1/b/" + id;
-  internal::nl::json metadata{
+  nlohmann::json metadata{
       {"id", id},
       {"name", name},
       {"selfLink", link},

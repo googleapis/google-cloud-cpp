@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
@@ -24,6 +23,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <type_traits>
 
@@ -49,11 +49,11 @@ namespace {
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
-std::map<std::string, internal::nl::json>* signing_tests;
-std::map<std::string, internal::nl::json>* post_policy_tests;
+std::map<std::string, nlohmann::json>* signing_tests;
+std::map<std::string, nlohmann::json>* post_policy_tests;
 
 std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
-    internal::nl::json j_obj, std::string const& field) {
+    nlohmann::json j_obj, std::string const& field) {
   std::vector<std::pair<std::string, std::string>> res;
 
   // Check for the keys of the relevant field
@@ -66,17 +66,17 @@ std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
 }
 
 std::vector<std::pair<std::string, std::string>> ExtractHeaders(
-    internal::nl::json j_obj) {
+    nlohmann::json j_obj) {
   return ExtractListOfPairs(std::move(j_obj), "headers");
 }
 
 std::vector<std::pair<std::string, std::string>> ExtractQueryParams(
-    internal::nl::json j_obj) {
+    nlohmann::json j_obj) {
   return ExtractListOfPairs(std::move(j_obj), "queryParameters");
 }
 
 std::vector<std::pair<std::string, std::string>> ExtractFields(
-    internal::nl::json j_obj) {
+    nlohmann::json j_obj) {
   return ExtractListOfPairs(std::move(j_obj), "fields");
 }
 
@@ -194,7 +194,7 @@ INSTANTIATE_TEST_SUITE_P(
       std::vector<std::string> res;
       std::transform(signing_tests->begin(), signing_tests->end(),
                      std::back_inserter(res),
-                     [](std::pair<std::string, internal::nl::json> const& p) {
+                     [](std::pair<std::string, nlohmann::json> const& p) {
                        return p.first;
                      });
       return res;
@@ -271,7 +271,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   for (auto const& field : fields.items()) {
     expected_form_fields[field.key()] = field.value().get<std::string>();
   }
-  // We need to escape it because nl::json interprets the escaped characters.
+  // We need to escape it because nlohmann::json interprets the escaped
+  // characters.
   std::string const expected_decoded_policy =
       *internal::PostPolicyV4Escape(output["expectedDecodedPolicy"]);
 
@@ -309,7 +310,7 @@ INSTANTIATE_TEST_SUITE_P(
       std::vector<std::string> res;
       std::transform(post_policy_tests->begin(), post_policy_tests->end(),
                      std::back_inserter(res),
-                     [](std::pair<std::string, internal::nl::json> const& p) {
+                     [](std::pair<std::string, nlohmann::json> const& p) {
                        return p.first;
                      });
       return res;
@@ -339,15 +340,15 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
     return 1;
   }
 
-  auto signing_tests_destroyer = absl::make_unique<
-      std::map<std::string, google::cloud::storage::internal::nl::json>>();
+  auto signing_tests_destroyer =
+      absl::make_unique<std::map<std::string, nlohmann::json>>();
   google::cloud::storage::signing_tests = signing_tests_destroyer.get();
 
   // The implementation is not yet completed and these tests still fail, so skip
   // them so far.
   std::set<std::string> nonconformant_url_tests{"ListObjects"};
 
-  auto json = google::cloud::storage::internal::nl::json::parse(ifstr);
+  auto json = nlohmann::json::parse(ifstr);
   if (json.is_discarded()) {
     std::cerr << "Failed to parse provided data file\n";
     return 1;
@@ -408,8 +409,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
     }
   }
 
-  auto post_policy_tests_destroyer = absl::make_unique<
-      std::map<std::string, google::cloud::storage::internal::nl::json>>();
+  auto post_policy_tests_destroyer =
+      absl::make_unique<std::map<std::string, nlohmann::json>>();
   google::cloud::storage::post_policy_tests = post_policy_tests_destroyer.get();
 
   auto post_policy_tests_json = json["postPolicyV4Tests"];

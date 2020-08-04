@@ -131,7 +131,6 @@ add_library(
     internal/logging_resumable_upload_session.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
-    internal/nljson.h
     internal/notification_requests.cc
     internal/notification_requests.h
     internal/object_acl_requests.cc

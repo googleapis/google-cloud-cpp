@@ -16,11 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_REQUESTS_H
 
 #include "google/cloud/storage/internal/generic_request.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 #include <iosfwd>
 
 namespace google {
@@ -29,7 +29,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ServiceAccountParser {
-  static StatusOr<ServiceAccount> FromJson(internal::nl::json const& json);
+  static StatusOr<ServiceAccount> FromJson(nlohmann::json const& json);
   static StatusOr<ServiceAccount> FromString(std::string const& payload);
 };
 

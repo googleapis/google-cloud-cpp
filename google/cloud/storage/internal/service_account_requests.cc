@@ -21,7 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -33,7 +33,7 @@ StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
 
 StatusOr<ServiceAccount> ServiceAccountParser::FromString(
     std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 

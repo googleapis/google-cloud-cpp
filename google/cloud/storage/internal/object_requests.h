@@ -34,7 +34,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ObjectMetadataParser {
-  static StatusOr<ObjectMetadata> FromJson(internal::nl::json const& json);
+  static StatusOr<ObjectMetadata> FromJson(nlohmann::json const& json);
   static StatusOr<ObjectMetadata> FromString(std::string const& payload);
 };
 
@@ -47,11 +47,11 @@ struct ObjectMetadataParser {
  * different functions for each operation, though their implementations are
  * shared.
  */
-internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta);
-internal::nl::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta);
-internal::nl::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta);
-internal::nl::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta);
-internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
+nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta);
+nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta);
+nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta);
+nlohmann::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta);
+nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
 //@}
 
 /**

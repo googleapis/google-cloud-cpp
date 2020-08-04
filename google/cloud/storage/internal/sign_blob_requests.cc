@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, SignBlobRequest const& r) {
 
 StatusOr<SignBlobResponse> SignBlobResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

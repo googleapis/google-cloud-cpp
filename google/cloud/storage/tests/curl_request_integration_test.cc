@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <cstdlib>
 #include <vector>
 
@@ -50,8 +50,8 @@ TEST(CurlRequestTest, SimpleGET) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
@@ -80,14 +80,14 @@ TEST(CurlRequestTest, RepeatedGET) {
   ASSERT_STATUS_OK(response);
 
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 
   response = req.MakeRequest(std::string{});
   EXPECT_EQ(200, response->status_code);
-  parsed = nl::json::parse(response->payload);
+  parsed = nlohmann::json::parse(response->payload);
   args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
@@ -118,8 +118,8 @@ TEST(CurlRequestTest, SimplePOST) {
   auto response = request.BuildRequest().MakeRequest(data);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json form = parsed["form"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
   EXPECT_EQ("bar1-bar2", form["bar"].get<std::string>());
   EXPECT_EQ("baz=baz2", form["baz"].get<std::string>());
@@ -149,7 +149,7 @@ TEST(CurlRequestTest, MultiBufferPUT) {
   auto response = request.BuildRequest().MakeUploadRequest(data);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
+  auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_EQ("line 1\nline 2\nline 3\n", parsed["data"]);
 }
 
@@ -166,7 +166,7 @@ TEST(CurlRequestTest, MultiBufferEmptyPUT) {
   auto response = request.BuildRequest().MakeUploadRequest({});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
+  auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_TRUE(parsed["data"].get<std::string>().empty());
 }
 
@@ -200,7 +200,7 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
   auto response = request.BuildRequest().MakeUploadRequest(data);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
+  auto parsed = nlohmann::json::parse(response->payload);
   std::vector<std::string> const actual = absl::StrSplit(
       parsed["data"].get<std::string>(), '\n', absl::SkipEmpty());
   EXPECT_THAT(actual, ElementsAreArray(lines));
@@ -276,7 +276,7 @@ TEST(CurlRequestTest, UserAgent) {
   auto response = builder.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  auto payload = nl::json::parse(response->payload);
+  auto payload = nlohmann::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
   auto headers = payload["headers"];
   EXPECT_THAT(headers.value("User-Agent", ""),
@@ -296,8 +296,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("full", args.value("projection", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("userProject"));
@@ -319,8 +319,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("a-project", args.value("userProject", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("projection"));
@@ -342,8 +342,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("projection"));
@@ -365,8 +365,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("projection"));
@@ -388,8 +388,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("projection"));
@@ -411,8 +411,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
   // The other well known parameters are not set.
   EXPECT_EQ(0, args.count("projection"));
@@ -436,8 +436,8 @@ TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  nl::json parsed = nl::json::parse(response->payload);
-  nl::json args = parsed["args"];
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
   EXPECT_EQ("user-project-id", args.value("userProject", ""));
   EXPECT_EQ("7", args.value("ifMetagenerationMatch", ""));
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));

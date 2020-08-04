@@ -668,8 +668,8 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
                        .value()});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "acl": [{"entity": "user-test-user", "role": "OWNER"}]
   })""");
   EXPECT_EQ(expected, patch);
@@ -684,8 +684,8 @@ TEST(PatchObjectRequestTest, DiffResetAcl) {
   updated.set_acl({});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"acl": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"acl": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -696,8 +696,8 @@ TEST(PatchObjectRequestTest, DiffSetCacheControl) {
   updated.set_cache_control("no-cache");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"cacheControl": "no-cache"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"cacheControl": "no-cache"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -708,8 +708,8 @@ TEST(PatchObjectRequestTest, DiffResetCacheControl) {
   updated.set_cache_control("");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"cacheControl": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"cacheControl": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -720,9 +720,9 @@ TEST(PatchObjectRequestTest, DiffSetContentDisposition) {
   updated.set_content_disposition("test-value");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected =
-      nl::json::parse(R"""({"contentDisposition": "test-value"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  nlohmann::json expected =
+      nlohmann::json::parse(R"""({"contentDisposition": "test-value"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -733,8 +733,8 @@ TEST(PatchObjectRequestTest, DiffResetContentDisposition) {
   updated.set_content_disposition("");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"contentDisposition": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"contentDisposition": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -745,9 +745,9 @@ TEST(PatchObjectRequestTest, DiffSetContentEncoding) {
   updated.set_content_encoding("test-value");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected =
-      nl::json::parse(R"""({"contentEncoding": "test-value"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  nlohmann::json expected =
+      nlohmann::json::parse(R"""({"contentEncoding": "test-value"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -758,8 +758,8 @@ TEST(PatchObjectRequestTest, DiffResetContentEncoding) {
   updated.set_content_encoding("");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"contentEncoding": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"contentEncoding": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -770,9 +770,9 @@ TEST(PatchObjectRequestTest, DiffSetContentLanguage) {
   updated.set_content_language("test-value");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected =
-      nl::json::parse(R"""({"contentLanguage": "test-value"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  nlohmann::json expected =
+      nlohmann::json::parse(R"""({"contentLanguage": "test-value"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -783,8 +783,8 @@ TEST(PatchObjectRequestTest, DiffResetContentLanguage) {
   updated.set_content_language("");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"contentLanguage": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"contentLanguage": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -795,8 +795,8 @@ TEST(PatchObjectRequestTest, DiffSetContentType) {
   updated.set_content_type("test-value");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"contentType": "test-value"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"contentType": "test-value"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -807,8 +807,8 @@ TEST(PatchObjectRequestTest, DiffResetContentType) {
   updated.set_content_type("");
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"contentType": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"contentType": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -819,8 +819,8 @@ TEST(PatchObjectRequestTest, DiffSetEventBasedHold) {
   updated.set_event_based_hold(true);
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"eventBasedHold": true})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"eventBasedHold": true})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -835,8 +835,8 @@ TEST(PatchObjectRequestTest, DiffSetLabels) {
   updated.mutable_metadata().insert({"label3", "v3"});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "metadata": {"label2": null, "label3": "v3"}
   })""");
   EXPECT_EQ(expected, patch);
@@ -852,8 +852,8 @@ TEST(PatchObjectRequestTest, DiffResetLabels) {
   updated.mutable_metadata().clear();
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"metadata": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"metadata": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -864,8 +864,8 @@ TEST(PatchObjectRequestTest, DiffSetTemporaryHold) {
   updated.set_temporary_hold(true);
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"temporaryHold": true})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"temporaryHold": true})""");
   EXPECT_EQ(expected, patch);
 }
 

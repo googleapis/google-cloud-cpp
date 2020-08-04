@@ -30,12 +30,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct LifecycleRuleParser {
-  static StatusOr<LifecycleRule> FromJson(internal::nl::json const& json);
+  static StatusOr<LifecycleRule> FromJson(nlohmann::json const& json);
   static StatusOr<LifecycleRule> FromString(std::string const& text);
 };
 
 struct BucketMetadataParser {
-  static StatusOr<BucketMetadata> FromJson(internal::nl::json const& json);
+  static StatusOr<BucketMetadata> FromJson(nlohmann::json const& json);
   static StatusOr<BucketMetadata> FromString(std::string const& payload);
 };
 

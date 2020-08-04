@@ -17,10 +17,10 @@
 
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/notification_metadata.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include <nlohmann/json.hpp>
 #include <iosfwd>
 
 namespace google {
@@ -29,8 +29,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct NotificationMetadataParser {
-  static StatusOr<NotificationMetadata> FromJson(
-      internal::nl::json const& json);
+  static StatusOr<NotificationMetadata> FromJson(nlohmann::json const& json);
   static StatusOr<NotificationMetadata> FromString(std::string const& payload);
 };
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include <nlohmann/json.hpp>
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
@@ -30,8 +30,7 @@ namespace oauth2 {
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
-  namespace nl = storage::internal::nl;
-  nl::json credentials = nl::json::parse(content, nullptr, false);
+  auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid ServiceAccountCredentials,"
@@ -189,7 +188,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
-  storage::internal::nl::json assertion_header = {
+  nlohmann::json assertion_header = {
       {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
   // Scopes must be specified in a comma-delimited string.
@@ -213,7 +212,7 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
       static_cast<std::intmax_t>(std::chrono::system_clock::to_time_t(now));
   auto const expiration_from_epoch = static_cast<std::intmax_t>(
       std::chrono::system_clock::to_time_t(expiration));
-  storage::internal::nl::json assertion_payload = {
+  nlohmann::json assertion_payload = {
       {"iss", info.client_email},
       {"scope", scope_str},
       {"aud", info.token_uri},
@@ -254,8 +253,7 @@ StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now) {
-  auto access_token =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 or
       access_token.count("expires_in") == 0 or
       access_token.count("token_type") == 0) {

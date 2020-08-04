@@ -17,8 +17,8 @@
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
