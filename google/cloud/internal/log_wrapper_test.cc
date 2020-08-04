@@ -250,6 +250,39 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
+/// @test the overload for functions returning FutureStatus and using
+/// CompletionQueue as input
+TEST(LogWrapper, FutureStatusWithContextAndCQ) {
+  auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
+  auto mock = [&](google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+                  google::spanner::v1::Mutation const&) {
+    return make_ready_future(status);
+  };
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context;
+  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
+
+  std::ostringstream os;
+  os << status;
+  auto status_as_string = std::move(os).str();
+
+  EXPECT_THAT(backend->log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(backend->log_lines,
+              Contains(AllOf(HasSubstr("in-test("),
+                             HasSubstr(" >> response=" + status_as_string))));
+  EXPECT_THAT(
+      backend->log_lines,
+      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
