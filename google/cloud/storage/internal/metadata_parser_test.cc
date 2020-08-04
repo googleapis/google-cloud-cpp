@@ -27,7 +27,7 @@ TEST(MetadataParserTest, ParseBoolField) {
       "flag1": true,
       "flag2": false
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
   EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
 }
@@ -38,7 +38,7 @@ TEST(MetadataParserTest, ParseBoolFieldFromString) {
       "flag1": "true",
       "flag2": "false"
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
   EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
 }
@@ -48,7 +48,7 @@ TEST(MetadataParserTest, ParseMissingBoolField) {
   std::string text = R"""({
       "flag": true
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = ParseBoolField(json_object, "some-other-flag");
   EXPECT_FALSE(actual);
 }
@@ -58,7 +58,7 @@ TEST(MetadataParserTest, ParseInvalidBoolFieldValue) {
   std::string text = R"""({
       "flag": "not-a-boolean"
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
@@ -72,7 +72,7 @@ TEST(MetadataParserTest, ParseInvalidBoolFieldType) {
   std::string text = R"""({
       "flag": [0, 1, 2]
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
@@ -87,7 +87,7 @@ TEST(MetadataParserTest, ParseTimestampField) {
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
 
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
@@ -102,7 +102,7 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
   std::string text = R"""({
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
 
   using std::chrono::duration_cast;
@@ -113,9 +113,9 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
 
 template <typename Integer>
 void CheckParseNormal(
-    std::function<Integer(nl::json const&, char const*)> tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": 42 })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "field");
   EXPECT_EQ(Integer(42), actual);
 }
@@ -130,9 +130,9 @@ TEST(MetadataParserTest, ParseIntegralFieldNormal) {
 
 template <typename Integer>
 void CheckParseFromString(
-    std::function<Integer(nl::json const&, char const*)> tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": "1234" })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "field");
   EXPECT_EQ(Integer(1234), actual);
 }
@@ -147,9 +147,9 @@ TEST(MetadataParserTest, ParseIntegralFieldString) {
 
 template <typename Integer>
 void CheckParseMissing(
-    std::function<Integer(nl::json const&, char const*)> tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": "1234" })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "some-other-field");
   EXPECT_EQ(Integer(0), actual);
 }
@@ -164,9 +164,9 @@ TEST(MetadataParserTest, ParseIntegralFieldMissing) {
 
 template <typename Integer>
 void CheckParseInvalid(
-    std::function<Integer(nl::json const&, char const*)> tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field_name": "not-a-number" })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(tested(json_object, "field_name"), std::invalid_argument);
 #else
@@ -184,9 +184,9 @@ TEST(MetadataParserTest, ParseIntegralFieldInvalid) {
 
 template <typename Integer>
 void CheckParseInvalidFieldType(
-    std::function<Integer(nl::json const&, char const*)> tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field_name": [0, 1, 2] })""";
-  auto json_object = nl::json::parse(text);
+  auto json_object = nlohmann::json::parse(text);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       try {

@@ -355,8 +355,8 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
       .WillOnce([&result](internal::PatchBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
-        internal::nl::json expected{{"role", "OWNER"}};
-        auto payload = internal::nl::json::parse(r.payload());
+        nlohmann::json expected{{"role", "OWNER"}};
+        auto payload = nlohmann::json::parse(r.payload());
         EXPECT_EQ(expected, payload);
 
         return make_status_or(result);

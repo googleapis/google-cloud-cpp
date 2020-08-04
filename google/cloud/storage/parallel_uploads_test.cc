@@ -64,7 +64,7 @@ std::string ObjectId(std::string const& bucket, std::string const& object,
 }
 
 ObjectMetadata MockObject(std::string const& object_name, int generation) {
-  auto metadata = internal::ObjectMetadataParser::FromJson(internal::nl::json{
+  auto metadata = internal::ObjectMetadataParser::FromJson(nlohmann::json{
       {"contentDisposition", "a-disposition"},
       {"contentLanguage", "a-language"},
       {"contentType", "application/octet-stream"},
@@ -291,21 +291,20 @@ auto create_composition_check =
        std::string const& dest_obj, StatusOr<ObjectMetadata> const& res,
        absl::optional<std::int64_t> const& expected_if_gen_match =
            absl::optional<std::int64_t>()) {
-      internal::nl::json json_source_objects;
+      nlohmann::json json_source_objects;
       for (auto& obj : source_objects) {
-        json_source_objects.emplace_back(internal::nl::json{
+        json_source_objects.emplace_back(nlohmann::json{
             {"name", std::move(obj.first)}, {"generation", obj.second}});
       }
 
-      internal::nl::json expected_payload = {
+      nlohmann::json expected_payload = {
           {"kind", "storage#composeRequest"},
           {"sourceObjects", json_source_objects}};
       return [dest_obj, res, expected_payload,
               expected_if_gen_match](internal::ComposeObjectRequest const& r) {
         EXPECT_EQ(kBucketName, r.bucket_name());
         EXPECT_EQ(dest_obj, r.object_name());
-        internal::nl::json actual_payload =
-            internal::nl::json::parse(r.JsonPayload());
+        auto actual_payload = nlohmann::json::parse(r.JsonPayload());
         EXPECT_EQ(expected_payload, actual_payload);
         if (expected_if_gen_match) {
           EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
@@ -342,7 +341,7 @@ auto expect_new_object = [](std::string const& object_name, int generation) {
 };
 
 auto expect_persistent_state = [](std::string const& state_name, int generation,
-                                  internal::nl::json const& state) {
+                                  nlohmann::json const& state) {
   return [state_name, generation,
           state](internal::InsertObjectMediaRequest const& request) {
     EXPECT_EQ(kBucketName, request.bucket_name());
@@ -354,7 +353,7 @@ auto expect_persistent_state = [](std::string const& state_name, int generation,
 
 auto create_state_read_expectation = [](std::string const& state_object,
                                         std::int64_t generation,
-                                        internal::nl::json const& state) {
+                                        nlohmann::json const& state) {
   return [state_object, generation, state](ReadObjectRangeRequest const& req) {
     EXPECT_EQ(state_object, req.object_name());
     EXPECT_TRUE(req.HasOption<IfGenerationMatch>());
@@ -1020,7 +1019,7 @@ TEST(ParallelUploadPersistentState, RootNotOject) {
 
 TEST(ParallelUploadPersistentState, NoDestination) {
   auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"a", "b"}}.dump());
+      nlohmann::json{{"a", "b"}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1029,7 +1028,7 @@ TEST(ParallelUploadPersistentState, NoDestination) {
 
 TEST(ParallelUploadPersistentState, DestinationNotAString) {
   auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", 2}}.dump());
+      nlohmann::json{{"destination", 2}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1038,7 +1037,7 @@ TEST(ParallelUploadPersistentState, DestinationNotAString) {
 
 TEST(ParallelUploadPersistentState, NoGeneration) {
   auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "b"}}.dump());
+      nlohmann::json{{"destination", "b"}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1046,7 +1045,7 @@ TEST(ParallelUploadPersistentState, NoGeneration) {
 }
 
 TEST(ParallelUploadPersistentState, GenerationNotAString) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", "blah"}}.dump());
   EXPECT_FALSE(res);
@@ -1056,7 +1055,7 @@ TEST(ParallelUploadPersistentState, GenerationNotAString) {
 }
 
 TEST(ParallelUploadPersistentState, CustomDataNotAString) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"custom_data", 123}}.dump());
@@ -1067,7 +1066,7 @@ TEST(ParallelUploadPersistentState, CustomDataNotAString) {
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"}, {"expected_generation", 1}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
@@ -1075,7 +1074,7 @@ TEST(ParallelUploadPersistentState, NoStreams) {
 }
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", 5}}.dump());
@@ -1085,7 +1084,7 @@ TEST(ParallelUploadPersistentState, StreamsNotArray) {
 }
 
 TEST(ParallelUploadPersistentState, StreamNotObject) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {5}}}.dump());
@@ -1095,10 +1094,10 @@ TEST(ParallelUploadPersistentState, StreamNotObject) {
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoName) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
-      {"streams", {internal::nl::json::object()}}}.dump());
+      {"streams", {nlohmann::json::object()}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1106,7 +1105,7 @@ TEST(ParallelUploadPersistentState, StreamHasNoName) {
 }
 
 TEST(ParallelUploadPersistentState, StreamNameNotString) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {{{"name", 1}}}}}.dump());
@@ -1117,7 +1116,7 @@ TEST(ParallelUploadPersistentState, StreamNameNotString) {
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {{{"name", "abc"}}}}}.dump());
@@ -1128,7 +1127,7 @@ TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
 }
 
 TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams",
@@ -1140,10 +1139,10 @@ TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
 }
 
 TEST(ParallelUploadPersistentState, StreamsEmpty) {
-  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", 1},
-      {"streams", internal::nl::json::array()}}.dump());
+      {"streams", nlohmann::json::array()}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain any streams"));
@@ -1190,15 +1189,15 @@ TEST(ParallelFileUploadSplitPointsFromStringTest, NotJson) {
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotArray) {
   auto res = ParallelFileUploadSplitPointsFromString(
-      internal::nl::json{{"a", "b"}, {"b", "c"}}.dump());
+      nlohmann::json{{"a", "b"}, {"b", "c"}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("not an array"));
 }
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotNumber) {
-  auto res = ParallelFileUploadSplitPointsFromString(
-      internal::nl::json{1, "a", 2}.dump());
+  auto res =
+      ParallelFileUploadSplitPointsFromString(nlohmann::json{1, "a", 2}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("not a number"));
@@ -1210,7 +1209,7 @@ TEST_F(ParallelUploadTest, ResumableSuccess) {
   ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "", "");
   ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "", "");
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1279,7 +1278,7 @@ TEST_F(ParallelUploadTest, Suspend) {
   ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_2", "");
   ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "", "");
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1325,7 +1324,7 @@ TEST_F(ParallelUploadTest, Resume) {
                       kIndividualSessionId);
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "",
                       kIndividualSessionId);
-  internal::nl::json state_json{
+  nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1410,7 +1409,7 @@ TEST_F(ParallelUploadTest, BrokenResumableStream) {
   ExpectCreateFailingSession(kPrefix + ".upload_shard_1", PermanentError());
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1442,7 +1441,7 @@ TEST_F(ParallelUploadTest, ResumableSuccessDestinationExists) {
   int const num_shards = 1;
   // The expectations need to be reversed.
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 42},
       {"streams",
@@ -1495,7 +1494,7 @@ TEST_F(ParallelUploadTest, ResumableSuccessDestinationChangedUnderhandedly) {
   int const num_shards = 1;
   // The expectations need to be reversed.
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 42},
       {"streams",
@@ -1576,7 +1575,7 @@ TEST_F(ParallelUploadTest, StoringPersistentStateFails) {
 
 TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
   int const num_shards = 1;
-  internal::nl::json state_json{
+  nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1586,7 +1585,7 @@ TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
   EXPECT_CALL(*raw_client_mock_, ReadObject(_))
       .WillOnce(create_state_read_expectation(
           kPersistentStateName, kPersistentStateGeneration,
-          internal::nl::json{{"not", "valid"}}));
+          nlohmann::json{{"not", "valid"}}));
 
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
@@ -1600,7 +1599,7 @@ TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCrationOnResume) {
   // The expectations need to be reversed.
   ExpectCreateSessionFailure(kPrefix + ".upload_shard_0", PermanentError());
 
-  internal::nl::json state_json{
+  nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
       {"streams",
@@ -1630,7 +1629,7 @@ TEST_F(ParallelUploadTest, ResumableBadSessionId) {
 TEST_F(ParallelUploadTest, ResumeBadNumShards) {
   int const num_shards = 2;
   // The expectations need to be reversed.
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 42},
       {"streams",
@@ -1653,7 +1652,7 @@ TEST_F(ParallelUploadTest, ResumeBadNumShards) {
 TEST_F(ParallelUploadTest, ResumeDifferentDest) {
   int const num_shards = 1;
   // The expectations need to be reversed.
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "some-different-object"},
       {"expected_generation", 42},
       {"streams",
@@ -1678,10 +1677,10 @@ TEST_F(ParallelUploadTest, ResumableUploadFileShards) {
   ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "c", "");
   ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "b", "");
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "a", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 0},
-      {"custom_data", internal::nl::json{1, 2}.dump()},
+      {"custom_data", nlohmann::json{1, 2}.dump()},
       {"streams",
        {{{"name", "some-prefix.upload_shard_0"},
          {"resumable_session_id", kIndividualSessionId}},
@@ -1748,10 +1747,10 @@ TEST_F(ParallelUploadTest, SuspendUploadFileShards) {
   ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_2", "");
   ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "def", "");
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "abc", "");
-  internal::nl::json expected_state{
+  nlohmann::json expected_state{
       {"destination", "final-object"},
       {"expected_generation", 0},
-      {"custom_data", internal::nl::json{3, 6}.dump()},
+      {"custom_data", nlohmann::json{3, 6}.dump()},
       {"streams",
        {{{"name", "some-prefix.upload_shard_0"},
          {"resumable_session_id", kIndividualSessionId}},
@@ -1798,10 +1797,10 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
   EXPECT_CALL(session3, next_expected_byte()).WillRepeatedly(Return(1));
   // first stream is fully uploaded
   EXPECT_CALL(session1, next_expected_byte()).WillRepeatedly(Return(3));
-  internal::nl::json state_json{
+  nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
-      {"custom_data", internal::nl::json{3, 6}.dump()},
+      {"custom_data", nlohmann::json{3, 6}.dump()},
       {"streams",
        {{{"name", "some-prefix.upload_shard_0"},
          {"resumable_session_id", kIndividualSessionId}},
@@ -1870,10 +1869,10 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
   auto& session1 = ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_0",
                                                 kIndividualSessionId);
   EXPECT_CALL(session1, next_expected_byte()).WillRepeatedly(Return(7));
-  internal::nl::json state_json{
+  nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
-      {"custom_data", internal::nl::json{3, 6}.dump()},
+      {"custom_data", nlohmann::json{3, 6}.dump()},
       {"streams",
        {{{"name", "some-prefix.upload_shard_0"},
          {"resumable_session_id", kIndividualSessionId}},

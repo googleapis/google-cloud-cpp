@@ -238,11 +238,10 @@ TEST_F(ObjectTest, UpdateObject) {
       .WillOnce([&expected](internal::UpdateObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
-        internal::nl::json actual_payload =
-            internal::nl::json::parse(r.json_payload());
-        internal::nl::json expected_payload = {
+        auto actual_payload = nlohmann::json::parse(r.json_payload());
+        nlohmann::json expected_payload = {
             {"acl",
-             internal::nl::json{
+             nlohmann::json{
                  {{"entity", "user-test-user"}, {"role", "READER"}},
              }},
             {"cacheControl", "no-cache"},
@@ -252,7 +251,7 @@ TEST_F(ObjectTest, UpdateObject) {
             {"contentType", "new-type"},
             {"eventBasedHold", false},
             {"metadata",
-             internal::nl::json{
+             nlohmann::json{
                  {"test-label", "test-value"},
              }},
         };
@@ -426,7 +425,7 @@ ObjectMetadata CreateObject(int index) {
   std::string name = id;
   std::string link =
       "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
-  internal::nl::json metadata{
+  nlohmann::json metadata{
       {"bucket", "test-bucket"},
       {"id", id},
       {"name", name},
@@ -620,8 +619,7 @@ TEST_F(ObjectTest, ComposeManyOne) {
       .WillOnce([](internal::ComposeObjectRequest const& req)
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
-        internal::nl::json parsed =
-            internal::nl::json::parse(req.JsonPayload());
+        auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
         EXPECT_EQ(1, source_objects.size());
         EXPECT_EQ(42, source_objects[0]["generation"]);
@@ -659,8 +657,7 @@ TEST_F(ObjectTest, ComposeManyThree) {
       .WillOnce([](internal::ComposeObjectRequest const& req)
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
-        internal::nl::json parsed =
-            internal::nl::json::parse(req.JsonPayload());
+        auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
         EXPECT_EQ(3, source_objects.size());
         EXPECT_EQ(42, source_objects[0]["generation"]);
@@ -708,8 +705,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-0", req.object_name());
-        internal::nl::json parsed =
-            internal::nl::json::parse(req.JsonPayload());
+        auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
 
         EXPECT_EQ(32, source_objects.size());
@@ -724,8 +720,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-1", req.object_name());
-        internal::nl::json parsed =
-            internal::nl::json::parse(req.JsonPayload());
+        auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
 
         EXPECT_EQ(31, source_objects.size());
@@ -740,8 +735,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
         EXPECT_EQ("dest", req.object_name());
-        internal::nl::json parsed =
-            internal::nl::json::parse(req.JsonPayload());
+        auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
 
         EXPECT_EQ(2, source_objects.size());

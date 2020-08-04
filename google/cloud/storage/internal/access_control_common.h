@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H
 
 #include "google/cloud/storage/internal/common_metadata.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <utility>
 
 namespace google {
@@ -127,7 +127,7 @@ class AccessControlCommon {
   std::string const& self_link() const { return self_link_; }
 
   static Status ParseFromJson(AccessControlCommon& result,
-                              nl::json const& json);
+                              nlohmann::json const& json);
 
  private:
   friend class GrpcClient;

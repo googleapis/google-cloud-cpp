@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {

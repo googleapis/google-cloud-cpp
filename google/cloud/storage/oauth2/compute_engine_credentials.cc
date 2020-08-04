@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -22,8 +22,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response) {
-  auto response_body =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  auto response_body = nlohmann::json::parse(response.payload, nullptr, false);
   // Note that the "scopes" attribute will always be present and contain a
   // JSON array. At minimum, for the request to succeed, the instance must
   // have been granted the scope that allows it to retrieve info from the
@@ -50,10 +49,9 @@ StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseComputeEngineRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now) {
-  namespace nl = storage::internal::nl;
   // Response should have the attributes "access_token", "expires_in", and
   // "token_type".
-  nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+  auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 or
       access_token.count("expires_in") == 0 or
       access_token.count("token_type") == 0) {

@@ -22,14 +22,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 template <typename Functor>
-Status IsOfTypeIfPresent(internal::nl::json const& json,
+Status IsOfTypeIfPresent(nlohmann::json const& json,
                          std::string const& json_rep, std::string const& field,
                          std::string const& location_desc, Functor const& check,
                          std::string const& type_desc) {
   if (!field.empty() && json.find(field) == json.end()) {
     return Status();
   }
-  internal::nl::json const& to_check = field.empty() ? json : json[field];
+  nlohmann::json const& to_check = field.empty() ? json : json[field];
   if (!check(to_check)) {
     std::ostringstream os;
     os << "Invalid IamPolicy payload, expected " << type_desc << " for "
@@ -39,46 +39,44 @@ Status IsOfTypeIfPresent(internal::nl::json const& json,
   return Status();
 }
 
-Status IsStringIfPresent(internal::nl::json const& json,
+Status IsStringIfPresent(nlohmann::json const& json,
                          std::string const& json_rep, std::string const& field,
                          std::string const& location_desc) {
   return IsOfTypeIfPresent(
       json, json_rep, field, location_desc,
-      [](internal::nl::json const& json) { return json.is_string(); },
-      "string");
+      [](nlohmann::json const& json) { return json.is_string(); }, "string");
 }
 
-Status IsIntIfPresent(internal::nl::json const& json,
-                      std::string const& json_rep, std::string const& field,
+Status IsIntIfPresent(nlohmann::json const& json, std::string const& json_rep,
+                      std::string const& field,
                       std::string const& location_desc) {
   return IsOfTypeIfPresent(
       json, json_rep, field, location_desc,
-      [](internal::nl::json const& json) { return json.is_number_integer(); },
+      [](nlohmann::json const& json) { return json.is_number_integer(); },
       "integer");
 }
 
-Status IsObjectIfPresent(internal::nl::json const& json,
+Status IsObjectIfPresent(nlohmann::json const& json,
                          std::string const& json_rep, std::string const& field,
                          std::string const& location_desc) {
   return IsOfTypeIfPresent(
       json, json_rep, field, location_desc,
-      [](internal::nl::json const& json) { return json.is_object(); },
-      "object");
+      [](nlohmann::json const& json) { return json.is_object(); }, "object");
 }
 
-Status IsArrayIfPresent(internal::nl::json const& json,
-                        std::string const& json_rep, std::string const& field,
+Status IsArrayIfPresent(nlohmann::json const& json, std::string const& json_rep,
+                        std::string const& field,
                         std::string const& location_desc) {
   return IsOfTypeIfPresent(
       json, json_rep, field, location_desc,
-      [](internal::nl::json const& json) { return json.is_array(); }, "array");
+      [](nlohmann::json const& json) { return json.is_array(); }, "array");
 }
 
 }  // namespace
 
 struct NativeExpression::Impl {
   static StatusOr<NativeExpression> CreateFromJson(
-      internal::nl::json const& json, std::string const& policy_json_rep) {
+      nlohmann::json const& json, std::string const& policy_json_rep) {
     Status status = IsStringIfPresent(json, policy_json_rep, "expression",
                                       "'expression' field");
     if (!status.ok()) {
@@ -103,16 +101,15 @@ struct NativeExpression::Impl {
     return NativeExpression(std::unique_ptr<Impl>(new Impl{json}));
   }
 
-  internal::nl::json ToJson() const { return native_json; }
+  nlohmann::json ToJson() const { return native_json; }
 
-  internal::nl::json native_json;
+  nlohmann::json native_json;
 };
 
 NativeExpression::NativeExpression(std::string expression, std::string title,
                                    std::string description,
                                    std::string location)
-    : pimpl_(
-          new Impl{internal::nl::json{{"expression", std::move(expression)}}}) {
+    : pimpl_(new Impl{nlohmann::json{{"expression", std::move(expression)}}}) {
   if (!title.empty()) {
     pimpl_->native_json["title"] = std::move(title);
   }
@@ -194,7 +191,7 @@ std::ostream& operator<<(std::ostream& stream, NativeExpression const& e) {
 
 struct NativeIamBinding::Impl {
   static StatusOr<NativeIamBinding> CreateFromJson(
-      internal::nl::json json, std::string const& policy_json_rep) {
+      nlohmann::json json, std::string const& policy_json_rep) {
     Status status =
         IsObjectIfPresent(json, policy_json_rep, "", "'bindings' entry");
     if (!status.ok()) {
@@ -245,7 +242,7 @@ struct NativeIamBinding::Impl {
         new Impl{json, std::move(members), std::move(condition)}));
   }
 
-  internal::nl::json ToJson() const {
+  nlohmann::json ToJson() const {
     auto ret = native_json;
     if (condition.has_value()) {
       ret["condition"] = condition->pimpl_->ToJson();
@@ -256,21 +253,21 @@ struct NativeIamBinding::Impl {
     return ret;
   }
 
-  internal::nl::json native_json;
+  nlohmann::json native_json;
   std::vector<std::string> members;
   absl::optional<NativeExpression> condition;
 };
 
 NativeIamBinding::NativeIamBinding(std::string role,
                                    std::vector<std::string> members)
-    : pimpl_(new Impl{internal::nl::json{{"role", std::move(role)}},
+    : pimpl_(new Impl{nlohmann::json{{"role", std::move(role)}},
                       std::move(members), absl::optional<NativeExpression>()}) {
 }
 
 NativeIamBinding::NativeIamBinding(std::string role,
                                    std::vector<std::string> members,
                                    NativeExpression condition)
-    : pimpl_(new Impl{internal::nl::json{{"role", std::move(role)}},
+    : pimpl_(new Impl{nlohmann::json{{"role", std::move(role)}},
                       std::move(members), std::move(condition)}) {}
 
 NativeIamBinding::NativeIamBinding(NativeIamBinding const& other)
@@ -341,10 +338,10 @@ std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding) {
 }
 
 struct NativeIamPolicy::Impl {
-  internal::nl::json ToJson() const {
+  nlohmann::json ToJson() const {
     auto ret = native_json;
     if (!bindings.empty()) {
-      auto& ret_bindings = ret["bindings"] = internal::nl::json::array();
+      auto& ret_bindings = ret["bindings"] = nlohmann::json::array();
       std::transform(bindings.begin(), bindings.end(),
                      std::back_inserter(ret_bindings),
                      [](NativeIamBinding const& binding) {
@@ -355,14 +352,14 @@ struct NativeIamPolicy::Impl {
     return ret;
   }
 
-  internal::nl::json native_json;
+  nlohmann::json native_json;
   std::vector<NativeIamBinding> bindings;
 };
 
 NativeIamPolicy::NativeIamPolicy(std::vector<NativeIamBinding> bindings,
                                  std::string etag, std::int32_t version)
-    : pimpl_(new Impl{internal::nl::json{{"version", version}},
-                      std::move(bindings)}) {
+    : pimpl_(
+          new Impl{nlohmann::json{{"version", version}}, std::move(bindings)}) {
   if (!etag.empty()) {
     pimpl_->native_json["etag"] = std::move(etag);
   }
@@ -378,7 +375,7 @@ NativeIamPolicy::~NativeIamPolicy() = default;
 
 StatusOr<NativeIamPolicy> NativeIamPolicy::CreateFromJson(
     std::string const& json_rep) {
-  auto json = internal::nl::json::parse(json_rep, nullptr, false);
+  auto json = nlohmann::json::parse(json_rep, nullptr, false);
   // Make sure the json actually parsed successfully
   if (json.is_discarded()) {
     std::ostringstream os;

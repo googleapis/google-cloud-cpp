@@ -353,7 +353,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   auto tested = CreateBucketMetadataForTest();
   auto actual_string = internal::BucketMetadataToJsonString(tested);
   // Verify that the produced string can be parsed as a JSON object.
-  internal::nl::json actual = internal::nl::json::parse(actual_string);
+  auto actual = nlohmann::json::parse(actual_string);
 
   // acl()
   ASSERT_EQ(1U, actual.count("acl")) << actual;
@@ -392,9 +392,9 @@ TEST(BucketMetadataTest, ToJsonString) {
 
   // iam_configuration()
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
-  internal::nl::json expected_iam_configuration{
-      {"bucketPolicyOnly", internal::nl::json{{"enabled", true}}},
-      {"uniformBucketLevelAccess", internal::nl::json{{"enabled", true}}}};
+  nlohmann::json expected_iam_configuration{
+      {"bucketPolicyOnly", nlohmann::json{{"enabled", true}}},
+      {"uniformBucketLevelAccess", nlohmann::json{{"enabled", true}}}};
   EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()
@@ -412,19 +412,19 @@ TEST(BucketMetadataTest, ToJsonString) {
   auto rule = actual["lifecycle"]["rule"][0];
   ASSERT_TRUE(rule.is_object()) << rule;
   EXPECT_EQ(
-      internal::nl::json({{"age", 30}, {"matchesStorageClass", {"STANDARD"}}}),
-      rule.value("condition", internal::nl::json{}));
-  EXPECT_EQ(internal::nl::json({
+      nlohmann::json({{"age", 30}, {"matchesStorageClass", {"STANDARD"}}}),
+      rule.value("condition", nlohmann::json{}));
+  EXPECT_EQ(nlohmann::json({
                 {"type", "SetStorageClass"},
                 {"storageClass", "NEARLINE"},
             }),
-            rule.value("action", internal::nl::json{}));
+            rule.value("action", nlohmann::json{}));
 
   rule = actual["lifecycle"]["rule"][1];
-  EXPECT_EQ(internal::nl::json({{"createdBefore", "2016-01-01"}}),
-            rule.value("condition", internal::nl::json{}));
-  EXPECT_EQ(internal::nl::json({{"type", "Delete"}}),
-            rule.value("action", internal::nl::json{}));
+  EXPECT_EQ(nlohmann::json({{"createdBefore", "2016-01-01"}}),
+            rule.value("condition", nlohmann::json{}));
+  EXPECT_EQ(nlohmann::json({{"type", "Delete"}}),
+            rule.value("action", nlohmann::json{}));
 
   // location()
   ASSERT_EQ(1U, actual.count("location")) << actual;
@@ -445,7 +445,7 @@ TEST(BucketMetadataTest, ToJsonString) {
 
   // retention_policy()
   ASSERT_EQ(1U, actual.count("retentionPolicy"));
-  auto expected_retention_policy = internal::nl::json{
+  auto expected_retention_policy = nlohmann::json{
       {"retentionPeriod", 86400},
   };
   EXPECT_EQ(expected_retention_policy, actual["retentionPolicy"]);
@@ -832,7 +832,7 @@ TEST(BucketMetadataPatchBuilder, SetAcl) {
                       .value()});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("acl"));
   ASSERT_TRUE(json["acl"].is_array()) << json;
   ASSERT_EQ(1U, json["acl"].size()) << json;
@@ -845,7 +845,7 @@ TEST(BucketMetadataPatchBuilder, ResetAcl) {
   builder.ResetAcl();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("acl")) << json;
   ASSERT_TRUE(json["acl"].is_null()) << json;
 }
@@ -855,7 +855,7 @@ TEST(BucketMetadataPatchBuilder, SetBilling) {
   builder.SetBilling(BucketBilling{true});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("billing")) << json;
   ASSERT_TRUE(json["billing"].is_object()) << json;
   EXPECT_TRUE(json["billing"].value("requesterPays", false)) << json;
@@ -866,7 +866,7 @@ TEST(BucketMetadataPatchBuilder, ResetBilling) {
   builder.ResetBilling();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("billing")) << json;
   ASSERT_TRUE(json["billing"].is_null()) << json;
 }
@@ -879,7 +879,7 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
   builder.SetCors(v);
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("cors")) << json;
   ASSERT_TRUE(json["cors"].is_array()) << json;
   ASSERT_EQ(2U, json["cors"].size()) << json;
@@ -899,7 +899,7 @@ TEST(BucketMetadataPatchBuilder, ResetCors) {
   builder.ResetCors();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("cors")) << json;
   ASSERT_TRUE(json["cors"].is_null()) << json;
 }
@@ -909,7 +909,7 @@ TEST(BucketMetadataPatchBuilder, SetDefaultEventBasedHold) {
   builder.SetDefaultEventBasedHold(true);
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("defaultEventBasedHold")) << json;
   ASSERT_TRUE(json["defaultEventBasedHold"].is_boolean()) << json;
   EXPECT_TRUE(json.value("defaultEventBasedHold", false)) << json;
@@ -920,7 +920,7 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
   builder.ResetDefaultEventBasedHold();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("defaultEventBasedHold")) << json;
   ASSERT_TRUE(json["defaultEventBasedHold"].is_null()) << json;
 }
@@ -933,7 +933,7 @@ TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
            .value()});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("defaultObjectAcl")) << json;
   ASSERT_TRUE(json["defaultObjectAcl"].is_array()) << json;
   ASSERT_EQ(1U, json["defaultObjectAcl"].size()) << json;
@@ -947,7 +947,7 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultAcl) {
   builder.ResetDefaultAcl();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("defaultObjectAcl")) << json;
   ASSERT_TRUE(json["defaultObjectAcl"].is_null()) << json;
 }
@@ -960,7 +960,7 @@ TEST(BucketMetadataPatchBuilder, SetIamConfiguration) {
   builder.SetEncryption(BucketEncryption{expected});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("encryption")) << json;
   ASSERT_TRUE(json["encryption"].is_object()) << json;
   EXPECT_EQ(expected, json["encryption"].value("defaultKmsKeyName", ""))
@@ -972,7 +972,7 @@ TEST(BucketMetadataPatchBuilder, ResetIamConfiguration) {
   builder.ResetEncryption();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("encryption")) << json;
   ASSERT_TRUE(json["encryption"].is_null()) << json;
 }
@@ -985,7 +985,7 @@ TEST(BucketMetadataPatchBuilder, SetEncryption) {
   builder.SetEncryption(BucketEncryption{expected});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("encryption")) << json;
   ASSERT_TRUE(json["encryption"].is_object()) << json;
   EXPECT_EQ(expected, json["encryption"].value("defaultKmsKeyName", ""))
@@ -997,7 +997,7 @@ TEST(BucketMetadataPatchBuilder, ResetEncryption) {
   builder.ResetEncryption();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("encryption")) << json;
   ASSERT_TRUE(json["encryption"].is_null()) << json;
 }
@@ -1009,7 +1009,7 @@ TEST(BucketMetadataPatchBuilder, SetLabels) {
   builder.ResetLabel("test-label3");
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("labels")) << json;
   ASSERT_TRUE(json["labels"].is_object()) << json;
   EXPECT_EQ("v1", json["labels"].value("test-label1", "")) << json;
@@ -1022,7 +1022,7 @@ TEST(BucketMetadataPatchBuilder, ResetLabels) {
   builder.ResetLabels();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("labels")) << json;
   ASSERT_TRUE(json["labels"].is_null()) << json;
 }
@@ -1040,7 +1040,7 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
   builder.SetLifecycle(lifecycle);
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("lifecycle")) << json;
   ASSERT_TRUE(json["lifecycle"].is_object()) << json;
   ASSERT_EQ(1U, json["lifecycle"].count("rule")) << json;
@@ -1062,7 +1062,7 @@ TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
   builder.ResetLifecycle();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("lifecycle")) << json;
   ASSERT_TRUE(json["lifecycle"].is_null()) << json;
 }
@@ -1072,7 +1072,7 @@ TEST(BucketMetadataPatchBuilder, SetLogging) {
   builder.SetLogging(BucketLogging{"test-log-bucket", "test-log-prefix"});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("logging")) << json;
   ASSERT_TRUE(json["logging"].is_object()) << json;
   EXPECT_EQ("test-log-bucket", json["logging"].value("logBucket", "")) << json;
@@ -1085,7 +1085,7 @@ TEST(BucketMetadataPatchBuilder, ResetLogging) {
   builder.ResetLogging();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("logging")) << json;
   ASSERT_TRUE(json["logging"].is_null()) << json;
 }
@@ -1095,7 +1095,7 @@ TEST(BucketMetadataPatchBuilder, SetName) {
   builder.SetName("test-bucket-changed-name");
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("name")) << json;
   ASSERT_TRUE(json["name"].is_string()) << json;
   EXPECT_EQ("test-bucket-changed-name", json.value("name", "")) << json;
@@ -1106,7 +1106,7 @@ TEST(BucketMetadataPatchBuilder, ResetName) {
   builder.ResetName();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("name")) << json;
   ASSERT_TRUE(json["name"].is_null()) << json;
 }
@@ -1118,9 +1118,9 @@ TEST(BucketMetadataPatchBuilder, SetRetentionPolicy) {
       google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z"), false});
 
   auto actual_patch = builder.BuildPatch();
-  auto actual_json = internal::nl::json::parse(actual_patch);
-  auto expected_json = internal::nl::json{
-      {"retentionPolicy", internal::nl::json{{"retentionPeriod", 60}}}};
+  auto actual_json = nlohmann::json::parse(actual_patch);
+  auto expected_json = nlohmann::json{
+      {"retentionPolicy", nlohmann::json{{"retentionPeriod", 60}}}};
   EXPECT_EQ(expected_json, actual_json);
 }
 
@@ -1129,7 +1129,7 @@ TEST(BucketMetadataPatchBuilder, ResetRetentionPolicy) {
   builder.ResetRetentionPolicy();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("retentionPolicy")) << json;
   ASSERT_TRUE(json["retentionPolicy"].is_null()) << json;
 }
@@ -1139,7 +1139,7 @@ TEST(BucketMetadataPatchBuilder, SetStorageClass) {
   builder.SetStorageClass("NEARLINE");
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("storageClass")) << json;
   ASSERT_TRUE(json["storageClass"].is_string()) << json;
   EXPECT_EQ("NEARLINE", json.value("storageClass", "")) << json;
@@ -1150,7 +1150,7 @@ TEST(BucketMetadataPatchBuilder, ResetStorageClass) {
   builder.ResetStorageClass();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("storageClass")) << json;
   ASSERT_TRUE(json["storageClass"].is_null()) << json;
 }
@@ -1160,7 +1160,7 @@ TEST(BucketMetadataPatchBuilder, SetVersioning) {
   builder.SetVersioning(BucketVersioning{true});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("versioning")) << json;
   ASSERT_TRUE(json["versioning"].is_object()) << json;
   EXPECT_TRUE(json["versioning"].value("enabled", false)) << json;
@@ -1171,7 +1171,7 @@ TEST(BucketMetadataPatchBuilder, ResetVersioning) {
   builder.ResetVersioning();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("versioning")) << json;
   ASSERT_TRUE(json["versioning"].is_null()) << json;
 }
@@ -1181,7 +1181,7 @@ TEST(BucketMetadataPatchBuilder, SetWebsite) {
   builder.SetWebsite(BucketWebsite{"index.htm", "404.htm"});
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("website")) << json;
   ASSERT_TRUE(json["website"].is_object()) << json;
   EXPECT_EQ("index.htm", json["website"].value("mainPageSuffix", "")) << json;
@@ -1193,7 +1193,7 @@ TEST(BucketMetadataPatchBuilder, ResetWebsite) {
   builder.ResetWebsite();
 
   auto actual = builder.BuildPatch();
-  auto json = internal::nl::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("website")) << json;
   ASSERT_TRUE(json["website"].is_null()) << json;
 }

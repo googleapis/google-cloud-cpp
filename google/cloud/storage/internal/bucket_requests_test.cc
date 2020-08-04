@@ -254,8 +254,8 @@ TEST(PatchBucketRequestTest, DiffSetAcl) {
                        .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(
       R"""({"acl": [{"entity": "user-test-user", "role": "OWNER"}]})""");
   EXPECT_EQ(expected, patch);
 }
@@ -269,8 +269,8 @@ TEST(PatchBucketRequestTest, DiffResetAcl) {
   updated.set_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"acl": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"acl": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -281,8 +281,8 @@ TEST(PatchBucketRequestTest, DiffSetBilling) {
   updated.set_billing(BucketBilling(true));
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "billing": {"requesterPays": true}
   })""");
   EXPECT_EQ(expected, patch);
@@ -295,8 +295,8 @@ TEST(PatchBucketRequestTest, DiffResetBilling) {
   updated.reset_billing();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"billing": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"billing": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -310,8 +310,8 @@ TEST(PatchBucketRequestTest, DiffSetCors) {
   updated.set_cors({e1, e2});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "cors": [{
           "maxAgeSeconds": 86400
        }, {
@@ -330,8 +330,8 @@ TEST(PatchBucketRequestTest, DiffResetCors) {
   updated.set_cors({});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"cors": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"cors": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -342,8 +342,8 @@ TEST(PatchBucketRequestTest, DiffSetDefaultEventBasedHold) {
   updated.set_default_event_based_hold(true);
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "defaultEventBasedHold": true
   })""");
   EXPECT_EQ(expected, patch);
@@ -359,8 +359,8 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
            .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "defaultObjectAcl": [{"entity": "user-test-user", "role": "OWNER"}]
   })""");
   EXPECT_EQ(expected, patch);
@@ -376,8 +376,8 @@ TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
   updated.set_default_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"defaultObjectAcl": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"defaultObjectAcl": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -388,8 +388,8 @@ TEST(PatchBucketRequestTest, DiffSetEncryption) {
   updated.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "encryption": {"defaultKmsKeyName": "invalid-key-name-just-for-test"}
   })""");
   EXPECT_EQ(expected, patch);
@@ -402,8 +402,8 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   updated.reset_encryption();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"encryption": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"encryption": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -416,8 +416,8 @@ TEST(PatchBucketRequestTest, DiffSetIamConfigurationBPO) {
   updated.set_iam_configuration(std::move(configuration));
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "iamConfiguration": {
           "bucketPolicyOnly": {"enabled": true},
           "uniformBucketLevelAccess":{"enabled": true}
@@ -436,8 +436,8 @@ TEST(PatchBucketRequestTest, DiffSetIamConfigurationUBLA) {
   updated.set_iam_configuration(std::move(configuration));
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "iamConfiguration": {
           "bucketPolicyOnly": {"enabled": true},
           "uniformBucketLevelAccess":{"enabled": true}
@@ -455,8 +455,8 @@ TEST(PatchBucketRequestTest, DiffResetIamConfigurationBPO) {
   updated.reset_iam_configuration();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"iamConfiguration": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"iamConfiguration": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -470,8 +470,8 @@ TEST(PatchBucketRequestTest, DiffResetIamConfigurationUBLA) {
   updated.reset_iam_configuration();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"iamConfiguration": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"iamConfiguration": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -486,8 +486,8 @@ TEST(PatchBucketRequestTest, DiffSetLabels) {
   updated.mutable_labels().insert({"label3", "v3"});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "labels": {"label2": null, "label3": "v3"}
   })""");
   EXPECT_EQ(expected, patch);
@@ -503,8 +503,8 @@ TEST(PatchBucketRequestTest, DiffResetLabels) {
   updated.mutable_labels().clear();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"labels": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"labels": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -516,8 +516,8 @@ TEST(PatchBucketRequestTest, DiffSetLifecycle) {
       LifecycleRule::NumNewerVersions(5), LifecycleRule::Delete())}});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "lifecycle": {
           "rule": [
               {
@@ -538,8 +538,8 @@ TEST(PatchBucketRequestTest, DiffResetLifecycle) {
   updated.reset_lifecycle();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"lifecycle": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"lifecycle": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -550,8 +550,8 @@ TEST(PatchBucketRequestTest, DiffSetLogging) {
   updated.set_logging(BucketLogging{"test-log-bucket", "test-log-prefix"});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "logging": {
           "logBucket": "test-log-bucket",
           "logObjectPrefix": "test-log-prefix"
@@ -567,8 +567,8 @@ TEST(PatchBucketRequestTest, DiffResetLogging) {
   updated.reset_logging();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"logging": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"logging": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -579,8 +579,8 @@ TEST(PatchBucketRequestTest, DiffSetName) {
   updated.set_name("new-bucket-name");
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"name": "new-bucket-name"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"name": "new-bucket-name"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -591,8 +591,8 @@ TEST(PatchBucketRequestTest, DiffResetName) {
   updated.set_name("");
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"name": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"name": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -603,8 +603,8 @@ TEST(PatchBucketRequestTest, DiffSetRetentionPolicy) {
   updated.set_retention_policy(std::chrono::seconds(60));
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "retentionPolicy": {
           "retentionPeriod": 60
       }
@@ -619,8 +619,8 @@ TEST(PatchBucketRequestTest, DiffResetRetentionPolicy) {
   updated.reset_retention_policy();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"retentionPolicy": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"retentionPolicy": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -631,8 +631,8 @@ TEST(PatchBucketRequestTest, DiffSetStorageClass) {
   updated.set_storage_class(storage_class::Coldline());
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"storageClass": "COLDLINE"})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"storageClass": "COLDLINE"})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -643,8 +643,8 @@ TEST(PatchBucketRequestTest, DiffResetStorageClass) {
   updated.set_storage_class("");
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"storageClass": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"storageClass": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -655,8 +655,8 @@ TEST(PatchBucketRequestTest, DiffSetVersioning) {
   updated.disable_versioning();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "versioning": {"enabled": false}
   })""");
   EXPECT_EQ(expected, patch);
@@ -669,8 +669,8 @@ TEST(PatchBucketRequestTest, DiffResetVersioning) {
   updated.reset_versioning();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"versioning": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"versioning": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -681,8 +681,8 @@ TEST(PatchBucketRequestTest, DiffSetWebsite) {
   updated.set_website(BucketWebsite{"idx.htm", "404.htm"});
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
       "website": {
           "mainPageSuffix": "idx.htm",
           "notFoundPage": "404.htm"
@@ -698,8 +698,8 @@ TEST(PatchBucketRequestTest, DiffResetWebsite) {
   updated.reset_website();
   PatchBucketRequest request("test-bucket", original, updated);
 
-  nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({"website": null})""");
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"website": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -753,7 +753,7 @@ TEST(BucketRequestsTest, GetIamPolicy) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromString) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
       {"bindings",
@@ -762,11 +762,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{{"role", "roles/storage.admin"},
-                    {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{{"role", "roles/storage.objectViewer"},
-                    {"members",
-                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nlohmann::json{{"role", "roles/storage.admin"},
+                          {"members", std::vector<std::string>{"test-user-1"}}},
+           nlohmann::json{{"role", "roles/storage.objectViewer"},
+                          {"members", std::vector<std::string>{"test-user-2",
+                                                               "test-user-3"}}},
        }},
   };
 
@@ -787,12 +787,12 @@ TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
       {"bindings",
-       std::vector<nl::json>{
-           nl::json{{"members", std::vector<std::string>{"test-user-1"}}},
+       std::vector<nlohmann::json>{
+           nlohmann::json{{"members", std::vector<std::string>{"test-user-1"}}},
 
        }},
   };
@@ -804,10 +804,10 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings", std::vector<nl::json>{nl::json{
+      {"bindings", std::vector<nlohmann::json>{nlohmann::json{
                        {"role", "roles/storage.objectViewer"},
                    }}},
   };
@@ -820,10 +820,10 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings", std::vector<nl::json>{nl::json{
+      {"bindings", std::vector<nlohmann::json>{nlohmann::json{
                        {"role", "roles/storage.objectViewer"},
                        {"members", "invalid"},
                    }}},
@@ -837,7 +837,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
       {"bindings", "invalid"},
@@ -851,10 +851,10 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings", std::vector<nl::json>{"not_an_object"}},
+      {"bindings", std::vector<nlohmann::json>{"not_an_object"}},
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
@@ -865,14 +865,14 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidExtras) {
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
       {"bindings",
        {
-           nl::json{{"role", "roles/storage.admin"},
-                    {"members", std::vector<std::string>{"test-user-1"}},
-                    {"condition", "some_condition"}},
+           nlohmann::json{{"role", "roles/storage.admin"},
+                          {"members", std::vector<std::string>{"test-user-1"}},
+                          {"condition", "some_condition"}},
        }},
   };
 
@@ -894,7 +894,7 @@ TEST(BucketRequestsTest, SetIamPolicy) {
   request.set_multiple_options(UserProject("project-for-billing"));
   EXPECT_EQ("my-bucket", request.bucket_name());
 
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
       {"bindings",
@@ -903,16 +903,16 @@ TEST(BucketRequestsTest, SetIamPolicy) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{{"role", "roles/storage.admin"},
-                    {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{{"role", "roles/storage.objectViewer"},
-                    {"members",
-                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nlohmann::json{{"role", "roles/storage.admin"},
+                          {"members", std::vector<std::string>{"test-user-1"}}},
+           nlohmann::json{{"role", "roles/storage.objectViewer"},
+                          {"members", std::vector<std::string>{"test-user-2",
+                                                               "test-user-3"}}},
        }},
   };
-  auto actual_payload = nl::json::parse(request.json_payload());
+  auto actual_payload = nlohmann::json::parse(request.json_payload());
   EXPECT_EQ(expected_payload, actual_payload)
-      << nl::json::diff(expected_payload, actual_payload);
+      << nlohmann::json::diff(expected_payload, actual_payload);
   std::ostringstream os;
   os << request;
   auto actual = os.str();
@@ -931,7 +931,7 @@ TEST(BucketRequestsTest, SetNativeIamPolicy) {
   request.set_multiple_options(UserProject("project-for-billing"));
   EXPECT_EQ("my-bucket", request.bucket_name());
 
-  nl::json expected_payload{
+  nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"version", 1},
       {"etag", "XYZ="},
@@ -941,17 +941,17 @@ TEST(BucketRequestsTest, SetNativeIamPolicy) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{{"role", "roles/storage.admin"},
-                    {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{{"role", "roles/storage.objectViewer"},
-                    {"members",
-                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nlohmann::json{{"role", "roles/storage.admin"},
+                          {"members", std::vector<std::string>{"test-user-1"}}},
+           nlohmann::json{{"role", "roles/storage.objectViewer"},
+                          {"members", std::vector<std::string>{"test-user-2",
+                                                               "test-user-3"}}},
        }},
   };
   EXPECT_TRUE(request.HasOption<IfMatchEtag>());
-  auto actual_payload = nl::json::parse(request.json_payload());
+  auto actual_payload = nlohmann::json::parse(request.json_payload());
   EXPECT_EQ(expected_payload, actual_payload)
-      << nl::json::diff(expected_payload, actual_payload);
+      << nlohmann::json::diff(expected_payload, actual_payload);
   std::ostringstream os;
   os << request;
   auto actual = os.str();

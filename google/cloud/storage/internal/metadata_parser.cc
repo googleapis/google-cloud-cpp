@@ -22,7 +22,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-bool ParseBoolField(nl::json const& json, char const* field_name) {
+bool ParseBoolField(nlohmann::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return false;
   }
@@ -45,7 +45,7 @@ bool ParseBoolField(nl::json const& json, char const* field_name) {
   google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
-std::int32_t ParseIntField(nl::json const& json, char const* field_name) {
+std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return 0;
   }
@@ -62,7 +62,7 @@ std::int32_t ParseIntField(nl::json const& json, char const* field_name) {
   google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
-std::uint32_t ParseUnsignedIntField(nl::json const& json,
+std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
                                     char const* field_name) {
   if (json.count(field_name) == 0) {
     return 0;
@@ -80,7 +80,8 @@ std::uint32_t ParseUnsignedIntField(nl::json const& json,
   google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
-std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
+std::int64_t ParseLongField(nlohmann::json const& json,
+                            char const* field_name) {
   if (json.count(field_name) == 0) {
     return 0;
   }
@@ -97,7 +98,7 @@ std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
   google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
-std::uint64_t ParseUnsignedLongField(nl::json const& json,
+std::uint64_t ParseUnsignedLongField(nlohmann::json const& json,
                                      char const* field_name) {
   if (json.count(field_name) == 0) {
     return 0;
@@ -116,7 +117,7 @@ std::uint64_t ParseUnsignedLongField(nl::json const& json,
 }
 
 std::chrono::system_clock::time_point ParseTimestampField(
-    nl::json const& json, char const* field_name) {
+    nlohmann::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return std::chrono::system_clock::time_point{};
   }

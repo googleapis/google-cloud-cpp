@@ -75,9 +75,9 @@ TEST(NotificationMetadataTest, IOStream) {
 TEST(NotificationMetadataTest, JsonPayloadForInsert) {
   auto notification = CreateNotificationMetadataForTest();
   auto text = notification.JsonPayloadForInsert();
-  internal::nl::json actual = internal::nl::json::parse(text);
+  auto actual = nlohmann::json::parse(text);
 
-  internal::nl::json expected_attributes{
+  nlohmann::json expected_attributes{
       {"test-ca-1", "value1"},
       {"test-ca-2", "value2"},
   };
@@ -87,7 +87,7 @@ TEST(NotificationMetadataTest, JsonPayloadForInsert) {
       "OBJECT_DELETE",
       "OBJECT_ARCHIVE",
   };
-  internal::nl::json expected{
+  nlohmann::json expected{
       {"custom_attributes", expected_attributes},
       {"topic", "test-topic"},
       {"payload_format", "JSON_API_V1"},
@@ -95,7 +95,7 @@ TEST(NotificationMetadataTest, JsonPayloadForInsert) {
       {"object_name_prefix", "test-prefix-"},
   };
 
-  auto diff = internal::nl::json::diff(expected, actual);
+  auto diff = nlohmann::json::diff(expected, actual);
   EXPECT_EQ("[]", diff.dump()) << " text=" << text;
 }
 

@@ -144,9 +144,8 @@ TEST_F(ObjectCopyTest, ComposeObject) {
       .WillOnce([&expected](internal::ComposeObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
-        internal::nl::json actual_payload =
-            internal::nl::json::parse(r.JsonPayload());
-        internal::nl::json expected_payload = {
+        auto actual_payload = nlohmann::json::parse(r.JsonPayload());
+        nlohmann::json expected_payload = {
             {"kind", "storage#composeRequest"},
             {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
         EXPECT_EQ(expected_payload, actual_payload);

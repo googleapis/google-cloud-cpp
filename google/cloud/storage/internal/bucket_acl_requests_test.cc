@@ -166,10 +166,10 @@ TEST(BucketAclRequestTest, PatchDiff) {
 
   PatchBucketAclRequest request("my-bucket", "user-test-user", original,
                                 new_acl);
-  nl::json expected = {
+  nlohmann::json expected = {
       {"role", "READER"},
   };
-  nl::json actual = nl::json::parse(request.payload());
+  auto actual = nlohmann::json::parse(request.payload());
   EXPECT_EQ(expected, actual);
 }
 
@@ -177,8 +177,8 @@ TEST(BucketAclRequestTest, PatchBuilder) {
   PatchBucketAclRequest request(
       "my-bucket", "user-test-user",
       BucketAccessControlPatchBuilder().set_role("READER").delete_entity());
-  nl::json expected = {{"role", "READER"}, {"entity", nullptr}};
-  nl::json actual = nl::json::parse(request.payload());
+  auto expected = nlohmann::json{{"role", "READER"}, {"entity", nullptr}};
+  auto actual = nlohmann::json::parse(request.payload());
   EXPECT_EQ(expected, actual);
 }
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace google {
@@ -22,7 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<BucketAccessControl> BucketAccessControlParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -36,7 +36,7 @@ StatusOr<BucketAccessControl> BucketAccessControlParser::FromJson(
 
 StatusOr<BucketAccessControl> BucketAccessControlParser::FromString(
     std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 
@@ -49,7 +49,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r) {
 StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
     std::string const& payload) {
   ListBucketAclResponse result;
-  auto json = nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace google {
@@ -31,7 +31,7 @@ std::ostream& operator<<(std::ostream& os,
 
 StatusOr<ListDefaultObjectAclResponse>
 ListDefaultObjectAclResponse::FromHttpResponse(std::string const& payload) {
-  auto json = nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

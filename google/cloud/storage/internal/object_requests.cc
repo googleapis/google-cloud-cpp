@@ -15,9 +15,9 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/object_metadata.h"
+#include <nlohmann/json.hpp>
 #include <cinttypes>
 #include <sstream>
 
@@ -33,7 +33,7 @@ namespace {
  * This simplifies the implementation of ToJsonString() because we repeat this
  * check for many attributes.
  */
-void SetIfNotEmpty(internal::nl::json& json, char const* key,
+void SetIfNotEmpty(nlohmann::json& json, char const* key,
                    std::string const& value) {
   if (value.empty()) {
     return;
@@ -43,7 +43,7 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
 }  // namespace
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -100,16 +100,15 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromString(
     std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 
-internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
-  using ::google::cloud::storage::internal::nl::json;
-  json metadata_as_json({});
+nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
+  nlohmann::json metadata_as_json({});
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
-      json entry;
+      nlohmann::json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
       SetIfNotEmpty(entry, "role", a.role());
       metadata_as_json["acl"].emplace_back(std::move(entry));
@@ -131,7 +130,7 @@ internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
   SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
 
   if (!meta.metadata().empty()) {
-    json meta_as_json;
+    nlohmann::json meta_as_json;
     for (auto const& kv : meta.metadata()) {
       meta_as_json[kv.first] = kv.second;
     }
@@ -141,27 +140,26 @@ internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
   return metadata_as_json;
 }
 
-internal::nl::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta) {
+nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta) {
   return ObjectMetadataJsonForCompose(meta);
 }
 
-internal::nl::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta) {
+nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta) {
   auto json = ObjectMetadataJsonForCompose(meta);
   SetIfNotEmpty(json, "crc32c", meta.crc32c());
   SetIfNotEmpty(json, "md5Hash", meta.md5_hash());
   return json;
 }
 
-internal::nl::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta) {
+nlohmann::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta) {
   return ObjectMetadataJsonForCompose(meta);
 }
 
-internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
-  using ::google::cloud::storage::internal::nl::json;
-  json metadata_as_json({});
+nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
+  nlohmann::json metadata_as_json({});
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
-      json entry;
+      nlohmann::json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
       SetIfNotEmpty(entry, "role", a.role());
       metadata_as_json["acl"].emplace_back(std::move(entry));
@@ -178,7 +176,7 @@ internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   metadata_as_json["eventBasedHold"] = meta.event_based_hold();
 
   if (!meta.metadata().empty()) {
-    json meta_as_json;
+    nlohmann::json meta_as_json;
     for (auto const& kv : meta.metadata()) {
       meta_as_json[kv.first] = kv.second;
     }
@@ -196,7 +194,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
 
 StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -414,10 +412,9 @@ ComposeObjectRequest::ComposeObjectRequest(
       source_objects_(std::move(source_objects)) {}
 
 std::string ComposeObjectRequest::JsonPayload() const {
-  using ::google::cloud::storage::internal::nl::json;
-  json compose_object_payload_json;
+  nlohmann::json compose_object_payload_json;
   compose_object_payload_json["kind"] = "storage#composeRequest";
-  json destination_metadata_payload;
+  nlohmann::json destination_metadata_payload;
   if (HasOption<WithObjectMetadata>()) {
     destination_metadata_payload =
         ObjectMetadataJsonForCompose(GetOption<WithObjectMetadata>().value());
@@ -425,9 +422,9 @@ std::string ComposeObjectRequest::JsonPayload() const {
   if (!destination_metadata_payload.is_null()) {
     compose_object_payload_json["destination"] = destination_metadata_payload;
   }
-  json source_object_list;
+  nlohmann::json source_object_list;
   for (auto const& source_object : source_objects_) {
-    json source_object_json;
+    nlohmann::json source_object_json;
     source_object_json["name"] = source_object.object_name;
     if (source_object.generation.has_value()) {
       source_object_json["generation"] = source_object.generation.value();
@@ -544,7 +541,7 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
 
 StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     std::string const& payload) {
-  nl::json object = nl::json::parse(payload, nullptr, false);
+  auto object = nlohmann::json::parse(payload, nullptr, false);
   if (!object.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

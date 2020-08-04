@@ -187,7 +187,7 @@ TEST(CompositeHashValidator, ProcessMetadata) {
   UpdateValidator(validator, " brown");
   UpdateValidator(validator, " fox jumps over the lazy dog");
   auto object_metadata = internal::ObjectMetadataParser::FromJson(
-                             internal::nl::json{
+                             nlohmann::json{
                                  {"crc32c", kQuickFoxCrc32cChecksum},
                                  {"md5Hash", kQuickFoxMD5Hash},
                              })

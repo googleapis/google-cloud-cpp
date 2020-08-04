@@ -185,8 +185,8 @@ TEST(ObjectMetadataTest, IOStream) {
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
 TEST(ObjectMetadataTest, JsonForComposeEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForCompose(ObjectMetadata());
-  internal::nl::json expected({});
+  nlohmann::json actual = ObjectMetadataJsonForCompose(ObjectMetadata());
+  nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
@@ -194,9 +194,9 @@ TEST(ObjectMetadataTest, JsonForComposeEmpty) {
 TEST(ObjectMetadataTest, JsonForCompose) {
   auto actual = ObjectMetadataJsonForCompose(CreateObjectMetadataForTest());
 
-  internal::nl::json expected = {
+  nlohmann::json expected = {
       {"acl",
-       internal::nl::json{
+       nlohmann::json{
            {{"entity", "user-qux"}, {"role", "OWNER"}},
            {{"entity", "user-quux"}, {"role", "READER"}},
        }},
@@ -207,7 +207,7 @@ TEST(ObjectMetadataTest, JsonForCompose) {
       {"contentType", "application/octet-stream"},
       {"eventBasedHold", true},
       {"metadata",
-       internal::nl::json{
+       nlohmann::json{
            {"foo", "bar"},
            {"baz", "qux"},
        }},
@@ -215,13 +215,13 @@ TEST(ObjectMetadataTest, JsonForCompose) {
       {"storageClass", "STANDARD"},
   };
   EXPECT_EQ(expected, actual)
-      << "diff=" << internal::nl::json::diff(expected, actual);
+      << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForCopy works as expected.
 TEST(ObjectMetadataTest, JsonForCopyEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
-  internal::nl::json expected({});
+  nlohmann::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
+  nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
@@ -229,9 +229,9 @@ TEST(ObjectMetadataTest, JsonForCopyEmpty) {
 TEST(ObjectMetadataTest, JsonForCopy) {
   auto actual = ObjectMetadataJsonForCopy(CreateObjectMetadataForTest());
 
-  internal::nl::json expected = {
+  nlohmann::json expected = {
       {"acl",
-       internal::nl::json{
+       nlohmann::json{
            {{"entity", "user-qux"}, {"role", "OWNER"}},
            {{"entity", "user-quux"}, {"role", "READER"}},
        }},
@@ -242,7 +242,7 @@ TEST(ObjectMetadataTest, JsonForCopy) {
       {"contentType", "application/octet-stream"},
       {"eventBasedHold", true},
       {"metadata",
-       internal::nl::json{
+       nlohmann::json{
            {"foo", "bar"},
            {"baz", "qux"},
        }},
@@ -250,13 +250,13 @@ TEST(ObjectMetadataTest, JsonForCopy) {
       {"storageClass", "STANDARD"},
   };
   EXPECT_EQ(expected, actual)
-      << "diff=" << internal::nl::json::diff(expected, actual);
+      << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForInsert works as expected.
 TEST(ObjectMetadataTest, JsonForInsertEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForInsert(ObjectMetadata());
-  internal::nl::json expected({});
+  nlohmann::json actual = ObjectMetadataJsonForInsert(ObjectMetadata());
+  nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
@@ -264,9 +264,9 @@ TEST(ObjectMetadataTest, JsonForInsertEmpty) {
 TEST(ObjectMetadataTest, JsonForInsert) {
   auto actual = ObjectMetadataJsonForInsert(CreateObjectMetadataForTest());
 
-  internal::nl::json expected = {
+  nlohmann::json expected = {
       {"acl",
-       internal::nl::json{
+       nlohmann::json{
            {{"entity", "user-qux"}, {"role", "OWNER"}},
            {{"entity", "user-quux"}, {"role", "READER"}},
        }},
@@ -279,7 +279,7 @@ TEST(ObjectMetadataTest, JsonForInsert) {
       {"eventBasedHold", true},
       {"md5Hash", "deaderBeef="},
       {"metadata",
-       internal::nl::json{
+       nlohmann::json{
            {"foo", "bar"},
            {"baz", "qux"},
        }},
@@ -287,13 +287,13 @@ TEST(ObjectMetadataTest, JsonForInsert) {
       {"storageClass", "STANDARD"},
   };
   EXPECT_EQ(expected, actual)
-      << "diff=" << internal::nl::json::diff(expected, actual);
+      << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForRewrite works as expected.
 TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForRewrite(ObjectMetadata());
-  internal::nl::json expected({});
+  nlohmann::json actual = ObjectMetadataJsonForRewrite(ObjectMetadata());
+  nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
@@ -301,9 +301,9 @@ TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
 TEST(ObjectMetadataTest, JsonForRewrite) {
   auto actual = ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
 
-  internal::nl::json expected = {
+  nlohmann::json expected = {
       {"acl",
-       internal::nl::json{
+       nlohmann::json{
            {{"entity", "user-qux"}, {"role", "OWNER"}},
            {{"entity", "user-quux"}, {"role", "READER"}},
        }},
@@ -314,7 +314,7 @@ TEST(ObjectMetadataTest, JsonForRewrite) {
       {"contentType", "application/octet-stream"},
       {"eventBasedHold", true},
       {"metadata",
-       internal::nl::json{
+       nlohmann::json{
            {"foo", "bar"},
            {"baz", "qux"},
        }},
@@ -322,27 +322,27 @@ TEST(ObjectMetadataTest, JsonForRewrite) {
       {"storageClass", "STANDARD"},
   };
   EXPECT_EQ(expected, actual)
-      << "diff=" << internal::nl::json::diff(expected, actual);
+      << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForUpdate works as expected.
 TEST(ObjectMetadataTest, JsonForUpdateEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForUpdate(ObjectMetadata());
-  internal::nl::json expected({{"eventBasedHold", false}});
+  nlohmann::json actual = ObjectMetadataJsonForUpdate(ObjectMetadata());
+  nlohmann::json expected({{"eventBasedHold", false}});
   EXPECT_EQ(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForUpdate works as expected.
 TEST(ObjectMetadataTest, JsonForUpdate) {
   auto tested = CreateObjectMetadataForTest();
-  internal::nl::json actual = ObjectMetadataJsonForUpdate(tested);
+  nlohmann::json actual = ObjectMetadataJsonForUpdate(tested);
 
   // Create a JSON object with only the writeable fields, because this is what
   // will be encoded in JsonPayloadForUpdate(). Before adding a new field,
   // verify that it is used by `Objects: update`.
-  internal::nl::json expected = {
+  nlohmann::json expected = {
       {"acl",
-       internal::nl::json{
+       nlohmann::json{
            {{"entity", "user-qux"}, {"role", "OWNER"}},
            {{"entity", "user-quux"}, {"role", "READER"}},
        }},
@@ -353,13 +353,13 @@ TEST(ObjectMetadataTest, JsonForUpdate) {
       {"contentType", "application/octet-stream"},
       {"eventBasedHold", true},
       {"metadata",
-       internal::nl::json{
+       nlohmann::json{
            {"foo", "bar"},
            {"baz", "qux"},
        }},
   };
   EXPECT_EQ(expected, actual)
-      << "diff=" << internal::nl::json::diff(expected, actual);
+      << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
 /// @test Verify we can make changes to one Acl in ObjectMetadata.
@@ -491,11 +491,11 @@ TEST(ObjectMetadataPatchBuilder, SetAcl) {
                       .value()});
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
+  auto actual_as_json = nlohmann::json::parse(actual);
 
-  // This is easier to express as a string than as a brace-initialized nl::json
-  // object.
-  internal::nl::json expected = internal::nl::json::parse(R"""({
+  // This is easier to express as a string than as a brace-initialized
+  // nlohmann::json object.
+  auto expected = nlohmann::json::parse(R"""({
     "acl":[{ "entity": "user-test-user", "role": "OWNER" }]
   })""");
   EXPECT_EQ(expected, actual_as_json) << actual;
@@ -506,8 +506,8 @@ TEST(ObjectMetadataPatchBuilder, ResetAcl) {
   builder.ResetAcl();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"acl", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"acl", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -516,8 +516,8 @@ TEST(ObjectMetadataPatchBuilder, SetCacheControl) {
   builder.SetCacheControl("no-cache");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"cacheControl", "no-cache"}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"cacheControl", "no-cache"}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -526,8 +526,8 @@ TEST(ObjectMetadataPatchBuilder, ResetCacheControl) {
   builder.ResetCacheControl();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"cacheControl", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"cacheControl", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -536,8 +536,8 @@ TEST(ObjectMetadataPatchBuilder, SetContentDisposition) {
   builder.SetContentDisposition("test-value");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentDisposition", "test-value"}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentDisposition", "test-value"}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -546,8 +546,8 @@ TEST(ObjectMetadataPatchBuilder, ResetContentDisposition) {
   builder.ResetContentDisposition();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentDisposition", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentDisposition", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -556,8 +556,8 @@ TEST(ObjectMetadataPatchBuilder, SetContentEncoding) {
   builder.SetContentEncoding("test-value");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentEncoding", "test-value"}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentEncoding", "test-value"}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -566,8 +566,8 @@ TEST(ObjectMetadataPatchBuilder, ResetContentEncoding) {
   builder.ResetContentEncoding();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentEncoding", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentEncoding", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -576,8 +576,8 @@ TEST(ObjectMetadataPatchBuilder, SetContentLanguage) {
   builder.SetContentLanguage("test-value");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentLanguage", "test-value"}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentLanguage", "test-value"}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -586,8 +586,8 @@ TEST(ObjectMetadataPatchBuilder, ResetContentLanguage) {
   builder.ResetContentLanguage();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentLanguage", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentLanguage", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -596,8 +596,8 @@ TEST(ObjectMetadataPatchBuilder, SetContentType) {
   builder.SetContentType("test-value");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentType", "test-value"}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentType", "test-value"}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -606,8 +606,8 @@ TEST(ObjectMetadataPatchBuilder, ResetContentType) {
   builder.ResetContentType();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"contentType", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"contentType", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -616,8 +616,8 @@ TEST(ObjectMetadataPatchBuilder, SetEventBasedHold) {
   builder.SetEventBasedHold(true);
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"eventBasedHold", true}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"eventBasedHold", true}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -626,8 +626,8 @@ TEST(ObjectMetadataPatchBuilder, ResetEventBasedHold) {
   builder.ResetEventBasedHold();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"eventBasedHold", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"eventBasedHold", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -638,13 +638,13 @@ TEST(ObjectMetadataPatchBuilder, SetMetadata) {
   builder.ResetMetadata("test-label3");
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  auto json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"metadata", internal::nl::json{
-                                               {"test-label1", "v1"},
-                                               {"test-label2", "v2"},
-                                               {"test-label3", nullptr},
-                                           }}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  auto json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"metadata", nlohmann::json{
+                                           {"test-label1", "v1"},
+                                           {"test-label2", "v2"},
+                                           {"test-label3", nullptr},
+                                       }}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -653,8 +653,8 @@ TEST(ObjectMetadataPatchBuilder, Resetmetadata) {
   builder.ResetMetadata();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{
       {"metadata", nullptr},
   };
   EXPECT_EQ(expected, actual_as_json) << actual;
@@ -665,8 +665,8 @@ TEST(ObjectMetadataPatchBuilder, SetTemporaryHold) {
   builder.SetTemporaryHold(true);
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"temporaryHold", true}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"temporaryHold", true}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
@@ -675,8 +675,8 @@ TEST(ObjectMetadataPatchBuilder, ResetTemporaryHold) {
   builder.ResetTemporaryHold();
 
   auto actual = builder.BuildPatch();
-  auto actual_as_json = internal::nl::json::parse(actual);
-  internal::nl::json expected{{"temporaryHold", nullptr}};
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"temporaryHold", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 

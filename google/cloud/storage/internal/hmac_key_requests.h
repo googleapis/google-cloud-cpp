@@ -18,9 +18,9 @@
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/override_default_project.h"
 #include "google/cloud/storage/version.h"
+#include <nlohmann/json.hpp>
 #include <iosfwd>
 
 namespace google {
@@ -30,7 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 struct HmacKeyMetadataParser {
-  static StatusOr<HmacKeyMetadata> FromJson(internal::nl::json const& json);
+  static StatusOr<HmacKeyMetadata> FromJson(nlohmann::json const& json);
   static StatusOr<HmacKeyMetadata> FromString(std::string const& payload);
 };
 

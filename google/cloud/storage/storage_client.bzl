@@ -54,7 +54,6 @@ storage_client_hdrs = [
     "internal/logging_client.h",
     "internal/logging_resumable_upload_session.h",
     "internal/metadata_parser.h",
-    "internal/nljson.h",
     "internal/notification_requests.h",
     "internal/object_acl_requests.h",
     "internal/object_read_source.h",

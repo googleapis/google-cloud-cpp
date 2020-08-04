@@ -21,7 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<NotificationMetadata> NotificationMetadataParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -53,7 +53,7 @@ StatusOr<NotificationMetadata> NotificationMetadataParser::FromJson(
 
 StatusOr<NotificationMetadata> NotificationMetadataParser::FromString(
     std::string const& payload) {
-  internal::nl::json json = internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r) {
 
 StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

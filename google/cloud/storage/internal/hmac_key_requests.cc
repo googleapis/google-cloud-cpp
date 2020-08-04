@@ -23,7 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
-    internal::nl::json const& json) {
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -48,7 +48,7 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
 
 StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromString(
     std::string const& payload) {
-  internal::nl::json json = internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   return FromJson(json);
 }
 
@@ -61,7 +61,7 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r) {
 
 StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -93,7 +93,7 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r) {
 
 StatusOr<ListHmacKeysResponse> ListHmacKeysResponse::FromHttpResponse(
     std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

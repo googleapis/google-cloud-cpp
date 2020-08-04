@@ -29,7 +29,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ObjectAccessControlParser {
-  static StatusOr<ObjectAccessControl> FromJson(internal::nl::json const& json);
+  static StatusOr<ObjectAccessControl> FromJson(nlohmann::json const& json);
   static StatusOr<ObjectAccessControl> FromString(std::string const& payload);
 };
 

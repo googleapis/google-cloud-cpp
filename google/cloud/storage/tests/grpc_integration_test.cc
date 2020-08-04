@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
@@ -21,6 +20,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <algorithm>
 #include <vector>
 
