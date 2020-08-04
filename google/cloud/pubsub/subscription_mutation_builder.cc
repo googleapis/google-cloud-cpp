@@ -27,8 +27,7 @@ SubscriptionMutationBuilder::BuildUpdateSubscription(
   request.mutable_subscription()->set_name(subscription.FullName());
   for (auto const& p : paths_) {
     google::protobuf::util::FieldMaskUtil::AddPathToFieldMask<
-        google::pubsub::v1::UpdateSubscriptionRequest>(
-        "subscription." + p, request.mutable_update_mask());
+        google::pubsub::v1::Subscription>(p, request.mutable_update_mask());
   }
   return request;
 }
