@@ -14,27 +14,21 @@
 # limitations under the License.
 # ~~~
 
-include(ExternalProject)
-ExternalProject_Add(
-    nlohmann_json_project
-    PREFIX "${CMAKE_BINARY_DIR}/external/nlohmann_json"
-    DOWNLOAD_COMMAND ${CMAKE_COMMAND} -DDEST=<INSTALL_DIR>/src -P
-                     ${PROJECT_SOURCE_DIR}/cmake/DownloadNlohmannJson.cmake
-    CONFIGURE_COMMAND
-        "" # This is not great, we abuse the `build` step to create the target
-           # directory. Unfortunately there is no way to specify two commands in
-           # the install step.
-    BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include
-    INSTALL_COMMAND
-        ${CMAKE_COMMAND} -E copy <INSTALL_DIR>/src/json.hpp
-        <INSTALL_DIR>/include/google/cloud/storage/internal/nlohmann_json.hpp
-    LOG_DOWNLOAD ON
-    LOG_INSTALL ON)
+function (find_nlohmann_json)
+    find_package(nlohmann_json CONFIG QUIET)
+    if (nlohmann_json_FOUND)
+        return()
+    endif ()
+    # As a fall back, try finding the header. Since this is a header-only
+    # library that is all we need.
+    find_path(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER "nlohmann/json.hpp"
+              REQUIRED)
+    add_library(nlohmann_json::nlohmann_json UNKNOWN IMPORTED)
+    set_property(
+        TARGET nlohmann_json::nlohmann_json
+        APPEND
+        PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                 ${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_HEADER})
+endfunction ()
 
-add_library(nlohmann_json INTERFACE)
-add_dependencies(nlohmann_json nlohmann_json_project)
-target_include_directories(
-    nlohmann_json
-    INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/external/nlohmann_json/include>
-        $<INSTALL_INTERFACE:include>)
+find_nlohmann_json()

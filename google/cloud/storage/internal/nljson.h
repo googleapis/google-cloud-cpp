@@ -15,47 +15,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_NLJSON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_NLJSON_H
 
-#include "google/cloud/storage/version.h"
-
 /**
  * @file
  *
- * Include the nlohmann/json headers but renaming the namespace.
- *
- * We use the excellent nlohmann/json library to parse JSON in this client.
- * However, we do not want to create dependency conflicts where our version of
- * the code clashes with a different version that the user may have included.
- * We always include the library through this header, and rename its top-level
- * namespace to avoid conflicts. Because nlohmann/json is a header-only library
- * no further action is needed.
+ * Include the nlohmann/json headers.
  *
  * @see https://github.com/nlohmann/json.git
  */
 
-// Remove the include guards because third-parties may have included their own
-// version of nlohmann::json. This is safe because google/cloud/storage always
-// includes the nlohmann::json through this header, so after the first time our
-// own include guards are enough.
-#undef NLOHMANN_JSON_HPP
-#undef NLOHMANN_JSON_FWD_HPP
+#include "google/cloud/storage/version.h"
+#include <nlohmann/json.hpp>
 
-// NOLINTNEXTLINE(readability-identifier-naming)
-#define nlohmann google_cloud_storage_internal_nlohmann_3_4_0
-#include "google/cloud/storage/internal/nlohmann_json.hpp"
-
-// Remove the include guards so third-parties can include their own version of
-// nlohmann::json. This is safe because google/cloud/storage always includes
-// the nlohmann::json through this header, so after the first time our own
-// include guards are enough.
-#undef NLOHMANN_BASIC_JSON_TPL
-#undef NLOHMANN_BASIC_JSON_TPL_DECLARATION
-#undef NLOHMANN_JSON_HPP
-#undef NLOHMANN_JSON_FWD_HPP
-#undef NLOHMANN_JSON_SERIALIZE_ENUM
-#undef NLOHMANN_JSON_VERSION_MAJOR
-#undef NLOHMANN_JSON_VERSION_MINOR
-#undef NLOHMANN_JSON_VERSION_PATCH
-
+// TODO(#4748) - clean this up, the bug in GTest was fixed circa 2017
+//   https://github.com/google/googletest/pull/1186
 namespace nlohmann {
 //
 // Google Test uses PrintTo (with many overloads) to print the results of failed
@@ -70,14 +42,14 @@ namespace nlohmann {
 /// Prints json objects to output streams from within Google Test.
 inline void PrintTo(json const& j, std::ostream* os) { *os << j.dump(); }
 }  // namespace nlohmann
-#undef nlohmann
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace nl = ::google_cloud_storage_internal_nlohmann_3_4_0;
+// TODO(#4749) - we no longer need this alias, remove
+namespace nl = ::nlohmann;  // NOLINT(misc-unused-alias-decls)
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

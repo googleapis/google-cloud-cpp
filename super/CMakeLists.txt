@@ -38,11 +38,13 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
 endif ()
 
 include(external/abseil)
+include(external/benchmark)
 include(external/curl)
 include(external/crc32c)
-include(external/grpc)
 include(external/googletest)
-include(external/benchmark)
+include(external/grpc)
+include(external/nlohmann_json)
+
 include(ProcessorCount)
 processorcount(NCPU)
 
@@ -51,8 +53,13 @@ set_external_project_build_parallel_level(PARALLEL)
 set_external_project_vars()
 
 set(GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST
-    abseil-cpp-project grpc-project curl-project crc32c-project
-    googletest-project benchmark-project)
+    abseil-cpp-project
+    grpc-project
+    curl-project
+    crc32c-project
+    nlohmann-json-project
+    googletest-project
+    benchmark-project)
 
 include(ExternalProject)
 ExternalProject_Add(

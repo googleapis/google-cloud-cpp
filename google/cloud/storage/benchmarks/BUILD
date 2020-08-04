@@ -25,7 +25,6 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "@boringssl//:crypto",
@@ -51,7 +50,6 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     deps = [
         ":storage_benchmarks",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",

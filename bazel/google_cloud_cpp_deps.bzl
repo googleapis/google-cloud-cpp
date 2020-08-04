@@ -140,13 +140,14 @@ def google_cloud_cpp_deps():
         )
 
     # We need the nlohmann_json library
-    if "com_github_nlohmann_json_single_header" not in native.existing_rules():
-        http_file(
-            name = "com_github_nlohmann_json_single_header",
+    if "com_github_nlohmann_json" not in native.existing_rules():
+        http_archive(
+            name = "com_github_nlohmann_json",
             urls = [
-                "https://github.com/nlohmann/json/releases/download/v3.4.0/json.hpp",
+                "https://github.com/nlohmann/json/releases/download/v3.4.0/include.zip",
             ],
-            sha256 = "63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f",
+            sha256 = "bfec46fc0cee01c509cf064d2254517e7fa80d1e7647fea37cf81d97c5682bdc",
+            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:nlohmann_json.BUILD",
         )
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.

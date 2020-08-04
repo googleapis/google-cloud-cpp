@@ -183,10 +183,17 @@ cc_binary(
 
 | Library | Minimum version | Description |
 | ------- | --------------: | ----------- |
-| gRPC    | 1.16.x | gRPC++ for Cloud Bigtable |
-| libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
-| crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
-| OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
+| [gRPC][gRPC-gh] | 1.16.x | gRPC++ for Cloud Bigtable |
+| [libcurl][libcurl-gh] | 7.47.0  | HTTP client library for the Google Cloud Storage client |
+| [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
+| [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
+| [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
+
+[gRPC-gh]: https://github.com/grpc/grpc
+[libcurl-gh]: https://github.com/curl/curl
+[crc32c-gh]: https://github.com/google/crc32c
+[OpenSSL-gh]: https://github.com/openssl/openssl
+[nlohmann-json-gh]: https://github.com/nlohmann/json
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
