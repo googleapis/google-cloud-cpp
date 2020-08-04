@@ -88,7 +88,7 @@ TEST(SubscriptionMutationBuilder, PushConfigBasic) {
       name: "projects/test-project/subscriptions/test-subscription"
       push_config { push_endpoint: "https://endpoint.example.com" }
     }
-    update_mask { paths: "push_config.push_endpoint" })pb";
+    update_mask { paths: "subscription.push_config.push_endpoint" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -112,8 +112,8 @@ TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
       }
     }
     update_mask {
-      paths: "push_config.attributes"
-      paths: "push_config.push_endpoint"
+      paths: "subscription.push_config.attributes"
+      paths: "subscription.push_config.push_endpoint"
     })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -138,8 +138,8 @@ TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
       }
     }
     update_mask {
-      paths: "push_config.attributes"
-      paths: "push_config.push_endpoint"
+      paths: "subscription.push_config.attributes"
+      paths: "subscription.push_config.push_endpoint"
     })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -167,8 +167,8 @@ TEST(SubscriptionMutationBuilder, PushConfigSetAuthentication) {
       }
     }
     update_mask {
-      paths: "push_config.oidc_token"
-      paths: "push_config.push_endpoint"
+      paths: "subscription.push_config.oidc_token"
+      paths: "subscription.push_config.push_endpoint"
     })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
@@ -185,7 +185,7 @@ TEST(SubscriptionMutationBuilder, SetAckDeadline) {
       name: "projects/test-project/subscriptions/test-subscription"
       ack_deadline_seconds: 600
     }
-    update_mask { paths: "ack_deadline_seconds" })pb";
+    update_mask { paths: "subscription.ack_deadline_seconds" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -201,7 +201,7 @@ TEST(SubscriptionMutationBuilder, SetRetainAckedMessages) {
       name: "projects/test-project/subscriptions/test-subscription"
       retain_acked_messages: true
     }
-    update_mask { paths: "retain_acked_messages" })pb";
+    update_mask { paths: "subscription.retain_acked_messages" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -220,7 +220,7 @@ TEST(SubscriptionMutationBuilder, SetMessageRetentionDuration) {
       name: "projects/test-project/subscriptions/test-subscription"
       message_retention_duration { seconds: 62 nanos: 3000 }
     }
-    update_mask { paths: "message_retention_duration" })pb";
+    update_mask { paths: "subscription.message_retention_duration" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -237,7 +237,7 @@ TEST(SubscriptionMutationBuilder, SetPushConfig) {
       name: "projects/test-project/subscriptions/test-subscription"
       push_config { push_endpoint: "https://ep.example.com" }
     }
-    update_mask { paths: "push_config.push_endpoint" })pb";
+    update_mask { paths: "subscription.push_config.push_endpoint" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -255,7 +255,7 @@ TEST(SubscriptionMutationBuilder, AddLabels) {
       labels: { key: "key0", value: "label0" }
       labels: { key: "key1", value: "label1" }
     }
-    update_mask { paths: "labels" })pb";
+    update_mask { paths: "subscription.labels" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -273,7 +273,7 @@ TEST(SubscriptionMutationBuilder, SetLabels) {
       name: "projects/test-project/subscriptions/test-subscription"
       labels: { key: "key2", value: "label2" }
     }
-    update_mask { paths: "labels" })pb";
+    update_mask { paths: "subscription.labels" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -291,7 +291,7 @@ TEST(SubscriptionMutationBuilder, ClearLabels) {
       name: "projects/test-project/subscriptions/test-subscription"
       labels: { key: "key1", value: "label1" }
     }
-    update_mask { paths: "labels" })pb";
+    update_mask { paths: "subscription.labels" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -307,7 +307,7 @@ TEST(SubscriptionMutationBuilder, EnableMessageOrdering) {
       name: "projects/test-project/subscriptions/test-subscription"
       enable_message_ordering: true
     }
-    update_mask { paths: "enable_message_ordering" })pb";
+    update_mask { paths: "subscription.enable_message_ordering" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -326,7 +326,7 @@ TEST(SubscriptionMutationBuilder, SetExpirationPolicy) {
       name: "projects/test-project/subscriptions/test-subscription"
       expiration_policy { ttl { seconds: 7200 nanos: 3 } }
     }
-    update_mask { paths: "expiration_policy" })pb";
+    update_mask { paths: "subscription.expiration_policy" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -347,7 +347,7 @@ TEST(SubscriptionMutationBuilder, SetDeadLetterPolicy) {
         max_delivery_attempts: 3
       }
     }
-    update_mask { paths: "dead_letter_policy" })pb";
+    update_mask { paths: "subscription.dead_letter_policy" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }

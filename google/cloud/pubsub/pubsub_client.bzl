@@ -67,6 +67,7 @@ pubsub_client_srcs = [
     "subscription.cc",
     "subscription_admin_client.cc",
     "subscription_admin_connection.cc",
+    "subscription_mutation_builder.cc",
     "topic.cc",
     "topic_admin_client.cc",
     "topic_admin_connection.cc",

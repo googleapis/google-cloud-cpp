@@ -66,6 +66,7 @@ add_library(
     subscription_admin_client.h
     subscription_admin_connection.cc
     subscription_admin_connection.h
+    subscription_mutation_builder.cc
     subscription_mutation_builder.h
     subscription_options.h
     topic.cc

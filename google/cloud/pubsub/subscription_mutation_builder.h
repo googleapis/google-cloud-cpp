@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
+#include <google/protobuf/util/field_mask_util.h>
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <set>
 
@@ -92,23 +93,10 @@ class SubscriptionMutationBuilder {
   SubscriptionMutationBuilder() = default;
 
   google::pubsub::v1::UpdateSubscriptionRequest BuildUpdateSubscription(
-      Subscription const& subscription) && {
-    google::pubsub::v1::UpdateSubscriptionRequest request;
-    *request.mutable_subscription() = std::move(proto_);
-    request.mutable_subscription()->set_name(subscription.FullName());
-    for (auto const& p : paths_) {
-      request.mutable_update_mask()->add_paths(p);
-    }
-    return request;
-  }
+      Subscription const& subscription) &&;
 
   google::pubsub::v1::Subscription BuildCreateSubscription(
-      Topic const& topic, Subscription const& subscription) && {
-    google::pubsub::v1::Subscription request = std::move(proto_);
-    request.set_topic(topic.FullName());
-    request.set_name(subscription.FullName());
-    return request;
-  }
+      Topic const& topic, Subscription const& subscription) &&;
 
   SubscriptionMutationBuilder& set_push_config(PushConfigBuilder v) & {
     *proto_.mutable_push_config() = std::move(v.proto_);
