@@ -90,8 +90,7 @@ TEST(SubscriptionMutationBuilder, PushConfigBasic) {
     }
     update_mask { paths: "push_config.push_endpoint" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(actual, IsProtoEqual(expected))
-      << "actual=" << actual.DebugString();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
