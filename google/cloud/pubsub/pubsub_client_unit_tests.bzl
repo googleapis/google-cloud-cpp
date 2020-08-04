@@ -23,6 +23,7 @@ pubsub_client_unit_tests = [
     "internal/default_ack_handler_impl_test.cc",
     "internal/emulator_overrides_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
+    "internal/publisher_logging_test.cc",
     "internal/subscription_session_test.cc",
     "internal/user_agent_prefix_test.cc",
     "message_test.cc",
@@ -33,5 +34,6 @@ pubsub_client_unit_tests = [
     "subscriber_test.cc",
     "subscription_mutation_builder_test.cc",
     "subscription_test.cc",
+    "topic_admin_connection_test.cc",
     "topic_test.cc",
 ]

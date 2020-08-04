@@ -73,7 +73,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
-    std::shared_ptr<PublisherStub> stub, google::cloud::CompletionQueue cq);
+    pubsub::ConnectionOptions const& connection_options,
+    std::shared_ptr<PublisherStub> stub);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

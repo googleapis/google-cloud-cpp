@@ -15,7 +15,9 @@
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
+#include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/log.h"
 #include <memory>
 
 namespace google {
@@ -49,12 +51,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
     ConnectionOptions const& connection_options) {
   auto stub = pubsub_internal::CreateDefaultPublisherStub(connection_options,
                                                           /*channel_id=*/0);
-  auto background = connection_options.background_threads_factory()();
-  auto cq = background->cq();
-  return std::make_shared<ContainingPublisherConnection>(
-      std::move(background), pubsub_internal::MakePublisherConnection(
-                                 std::move(topic), std::move(options),
-                                 std::move(stub), std::move(cq)));
+  return pubsub_internal::MakePublisherConnection(
+      std::move(topic), std::move(options), connection_options,
+      std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -65,17 +64,29 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
-    std::shared_ptr<PublisherStub> stub, google::cloud::CompletionQueue cq) {
-  if (options.message_ordering()) {
-    auto factory = [topic, options, stub, cq](std::string const&) {
-      return BatchingPublisherConnection::Create(
-          topic, options.batching_config(), stub, cq);
-    };
-    return OrderingKeyPublisherConnection::Create(std::move(factory));
+    pubsub::ConnectionOptions const& connection_options,
+    std::shared_ptr<PublisherStub> stub) {
+  if (connection_options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::PublisherLogging>(
+        std::move(stub), connection_options.tracing_options());
   }
-  return BatchingPublisherConnection::Create(std::move(topic),
-                                             options.batching_config(),
-                                             std::move(stub), std::move(cq));
+  auto background = connection_options.background_threads_factory()();
+  auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
+    auto cq = background->cq();
+    if (options.message_ordering()) {
+      auto factory = [topic, options, stub, cq](std::string const&) {
+        return BatchingPublisherConnection::Create(
+            topic, options.batching_config(), stub, cq);
+      };
+      return OrderingKeyPublisherConnection::Create(std::move(factory));
+    }
+    return BatchingPublisherConnection::Create(std::move(topic),
+                                               options.batching_config(),
+                                               std::move(stub), std::move(cq));
+  };
+  return std::make_shared<pubsub::ContainingPublisherConnection>(
+      std::move(background), make_connection());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
