@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/create_subscription_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
+#include "google/cloud/pubsub/subscription_mutation_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -81,7 +81,7 @@ class SubscriptionAdminClient {
    * @param builder the configuration for the new subscription.
    */
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      CreateSubscriptionBuilder builder) {
+      SubscriptionMutationBuilder builder) {
     return connection_->CreateSubscription({std::move(builder).as_proto()});
   }
 
