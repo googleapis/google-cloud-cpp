@@ -274,9 +274,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -374,9 +374,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -534,9 +534,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -667,9 +667,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -799,9 +799,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -946,9 +946,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
         -e '/^target_compile_features/d' \
@@ -1046,9 +1046,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1200,9 +1200,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
         -e '/^target_compile_features/d' \
@@ -1349,9 +1349,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1513,9 +1513,9 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.4.0.tar.gz && \
-    tar -xzf v3.4.0.tar.gz && \
-    cd json-3.4.0 && \
+wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
+    tar -xzf v3.9.0.tar.gz && \
+    cd json-3.9.0 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
