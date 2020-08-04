@@ -18,12 +18,15 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
+#include <google/protobuf/util/field_mask_util.h>
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <set>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+class SubscriptionMutationBuilder;
 
 /**
  * Helper class to create google::pubsub::v1::PushConfig protos.
@@ -32,6 +35,7 @@ class PushConfigBuilder {
  public:
   explicit PushConfigBuilder(std::string push_endpoint) {
     proto_.set_push_endpoint(std::move(push_endpoint));
+    paths_.insert("push_endpoint");
   }
 
   PushConfigBuilder& add_attribute(std::string const& key,
@@ -39,6 +43,7 @@ class PushConfigBuilder {
     proto_.mutable_attributes()->insert(
         google::protobuf::Map<std::string, std::string>::value_type(key,
                                                                     value));
+    paths_.insert("attributes");
     return *this;
   }
   PushConfigBuilder& set_attributes(
@@ -48,6 +53,7 @@ class PushConfigBuilder {
       attributes[kv.first] = std::move(kv.second);
     }
     proto_.mutable_attributes()->swap(attributes);
+    paths_.insert("attributes");
     return *this;
   }
 
@@ -69,14 +75,14 @@ class PushConfigBuilder {
   PushConfigBuilder& set_authentication(
       google::pubsub::v1::PushConfig::OidcToken token) {
     *proto_.mutable_oidc_token() = std::move(token);
+    paths_.insert("oidc_token");
     return *this;
   }
 
-  google::pubsub::v1::PushConfig as_proto() const& { return proto_; }
-  google::pubsub::v1::PushConfig&& as_proto() && { return std::move(proto_); }
-
  private:
+  friend class SubscriptionMutationBuilder;
   google::pubsub::v1::PushConfig proto_;
+  std::set<std::string> paths_;
 };
 
 /**
@@ -84,71 +90,122 @@ class PushConfigBuilder {
  */
 class SubscriptionMutationBuilder {
  public:
-  explicit SubscriptionMutationBuilder(Subscription const& subscription,
-                                       Topic const& topic) {
-    proto_.set_name(subscription.FullName());
-    proto_.set_topic(topic.FullName());
-  }
+  SubscriptionMutationBuilder() = default;
 
-  SubscriptionMutationBuilder& set_push_config(
-      google::pubsub::v1::PushConfig v) {
-    *proto_.mutable_push_config() = std::move(v);
+  google::pubsub::v1::UpdateSubscriptionRequest BuildUpdateSubscription(
+      Subscription const& subscription) &&;
+
+  google::pubsub::v1::Subscription BuildCreateSubscription(
+      Topic const& topic, Subscription const& subscription) &&;
+
+  SubscriptionMutationBuilder& set_push_config(PushConfigBuilder v) & {
+    *proto_.mutable_push_config() = std::move(v.proto_);
+    for (auto const& s : v.paths_) {
+      paths_.insert("push_config." + s);
+    }
     return *this;
   }
+  SubscriptionMutationBuilder&& set_push_config(PushConfigBuilder v) && {
+    return std::move(set_push_config(std::move(v)));
+  }
 
-  SubscriptionMutationBuilder& set_ack_deadline(std::chrono::seconds v) {
+  SubscriptionMutationBuilder& set_ack_deadline(std::chrono::seconds v) & {
     proto_.set_ack_deadline_seconds(static_cast<std::int32_t>(v.count()));
+    paths_.insert("ack_deadline_seconds");
     return *this;
   }
+  SubscriptionMutationBuilder&& set_ack_deadline(std::chrono::seconds v) && {
+    return std::move(set_ack_deadline(v));
+  }
 
-  SubscriptionMutationBuilder& set_retain_acked_messages(bool v) {
+  SubscriptionMutationBuilder& set_retain_acked_messages(bool v) & {
     proto_.set_retain_acked_messages(v);
+    paths_.insert("retain_acked_messages");
     return *this;
+  }
+  SubscriptionMutationBuilder&& set_retain_acked_messages(bool v) && {
+    return std::move(set_retain_acked_messages(v));
   }
 
   template <typename Rep, typename Period>
   SubscriptionMutationBuilder& set_message_retention_duration(
-      std::chrono::duration<Rep, Period> d) {
+      std::chrono::duration<Rep, Period> d) & {
     *proto_.mutable_message_retention_duration() =
         ToDurationProto(std::move(d));
+    paths_.insert("message_retention_duration");
     return *this;
+  }
+  template <typename Rep, typename Period>
+  SubscriptionMutationBuilder&& set_message_retention_duration(
+      std::chrono::duration<Rep, Period> d) && {
+    return std::move(set_message_retention_duration(d));
   }
 
   SubscriptionMutationBuilder& add_label(std::string const& key,
-                                         std::string const& value) {
+                                         std::string const& value) & {
     using value_type = protobuf::Map<std::string, std::string>::value_type;
     proto_.mutable_labels()->insert(value_type(key, value));
+    paths_.insert("labels");
     return *this;
   }
+  SubscriptionMutationBuilder&& add_label(std::string const& key,
+                                          std::string const& value) && {
+    return std::move(add_label(key, value));
+  }
+
   SubscriptionMutationBuilder& set_labels(
-      std::vector<std::pair<std::string, std::string>> new_labels) {
+      std::vector<std::pair<std::string, std::string>> new_labels) & {
     google::protobuf::Map<std::string, std::string> labels;
     for (auto& kv : new_labels) {
       labels[kv.first] = std::move(kv.second);
     }
     proto_.mutable_labels()->swap(labels);
+    paths_.insert("labels");
     return *this;
   }
-  SubscriptionMutationBuilder& clear_labels() {
-    proto_.clear_labels();
-    return *this;
+  SubscriptionMutationBuilder&& set_labels(
+      std::vector<std::pair<std::string, std::string>> new_labels) && {
+    return std::move(set_labels(std::move(new_labels)));
   }
 
-  SubscriptionMutationBuilder& enable_message_ordering(bool v) {
-    proto_.set_enable_message_ordering(v);
+  SubscriptionMutationBuilder& clear_labels() & {
+    proto_.clear_labels();
+    paths_.insert("labels");
     return *this;
+  }
+  SubscriptionMutationBuilder&& clear_labels() && {
+    return std::move(clear_labels());
+  }
+
+  SubscriptionMutationBuilder& enable_message_ordering(bool v) & {
+    proto_.set_enable_message_ordering(v);
+    paths_.insert("enable_message_ordering");
+    return *this;
+  }
+  SubscriptionMutationBuilder&& enable_message_ordering(bool v) && {
+    return std::move(enable_message_ordering(v));
   }
 
   SubscriptionMutationBuilder& set_expiration_policy(
-      google::pubsub::v1::ExpirationPolicy v) {
+      google::pubsub::v1::ExpirationPolicy v) & {
     *proto_.mutable_expiration_policy() = std::move(v);
+    paths_.insert("expiration_policy");
     return *this;
+  }
+  SubscriptionMutationBuilder&& set_expiration_policy(
+      google::pubsub::v1::ExpirationPolicy v) && {
+    return std::move(set_expiration_policy(std::move(v)));
   }
 
   SubscriptionMutationBuilder& set_dead_letter_policy(
-      google::pubsub::v1::DeadLetterPolicy v) {
+      google::pubsub::v1::DeadLetterPolicy v) & {
     *proto_.mutable_dead_letter_policy() = std::move(v);
+    paths_.insert("dead_letter_policy");
     return *this;
+  }
+  SubscriptionMutationBuilder&& set_dead_letter_policy(
+      google::pubsub::v1::DeadLetterPolicy v) && {
+    return std::move(set_dead_letter_policy(std::move(v)));
   }
 
   template <typename Rep, typename Period>
@@ -160,15 +217,12 @@ class SubscriptionMutationBuilder {
   }
 
   static google::pubsub::v1::DeadLetterPolicy MakeDeadLetterPolicy(
-      Topic const& dead_letter_topic, std::int32_t max_delivery_attemps = 0) {
+      Topic const& dead_letter_topic, std::int32_t max_delivery_attempts = 0) {
     google::pubsub::v1::DeadLetterPolicy result;
     result.set_dead_letter_topic(dead_letter_topic.FullName());
-    result.set_max_delivery_attempts(max_delivery_attemps);
+    result.set_max_delivery_attempts(max_delivery_attempts);
     return result;
   }
-
-  google::pubsub::v1::Subscription as_proto() const& { return proto_; }
-  google::pubsub::v1::Subscription&& as_proto() && { return std::move(proto_); }
 
  private:
   template <typename Rep, typename Period>
@@ -184,6 +238,7 @@ class SubscriptionMutationBuilder {
   }
 
   google::pubsub::v1::Subscription proto_;
+  std::set<std::string> paths_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
