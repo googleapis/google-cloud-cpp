@@ -28,6 +28,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 TEST(TopicAdminConnectionTest, Create) {
@@ -57,16 +58,18 @@ TEST(TopicAdminConnectionTest, List) {
         EXPECT_EQ("projects/test-project-id", request.project());
         EXPECT_TRUE(request.page_token().empty());
         google::pubsub::v1::ListTopicsResponse response;
+        response.add_topics()->set_name("test-topic-01");
+        response.add_topics()->set_name("test-topic-02");
         return make_status_or(response);
       });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
-  std::vector<google::pubsub::v1::Topic> topics;
+  std::vector<std::string> topic_names;
   for (auto& t : topic_admin->ListTopics({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
-    topics.push_back(*t);
+    topic_names.push_back(t->name());
   }
-  EXPECT_TRUE(topics.empty());
+  EXPECT_THAT(topic_names, ElementsAre("test-topic-01", "test-topic-02"));
 }
 
 /**
