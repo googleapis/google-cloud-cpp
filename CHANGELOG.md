@@ -70,6 +70,7 @@
 * fix: date formatting with negative years (#4614)
 * feat: add `google::cloud::spanner::Numeric` (#4418)
 * fix: warnings under Windows+MSVC+x86 (#4515)
+* feat: log the result for `future<StatusOr<T>>` (#4746)
 
 ### Common libraries
 
