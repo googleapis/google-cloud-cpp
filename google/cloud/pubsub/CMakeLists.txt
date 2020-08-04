@@ -43,6 +43,8 @@ add_library(
     internal/publisher_logging.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
+    internal/subscriber_logging.cc
+    internal/subscriber_logging.h
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
     internal/subscription_session.cc
@@ -151,6 +153,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/emulator_overrides_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
+        internal/subscriber_logging_test.cc
         internal/subscription_session_test.cc
         internal/user_agent_prefix_test.cc
         message_test.cc
