@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/log.h"
 #include <algorithm>
 #include <memory>
 
@@ -62,6 +64,11 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     std::shared_ptr<SubscriberStub> stub,
     pubsub::ConnectionOptions const& options) {
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::SubscriberLogging>(
+        std::move(stub), options.tracing_options());
+  }
   return std::make_shared<SubscriberConnectionImpl>(std::move(stub), options);
 }
 

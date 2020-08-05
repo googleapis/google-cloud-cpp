@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/internal/subscriber_logging.h"
+#include "google/cloud/log.h"
 #include <memory>
 
 namespace google {
@@ -21,8 +22,24 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    ConnectionOptions const& options) {
+  return pubsub_internal::MakeSubscriptionAdminConnection(
+      options,
+      pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0));
+}
+
+SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
 namespace {
-class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
+class SubscriptionAdminConnectionImpl
+    : public pubsub::SubscriptionAdminConnection {
  public:
   explicit SubscriptionAdminConnectionImpl(
       std::shared_ptr<pubsub_internal::SubscriberStub> stub)
@@ -50,11 +67,12 @@ class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
     return stub_->UpdateSubscription(context, p.request);
   }
 
-  ListSubscriptionsRange ListSubscriptions(ListSubscriptionsParams p) override {
+  pubsub::ListSubscriptionsRange ListSubscriptions(
+      ListSubscriptionsParams p) override {
     google::pubsub::v1::ListSubscriptionsRequest request;
     request.set_project(std::move(p.project_id));
     auto& stub = stub_;
-    return ListSubscriptionsRange(
+    return pubsub::ListSubscriptionsRange(
         std::move(request),
         [stub](google::pubsub::v1::ListSubscriptionsRequest const& request) {
           grpc::ClientContext context;
@@ -82,16 +100,18 @@ class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
 };
 }  // namespace
 
-SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
-
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    ConnectionOptions const& options) {
-  auto stub =
-      pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0);
+std::shared_ptr<pubsub::SubscriptionAdminConnection>
+MakeSubscriptionAdminConnection(pubsub::ConnectionOptions const& options,
+                                std::shared_ptr<SubscriberStub> stub) {
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::SubscriberLogging>(
+        std::move(stub), options.tracing_options());
+  }
   return std::make_shared<SubscriptionAdminConnectionImpl>(std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
