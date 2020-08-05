@@ -105,6 +105,24 @@ class SubscriptionAdminClient {
   }
 
   /**
+   * Update an existing subscription in Cloud Pub/Sub.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc update-subscription
+   *
+   * @param subscription the name for the subscription
+   * @param builder any additional configuration for the subscription
+   */
+  StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
+      Subscription const& subscription, SubscriptionMutationBuilder builder) {
+    return connection_->UpdateSubscription(
+        {std::move(builder).BuildUpdateSubscription(subscription)});
+  }
+
+  /**
    * List all the subscriptions for a given project id.
    *
    * @par Idempotency

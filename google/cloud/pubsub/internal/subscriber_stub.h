@@ -49,6 +49,11 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::GetSubscriptionRequest const& request) = 0;
 
+  /// Update an existing subscription.
+  virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::UpdateSubscriptionRequest const& request) = 0;
+
   /// List existing subscriptions.
   virtual StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
   ListSubscriptions(

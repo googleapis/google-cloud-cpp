@@ -81,6 +81,13 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   ASSERT_STATUS_OK(get_response);
   EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
+  auto constexpr kTestDeadlineSeconds = 20;
+  auto update_response = client.UpdateSubscription(
+      subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
+                        std::chrono::seconds(kTestDeadlineSeconds)));
+  ASSERT_STATUS_OK(update_response);
+  EXPECT_EQ(kTestDeadlineSeconds, update_response->ack_deadline_seconds());
+
   EXPECT_THAT(subscription_names(client, project_id),
               Contains(subscription.FullName()));
 
@@ -98,6 +105,25 @@ TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   auto create_response = client.CreateSubscription(
       Topic("--invalid-project--", "--invalid-topic--"),
       Subscription("--invalid-project--", "--invalid-subscription--"));
+  ASSERT_FALSE(create_response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, GetSubscriptionFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto create_response = client.GetSubscription(
+      Subscription("--invalid-project--", "--invalid-subscription--"));
+  ASSERT_FALSE(create_response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto create_response = client.UpdateSubscription(
+      Subscription("--invalid-project--", "--invalid-subscription--"),
+      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(20)));
   ASSERT_FALSE(create_response.ok());
 }
 

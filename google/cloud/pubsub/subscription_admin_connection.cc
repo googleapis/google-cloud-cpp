@@ -44,6 +44,12 @@ class SubscriptionAdminConnectionImpl : public SubscriptionAdminConnection {
     return stub_->GetSubscription(context, request);
   }
 
+  StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
+      UpdateSubscriptionParams p) override {
+    grpc::ClientContext context;
+    return stub_->UpdateSubscription(context, p.request);
+  }
+
   ListSubscriptionsRange ListSubscriptions(ListSubscriptionsParams p) override {
     google::pubsub::v1::ListSubscriptionsRequest request;
     request.set_project(std::move(p.project_id));

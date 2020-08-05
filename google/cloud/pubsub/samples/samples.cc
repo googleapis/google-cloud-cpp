@@ -123,6 +123,25 @@ void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
+                        std::vector<std::string> const& argv) {
+  //! [update-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id) {
+    auto s = client.UpdateSubscription(
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionMutationBuilder{}.set_ack_deadline(
+            std::chrono::seconds(60)));
+    if (!s) throw std::runtime_error(s.status().message());
+
+    std::cout << "The subscription has been updated to: " << s->DebugString()
+              << "\n";
+  }
+  //! [update-subscription]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
   //! [START pubsub_list_subscriptions] [list-subscriptions]
@@ -375,6 +394,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetSubscription() sample" << std::endl;
   GetSubscription(subscription_admin_client, {project_id, subscription_id});
 
+  std::cout << "\nRunning UpdateSubscription() sample" << std::endl;
+  UpdateSubscription(subscription_admin_client, {project_id, subscription_id});
+
   std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
   ListSubscriptions(subscription_admin_client, {project_id});
 
@@ -430,6 +452,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
                                      GetSubscription),
+      CreateSubscriptionAdminCommand("update-subscription",
+                                     {"project-id", "subscription-id"},
+                                     UpdateSubscription),
       CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
                                      ListSubscriptions),
       CreateSubscriptionAdminCommand("delete-subscription",
