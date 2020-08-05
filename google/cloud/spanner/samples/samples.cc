@@ -76,7 +76,7 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
 
   std::string region_id = region.empty() ? "us-central1" : region;
   std::string instance_config =
-      "projects/" + project_id + "/instanceConfigs/regional-" + region;
+      "projects/" + project_id + "/instanceConfigs/regional-" + region_id;
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
       client.CreateInstance(
           spanner::CreateInstanceRequestBuilder(in, instance_config)
