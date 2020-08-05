@@ -34,9 +34,17 @@ class DefaultPublisherStub : public PublisherStub {
       google::pubsub::v1::Topic const& request) override {
     google::pubsub::v1::Topic response;
     auto status = grpc_stub_->CreateTopic(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+    return response;
+  }
+
+  StatusOr<google::pubsub::v1::Topic> GetTopic(
+      grpc::ClientContext& context,
+      google::pubsub::v1::GetTopicRequest const& request) override {
+    google::pubsub::v1::Topic response;
+    auto status = grpc_stub_->GetTopic(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
     return response;
   }
 
@@ -45,9 +53,7 @@ class DefaultPublisherStub : public PublisherStub {
       google::pubsub::v1::ListTopicsRequest const& request) override {
     google::pubsub::v1::ListTopicsResponse response;
     auto status = grpc_stub_->ListTopics(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
     return response;
   }
 
@@ -56,9 +62,7 @@ class DefaultPublisherStub : public PublisherStub {
       google::pubsub::v1::DeleteTopicRequest const& request) override {
     google::protobuf::Empty response;
     auto status = grpc_stub_->DeleteTopic(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
     return {};
   }
 
