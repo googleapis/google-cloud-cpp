@@ -35,6 +35,11 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
               (grpc::ClientContext&, google::pubsub::v1::Topic const&),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, GetTopic,
+              (grpc::ClientContext&,
+               google::pubsub::v1::GetTopicRequest const&),
+              (override));
+
   MOCK_METHOD(StatusOr<google::pubsub::v1::ListTopicsResponse>, ListTopics,
               (grpc::ClientContext&,
                google::pubsub::v1::ListTopicsRequest const&),

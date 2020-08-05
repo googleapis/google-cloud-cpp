@@ -66,6 +66,19 @@ TEST_F(PublisherLoggingTest, CreateTopic) {
   EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("CreateTopic")));
 }
 
+TEST_F(PublisherLoggingTest, GetTopic) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, GetTopic)
+      .WillOnce(Return(make_status_or(google::pubsub::v1::Topic{})));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::GetTopicRequest request;
+  request.set_topic("test-topic-name");
+  auto status = stub.GetTopic(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("GetTopic")));
+}
+
 TEST_F(PublisherLoggingTest, ListTopics) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, ListTopics)

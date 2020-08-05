@@ -84,6 +84,19 @@ class TopicAdminClient {
   }
 
   /**
+   * Get information about an existing Cloud Pub/Sub topic.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent and retried.
+   *
+   * @par Example
+   * @snippet samples.cc get-topic
+   */
+  StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic) {
+    return connection_->GetTopic({std::move(topic)});
+  }
+
+  /**
    * List all the topics for a given project id.
    *
    * @par Idempotency

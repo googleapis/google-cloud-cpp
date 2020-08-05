@@ -52,6 +52,23 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void GetTopic(google::cloud::pubsub::TopicAdminClient client,
+              std::vector<std::string> const& argv) {
+  //! [get-topic]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    auto topic = client.GetTopic(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)));
+    if (!topic) throw std::runtime_error(topic.status().message());
+
+    std::cout << "The topic information was successfully retrieved: "
+              << topic->DebugString() << "\n";
+  }
+  //! [get-topic]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListTopics(google::cloud::pubsub::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
   //! [START pubsub_list_topics] [list-topics]
@@ -381,6 +398,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
 
+  std::cout << "\nRunning GetTopic() sample" << std::endl;
+  GetTopic(topic_admin_client, {project_id, topic_id});
+
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
 
@@ -443,6 +463,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   Example example({
       CreateTopicAdminCommand("create-topic", {"project-id", "topic-id"},
                               CreateTopic),
+      CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
+                              GetTopic),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),

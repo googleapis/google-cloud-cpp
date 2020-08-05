@@ -18,6 +18,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +28,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
@@ -58,6 +60,11 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
 
   auto create_response = publisher.CreateTopic(CreateTopicBuilder(topic));
   ASSERT_STATUS_OK(create_response);
+
+  auto get_response = publisher.GetTopic(topic);
+  ASSERT_STATUS_OK(get_response);
+
+  EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
   EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
 
