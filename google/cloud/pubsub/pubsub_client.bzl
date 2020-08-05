@@ -73,4 +73,5 @@ pubsub_client_srcs = [
     "topic.cc",
     "topic_admin_client.cc",
     "topic_admin_connection.cc",
+    "topic_mutation_builder.cc",
 ]

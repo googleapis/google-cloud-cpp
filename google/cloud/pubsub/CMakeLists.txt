@@ -76,6 +76,7 @@ add_library(
     topic_admin_client.h
     topic_admin_connection.cc
     topic_admin_connection.h
+    topic_mutation_builder.cc
     topic_mutation_builder.h
     version.h
     version_info.h)
