@@ -237,6 +237,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -337,6 +338,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -437,6 +439,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -585,6 +588,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -717,6 +721,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -849,6 +854,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -1009,6 +1015,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -1103,6 +1110,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -1267,6 +1275,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
@@ -1416,6 +1425,7 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out/abseil && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
