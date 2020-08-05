@@ -39,10 +39,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
     # gcc-4.8 is the first release that claims C++11 support.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.4)
         message(
             FATAL_ERROR
-                "GCC version must be at least 4.8. Older versions"
+                "GCC version must be at least 5.4. Older versions"
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()

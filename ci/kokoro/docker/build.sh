@@ -175,13 +175,15 @@ elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # package maintainers, where the cost of running the tests for a fixed version
   # is too high.
   export BUILD_TESTING=no
-elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
-  # The oldest version of GCC we support is 4.8, this build checks the code
-  # against that version. The use of CentOS 7 for that build is not a
-  # coincidence: the reason we support GCC 4.8 is to support this distribution
-  # (and its commercial cousin: RHEL 7).
-  export DISTRO=centos
-  export DISTRO_VERSION=7
+elif [[ "${BUILD_NAME}" = "gcc-5.4" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
+  # The oldest version of GCC we support is 5.4, this build checks the code
+  # against that version. The use of Ubuntu 16.04 for that build is not a
+  # coincidence: the reason we support GCC 5.4 is to support this distribution.
+  # See also https://github.com/googleapis/google-cloud-cpp/issues/4788
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=16.04
+  export CC=gcc
+  export CXX=g++
   export CMAKE_SOURCE_DIR="super"
   export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
