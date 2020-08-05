@@ -206,6 +206,9 @@ if should_run_integration_tests; then
   # Run the integration tests using Bazel to drive them. Some of the tests and
   # examples require environment variables with dynamic values, so we run them
   # below to avoid invalidating the cached test results for all the other tests.
+  echo "================================================================"
+  io::log_yellow "running integration tests against production:" \
+    "spanner=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-default}"
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
