@@ -58,7 +58,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
 
-  auto create_response = publisher.CreateTopic(CreateTopicBuilder(topic));
+  auto create_response = publisher.CreateTopic(TopicMutationBuilder(topic));
   ASSERT_STATUS_OK(create_response);
 
   auto get_response = publisher.GetTopic(topic);
@@ -79,7 +79,7 @@ TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto publisher = TopicAdminClient(MakeTopicAdminConnection());
   auto create_response = publisher.CreateTopic(
-      CreateTopicBuilder(Topic("invalid-project", "invalid-topic")));
+      TopicMutationBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
 }
 

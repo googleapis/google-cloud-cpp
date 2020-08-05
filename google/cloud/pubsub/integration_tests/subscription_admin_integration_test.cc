@@ -63,7 +63,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   EXPECT_THAT(subscription_names(client, project_id),
               Not(Contains(subscription.FullName())));
 
-  auto topic_metadata = publisher_client.CreateTopic(CreateTopicBuilder(topic));
+  auto topic_metadata =
+      publisher_client.CreateTopic(TopicMutationBuilder(topic));
   ASSERT_STATUS_OK(topic_metadata);
 
   struct Cleanup {

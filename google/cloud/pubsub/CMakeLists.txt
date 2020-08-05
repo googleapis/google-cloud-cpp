@@ -30,7 +30,6 @@ add_library(
     ack_handler.h
     connection_options.cc
     connection_options.h
-    create_topic_builder.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
     internal/default_ack_handler_impl.cc
@@ -77,6 +76,7 @@ add_library(
     topic_admin_client.h
     topic_admin_connection.cc
     topic_admin_connection.h
+    topic_mutation_builder.h
     version.h
     version_info.h)
 target_include_directories(
@@ -147,7 +147,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
-        create_topic_builder_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_ack_handler_impl_test.cc
         internal/emulator_overrides_test.cc
@@ -166,6 +165,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         subscription_mutation_builder_test.cc
         subscription_test.cc
         topic_admin_connection_test.cc
+        topic_mutation_builder_test.cc
         topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

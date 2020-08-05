@@ -19,7 +19,6 @@
 pubsub_client_hdrs = [
     "ack_handler.h",
     "connection_options.h",
-    "create_topic_builder.h",
     "internal/batching_publisher_connection.h",
     "internal/default_ack_handler_impl.h",
     "internal/emulator_overrides.h",
@@ -44,6 +43,7 @@ pubsub_client_hdrs = [
     "topic.h",
     "topic_admin_client.h",
     "topic_admin_connection.h",
+    "topic_mutation_builder.h",
     "version.h",
     "version_info.h",
 ]

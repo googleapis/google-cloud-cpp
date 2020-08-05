@@ -41,7 +41,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::CreateTopicBuilder(
+    auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
     if (!topic) throw std::runtime_error(topic.status().message());
 
