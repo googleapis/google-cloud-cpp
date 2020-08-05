@@ -136,6 +136,7 @@ option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
 option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
 
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
@@ -143,7 +144,8 @@ string(
            "GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY OR "
            "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE OR "
            "GOOGLE_CLOUD_CPP_ENABLE_SPANNER OR "
-           "GOOGLE_CLOUD_CPP_ENABLE_PUBSUB")
+           "GOOGLE_CLOUD_CPP_ENABLE_PUBSUB OR "
+           "GOOGLE_CLOUD_CPP_ENABLE_GENERATOR")
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
@@ -182,6 +184,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
     add_subdirectory(google/cloud/pubsub)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
+    add_subdirectory(generator)
 endif ()
 
 # The examples are more readable if we use exceptions for error handling. We had
