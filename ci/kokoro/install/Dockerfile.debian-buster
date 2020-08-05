@@ -58,6 +58,26 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd /var/tmp && rm -fr build
 # ```
 
+# #### Protobuf
+
+# We need to install a version of Protobuf that is recent enough to support the
+# Google Cloud Platform proto files:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
+    tar -xf v3.11.3.tar.gz && \
+    cd protobuf-3.11.3/cmake && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
 # #### crc32c
 
 # The project depends on the Crc32c library, we need to compile this from
