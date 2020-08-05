@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_options_generator.h"
@@ -99,21 +100,35 @@ void SetMethodSignatureMethodVars(
     std::vector<std::string> parameters =
         absl::StrSplit(method_signature_extension[i], ",");
     std::string method_signature;
-    for (unsigned int j = 0; j < parameters.size() - 1; ++j) {
-      google::protobuf::FieldDescriptor const* parameter =
+    std::string method_request_setters;
+    for (unsigned int j = 0; j < parameters.size(); ++j) {
+      google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameters[j]);
-      method_signature += CppTypeToString(parameter);
-      method_signature += " const& ";
-      method_signature += parameters[j];
-      method_signature += ", ";
+      if (parameter_descriptor->is_repeated()) {
+        method_signature += absl::StrFormat(
+            "std::vector<%s>", CppTypeToString(parameter_descriptor));
+        method_request_setters += absl::StrFormat(
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
+            parameters[j], parameters[j], parameters[j]);
+      } else if (parameter_descriptor->type() ==
+                 FieldDescriptor::TYPE_MESSAGE) {
+        method_signature += CppTypeToString(parameter_descriptor);
+        method_request_setters += absl::StrFormat(
+            "  *request.mutable_%s() = %s;\n", parameters[j], parameters[j]);
+      } else {
+        method_signature += CppTypeToString(parameter_descriptor);
+        method_request_setters += absl::StrFormat("  request.set_%s(%s);\n",
+                                                  parameters[j], parameters[j]);
+      }
+      method_signature += absl::StrFormat(" const& %s", parameters[j]);
+      if (j < parameters.size() - 1) {
+        method_signature += ", ";
+      }
     }
-    google::protobuf::FieldDescriptor const* parameter =
-        input_type->FindFieldByName(parameters[parameters.size() - 1]);
-    method_signature += CppTypeToString(parameter);
-    method_signature += " const& ";
-    method_signature += parameters[parameters.size() - 1];
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
+    std::string key2 = "method_request_setters" + std::to_string(i);
+    method_vars[key2] = method_request_setters;
   }
 }
 
@@ -203,6 +218,12 @@ VarsDictionary CreateServiceVars(
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
+  vars["client_cc_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()), "_client",
+      GeneratedFileSuffix(), ".cc");
+  vars["client_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()), "_client",
+      GeneratedFileSuffix(), ".h");
   vars["connection_class_name"] = absl::StrCat(descriptor.name(), "Connection");
   vars["connection_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()),
@@ -305,6 +326,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
+  code_generators.push_back(absl::make_unique<ClientGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   code_generators.push_back(absl::make_unique<ConnectionGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
