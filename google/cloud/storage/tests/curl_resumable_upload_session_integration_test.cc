@@ -16,6 +16,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -33,9 +34,13 @@ class CurlResumableUploadIntegrationTest
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty());
   }
 
   std::string bucket_name_;
+  std::string project_id_;
 };
 
 TEST_F(CurlResumableUploadIntegrationTest, Simple) {
@@ -214,6 +219,70 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
   auto status =
       client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
+}
+
+/**
+ * @test Verify that resetting sessions with query parameters works.
+ *
+ * UserProject parameter is not tested because it is hard to set up. The hope is
+ * that if it stops to work, other parameters do too.
+ */
+TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(client_options);
+  auto raw_client =
+      CurlClient::Create(client_options->set_project_id(project_id_));
+  Client client(raw_client);
+  auto object_name = MakeRandomObjectName();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto bucket_name = MakeRandomBucketName();
+  auto const csek = CreateKeyFromGenerator(generator);
+
+  auto res = client.CreateBucket(bucket_name, BucketMetadata{});
+  ASSERT_STATUS_OK(res);
+  res = client.PatchBucket(bucket_name, BucketMetadataPatchBuilder().SetBilling(
+                                            BucketBilling{true}));
+
+  ResumableUploadRequest request(bucket_name, object_name);
+  request.set_multiple_options(IfGenerationMatch(0),
+                               QuotaUser("test-quota-user"), Fields("name"),
+                               UserProject(project_id_), EncryptionKey(csek));
+
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      raw_client->CreateResumableSession(request);
+
+  ASSERT_STATUS_OK(session);
+
+  std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
+  StatusOr<ResumableUploadResponse> response =
+      (*session)->UploadChunk({{contents}});
+  ASSERT_STATUS_OK(response);
+
+  response = (*session)->ResetSession();
+  ASSERT_STATUS_OK(response);
+
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
+  EXPECT_EQ(object_name, metadata.name());
+  // These are an effect of Fields("name")
+  EXPECT_EQ("", metadata.bucket());
+  EXPECT_EQ(0, metadata.size());
+
+  auto stream = client.ReadObject(
+      bucket_name, object_name, UserProject(project_id_), EncryptionKey(csek));
+  std::string actual_contents(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_STATUS_OK(stream.status());
+  EXPECT_EQ(2 * contents.size(), actual_contents.size());
+  EXPECT_TRUE(std::all_of(actual_contents.begin(), actual_contents.end(),
+                          [](char c) { return c == '0'; }));
+
+  auto status =
+      client.DeleteObject(bucket_name, object_name, UserProject(project_id_));
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(client.DeleteBucket(bucket_name, UserProject(project_id_)));
 }
 
 }  // namespace
