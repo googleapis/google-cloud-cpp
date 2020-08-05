@@ -77,11 +77,11 @@ class TopicAdminClient {
    * @par Example
    * @snippet samples.cc create-topic
    *
-   * @param builder the configuration for the new topic.
+   * @param builder the configuration for the new topic, includes the name.
    */
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       TopicMutationBuilder builder) {
-    return connection_->CreateTopic({std::move(builder).as_proto()});
+    return connection_->CreateTopic({std::move(builder).BuildCreateMutation()});
   }
 
   /**

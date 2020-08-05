@@ -43,7 +43,7 @@ TEST(TopicAdminConnectionTest, Create) {
           });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
-  auto const expected = TopicMutationBuilder(topic).as_proto();
+  auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));

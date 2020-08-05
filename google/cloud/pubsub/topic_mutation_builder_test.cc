@@ -27,9 +27,9 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 
-TEST(Topic, TopicOnly) {
-  auto const actual =
-      TopicMutationBuilder(Topic("test-project", "test-topic")).as_proto();
+TEST(Topic, CreateTopicOnly) {
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+                          .BuildCreateMutation();
   google::pubsub::v1::Topic expected;
   std::string const text = R"pb(
     name: "projects/test-project/topics/test-topic"
@@ -42,13 +42,15 @@ TEST(Topic, AddLabel) {
   auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_label("key0", "label0")
                           .add_label("key1", "label1")
-                          .as_proto();
-  google::pubsub::v1::Topic expected;
+                          .BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    labels: { key: "key1" value: "label1" }
-    labels: { key: "key0" value: "label0" }
-  )pb";
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      labels: { key: "key1" value: "label1" }
+      labels: { key: "key0" value: "label0" }
+    }
+    update_mask { paths: "labels" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -58,12 +60,14 @@ TEST(Topic, ClearLabel) {
                           .add_label("key0", "label0")
                           .clear_labels()
                           .add_label("key1", "label1")
-                          .as_proto();
-  google::pubsub::v1::Topic expected;
+                          .BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    labels: { key: "key1" value: "label1" }
-  )pb";
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      labels: { key: "key1" value: "label1" }
+    }
+    update_mask { paths: "labels" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -72,15 +76,17 @@ TEST(Topic, AddAllowedPersistenceRegion) {
   auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_allowed_persistence_region("us-central1")
                           .add_allowed_persistence_region("us-west1")
-                          .as_proto();
-  google::pubsub::v1::Topic expected;
+                          .BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    message_storage_policy {
-      allowed_persistence_regions: "us-central1"
-      allowed_persistence_regions: "us-west1"
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      message_storage_policy {
+        allowed_persistence_regions: "us-central1"
+        allowed_persistence_regions: "us-west1"
+      }
     }
-  )pb";
+    update_mask { paths: "message_storage_policy" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -90,12 +96,14 @@ TEST(Topic, ClearAllowedPersistenceRegions) {
                           .add_allowed_persistence_region("us-central1")
                           .clear_allowed_persistence_regions()
                           .add_allowed_persistence_region("us-west1")
-                          .as_proto();
-  google::pubsub::v1::Topic expected;
+                          .BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    message_storage_policy { allowed_persistence_regions: "us-west1" }
-  )pb";
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      message_storage_policy { allowed_persistence_regions: "us-west1" }
+    }
+    update_mask { paths: "message_storage_policy" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -103,35 +111,43 @@ TEST(Topic, ClearAllowedPersistenceRegions) {
 TEST(Topic, SetKmsKeyName) {
   auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .set_kms_key_name("projects/.../test-only-string")
-                          .as_proto();
-  google::pubsub::v1::Topic expected;
+                          .BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    kms_key_name: "projects/.../test-only-string"
-  )pb";
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      kms_key_name: "projects/.../test-only-string"
+    }
+    update_mask { paths: "kms_key_name" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, MoveProto) {
+TEST(Topic, MultipleChanges) {
   auto builder = TopicMutationBuilder(Topic("test-project", "test-topic"))
                      .add_label("key0", "label0")
                      .add_label("key1", "label1")
                      .add_allowed_persistence_region("us-central1")
                      .add_allowed_persistence_region("us-west1")
                      .set_kms_key_name("projects/.../test-only-string");
-  auto const actual = std::move(builder).as_proto();
-  google::pubsub::v1::Topic expected;
+  auto const actual = std::move(builder).BuildUpdateMutation();
+  google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
-    name: "projects/test-project/topics/test-topic"
-    labels: { key: "key1" value: "label1" }
-    labels: { key: "key0" value: "label0" }
-    message_storage_policy {
-      allowed_persistence_regions: "us-central1"
-      allowed_persistence_regions: "us-west1"
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      labels: { key: "key1" value: "label1" }
+      labels: { key: "key0" value: "label0" }
+      message_storage_policy {
+        allowed_persistence_regions: "us-central1"
+        allowed_persistence_regions: "us-west1"
+      }
+      kms_key_name: "projects/.../test-only-string"
     }
-    kms_key_name: "projects/.../test-only-string"
-  )pb";
+    update_mask {
+      paths: "kms_key_name"
+      paths: "labels"
+      paths: "message_storage_policy"
+    })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
