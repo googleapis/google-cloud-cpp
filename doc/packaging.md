@@ -1385,8 +1385,8 @@ sudo cmake --build cmake-out --target install
 ### CentOS (7)
 
 First install the development tools and OpenSSL. The development tools
-distributed with CentOS 7 (notably CMake) are too old to build
-the project. In these instructions, we use `cmake3` obtained from
+distributed with CentOS 7 are too old to build the project. In these
+instructions, we use `cmake3` and `gcc-7` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
@@ -1394,9 +1394,16 @@ sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch
 sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake ccache cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
+sudo yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
+        git libtool make openssl-devel pkgconfig tar wget which zlib-devel
 sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
+```
+
+Start a bash shell with its environment configured to use the tools installed
+by `devtoolset-7`.
+**IMPORTANT**: All the following commands should be run from this new shell.
+```bash
+scl enable devtoolset-7 bash
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
