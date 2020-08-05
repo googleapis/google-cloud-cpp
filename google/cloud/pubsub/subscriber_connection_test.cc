@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 #include <atomic>
 
@@ -26,6 +27,8 @@ namespace {
 
 using ::testing::_;
 using ::testing::AtLeast;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 TEST(SubscriberConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -109,6 +112,69 @@ TEST(SubscriberConnectionTest, PullFailure) {
   auto handler = [&](Message const&, AckHandler const&) {};
   auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
   EXPECT_EQ(expected, response.get());
+}
+
+/// @test Verify key events are logged
+TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, AsyncPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        auto& m = *response.add_received_messages();
+        m.set_ack_id("test-ack-id-0");
+        m.mutable_message()->set_message_id("test-message-id-0");
+        return make_ready_future(make_status_or(response));
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(1))
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
+      });
+  // Depending on timing this might be called, but it is very rare.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  CompletionQueue cq;
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()}
+                .DisableBackgroundThreads(cq)
+                .enable_tracing("rpc"));
+  std::atomic_flag received_one{false};
+  promise<void> waiter;
+  auto handler = [&](Message const&, AckHandler h) {
+    std::move(h).ack();
+    if (received_one.test_and_set()) return;
+    waiter.set_value();
+  };
+  std::thread t([&cq] { cq.Run(); });
+  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  waiter.get_future().wait();
+  response.cancel();
+  ASSERT_STATUS_OK(response.get());
+  // We need to explicitly cancel any pending timers (some of which may be quite
+  // long) left by the subscription.
+  cq.CancelAll();
+  cq.Shutdown();
+  t.join();
+
+  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncPull")));
+  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncAcknowledge")));
+  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 }  // namespace
