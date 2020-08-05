@@ -20,36 +20,13 @@ if (NOT TARGET nlohmann-json-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_URL
-        "https://github.com/nlohmann/json/archive/v3.4.0.tar.gz")
+        "https://github.com/nlohmann/json/archive/v3.9.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_SHA256
-        "c377963a95989270c943d522bfefe7b889ef5ed0e1e15d535fd6f6f16ed70732")
+        "9943db11eeaa5b23e58a88fbc26c453faccef7b546e55063ad00e7caaaf76d0b")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
 
-    if ("${CMAKE_VERSION}" VERSION_LESS 3.8)
-        if (WIN32)
-            # patch may not be installed on Windows. It might be easier to
-            # upgrade CMake on that platform though.
-            message(FATAL_ERROR "Super builds on WIN32 require CMake >= 3.8."
-                                " Please upgrade your CMake version.")
-        endif ()
-        # nlohmann_json requires CMake >= 3.8, apparently to use the cxx_std_11
-        # property on its targets. We patch the CMakeLists.txt file to disable
-        # this feature. It is useful but using C++11 is a documented
-        # requirement.
-        message(
-            "nlohmann_json CMakeLists.txt file needs a patch ${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001"
-        )
-        set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND
-            "patch" "-p1" "<"
-            "${CMAKE_CURRENT_LIST_DIR}/nlohmann_json.patch001")
-    else ()
-        message(
-            "nlohmann_json CMakeLists.txt file will NOT need a patch ${CMAKE_VERSION}"
-        )
-        set(GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND "")
-    endif ()
     include(ExternalProject)
     ExternalProject_Add(
         nlohmann-json-project
@@ -64,7 +41,6 @@ if (NOT TARGET nlohmann-json-project)
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DBUILD_TESTING=OFF
-        PATCH_COMMAND "${GOOGLE_CLOUD_CPP_NLOHMANN_JSON_PATCH_COMMAND}"
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
