@@ -25,9 +25,6 @@ namespace cloud {
 namespace generator {
 namespace internal {
 
-using google::protobuf::ServiceDescriptor;
-using google::protobuf::compiler::GeneratorContext;
-
 ClientGenerator::ClientGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     std::map<std::string, std::string> service_vars,
