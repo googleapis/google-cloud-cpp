@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -25,7 +26,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::storage::testing::MakeRandomData;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::Return;
 
 class MockGrpcUploadWriter : public GrpcClient::UploadWriter {
@@ -82,6 +85,54 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
               EXPECT_EQ(size, r.write_offset());
               EXPECT_TRUE(r.finish_write());
               EXPECT_TRUE(options.is_last_message());
+              return true;
+            });
+        EXPECT_CALL(*writer, Finish()).WillOnce(Return(grpc::Status::OK));
+
+        return std::unique_ptr<GrpcClient::UploadWriter>(writer.release());
+      });
+
+  auto upload = session.UploadChunk({{payload}});
+  EXPECT_STATUS_OK(upload);
+  EXPECT_EQ(size - 1, upload->last_committed_byte);
+  EXPECT_EQ(size, session.next_expected_byte());
+  EXPECT_FALSE(session.done());
+
+  upload = session.UploadFinalChunk({{payload}}, 2 * size);
+  EXPECT_STATUS_OK(upload);
+  EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
+  EXPECT_EQ(2 * size, session.next_expected_byte());
+  EXPECT_TRUE(session.done());
+}
+
+TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
+  auto mock = MockGrpcClient::Create();
+  GrpcResumableUploadSession session(mock, "test-upload-id");
+
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  auto const payload = MakeRandomData(rng, 8 * 1024 * 1024L);
+  auto const size = payload.size();
+
+  EXPECT_FALSE(session.done());
+  EXPECT_EQ(0, session.next_expected_byte());
+  std::size_t expected_write_offset = 0;
+  EXPECT_CALL(*mock, CreateUploadWriter)
+      .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
+        auto writer = absl::make_unique<MockGrpcUploadWriter>();
+
+        using google::storage::v1::InsertObjectRequest;
+        EXPECT_CALL(*writer, Write)
+            .Times(AtLeast(2))
+            .WillRepeatedly([&](InsertObjectRequest const& r,
+                                grpc::WriteOptions const&) {
+              EXPECT_EQ("test-upload-id", r.upload_id());
+              EXPECT_EQ(expected_write_offset, r.write_offset());
+              EXPECT_TRUE(r.has_checksummed_data());
+              auto const content_size = r.checksummed_data().content().size();
+              EXPECT_LE(
+                  content_size,
+                  google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+              expected_write_offset += content_size;
               return true;
             });
         EXPECT_CALL(*writer, Finish()).WillOnce(Return(grpc::Status::OK));
