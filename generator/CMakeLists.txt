@@ -19,9 +19,8 @@ include(FindProtobufWithTargets)
 
 find_package(ProtobufWithTargets REQUIRED)
 
-configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
-    generator # cmake-format: sort
+    google_cloud_cpp_generator # cmake-format: sort
     generator.cc
     generator.h
     internal/class_generator_interface.h
@@ -39,31 +38,30 @@ add_library(
     internal/service_generator.cc
     internal/service_generator.h
     internal/stub_generator.cc
-    internal/stub_generator.h
-    version.h
-    version_info.h)
-target_include_directories(
-    generator
-    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-           $<INSTALL_INTERFACE:include>)
+    internal/stub_generator.h)
+target_include_directories(google_cloud_cpp_generator
+                           PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
-    generator
+    google_cloud_cpp_generator
     PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
            googleapis-c++::api_client_protos
            googleapis-c++::longrunning_operations_protos)
-google_cloud_cpp_add_common_options(generator)
-set_target_properties(
-    generator PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                         SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
-target_compile_options(generator PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
+target_compile_options(google_cloud_cpp_generator
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(googleapis-c++::generator ALIAS generator)
+add_library(googleapis-c++::google_cloud_cpp_generator ALIAS
+            google_cloud_cpp_generator)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(generator YEAR "2020")
+create_bazel_config(google_cloud_cpp_generator YEAR "2020")
+
+# Build protoc plugin executable
+add_executable(protoc-gen-cpp_codegen main.cc)
+target_link_libraries(protoc-gen-cpp_codegen LINK_PUBLIC
+                      google_cloud_cpp_generator protobuf::libprotoc)
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_generator_define_tests)
@@ -94,7 +92,7 @@ function (google_cloud_cpp_generator_define_tests)
         google_cloud_cpp_add_executable(target "generator" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE generator
+            PRIVATE google_cloud_cpp_generator
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     GTest::gmock_main
@@ -119,8 +117,3 @@ endfunction ()
 if (BUILD_TESTING)
     google_cloud_cpp_generator_define_tests()
 endif (BUILD_TESTING)
-
-# Build protoc plugin executable
-add_executable(protoc-gen-cpp_codegen main.cc)
-target_link_libraries(protoc-gen-cpp_codegen LINK_PUBLIC generator
-                      protobuf::libprotoc)
