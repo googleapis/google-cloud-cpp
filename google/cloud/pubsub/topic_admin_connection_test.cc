@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
-#include "google/cloud/pubsub/create_topic_builder.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
+#include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -43,7 +43,7 @@ TEST(TopicAdminConnectionTest, Create) {
           });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
-  auto const expected = CreateTopicBuilder(topic).as_proto();
+  auto const expected = TopicMutationBuilder(topic).as_proto();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/create_topic_builder.h"
 #include "google/cloud/pubsub/topic_admin_connection.h"
+#include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -79,7 +79,8 @@ class TopicAdminClient {
    *
    * @param builder the configuration for the new topic.
    */
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(CreateTopicBuilder builder) {
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      TopicMutationBuilder builder) {
     return connection_->CreateTopic({std::move(builder).as_proto()});
   }
 

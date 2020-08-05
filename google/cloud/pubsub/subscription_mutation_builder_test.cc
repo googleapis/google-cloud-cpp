@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "subscription_mutation_builder.h"
-#include "google/cloud/pubsub/create_topic_builder.h"
+#include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>

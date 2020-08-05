@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/create_topic_builder.h"
+#include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -29,7 +29,7 @@ using ::google::protobuf::TextFormat;
 
 TEST(Topic, TopicOnly) {
   auto const actual =
-      CreateTopicBuilder(Topic("test-project", "test-topic")).as_proto();
+      TopicMutationBuilder(Topic("test-project", "test-topic")).as_proto();
   google::pubsub::v1::Topic expected;
   std::string const text = R"pb(
     name: "projects/test-project/topics/test-topic"
@@ -39,7 +39,7 @@ TEST(Topic, TopicOnly) {
 }
 
 TEST(Topic, AddLabel) {
-  auto const actual = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_label("key0", "label0")
                           .add_label("key1", "label1")
                           .as_proto();
@@ -54,7 +54,7 @@ TEST(Topic, AddLabel) {
 }
 
 TEST(Topic, ClearLabel) {
-  auto const actual = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_label("key0", "label0")
                           .clear_labels()
                           .add_label("key1", "label1")
@@ -69,7 +69,7 @@ TEST(Topic, ClearLabel) {
 }
 
 TEST(Topic, AddAllowedPersistenceRegion) {
-  auto const actual = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_allowed_persistence_region("us-central1")
                           .add_allowed_persistence_region("us-west1")
                           .as_proto();
@@ -86,7 +86,7 @@ TEST(Topic, AddAllowedPersistenceRegion) {
 }
 
 TEST(Topic, ClearAllowedPersistenceRegions) {
-  auto const actual = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .add_allowed_persistence_region("us-central1")
                           .clear_allowed_persistence_regions()
                           .add_allowed_persistence_region("us-west1")
@@ -101,7 +101,7 @@ TEST(Topic, ClearAllowedPersistenceRegions) {
 }
 
 TEST(Topic, SetKmsKeyName) {
-  auto const actual = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
                           .set_kms_key_name("projects/.../test-only-string")
                           .as_proto();
   google::pubsub::v1::Topic expected;
@@ -114,7 +114,7 @@ TEST(Topic, SetKmsKeyName) {
 }
 
 TEST(Topic, MoveProto) {
-  auto builder = CreateTopicBuilder(Topic("test-project", "test-topic"))
+  auto builder = TopicMutationBuilder(Topic("test-project", "test-topic"))
                      .add_label("key0", "label0")
                      .add_label("key1", "label1")
                      .add_allowed_persistence_region("us-central1")

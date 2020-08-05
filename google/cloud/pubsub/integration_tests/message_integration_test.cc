@@ -45,7 +45,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   auto subscription_admin =
       SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-  auto topic_metadata = topic_admin.CreateTopic(CreateTopicBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
   ASSERT_STATUS_OK(topic_metadata);
 
   struct Cleanup {
