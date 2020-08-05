@@ -98,6 +98,22 @@ class TopicAdminClient {
   }
 
   /**
+   * Update the configuration of an existing Cloud Pub/Sub topic.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc update-topic
+   *
+   * @param builder the configuration for the new topic, includes the name.
+   */
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      TopicMutationBuilder builder) {
+    return connection_->UpdateTopic({std::move(builder).BuildUpdateMutation()});
+  }
+
+  /**
    * List all the topics for a given project id.
    *
    * @par Idempotency

@@ -78,6 +78,11 @@ class TopicAdminConnection {
     Topic topic;
   };
 
+  /// Wrap the arguments for `UpdateTopic()`
+  struct UpdateTopicParams {
+    google::pubsub::v1::UpdateTopicRequest request;
+  };
+
   /// Wrap the arguments for `ListTopics`
   struct ListTopicsParams {
     std::string project_id;
@@ -95,6 +100,10 @@ class TopicAdminConnection {
 
   /// Defines the interface for `Client::GetTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams) = 0;
+
+  /// Defines the interface for `Client::UpdateTopic()`
+  virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      UpdateTopicParams) = 0;
 
   /// Defines the interface for `Client::ListTopics()`
   virtual ListTopicsRange ListTopics(ListTopicsParams) = 0;

@@ -43,6 +43,17 @@ StatusOr<google::pubsub::v1::Topic> PublisherLogging::GetTopic(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::Topic> PublisherLogging::UpdateTopic(
+    grpc::ClientContext& context,
+    google::pubsub::v1::UpdateTopicRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::UpdateTopicRequest const& request) {
+        return child_->UpdateTopic(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherLogging::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {

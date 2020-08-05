@@ -69,6 +69,25 @@ void GetTopic(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
+                 std::vector<std::string> const& argv) {
+  //! [update-topic]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    auto topic = client.UpdateTopic(
+        pubsub::TopicMutationBuilder(
+            pubsub::Topic(std::move(project_id), std::move(topic_id)))
+            .add_label("test-key", "test-value"));
+    if (!topic) return;  // TODO(#4792) - emulator lacks UpdateTopic()
+
+    std::cout << "The topic was successfully updated: " << topic->DebugString()
+              << "\n";
+  }
+  //! [update-topic]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListTopics(google::cloud::pubsub::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
   //! [START pubsub_list_topics] [list-topics]
@@ -401,6 +420,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
 
+  std::cout << "\nRunning UpdateTopic() sample" << std::endl;
+  UpdateTopic(topic_admin_client, {project_id, topic_id});
+
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
 
@@ -465,6 +487,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                               CreateTopic),
       CreateTopicAdminCommand("get-topic", {"project-id", "topic-id"},
                               GetTopic),
+      CreateTopicAdminCommand("update-topic", {"project-id", "topic-id"},
+                              UpdateTopic),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),

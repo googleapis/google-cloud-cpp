@@ -68,6 +68,29 @@ TEST(TopicAdminConnectionTest, Get) {
   EXPECT_THAT(*response, IsProtoEqual(expected));
 }
 
+TEST(TopicAdminConnectionTest, Update) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+  google::pubsub::v1::Topic expected;
+  expected.set_name(topic.FullName());
+
+  EXPECT_CALL(*mock, UpdateTopic)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::UpdateTopicRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic().name());
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("labels"));
+        return make_status_or(expected);
+      });
+
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto response =
+      topic_admin->UpdateTopic({TopicMutationBuilder(topic)
+                                    .add_label("test-key", "test-value")
+                                    .BuildUpdateMutation()});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
 TEST(TopicAdminConnectionTest, List) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
 
