@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
@@ -31,8 +32,21 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::EndsWith;
 
+// Constants used to identify the encryption key.
+// For staging, the location must be us-central1.
+auto constexpr kLocation = "us-central1";
+auto constexpr kKeyRing = "spanner-cmek";
+auto constexpr kKeyName = "spanner-cmek-test-key";
+
 class DatabaseAdminClientTest : public ::testing::Test {
  protected:
+  static void SetUpTestSuite() {
+    // XXX(salty) DELETE BEFORE MERGING: run these tests against staging spanner
+    using ::google::cloud::internal::SetEnv;
+    SetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+           "staging-wrenchworks.sandbox.googleapis.com");
+  }
+
   // We can't use ASSERT* in the constructor, so defer initializing `instance_`
   // and `database_` until `SetUp()`.
   DatabaseAdminClientTest()
@@ -88,8 +102,12 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                                  << " already exists, this is unexpected as "
                                     "the database id is selected at random.";
 
-  auto database_future =
-      client_.CreateDatabase(database_, /*extra_statements=*/{});
+  // Use an encryption key for this test (the emulator doesn't support it but
+  // ignores it, so go ahead and set it, we just can't check that it exists).
+  KmsKeyName encryption_key(instance_.project_id(), kLocation, kKeyRing,
+                            kKeyName);
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, encryption_key);
   auto database = database_future.get();
   ASSERT_STATUS_OK(database);
 
@@ -178,6 +196,44 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   auto drop_status = client_.DropDatabase(database_);
   EXPECT_STATUS_OK(drop_status);
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
+// @test Verify we can create a database with an encryption key.
+TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
+  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
+  KmsKeyName encryption_key(instance_.project_id(), kLocation, kKeyRing,
+                            kKeyName);
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, encryption_key);
+  auto database = database_future.get();
+  EXPECT_STATUS_OK(database);
+
+  auto get_result = client_.GetDatabase(database_);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(database->name(), get_result->name());
+  // Verify the encryption key name
+  // TODO(salty) it seems to me that these expectations should also hold true
+  // for the `database` returned from `CreateDatabase`, but the encryption
+  // config is not present in `database`. I talked to the spanner folks about
+  // it, waiting to hear if they're going to change it.
+  EXPECT_TRUE(get_result->has_encryption_config());
+  EXPECT_EQ(get_result->encryption_config().kms_key_name(),
+            encryption_key.FullName());
+
+  auto drop_status = client_.DropDatabase(database_);
+  EXPECT_STATUS_OK(drop_status);
+}
+
+// @test Verify creating a database fails if a nonexistent encryption key is
+// supplied.
+TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
+  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
+  KmsKeyName nonexistent_encryption_key(instance_.project_id(), kLocation,
+                                        kKeyRing, "ceci-n-est-pas-une-cle");
+  auto database_future = client_.CreateDatabase(
+      database_, /*extra_statements=*/{}, nonexistent_encryption_key);
+  auto database = database_future.get();
+  EXPECT_FALSE(database.ok());
 }
 
 }  // namespace

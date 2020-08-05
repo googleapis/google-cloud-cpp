@@ -27,8 +27,10 @@ DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
     : conn_(MakeDatabaseAdminConnection(options)) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
-    Database db, std::vector<std::string> extra_statements) {
-  return conn_->CreateDatabase({std::move(db), std::move(extra_statements)});
+    Database db, std::vector<std::string> extra_statements,
+    absl::optional<KmsKeyName> encryption_key) {
+  return conn_->CreateDatabase(
+      {std::move(db), std::move(extra_statements), std::move(encryption_key)});
 }
 
 StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database db) {
