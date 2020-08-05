@@ -39,6 +39,8 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/stub_factory_generator.cc
+    internal/stub_factory_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h)
 target_include_directories(google_cloud_cpp_generator

@@ -88,10 +88,10 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("proto_file_name",
                        "google/cloud/frobber/v1/frobber.proto"),
         std::make_pair("service_endpoint", ""),
+        std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair(
             "stub_cc_path",
             "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.cc"),
-        std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair(
             "stub_header_path",
             "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.h")),

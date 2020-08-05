@@ -17,8 +17,8 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
-#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>

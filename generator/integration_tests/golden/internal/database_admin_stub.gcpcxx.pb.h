@@ -18,7 +18,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_GCPCXX_PB_H
 
-#include "generator/integration_tests/golden/internal/version.h"
+#include "generator/integration_tests/golden/version.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>

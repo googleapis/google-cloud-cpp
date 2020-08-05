@@ -93,7 +93,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     "class $metadata_class_name$ : public $stub_class_name$ {\n"
     " public:\n"
     "  ~$metadata_class_name$() override = default;\n"
-    "  $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n"
+    "  explicit $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n"
     "\n");
   // clang-format on
 
