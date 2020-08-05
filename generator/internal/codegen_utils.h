@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GENERATOR_INTERNAL_CODEGEN_UTILS_H_
-#define GENERATOR_INTERNAL_CODEGEN_UTILS_H_
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
 
 #include <string>
 
@@ -57,4 +57,4 @@ std::string ProtoNameToCppName(std::string const& proto_name);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GENERATOR_INTERNAL_CODEGEN_UTILS_H_
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H

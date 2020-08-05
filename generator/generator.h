@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GENERATOR_GENERATOR_H_
-#define GENERATOR_GENERATOR_H_
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
 
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
@@ -34,4 +34,4 @@ class Generator : public google::protobuf::compiler::CodeGenerator {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GENERATOR_GENERATOR_H_
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H

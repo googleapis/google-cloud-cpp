@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H_
-#define GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H_
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H
 
 #include "google/cloud/status.h"
 #include <google/protobuf/descriptor.h>
@@ -35,4 +35,4 @@ class ClassGeneratorInterface {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H_
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H

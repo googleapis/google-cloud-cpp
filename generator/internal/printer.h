@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GENERATOR_INTERNAL_PRINTER_H_
-#define GENERATOR_INTERNAL_PRINTER_H_
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
@@ -52,4 +52,4 @@ class Printer {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GENERATOR_INTERNAL_PRINTER_H_
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
