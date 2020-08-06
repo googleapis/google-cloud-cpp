@@ -21,6 +21,7 @@
 #include <functional>
 #include <iterator>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -28,6 +29,18 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
+inline bool ComparePaginationValues(google::protobuf::Message const& lhs,
+                                    google::protobuf::Message const& rhs) {
+  return google::protobuf::util::MessageDifferencer::Equals(lhs, rhs);
+}
+
+template <typename T, typename std::enable_if<
+                          !std::is_base_of<google::protobuf::Message, T>::value,
+                          int>::type = 0>
+bool ComparePaginationValues(T const& lhs, T const& rhs) {
+  return lhs == rhs;
+}
 
 /**
  * An input iterator for a class with the same interface as `PaginationRange`.
@@ -82,8 +95,7 @@ class PaginationIterator {
     }
     // Iterators on the same stream are equal if they point to the same object.
     if (lhs.value_.ok() && rhs.value_.ok()) {
-      return google::protobuf::util::MessageDifferencer::Equals(*lhs.value_,
-                                                                *rhs.value_);
+      return ComparePaginationValues(*lhs.value_, *rhs.value_);
     }
     // If one is an error and the other is not then they must be different,
     // because only one iterator per range can have an error status. For the

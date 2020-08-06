@@ -76,6 +76,36 @@ TEST(RangeFromPagination, SinglePage) {
   EXPECT_THAT(names, ElementsAre("p1", "p2"));
 }
 
+TEST(RangeFromPagination, NonProtoRange) {
+  MockRpc mock;
+  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
+    EXPECT_TRUE(request.page_token().empty());
+    Response response;
+    response.clear_next_page_token();
+    response.add_app_profiles()->set_name("p1");
+    response.add_app_profiles()->set_name("p2");
+    return response;
+  });
+
+  using NonProtoRange = PaginationRange<std::string, Request, Response>;
+
+  NonProtoRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); },
+      [](Response const& r) {
+        std::vector<std::string> items;
+        for (auto const& i : r.app_profiles()) {
+          items.push_back(i.name());
+        }
+        return items;
+      });
+  std::vector<std::string> names;
+  for (auto& p : range) {
+    if (!p) break;
+    names.push_back(*p);
+  }
+  EXPECT_THAT(names, ElementsAre("p1", "p2"));
+}
+
 TEST(RangeFromPagination, TwoPages) {
   MockRpc mock;
   EXPECT_CALL(mock, Loader(_))
