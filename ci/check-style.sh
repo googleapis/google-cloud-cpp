@@ -38,6 +38,10 @@ time {
     xargs -0 awk -f "ci/check-include-guards.gawk"; then
     problems="${problems} include-guards"
   fi
+  if ! find generator -name '*.h' -print0 |
+    xargs -0 awk -f "ci/check-include-guards.gawk"; then
+    problems="${problems} include-guards"
+  fi
 }
 
 replace_original_if_changed() {
