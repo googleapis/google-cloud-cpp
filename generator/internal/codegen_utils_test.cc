@@ -17,8 +17,7 @@
 
 namespace google {
 namespace cloud {
-namespace generator {
-namespace internal {
+namespace generator_internal {
 namespace {
 
 TEST(GeneratedFileSuffix, Success) {
@@ -32,7 +31,7 @@ TEST(LocalInclude, Success) {
 TEST(SystemInclude, Success) { EXPECT_EQ("<vector>", SystemInclude("vector")); }
 
 TEST(CamelCaseToSnakeCase, Success) {
-  EXPECT_EQ("snake_case_name", CamelCaseToSnakeCase("SnakeCaseName"));
+  EXPECT_EQ("foo_bar_ba", CamelCaseToSnakeCase("FooBarBa"));
 }
 
 TEST(ServiceNameToFilePath, TrailingServiceInLastComponent) {
@@ -60,7 +59,6 @@ TEST(ProtoNameToCppName, Success) {
 }
 
 }  // namespace
-}  // namespace internal
-}  // namespace generator
+}  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

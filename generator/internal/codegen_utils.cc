@@ -17,15 +17,15 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
+#include <cctype>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace generator {
-namespace internal {
+namespace generator_internal {
 
 namespace {
-const char kGeneratorFileSuffix[] = ".gcpcxx.pb";
+char const kGeneratorFileSuffix[] = ".gcpcxx.pb";
 }  // namespace
 
 std::string GeneratedFileSuffix() { return {kGeneratorFileSuffix}; }
@@ -42,19 +42,29 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
   std::string output;
   for (auto i = 0U; i < input.size(); ++i) {
     if (i + 2 < input.size()) {
-      if (std::isupper(input[i + 1]) && std::islower(input[i + 2])) {
-        absl::StrAppend(&output, std::string(1, std::tolower(input[i])), "_");
+      if (std::isupper(static_cast<unsigned char>(input[i + 1])) &&
+          std::islower(static_cast<unsigned char>(input[i + 2]))) {
+        absl::StrAppend(
+            &output,
+            std::string(1, std::tolower(static_cast<unsigned char>(input[i]))),
+            "_");
         continue;
       }
     }
     if (i + 1 < input.size()) {
-      if ((std::islower(input[i]) || std::isdigit(input[i])) &&
-          std::isupper(input[i + 1])) {
-        absl::StrAppend(&output, std::string(1, std::tolower(input[i])), "_");
+      if ((std::islower(static_cast<unsigned char>(input[i])) ||
+           std::isdigit(static_cast<unsigned char>(input[i]))) &&
+          std::isupper(static_cast<unsigned char>(input[i + 1]))) {
+        absl::StrAppend(
+            &output,
+            std::string(1, std::tolower(static_cast<unsigned char>(input[i]))),
+            "_");
         continue;
       }
     }
-    absl::StrAppend(&output, std::string(1, std::tolower(input[i])));
+    absl::StrAppend(
+        &output,
+        std::string(1, std::tolower(static_cast<unsigned char>(input[i]))));
   }
   return output;
 }
@@ -73,7 +83,6 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-}  // namespace internal
-}  // namespace generator
+}  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

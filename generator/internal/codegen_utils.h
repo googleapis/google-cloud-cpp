@@ -19,8 +19,7 @@
 
 namespace google {
 namespace cloud {
-namespace generator {
-namespace internal {
+namespace generator_internal {
 
 /**
  * Suffix for generated files to indicate what plugin generated them.
@@ -33,7 +32,9 @@ std::string LocalInclude(absl::string_view header);
 std::string SystemInclude(absl::string_view header);
 
 /**
- * Convert a CamelCase string to snake_case.
+ * Convert a CamelCase string from a protoc descriptor to snake_case.
+ *
+ * This function assumes inputs are correctly formatted CamelCase.
  */
 std::string CamelCaseToSnakeCase(absl::string_view input);
 
@@ -56,8 +57,8 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
  * "::" separated C++ fully qualified name.
  */
 std::string ProtoNameToCppName(absl::string_view proto_name);
-}  // namespace internal
-}  // namespace generator
+
+}  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
 
