@@ -53,13 +53,13 @@ echo "================================================================"
 io::log "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
 "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-  "${BAZEL_BIN}" fetch -- //google/cloud/...:all
+  "${BAZEL_BIN}" fetch -- //google/cloud/...:all //generator/...:all
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
-  -- //google/cloud/...:all
+  -- //google/cloud/...:all //generator/...:all
 
 echo "================================================================"
 io::log "Compiling all the code, including integration tests"
@@ -67,7 +67,7 @@ io::log "Compiling all the code, including integration tests"
 # them next.
 "${BAZEL_BIN}" build \
   "${bazel_args[@]}" \
-  -- //google/cloud/...:all
+  -- //google/cloud/...:all //generator/...:all
 
 readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
@@ -198,6 +198,10 @@ if should_run_integration_tests; then
 
     # The Pub/Sub integration tests were already run above
     "-//google/cloud/pubsub/..."
+
+    # The Generator integration tests were already run above
+    "-//generator/..."
+
   )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
@@ -206,9 +210,6 @@ if should_run_integration_tests; then
   # Run the integration tests using Bazel to drive them. Some of the tests and
   # examples require environment variables with dynamic values, so we run them
   # below to avoid invalidating the cached test results for all the other tests.
-  echo "================================================================"
-  io::log_yellow "running integration tests against production:" \
-    "spanner=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-default}"
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
