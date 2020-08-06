@@ -30,6 +30,7 @@ pubsub_client_unit_tests = [
     "publisher_connection_test.cc",
     "publisher_option_test.cc",
     "publisher_test.cc",
+    "snapshot_test.cc",
     "subscriber_connection_test.cc",
     "subscriber_test.cc",
     "subscription_admin_connection_test.cc",
