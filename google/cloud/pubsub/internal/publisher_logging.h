@@ -47,6 +47,11 @@ class PublisherLogging : public PublisherStub {
   Status DeleteTopic(
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

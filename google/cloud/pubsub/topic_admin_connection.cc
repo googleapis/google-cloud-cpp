@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_split.h"
 #include <memory>
 
 namespace google {
@@ -76,6 +77,28 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
     request.set_topic(p.topic.FullName());
     grpc::ClientContext context;
     return stub_->DeleteTopic(context, request);
+  }
+
+  ListTopicSubscriptionsRange ListTopicSubscriptions(
+      ListTopicSubscriptionsParams p) override {
+    google::pubsub::v1::ListTopicSubscriptionsRequest request;
+    request.set_topic(std::move(p.topic_full_name));
+    auto& stub = stub_;
+    return ListTopicSubscriptionsRange(
+        std::move(request),
+        [stub](
+            google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
+          grpc::ClientContext context;
+          return stub->ListTopicSubscriptions(context, request);
+        },
+        [](google::pubsub::v1::ListTopicSubscriptionsResponse response) {
+          std::vector<std::string> items;
+          items.reserve(response.subscriptions_size());
+          for (auto& item : *response.mutable_subscriptions()) {
+            items.push_back(std::move(item));
+          }
+          return items;
+        });
   }
 
  private:

@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -41,6 +42,19 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 using ListTopicsRange = google::cloud::internal::PaginationRange<
     google::pubsub::v1::Topic, google::pubsub::v1::ListTopicsRequest,
     google::pubsub::v1::ListTopicsResponse>;
+
+/**
+ * An input range to stream the Cloud Pub/Sub subscriptions of a topic.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `std::string` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListTopicSubscriptionsRange = google::cloud::internal::PaginationRange<
+    std::string, google::pubsub::v1::ListTopicSubscriptionsRequest,
+    google::pubsub::v1::ListTopicSubscriptionsResponse>;
 
 /**
  * A connection to Cloud Pub/Sub.
@@ -92,24 +106,33 @@ class TopicAdminConnection {
   struct DeleteTopicParams {
     Topic topic;
   };
+
+  /// Wrap the arguments for `ListTopicSubscriptions()`
+  struct ListTopicSubscriptionsParams {
+    std::string topic_full_name;
+  };
   //@}
 
-  /// Defines the interface for `Client::CreateTopic()`
+  /// Defines the interface for `TopicAdminClient::CreateTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams) = 0;
 
-  /// Defines the interface for `Client::GetTopic()`
+  /// Defines the interface for `TopicAdminClient::GetTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams) = 0;
 
-  /// Defines the interface for `Client::UpdateTopic()`
+  /// Defines the interface for `TopicAdminClient::UpdateTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
       UpdateTopicParams) = 0;
 
-  /// Defines the interface for `Client::ListTopics()`
+  /// Defines the interface for `TopicAdminClient::ListTopics()`
   virtual ListTopicsRange ListTopics(ListTopicsParams) = 0;
 
-  /// Defines the interface for `Client::DeleteTopic()`
+  /// Defines the interface for `TopicAdminClient::DeleteTopic()`
   virtual Status DeleteTopic(DeleteTopicParams) = 0;
+
+  /// Defines the interface for `TopicAdminClient::ListTopicSubscriptions()`
+  virtual ListTopicSubscriptionsRange ListTopicSubscriptions(
+      ListTopicSubscriptionsParams) = 0;
 };
 
 /**

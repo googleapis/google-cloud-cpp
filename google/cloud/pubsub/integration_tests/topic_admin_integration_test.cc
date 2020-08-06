@@ -77,9 +77,13 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
     ASSERT_STATUS_OK(update_response);
   }
 
+  // The integration test for ListTopicSubscriptions() is found in
+  // subscription_admin_integration_test.cc. The test is uninteresting until one
+  // creates a subscription, and doing so here would just complicate this test
+  // with little benefit.
+
   auto delete_response = publisher.DeleteTopic(topic);
   ASSERT_STATUS_OK(delete_response);
-
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
 }
@@ -122,6 +126,16 @@ TEST(TopicAdminIntegrationTest, DeleteTopicFailure) {
   auto delete_response =
       publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());
+}
+
+TEST(TopicAdminIntegrationTest, ListTopicSubscriptionsFailure) {
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
+  auto list = publisher.ListTopicSubscriptions(
+      Topic("invalid-project", "invalid-topic"));
+  auto i = list.begin();
+  EXPECT_FALSE(i == list.end());
+  EXPECT_FALSE(*i);
 }
 
 }  // namespace

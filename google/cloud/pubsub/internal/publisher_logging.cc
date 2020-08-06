@@ -76,6 +76,18 @@ Status PublisherLogging::DeleteTopic(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+PublisherLogging::ListTopicSubscriptions(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
+        return child_->ListTopicSubscriptions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherLogging::AsyncPublish(
     google::cloud::CompletionQueue& cq,
