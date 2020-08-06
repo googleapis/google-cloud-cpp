@@ -340,6 +340,45 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void CustomBatchPublisher(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "custom-thread-pool-publisher <project-id> <topic-id>"};
+  }
+  //! [START pubsub_publisher_batch_settings] [publisher-options]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic),
+        pubsub::PublisherOptions{}.set_batching_config(
+            pubsub::BatchingConfig{}
+                .set_maximum_hold_time(std::chrono::milliseconds(10))
+                .set_maximum_batch_bytes(10 * 1024 * 1024L)
+                .set_maximum_message_count(100)),
+        pubsub::ConnectionOptions{}));
+
+    std::vector<future<void>> ids;
+    for (char const* data : {"1", "2", "3", "go!"}) {
+      ids.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([data](future<StatusOr<std::string>> f) {
+                auto s = f.get();
+                if (!s) return;
+                std::cout << "Sent '" << data << "' (" << *s << ")\n";
+              }));
+    }
+    publisher.Flush();
+    // Block until they are actually sent.
+    for (auto& id : ids) id.get();
+  }
+  //! [END pubsub_publisher_batch_settings] [publisher-options]
+  (argv.at(0), argv.at(1));
+}
+
 void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -463,6 +502,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the CustomThreadPoolPublisher() sample" << std::endl;
   CustomThreadPoolPublisher({project_id, topic_id});
 
+  std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
+  CustomBatchPublisher({project_id, topic_id});
+
   std::cout << "\nRunning the CustomThreadPoolSubscriber() sample" << std::endl;
   CustomThreadPoolSubscriber({project_id, subscription_id});
 
@@ -509,6 +551,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish", {}, Publish),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
+      {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"auto", AutoRun},
   });
