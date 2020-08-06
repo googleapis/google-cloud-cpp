@@ -175,7 +175,7 @@ elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # package maintainers, where the cost of running the tests for a fixed version
   # is too high.
   export BUILD_TESTING=no
-elif [[ "${BUILD_NAME}" = "gcc-5.4" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
+elif [[ "${BUILD_NAME}" = "gcc-5.4" ]]; then
   # The oldest version of GCC we support is 5.4, this build checks the code
   # against that version. The use of Ubuntu 16.04 for that build is not a
   # coincidence: the reason we support GCC 5.4 is to support this distribution.
