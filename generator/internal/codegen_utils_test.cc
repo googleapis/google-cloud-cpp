@@ -32,6 +32,12 @@ TEST(SystemInclude, Success) { EXPECT_EQ("<vector>", SystemInclude("vector")); }
 
 TEST(CamelCaseToSnakeCase, Success) {
   EXPECT_EQ("foo_bar_b", CamelCaseToSnakeCase("FooBarB"));
+  EXPECT_EQ("foo_bar_baz", CamelCaseToSnakeCase("FooBarBaz"));
+  EXPECT_EQ("foo_bar_baz", CamelCaseToSnakeCase("fooBarBaz"));
+  EXPECT_EQ("foo_bar_ba", CamelCaseToSnakeCase("fooBarBa"));
+  EXPECT_EQ("foo_bar_baaaaa", CamelCaseToSnakeCase("fooBarBAAAAA"));
+  EXPECT_EQ("foo_bar_b", CamelCaseToSnakeCase("foo_BarB"));
+  EXPECT_EQ("v1", CamelCaseToSnakeCase("v1"));
 }
 
 TEST(ServiceNameToFilePath, TrailingServiceInLastComponent) {

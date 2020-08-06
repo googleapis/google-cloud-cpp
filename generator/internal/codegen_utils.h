@@ -26,9 +26,14 @@ namespace generator_internal {
  */
 std::string GeneratedFileSuffix();
 
-// Convenience functions for wrapping include headers with the correct
-// delimiting characters (either <> or "")
+/**
+ * Wraps header include in "".
+ */
 std::string LocalInclude(absl::string_view header);
+
+/**
+ * Wraps header include in <>.
+ */
 std::string SystemInclude(absl::string_view header);
 
 /**

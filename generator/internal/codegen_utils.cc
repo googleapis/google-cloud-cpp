@@ -24,11 +24,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-namespace {
-char const kGeneratorFileSuffix[] = ".gcpcxx.pb";
-}  // namespace
-
-std::string GeneratedFileSuffix() { return {kGeneratorFileSuffix}; }
+std::string GeneratedFileSuffix() { return ".gcpcxx.pb"; }
 
 std::string LocalInclude(absl::string_view header) {
   return absl::StrCat("\"", header, "\"");
@@ -41,7 +37,7 @@ std::string SystemInclude(absl::string_view header) {
 std::string CamelCaseToSnakeCase(absl::string_view input) {
   std::string output;
   for (auto i = 0U; i < input.size(); ++i) {
-    if (i + 2 < input.size()) {
+    if (input[i] != '_' && i + 2 < input.size()) {
       if (std::isupper(static_cast<unsigned char>(input[i + 1])) &&
           std::islower(static_cast<unsigned char>(input[i + 2]))) {
         absl::StrAppend(
@@ -51,7 +47,7 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
         continue;
       }
     }
-    if (i + 1 < input.size()) {
+    if (input[i] != '_' && i + 1 < input.size()) {
       if ((std::islower(static_cast<unsigned char>(input[i])) ||
            std::isdigit(static_cast<unsigned char>(input[i]))) &&
           std::isupper(static_cast<unsigned char>(input[i + 1]))) {
