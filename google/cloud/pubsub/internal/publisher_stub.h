@@ -50,6 +50,11 @@ class PublisherStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::GetTopicRequest const& request) = 0;
 
+  /// Update the configuration of an existing topic.
+  virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::UpdateTopicRequest const& request) = 0;
+
   /// List existing topics.
   virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
       grpc::ClientContext& client_context,

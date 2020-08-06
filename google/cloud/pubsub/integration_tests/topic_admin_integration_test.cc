@@ -33,6 +33,10 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+}
+
 TEST(TopicAdminIntegrationTest, TopicCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -60,13 +64,18 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
 
   auto create_response = publisher.CreateTopic(TopicMutationBuilder(topic));
   ASSERT_STATUS_OK(create_response);
+  EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
 
   auto get_response = publisher.GetTopic(topic);
   ASSERT_STATUS_OK(get_response);
-
   EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
-  EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
+  auto update_response = publisher.UpdateTopic(
+      TopicMutationBuilder(topic).add_label("test-key", "test-value"));
+  // TODO(#4792) - cleanup this workaround whenever the emulator is fixed
+  if (!UsingEmulator()) {
+    ASSERT_STATUS_OK(update_response);
+  }
 
   auto delete_response = publisher.DeleteTopic(topic);
   ASSERT_STATUS_OK(delete_response);
@@ -81,6 +90,21 @@ TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
   auto create_response = publisher.CreateTopic(
       TopicMutationBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
+}
+
+TEST(TopicAdminIntegrationTest, GetTopicFailure) {
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
+  auto response = publisher.GetTopic(Topic("invalid-project", "invalid-topic"));
+  ASSERT_FALSE(response);
+}
+
+TEST(TopicAdminIntegrationTest, UpdateTopicFailure) {
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
+  auto response = publisher.UpdateTopic(
+      TopicMutationBuilder(Topic("invalid-project", "invalid-topic")));
+  ASSERT_FALSE(response);
 }
 
 TEST(TopicAdminIntegrationTest, ListTopicsFailure) {

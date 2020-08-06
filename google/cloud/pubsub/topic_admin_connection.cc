@@ -45,6 +45,12 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
     return stub_->GetTopic(context, request);
   }
 
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      UpdateTopicParams p) override {
+    grpc::ClientContext context;
+    return stub_->UpdateTopic(context, p.request);
+  }
+
   ListTopicsRange ListTopics(ListTopicsParams p) override {
     google::pubsub::v1::ListTopicsRequest request;
     request.set_project(std::move(p.project_id));

@@ -48,6 +48,15 @@ class DefaultPublisherStub : public PublisherStub {
     return response;
   }
 
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      grpc::ClientContext& context,
+      google::pubsub::v1::UpdateTopicRequest const& request) override {
+    google::pubsub::v1::Topic response;
+    auto status = grpc_stub_->UpdateTopic(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
       grpc::ClientContext& context,
       google::pubsub::v1::ListTopicsRequest const& request) override {
