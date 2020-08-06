@@ -122,10 +122,9 @@ if (Integration-Tests-Enabled) {
 
     Set-Location "${project_root}"
     Set-Location "${binary_dir}"
-    # TODO(#4536) - restore the GCS+gRPC integration tests
     ctest $ctest_flags `
         -L 'integration-test-production' `
-        -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test|storage_grpc_)'
+        -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test)'
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
         Exit ${LastExitCode}

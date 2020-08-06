@@ -301,17 +301,15 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     io::log "Revoke service account after creating the access token."
     revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
-    # TODO(#4536) - restore the GCS+gRPC integration tests
-    ctest_args+=(-E "storage_grpc_")
-
-    # Here we just run the tests that run against production, as we already have
-    # run all the tests that use the emulator. Some libraries will tag all their
-    # tests as "integration-test-production", that is fine too. As long as we do
-    # not repeat all the tests we are winning.
+    # Since we already run multiple integration tests against the emulator we
+    # only need to run the tests here that cannot use the emulator. Some
+    # libraries will tag all their tests as "integration-test-production",
+    # that is fine too. As long as we do not repeat all the tests we are
+    # winning.
     if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
       # TODO(#4234) - the Bigtable tests are only enabled on the coverage
       #   builds because they consume too much quota.
-      ctest_args+=(-E "(^bigtable_|storage_grpc_)")
+      ctest_args+=(-E "^bigtable_")
     fi
     env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
       -L integration-test-production
