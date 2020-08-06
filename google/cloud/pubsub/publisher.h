@@ -92,6 +92,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * });
  * @endcode
  *
+ * @par Batching Configuration Example
+ * @snippet samples.cc publisher-options
+ *
  * [std-future-link]: https://en.cppreference.com/w/cpp/thread/future
  */
 class Publisher {

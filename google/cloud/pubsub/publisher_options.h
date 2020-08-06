@@ -24,15 +24,46 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-/// Batching configuration for a `Publisher`.
+/**
+ * Configure batching for a `Publisher` object.
+ *
+ * By default, the client library does not automatically batch messages, all
+ * messages have a maximum holding time of 0.
+ *
+ * @warning TODO(#4808) - we are planning to change this default.
+ *
+ * @note Applications developers may want to consider batching messages,
+ *     specially if their messages have small payloads. Consult the Cloud
+ *     Pub/Sub [pricing page][pubsub-pricing-link] for details.
+ *
+ * @par Example
+ * @snippet samples.cc publisher-options
+ *
+ * [pubsub-pricing-link]: https://cloud.google.com/pubsub/pricing
+ */
 class BatchingConfig {
  public:
   BatchingConfig();
 
+  /// The maximum hold time.
   std::chrono::microseconds maximum_hold_time() const {
     return maximum_hold_time_;
   }
 
+  /**
+   * Sets the maximum hold time for the messages.
+   *
+   * @note while this function accepts durations in arbitrary precision, the
+   *     implementation depends on the granularity of your OS timers. It is
+   *     possible that messages are held for slightly longer times than the
+   *     value set here.
+   *
+   * @note the first message in a batch starts the hold time counter. New
+   *     messages do not extend the life of the batch. For example, if you have
+   *     set the holding time to 10 milliseconds, start a batch with message 1,
+   *     and publish a second message 5 milliseconds later, the second message
+   *     will be flushed approximately 5 milliseconds after it is published.
+   */
   template <typename Rep, typename Period>
   BatchingConfig& set_maximum_hold_time(std::chrono::duration<Rep, Period> v) {
     maximum_hold_time_ =
@@ -58,7 +89,12 @@ class BatchingConfig {
   std::size_t maximum_batch_bytes_;
 };
 
-/// Configuration options for a `PublisherClient`
+/**
+ * Configuration options for a `Publisher`
+ *
+ * @par Example
+ * @snippet samples.cc publisher-options
+ */
 class PublisherOptions {
  public:
   PublisherOptions() = default;
