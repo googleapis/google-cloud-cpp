@@ -42,6 +42,9 @@ class NotifyWhenMessageHandled : public pubsub::AckHandler::Impl {
     NotifySession(id);
   }
   std::string ack_id() const override { return child_->ack_id(); }
+  std::int32_t delivery_attempt() const override {
+    return child_->delivery_attempt();
+  }
 
  private:
   void NotifySession(std::string const& id) {
@@ -152,9 +155,9 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
   lk.unlock();
 
   std::unique_ptr<pubsub::AckHandler::Impl> handler =
-      absl::make_unique<DefaultAckHandlerImpl>(executor_, stub_,
-                                               params_.full_subscription_name,
-                                               std::move(*m.mutable_ack_id()));
+      absl::make_unique<DefaultAckHandlerImpl>(
+          executor_, stub_, params_.full_subscription_name,
+          std::move(*m.mutable_ack_id()), m.delivery_attempt());
   // TODO(#4645) - use a better estimation for the message size.
   auto const message_size = m.message().data().size();
   handler = absl::make_unique<NotifyWhenMessageHandled>(

@@ -28,11 +28,13 @@ class DefaultAckHandlerImpl : public pubsub::AckHandler::Impl {
  public:
   DefaultAckHandlerImpl(google::cloud::CompletionQueue cq,
                         std::shared_ptr<pubsub_internal::SubscriberStub> s,
-                        std::string subscription, std::string ack_id)
+                        std::string subscription, std::string ack_id,
+                        std::int32_t delivery_attempt)
       : cq_(std::move(cq)),
         stub_(std::move(s)),
         subscription_(std::move(subscription)),
-        ack_id_(std::move(ack_id)) {}
+        ack_id_(std::move(ack_id)),
+        delivery_attempt_(delivery_attempt) {}
 
   ~DefaultAckHandlerImpl() override = default;
 
@@ -40,12 +42,14 @@ class DefaultAckHandlerImpl : public pubsub::AckHandler::Impl {
   void nack() override;
 
   std::string ack_id() const override { return ack_id_; }
+  std::int32_t delivery_attempt() const override { return delivery_attempt_; }
 
  private:
   google::cloud::CompletionQueue cq_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::string subscription_;
   std::string ack_id_;
+  std::int32_t delivery_attempt_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
