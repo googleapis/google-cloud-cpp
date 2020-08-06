@@ -28,6 +28,7 @@ class MockAckHandler : public pubsub::AckHandler::Impl {
   MOCK_METHOD0(ack, void());
   MOCK_METHOD0(nack, void());
   MOCK_CONST_METHOD0(ack_id, std::string());
+  MOCK_CONST_METHOD0(delivery_attempt, std::int32_t());
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

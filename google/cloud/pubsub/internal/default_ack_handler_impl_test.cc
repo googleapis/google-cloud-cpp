@@ -22,11 +22,9 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::testing::_;
-
 TEST(DefaultAckHandlerTest, Ack) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
+  EXPECT_CALL(*mock, AsyncAcknowledge)
       .WillOnce([](google::cloud::CompletionQueue&,
                    std::unique_ptr<grpc::ClientContext>,
                    google::pubsub::v1::AcknowledgeRequest const& request) {
@@ -37,14 +35,16 @@ TEST(DefaultAckHandlerTest, Ack) {
       });
 
   google::cloud::CompletionQueue cq;
-  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id");
+  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id",
+                                123);
   EXPECT_EQ("test-ack-id", handler.ack_id());
+  EXPECT_EQ(123, handler.delivery_attempt());
   ASSERT_NO_FATAL_FAILURE(handler.ack());
 }
 
 TEST(DefaultAckHandlerTest, Nack) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
       .WillOnce(
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
@@ -57,7 +57,8 @@ TEST(DefaultAckHandlerTest, Nack) {
           });
 
   google::cloud::CompletionQueue cq;
-  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id");
+  DefaultAckHandlerImpl handler(cq, mock, "test-subscription", "test-ack-id",
+                                0);
   EXPECT_EQ("test-ack-id", handler.ack_id());
   ASSERT_NO_FATAL_FAILURE(handler.nack());
 }

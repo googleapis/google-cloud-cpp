@@ -47,6 +47,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
           auto& m = *response.add_received_messages();
           std::lock_guard<std::mutex> lk(mu);
           m.set_ack_id("test-ack-id-" + std::to_string(count));
+          m.set_delivery_attempt(42);
           m.mutable_message()->set_message_id("test-message-id-" +
                                               std::to_string(count));
           ++count;
@@ -86,6 +87,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
 
   std::atomic<int> expected_message_id{0};
   auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+    EXPECT_EQ(42, h.delivery_attempt());
     EXPECT_EQ("test-message-id-" + std::to_string(expected_message_id),
               m.message_id());
     auto pos = ids.find(std::this_thread::get_id());

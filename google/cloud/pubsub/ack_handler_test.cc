@@ -49,6 +49,14 @@ TEST(AckHandlerTest, AckId) {
   EXPECT_EQ("test-id", handler.ack_id());
 }
 
+TEST(AckHandlerTest, DeliveryAttempts) {
+  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  EXPECT_CALL(*mock, delivery_attempt()).WillOnce(Return(42));
+  EXPECT_CALL(*mock, nack()).Times(1);
+  AckHandler handler(std::move(mock));
+  EXPECT_EQ(42, handler.delivery_attempt());
+}
+
 TEST(AckHandlerTest, Ack) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, ack()).Times(1);
