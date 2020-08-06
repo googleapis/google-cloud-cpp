@@ -34,7 +34,7 @@ readonly TIMEFORMAT="... %R seconds"
 problems=""
 printf "%-30s" "Running check-include-guards:"
 time {
-  if ! find google/cloud -name '*.h' -print0 |
+  if ! find google/cloud generator -name '*.h' -print0 |
     xargs -0 awk -f "ci/check-include-guards.gawk"; then
     problems="${problems} include-guards"
   fi
