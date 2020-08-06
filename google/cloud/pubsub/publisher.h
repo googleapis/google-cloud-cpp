@@ -109,9 +109,11 @@ class Publisher {
   /**
    * Publishes a message to this publisher's topic
    *
-   * @par
    * Note that the message maybe be batched based on the Publisher's
    * configuration, the message may not be immediately sent.
+   *
+   * @par Example
+   * @snippet samples.cc publish
    *
    * @return a future that becomes satisfied when the message is published or on
    *     a unrecoverable error.
