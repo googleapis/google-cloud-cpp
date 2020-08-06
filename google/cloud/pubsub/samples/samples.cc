@@ -258,6 +258,34 @@ void Publish(google::cloud::pubsub::Publisher publisher,
   (std::move(publisher));
 }
 
+void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
+                             std::vector<std::string> const&) {
+  //! [START pubsub_publish_custom_attributes] [publish-custom-attributes]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    std::vector<future<void>> done;
+    for (int i = 0; i != 10; ++i) {
+      auto message_id = publisher.Publish(
+          pubsub::MessageBuilder{}
+              .SetData("Hello World! [" + std::to_string(i) + "]")
+              .SetAttributes({{"origin", "cpp-sample"}, {"username", "gcp"}})
+              .Build());
+      done.push_back(message_id.then([i](future<StatusOr<std::string>> f) {
+        auto id = f.get();
+        if (!id) throw std::runtime_error(id.status().message());
+        std::cout << "Message " << i << " published with id=" << *id << "\n";
+      }));
+    }
+    publisher.Flush();
+    // Block until all the messages are published (optional)
+    for (auto& f : done) f.get();
+  }
+  //! [END pubsub_publish_custom_attributes] [publish-custom-attributes]
+  (std::move(publisher));
+}
+
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                google::cloud::pubsub::Subscription const& subscription,
                std::vector<std::string> const&) {
@@ -496,6 +524,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning Publish() sample" << std::endl;
   Publish(publisher, {});
 
+  std::cout << "\nRunning PublishCustomAttributes() sample" << std::endl;
+  PublishCustomAttributes(publisher, {});
+
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, subscription, {});
 
@@ -549,6 +580,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
       CreatePublisherCommand("publish", {}, Publish),
+      CreatePublisherCommand("publish-custom-attributes", {},
+                             PublishCustomAttributes),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"custom-batch-publisher", CustomBatchPublisher},
