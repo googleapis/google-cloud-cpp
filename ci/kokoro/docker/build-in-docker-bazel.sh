@@ -209,7 +209,7 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running integration tests against production:" \
     "spanner=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-default}"
-    "${BAZEL_BIN}" test \
+  "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
     -- //google/cloud/...:all "${excluded_targets[@]}"
