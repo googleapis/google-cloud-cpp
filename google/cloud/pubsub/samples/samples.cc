@@ -123,6 +123,24 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
+                            std::vector<std::string> const& argv) {
+  //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id) {
+    auto const topic =
+        pubsub::Topic(std::move(project_id), std::move(topic_id));
+    std::cout << "Subscription list for topic " << topic << ":\n";
+    for (auto const& name : client.ListTopicSubscriptions(topic)) {
+      if (!name) throw std::runtime_error(name.status().message());
+      std::cout << "  " << *name << "\n";
+    }
+  }
+  //! [END pubsub_list_topic_subscriptions] [list-topic-subscriptions]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_create_pull_subscription] [create-subscription]
@@ -472,6 +490,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
+  std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
+  ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
+
   std::cout << "\nRunning GetSubscription() sample" << std::endl;
   GetSubscription(subscription_admin_client, {project_id, subscription_id});
 
@@ -534,6 +555,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),
+      CreateTopicAdminCommand("list-topic-subscriptions",
+                              {"project-id", "topic-id"},
+                              ListTopicSubscriptions),
       CreateSubscriptionAdminCommand(
           "create-subscription", {"project-id", "topic-id", "subscription-id"},
           CreateSubscription),

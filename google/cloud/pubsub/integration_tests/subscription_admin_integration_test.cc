@@ -56,15 +56,14 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   Subscription subscription(project_id,
                             pubsub_testing::RandomSubscriptionId(generator));
 
-  auto publisher_client = TopicAdminClient(MakeTopicAdminConnection());
-  auto client =
+  auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
+  auto subscription_admin =
       SubscriptionAdminClient(pubsub::MakeSubscriptionAdminConnection());
 
-  EXPECT_THAT(subscription_names(client, project_id),
+  EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
 
-  auto topic_metadata =
-      publisher_client.CreateTopic(TopicMutationBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
   ASSERT_STATUS_OK(topic_metadata);
 
   struct Cleanup {
@@ -73,29 +72,40 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
     ~Cleanup() { action(); }
   };
   Cleanup cleanup_topic{
-      [&publisher_client, &topic] { publisher_client.DeleteTopic(topic); }};
+      [&topic_admin, &topic] { topic_admin.DeleteTopic(topic); }};
 
-  auto create_response = client.CreateSubscription(topic, subscription);
+  auto create_response =
+      subscription_admin.CreateSubscription(topic, subscription);
   ASSERT_STATUS_OK(create_response);
 
-  auto get_response = client.GetSubscription(subscription);
+  auto get_response = subscription_admin.GetSubscription(subscription);
   ASSERT_STATUS_OK(get_response);
   EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
   auto constexpr kTestDeadlineSeconds = 20;
-  auto update_response = client.UpdateSubscription(
+  auto update_response = subscription_admin.UpdateSubscription(
       subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
                         std::chrono::seconds(kTestDeadlineSeconds)));
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(kTestDeadlineSeconds, update_response->ack_deadline_seconds());
 
-  EXPECT_THAT(subscription_names(client, project_id),
+  EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Contains(subscription.FullName()));
 
-  auto delete_response = client.DeleteSubscription(subscription);
+  auto const topic_subscriptions = [&] {
+    std::vector<std::string> names;
+    for (auto& name : topic_admin.ListTopicSubscriptions(topic)) {
+      EXPECT_STATUS_OK(name);
+      names.push_back(std::move(*name));
+    }
+    return names;
+  }();
+  EXPECT_THAT(topic_subscriptions, Contains(subscription.FullName()));
+
+  auto delete_response = subscription_admin.DeleteSubscription(subscription);
   ASSERT_STATUS_OK(delete_response);
 
-  EXPECT_THAT(subscription_names(client, project_id),
+  EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
 }
 

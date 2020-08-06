@@ -75,6 +75,18 @@ class DefaultPublisherStub : public PublisherStub {
     return {};
   }
 
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override {
+    google::pubsub::v1::ListTopicSubscriptionsResponse response;
+    auto status =
+        grpc_stub_->ListTopicSubscriptions(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

@@ -143,6 +143,31 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
+TEST(TopicAdminConnectionTest, ListSubscriptions) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  auto const topic_name = Topic("test-project-id", "test-topic-id").FullName();
+  EXPECT_CALL(*mock, ListTopicSubscriptions)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::ListTopicSubscriptionsRequest const&
+                        request) {
+        EXPECT_EQ(topic_name, request.topic());
+        EXPECT_TRUE(request.page_token().empty());
+        google::pubsub::v1::ListTopicSubscriptionsResponse response;
+        response.add_subscriptions("projects/test-project-id/subscriptions/s1");
+        response.add_subscriptions("projects/test-project-id/subscriptions/s2");
+        return make_status_or(response);
+      });
+
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  std::vector<std::string> names;
+  for (auto& t : topic_admin->ListTopicSubscriptions({topic_name})) {
+    ASSERT_STATUS_OK(t);
+    names.push_back(std::move(*t));
+  }
+  EXPECT_THAT(names, ElementsAre("projects/test-project-id/subscriptions/s1",
+                                 "projects/test-project-id/subscriptions/s2"));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
