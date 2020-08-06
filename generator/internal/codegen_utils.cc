@@ -66,13 +66,12 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
 }
 
 std::string ServiceNameToFilePath(absl::string_view service_name) {
-  std::vector<std::string> components = absl::StrSplit(service_name, '.');
-  absl::string_view last(components.back());
-  absl::ConsumeSuffix(&last, "Service");
-  components.back() = std::string(last);
-  std::transform(components.begin(), components.end(), components.begin(),
-                 CamelCaseToSnakeCase);
-  return absl::StrJoin(components, "/");
+  std::vector<absl::string_view> components = absl::StrSplit(service_name, ".");
+  absl::ConsumeSuffix(&components.back(), "Service");
+  auto formatter = [](std::string* s, absl::string_view sv) {
+    *s += CamelCaseToSnakeCase(sv);
+  };
+  return absl::StrJoin(components, "/", formatter);
 }
 
 std::string ProtoNameToCppName(absl::string_view proto_name) {
