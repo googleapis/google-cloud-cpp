@@ -38,6 +38,11 @@ TEST(CamelCaseToSnakeCase, Success) {
   EXPECT_EQ("foo_bar_baaaaa", CamelCaseToSnakeCase("fooBarBAAAAA"));
   EXPECT_EQ("foo_bar_b", CamelCaseToSnakeCase("foo_BarB"));
   EXPECT_EQ("v1", CamelCaseToSnakeCase("v1"));
+  EXPECT_EQ("", CamelCaseToSnakeCase(""));
+  EXPECT_EQ(" ", CamelCaseToSnakeCase(" "));
+  EXPECT_EQ("a", CamelCaseToSnakeCase("A"));
+  EXPECT_EQ("a_b", CamelCaseToSnakeCase("aB"));
+  EXPECT_EQ("foo123", CamelCaseToSnakeCase("Foo123"));
 }
 
 TEST(ServiceNameToFilePath, TrailingServiceInLastComponent) {
