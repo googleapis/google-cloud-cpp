@@ -152,8 +152,7 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "ninja" ]]; then
-  # Compiling with Ninja can catch bugs that may not be caught using Make.
-  export USE_NINJA=yes
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
   # Compile under fedora:31. This distro uses gcc-9.
   export DISTRO=fedora-install
@@ -215,8 +214,9 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
 elif [[ "${BUILD_NAME}" = "gcs-no-grpc" ]]; then
-  # Compiling with Ninja can catch bugs that may not be caught using Make.
-  export USE_NINJA=yes
+  # The BUILD_NAME "gcs-no-grpc" triggers some extra cmake flags in the
+  # in-docker script.
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes
@@ -423,9 +423,6 @@ docker_flags=(
 
   # If set, enable using libc++ with CMake.
   "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
-
-  # If set, enable the Ninja generator with CMake.
-  "--env" "USE_NINJA=${USE_NINJA:-}"
 
   # If set, run the check-abi.sh script.
   "--env" "CHECK_ABI=${CHECK_ABI:-}"

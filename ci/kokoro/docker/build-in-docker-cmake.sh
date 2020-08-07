@@ -99,10 +99,6 @@ if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
   cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON")
 fi
 
-if [[ "${USE_NINJA:-}" == "yes" ]]; then
-  cmake_extra_flags+=("-GNinja")
-fi
-
 if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
   cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on")
   if [[ "${BRANCH:-}" == "master" ]]; then
@@ -117,6 +113,7 @@ fi
 # to expand as separate arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
+  -GNinja \
   -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
   "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
   ${CMAKE_FLAGS:-} \
