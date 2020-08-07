@@ -32,6 +32,10 @@ std::string RandomSubscriptionId(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& prefix = {});
 
+/// Generate a random snapshot ID.
+std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator,
+                             std::string const& prefix = {});
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_testing
 }  // namespace cloud

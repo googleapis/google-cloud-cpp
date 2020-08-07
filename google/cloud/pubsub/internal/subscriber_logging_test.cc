@@ -183,6 +183,29 @@ TEST_F(SubscriberLoggingTest, AsyncModifyAckDeadline) {
                              HasSubstr("test-subscription-name"))));
 }
 
+TEST_F(SubscriberLoggingTest, CreateSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, CreateSnapshot)
+      .WillOnce(Return(make_status_or(google::pubsub::v1::Snapshot{})));
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::CreateSnapshotRequest request;
+  auto status = stub.CreateSnapshot(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("CreateSnapshot")));
+}
+
+TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, DeleteSnapshot).WillOnce(Return(Status{}));
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::DeleteSnapshotRequest request;
+  auto status = stub.DeleteSnapshot(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("DeleteSnapshot")));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

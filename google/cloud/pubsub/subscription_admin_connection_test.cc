@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
+#include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/pubsub/topic.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -156,6 +158,47 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
 
   EXPECT_THAT(backend->log_lines, Contains(HasSubstr("DeleteSubscription")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Topic const topic("test-project", "test-topic");
+  Subscription const subscription("test-project", "test-subscription");
+  google::pubsub::v1::Snapshot expected;
+  expected.set_topic(topic.FullName());
+  expected.set_name("projects/test-project/snapshots/test-snapshot-0001");
+
+  EXPECT_CALL(*mock, CreateSnapshot)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::CreateSnapshotRequest const& request) {
+        EXPECT_EQ(subscription.FullName(), request.subscription());
+        EXPECT_TRUE(request.name().empty());
+        return make_status_or(expected);
+      });
+
+  auto subscription_admin =
+      pubsub_internal::MakeSubscriptionAdminConnection({}, mock);
+  auto response = subscription_admin->CreateSnapshot(
+      {SnapshotMutationBuilder{}.BuildCreateMutation(subscription)});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Snapshot const snapshot("test-project", "test-snapshot");
+
+  EXPECT_CALL(*mock, DeleteSnapshot)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::DeleteSnapshotRequest const& request) {
+        EXPECT_EQ(snapshot.FullName(), request.snapshot());
+        return Status{};
+      });
+
+  auto snapshot_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock);
+  auto response = snapshot_admin->DeleteSnapshot({snapshot});
+  ASSERT_STATUS_OK(response);
 }
 
 }  // namespace

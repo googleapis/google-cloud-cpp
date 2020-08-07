@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -57,8 +58,10 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
                             pubsub_testing::RandomSubscriptionId(generator));
 
   auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
+  auto subscription_admin_connection =
+      pubsub::MakeSubscriptionAdminConnection();
   auto subscription_admin =
-      SubscriptionAdminClient(pubsub::MakeSubscriptionAdminConnection());
+      SubscriptionAdminClient(subscription_admin_connection);
 
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
@@ -101,6 +104,21 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
     return names;
   }();
   EXPECT_THAT(topic_subscriptions, Contains(subscription.FullName()));
+
+  // To create snapshots we need at least one subscription, so we test those
+  // here too.
+  // TODO(#4792) - cannot test server-side assigned names, the emulator lacks
+  //    support for them.
+  // TODO(#4575) - use the *Connection to test for now, use *Client later
+  Snapshot snapshot(project_id, pubsub_testing::RandomSnapshotId(generator));
+  auto snapshot_response = subscription_admin_connection->CreateSnapshot(
+      {SnapshotMutationBuilder{}.BuildCreateMutation(subscription, snapshot)});
+  ASSERT_STATUS_OK(snapshot_response);
+  EXPECT_EQ(snapshot.FullName(), snapshot_response->name());
+
+  auto delete_snapshot =
+      subscription_admin_connection->DeleteSnapshot({snapshot});
+  EXPECT_STATUS_OK(delete_snapshot);
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   ASSERT_STATUS_OK(delete_response);
@@ -155,6 +173,25 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   auto delete_response = client.DeleteSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(delete_response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto connection = MakeSubscriptionAdminConnection();
+  auto response =
+      connection->CreateSnapshot({SnapshotMutationBuilder{}.BuildCreateMutation(
+          Subscription("--invalid-project--", "--invalid-subscription--"))});
+  ASSERT_FALSE(response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto connection = MakeSubscriptionAdminConnection();
+  auto response = connection->DeleteSnapshot(
+      {Snapshot("--invalid-project--", "--invalid-snapshot--")});
+  ASSERT_FALSE(response.ok());
 }
 
 }  // namespace

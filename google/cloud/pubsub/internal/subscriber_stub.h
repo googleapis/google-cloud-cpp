@@ -82,6 +82,16 @@ class SubscriberStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> client_context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+
+  /// Create a new snapshot.
+  virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) = 0;
+
+  /// Delete a snapshot.
+  virtual Status DeleteSnapshot(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DeleteSnapshotRequest const& request) = 0;
 };
 
 /**

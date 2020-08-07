@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -94,6 +95,16 @@ class SubscriptionAdminConnection {
   struct DeleteSubscriptionParams {
     Subscription subscription;
   };
+
+  /// Wrap the arguments for `CreateSnapshot()`
+  struct CreateSnapshotParams {
+    google::pubsub::v1::CreateSnapshotRequest request;
+  };
+
+  /// Wrap the arguments for `DeleteSnapshot()`
+  struct DeleteSnapshotParams {
+    Snapshot snapshot;
+  };
   //@}
 
   /// Defines the interface for `SubscriptionAdminClient::CreateSubscription()`
@@ -113,6 +124,13 @@ class SubscriptionAdminConnection {
 
   /// Defines the interface for `SubscriptionAdminClient::DeleteSubscription()`
   virtual Status DeleteSubscription(DeleteSubscriptionParams) = 0;
+
+  /// Defines the interface for `SnapshotAdminClient::CreateSnapshot()`
+  virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      CreateSnapshotParams) = 0;
+
+  /// Defines the interface for `SnapshotAdminClient::DeleteSnapshot()`
+  virtual Status DeleteSnapshot(DeleteSnapshotParams) = 0;
 };
 
 /**

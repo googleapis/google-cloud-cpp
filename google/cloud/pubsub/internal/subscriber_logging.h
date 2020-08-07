@@ -67,6 +67,14 @@ class SubscriberLogging : public SubscriberStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) override;
+
+  Status DeleteSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteSnapshotRequest const& request) override;
+
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;
