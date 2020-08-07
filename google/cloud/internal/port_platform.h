@@ -78,26 +78,6 @@
 #  define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-// Define a macro to detect if the compiler supports `const&&`-qualified member
-// functions.
-// TODO(#4829): Remove now that `const&&` qualification is fully supported.
-#ifdef GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-#  error "GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF should not be set directly."
-#elif defined(__clang__)
-   // Of course this is not true of all Clang versions, but older versions are
-   // rejected earlier in this file.
-#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
-#elif defined(_MSC_VER)
-   // Of course this is not true of all MSVC versions, but older versions are
-   // rejected earlier in this file.
-#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
-#elif defined(__GNUC__)
-   // Of course this is not true of all GNUC versions, but older versions are
-   // rejected earlier in this file.
-#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
-#else
-#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
 // clang-format on
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H

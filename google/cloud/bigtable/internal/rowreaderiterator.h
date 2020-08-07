@@ -59,9 +59,7 @@ class RowReaderIterator {
 
   value_type const& operator*() const& { return row_; }
   value_type& operator*() & { return row_; }
-#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type const&& operator*() const&& { return std::move(row_); }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type&& operator*() && { return std::move(row_); }
 
  private:

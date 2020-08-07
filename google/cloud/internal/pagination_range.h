@@ -75,9 +75,7 @@ class PaginationIterator {
 
   value_type const& operator*() const& { return value_; }
   value_type& operator*() & { return value_; }
-#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type const&& operator*() const&& { return std::move(value_); }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type&& operator*() && { return std::move(value_); }
 
  private:
