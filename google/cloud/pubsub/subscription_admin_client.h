@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 
+#include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/subscription_mutation_builder.h"
 #include "google/cloud/pubsub/version.h"
@@ -149,6 +150,54 @@ class SubscriptionAdminClient {
    */
   Status DeleteSubscription(Subscription subscription) {
     return connection_->DeleteSubscription({std::move(subscription)});
+  }
+
+  /**
+   * Create a new snapshot for a subscription with a server-assigned name.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @param subscription the name of the subscription
+   * @param builder additional configuration for the snapshot, e.g., labels
+   */
+  // TODO(#4792) - add missing example once it is testable
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      Subscription const& subscription, SnapshotMutationBuilder builder = {}) {
+    return connection_->CreateSnapshot(
+        {std::move(builder).BuildCreateMutation(subscription)});
+  }
+
+  /**
+   * Create a new snapshot for a subscription with a given name.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc create-snapshot-with-name
+   *
+   * @param subscription the name of the subscription
+   * @param snapshot the name of the snapshot
+   * @param builder additional configuration for the snapshot, e.g., labels
+   */
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      Subscription const& subscription, Snapshot const& snapshot,
+      SnapshotMutationBuilder builder = {}) {
+    return connection_->CreateSnapshot(
+        {std::move(builder).BuildCreateMutation(subscription, snapshot)});
+  }
+
+  /**
+   * Delete a snapshot
+   *
+   * @par Example
+   * @snippet samples.cc create-snapshot-with-name
+   *
+   * @param snapshot the name of the snapshot
+   */
+  Status DeleteSnapshot(Snapshot const& snapshot) {
+    return connection_->DeleteSnapshot({snapshot});
   }
 
  private:

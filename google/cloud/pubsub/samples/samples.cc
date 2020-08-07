@@ -35,6 +35,11 @@ std::string RandomSubscriptionId(
       generator, "cloud-cpp-samples");
 }
 
+std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomSnapshotId(generator,
+                                                         "cloud-cpp-samples");
+}
+
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_create_topic] [create-topic]
@@ -229,6 +234,40 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
     std::cout << "The subscription was successfully deleted\n";
   }
   //! [END pubsub_delete_subscription] [delete-subscription]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  //! [create-snapshot-with-name]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subsciption_id, std::string const& snapshot_id) {
+    auto snapshot = client.CreateSnapshot(
+        pubsub::Subscription(project_id, subsciption_id),
+        pubsub::Snapshot(project_id, std::move(snapshot_id)));
+    if (!snapshot.ok()) throw std::runtime_error(snapshot.status().message());
+
+    std::cout << "The snapshot was successfully created: "
+              << snapshot->DebugString() << "\n";
+  }
+  //! [create-snapshot-with-name]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  //! [delete-snapshot]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& snapshot_id) {
+    auto status = client.DeleteSnapshot(
+        pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
+    if (!status.ok()) throw std::runtime_error(status.message());
+
+    std::cout << "The snapshot was successfully deleted\n";
+  }
+  //! [delete-snapshot]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -496,6 +535,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
 
+  auto snapshot_id = RandomSnapshotId(generator);
+
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
@@ -531,6 +572,13 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
   ListSubscriptions(subscription_admin_client, {project_id});
+
+  std::cout << "\nRunning CreateSnapshot() sample" << std::endl;
+  CreateSnapshot(subscription_admin_client,
+                 {project_id, subscription_id, snapshot_id});
+
+  std::cout << "\nRunning DeleteSnapshot() sample" << std::endl;
+  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
@@ -605,6 +653,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand("delete-subscription",
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
+          CreateSnapshot),
+      CreateSubscriptionAdminCommand(
+          "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),
