@@ -54,7 +54,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::BatchingConfig{}
+      pubsub::PublisherOptions{}
           .set_maximum_message_count(4)
           .set_maximum_hold_time(std::chrono::milliseconds(50)),
       mock, bg.cq());
@@ -108,7 +108,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   // due to the zero-maximum-hold-time timer expiring.
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock, cq);
+      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock, cq);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -159,7 +159,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::BatchingConfig{}
+      pubsub::PublisherOptions{}
           .set_maximum_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
       mock, cq);
@@ -212,7 +212,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::BatchingConfig{}
+      pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_message_count(4),
       mock, cq);
@@ -275,7 +275,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::BatchingConfig{}
+      pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_message_count(4),
       mock, cq);
@@ -330,7 +330,7 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
+      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
       bg.cq());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
@@ -363,7 +363,7 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::BatchingConfig{}.set_maximum_message_count(2), mock,
+      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
       bg.cq());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();

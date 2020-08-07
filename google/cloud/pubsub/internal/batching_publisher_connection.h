@@ -29,12 +29,11 @@ class BatchingPublisherConnection
       public std::enable_shared_from_this<BatchingPublisherConnection> {
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
-      pubsub::Topic topic, pubsub::BatchingConfig batching_config,
+      pubsub::Topic topic, pubsub::PublisherOptions options,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
       google::cloud::CompletionQueue cq) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(std::move(topic),
-                                        std::move(batching_config),
+        new BatchingPublisherConnection(std::move(topic), std::move(options),
                                         std::move(stub), std::move(cq)));
   }
 
@@ -43,12 +42,12 @@ class BatchingPublisherConnection
 
  private:
   explicit BatchingPublisherConnection(
-      pubsub::Topic topic, pubsub::BatchingConfig batching_config,
+      pubsub::Topic topic, pubsub::PublisherOptions options,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
       google::cloud::CompletionQueue cq)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
-        batching_config_(std::move(batching_config)),
+        options_(std::move(options)),
         stub_(std::move(stub)),
         cq_(std::move(cq)) {}
 
@@ -58,7 +57,7 @@ class BatchingPublisherConnection
 
   pubsub::Topic topic_;
   std::string topic_full_name_;
-  pubsub::BatchingConfig batching_config_;
+  pubsub::PublisherOptions options_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
   google::cloud::CompletionQueue cq_;
 

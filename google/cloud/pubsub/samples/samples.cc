@@ -441,11 +441,10 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
         std::move(topic),
-        pubsub::PublisherOptions{}.set_batching_config(
-            pubsub::BatchingConfig{}
-                .set_maximum_hold_time(std::chrono::milliseconds(10))
-                .set_maximum_batch_bytes(10 * 1024 * 1024L)
-                .set_maximum_message_count(100)),
+        pubsub::PublisherOptions{}
+            .set_maximum_hold_time(std::chrono::milliseconds(10))
+            .set_maximum_batch_bytes(10 * 1024 * 1024L)
+            .set_maximum_message_count(100),
         pubsub::ConnectionOptions{}));
 
     std::vector<future<void>> ids;
@@ -584,9 +583,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic,
-          google::cloud::pubsub::PublisherOptions{}.set_batching_config(
-              google::cloud::pubsub::BatchingConfig{}.set_maximum_message_count(
-                  1))));
+          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
+              1)));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
