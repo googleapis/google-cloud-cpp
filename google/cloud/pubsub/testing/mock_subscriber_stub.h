@@ -73,6 +73,16 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                std::unique_ptr<grpc::ClientContext>,
                google::pubsub::v1::ModifyAckDeadlineRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, CreateSnapshot,
+              (grpc::ClientContext&,
+               google::pubsub::v1::CreateSnapshotRequest const&),
+              (override));
+
+  MOCK_METHOD(Status, DeleteSnapshot,
+              (grpc::ClientContext&,
+               google::pubsub::v1::DeleteSnapshotRequest const&),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

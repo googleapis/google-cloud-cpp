@@ -23,6 +23,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
                           std::string const& prefix) {
+  // The documentation says these should be between 3 and 255 characters, for
+  // our tests 32 characters is long enough.
+  //    https://cloud.google.com/pubsub/docs/admin#resource_names
   auto constexpr kMaxRandomTopicSuffixLength = 32;
   auto now = std::chrono::system_clock::now();
   std::string date = google::cloud::internal::FormatUtcDate(now);
@@ -35,10 +38,25 @@ std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
 std::string RandomSubscriptionId(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& prefix) {
+  // The documentation says these should be between 3 and 255 characters, for
+  // our tests 32 characters is long enough.
+  //    https://cloud.google.com/pubsub/docs/admin#resource_names
   auto constexpr kMaxRandomSubscriptionSuffixLength = 32;
   auto suffix = google::cloud::internal::Sample(
       generator, kMaxRandomSubscriptionSuffixLength,
       "abcdefghijklmnopqrstuvwxyz");
+  auto p = prefix.empty() ? "cloud-cpp" : prefix;
+  return p + "-" + suffix;
+}
+
+std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator,
+                             std::string const& prefix) {
+  // The documentation does not explicitly say how long this can be, but 32
+  // seems to work.
+  //    https://cloud.google.com/pubsub/docs/admin#resource_names
+  auto constexpr kMaxRandomSnapshotSuffixLength = 32;
+  auto suffix = google::cloud::internal::Sample(
+      generator, kMaxRandomSnapshotSuffixLength, "abcdefghijklmnopqrstuvwxyz");
   auto p = prefix.empty() ? "cloud-cpp" : prefix;
   return p + "-" + suffix;
 }

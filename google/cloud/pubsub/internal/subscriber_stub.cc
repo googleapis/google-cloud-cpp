@@ -125,6 +125,24 @@ class DefaultSubscriberStub : public SubscriberStub {
         });
   }
 
+  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CreateSnapshotRequest const& request) override {
+    google::pubsub::v1::Snapshot response;
+    auto status = grpc_stub_->CreateSnapshot(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
+  Status DeleteSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteSnapshotRequest const& request) override {
+    google::protobuf::Empty response;
+    auto status = grpc_stub_->DeleteSnapshot(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return {};
+  }
+
  private:
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };

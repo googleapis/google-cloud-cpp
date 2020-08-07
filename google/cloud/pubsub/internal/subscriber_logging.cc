@@ -119,6 +119,28 @@ future<Status> SubscriberLogging::AsyncModifyAckDeadline(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::CreateSnapshot(
+    grpc::ClientContext& context,
+    google::pubsub::v1::CreateSnapshotRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::CreateSnapshotRequest const& request) {
+        return child_->CreateSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status SubscriberLogging::DeleteSnapshot(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteSnapshotRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::DeleteSnapshotRequest const& request) {
+        return child_->DeleteSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
