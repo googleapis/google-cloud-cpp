@@ -58,10 +58,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
                             pubsub_testing::RandomSubscriptionId(generator));
 
   auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
-  auto subscription_admin_connection =
-      pubsub::MakeSubscriptionAdminConnection();
   auto subscription_admin =
-      SubscriptionAdminClient(subscription_admin_connection);
+      SubscriptionAdminClient(pubsub::MakeSubscriptionAdminConnection());
 
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
@@ -109,15 +107,13 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   // here too.
   // TODO(#4792) - cannot test server-side assigned names, the emulator lacks
   //    support for them.
-  // TODO(#4575) - use the *Connection to test for now, use *Client later
   Snapshot snapshot(project_id, pubsub_testing::RandomSnapshotId(generator));
-  auto snapshot_response = subscription_admin_connection->CreateSnapshot(
-      {SnapshotMutationBuilder{}.BuildCreateMutation(subscription, snapshot)});
+  auto snapshot_response =
+      subscription_admin.CreateSnapshot(subscription, snapshot);
   ASSERT_STATUS_OK(snapshot_response);
   EXPECT_EQ(snapshot.FullName(), snapshot_response->name());
 
-  auto delete_snapshot =
-      subscription_admin_connection->DeleteSnapshot({snapshot});
+  auto delete_snapshot = subscription_admin.DeleteSnapshot(snapshot);
   EXPECT_STATUS_OK(delete_snapshot);
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
@@ -178,19 +174,18 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
 TEST(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto connection = MakeSubscriptionAdminConnection();
-  auto response =
-      connection->CreateSnapshot({SnapshotMutationBuilder{}.BuildCreateMutation(
-          Subscription("--invalid-project--", "--invalid-subscription--"))});
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.CreateSnapshot(
+      Subscription("--invalid-project--", "--invalid-subscription--"));
   ASSERT_FALSE(response.ok());
 }
 
 TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto connection = MakeSubscriptionAdminConnection();
-  auto response = connection->DeleteSnapshot(
-      {Snapshot("--invalid-project--", "--invalid-snapshot--")});
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.DeleteSnapshot(
+      Snapshot("--invalid-project--", "--invalid-snapshot--"));
   ASSERT_FALSE(response.ok());
 }
 
