@@ -184,6 +184,29 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
   EXPECT_THAT(*response, IsProtoEqual(expected));
 }
 
+TEST(SubscriptionAdminConnectionTest, GetSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Topic const topic("test-project", "test-topic");
+  Snapshot const snapshot("test-project", "test-snapshot-0001");
+  google::pubsub::v1::Snapshot expected;
+  expected.set_topic(topic.FullName());
+  expected.set_name(snapshot.FullName());
+
+  EXPECT_CALL(*mock, GetSnapshot)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::GetSnapshotRequest const& request) {
+        EXPECT_EQ(snapshot.FullName(), request.snapshot());
+
+        return make_status_or(expected);
+      });
+
+  auto subscription_admin =
+      pubsub_internal::MakeSubscriptionAdminConnection({}, mock);
+  auto response = subscription_admin->GetSnapshot({snapshot});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Snapshot const snapshot("test-project", "test-snapshot");

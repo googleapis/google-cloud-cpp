@@ -101,6 +101,11 @@ class SubscriptionAdminConnection {
     google::pubsub::v1::CreateSnapshotRequest request;
   };
 
+  /// Wrap the arguments for `GetSnapshot()`
+  struct GetSnapshotParams {
+    Snapshot snapshot;
+  };
+
   /// Wrap the arguments for `DeleteSnapshot()`
   struct DeleteSnapshotParams {
     Snapshot snapshot;
@@ -128,6 +133,10 @@ class SubscriptionAdminConnection {
   /// Defines the interface for `SnapshotAdminClient::CreateSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       CreateSnapshotParams) = 0;
+
+  /// Defines the interface for `SnapshotAdminClient::GetSnapshot()`
+  virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
+      GetSnapshotParams) = 0;
 
   /// Defines the interface for `SnapshotAdminClient::DeleteSnapshot()`
   virtual Status DeleteSnapshot(DeleteSnapshotParams) = 0;

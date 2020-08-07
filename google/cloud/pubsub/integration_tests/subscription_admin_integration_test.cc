@@ -108,10 +108,14 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   // TODO(#4792) - cannot test server-side assigned names, the emulator lacks
   //    support for them.
   Snapshot snapshot(project_id, pubsub_testing::RandomSnapshotId(generator));
-  auto snapshot_response =
+  auto create_snapshot_response =
       subscription_admin.CreateSnapshot(subscription, snapshot);
-  ASSERT_STATUS_OK(snapshot_response);
-  EXPECT_EQ(snapshot.FullName(), snapshot_response->name());
+  ASSERT_STATUS_OK(create_snapshot_response);
+  EXPECT_EQ(snapshot.FullName(), create_snapshot_response->name());
+
+  auto get_snapshot_response = subscription_admin.GetSnapshot(snapshot);
+  ASSERT_STATUS_OK(get_snapshot_response);
+  EXPECT_THAT(*get_snapshot_response, IsProtoEqual(*create_snapshot_response));
 
   auto delete_snapshot = subscription_admin.DeleteSnapshot(snapshot);
   EXPECT_STATUS_OK(delete_snapshot);
@@ -177,6 +181,15 @@ TEST(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto response = client.CreateSnapshot(
       Subscription("--invalid-project--", "--invalid-subscription--"));
+  ASSERT_FALSE(response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, GetSnapshotFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.GetSnapshot(
+      Snapshot("--invalid-project--", "--invalid-snapshot--"));
   ASSERT_FALSE(response.ok());
 }
 
