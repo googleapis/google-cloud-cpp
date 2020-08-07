@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace google {
@@ -30,8 +30,9 @@ std::string ConnectionOptionsTraits::default_endpoint() {
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
   return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
-         internal::CompilerId() + "-" + internal::CompilerVersion() + "; " +
-         internal::CompilerFeatures() + ")";
+         google::cloud::internal::CompilerId() + "-" +
+         google::cloud::internal::CompilerVersion() + "; " +
+         google::cloud::internal::CompilerFeatures() + ")";
 }
 
 int ConnectionOptionsTraits::default_num_channels() { return 4; }

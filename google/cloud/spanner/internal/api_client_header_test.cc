@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/api_client_header.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,8 +30,10 @@ TEST(ApiClientHeaderTest, Basic) {
 
   EXPECT_THAT(actual, HasSubstr("gccl/" + VersionString()));
   EXPECT_THAT(actual,
-              HasSubstr("gl-cpp/" + CompilerId() + "-" + CompilerVersion() +
-                        "-" + CompilerFeatures() + "-" + LanguageVersion()));
+              HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
+                        "-" + google::cloud::internal::CompilerVersion() + "-" +
+                        google::cloud::internal::CompilerFeatures() + "-" +
+                        google::cloud::internal::LanguageVersion()));
 }
 
 }  // namespace

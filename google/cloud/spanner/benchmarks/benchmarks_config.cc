@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <sstream>
@@ -23,8 +23,6 @@ namespace google {
 namespace cloud {
 namespace spanner_benchmarks {
 inline namespace SPANNER_CLIENT_NS {
-
-namespace spanner = ::google::cloud::spanner;
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
   return os << "# Experiment: " << config.experiment
@@ -42,8 +40,8 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Query Size: " << config.query_size
             << "\n# Use Only Stubs: " << config.use_only_stubs
             << "\n# Use Only Clients: " << config.use_only_clients
-            << "\n# Compiler: " << spanner::internal::CompilerId() << "-"
-            << spanner::internal::CompilerVersion()
+            << "\n# Compiler: " << google::cloud::internal::CompilerId() << "-"
+            << google::cloud::internal::CompilerVersion()
             << "\n# Build Flags: " << google::cloud::internal::compiler_flags()
             << "\n";
 }
