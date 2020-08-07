@@ -30,9 +30,9 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/meta/type_traits.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/meta/type_traits.h"
 
 namespace google {
 namespace cloud {
