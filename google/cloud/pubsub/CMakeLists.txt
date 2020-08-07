@@ -60,6 +60,8 @@ add_library(
     publisher_options.h
     snapshot.cc
     snapshot.h
+    snapshot_mutation_builder.cc
+    snapshot_mutation_builder.h
     subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
@@ -162,6 +164,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_connection_test.cc
         publisher_option_test.cc
         publisher_test.cc
+        snapshot_mutation_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc
         subscriber_test.cc
