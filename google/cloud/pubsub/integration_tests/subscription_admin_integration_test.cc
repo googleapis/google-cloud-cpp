@@ -59,7 +59,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
   auto subscription_admin =
-      SubscriptionAdminClient(pubsub::MakeSubscriptionAdminConnection());
+      SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
