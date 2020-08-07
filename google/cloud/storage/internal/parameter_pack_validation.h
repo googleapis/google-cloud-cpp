@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/disjunction.h"
+#include "absl/meta/type_traits.h"
 
 namespace google {
 namespace cloud {
@@ -27,8 +27,7 @@ namespace internal {
 // Check if a parameter pack contains a type
 template <typename Type, typename... TypeList>
 constexpr bool ContainsType() {
-  return google::cloud::internal::disjunction<
-      std::is_same<Type, TypeList>...>::value;
+  return absl::disjunction<std::is_same<Type, TypeList>...>::value;
 }
 
 }  // namespace internal

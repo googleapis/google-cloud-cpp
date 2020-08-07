@@ -16,13 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H
 
 #include "google/cloud/bigtable/cell.h"
-#include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/meta/type_traits.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -318,7 +318,7 @@ class SingleRowMutation {
                               int>::type = 0>
   explicit SingleRowMutation(RowKey&& row_key, M&&... m) {
     static_assert(
-        internal::conjunction<std::is_convertible<M, Mutation>...>::value,
+        absl::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "
         "convertible to Mutation");
     request_.set_row_key(std::forward<RowKey>(row_key));
@@ -497,7 +497,7 @@ class BulkMutation {
 
   /// Create a muti-row mutation from a variadic list.
   template <typename... M,
-            typename std::enable_if<internal::conjunction<std::is_convertible<
+            typename std::enable_if<absl::conjunction<std::is_convertible<
                                         M, SingleRowMutation>...>::value,
                                     int>::type = 0>
   // NOLINTNEXTLINE(google-explicit-constructor)

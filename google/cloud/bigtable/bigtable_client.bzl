@@ -46,7 +46,6 @@ bigtable_client_hdrs = [
     "internal/bulk_mutator.h",
     "internal/client_options_defaults.h",
     "internal/common_client.h",
-    "internal/conjunction.h",
     "internal/google_bytes_traits.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",

@@ -117,11 +117,9 @@ add_library(
     internal/build_info.h
     internal/compiler_info.cc
     internal/compiler_info.h
-    internal/conjunction.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_msvc_crt_secure_warnings.inc
-    internal/disjunction.h
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc

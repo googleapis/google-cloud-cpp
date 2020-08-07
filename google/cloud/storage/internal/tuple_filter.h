@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TUPLE_FILTER_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/tuple.h"
 #include "google/cloud/internal/utility.h"
+#include "absl/meta/type_traits.h"
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -150,8 +150,8 @@ StaticTupleFilter(Tuple&& t) {
 template <typename... Types>
 struct Among {
   template <typename T>
-  using TPred = google::cloud::internal::disjunction<
-      std::is_same<typename std::decay<T>::type, Types>...>;
+  using TPred =
+      absl::disjunction<std::is_same<typename std::decay<T>::type, Types>...>;
 };
 
 /**
@@ -163,7 +163,7 @@ template <typename... Types>
 struct NotAmong {
   template <typename T>
   using TPred = std::integral_constant<
-      bool, !google::cloud::internal::disjunction<
+      bool, !absl::disjunction<
                 std::is_same<typename std::decay<T>::type, Types>...>::value>;
 };
 

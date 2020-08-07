@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COLUMN_FAMILY_H
 
-#include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/meta/type_traits.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <chrono>
@@ -94,8 +94,7 @@ class GcRule {
     // letting the compiler figure things out N levels deep as it recurses on
     // add_intersection().
     static_assert(
-        internal::conjunction<
-            std::is_convertible<GcRuleTypes, GcRule>...>::value,
+        absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
         "The arguments to Intersection must be convertible to GcRule");
     GcRule tmp;
     auto& intersection = *tmp.gc_rule_.mutable_intersection();
@@ -119,9 +118,9 @@ class GcRule {
     // This ugly thing provides a better compile-time error message than just
     // letting the compiler figure things out N levels deep as it recurses on
     // add_intersection().
-    static_assert(internal::conjunction<
-                      std::is_convertible<GcRuleTypes, GcRule>...>::value,
-                  "The arguments to Union must be convertible to GcRule");
+    static_assert(
+        absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
+        "The arguments to Union must be convertible to GcRule");
     GcRule tmp;
     auto& gc_rule_union = *tmp.gc_rule_.mutable_union_();
     std::initializer_list<GcRule> list{std::forward<GcRuleTypes>(gc_rules)...};
