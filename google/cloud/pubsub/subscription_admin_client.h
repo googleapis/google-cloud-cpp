@@ -205,6 +205,20 @@ class SubscriptionAdminClient {
   }
 
   /**
+   * List all the snapshots for a given project id.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc list-snapshots
+   */
+  ListSnapshotsRange ListSnapshots(std::string const& project_id) {
+    return connection_->ListSnapshots({"projects/" + project_id});
+  }
+
+  /**
    * Delete a snapshot
    *
    * @par Example

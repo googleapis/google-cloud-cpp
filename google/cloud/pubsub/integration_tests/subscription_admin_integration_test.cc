@@ -52,6 +52,17 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
     return names;
   };
 
+  auto snapshot_names = [](SubscriptionAdminClient client,
+                           std::string const& project_id) {
+    std::vector<std::string> names;
+    for (auto& snapshot : client.ListSnapshots(project_id)) {
+      EXPECT_STATUS_OK(snapshot);
+      if (!snapshot) break;
+      names.push_back(snapshot->name());
+    }
+    return names;
+  };
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
   Subscription subscription(project_id,
@@ -117,8 +128,12 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   ASSERT_STATUS_OK(get_snapshot_response);
   EXPECT_THAT(*get_snapshot_response, IsProtoEqual(*create_snapshot_response));
 
+  EXPECT_THAT(snapshot_names(subscription_admin, project_id),
+              Contains(snapshot.FullName()));
   auto delete_snapshot = subscription_admin.DeleteSnapshot(snapshot);
   EXPECT_STATUS_OK(delete_snapshot);
+  EXPECT_THAT(snapshot_names(subscription_admin, project_id),
+              Not(Contains(snapshot.FullName())));
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   ASSERT_STATUS_OK(delete_response);
@@ -191,6 +206,16 @@ TEST(SubscriptionAdminIntegrationTest, GetSnapshotFailure) {
   auto response = client.GetSnapshot(
       Snapshot("--invalid-project--", "--invalid-snapshot--"));
   ASSERT_FALSE(response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, ListSnapshotsFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto list = client.ListSnapshots("--invalid-project--");
+  auto i = list.begin();
+  EXPECT_FALSE(i == list.end());
+  EXPECT_FALSE(*i);
 }
 
 TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {

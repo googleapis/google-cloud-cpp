@@ -45,6 +45,19 @@ using ListSubscriptionsRange = google::cloud::internal::PaginationRange<
     google::pubsub::v1::ListSubscriptionsResponse>;
 
 /**
+ * An input range to stream Cloud Pub/Sub snapshots.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::pubsub::v1::Snapshot` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListSnapshotsRange = google::cloud::internal::PaginationRange<
+    google::pubsub::v1::Snapshot, google::pubsub::v1::ListSnapshotsRequest,
+    google::pubsub::v1::ListSnapshotsResponse>;
+
+/**
  * A connection to Cloud Pub/Sub for subscriber operations.
  *
  * This interface defines pure-virtual methods for each of the user-facing
@@ -106,6 +119,11 @@ class SubscriptionAdminConnection {
     Snapshot snapshot;
   };
 
+  /// Wrap the arguments for `ListSubscription()`
+  struct ListSnapshotsParams {
+    std::string project_id;
+  };
+
   /// Wrap the arguments for `DeleteSnapshot()`
   struct DeleteSnapshotParams {
     Snapshot snapshot;
@@ -137,6 +155,9 @@ class SubscriptionAdminConnection {
   /// Defines the interface for `SnapshotAdminClient::GetSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
       GetSnapshotParams) = 0;
+
+  /// Defines the interface for `SubscriptionAdminClient::ListSnapshots()`
+  virtual ListSnapshotsRange ListSnapshots(ListSnapshotsParams) = 0;
 
   /// Defines the interface for `SnapshotAdminClient::DeleteSnapshot()`
   virtual Status DeleteSnapshot(DeleteSnapshotParams) = 0;

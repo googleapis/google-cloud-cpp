@@ -272,6 +272,21 @@ void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
+                   std::vector<std::string> const& argv) {
+  //! [list-snapshots]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
+    std::cout << "Snapshot list for project " << project_id << ":\n";
+    for (auto const& snapshot : client.ListSnapshots(project_id)) {
+      if (!snapshot) throw std::runtime_error(snapshot.status().message());
+      std::cout << "Snapshot Name: " << snapshot->name() << "\n";
+    }
+  }
+  //! [list-snapshots]
+  (std::move(client), argv.at(0));
+}
+
 void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                     std::vector<std::string> const& argv) {
   //! [delete-snapshot]
@@ -596,6 +611,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
+  std::cout << "\nRunning ListSnapshots() sample" << std::endl;
+  ListSnapshots(subscription_admin_client, {project_id});
+
   std::cout << "\nRunning DeleteSnapshot() sample" << std::endl;
   DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
@@ -676,6 +694,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CreateSnapshot),
       CreateSubscriptionAdminCommand(
           "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
+      CreateSubscriptionAdminCommand("list-snapshots", {"project-id"},
+                                     ListSnapshots),
       CreateSubscriptionAdminCommand(
           "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
       CreatePublisherCommand("publish", {}, Publish),
