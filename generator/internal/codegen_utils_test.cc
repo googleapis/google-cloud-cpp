@@ -25,10 +25,13 @@ TEST(GeneratedFileSuffix, Success) {
 }
 
 TEST(LocalInclude, Success) {
-  EXPECT_EQ("\"google/cloud/status.h\"", LocalInclude("google/cloud/status.h"));
+  EXPECT_EQ("#include \"google/cloud/status.h\"\n",
+            LocalInclude("google/cloud/status.h"));
 }
 
-TEST(SystemInclude, Success) { EXPECT_EQ("<vector>", SystemInclude("vector")); }
+TEST(SystemInclude, Success) {
+  EXPECT_EQ("#include <vector>\n", SystemInclude("vector"));
+}
 
 TEST(CamelCaseToSnakeCase, Success) {
   EXPECT_EQ("foo_bar_b", CamelCaseToSnakeCase("FooBarB"));
@@ -67,6 +70,54 @@ TEST(ServiceNameToFilePath, TrailingServiceInIntermediateComponent) {
 TEST(ProtoNameToCppName, Success) {
   EXPECT_EQ("::google::spanner::admin::database::v1::Request",
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
+}
+
+TEST(BuildNamespaces, Internal) {
+  std::map<std::string, std::string> vars;
+  vars["product_path"] = "google/cloud/spanner/";
+  auto result = BuildNamespaces(vars, NamespaceType::INTERNAL);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("spanner_internal", result[2]);
+  EXPECT_EQ("SPANNER_CLIENT_NS", result[3]);
+}
+
+TEST(BuildNamespaces, NotInternal) {
+  std::map<std::string, std::string> vars;
+  vars["product_path"] = "google/cloud/translation/";
+  auto result = BuildNamespaces(vars);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("translation", result[2]);
+  EXPECT_EQ("TRANSLATION_CLIENT_NS", result[3]);
+}
+
+TEST(ProcessCommandLineArgs, NoProductPath) {
+  auto result = ProcessCommandLineArgs("");
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(result.status().message(),
+            "--cpp_codegen_opt=product_path=<path> must be specified.");
+}
+
+TEST(ProcessCommandLineArgs, EmptyProductPath) {
+  auto result = ProcessCommandLineArgs("product_path=");
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(result.status().message(),
+            "--cpp_codegen_opt=product_path=<path> must be specified.");
+}
+
+TEST(ProcessCommandLineArgs, ProductPathNeedsFormatting) {
+  auto result = ProcessCommandLineArgs("product_path=/google/cloud/pubsub");
+  EXPECT_TRUE(result.ok());
+  EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
+}
+
+TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
+  auto result = ProcessCommandLineArgs("product_path=google/cloud/pubsub/");
+  EXPECT_TRUE(result.ok());
+  EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
 }
 
 }  // namespace

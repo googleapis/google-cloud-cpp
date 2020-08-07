@@ -19,8 +19,10 @@ include(FindProtobufWithTargets)
 
 find_package(ProtobufWithTargets REQUIRED)
 
-add_library(google_cloud_cpp_generator # cmake-format: sort
-            internal/codegen_utils.cc internal/codegen_utils.h)
+add_library(
+    google_cloud_cpp_generator # cmake-format: sort
+    internal/class_generator_interface.h internal/codegen_utils.cc
+    internal/codegen_utils.h internal/printer.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(

@@ -14,7 +14,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
 
+#include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include <google/protobuf/descriptor.h>
 #include <string>
 
 namespace google {
@@ -27,12 +29,12 @@ namespace generator_internal {
 std::string GeneratedFileSuffix();
 
 /**
- * Wraps header include in "".
+ * Wraps header include in "" and returns complete include line.
  */
 std::string LocalInclude(absl::string_view header);
 
 /**
- * Wraps header include in <>.
+ * Wraps header include in <> and returns complete include line.
  */
 std::string SystemInclude(absl::string_view header);
 
@@ -62,6 +64,20 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
  * "::" separated C++ fully qualified name.
  */
 std::string ProtoNameToCppName(absl::string_view proto_name);
+
+enum class NamespaceType { NORMAL, INTERNAL };
+/**
+ * Builds namespace hierarchy.
+ */
+std::vector<std::string> BuildNamespaces(
+    std::map<std::string, std::string> const& vars,
+    NamespaceType ns_type = NamespaceType::NORMAL);
+
+/**
+ * Validates command line arguments passed to the microgenerator.
+ */
+StatusOr<std::vector<std::pair<std::string, std::string>>>
+ProcessCommandLineArgs(std::string const& parameters);
 
 }  // namespace generator_internal
 }  // namespace cloud
