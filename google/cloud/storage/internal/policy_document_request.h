@@ -149,12 +149,7 @@ class PolicyDocumentV4Request {
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);
 
-#if !defined(__clang__) && \
-    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 9))
-#define GOOGLE_CLOUD_CPP_HAVE_CODECVT 0
-#else
 #define GOOGLE_CLOUD_CPP_HAVE_CODECVT 1
-#endif
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -27,7 +26,6 @@ namespace {
 using ::testing::StartsWith;
 
 TEST(RandomDatabaseNameTest, PrefixMatchesRegexp) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
   auto const prefix = RandomDatabasePrefix(std::chrono::system_clock::now());
   auto const re = RandomDatabasePrefixRegex();
 
@@ -35,7 +33,6 @@ TEST(RandomDatabaseNameTest, PrefixMatchesRegexp) {
 }
 
 TEST(RandomDatabaseNameTest, NameMatchesRegexp) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const name = RandomDatabaseName(generator);
   auto const re = RandomDatabasePrefixRegex();
@@ -44,7 +41,6 @@ TEST(RandomDatabaseNameTest, NameMatchesRegexp) {
 }
 
 TEST(RandomDatabaseNameTest, RandomNameHasPrefix) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const now = std::chrono::system_clock::now();
   auto const prefix = RandomDatabasePrefix(now);

@@ -30,17 +30,6 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-#if !defined(__clang__) && \
-    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 9))
-
-// gcc-4.8 and earlier have broken regexes - ignore the tests there.
-Status IsContextMDValid(grpc::ClientContext&, std::string const&,
-                        std::string const&, absl::optional<std::string>) {
-  return Status();
-}
-
-#else
-
 namespace {
 
 /**
@@ -284,8 +273,6 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
 
   return Status();
 }
-
-#endif
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

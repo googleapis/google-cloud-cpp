@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
-#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include <iostream>
 #include <regex>
@@ -27,8 +26,6 @@ Status CleanupStaleDatabases(
     google::cloud::spanner::DatabaseAdminClient admin_client,
     std::string const& project_id, std::string const& instance_id,
     std::chrono::system_clock::time_point tp) {
-  if (!CompilerSupportsRegexp()) return Status(StatusCode::kUnimplemented, "");
-
   // Drop any databases more than 2 days old. This automatically cleans up
   // any databases created by a previous build that may have crashed before
   // having a chance to cleanup.
