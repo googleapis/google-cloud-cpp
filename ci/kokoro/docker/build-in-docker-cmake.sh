@@ -106,6 +106,12 @@ if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
   fi
 fi
 
+# Use Ninja for all builds, except the Coverage build. See
+# https://github.com/googleapis/google-cloud-cpp/issues/4837
+if [[ "${BUILD_NAME}" != "coverage" ]]; then
+  cmake_extra_flags+=("-GNinja")
+fi
+
 # We use parameter expansion for ${cmake_extra_flags} because set -u doesn't
 # like empty arrays on older versions of Bash (which some of our builds use).
 # The expression ${parameter+word} will expand word only if parameter is not
@@ -113,7 +119,6 @@ fi
 # to expand as separate arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
-  -GNinja \
   -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
   "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
   ${CMAKE_FLAGS:-} \
