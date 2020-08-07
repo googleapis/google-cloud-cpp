@@ -80,6 +80,7 @@
 
 // Define a macro to detect if the compiler supports `const&&`-qualified member
 // functions.
+// TODO(#4829): Remove now that `const&&` qualification is fully supported.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
 #  error "GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF should not be set directly."
 #elif defined(__clang__)
