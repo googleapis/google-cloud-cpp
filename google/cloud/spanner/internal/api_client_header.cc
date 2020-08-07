@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/api_client_header.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/internal/compiler_info.h"
 
 namespace google {
 namespace cloud {
@@ -22,10 +22,10 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 std::string ApiClientHeader() {
-  return "gl-cpp/" + google::cloud::spanner::internal::CompilerId() + "-" +
-         google::cloud::spanner::internal::CompilerVersion() + "-" +
-         google::cloud::spanner::internal::CompilerFeatures() + "-" +
-         google::cloud::spanner::internal::LanguageVersion() + " gccl/" +
+  return "gl-cpp/" + google::cloud::internal::CompilerId() + "-" +
+         google::cloud::internal::CompilerVersion() + "-" +
+         google::cloud::internal::CompilerFeatures() + "-" +
+         google::cloud::internal::LanguageVersion() + " gccl/" +
          VersionString();
 }
 

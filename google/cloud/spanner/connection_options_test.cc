@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -46,9 +46,9 @@ TEST(ConnectionOptionsTraits, NumChannels) {
 TEST(ConnectionOptionsTraits, UserAgentPrefix) {
   auto actual = ConnectionOptionsTraits::user_agent_prefix();
   EXPECT_THAT(actual, StartsWith("gcloud-cpp/" + VersionString()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerId()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerVersion()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerFeatures()));
+  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerId()));
+  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerVersion()));
+  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerFeatures()));
 
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ(actual, options.user_agent_prefix());
