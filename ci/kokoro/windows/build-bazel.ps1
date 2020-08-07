@@ -161,23 +161,21 @@ $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
-    bazel $common_flags fetch -- //google/cloud/...:all
+    bazel $common_flags fetch ...
     if ($LastExitCode -eq 0) {
         break
     }
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling and running unit tests"
-bazel $common_flags test $test_flags `
-  --test_tag_filters=-integration-test `
-  -- //google/cloud/...:all
+bazel $common_flags test $test_flags --test_tag_filters=-integration-test ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
-bazel $common_flags build $build_flags -- //google/cloud/...:all
+bazel $common_flags build $build_flags ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
@@ -238,7 +236,7 @@ if (Integration-Tests-Enabled) {
     )
     bazel $common_flags test $test_flags $integration_flags `
         "--test_tag_filters=integration-test" `
-        -- //google/cloud/...:all `
+        -- ... `
         -//google/cloud/bigtable/examples:bigtable_grpc_credentials `
         -//google/cloud/storage/examples:storage_service_account_samples `
         -//google/cloud/storage/tests:service_account_integration_test

@@ -78,7 +78,7 @@ build_quickstart() {
   for repeat in 1 2 3; do
     echo
     io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]."
-    if "${BAZEL_BIN}" fetch -- ...; then
+    if "${BAZEL_BIN}" fetch ...; then
       break
     else
       io::log_yellow "bazel fetch failed with $?"

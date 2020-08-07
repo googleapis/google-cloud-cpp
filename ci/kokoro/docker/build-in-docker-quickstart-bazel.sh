@@ -64,11 +64,11 @@ build_quickstart() {
   io::log "fetch dependencies for ${library}'s quickstart"
   # retry up to 3 times with exponential backoff, initial interval 120s
   "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    "${BAZEL_BIN}" fetch -- ...
+    "${BAZEL_BIN}" fetch ...
 
   echo
   io::log_yellow "Compiling ${library}'s quickstart"
-  "${BAZEL_BIN}" build "${bazel_args[@]}" -- ...
+  "${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
   if [[ -r "/c/kokoro-run-key.json" ]]; then
     echo
