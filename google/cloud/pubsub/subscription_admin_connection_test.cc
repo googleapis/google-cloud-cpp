@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
-#include <atomic>
 
 namespace google {
 namespace cloud {
@@ -229,6 +228,30 @@ TEST(SubscriptionAdminConnectionTest, ListSnapshots) {
     names.push_back(t->name());
   }
   EXPECT_THAT(names, ElementsAre("test-snapshot-01", "test-snapshot-02"));
+}
+
+TEST(SubscriptionAdminConnectionTest, UpdateSnapshot) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Topic const topic("test-project", "test-topic");
+  Subscription const subscription("test-project", "test-subscription");
+  Snapshot const snapshot("test-project", "test-snapshot-0001");
+  google::pubsub::v1::Snapshot expected;
+  expected.set_topic(topic.FullName());
+  expected.set_name(snapshot.FullName());
+
+  EXPECT_CALL(*mock, UpdateSnapshot)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::UpdateSnapshotRequest const& request) {
+        EXPECT_EQ(snapshot.FullName(), request.snapshot().name());
+        return make_status_or(expected);
+      });
+
+  auto subscription_admin =
+      pubsub_internal::MakeSubscriptionAdminConnection({}, mock);
+  auto response = subscription_admin->UpdateSnapshot(
+      {SnapshotMutationBuilder{}.BuildUpdateMutation(snapshot)});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
 }
 
 TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {

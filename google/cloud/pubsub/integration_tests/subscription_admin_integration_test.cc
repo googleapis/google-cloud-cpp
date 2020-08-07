@@ -36,6 +36,10 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::Not;
 
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+}
+
 TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -128,6 +132,15 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   ASSERT_STATUS_OK(get_snapshot_response);
   EXPECT_THAT(*get_snapshot_response, IsProtoEqual(*create_snapshot_response));
 
+  // TODO(#4792) - the emulator does not support UpdateSnapshot()
+  if (!UsingEmulator()) {
+    auto update_snapshot_response = subscription_admin.UpdateSnapshot(
+        snapshot,
+        SnapshotMutationBuilder{}.add_label("test-label", "test-value"));
+    ASSERT_STATUS_OK(update_snapshot_response);
+    EXPECT_FALSE(update_snapshot_response->labels().empty());
+  }
+
   EXPECT_THAT(snapshot_names(subscription_admin, project_id),
               Contains(snapshot.FullName()));
   auto delete_snapshot = subscription_admin.DeleteSnapshot(snapshot);
@@ -216,6 +229,16 @@ TEST(SubscriptionAdminIntegrationTest, ListSnapshotsFailure) {
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
   EXPECT_FALSE(*i);
+}
+
+TEST(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.UpdateSnapshot(
+      Snapshot("--invalid-project--", "--invalid-snapshot--"),
+      SnapshotMutationBuilder{}.clear_labels());
+  ASSERT_FALSE(response.ok());
 }
 
 TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {

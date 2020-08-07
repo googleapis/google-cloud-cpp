@@ -153,6 +153,17 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::GetSnapshot(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::UpdateSnapshot(
+    grpc::ClientContext& context,
+    google::pubsub::v1::UpdateSnapshotRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::UpdateSnapshotRequest const& request) {
+        return child_->UpdateSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status SubscriberLogging::DeleteSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {

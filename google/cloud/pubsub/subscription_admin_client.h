@@ -205,6 +205,24 @@ class SubscriptionAdminClient {
   }
 
   /**
+   * Update an existing snapshot.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc update-snapshot
+   *
+   * @param snapshot the name of the snapshot
+   * @param builder the changes applied to the snapshot
+   */
+  StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
+      Snapshot const& snapshot, SnapshotMutationBuilder builder) {
+    return connection_->UpdateSnapshot(
+        {std::move(builder).BuildUpdateMutation(snapshot)});
+  }
+
+  /**
    * List all the snapshots for a given project id.
    *
    * @par Idempotency
