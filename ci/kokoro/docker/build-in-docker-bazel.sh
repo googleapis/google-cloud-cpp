@@ -53,21 +53,18 @@ echo "================================================================"
 io::log "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
 "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-  "${BAZEL_BIN}" fetch -- //google/cloud/...:all //generator/...:all
+  "${BAZEL_BIN}" fetch ...
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
 "${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
-  -- //google/cloud/...:all //generator/...:all
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 echo "================================================================"
 io::log "Compiling all the code, including integration tests"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
-"${BAZEL_BIN}" build \
-  "${bazel_args[@]}" \
-  -- //google/cloud/...:all //generator/...:all
+"${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
 readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
@@ -212,7 +209,7 @@ if should_run_integration_tests; then
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
-    -- //google/cloud/...:all "${excluded_targets[@]}"
+    -- ... "${excluded_targets[@]}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"

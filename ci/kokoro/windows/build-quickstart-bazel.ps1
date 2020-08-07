@@ -141,7 +141,7 @@ ForEach($library in ("bigtable", "storage", "spanner")) {
     ForEach($_ in (1, 2, 3)) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "Fetch dependencies for ${library} [$_]"
-        bazel $common_flags fetch -- ...:all
+        bazel $common_flags fetch ...
         if ($LastExitCode -eq 0) {
             break
         }

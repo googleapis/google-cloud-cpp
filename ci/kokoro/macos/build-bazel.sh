@@ -58,7 +58,7 @@ echo
 echo "================================================================"
 for repeat in 1 2 3; do
   io::log_yellow "Fetch bazel dependencies [${repeat}/3]."
-  if "${BAZEL_BIN}" fetch -- //google/cloud/...; then
+  if "${BAZEL_BIN}" fetch ...; then
     break
   else
     io::log_yellow "bazel fetch failed with $?"
@@ -69,14 +69,12 @@ echo
 echo "================================================================"
 io::log_yellow "build and run unit tests."
 "${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
-  -- //google/cloud/...:all
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 echo
 echo "================================================================"
 io::log_yellow "build all targets."
-"${BAZEL_BIN}" build \
-  "${bazel_args[@]}" -- //google/cloud/...:all
+"${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
@@ -132,7 +130,7 @@ if should_run_integration_tests; then
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
-    -- //google/cloud/...:all \
+    -- ... \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
     -//google/cloud/storage/examples:storage_service_account_samples \
     -//google/cloud/storage/tests:service_account_integration_test
