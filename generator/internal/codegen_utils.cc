@@ -11,12 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #include "generator/internal/codegen_utils.h"
+// TODO(#4501) - fix by doing #include <absl/...>
+#if _MSC_VER
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
+// TODO(#4501) - end
 #include <cctype>
 #include <string>
 
