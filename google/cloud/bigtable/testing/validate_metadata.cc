@@ -31,16 +31,6 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-#if !defined(__clang__) && \
-    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 9))
-
-// gcc-4.8 and earlier have broken regexes - ignore the tests there.
-Status IsContextMDValid(grpc::ClientContext&, std::string const&) {
-  return Status();
-}
-
-#else
-
 namespace {
 
 /**
@@ -262,8 +252,6 @@ Status IsContextMDValid(grpc::ClientContext& context,
   }
   return Status();
 }
-
-#endif
 
 }  // namespace testing
 }  // namespace bigtable

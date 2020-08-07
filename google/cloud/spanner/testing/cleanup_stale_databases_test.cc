@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
-#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -33,8 +32,6 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 namespace spanner = ::google::cloud::spanner;
 
 TEST(CleanupStaleDatabases, Empty) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
-
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases(_))
@@ -61,8 +58,6 @@ TEST(CleanupStaleDatabases, Empty) {
 }
 
 TEST(CleanupStaleDatabases, ListError) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
-
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases(_))
@@ -89,8 +84,6 @@ TEST(CleanupStaleDatabases, ListError) {
 }
 
 TEST(CleanupStaleDatabases, RemovesMatching) {
-  if (!CompilerSupportsRegexp()) GTEST_SKIP();
-
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   auto generator = google::cloud::internal::DefaultPRNG({});
   auto const now = std::chrono::system_clock::now();

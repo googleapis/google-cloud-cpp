@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
-#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_backup_name.h"
@@ -90,10 +89,6 @@ class BackupTestWithCleanup : public BackupTest {
 /// @test Backup related integration tests.
 TEST_F(BackupTestWithCleanup, BackupTestSuite) {
   if (!run_slow_backup_tests_ || emulator_) {
-    GTEST_SKIP();
-  }
-  if (!spanner_testing::CompilerSupportsRegexp()) {
-    // This test (not the code) depends on regexp.
     GTEST_SKIP();
   }
   auto generator = google::cloud::internal::MakeDefaultPRNG();

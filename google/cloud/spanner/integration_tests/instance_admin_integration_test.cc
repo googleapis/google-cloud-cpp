@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
-#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
@@ -132,8 +131,6 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   if (!run_slow_instance_tests_) GTEST_SKIP();
-  // This test (not the code) depends on regexp.
-  if (!spanner_testing::CompilerSupportsRegexp()) GTEST_SKIP();
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string instance_id =
