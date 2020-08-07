@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_SET_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_SET_H
 
-#include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/bigtable/version.h"
 

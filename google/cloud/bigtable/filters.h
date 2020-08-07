@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H
 
-#include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/version.h"
+#include "absl/meta/type_traits.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
 
@@ -559,8 +559,7 @@ class Filter {
     // just letting the compiler figure things out 3 levels deep
     // as it recurses on append_types().
     static_assert(
-        internal::conjunction<
-            std::is_convertible<FilterTypes, Filter>...>::value,
+        absl::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
         "The arguments passed to Chain(...) must be convertible to Filter");
     Filter tmp;
     auto& chain = *tmp.filter_.mutable_chain();
@@ -623,10 +622,10 @@ class Filter {
    */
   template <typename... FilterTypes>
   static Filter Interleave(FilterTypes&&... streams) {
-    static_assert(internal::conjunction<
-                      std::is_convertible<FilterTypes, Filter>...>::value,
-                  "The arguments passed to Interleave(...) must be convertible"
-                  " to Filter");
+    static_assert(
+        absl::conjunction<std::is_convertible<FilterTypes, Filter>...>::value,
+        "The arguments passed to Interleave(...) must be convertible"
+        " to Filter");
     Filter tmp;
     auto& interleave = *tmp.filter_.mutable_interleave();
     std::initializer_list<Filter> list{std::forward<FilterTypes>(streams)...};

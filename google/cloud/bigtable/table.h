@@ -30,7 +30,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/disjunction.h"
+#include "absl/meta/type_traits.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 
@@ -169,14 +169,14 @@ class Table {
 
   /// A meta function to check if @p P is a valid Policy type.
   template <typename P>
-  struct ValidPolicy : google::cloud::internal::disjunction<
-                           std::is_base_of<RPCBackoffPolicy, P>,
-                           std::is_base_of<RPCRetryPolicy, P>,
-                           std::is_base_of<IdempotentMutationPolicy, P>> {};
+  struct ValidPolicy
+      : absl::disjunction<std::is_base_of<RPCBackoffPolicy, P>,
+                          std::is_base_of<RPCRetryPolicy, P>,
+                          std::is_base_of<IdempotentMutationPolicy, P>> {};
 
   /// A meta function to check if all the @p Policies are valid policy types.
   template <typename... Policies>
-  struct ValidPolicies : internal::conjunction<ValidPolicy<Policies>...> {};
+  struct ValidPolicies : absl::conjunction<ValidPolicy<Policies>...> {};
 
  public:
   /**
@@ -601,7 +601,7 @@ class Table {
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        bigtable::internal::conjunction<
+        absl::conjunction<
             std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");

@@ -111,7 +111,6 @@ add_library(
     internal/client_options_defaults.h
     internal/common_client.cc
     internal/common_client.h
-    internal/conjunction.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
     internal/prefix_range_end.cc
