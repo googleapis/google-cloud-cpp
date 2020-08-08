@@ -93,7 +93,7 @@ std::vector<std::string> BuildNamespaces(
   // vars["product_path"] is guaranteed to be present and properly formatted.
   std::string product_path = vars.find("product_path")->second;
   std::vector<std::string> v = absl::StrSplit(product_path, '/');
-  auto name = *----v.end();
+  auto name = v[v.size() - 2];
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::INTERNAL) {
     name = absl::StrCat(name, "_internal");

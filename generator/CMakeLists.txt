@@ -50,8 +50,9 @@ function (google_cloud_cpp_generator_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(google_cloud_cpp_generator_unit_tests # cmake-format: sort
-                                              internal/codegen_utils_test.cc)
+    set(google_cloud_cpp_generator_unit_tests
+        # cmake-format: sort
+        internal/codegen_utils_test.cc internal/printer_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

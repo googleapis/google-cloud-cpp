@@ -66,6 +66,7 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
 std::string ProtoNameToCppName(absl::string_view proto_name);
 
 enum class NamespaceType { NORMAL, INTERNAL };
+
 /**
  * Builds namespace hierarchy.
  */
