@@ -79,6 +79,11 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::CreateSnapshotRequest const&),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, GetSnapshot,
+              (grpc::ClientContext&,
+               google::pubsub::v1::GetSnapshotRequest const&),
+              (override));
+
   MOCK_METHOD(Status, DeleteSnapshot,
               (grpc::ClientContext&,
                google::pubsub::v1::DeleteSnapshotRequest const&),

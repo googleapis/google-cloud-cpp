@@ -189,6 +189,22 @@ class SubscriptionAdminClient {
   }
 
   /**
+   * Get information about an existing snapshot.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc get-snapshot
+   *
+   * @param snapshot the name of the snapshot
+   */
+  StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(Snapshot const& snapshot) {
+    return connection_->GetSnapshot({snapshot});
+  }
+
+  /**
    * Delete a snapshot
    *
    * @par Example

@@ -242,9 +242,9 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   //! [create-snapshot-with-name]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subsciption_id, std::string const& snapshot_id) {
+     std::string const& subscription_id, std::string const& snapshot_id) {
     auto snapshot = client.CreateSnapshot(
-        pubsub::Subscription(project_id, subsciption_id),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::Snapshot(project_id, std::move(snapshot_id)));
     if (!snapshot.ok()) throw std::runtime_error(snapshot.status().message());
 
@@ -253,6 +253,23 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   }
   //! [create-snapshot-with-name]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
+                 std::vector<std::string> const& argv) {
+  //! [get-snapshot]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& snapshot_id) {
+    auto response = client.GetSnapshot(
+        pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
+    if (!response.ok()) throw std::runtime_error(response.status().message());
+
+    std::cout << "The snapshot details are: " << response->DebugString()
+              << "\n";
+  }
+  //! [get-snapshot]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
@@ -576,6 +593,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
 
+  std::cout << "\nRunning GetSnapshot() sample" << std::endl;
+  GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
   std::cout << "\nRunning DeleteSnapshot() sample" << std::endl;
   DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
@@ -654,6 +674,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
           CreateSnapshot),
+      CreateSubscriptionAdminCommand(
+          "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
       CreateSubscriptionAdminCommand(
           "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
       CreatePublisherCommand("publish", {}, Publish),
