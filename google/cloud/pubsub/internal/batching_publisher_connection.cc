@@ -78,7 +78,7 @@ void BatchingPublisherConnection::Flush(FlushParams) {
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
-  if (pending_.size() >= batching_config_.maximum_message_count()) {
+  if (pending_.size() >= options_.maximum_message_count()) {
     FlushImpl(std::move(lk));
     return;
   }
@@ -86,7 +86,7 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   auto const bytes = std::accumulate(
       pending_.begin(), pending_.end(), std::size_t{0},
       [](std::size_t a, Item const& b) { return a + b.message.data().size(); });
-  if (bytes >= batching_config_.maximum_batch_bytes()) {
+  if (bytes >= options_.maximum_batch_bytes()) {
     FlushImpl(std::move(lk));
     return;
   }
@@ -94,7 +94,7 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   // than one element then we already have setup a timer previously.
   if (pending_.size() == 1U) {
     batch_expiration_ =
-        std::chrono::system_clock::now() + batching_config_.maximum_hold_time();
+        std::chrono::system_clock::now() + options_.maximum_hold_time();
     lk.unlock();
     // We need a weak_ptr<> because this class owns the completion queue,
     // creating a lambda with a shared_ptr<> owning this class would create a

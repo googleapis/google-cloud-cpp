@@ -76,14 +76,12 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     auto cq = background->cq();
     if (options.message_ordering()) {
       auto factory = [topic, options, stub, cq](std::string const&) {
-        return BatchingPublisherConnection::Create(
-            topic, options.batching_config(), stub, cq);
+        return BatchingPublisherConnection::Create(topic, options, stub, cq);
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
-    return BatchingPublisherConnection::Create(std::move(topic),
-                                               options.batching_config(),
-                                               std::move(stub), std::move(cq));
+    return BatchingPublisherConnection::Create(
+        std::move(topic), std::move(options), std::move(stub), std::move(cq));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());

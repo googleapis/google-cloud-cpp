@@ -20,10 +20,11 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-BatchingConfig::BatchingConfig()
+PublisherOptions::PublisherOptions()
     : maximum_hold_time_(0),
       maximum_message_count_((std::numeric_limits<std::size_t>::max)()),
-      maximum_batch_bytes_((std::numeric_limits<std::size_t>::max)()) {}
+      maximum_batch_bytes_((std::numeric_limits<std::size_t>::max)()),
+      message_ordering_(false) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

@@ -25,10 +25,11 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Configure batching for a `Publisher` object.
+ * Configuration options for a `Publisher`.
  *
  * By default, the client library does not automatically batch messages, all
- * messages have a maximum holding time of 0.
+ * messages have a maximum holding time of 0. Applications developers can use
+ * this class to change these defaults on any `Publisher` object they create.
  *
  * @warning TODO(#4808) - we are planning to change this default.
  *
@@ -41,9 +42,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * [pubsub-pricing-link]: https://cloud.google.com/pubsub/pricing
  */
-class BatchingConfig {
+class PublisherOptions {
  public:
-  BatchingConfig();
+  PublisherOptions();
 
   /// The maximum hold time.
   std::chrono::microseconds maximum_hold_time() const {
@@ -65,43 +66,22 @@ class BatchingConfig {
    *     will be flushed approximately 5 milliseconds after it is published.
    */
   template <typename Rep, typename Period>
-  BatchingConfig& set_maximum_hold_time(std::chrono::duration<Rep, Period> v) {
+  PublisherOptions& set_maximum_hold_time(
+      std::chrono::duration<Rep, Period> v) {
     maximum_hold_time_ =
         std::chrono::duration_cast<std::chrono::microseconds>(v);
     return *this;
   }
 
   std::size_t maximum_message_count() const { return maximum_message_count_; }
-  BatchingConfig& set_maximum_message_count(std::size_t v) {
+  PublisherOptions& set_maximum_message_count(std::size_t v) {
     maximum_message_count_ = v;
     return *this;
   }
 
   std::size_t maximum_batch_bytes() const { return maximum_batch_bytes_; }
-  BatchingConfig& set_maximum_batch_bytes(std::size_t v) {
+  PublisherOptions& set_maximum_batch_bytes(std::size_t v) {
     maximum_batch_bytes_ = v;
-    return *this;
-  }
-
- private:
-  std::chrono::microseconds maximum_hold_time_;
-  std::size_t maximum_message_count_;
-  std::size_t maximum_batch_bytes_;
-};
-
-/**
- * Configuration options for a `Publisher`
- *
- * @par Example
- * @snippet samples.cc publisher-options
- */
-class PublisherOptions {
- public:
-  PublisherOptions() = default;
-
-  BatchingConfig const& batching_config() const { return batching_config_; }
-  PublisherOptions& set_batching_config(BatchingConfig v) {
-    batching_config_ = std::move(v);
     return *this;
   }
 
@@ -116,8 +96,10 @@ class PublisherOptions {
   }
 
  private:
-  BatchingConfig batching_config_;
-  bool message_ordering_ = false;
+  std::chrono::microseconds maximum_hold_time_;
+  std::size_t maximum_message_count_;
+  std::size_t maximum_batch_bytes_;
+  bool message_ordering_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

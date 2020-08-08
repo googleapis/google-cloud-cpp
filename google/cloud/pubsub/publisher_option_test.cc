@@ -21,32 +21,22 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-TEST(PublisherOptions, Batching) {
-  auto const b0 = BatchingConfig{};
+TEST(PublisherOptions, Setters) {
+  auto const b0 = PublisherOptions{};
   EXPECT_EQ(0, b0.maximum_hold_time().count());
+  EXPECT_FALSE(b0.message_ordering());
 
-  auto const b = BatchingConfig{}
+  auto const b = PublisherOptions{}
                      .set_maximum_hold_time(std::chrono::seconds(12))
                      .set_maximum_batch_bytes(123)
-                     .set_maximum_message_count(10);
+                     .set_maximum_message_count(10)
+                     .enable_message_ordering();
   EXPECT_EQ(10, b.maximum_message_count());
   EXPECT_EQ(123, b.maximum_batch_bytes());
   auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::seconds(12));
   EXPECT_EQ(expected, b.maximum_hold_time());
-}
-
-TEST(PublisherOptions, PublisherOptions) {
-  auto const o0 = PublisherOptions{};
-  EXPECT_FALSE(o0.message_ordering());
-
-  auto const o =
-      PublisherOptions{}.enable_message_ordering().set_batching_config(
-          BatchingConfig{}.set_maximum_hold_time(std::chrono::seconds(12)));
-  EXPECT_TRUE(o.message_ordering());
-  auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
-      std::chrono::seconds(12));
-  EXPECT_EQ(expected, o.batching_config().maximum_hold_time());
+  EXPECT_TRUE(b.message_ordering());
 }
 
 }  // namespace
