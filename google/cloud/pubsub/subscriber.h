@@ -115,6 +115,8 @@ class Subscriber {
    * @param subscription the Cloud Pub/Sub subscription to receive messages from
    * @param cb an object usable to construct a
    *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`
+   * @param options configure the subscription's flow control, maximum message
+   *     lease time and other parameters, see `SubscriptionOptions` for details
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
@@ -124,9 +126,11 @@ class Subscriber {
    * https://en.cppreference.com/w/cpp/utility/functional/function
    */
   template <typename Callable>
-  future<Status> Subscribe(Subscription const& subscription, Callable&& cb) {
+  future<Status> Subscribe(Subscription const& subscription, Callable&& cb,
+                           SubscriptionOptions options = {}) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({subscription.FullName(), std::move(f), {}});
+    return connection_->Subscribe(
+        {subscription.FullName(), std::move(f), std::move(options)});
   }
 
  private:
