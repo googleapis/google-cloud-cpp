@@ -249,10 +249,8 @@ function (google_cloud_cpp_proto_library libname)
     # We want to treat the generated code as "system" headers so they get
     # ignored by the more aggressive warnings.
     target_include_directories(
-        ${libname} SYSTEM
-        PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-               $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-               $<INSTALL_INTERFACE:include>)
+        ${libname} SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                 $<INSTALL_INTERFACE:include>)
 endfunction ()
 
 function (google_cloud_cpp_grpcpp_library libname)
