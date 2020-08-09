@@ -207,6 +207,22 @@ TEST_F(SubscriberLoggingTest, GetSnapshot) {
   EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("GetSnapshot")));
 }
 
+TEST_F(SubscriberLoggingTest, ListSnapshots) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, ListSnapshots)
+      .WillOnce(
+          Return(make_status_or(google::pubsub::v1::ListSnapshotsResponse{})));
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::ListSnapshotsRequest request;
+  request.set_project("test-project-name");
+  auto status = stub.ListSnapshots(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines,
+              Contains(AllOf(HasSubstr("ListSnapshots"),
+                             HasSubstr("test-project-name"))));
+}
+
 TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, DeleteSnapshot).WillOnce(Return(Status{}));

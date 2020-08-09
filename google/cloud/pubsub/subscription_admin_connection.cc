@@ -109,6 +109,26 @@ class SubscriptionAdminConnectionImpl
     return stub_->GetSnapshot(context, request);
   }
 
+  pubsub::ListSnapshotsRange ListSnapshots(ListSnapshotsParams p) override {
+    google::pubsub::v1::ListSnapshotsRequest request;
+    request.set_project(std::move(p.project_id));
+    auto& stub = stub_;
+    return pubsub::ListSnapshotsRange(
+        std::move(request),
+        [stub](google::pubsub::v1::ListSnapshotsRequest const& request) {
+          grpc::ClientContext context;
+          return stub->ListSnapshots(context, request);
+        },
+        [](google::pubsub::v1::ListSnapshotsResponse response) {
+          std::vector<google::pubsub::v1::Snapshot> items;
+          items.reserve(response.snapshots_size());
+          for (auto& item : *response.mutable_snapshots()) {
+            items.push_back(std::move(item));
+          }
+          return items;
+        });
+  }
+
   Status DeleteSnapshot(DeleteSnapshotParams p) override {
     google::pubsub::v1::DeleteSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());

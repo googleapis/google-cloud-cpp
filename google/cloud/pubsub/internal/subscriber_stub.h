@@ -93,6 +93,11 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::GetSnapshotRequest const& request) = 0;
 
+  /// List existing snapshots.
+  virtual StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListSnapshotsRequest const& request) = 0;
+
   /// Delete a snapshot.
   virtual Status DeleteSnapshot(
       grpc::ClientContext& client_context,

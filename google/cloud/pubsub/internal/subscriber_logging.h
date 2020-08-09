@@ -75,6 +75,10 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListSnapshotsRequest const& request) override;
+
   Status DeleteSnapshot(
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override;
