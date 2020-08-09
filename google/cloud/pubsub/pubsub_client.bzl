@@ -66,7 +66,6 @@ pubsub_client_srcs = [
     "message.cc",
     "publisher.cc",
     "publisher_connection.cc",
-    "publisher_options.cc",
     "snapshot.cc",
     "snapshot_mutation_builder.cc",
     "subscriber_connection.cc",

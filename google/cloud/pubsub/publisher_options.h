@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/version.h"
 #include <chrono>
 #include <cstddef>
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -44,7 +45,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class PublisherOptions {
  public:
-  PublisherOptions();
+  PublisherOptions() = default;
 
   /// The maximum hold time.
   std::chrono::microseconds maximum_hold_time() const {
@@ -96,10 +97,10 @@ class PublisherOptions {
   }
 
  private:
-  std::chrono::microseconds maximum_hold_time_;
-  std::size_t maximum_message_count_;
-  std::size_t maximum_batch_bytes_;
-  bool message_ordering_;
+  std::chrono::microseconds maximum_hold_time_{0};
+  std::size_t maximum_message_count_{(std::numeric_limits<std::size_t>::max)()};
+  std::size_t maximum_batch_bytes_{(std::numeric_limits<std::size_t>::max)()};
+  bool message_ordering_{false};
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

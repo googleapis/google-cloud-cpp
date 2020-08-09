@@ -203,7 +203,7 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   GCP_LOG(DEBUG) << prefix << " >> future_status="
                  << DebugFutureStatus(
                         response.wait_for(std::chrono::microseconds(0)));
-  return response.then([prefix, options](future<Status> f) {
+  return response.then([prefix](future<Status> f) {
     auto response = f.get();
     GCP_LOG(DEBUG) << prefix << " >> response=" << response;
     return response;
