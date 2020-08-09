@@ -66,6 +66,27 @@ TEST(SubscriberTest, SubscribeSimple) {
   ASSERT_STATUS_OK(status);
 }
 
+/// @test Verify Subscriber::Subscribe() works, including mocks.
+TEST(SubscriberTest, SubscribeWithOptions) {
+  Subscription const subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
+  EXPECT_CALL(*mock, Subscribe(_))
+      .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
+        EXPECT_EQ(subscription.FullName(), p.full_subscription_name);
+        EXPECT_EQ(7200, p.options.max_deadline_time().count());
+        return make_ready_future(Status{});
+      });
+
+  Subscriber subscriber(mock);
+  auto handler = [&](Message const&, AckHandler const&) {};
+  auto status = subscriber
+                    .Subscribe(subscription, std::move(handler),
+                               SubscriptionOptions{}.set_max_deadline_time(
+                                   std::chrono::hours(2)))
+                    .get();
+  ASSERT_STATUS_OK(status);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
