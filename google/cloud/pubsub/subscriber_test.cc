@@ -74,18 +74,11 @@ TEST(SubscriberTest, SubscribeWithOptions) {
       .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
         EXPECT_EQ(subscription.FullName(), p.full_subscription_name);
         EXPECT_EQ(7200, p.options.max_deadline_time().count());
-
         return make_ready_future(Status{});
       });
 
   Subscriber subscriber(mock);
-  auto handler = [&](Message const& m, AckHandler h) {
-    if (m.data() == "do-nack") {
-      std::move(h).nack();
-    } else {
-      std::move(h).ack();
-    }
-  };
+  auto handler = [&](Message const&, AckHandler const&) {};
   auto status = subscriber
                     .Subscribe(subscription, std::move(handler),
                                SubscriptionOptions{}.set_max_deadline_time(
