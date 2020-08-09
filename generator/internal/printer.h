@@ -15,7 +15,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
 #include "absl/memory/memory.h"
-#include "absl/strings/string_view.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -47,16 +46,16 @@ class Printer {
    * are defined by the given map.
    */
   void Print(const std::map<std::string, std::string>& variables,
-             absl::string_view text) {
-    printer_->Print(variables, text.data());
+             std::string const& text) {
+    printer_->Print(variables, text.c_str());
   }
 
   /**
    * Like the first Print(), except the substitutions are given as parameters.
    */
   template <typename... Args>
-  void Print(absl::string_view text, const Args&... args) {
-    printer_->Print(text.data(), args...);
+  void Print(std::string const& text, const Args&... args) {
+    printer_->Print(text.c_str(), args...);
   }
 
   Printer(Printer const&) = delete;

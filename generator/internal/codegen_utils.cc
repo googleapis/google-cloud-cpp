@@ -95,7 +95,7 @@ std::vector<std::string> BuildNamespaces(
   std::vector<std::string> v = absl::StrSplit(product_path, '/');
   auto name = v[v.size() - 2];
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
-  if (ns_type == NamespaceType::INTERNAL) {
+  if (ns_type == NamespaceType::kInternal) {
     name = absl::StrCat(name, "_internal");
   }
   return {"google", "cloud", name, inline_ns};
@@ -103,7 +103,7 @@ std::vector<std::string> BuildNamespaces(
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters) {
-  std::cerr << "paramters: " << parameters << std::endl;
+  std::cerr << "parameters: " << parameters << std::endl;
   std::vector<std::pair<std::string, std::string>> command_line_args;
   google::protobuf::compiler::ParseGeneratorParameter(parameters,
                                                       &command_line_args);
@@ -117,11 +117,13 @@ ProcessCommandLineArgs(std::string const& parameters) {
     return Status(StatusCode::kInvalidArgument,
                   "--cpp_codegen_opt=product_path=<path> must be specified.");
   }
-  if (product_path->second.front() == '/') {
-    product_path->second = product_path->second.substr(1);
+
+  auto& path = product_path->second;
+  if (path.front() == '/') {
+    path = path.substr(1);
   }
-  if (product_path->second.back() != '/') {
-    product_path->second = absl::StrCat(product_path->second, "/");
+  if (path.back() != '/') {
+    path = absl::StrCat(path, "/");
   }
   return command_line_args;
 }

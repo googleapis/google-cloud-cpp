@@ -65,17 +65,21 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
  */
 std::string ProtoNameToCppName(absl::string_view proto_name);
 
-enum class NamespaceType { NORMAL, INTERNAL };
+enum class NamespaceType { kNormal, kInternal };
 
 /**
  * Builds namespace hierarchy.
  */
 std::vector<std::string> BuildNamespaces(
     std::map<std::string, std::string> const& vars,
-    NamespaceType ns_type = NamespaceType::NORMAL);
+    NamespaceType ns_type = NamespaceType::kNormal);
 
 /**
  * Validates command line arguments passed to the microgenerator.
+ *
+ * Command line arguments can be passed from the protoc command line via:
+ * '--cpp_codegen_opt=key=value'. This can be specified multiple times to
+ * pass various key,value pairs.
  */
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters);

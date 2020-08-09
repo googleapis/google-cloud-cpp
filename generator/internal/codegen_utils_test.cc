@@ -75,7 +75,7 @@ TEST(ProtoNameToCppName, Success) {
 TEST(BuildNamespaces, Internal) {
   std::map<std::string, std::string> vars;
   vars["product_path"] = "google/cloud/spanner/";
-  auto result = BuildNamespaces(vars, NamespaceType::INTERNAL);
+  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);

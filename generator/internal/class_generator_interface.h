@@ -20,6 +20,10 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+/**
+ * Interface class such that ServiceGenerator can invoke its collection of
+ * class generators polymorphically.
+ */
 class ClassGeneratorInterface {
  public:
   virtual ~ClassGeneratorInterface() {}
