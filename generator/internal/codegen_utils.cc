@@ -26,6 +26,7 @@
 #pragma warning(pop)
 #endif  // _MSC_VER
 // TODO(#4501) - end
+#include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>
 
@@ -36,11 +37,11 @@ namespace generator_internal {
 std::string GeneratedFileSuffix() { return ".gcpcxx.pb"; }
 
 std::string LocalInclude(absl::string_view header) {
-  return absl::StrCat("\"", header, "\"");
+  return absl::StrCat("#include \"", header, "\"\n");
 }
 
 std::string SystemInclude(absl::string_view header) {
-  return absl::StrCat("<", header, ">");
+  return absl::StrCat("#include <", header, ">\n");
 }
 
 std::string CamelCaseToSnakeCase(absl::string_view input) {
@@ -85,6 +86,58 @@ std::string ServiceNameToFilePath(absl::string_view service_name) {
 
 std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
+}
+
+StatusOr<std::vector<std::string>> BuildNamespaces(
+    std::map<std::string, std::string> const& vars, NamespaceType ns_type) {
+  auto iter = vars.find("product_path");
+  if (iter == vars.end()) {
+    return Status(StatusCode::kNotFound,
+                  "product_path must be present in vars.");
+  }
+  std::string product_path = iter->second;
+  if (product_path.back() != '/') {
+    return Status(StatusCode::kInvalidArgument,
+                  "vars[product_path] must end with '/'.");
+  }
+  if (product_path.size() < 2) {
+    return Status(StatusCode::kInvalidArgument,
+                  "vars[product_path] contain at least 2 characters.");
+  }
+  std::vector<std::string> v = absl::StrSplit(product_path, '/');
+  auto name = v[v.size() - 2];
+  std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
+  if (ns_type == NamespaceType::kInternal) {
+    name = absl::StrCat(name, "_internal");
+  }
+
+  return std::vector<std::string>{"google", "cloud", name, inline_ns};
+}
+
+StatusOr<std::vector<std::pair<std::string, std::string>>>
+ProcessCommandLineArgs(std::string const& parameters) {
+  std::vector<std::pair<std::string, std::string>> command_line_args;
+  google::protobuf::compiler::ParseGeneratorParameter(parameters,
+                                                      &command_line_args);
+
+  auto product_path =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "product_path";
+                   });
+  if (product_path == command_line_args.end() || product_path->second.empty()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "--cpp_codegen_opt=product_path=<path> must be specified.");
+  }
+
+  auto& path = product_path->second;
+  if (path.front() == '/') {
+    path = path.substr(1);
+  }
+  if (path.back() != '/') {
+    path += '/';
+  }
+  return command_line_args;
 }
 
 }  // namespace generator_internal

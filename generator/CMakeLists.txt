@@ -19,8 +19,10 @@ include(FindProtobufWithTargets)
 
 find_package(ProtobufWithTargets REQUIRED)
 
-add_library(google_cloud_cpp_generator # cmake-format: sort
-            internal/codegen_utils.cc internal/codegen_utils.h)
+add_library(
+    google_cloud_cpp_generator # cmake-format: sort
+    internal/class_generator_interface.h internal/codegen_utils.cc
+    internal/codegen_utils.h internal/printer.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
@@ -48,8 +50,9 @@ function (google_cloud_cpp_generator_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(google_cloud_cpp_generator_unit_tests # cmake-format: sort
-                                              internal/codegen_utils_test.cc)
+    set(google_cloud_cpp_generator_unit_tests
+        # cmake-format: sort
+        internal/codegen_utils_test.cc internal/printer_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

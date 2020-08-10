@@ -17,7 +17,9 @@
 """Automatically generated source lists for google_cloud_cpp_generator - DO NOT EDIT."""
 
 google_cloud_cpp_generator_hdrs = [
+    "internal/class_generator_interface.h",
     "internal/codegen_utils.h",
+    "internal/printer.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
