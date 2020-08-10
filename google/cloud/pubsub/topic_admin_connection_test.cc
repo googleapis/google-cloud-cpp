@@ -143,6 +143,25 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
+TEST(TopicAdminConnectionTest, DetachSubscription) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, DetachSubscription)
+      .WillOnce(
+          [&](grpc::ClientContext&,
+              google::pubsub::v1::DetachSubscriptionRequest const& request) {
+            EXPECT_EQ(subscription.FullName(), request.subscription());
+            return make_status_or(
+                google::pubsub::v1::DetachSubscriptionResponse{});
+          });
+
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock);
+  auto response = topic_admin->DetachSubscription({subscription});
+  ASSERT_STATUS_OK(response);
+}
+
 TEST(TopicAdminConnectionTest, ListSubscriptions) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   auto const topic_name = Topic("test-project-id", "test-topic-id").FullName();

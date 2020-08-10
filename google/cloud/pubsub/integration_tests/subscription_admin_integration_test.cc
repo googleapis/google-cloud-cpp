@@ -158,6 +158,12 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   EXPECT_THAT(snapshot_names(subscription_admin, project_id),
               Not(Contains(snapshot.FullName())));
 
+  // TODO(#4792) - the emulator does not support DetachSubscription()
+  if (!UsingEmulator()) {
+    auto detach_response = topic_admin.DetachSubscription(subscription);
+    ASSERT_STATUS_OK(detach_response);
+  }
+
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   ASSERT_STATUS_OK(delete_response);
 

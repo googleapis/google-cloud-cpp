@@ -55,6 +55,12 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
                google::pubsub::v1::DeleteTopicRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::DetachSubscriptionResponse>,
+              DetachSubscription,
+              (grpc::ClientContext&,
+               google::pubsub::v1::DetachSubscriptionRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>,
               ListTopicSubscriptions,
               (grpc::ClientContext&,

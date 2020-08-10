@@ -79,6 +79,14 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
     return stub_->DeleteTopic(context, request);
   }
 
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      DetachSubscriptionParams p) override {
+    google::pubsub::v1::DetachSubscriptionRequest request;
+    request.set_subscription(p.subscription.FullName());
+    grpc::ClientContext context;
+    return stub_->DetachSubscription(context, request);
+  }
+
   ListTopicSubscriptionsRange ListTopicSubscriptions(
       ListTopicSubscriptionsParams p) override {
     google::pubsub::v1::ListTopicSubscriptionsRequest request;

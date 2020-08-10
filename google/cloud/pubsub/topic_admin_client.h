@@ -143,6 +143,26 @@ class TopicAdminClient {
   }
 
   /**
+   * Detaches an existing subscription.
+   *
+   * This operation stops the subscription from receiving any further messages,
+   * it drops any messages still retained by the subscription, and any
+   * outstanding pull requests will fail with `FAILED_PRECONDITION`.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc detach-subscription
+   *
+   * @param subscription the name of the subscription to detach.
+   */
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      Subscription subscription) {
+    return connection_->DetachSubscription({std::move(subscription)});
+  }
+
+  /**
    * List all the subscription names for a given topic.
    *
    * @note
