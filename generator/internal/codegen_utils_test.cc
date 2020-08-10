@@ -72,6 +72,13 @@ TEST(ProtoNameToCppName, Success) {
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
 }
 
+TEST(BuildNamespace, EmptyVars) {
+  std::map<std::string, std::string> vars;
+  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
+  EXPECT_EQ(result.status().code(), StatusCode::kNotFound);
+  EXPECT_EQ(result.status().message(), "product_path must be present in vars.");
+}
+
 TEST(BuildNamespaces, Internal) {
   std::map<std::string, std::string> vars;
   vars["product_path"] = "google/cloud/spanner/";

@@ -94,7 +94,7 @@ StatusOr<std::vector<std::string>> BuildNamespaces(
   auto iter = vars.find("product_path");
   if (iter == vars.end()) {
     return Status(StatusCode::kNotFound,
-                  "product_path must be presen in vars.");
+                  "product_path must be present in vars.");
   }
   std::string product_path = iter->second;
   std::vector<std::string> v = absl::StrSplit(product_path, '/');
@@ -109,7 +109,6 @@ StatusOr<std::vector<std::string>> BuildNamespaces(
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters) {
-  std::cerr << "parameters: " << parameters << std::endl;
   std::vector<std::pair<std::string, std::string>> command_line_args;
   google::protobuf::compiler::ParseGeneratorParameter(parameters,
                                                       &command_line_args);
