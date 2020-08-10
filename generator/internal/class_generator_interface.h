@@ -26,7 +26,7 @@ namespace generator_internal {
  */
 class ClassGeneratorInterface {
  public:
-  virtual ~ClassGeneratorInterface() {}
+  virtual ~ClassGeneratorInterface() = default; 
   virtual Status Generate() = 0;
 };
 
