@@ -19,6 +19,16 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+google::pubsub::v1::ModifyPushConfigRequest
+PushConfigBuilder::BuildModifyPushConfig(Subscription const& subscription) && {
+  google::pubsub::v1::ModifyPushConfigRequest request;
+  request.set_subscription(subscription.FullName());
+  if (!paths_.empty()) {
+    *request.mutable_push_config() = std::move(proto_);
+  }
+  return request;
+}
+
 google::pubsub::v1::UpdateSubscriptionRequest
 SubscriptionMutationBuilder::BuildUpdateSubscription(
     Subscription const& subscription) && {
@@ -39,6 +49,20 @@ SubscriptionMutationBuilder::BuildCreateSubscription(
   request.set_topic(topic.FullName());
   request.set_name(subscription.FullName());
   return request;
+}
+
+SubscriptionMutationBuilder& SubscriptionMutationBuilder::set_push_config(
+    PushConfigBuilder v) & {
+  if (v.paths_.empty()) {
+    proto_.clear_push_config();
+    paths_.insert("push_config");
+  } else {
+    *proto_.mutable_push_config() = std::move(v.proto_);
+    for (auto const& s : v.paths_) {
+      paths_.insert("push_config." + s);
+    }
+  }
+  return *this;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

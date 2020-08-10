@@ -28,6 +28,141 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 
+TEST(SubscriptionMutationBuilder, MakeOidcToken) {
+  auto const actual =
+      PushConfigBuilder::MakeOidcToken("test-account@example.com");
+  google::pubsub::v1::PushConfig::OidcToken expected;
+  std::string const text = R"pb(
+    service_account_email: "test-account@example.com"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, MakeOidcTokenWithAudience) {
+  auto const actual = PushConfigBuilder::MakeOidcToken(
+      "test-account@example.com", "test-audience");
+  google::pubsub::v1::PushConfig::OidcToken expected;
+  std::string const text = R"pb(
+    service_account_email: "test-account@example.com"
+    audience: "test-audience"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, Empty) {
+  auto const actual = PushConfigBuilder().BuildModifyPushConfig(
+      Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::ModifyPushConfigRequest expected;
+  std::string const text = R"pb(
+    subscription: "projects/test-project/subscriptions/test-subscription"
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, PushConfigEndpoint) {
+  auto const actual = PushConfigBuilder()
+                          .set_push_endpoint("https://endpoint.example.com")
+                          .BuildModifyPushConfig(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::ModifyPushConfigRequest expected;
+  std::string const text = R"pb(
+    subscription: "projects/test-project/subscriptions/test-subscription"
+    push_config { push_endpoint: "https://endpoint.example.com" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
+  auto const actual = PushConfigBuilder()
+                          .set_push_endpoint("https://endpoint.example.com")
+                          .add_attribute("key0", "label0")
+                          .add_attribute("key1", "label1")
+                          .BuildModifyPushConfig(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::ModifyPushConfigRequest expected;
+  std::string const text = R"pb(
+    subscription: "projects/test-project/subscriptions/test-subscription"
+    push_config {
+      push_endpoint: "https://endpoint.example.com"
+      attributes: { key: "key1" value: "label1" }
+      attributes: { key: "key0" value: "label0" }
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
+  auto const actual = PushConfigBuilder()
+                          .set_push_endpoint("https://endpoint.example.com")
+                          .add_attribute("key0", "label0")
+                          .add_attribute("key1", "label1")
+                          .set_attributes({{"key2", "label2"}})
+                          .BuildModifyPushConfig(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::ModifyPushConfigRequest expected;
+  std::string const text = R"pb(
+    subscription: "projects/test-project/subscriptions/test-subscription"
+    push_config {
+      push_endpoint: "https://endpoint.example.com"
+      attributes: { key: "key2" value: "label2" }
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, PushConfigClearAttributes) {
+  auto const actual = PushConfigBuilder()
+                          .set_push_endpoint("https://endpoint.example.com")
+                          .add_attribute("key0", "label0")
+                          .add_attribute("key1", "label1")
+                          .clear_attributes()
+                          .add_attribute("key2", "label2")
+                          .BuildModifyPushConfig(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::ModifyPushConfigRequest expected;
+  std::string const text = R"pb(
+    subscription: "projects/test-project/subscriptions/test-subscription"
+    push_config {
+      push_endpoint: "https://endpoint.example.com"
+      attributes: { key: "key2" value: "label2" }
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionMutationBuilder, PushConfigSetAuthentication) {
+  auto const actual =
+      SubscriptionMutationBuilder{}
+          .set_push_config(
+              PushConfigBuilder()
+                  .set_push_endpoint("https://endpoint.example.com")
+                  .set_authentication(PushConfigBuilder::MakeOidcToken(
+                      "fake-service-account@example.com", "test-audience")))
+          .BuildUpdateSubscription(
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      push_config {
+        push_endpoint: "https://endpoint.example.com"
+        oidc_token {
+          service_account_email: "fake-service-account@example.com"
+          audience: "test-audience"
+        }
+      }
+    }
+    update_mask {
+      paths: "push_config.oidc_token"
+      paths: "push_config.push_endpoint"
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionMutationBuilder, BuildUpdateSubscription) {
   auto const actual = SubscriptionMutationBuilder{}.BuildUpdateSubscription(
       Subscription("test-project", "test-subscription"));
@@ -53,30 +188,22 @@ TEST(SubscriptionMutationBuilder, BuildCreateSubscription) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, MakeOidcToken) {
-  auto const actual =
-      PushConfigBuilder::MakeOidcToken("test-account@example.com");
-  google::pubsub::v1::PushConfig::OidcToken expected;
+TEST(SubscriptionMutationBuilder, SetPushConfigEmpty) {
+  auto const actual = SubscriptionMutationBuilder{}
+                          .set_push_config(PushConfigBuilder())
+                          .BuildUpdateSubscription(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
-    service_account_email: "test-account@example.com"
-  )pb";
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+    }
+    update_mask { paths: "push_config" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, MakeOidcTokenWithAudience) {
-  auto const actual = PushConfigBuilder::MakeOidcToken(
-      "test-account@example.com", "test-audience");
-  google::pubsub::v1::PushConfig::OidcToken expected;
-  std::string const text = R"pb(
-    service_account_email: "test-account@example.com"
-    audience: "test-audience"
-  )pb";
-  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(SubscriptionMutationBuilder, PushConfigBasic) {
+TEST(SubscriptionMutationBuilder, SetPushConfigEndpoint) {
   auto const actual =
       SubscriptionMutationBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com"))
@@ -93,7 +220,7 @@ TEST(SubscriptionMutationBuilder, PushConfigBasic) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
+TEST(SubscriptionMutationBuilder, SetPushConfigAddAttribute) {
   auto const actual =
       SubscriptionMutationBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com")
@@ -119,7 +246,7 @@ TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
+TEST(SubscriptionMutationBuilder, SetPushConfigSetAttributes) {
   auto const actual =
       SubscriptionMutationBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com")
@@ -145,7 +272,7 @@ TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigSetAuthentication) {
+TEST(SubscriptionMutationBuilder, SetPushConfigSetAuthentication) {
   auto const actual =
       SubscriptionMutationBuilder{}
           .set_push_config(
@@ -228,7 +355,8 @@ TEST(SubscriptionMutationBuilder, SetMessageRetentionDuration) {
 TEST(SubscriptionMutationBuilder, SetPushConfig) {
   auto const actual =
       SubscriptionMutationBuilder{}
-          .set_push_config(PushConfigBuilder("https://ep.example.com"))
+          .set_push_config(
+              PushConfigBuilder().set_push_endpoint("https://ep.example.com"))
           .BuildUpdateSubscription(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
