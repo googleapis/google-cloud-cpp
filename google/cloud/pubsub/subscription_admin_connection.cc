@@ -129,6 +129,12 @@ class SubscriptionAdminConnectionImpl
         });
   }
 
+  StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
+      UpdateSnapshotParams p) override {
+    grpc::ClientContext context;
+    return stub_->UpdateSnapshot(context, std::move(p.request));
+  }
+
   Status DeleteSnapshot(DeleteSnapshotParams p) override {
     google::pubsub::v1::DeleteSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());

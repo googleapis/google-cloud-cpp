@@ -124,6 +124,11 @@ class SubscriptionAdminConnection {
     std::string project_id;
   };
 
+  /// Wrap the arguments for `UpdateSnapshot()`
+  struct UpdateSnapshotParams {
+    google::pubsub::v1::UpdateSnapshotRequest request;
+  };
+
   /// Wrap the arguments for `DeleteSnapshot()`
   struct DeleteSnapshotParams {
     Snapshot snapshot;
@@ -155,6 +160,10 @@ class SubscriptionAdminConnection {
   /// Defines the interface for `SnapshotAdminClient::GetSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
       GetSnapshotParams) = 0;
+
+  /// Defines the interface for `SnapshotAdminClient::UpdateSnapshot()`
+  virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
+      UpdateSnapshotParams) = 0;
 
   /// Defines the interface for `SubscriptionAdminClient::ListSnapshots()`
   virtual ListSnapshotsRange ListSnapshots(ListSnapshotsParams) = 0;

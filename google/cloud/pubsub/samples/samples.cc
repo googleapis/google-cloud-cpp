@@ -272,6 +272,24 @@ void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
+                    std::vector<std::string> const& argv) {
+  //! [update-snapshot]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string snapshot_id) {
+    auto snap = client.UpdateSnapshot(
+        pubsub::Snapshot(project_id, std::move(snapshot_id)),
+        pubsub::SnapshotMutationBuilder{}.add_label("samples-cpp", "gcp"));
+    if (!snap.ok()) return;  // TODO(#4792) - emulator lacks UpdateSnapshot()
+
+    std::cout << "The snapshot was successfully updated: "
+              << snap->DebugString() << "\n";
+  }
+  //! [update-snapshot]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
                    std::vector<std::string> const& argv) {
   //! [list-snapshots]
@@ -611,6 +629,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
+  std::cout << "\nRunning UpdateSnapshot() sample" << std::endl;
+  UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
   std::cout << "\nRunning ListSnapshots() sample" << std::endl;
   ListSnapshots(subscription_admin_client, {project_id});
 
@@ -694,6 +715,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CreateSnapshot),
       CreateSubscriptionAdminCommand(
           "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
+      CreateSubscriptionAdminCommand(
+          "update-snapshot", {"project-id", "snapshot-id"}, UpdateSnapshot),
       CreateSubscriptionAdminCommand("list-snapshots", {"project-id"},
                                      ListSnapshots),
       CreateSubscriptionAdminCommand(

@@ -152,6 +152,15 @@ class DefaultSubscriberStub : public SubscriberStub {
     return response;
   }
 
+  StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
+      grpc::ClientContext& context,
+      google::pubsub::v1::UpdateSnapshotRequest const& request) override {
+    google::pubsub::v1::Snapshot response;
+    auto status = grpc_stub_->UpdateSnapshot(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
   Status DeleteSnapshot(
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override {
