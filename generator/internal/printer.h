@@ -54,8 +54,8 @@ class Printer {
    * Like the first Print(), except the substitutions are given as parameters.
    */
   template <typename... Args>
-  void Print(std::string const& text, const Args&... args) {
-    printer_->Print(text.c_str(), args...);
+  void Print(std::string const& text, Args&&... args) {
+    printer_->Print(text.c_str(), std::forward<Args>(args)...);
   }
 
   Printer(Printer const&) = delete;

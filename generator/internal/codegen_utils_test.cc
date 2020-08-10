@@ -76,22 +76,24 @@ TEST(BuildNamespaces, Internal) {
   std::map<std::string, std::string> vars;
   vars["product_path"] = "google/cloud/spanner/";
   auto result = BuildNamespaces(vars, NamespaceType::kInternal);
-  ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("spanner_internal", result[2]);
-  EXPECT_EQ("SPANNER_CLIENT_NS", result[3]);
+  ASSERT_TRUE(result.ok());
+  ASSERT_EQ(result->size(), 4);
+  EXPECT_EQ("google", (*result)[0]);
+  EXPECT_EQ("cloud", (*result)[1]);
+  EXPECT_EQ("spanner_internal", (*result)[2]);
+  EXPECT_EQ("SPANNER_CLIENT_NS", (*result)[3]);
 }
 
 TEST(BuildNamespaces, NotInternal) {
   std::map<std::string, std::string> vars;
   vars["product_path"] = "google/cloud/translation/";
   auto result = BuildNamespaces(vars);
-  ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("translation", result[2]);
-  EXPECT_EQ("TRANSLATION_CLIENT_NS", result[3]);
+  ASSERT_TRUE(result.ok());
+  ASSERT_EQ(result->size(), 4);
+  EXPECT_EQ("google", (*result)[0]);
+  EXPECT_EQ("cloud", (*result)[1]);
+  EXPECT_EQ("translation", (*result)[2]);
+  EXPECT_EQ("TRANSLATION_CLIENT_NS", (*result)[3]);
 }
 
 TEST(ProcessCommandLineArgs, NoProductPath) {

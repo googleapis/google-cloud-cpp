@@ -43,29 +43,29 @@ class MockZeroCopyOutputStream
   MOCK_METHOD(bool, AllowsAliasing, (), (const, override));
 };
 
-class PrinterTest : public testing::Test {
- protected:
-  void SetUp() override {
-    generator_context_ = absl::make_unique<MockGeneratorContext>();
-    output_ = new MockZeroCopyOutputStream();
-  }
-  std::unique_ptr<MockGeneratorContext> generator_context_;
-  MockZeroCopyOutputStream* output_;
-};
-
-TEST_F(PrinterTest, PrintWithMap) {
-  EXPECT_CALL(*generator_context_, Open("foo")).WillOnce(Return(output_));
-  Printer printer(generator_context_.get(), "foo");
+TEST(PrinterTest, PrintWithMap) {
+  std::unique_ptr<MockGeneratorContext> generator_context =
+      absl::make_unique<MockGeneratorContext>();
+  std::unique_ptr<MockZeroCopyOutputStream> output =
+      absl::make_unique<MockZeroCopyOutputStream>();
+  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
   std::map<std::string, std::string> vars;
   vars["name"] = "Inigo Montoya";
-  EXPECT_CALL(*output_, Next(_, _));
   printer.Print(vars, "Hello! My name is $name$.\n");
 }
 
-TEST_F(PrinterTest, PrintWithVariableArgs) {
-  EXPECT_CALL(*generator_context_, Open("foo")).WillOnce(Return(output_));
-  Printer printer(generator_context_.get(), "foo");
-  EXPECT_CALL(*output_, Next(_, _));
+TEST(PrinterTest, PrintWithVariableArgs) {
+  std::unique_ptr<MockGeneratorContext> generator_context =
+      absl::make_unique<MockGeneratorContext>();
+  std::unique_ptr<MockZeroCopyOutputStream> output =
+      absl::make_unique<MockZeroCopyOutputStream>();
+  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
   printer.Print("Hello! My name is $name$.\n", "name", "Inigo Montoya");
 }
 

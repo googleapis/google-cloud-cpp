@@ -70,7 +70,7 @@ enum class NamespaceType { kNormal, kInternal };
 /**
  * Builds namespace hierarchy.
  */
-std::vector<std::string> BuildNamespaces(
+StatusOr<std::vector<std::string>> BuildNamespaces(
     std::map<std::string, std::string> const& vars,
     NamespaceType ns_type = NamespaceType::kNormal);
 
@@ -79,7 +79,8 @@ std::vector<std::string> BuildNamespaces(
  *
  * Command line arguments can be passed from the protoc command line via:
  * '--cpp_codegen_opt=key=value'. This can be specified multiple times to
- * pass various key,value pairs.
+ * pass various key,value pairs. The resulting string passed from protoc to
+ * the plugin is a comma delimited list such: "key1=value1,key2,key3=value3"
  */
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters);
