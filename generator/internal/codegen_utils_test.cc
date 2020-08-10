@@ -79,6 +79,23 @@ TEST(BuildNamespace, EmptyVars) {
   EXPECT_EQ(result.status().message(), "product_path must be present in vars.");
 }
 
+TEST(BuildNamespace, NoTrailingSlash) {
+  std::map<std::string, std::string> vars;
+  vars["product_path"] = "google/cloud/spanner";
+  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(result.status().message(), "vars[product_path] must end with '/'.");
+}
+
+TEST(BuildNamespace, ProductPathTooShort) {
+  std::map<std::string, std::string> vars;
+  vars["product_path"] = std::string("/");
+  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(result.status().message(),
+            "vars[product_path] contain at least 2 characters.");
+}
+
 TEST(BuildNamespaces, Internal) {
   std::map<std::string, std::string> vars;
   vars["product_path"] = "google/cloud/spanner/";

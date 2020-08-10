@@ -37,6 +37,11 @@ class Printer {
         printer_(absl::make_unique<google::protobuf::io::Printer>(
             output_.get(), '$', nullptr)) {}
 
+  Printer(Printer const&) = delete;
+  Printer& operator=(Printer const&) = delete;
+  Printer(Printer&&) = default;
+  Printer& operator=(Printer&&) = default;
+
   /**
    * Print some text after applying variable substitutions.
    *
@@ -57,11 +62,6 @@ class Printer {
   void Print(std::string const& text, Args&&... args) {
     printer_->Print(text.c_str(), std::forward<Args>(args)...);
   }
-
-  Printer(Printer const&) = delete;
-  Printer& operator=(Printer const&) = delete;
-  Printer(Printer&&) = default;
-  Printer& operator=(Printer&&) = default;
 
  private:
   std::unique_ptr<google::protobuf::io::ZeroCopyOutputStream> output_;

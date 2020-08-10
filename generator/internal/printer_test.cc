@@ -44,10 +44,8 @@ class MockZeroCopyOutputStream
 };
 
 TEST(PrinterTest, PrintWithMap) {
-  std::unique_ptr<MockGeneratorContext> generator_context =
-      absl::make_unique<MockGeneratorContext>();
-  std::unique_ptr<MockZeroCopyOutputStream> output =
-      absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto output = absl::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*output, Next(_, _));
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
@@ -58,10 +56,8 @@ TEST(PrinterTest, PrintWithMap) {
 }
 
 TEST(PrinterTest, PrintWithVariableArgs) {
-  std::unique_ptr<MockGeneratorContext> generator_context =
-      absl::make_unique<MockGeneratorContext>();
-  std::unique_ptr<MockZeroCopyOutputStream> output =
-      absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto output = absl::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*output, Next(_, _));
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));

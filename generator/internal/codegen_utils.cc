@@ -90,13 +90,20 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
 
 StatusOr<std::vector<std::string>> BuildNamespaces(
     std::map<std::string, std::string> const& vars, NamespaceType ns_type) {
-  // vars["product_path"] must to be present and properly formatted.
   auto iter = vars.find("product_path");
   if (iter == vars.end()) {
     return Status(StatusCode::kNotFound,
                   "product_path must be present in vars.");
   }
   std::string product_path = iter->second;
+  if (product_path.back() != '/') {
+    return Status(StatusCode::kInvalidArgument,
+                  "vars[product_path] must end with '/'.");
+  }
+  if (product_path.size() < 2) {
+    return Status(StatusCode::kInvalidArgument,
+                  "vars[product_path] contain at least 2 characters.");
+  }
   std::vector<std::string> v = absl::StrSplit(product_path, '/');
   auto name = v[v.size() - 2];
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
