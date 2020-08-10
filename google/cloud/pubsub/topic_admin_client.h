@@ -149,6 +149,9 @@ class TopicAdminClient {
    * it drops any messages still retained by the subscription, and any
    * outstanding pull requests will fail with `FAILED_PRECONDITION`.
    *
+   * @warning this feature is **not GA** and may require registering your
+   *   project in an early access program.
+   *
    * @par Idempotency
    * This is not an idempotent operation and therefore it is never retried.
    *
