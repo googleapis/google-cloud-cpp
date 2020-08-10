@@ -52,6 +52,10 @@ class PublisherLogging : public PublisherStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
+
   StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
       grpc::ClientContext& context,

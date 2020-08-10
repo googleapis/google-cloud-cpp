@@ -120,6 +120,11 @@ class TopicAdminConnection {
     Topic topic;
   };
 
+  /// Wrap the arguments for `DetachSubscription()`
+  struct DetachSubscriptionParams {
+    Subscription subscription;
+  };
+
   /// Wrap the arguments for `ListTopicSubscriptions()`
   struct ListTopicSubscriptionsParams {
     std::string topic_full_name;
@@ -147,6 +152,10 @@ class TopicAdminConnection {
 
   /// Defines the interface for `TopicAdminClient::DeleteTopic()`
   virtual Status DeleteTopic(DeleteTopicParams) = 0;
+
+  /// Defines the interface for `TopicAdminClient::DetachSubscriptions()`
+  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+      DetachSubscription(DetachSubscriptionParams) = 0;
 
   /// Defines the interface for `TopicAdminClient::ListTopicSubscriptions()`
   virtual ListTopicSubscriptionsRange ListTopicSubscriptions(

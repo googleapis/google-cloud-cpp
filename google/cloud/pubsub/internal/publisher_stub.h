@@ -65,6 +65,12 @@ class PublisherStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
+  /// Detach a subscription.
+  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+  DetachSubscription(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
+
   /// List subscriptions for a topic.
   virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(

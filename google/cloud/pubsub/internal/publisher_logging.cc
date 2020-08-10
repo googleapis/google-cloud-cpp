@@ -76,6 +76,18 @@ Status PublisherLogging::DeleteTopic(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+PublisherLogging::DetachSubscription(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DetachSubscriptionRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::DetachSubscriptionRequest const& request) {
+        return child_->DetachSubscription(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherLogging::ListTopicSubscriptions(
     grpc::ClientContext& context,

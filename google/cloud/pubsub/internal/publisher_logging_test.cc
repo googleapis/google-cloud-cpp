@@ -122,6 +122,22 @@ TEST_F(PublisherLoggingTest, DeleteTopic) {
       Contains(AllOf(HasSubstr("DeleteTopic"), HasSubstr("test-topic-name"))));
 }
 
+TEST_F(PublisherLoggingTest, DetachSubscription) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, DetachSubscription)
+      .WillOnce(Return(
+          make_status_or(google::pubsub::v1::DetachSubscriptionResponse{})));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::DetachSubscriptionRequest request;
+  request.set_subscription("test-subscription-name");
+  auto status = stub.DetachSubscription(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines,
+              Contains(AllOf(HasSubstr("DetachSubscription"),
+                             HasSubstr("test-subscription-name"))));
+}
+
 TEST_F(PublisherLoggingTest, ListTopicSubscriptions) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, ListTopicSubscriptions)

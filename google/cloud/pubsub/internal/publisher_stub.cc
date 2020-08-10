@@ -75,6 +75,15 @@ class DefaultPublisherStub : public PublisherStub {
     return {};
   }
 
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DetachSubscriptionRequest const& request) override {
+    google::pubsub::v1::DetachSubscriptionResponse response;
+    auto status = grpc_stub_->DetachSubscription(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
   StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
       grpc::ClientContext& context,

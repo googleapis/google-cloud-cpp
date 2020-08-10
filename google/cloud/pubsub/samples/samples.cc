@@ -128,6 +128,23 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
+                        std::vector<std::string> const& argv) {
+  //! [START pubsub_subscription_detachment] [detach-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string subscription_id) {
+    auto response = client.DetachSubscription(pubsub::Subscription(
+        std::move(project_id), std::move(subscription_id)));
+    if (!response.ok()) return;  // TODO(#4792) - not implemented in emulator
+
+    std::cout << "The subscription was successfully detached: "
+              << response->DebugString() << "\n";
+  }
+  //! [END pubsub_subscription_detachment] [detach-subscription]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
                             std::vector<std::string> const& argv) {
   //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
@@ -688,6 +705,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the CustomThreadPoolSubscriber() sample" << std::endl;
   CustomThreadPoolSubscriber({project_id, subscription_id});
 
+  std::cout << "\nRunning DetachSubscription() sample" << std::endl;
+  DetachSubscription(topic_admin_client, {project_id, subscription_id});
+
   std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
@@ -714,6 +734,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("delete-topic", {"project-id", "topic-id"},
                               DeleteTopic),
+      CreateTopicAdminCommand("detach-subscription",
+                              {"project-id", "subscription-id"},
+                              DetachSubscription),
       CreateTopicAdminCommand("list-topic-subscriptions",
                               {"project-id", "topic-id"},
                               ListTopicSubscriptions),
