@@ -146,7 +146,7 @@ class TopicAdminClient {
    * List all the subscription names for a given topic.
    *
    * @note
-   * The returned range contains fully qualified subscription ranges, e.g.,
+   * The returned range contains fully qualified subscription names, e.g.,
    * `"projects/my-project/subscriptions/my-subscription"`. Applications may
    * need to parse these names to use with other APIs.
    *
@@ -159,6 +159,25 @@ class TopicAdminClient {
    */
   ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const& topic) {
     return connection_->ListTopicSubscriptions({topic.FullName()});
+  }
+
+  /**
+   * List all the subscription names for a given topic.
+   *
+   * @note
+   * The returned range contains fully qualified snapshot names, e.g.,
+   * `"projects/my-project/snapshots/my-subscription"`. Applications may
+   * need to parse these names to use with other APIs.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc list-topic-snapshots
+   */
+  ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic) {
+    return connection_->ListTopicSnapshots({topic.FullName()});
   }
 
  private:

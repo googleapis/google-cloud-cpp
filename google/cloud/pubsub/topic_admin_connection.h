@@ -57,6 +57,19 @@ using ListTopicSubscriptionsRange = google::cloud::internal::PaginationRange<
     google::pubsub::v1::ListTopicSubscriptionsResponse>;
 
 /**
+ * An input range to stream the Cloud Pub/Sub snapshots of a topic.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `std::string` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListTopicSnapshotsRange = google::cloud::internal::PaginationRange<
+    std::string, google::pubsub::v1::ListTopicSnapshotsRequest,
+    google::pubsub::v1::ListTopicSnapshotsResponse>;
+
+/**
  * A connection to Cloud Pub/Sub.
  *
  * This interface defines pure-virtual methods for each of the user-facing
@@ -111,6 +124,11 @@ class TopicAdminConnection {
   struct ListTopicSubscriptionsParams {
     std::string topic_full_name;
   };
+
+  /// Wrap the arguments for `ListTopicSnapshots()`
+  struct ListTopicSnapshotsParams {
+    std::string topic_full_name;
+  };
   //@}
 
   /// Defines the interface for `TopicAdminClient::CreateTopic()`
@@ -133,6 +151,10 @@ class TopicAdminConnection {
   /// Defines the interface for `TopicAdminClient::ListTopicSubscriptions()`
   virtual ListTopicSubscriptionsRange ListTopicSubscriptions(
       ListTopicSubscriptionsParams) = 0;
+
+  /// Defines the interface for `TopicAdminClient::ListTopicSnapshots()`
+  virtual ListTopicSnapshotsRange ListTopicSnapshots(
+      ListTopicSnapshotsParams) = 0;
 };
 
 /**

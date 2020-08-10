@@ -71,6 +71,12 @@ class PublisherStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
 
+  /// List snapshots for a topic.
+  virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
+  ListTopicSnapshots(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
+
   /// Publish a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,

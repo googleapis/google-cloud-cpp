@@ -101,6 +101,27 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
         });
   }
 
+  ListTopicSnapshotsRange ListTopicSnapshots(
+      ListTopicSnapshotsParams p) override {
+    google::pubsub::v1::ListTopicSnapshotsRequest request;
+    request.set_topic(std::move(p.topic_full_name));
+    auto& stub = stub_;
+    return ListTopicSnapshotsRange(
+        std::move(request),
+        [stub](google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+          grpc::ClientContext context;
+          return stub->ListTopicSnapshots(context, request);
+        },
+        [](google::pubsub::v1::ListTopicSnapshotsResponse response) {
+          std::vector<std::string> items;
+          items.reserve(response.snapshots_size());
+          for (auto& item : *response.mutable_snapshots()) {
+            items.push_back(std::move(item));
+          }
+          return items;
+        });
+  }
+
  private:
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
 };
