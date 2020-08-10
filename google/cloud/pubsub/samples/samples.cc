@@ -631,9 +631,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
-  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
-
   std::cout << "\nRunning GetSubscription() sample" << std::endl;
   GetSubscription(subscription_admin_client, {project_id, subscription_id});
 
@@ -646,6 +643,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSnapshot() sample" << std::endl;
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
+
+  std::cout << "\nRunning ListTopicSnapshots() sample" << std::endl;
+  ListTopicSnapshots(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetSnapshot() sample" << std::endl;
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
