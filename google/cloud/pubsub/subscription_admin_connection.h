@@ -109,6 +109,11 @@ class SubscriptionAdminConnection {
     Subscription subscription;
   };
 
+  /// Wrap the arguments for `ModifyPushConfig()`
+  struct ModifyPushConfigParams {
+    google::pubsub::v1::ModifyPushConfigRequest request;
+  };
+
   /// Wrap the arguments for `CreateSnapshot()`
   struct CreateSnapshotParams {
     google::pubsub::v1::CreateSnapshotRequest request;
@@ -152,6 +157,9 @@ class SubscriptionAdminConnection {
 
   /// Defines the interface for `SubscriptionAdminClient::DeleteSubscription()`
   virtual Status DeleteSubscription(DeleteSubscriptionParams) = 0;
+
+  /// Defines the interface for `SubscriptionAdminClient::ModifyPushConfig()`
+  virtual Status ModifyPushConfig(ModifyPushConfigParams) = 0;
 
   /// Defines the interface for `SnapshotAdminClient::CreateSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(

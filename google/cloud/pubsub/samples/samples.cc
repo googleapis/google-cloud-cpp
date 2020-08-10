@@ -200,6 +200,28 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreatePushSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_push_subscription] [create-push-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& endpoint) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, std::move(topic_id)),
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionMutationBuilder{}.set_push_config(
+            pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_push_subscription] [create-push-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [get-subscription]
@@ -270,6 +292,24 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   }
   //! [END pubsub_delete_subscription] [delete-subscription]
   (std::move(client), argv.at(0), argv.at(1));
+}
+
+void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
+                      std::vector<std::string> const& argv) {
+  //! [START pubsub_update_push_subscription] [modify-push-config]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id, std::string const& endpoint) {
+    auto status = client.ModifyPushSubscription(
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint));
+    if (!status.ok()) throw std::runtime_error(status.message());
+
+    std::cout << "The subscription push configuration was successfully"
+              << " modified\n";
+  }
+  //! [END pubsub_update_push_subscription] [modify-push-config]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
@@ -618,6 +658,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto topic_id = RandomTopicId(generator);
   auto subscription_id = RandomSubscriptionId(generator);
+  auto push_subscription_id = RandomSubscriptionId(generator);
 
   auto snapshot_id = RandomSnapshotId(generator);
 
@@ -656,6 +697,22 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
   ListSubscriptions(subscription_admin_client, {project_id});
+
+  auto const endpoint1 = "https://" + project_id + ".appspot.com/push1";
+  auto const endpoint2 = "https://" + project_id + ".appspot.com/push2";
+  std::cout << "\nRunning CreatePushSubscription() sample" << std::endl;
+  CreatePushSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, push_subscription_id, endpoint1});
+
+  std::cout << "\nRunning ModifyPushConfig() sample" << std::endl;
+  ModifyPushConfig(subscription_admin_client,
+                   {project_id, push_subscription_id, endpoint2});
+
+  std::cout << "\nRunning DeleteSubscription() sample [1]" << std::endl;
+  // Move push_subscription_id to prevent accidentally using it below.
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, std::move(push_subscription_id)});
 
   std::cout << "\nRunning CreateSnapshot() sample" << std::endl;
   CreateSnapshot(subscription_admin_client,
@@ -745,6 +802,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "create-subscription", {"project-id", "topic-id", "subscription-id"},
           CreateSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-push-subscription",
+          {"project-id", "topic-id", "subscription-id", "endpoint"},
+          CreatePushSubscription),
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
                                      GetSubscription),
@@ -756,6 +817,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand("delete-subscription",
                                      {"project-id", "subscription-id"},
                                      DeleteSubscription),
+      CreateSubscriptionAdminCommand(
+          "modify-push-config", {"project-id", "subscription-id", "endpoint"},
+          ModifyPushConfig),
       CreateSubscriptionAdminCommand(
           "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
           CreateSnapshot),

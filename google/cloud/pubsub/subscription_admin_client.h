@@ -76,8 +76,11 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This is not an idempotent operation and therefore it is never retried.
    *
-   * @par Example
+   * @par Example: Create a Pull Subscription
    * @snippet samples.cc create-subscription
+   *
+   * @par Example: Create a Push Subscription
+   * @snippet samples.cc create-push-subscription
    *
    * @param topic the topic that the subscription will attach to
    * @param subscription the name for the subscription
@@ -150,6 +153,28 @@ class SubscriptionAdminClient {
    */
   Status DeleteSubscription(Subscription subscription) {
     return connection_->DeleteSubscription({std::move(subscription)});
+  }
+
+  /**
+   * Modifies the push an existing subscription's push configuration.
+   *
+   * This can change a push subscription into a pull subscription (by setting
+   * an empty push config), change the push endpoint, or change a pull
+   * subscription into a push config.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc modify-push-config
+   *
+   * @param subscription the name of the subscription to be modified.
+   * @param builder a description of the changes to be made.
+   */
+  Status ModifyPushSubscription(Subscription const& subscription,
+                                PushConfigBuilder builder) {
+    return connection_->ModifyPushConfig(
+        {std::move(builder).BuildModifyPushConfig(subscription)});
   }
 
   /**

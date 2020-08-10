@@ -80,6 +80,17 @@ Status SubscriberLogging::DeleteSubscription(
       context, request, __func__, tracing_options_);
 }
 
+Status SubscriberLogging::ModifyPushConfig(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ModifyPushConfigRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::ModifyPushConfigRequest const& request) {
+        return child_->ModifyPushConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::pubsub::v1::PullResponse>> SubscriberLogging::AsyncPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

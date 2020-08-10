@@ -52,6 +52,10 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
+  Status ModifyPushConfig(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
+
   future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

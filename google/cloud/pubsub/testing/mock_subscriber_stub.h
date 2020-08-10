@@ -56,6 +56,11 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::DeleteSubscriptionRequest const& request),
               (override));
 
+  MOCK_METHOD(Status, ModifyPushConfig,
+              (grpc::ClientContext&,
+               google::pubsub::v1::ModifyPushConfigRequest const& request),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::pubsub::v1::PullResponse>>, AsyncPull,
               (google::cloud::CompletionQueue&,
                std::unique_ptr<grpc::ClientContext>,

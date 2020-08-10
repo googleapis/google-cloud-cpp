@@ -119,6 +119,20 @@ TEST_F(SubscriberLoggingTest, DeleteSubscription) {
                              HasSubstr("test-subscription-name"))));
 }
 
+TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, ModifyPushConfig).WillOnce(Return(Status{}));
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::ModifyPushConfigRequest request;
+  request.set_subscription("test-subscription-name");
+  auto status = stub.ModifyPushConfig(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines,
+              Contains(AllOf(HasSubstr("ModifyPushConfig"),
+                             HasSubstr("test-subscription-name"))));
+}
+
 TEST_F(SubscriberLoggingTest, AsyncPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncPull)

@@ -74,6 +74,15 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
+  Status ModifyPushConfig(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ModifyPushConfigRequest const& request) override {
+    google::protobuf::Empty response;
+    auto status = grpc_stub_->ModifyPushConfig(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return {};
+  }
+
   future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
