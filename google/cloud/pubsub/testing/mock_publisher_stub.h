@@ -61,6 +61,12 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
                google::pubsub::v1::ListTopicSubscriptionsRequest const&),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>,
+              ListTopicSnapshots,
+              (grpc::ClientContext&,
+               google::pubsub::v1::ListTopicSnapshotsRequest const&),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::pubsub::v1::PublishResponse>>,
               AsyncPublish,
               (google::cloud::CompletionQueue&,

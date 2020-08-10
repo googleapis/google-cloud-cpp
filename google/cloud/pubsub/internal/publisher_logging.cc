@@ -88,6 +88,18 @@ PublisherLogging::ListTopicSubscriptions(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
+PublisherLogging::ListTopicSnapshots(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+        return child_->ListTopicSnapshots(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherLogging::AsyncPublish(
     google::cloud::CompletionQueue& cq,

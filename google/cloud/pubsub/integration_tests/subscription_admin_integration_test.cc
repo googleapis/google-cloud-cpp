@@ -128,6 +128,16 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   ASSERT_STATUS_OK(create_snapshot_response);
   EXPECT_EQ(snapshot.FullName(), create_snapshot_response->name());
 
+  auto const topic_snapshots = [&] {
+    std::vector<std::string> names;
+    for (auto& name : topic_admin.ListTopicSnapshots(topic)) {
+      EXPECT_STATUS_OK(name);
+      names.push_back(std::move(*name));
+    }
+    return names;
+  }();
+  EXPECT_THAT(topic_snapshots, Contains(snapshot.FullName()));
+
   auto get_snapshot_response = subscription_admin.GetSnapshot(snapshot);
   ASSERT_STATUS_OK(get_snapshot_response);
   EXPECT_THAT(*get_snapshot_response, IsProtoEqual(*create_snapshot_response));

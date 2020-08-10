@@ -138,6 +138,22 @@ TEST_F(PublisherLoggingTest, ListTopicSubscriptions) {
                              HasSubstr("test-topic-name"))));
 }
 
+TEST_F(PublisherLoggingTest, ListTopicSnapshots) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, ListTopicSnapshots)
+      .WillOnce(Return(
+          make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{})));
+  PublisherLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::ListTopicSnapshotsRequest request;
+  request.set_topic("test-topic-name");
+  auto status = stub.ListTopicSnapshots(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(backend_->log_lines,
+              Contains(AllOf(HasSubstr("ListTopicSnapshots"),
+                             HasSubstr("test-topic-name"))));
+}
+
 TEST_F(PublisherLoggingTest, AsyncPublish) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, AsyncPublish)

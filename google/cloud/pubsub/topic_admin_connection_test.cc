@@ -168,6 +168,31 @@ TEST(TopicAdminConnectionTest, ListSubscriptions) {
                                  "projects/test-project-id/subscriptions/s2"));
 }
 
+TEST(TopicAdminConnectionTest, ListSnapshots) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  auto const topic_name = Topic("test-project-id", "test-topic-id").FullName();
+  EXPECT_CALL(*mock, ListTopicSnapshots)
+      .WillOnce(
+          [&](grpc::ClientContext&,
+              google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+            EXPECT_EQ(topic_name, request.topic());
+            EXPECT_TRUE(request.page_token().empty());
+            google::pubsub::v1::ListTopicSnapshotsResponse response;
+            response.add_snapshots("projects/test-project-id/snapshots/s1");
+            response.add_snapshots("projects/test-project-id/snapshots/s2");
+            return make_status_or(response);
+          });
+
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  std::vector<std::string> names;
+  for (auto& t : topic_admin->ListTopicSnapshots({topic_name})) {
+    ASSERT_STATUS_OK(t);
+    names.push_back(std::move(*t));
+  }
+  EXPECT_THAT(names, ElementsAre("projects/test-project-id/snapshots/s1",
+                                 "projects/test-project-id/snapshots/s2"));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
