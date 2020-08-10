@@ -33,21 +33,38 @@ class SubscriptionMutationBuilder;
  */
 class PushConfigBuilder {
  public:
+  PushConfigBuilder() = default;
   explicit PushConfigBuilder(std::string push_endpoint) {
-    proto_.set_push_endpoint(std::move(push_endpoint));
+    set_push_endpoint(std::move(push_endpoint));
+  }
+
+  google::pubsub::v1::ModifyPushConfigRequest BuildModifyPushConfig(
+      Subscription const& subscription) &&;
+
+  PushConfigBuilder& set_push_endpoint(std::string v) & {
+    proto_.set_push_endpoint(std::move(v));
     paths_.insert("push_endpoint");
+    return *this;
+  }
+  PushConfigBuilder&& set_push_endpoint(std::string v) && {
+    return std::move(set_push_endpoint(std::move(v)));
   }
 
   PushConfigBuilder& add_attribute(std::string const& key,
-                                   std::string const& value) {
+                                   std::string const& value) & {
     proto_.mutable_attributes()->insert(
         google::protobuf::Map<std::string, std::string>::value_type(key,
                                                                     value));
     paths_.insert("attributes");
     return *this;
   }
+  PushConfigBuilder&& add_attribute(std::string const& key,
+                                    std::string const& value) && {
+    return std::move(add_attribute(key, value));
+  }
+
   PushConfigBuilder& set_attributes(
-      std::vector<std::pair<std::string, std::string>> attr) {
+      std::vector<std::pair<std::string, std::string>> attr) & {
     google::protobuf::Map<std::string, std::string> attributes;
     for (auto& kv : attr) {
       attributes[kv.first] = std::move(kv.second);
@@ -55,6 +72,19 @@ class PushConfigBuilder {
     proto_.mutable_attributes()->swap(attributes);
     paths_.insert("attributes");
     return *this;
+  }
+  PushConfigBuilder&& set_attributes(
+      std::vector<std::pair<std::string, std::string>> attr) && {
+    return std::move(set_attributes(std::move(attr)));
+  }
+
+  PushConfigBuilder& clear_attributes() & {
+    proto_.mutable_attributes()->clear();
+    paths_.insert("attributes");
+    return *this;
+  }
+  PushConfigBuilder&& clear_attributes() && {
+    return std::move(clear_attributes());
   }
 
   static google::pubsub::v1::PushConfig::OidcToken MakeOidcToken(
@@ -73,10 +103,14 @@ class PushConfigBuilder {
   }
 
   PushConfigBuilder& set_authentication(
-      google::pubsub::v1::PushConfig::OidcToken token) {
+      google::pubsub::v1::PushConfig::OidcToken token) & {
     *proto_.mutable_oidc_token() = std::move(token);
     paths_.insert("oidc_token");
     return *this;
+  }
+  PushConfigBuilder&& set_authentication(
+      google::pubsub::v1::PushConfig::OidcToken token) && {
+    return std::move(set_authentication(std::move(token)));
   }
 
  private:
@@ -98,13 +132,7 @@ class SubscriptionMutationBuilder {
   google::pubsub::v1::Subscription BuildCreateSubscription(
       Topic const& topic, Subscription const& subscription) &&;
 
-  SubscriptionMutationBuilder& set_push_config(PushConfigBuilder v) & {
-    *proto_.mutable_push_config() = std::move(v.proto_);
-    for (auto const& s : v.paths_) {
-      paths_.insert("push_config." + s);
-    }
-    return *this;
-  }
+  SubscriptionMutationBuilder& set_push_config(PushConfigBuilder v) &;
   SubscriptionMutationBuilder&& set_push_config(PushConfigBuilder v) && {
     return std::move(set_push_config(std::move(v)));
   }
