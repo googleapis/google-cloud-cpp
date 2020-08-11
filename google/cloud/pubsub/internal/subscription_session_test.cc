@@ -328,6 +328,149 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
   for (auto& t : pool) t.join();
 }
 
+/// @test Verify pending callbacks are nacked on shutdown.
+TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  std::mutex mu;
+  int count = 0;
+  auto generate_5 = [&](google::cloud::CompletionQueue&,
+                        std::unique_ptr<grpc::ClientContext>,
+                        google::pubsub::v1::PullRequest const& request) {
+    EXPECT_EQ(subscription.FullName(), request.subscription());
+    google::pubsub::v1::PullResponse response;
+    for (int i = 0; i != 5; ++i) {
+      auto& m = *response.add_received_messages();
+      std::lock_guard<std::mutex> lk(mu);
+      m.set_ack_id("test-ack-id-" + std::to_string(count));
+      m.mutable_message()->set_message_id("test-message-id-" +
+                                          std::to_string(count));
+      ++count;
+    }
+    return make_ready_future(make_status_or(response));
+  };
+  auto generate_ack_response =
+      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+          google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
+      };
+  auto generate_nack_response =
+      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      };
+
+  EXPECT_CALL(*mock, AsyncPull).WillOnce(generate_5);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(2)
+      .WillRepeatedly(generate_ack_response);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .Times(AtLeast(1))
+      .WillRepeatedly(generate_nack_response);
+
+  // Now unto the handler, basically it counts messages and from the second one
+  // onwards it just nacks.
+  promise<void> enough_messages;
+  std::atomic<int> ack_count{0};
+  auto constexpr kMaximumAcks = 2;
+  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+    auto count = ++ack_count;
+    if (count == kMaximumAcks) enough_messages.set_value();
+    std::move(h).ack();
+  };
+
+  google::cloud::CompletionQueue cq;
+  auto session = SubscriptionSession::Create(
+      mock, cq,
+      {subscription.FullName(), handler,
+       pubsub::SubscriptionOptions{}.set_max_deadline_time(
+           std::chrono::seconds(60))});
+  session->SetTestRefreshPeriod(std::chrono::milliseconds(50));
+  auto response = session->Start();
+  // Setup the system to cancel after the second message.
+  auto done = enough_messages.get_future().then(
+      [&](future<void>) { response.cancel(); });
+  std::thread t{[&cq] { cq.Run(); }};
+  done.get();
+  EXPECT_STATUS_OK(response.get());
+
+  cq.Shutdown();
+  t.join();
+}
+
+/// @test Verify AsyncPull responses are nacked after shutdown.
+TEST(SubscriptionSessionTest, ShutdownNackOnPull) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  // In this test we are going to return futures that are satisfied much later
+  // in the test, to control the sequence of events with more precision.
+  std::mutex mu;
+  promise<StatusOr<google::pubsub::v1::PullResponse>> async_pull_response;
+  promise<void> async_pull_called;
+  auto pull_handler = [&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PullRequest const& request) {
+    async_pull_called.set_value();
+    EXPECT_EQ(subscription.FullName(), request.subscription());
+    return async_pull_response.get_future();
+  };
+  auto nack_handler = [&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+    return make_ready_future(Status{});
+  };
+
+  // We are going to cancel the pull loop before the first AsyncPull() responds,
+  // we expect all messages to be nacked.
+  {
+    InSequence sequence;
+    EXPECT_CALL(*mock, AsyncPull).WillOnce(pull_handler);
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillOnce(nack_handler);
+  }
+
+  // Now unto the handler, basically it counts messages and from the second one
+  // onwards it just nacks.
+  std::atomic<int> handler_count{0};
+  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+    ++handler_count;
+    std::move(h).ack();
+  };
+
+  google::cloud::CompletionQueue cq;
+  std::thread t{[&cq] { cq.Run(); }};
+  auto session = SubscriptionSession::Create(
+      mock, cq,
+      {subscription.FullName(), handler,
+       pubsub::SubscriptionOptions{}.set_max_deadline_time(
+           std::chrono::seconds(60))});
+  session->SetTestRefreshPeriod(std::chrono::milliseconds(50));
+  auto response = session->Start();
+  async_pull_called.get_future().get();
+  response.cancel();
+
+  // Now generate the response for AsyncPull():
+  {
+    google::pubsub::v1::PullResponse re;
+    for (int i = 0; i != 5; ++i) {
+      auto& m = *re.add_received_messages();
+      std::lock_guard<std::mutex> lk(mu);
+      m.set_ack_id("test-ack-id-" + std::to_string(i));
+      m.mutable_message()->set_message_id("test-message-id-" +
+                                          std::to_string(i));
+    }
+    // This satisfies the pending AsyncPull() response, but the subscription has
+    // already been canceled.
+    async_pull_response.set_value(std::move(re));
+  }
+  EXPECT_STATUS_OK(response.get());
+
+  cq.Shutdown();
+  t.join();
+  EXPECT_EQ(0, handler_count);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
