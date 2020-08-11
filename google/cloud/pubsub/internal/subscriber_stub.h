@@ -65,7 +65,7 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
-  /// Modify a the push configuration of a subscriptiion
+  /// Modify the push configuration of an existing subscription.
   virtual Status ModifyPushConfig(
       grpc::ClientContext& client_context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;

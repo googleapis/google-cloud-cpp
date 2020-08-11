@@ -156,7 +156,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Modifies the push an existing subscription's push configuration.
+   * Modifies an existing subscription's push configuration.
    *
    * This can change a push subscription into a pull subscription (by setting
    * an empty push config), change the push endpoint, or change a pull
