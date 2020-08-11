@@ -17,11 +17,13 @@
 """Automatically generated source lists for google_cloud_cpp_generator - DO NOT EDIT."""
 
 google_cloud_cpp_generator_hdrs = [
+    "generator.h",
     "internal/class_generator_interface.h",
     "internal/codegen_utils.h",
     "internal/printer.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
+    "generator.cc",
     "internal/codegen_utils.cc",
 ]

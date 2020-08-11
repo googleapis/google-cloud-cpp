@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_generator_unit_tests = [
+    "generator_test.cc",
     "internal/codegen_utils_test.cc",
     "internal/printer_test.cc",
 ]
