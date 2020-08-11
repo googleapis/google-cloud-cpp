@@ -1,4 +1,4 @@
-# HOWTO: using the Google Cloud Storage (GGCS) C++ client in your project
+# HOWTO: using the Google Cloud Storage (GCS) C++ client in your project
 
 This directory contains small examples showing how to use the GCS C++ client
 library in your own project. These instructions assume that you have some
@@ -17,7 +17,7 @@ credentials file. For example:
 | Shell              | Command                                        |
 | :----------------- | ---------------------------------------------- |
 | Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
-| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];` `export GOOGLE_APPLICATION_CREDENTIALS` |
+| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
 | csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
 | Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
 | Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
