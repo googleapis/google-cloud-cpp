@@ -46,7 +46,7 @@ function quickstart::arguments() {
     return 0
     ;;
   "pubsub")
-    echo "${GOOGLE_CLOUD_CPP_PROJECT}"
+    echo "${GOOGLE_CLOUD_PROJECT}"
     echo "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
     return 0
     ;;
