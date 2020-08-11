@@ -5,3 +5,4 @@ cmake-build-release/
 google/cloud/bigtable/quickstart/
 google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/
+google/cloud/pubsub/quickstart/
