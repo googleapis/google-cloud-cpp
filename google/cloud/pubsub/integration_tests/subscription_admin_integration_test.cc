@@ -90,13 +90,18 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   Cleanup cleanup_topic{
       [&topic_admin, &topic] { topic_admin.DeleteTopic(topic); }};
 
-  auto create_response =
-      subscription_admin.CreateSubscription(topic, subscription);
+  auto endpoint = "https://" + project_id + ".appspot.com/push";
+  auto create_response = subscription_admin.CreateSubscription(
+      topic, subscription,
+      SubscriptionMutationBuilder{}.set_push_config(
+          PushConfigBuilder{}.set_push_endpoint(endpoint)));
   ASSERT_STATUS_OK(create_response);
 
   auto get_response = subscription_admin.GetSubscription(subscription);
   ASSERT_STATUS_OK(get_response);
-  EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
+  // We cannot compare the full protos because for push configs `Create...()`
+  // returns less information than `Get` :shrug:
+  EXPECT_EQ(create_response->name(), get_response->name());
 
   auto constexpr kTestDeadlineSeconds = 20;
   auto update_response = subscription_admin.UpdateSubscription(
@@ -107,6 +112,10 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Contains(subscription.FullName()));
+
+  auto modify_push_config_response = subscription_admin.ModifyPushSubscription(
+      subscription, PushConfigBuilder{});
+  EXPECT_STATUS_OK(modify_push_config_response);
 
   auto const topic_subscriptions = [&] {
     std::vector<std::string> names;
@@ -217,6 +226,16 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto delete_response = client.DeleteSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"));
+  ASSERT_FALSE(delete_response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, ModifyPushConfigFailure) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto delete_response = client.ModifyPushSubscription(
+      Subscription("--invalid-project--", "--invalid-subscription--"),
+      PushConfigBuilder{});
   ASSERT_FALSE(delete_response.ok());
 }
 

@@ -65,6 +65,11 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
+  /// Modify the push configuration of an existing subscription.
+  virtual Status ModifyPushConfig(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
+
   /// Pull a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,

@@ -159,6 +159,32 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
+TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  EXPECT_CALL(*mock, ModifyPushConfig)
+      .WillOnce(
+          [&](grpc::ClientContext&,
+              google::pubsub::v1::ModifyPushConfigRequest const& request) {
+            EXPECT_EQ(subscription.FullName(), request.subscription());
+            return Status{};
+          });
+
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock);
+  google::pubsub::v1::ModifyPushConfigRequest request;
+  request.set_subscription(subscription.FullName());
+  auto response = subscription_admin->ModifyPushConfig({request});
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("ModifyPushConfig")));
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
 TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Topic const topic("test-project", "test-topic");

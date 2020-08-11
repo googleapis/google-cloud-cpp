@@ -95,6 +95,11 @@ class SubscriptionAdminConnectionImpl
     return stub_->DeleteSubscription(context, request);
   }
 
+  Status ModifyPushConfig(ModifyPushConfigParams p) override {
+    grpc::ClientContext context;
+    return stub_->ModifyPushConfig(context, p.request);
+  }
+
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       CreateSnapshotParams p) override {
     grpc::ClientContext context;
