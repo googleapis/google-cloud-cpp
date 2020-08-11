@@ -31,6 +31,6 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-# Once the bigtable_client package is found, define new targets.
+# Once the pubsub_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
 target_link_libraries(quickstart googleapis-c++::pubsub_client)

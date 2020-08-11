@@ -28,6 +28,13 @@ cc_library(
 )
 
 cc_library(
+    name = "pubsub_client",
+    deps = [
+        "//google/cloud/pubsub:pubsub_client",
+    ],
+)
+
+cc_library(
     name = "spanner_client",
     deps = [
         "//google/cloud/spanner:spanner_client",
@@ -38,12 +45,5 @@ cc_library(
     name = "storage_client",
     deps = [
         "//google/cloud/storage:storage_client",
-    ],
-)
-
-cc_library(
-    name = "pubsub_client",
-    deps = [
-        "//google/cloud/pubsub:pubsub_client",
     ],
 )
