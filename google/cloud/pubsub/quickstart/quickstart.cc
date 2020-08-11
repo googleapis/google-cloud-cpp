@@ -50,5 +50,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
-
 // [END pubsub_quickstart_publisher]
