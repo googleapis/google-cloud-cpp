@@ -25,6 +25,7 @@ namespace {
 using google::protobuf::DescriptorPool;
 using google::protobuf::FileDescriptor;
 using google::protobuf::FileDescriptorProto;
+using ::testing::HasSubstr;
 
 TEST(GeneratorTest, GenericService) {
   DescriptorPool pool;
@@ -44,7 +45,7 @@ TEST(GeneratorTest, GenericService) {
   auto result = generator.Generate(generic_service_file_descriptor, {}, nullptr,
                                    &actual_error);
   EXPECT_FALSE(result);
-  EXPECT_EQ(actual_error, expected_error);
+  EXPECT_THAT(actual_error, HasSubstr("cc_generic_service = false"));
 }
 
 TEST(GeneratorTest, BadCommandLineArgs) {

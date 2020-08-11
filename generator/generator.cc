@@ -63,7 +63,7 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
 
   std::vector<ServiceGenerator> services;
   services.reserve(file->service_count());
-  for (int i = 0; i < file->service_count(); i++) {
+  for (int i = 0; i < file->service_count(); ++i) {
     services.emplace_back(
         file->service(i), context,
         std::map<std::string, std::string>(command_line_args->begin(),
