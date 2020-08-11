@@ -396,6 +396,43 @@ void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
+                      std::vector<std::string> const& argv) {
+  //! [seek-with-snapshot]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id, std::string const& snapshot_id) {
+    auto response =
+        client.Seek(pubsub::Subscription(project_id, subscription_id),
+                    pubsub::Snapshot(project_id, snapshot_id));
+    if (!response.ok()) throw std::runtime_error(response.status().message());
+
+    std::cout << "The subscription seek was successful: "
+              << response->DebugString() << "\n";
+  }
+  //! [seek-with-snapshot]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
+                       std::vector<std::string> const& argv) {
+  //! [seek-with-timestamp]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id, std::string const& seconds) {
+    auto response =
+        client.Seek(pubsub::Subscription(project_id, subscription_id),
+                    std::chrono::system_clock::now() -
+                        std::chrono::seconds(std::stoi(seconds)));
+    if (!response.ok()) throw std::runtime_error(response.status().message());
+
+    std::cout << "The subscription seek was successful: "
+              << response->DebugString() << "\n";
+  }
+  //! [seek-with-timestamp]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [example-status-or]
@@ -730,8 +767,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListSnapshots() sample" << std::endl;
   ListSnapshots(subscription_admin_client, {project_id});
 
+  std::cout << "\nRunning SeekWithSnapshot() sample" << std::endl;
+  SeekWithSnapshot(subscription_admin_client,
+                   {project_id, subscription_id, snapshot_id});
+
   std::cout << "\nRunning DeleteSnapshot() sample" << std::endl;
   DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
+  std::cout << "\nRunning SeekWithTimestamp() sample" << std::endl;
+  SeekWithTimestamp(subscription_admin_client,
+                    {project_id, subscription_id, "2"});
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
@@ -831,6 +876,12 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                      ListSnapshots),
       CreateSubscriptionAdminCommand(
           "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
+      CreateSubscriptionAdminCommand(
+          "seek-with-snapshot",
+          {"project-id", "subscription-id", "snapshot-id"}, SeekWithSnapshot),
+      CreateSubscriptionAdminCommand(
+          "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
+          SeekWithTimestamp),
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),

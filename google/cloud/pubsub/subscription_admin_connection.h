@@ -138,6 +138,11 @@ class SubscriptionAdminConnection {
   struct DeleteSnapshotParams {
     Snapshot snapshot;
   };
+
+  /// Wrap the arguments for `Seek()`
+  struct SeekParams {
+    google::pubsub::v1::SeekRequest request;
+  };
   //@}
 
   /// Defines the interface for `SubscriptionAdminClient::CreateSubscription()`
@@ -178,6 +183,9 @@ class SubscriptionAdminConnection {
 
   /// Defines the interface for `SnapshotAdminClient::DeleteSnapshot()`
   virtual Status DeleteSnapshot(DeleteSnapshotParams) = 0;
+
+  /// Defines the interface for `SubscriptionAdminClient::Seek()`
+  virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams) = 0;
 };
 
 /**

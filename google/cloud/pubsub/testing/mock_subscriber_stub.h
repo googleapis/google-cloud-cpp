@@ -104,6 +104,10 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
               (grpc::ClientContext&,
                google::pubsub::v1::DeleteSnapshotRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::pubsub::v1::SeekResponse>, Seek,
+              (grpc::ClientContext&, google::pubsub::v1::SeekRequest const&),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

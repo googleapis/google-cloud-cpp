@@ -23,6 +23,24 @@ SubscriptionAdminClient::SubscriptionAdminClient(
     std::shared_ptr<SubscriptionAdminConnection> connection)
     : connection_(std::move(connection)) {}
 
+StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
+    Subscription const& subscription,
+    std::chrono::system_clock::time_point timestamp) {
+  google::pubsub::v1::SeekRequest request;
+  request.set_subscription(subscription.FullName());
+  *request.mutable_time() =
+      google::cloud::internal::ToProtoTimestamp(timestamp);
+  return connection_->Seek({std::move(request)});
+}
+
+StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
+    Subscription const& subscription, Snapshot const& snapshot) {
+  google::pubsub::v1::SeekRequest request;
+  request.set_subscription(subscription.FullName());
+  request.set_snapshot(snapshot.FullName());
+  return connection_->Seek({std::move(request)});
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
