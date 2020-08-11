@@ -262,7 +262,10 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Delete a snapshot
+   * Delete a snapshot.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
    *
    * @par Example
    * @snippet samples.cc create-snapshot-with-name
@@ -272,6 +275,41 @@ class SubscriptionAdminClient {
   Status DeleteSnapshot(Snapshot const& snapshot) {
     return connection_->DeleteSnapshot({snapshot});
   }
+
+  /**
+   * Seeks a subscription to @p timestamp.
+   *
+   * Messages retained in the subscription that were published before
+   * @p timestamp are marked as acknowledged, while messages published after
+   * @p timestamp are marked as unacknowledged.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc seek-with-timestamp
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's `Seek()` functionality.
+   */
+  StatusOr<google::pubsub::v1::SeekResponse> Seek(
+      Subscription const& subscription,
+      std::chrono::system_clock::time_point timestamp);
+
+  /**
+   * Seeks a subscription to @p snapshot.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation and therefore it is never retried.
+   *
+   * @par Example
+   * @snippet samples.cc seek-with-timestamp
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's `Seek()` functionality.
+   */
+  StatusOr<google::pubsub::v1::SeekResponse> Seek(
+      Subscription const& subscription, Snapshot const& snapshot);
 
  private:
   std::shared_ptr<SubscriptionAdminConnection> connection_;

@@ -112,6 +112,11 @@ class SubscriberStub {
   virtual Status DeleteSnapshot(
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSnapshotRequest const& request) = 0;
+
+  /// Seeks an existing subscription to a point in time or a snapshot.
+  virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::SeekRequest const& request) = 0;
 };
 
 /**

@@ -179,6 +179,15 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
+  StatusOr<google::pubsub::v1::SeekResponse> Seek(
+      grpc::ClientContext& context,
+      google::pubsub::v1::SeekRequest const& request) override {
+    google::pubsub::v1::SeekResponse response;
+    auto status = grpc_stub_->Seek(&context, request, &response);
+    if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+    return response;
+  }
+
  private:
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };

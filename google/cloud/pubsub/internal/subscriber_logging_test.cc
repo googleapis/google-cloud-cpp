@@ -260,6 +260,21 @@ TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
   EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("DeleteSnapshot")));
 }
 
+TEST_F(SubscriberLoggingTest, Seek) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, Seek)
+      .WillOnce(Return(make_status_or(google::pubsub::v1::SeekResponse{})));
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
+  grpc::ClientContext context;
+  google::pubsub::v1::SeekRequest request;
+  request.set_subscription("test-subscription-name");
+  auto status = stub.Seek(context, request);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(
+      backend_->log_lines,
+      Contains(AllOf(HasSubstr("Seek"), HasSubstr("test-subscription-name"))));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

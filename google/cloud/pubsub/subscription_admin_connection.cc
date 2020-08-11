@@ -147,6 +147,11 @@ class SubscriptionAdminConnectionImpl
     return stub_->DeleteSnapshot(context, request);
   }
 
+  StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams p) override {
+    grpc::ClientContext context;
+    return stub_->Seek(context, std::move(p.request));
+  }
+
  private:
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
 };

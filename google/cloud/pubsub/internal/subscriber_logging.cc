@@ -186,6 +186,17 @@ Status SubscriberLogging::DeleteSnapshot(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::SeekResponse> SubscriberLogging::Seek(
+    grpc::ClientContext& context,
+    google::pubsub::v1::SeekRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::SeekRequest const& request) {
+        return child_->Seek(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

@@ -91,6 +91,10 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override;
 
+  StatusOr<google::pubsub::v1::SeekResponse> Seek(
+      grpc::ClientContext& context,
+      google::pubsub::v1::SeekRequest const& request) override;
+
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;

@@ -297,6 +297,28 @@ TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
   ASSERT_STATUS_OK(response);
 }
 
+TEST(SubscriptionAdminConnectionTest, Seek) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+  Snapshot const snapshot("test-project", "test-snapshot");
+
+  EXPECT_CALL(*mock, Seek)
+      .WillOnce([&](grpc::ClientContext&,
+                    google::pubsub::v1::SeekRequest const& request) {
+        EXPECT_EQ(subscription.FullName(), request.subscription());
+        EXPECT_EQ(snapshot.FullName(), request.snapshot());
+        return make_status_or(google::pubsub::v1::SeekResponse{});
+      });
+
+  auto snapshot_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock);
+  google::pubsub::v1::SeekRequest request;
+  request.set_subscription(subscription.FullName());
+  request.set_snapshot(snapshot.FullName());
+  auto response = snapshot_admin->Seek({request});
+  ASSERT_STATUS_OK(response);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

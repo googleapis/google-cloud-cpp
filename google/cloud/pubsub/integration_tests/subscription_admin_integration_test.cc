@@ -160,6 +160,9 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
     EXPECT_FALSE(update_snapshot_response->labels().empty());
   }
 
+  auto seek_response = subscription_admin.Seek(subscription, snapshot);
+  EXPECT_STATUS_OK(seek_response);
+
   EXPECT_THAT(snapshot_names(subscription_admin, project_id),
               Contains(snapshot.FullName()));
   auto delete_snapshot = subscription_admin.DeleteSnapshot(snapshot);
@@ -282,6 +285,26 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
   auto response = client.DeleteSnapshot(
+      Snapshot("--invalid-project--", "--invalid-snapshot--"));
+  ASSERT_FALSE(response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, SeekFailureTimestamp) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.Seek(
+      Subscription("--invalid-project--", "--invalid-subscription--"),
+      std::chrono::system_clock::now());
+  ASSERT_FALSE(response.ok());
+}
+
+TEST(SubscriptionAdminIntegrationTest, SeekFailureSnapshot) {
+  // Use an invalid endpoint to force a connection error.
+  ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
+  auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+  auto response = client.Seek(
+      Subscription("--invalid-project--", "--invalid-subscription--"),
       Snapshot("--invalid-project--", "--invalid-snapshot--"));
   ASSERT_FALSE(response.ok());
 }
