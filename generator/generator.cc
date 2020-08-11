@@ -15,6 +15,7 @@
 #include "generator/generator.h"
 #include "google/cloud/status_or.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/service_generator.h"
 #include <google/api/client.pb.h>
 #include <string>
 #include <vector>
@@ -22,25 +23,6 @@
 namespace google {
 namespace cloud {
 namespace generator {
-
-// Temporary Stub for testing purposes.
-class ServiceGenerator {
- public:
-  ServiceGenerator(google::protobuf::ServiceDescriptor const* service,
-                   google::protobuf::compiler::GeneratorContext*,
-                   std::map<std::string, std::string> const&)
-      : service_(service) {}
-
-  Status Generate() const {
-    if (service_->name() == "FailureService") {
-      return Status(StatusCode::kInternal, "Failed for testing.");
-    }
-    return {};
-  }
-
- private:
-  google::protobuf::ServiceDescriptor const* service_;
-};
 
 bool Generator::Generate(google::protobuf::FileDescriptor const* file,
                          std::string const& parameters,
@@ -61,7 +43,7 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
     return false;
   }
 
-  std::vector<ServiceGenerator> services;
+  std::vector<generator_internal::ServiceGenerator> services;
   services.reserve(file->service_count());
   for (int i = 0; i < file->service_count(); ++i) {
     services.emplace_back(
