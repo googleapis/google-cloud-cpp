@@ -38,10 +38,6 @@ TEST(GeneratorTest, GenericService) {
 
   Generator generator;
   std::string actual_error;
-  std::string expected_error =
-      "cpp codegen proto compiler plugin does not work with generic "
-      "services. To generate cpp codegen APIs, please set \""
-      "cc_generic_service = false\".";
   auto result = generator.Generate(generic_service_file_descriptor, {}, nullptr,
                                    &actual_error);
   EXPECT_FALSE(result);
