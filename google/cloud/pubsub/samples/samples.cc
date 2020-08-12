@@ -541,6 +541,46 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   (std::move(subscriber), std::move(subscription));
 }
 
+void SubscribeErrorListener(
+    google::cloud::pubsub::Subscriber subscriber,
+    google::cloud::pubsub::Subscription const& subscription,
+    std::vector<std::string> const&) {
+  // [START pubsub_subscriber_error_listener]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+    std::atomic<int> count{0};
+    google::cloud::promise<void> done;
+    auto session =
+        subscriber
+            .Subscribe(subscription,
+                       [&](pubsub::Message const& m, pubsub::AckHandler h) {
+                         std::cout << "Received message " << m << "\n";
+                         // Signal the waiting thread to detach the subscription
+                         // after the first message.
+                         if (count.load() == 0) done.set_value();
+                         ++count;
+                         std::move(h).ack();
+                       })
+            // Setup an error handler for the subscription session
+            .then([&](future<google::cloud::Status> f) {
+              std::cout << "Subscription session result: " << f.get() << "\n";
+            });
+    // Most applications would just release the `session` object at this point,
+    // but we want to gracefully close down this example. Setup a callback to
+    // cancel (close) the session when it receives the first message.
+    auto cancelled =
+        done.get_future().then([&session](future<void>) { session.cancel(); });
+    // Now block until the cancel operation and the session have finished
+    cancelled.get();
+    session.get();
+    std::cout << "Message count = " << count.load() << "\n";
+  }
+  // [END pubsub_subscriber_error_listener]
+  (std::move(subscriber), std::move(subscription));
+}
+
 void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -789,7 +829,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection());
 
-  std::cout << "\nRunning Publish() sample" << std::endl;
+  std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
 
   std::cout << "\nRunning PublishCustomAttributes() sample" << std::endl;
@@ -797,6 +837,12 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, subscription, {});
+
+  std::cout << "\nRunning Publish() sample [2]" << std::endl;
+  Publish(publisher, {});
+
+  std::cout << "\nRunning SubscribeErrorListener() sample" << std::endl;
+  SubscribeErrorListener(subscriber, subscription, {});
 
   std::cout << "\nRunning the CustomThreadPoolPublisher() sample" << std::endl;
   CustomThreadPoolPublisher({project_id, topic_id});
@@ -810,7 +856,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning DeleteSubscription() sample" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
   std::cout << "\nRunning delete-topic sample" << std::endl;
@@ -886,6 +932,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
+      CreateSubscriberCommand("subscribe-error-listener", {},
+                              SubscribeErrorListener),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
