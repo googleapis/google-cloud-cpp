@@ -47,13 +47,13 @@ Status ServiceGenerator::Generate() const {
 void ServiceGenerator::SetVars() {
   vars_["stub_class_name"] = absl::StrCat(descriptor_->name(), "Stub");
   vars_["stub_header_path"] =
-      absl::StrCat(absl::StrCat(vars_["product_path"], "internal/",
-                                ServiceNameToFilePath(descriptor_->name()),
-                                "_stub", GeneratedFileSuffix(), ".h"));
+      absl::StrCat(vars_["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor_->name()), "_stub",
+                   GeneratedFileSuffix(), ".h");
   vars_["stub_cc_path"] =
-      absl::StrCat(absl::StrCat(vars_["product_path"], "internal/",
-                                ServiceNameToFilePath(descriptor_->name()),
-                                "_stub", GeneratedFileSuffix(), ".cc"));
+      absl::StrCat(vars_["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor_->name()), "_stub",
+                   GeneratedFileSuffix(), ".cc");
   vars_["client_class_name"] = absl::StrCat(descriptor_->name(), "Client");
   vars_["metadata_class_name"] = absl::StrCat(descriptor_->name(), "Metadata");
   vars_["logging_class_name"] = absl::StrCat(descriptor_->name(), "Logging");
