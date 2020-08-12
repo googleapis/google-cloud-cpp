@@ -41,6 +41,11 @@ class ServiceGenerator {
       google::protobuf::compiler::GeneratorContext* context,
       std::map<std::string, std::string> command_line_vars);
 
+  ServiceGenerator(ServiceGenerator const&) = delete;
+  ServiceGenerator& operator=(ServiceGenerator const&) = delete;
+  ServiceGenerator(ServiceGenerator&&) = default;
+  ServiceGenerator& operator=(ServiceGenerator&&) = default;
+
   Status Generate() const;
 
  private:
