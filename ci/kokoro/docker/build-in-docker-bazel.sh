@@ -49,6 +49,24 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
   bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
+readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
+readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
+readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
+readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
+readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
+
+# If we have the right credentials, tell bazel to cache build results in a GCS
+# bucket. Note: this will not cache external deps, so the "fetch" below will
+# not hit this cache.
+if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
+  io::log "Using bazel remote cache: ${BAZEL_CACHE}"
+  bazel_args+=("--remote_cache=${BAZEL_CACHE}")
+  bazel_args+=("--google_credentials=${GOOGLE_APPLICATION_CREDENTIALS}")
+  # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+  # and https://github.com/bazelbuild/bazel/issues/3360
+  bazel_args+=("--experimental_guard_against_concurrent_changes")
+fi
+
 echo "================================================================"
 io::log "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
@@ -65,11 +83,6 @@ io::log "Compiling all the code, including integration tests"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
 "${BAZEL_BIN}" build "${bazel_args[@]}" ...
-
-readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
-readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
-readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
-readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
 
 should_run_integration_tests() {
   if [[ "${SOURCE_DIR:-}" == "super" ]]; then
