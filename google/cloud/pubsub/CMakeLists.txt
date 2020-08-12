@@ -111,10 +111,12 @@ create_bazel_config(pubsub_client YEAR "2020")
 add_library(pubsub_client_mocks INTERFACE)
 target_sources(
     pubsub_client_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscription_admin_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
 target_link_libraries(
     pubsub_client_mocks
     INTERFACE googleapis-c++::pubsub_client google_cloud_cpp_testing
@@ -168,6 +170,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         snapshot_test.cc
         subscriber_connection_test.cc
         subscriber_test.cc
+        subscription_admin_client_test.cc
         subscription_admin_connection_test.cc
         subscription_mutation_builder_test.cc
         subscription_test.cc
