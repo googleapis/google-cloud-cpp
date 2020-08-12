@@ -113,6 +113,7 @@ target_sources(
     pubsub_client_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
 target_link_libraries(
     pubsub_client_mocks
@@ -170,6 +171,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         subscription_admin_connection_test.cc
         subscription_mutation_builder_test.cc
         subscription_test.cc
+        topic_admin_client_test.cc
         topic_admin_connection_test.cc
         topic_mutation_builder_test.cc
         topic_test.cc)
