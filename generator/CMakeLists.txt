@@ -21,8 +21,16 @@ find_package(ProtobufWithTargets REQUIRED)
 
 add_library(
     google_cloud_cpp_generator # cmake-format: sort
-    generator.cc generator.h internal/class_generator_interface.h
-    internal/codegen_utils.cc internal/codegen_utils.h internal/printer.h)
+    generator.cc
+    generator.h
+    internal/class_generator_interface.h
+    internal/codegen_utils.cc
+    internal/codegen_utils.h
+    internal/printer.h
+    internal/service_generator.cc
+    internal/service_generator.h
+    internal/stub_generator.cc
+    internal/stub_generator.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
@@ -53,7 +61,7 @@ function (google_cloud_cpp_generator_define_tests)
     set(google_cloud_cpp_generator_unit_tests
         # cmake-format: sort
         generator_test.cc internal/codegen_utils_test.cc
-        internal/printer_test.cc)
+        internal/printer_test.cc internal/service_generator_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
