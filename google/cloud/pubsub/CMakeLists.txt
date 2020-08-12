@@ -260,7 +260,8 @@ set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
 set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_pubsub_protos"
+)
 set(GOOGLE_CLOUD_PC_LIBS "-lpubsub_client")
 
 # Create and install the pkg-config files.

@@ -51,3 +51,4 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
 # Cloud Pub/Sub only needs GOOGLE_CLOUD_PROJECT
+export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"

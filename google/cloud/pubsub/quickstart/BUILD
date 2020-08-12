@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,34 +16,13 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-exports_files([
-    "LICENSE",
-])
-
-cc_library(
-    name = "bigtable_client",
-    deps = [
-        "//google/cloud/bigtable:bigtable_client",
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
     ],
-)
-
-cc_library(
-    name = "pubsub_client",
     deps = [
-        "//google/cloud/pubsub:pubsub_client",
-    ],
-)
-
-cc_library(
-    name = "spanner_client",
-    deps = [
-        "//google/cloud/spanner:spanner_client",
-    ],
-)
-
-cc_library(
-    name = "storage_client",
-    deps = [
-        "//google/cloud/storage:storage_client",
+        # TODO(#4856) - use the top-level target
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/pubsub:pubsub_client",
     ],
 )
