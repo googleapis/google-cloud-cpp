@@ -17,7 +17,6 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
-load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -35,15 +34,3 @@ load(":pubsub_client_install_tests.bzl", "pubsub_client_install_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_integration_tests]
-
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
-    tags = [
-        "integration-test",
-    ],
-    deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/pubsub:pubsub_client",
-    ],
-) for test in pubsub_client_install_tests]

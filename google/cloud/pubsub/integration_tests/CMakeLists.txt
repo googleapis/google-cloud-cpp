@@ -25,14 +25,11 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         # cmake-format: sortable
         message_integration_test.cc subscription_admin_integration_test.cc
         topic_admin_integration_test.cc)
-    set(pubsub_client_install_tests pubsub_install_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("pubsub_client_integration_tests.bzl"
                          "pubsub_client_integration_tests" YEAR "2020")
-    export_list_to_bazel("pubsub_client_install_tests.bzl"
-                         "pubsub_client_install_tests" YEAR "2020")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(pubsub-client-integration-tests)
@@ -67,17 +64,6 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         return()
     endif ()
-
-    foreach (fname ${pubsub_client_install_tests})
-        google_cloud_cpp_add_executable(target "pubsub" "${fname}")
-        target_link_libraries(${target} PRIVATE googleapis-c++::pubsub_client)
-        google_cloud_cpp_add_common_options(${target})
-
-        add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-emulator")
-    endforeach ()
 endfunction ()
 
 # Only define the tests if testing is enabled. Package maintainers may not want
