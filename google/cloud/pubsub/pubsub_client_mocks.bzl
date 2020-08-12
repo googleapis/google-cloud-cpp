@@ -19,6 +19,7 @@
 pubsub_client_mocks_hdrs = [
     "mocks/mock_ack_handler.h",
     "mocks/mock_publisher_connection.h",
+    "mocks/mock_subscription_admin_connection.h",
     "mocks/mock_topic_admin_connection.h",
     "mocks/mock_subscriber_connection.h",
 ]
