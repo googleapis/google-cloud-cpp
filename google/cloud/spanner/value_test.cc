@@ -677,7 +677,7 @@ TEST(Value, ProtoConversionNumeric) {
     Value const v(x);
     auto const p = internal::ToProto(v);
     EXPECT_EQ(v, internal::FromProto(p.first, p.second));
-    EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT + 1, p.first.code());
+    EXPECT_EQ(google::spanner::v1::TypeCode::NUMERIC, p.first.code());
     EXPECT_EQ(x.ToString(), p.second.string_value());
   }
 }
