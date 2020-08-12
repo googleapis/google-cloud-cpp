@@ -42,6 +42,7 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
 
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
+  //! [START pubsub_quickstart_create_topic]
   //! [START pubsub_create_topic] [create-topic]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
@@ -54,6 +55,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
               << "\n";
   }
   //! [END pubsub_create_topic] [create-topic]
+  //! [END pubsub_quickstart_create_topic]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -510,10 +512,11 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                google::cloud::pubsub::Subscription const& subscription,
                std::vector<std::string> const&) {
+  //! [START pubsub_quickstart_subscriber]
+  //! [START pubsub_subscriber_async_pull] [subscribe]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  //! [START pubsub_subscriber_async_pull] [subscribe]
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::atomic<int> count{0};
     google::cloud::promise<void> received_message;
@@ -538,6 +541,7 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
               << ", status = " << result.get() << "\n";
   }
   //! [END pubsub_subscriber_async_pull] [subscribe]
+  //! [END pubsub_quickstart_subscriber]
   (std::move(subscriber), std::move(subscription));
 }
 
