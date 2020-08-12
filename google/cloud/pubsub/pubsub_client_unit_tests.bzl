@@ -37,6 +37,7 @@ pubsub_client_unit_tests = [
     "subscription_admin_connection_test.cc",
     "subscription_mutation_builder_test.cc",
     "subscription_test.cc",
+    "topic_admin_client_test.cc",
     "topic_admin_connection_test.cc",
     "topic_mutation_builder_test.cc",
     "topic_test.cc",

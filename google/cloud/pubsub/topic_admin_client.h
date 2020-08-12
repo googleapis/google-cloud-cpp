@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CLIENT_H
 
+#include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/pubsub/version.h"
