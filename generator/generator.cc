@@ -66,4 +66,3 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
 }  // namespace generator
 }  // namespace cloud
 }  // namespace google
-
