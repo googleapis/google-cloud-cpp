@@ -152,6 +152,21 @@ $test_flags += $warning_flags
 $build_flags = @("--keep_going")
 $build_flags += $warning_flags
 
+$BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
+
+# If we have the right credentials, tell bazel to cache build results in a GCS
+# bucket. Note: this will not cache external deps, so the "fetch" below will
+# not hit this cache.
+if ((Test-Path env:KOKORO_GFILE_DIR) -and
+    (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
+    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}"
+    $build_flags += @("--remote_cache=${BAZEL_CACHE}")
+    $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
+    # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+    # and https://github.com/bazelbuild/bazel/issues/3360
+    $build_flags += @("--experimental_guard_against_concurrent_changes")
+}
+
 if (${env:BUILD_NAME} -eq "bazel-release") {
     $test_flags+=("-c", "opt")
     $build_flags+=("-c", "opt")
