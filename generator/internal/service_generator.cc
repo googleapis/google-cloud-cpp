@@ -13,8 +13,16 @@
 // limitations under the License.
 
 #include "generator/internal/service_generator.h"
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
+#if _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+// TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
