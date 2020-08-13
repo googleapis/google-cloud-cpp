@@ -75,6 +75,7 @@ class PublisherOptions {
   }
 
   std::size_t maximum_message_count() const { return maximum_message_count_; }
+
   /**
    * Set the maximum number of messages in a batch.
    *
@@ -91,6 +92,7 @@ class PublisherOptions {
   }
 
   std::size_t maximum_batch_bytes() const { return maximum_batch_bytes_; }
+
   /**
    * Set the maximum size for the messages in a batch.
    *
