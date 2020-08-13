@@ -149,6 +149,8 @@ add_library(
     internal/tuple.h
     internal/utility.h
     internal/version_info.h
+    kms_key_name.cc
+    kms_key_name.h
     log.cc
     log.h
     optional.h
@@ -234,6 +236,7 @@ if (BUILD_TESTING)
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
         internal/utility_test.cc
+        kms_key_name_test.cc
         log_test.cc
         status_or_test.cc
         status_test.cc
