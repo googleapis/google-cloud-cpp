@@ -163,9 +163,9 @@ int main(int argc, char* argv[]) {
     auto const r =
         RunOneIteration(generator, *options, bucket_name, object_names);
     std::cout << r.bytes << ',' << r.elapsed.count() << std::endl;
-    auto const mi_b = r.bytes / gcs_bm::kMiB;
-    auto const mi_bs =
-        mi_b * (1.0 * decltype(r.elapsed)::period::den) / r.elapsed.count();
+    auto const mi_b = static_cast<double>(r.bytes) / gcs_bm::kMiB;
+    auto const mi_bs = mi_b * (1.0 * decltype(r.elapsed)::period::den) /
+                       static_cast<double>(r.elapsed.count());
     mi_bs_sum += mi_bs;
   }
 

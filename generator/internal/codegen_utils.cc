@@ -50,13 +50,13 @@ std::string SystemInclude(absl::string_view header) {
 std::string CamelCaseToSnakeCase(absl::string_view input) {
   std::string output;
   for (auto i = 0U; i < input.size(); ++i) {
+    auto const uc = static_cast<unsigned char>(input[i]);
+    auto const lower = static_cast<char>(std::tolower(uc));
     if (input[i] != '_' && i + 2 < input.size()) {
       if (std::isupper(static_cast<unsigned char>(input[i + 1])) &&
           std::islower(static_cast<unsigned char>(input[i + 2]))) {
-        absl::StrAppend(
-            &output,
-            std::string(1, std::tolower(static_cast<unsigned char>(input[i]))),
-            "_");
+        output += lower;
+        output += '_';
         continue;
       }
     }
@@ -64,16 +64,12 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
       if ((std::islower(static_cast<unsigned char>(input[i])) ||
            std::isdigit(static_cast<unsigned char>(input[i]))) &&
           std::isupper(static_cast<unsigned char>(input[i + 1]))) {
-        absl::StrAppend(
-            &output,
-            std::string(1, std::tolower(static_cast<unsigned char>(input[i]))),
-            "_");
+        output += lower;
+        output += '_';
         continue;
       }
     }
-    absl::StrAppend(
-        &output,
-        std::string(1, std::tolower(static_cast<unsigned char>(input[i]))));
+    output += lower;
   }
   return output;
 }

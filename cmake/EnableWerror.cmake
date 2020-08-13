@@ -23,6 +23,10 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_WERROR)
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-Wall GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WALL)
 check_cxx_compiler_flag(-Wextra GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WEXTRA)
+check_cxx_compiler_flag(-Wconversion
+                        GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WCONVERSION)
+check_cxx_compiler_flag(-Wno-sign-conversion
+                        GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WNO_SIGN_CONVERSION)
 check_cxx_compiler_flag(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
 
 function (google_cloud_cpp_add_common_options target)
@@ -41,6 +45,12 @@ function (google_cloud_cpp_add_common_options target)
     endif ()
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WEXTRA)
         target_compile_options(${target} PRIVATE "-Wextra")
+    endif ()
+    if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WCONVERSION)
+        target_compile_options(${target} PRIVATE "-Wconversion")
+    endif ()
+    if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WNO_SIGN_CONVERSION)
+        target_compile_options(${target} PRIVATE "-Wno-sign-conversion")
     endif ()
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR
         AND GOOGLE_CLOUD_CPP_ENABLE_WERROR)

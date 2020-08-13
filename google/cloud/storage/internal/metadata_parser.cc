@@ -54,7 +54,7 @@ std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name) {
     return f.get<std::int32_t>();
   }
   if (f.is_string()) {
-    return std::stol(f.get_ref<std::string const&>());
+    return std::stoi(f.get_ref<std::string const&>());
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
@@ -72,7 +72,10 @@ std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
     return f.get<std::uint32_t>();
   }
   if (f.is_string()) {
-    return std::stoul(f.get_ref<std::string const&>());
+    auto v = std::stoul(f.get_ref<std::string const&>());
+    if (v <= (std::numeric_limits<std::uint32_t>::max)()) {
+      return static_cast<std::uint32_t>(v);
+    }
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name

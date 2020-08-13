@@ -214,11 +214,11 @@ StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
   constexpr auto kMax = (std::numeric_limits<T>::max)();
   enum { kIntPart, kFracPart } state = kIntPart;
   for (auto const ch : rep) {
-    auto dp = std::strchr(kDigits, ch);
+    auto const* dp = std::strchr(kDigits, ch);
     if (state == kFracPart) {
       if (dp - kDigits >= 5) {  // dp != nullptr
         if (v == kMax) return internal::DataLoss(rep);
-        v += 1;
+        v = static_cast<T>(v + 1);
       }
       break;
     }
@@ -227,10 +227,10 @@ StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
       state = kFracPart;  // ch == '.'
     } else {
       if (v > kMax / 10) return internal::DataLoss(rep);
-      v *= 10;
+      v = static_cast<T>(v * 10);
       auto d = static_cast<T>(dp - kDigits);
       if (v > kMax - d) return internal::DataLoss(rep);
-      v += d;
+      v = static_cast<T>(v + d);
     }
   }
   return v;
@@ -252,11 +252,11 @@ StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
   bool negate = true;
   enum { kIntPart, kFracPart } state = kIntPart;
   for (auto const ch : rep) {
-    auto dp = std::strchr(kDigits, ch);
+    auto const* dp = std::strchr(kDigits, ch);
     if (state == kFracPart) {
       if (dp - kDigits >= 5) {  // dp != nullptr
         if (v == kMin) return internal::DataLoss(rep);
-        v -= 1;
+        v = static_cast<T>(v - 1);
       }
       break;
     }
@@ -268,16 +268,16 @@ StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
       }
     } else {
       if (v < kMin / 10) return internal::DataLoss(rep);
-      v *= 10;
+      v = static_cast<T>(v * 10);
       auto d = static_cast<T>(dp - kDigits);
       if (v < kMin + d) return internal::DataLoss(rep);
-      v -= d;
+      v = static_cast<T>(v - d);
     }
   }
   if (!negate) return v;
   constexpr auto kMax = (std::numeric_limits<T>::max)();
   if (kMin != -kMax && v == kMin) return internal::DataLoss(rep);
-  return -v;
+  return static_cast<T>(-v);
 }
 ///@}
 

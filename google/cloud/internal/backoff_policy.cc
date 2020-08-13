@@ -46,8 +46,8 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
   auto delay = microseconds(rng_distribution(*generator_));
-  current_delay_range_ = microseconds(
-      static_cast<microseconds::rep>(current_delay_range_.count() * scaling_));
+  current_delay_range_ = microseconds(static_cast<microseconds::rep>(
+      static_cast<double>(current_delay_range_.count()) * scaling_));
   if (current_delay_range_ >= maximum_delay_) {
     current_delay_range_ = maximum_delay_;
   }

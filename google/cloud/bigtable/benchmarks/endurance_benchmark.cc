@@ -114,7 +114,8 @@ int main(int argc, char* argv[]) {
   }
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::steady_clock::now() - latency_test_start);
-  auto throughput = 1000.0 * static_cast<double>(combined) / elapsed.count();
+  auto throughput = 1000.0 * static_cast<double>(combined) /
+                    static_cast<double>(elapsed.count());
   std::cout << "# DONE. Elapsed=" << FormatDuration(elapsed)
             << ", Ops=" << combined << ", Throughput: " << throughput
             << " ops/sec\n";

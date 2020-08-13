@@ -143,11 +143,20 @@ int main(int argc, char* argv[]) {
         client.UploadFile(filename, bucket_name, object_name);
     auto upload_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
         std::chrono::steady_clock::now() - upload_start);
-    double gbps = options->file_size * 8.0 / upload_elapsed.count();
+    // Convert to Gbps
+    auto to_gbps = [](std::int64_t size, std::chrono::nanoseconds elapsed) {
+      return 8.0 * static_cast<double>(size) /
+             static_cast<double>(elapsed.count());
+    };
+    // Convert to MiB/s
+    auto to_mibs = [](std::int64_t size, std::chrono::milliseconds elapsed) {
+      return (static_cast<double>(size) / gcs_bm::kMiB) /
+             (static_cast<double>(elapsed.count()) / 1000.0);
+    };
+    double gbps = to_gbps(options->file_size, upload_elapsed);
     auto ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(upload_elapsed);
-    auto mi_bs =
-        (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
+    auto mi_bs = to_mibs(options->file_size, ms);
     std::cout << "FileUpload," << options->file_size << ','
               << upload_elapsed.count() << ',' << gbps << ',' << ms.count()
               << ',' << mi_bs << ',' << object_metadata.status().code() << "\n";
@@ -164,10 +173,10 @@ int main(int argc, char* argv[]) {
     auto download_elapsed =
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::steady_clock::now() - download_start);
-    gbps = options->file_size * 8.0 / download_elapsed.count();
+    gbps = to_gbps(options->file_size, download_elapsed);
     ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(download_elapsed);
-    mi_bs = (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
+    mi_bs = to_mibs(options->file_size, ms);
     std::cout << "FileDownload," << options->file_size << ','
               << download_elapsed.count() << ',' << gbps << ',' << ms.count()
               << ',' << mi_bs << ',' << object_metadata.status().code() << "\n";

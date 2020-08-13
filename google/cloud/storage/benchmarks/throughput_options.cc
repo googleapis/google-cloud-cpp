@@ -96,12 +96,12 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
       {"--minimum-sample-count",
        "continue the test until at least this number of samples are obtained",
        [&options](std::string const& val) {
-         options.minimum_sample_count = std::stol(val);
+         options.minimum_sample_count = std::stoi(val);
        }},
       {"--maximum-sample-count",
        "stop the test when this number of samples are obtained",
        [&options](std::string const& val) {
-         options.maximum_sample_count = std::stol(val);
+         options.maximum_sample_count = std::stoi(val);
        }},
       {"--enabled-apis", "enable a subset of the APIs for the test",
        [&options](std::string const& val) {

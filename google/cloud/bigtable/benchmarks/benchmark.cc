@@ -332,14 +332,16 @@ std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
   // back is super tedious, so just use std::snprintf().
   if (nanos < std::chrono::milliseconds(1)) {
     char buf[32];
-    std::snprintf(buf, sizeof(buf), "%.03fus", nanos.count() / 1000.0);
+    std::snprintf(buf, sizeof(buf), "%.03fus",
+                  static_cast<double>(nanos.count()) / 1000.0);
     return os << buf;
   }
   // For sub-second values print 123.456ms, that is, the number of milliseconds.
   if (nanos < std::chrono::seconds(1)) {
     auto us = std::chrono::duration_cast<std::chrono::microseconds>(nanos);
     char buf[32];
-    std::snprintf(buf, sizeof(buf), "%.03fms", us.count() / 1000.0);
+    std::snprintf(buf, sizeof(buf), "%.03fms",
+                  static_cast<double>(us.count()) / 1000.0);
     return os << buf;
   }
 
@@ -363,7 +365,8 @@ std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
     return os << ms.count() / 1000 << "s";
   }
   char buf[32];
-  std::snprintf(buf, sizeof(buf), "%.03fs", ms.count() / 1000.0);
+  std::snprintf(buf, sizeof(buf), "%.03fs",
+                static_cast<double>(ms.count()) / 1000.0);
   return os << buf;
 }
 

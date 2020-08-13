@@ -125,18 +125,18 @@ void Bytes::Decoder::Iterator::Fill() {
     auto i1 = kCharToIndexExcessOne[p1] - 1;
     if (p3 == kPadding) {
       if (p2 == kPadding) {
-        buf_[++len_] = i0 << 2 | i1 >> 4;
+        buf_[++len_] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
       } else {
         auto i2 = kCharToIndexExcessOne[p2] - 1;
-        buf_[++len_] = i1 << 4 | i2 >> 2;
-        buf_[++len_] = i0 << 2 | i1 >> 4;
+        buf_[++len_] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
+        buf_[++len_] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
       }
     } else {
       auto i2 = kCharToIndexExcessOne[p2] - 1;
       auto i3 = kCharToIndexExcessOne[p3] - 1;
-      buf_[++len_] = i2 << 6 | i3;
-      buf_[++len_] = i1 << 4 | i2 >> 2;
-      buf_[++len_] = i0 << 2 | i1 >> 4;
+      buf_[++len_] = static_cast<unsigned char>(i2 << 6 | i3);
+      buf_[++len_] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
+      buf_[++len_] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
     }
   }
 }
