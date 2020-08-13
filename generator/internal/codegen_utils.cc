@@ -141,7 +141,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
 }
 
 std::string CopyrightLicenseFileHeader() {
-  static std::string const kHeader =  // clang-format off
+  static auto constexpr kHeader =  // clang-format off
   "// Copyright 2020 Google LLC\n"
   "//\n"
   "// Licensed under the Apache License, Version 2.0 (the \"License\");\n"
