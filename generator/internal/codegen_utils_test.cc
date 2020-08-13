@@ -21,10 +21,10 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-using google::protobuf::DescriptorPool;
-using google::protobuf::FileDescriptor;
-using google::protobuf::FileDescriptorProto;
-using google::protobuf::ServiceDescriptorProto;
+using ::google::protobuf::DescriptorPool;
+using ::google::protobuf::FileDescriptor;
+using ::google::protobuf::FileDescriptorProto;
+using ::google::protobuf::ServiceDescriptorProto;
 
 TEST(GeneratedFileSuffix, Success) {
   EXPECT_EQ(".gcpcxx.pb", GeneratedFileSuffix());
