@@ -44,6 +44,7 @@ genrule(
       fi >$@
     """,
     }),
+    tags = ["no-cache"],
 )
 
 CURL_WIN_COPTS = [
@@ -359,6 +360,7 @@ cc_library(
             "-lrt",
         ],
     }),
+    tags = ["no-cache"],
     visibility = ["//visibility:public"],
     deps = [
         # Use the same version of zlib that gRPC does.
@@ -475,6 +477,7 @@ cc_binary(
             "-Wno-string-plus-int",
         ],
     }),
+    tags = ["no-cache"],
     deps = [":curl"],
 )
 
@@ -745,4 +748,5 @@ genrule(
         "#endif  // EXTERNAL_CURL_INCLUDE_CURL_CONFIG_H_",
         "EOF",
     ]),
+    tags = ["no-cache"],
 )
