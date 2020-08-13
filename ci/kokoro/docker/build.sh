@@ -584,10 +584,10 @@ fi
 if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
   exit_status=$?
-else
+elif [[ "${RUNNING_CI:-}" == "yes" ]]; then
   # Note that only the `clang-tidy` build config contains the token needed
   # to actually upload the docs, otherwise this has no effect.
-  "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh" "${BRANCH}"
+  "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh" "${BRANCH}" "${BUILD_OUTPUT}"
 fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" \
