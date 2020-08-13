@@ -87,7 +87,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       if (!absl::ParseCivilTime(date, &day)) {
         return Status(
             StatusCode::kInvalidArgument,
-            "Cannot parse createdBefore value (" + date + "( as a date");
+            "Cannot parse createdBefore value (" + date + ") as a date");
       }
       result.condition_.created_before.emplace(std::move(day));
     }

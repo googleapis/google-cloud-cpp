@@ -116,7 +116,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
                                     LifecycleRuleCondition const& rhs) {
   if (rhs.age.has_value()) {
     if (result.age.has_value()) {
-      *result.age = std::min(*result.age, *rhs.age);
+      result.age = std::min(*result.age, *rhs.age);
     } else {
       auto tmp = *rhs.age;
       result.age.emplace(std::forward<std::int32_t>(tmp));
@@ -124,7 +124,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.created_before.has_value()) {
     if (result.created_before.has_value()) {
-      *result.created_before =
+      result.created_before =
           std::max(*result.created_before, *rhs.created_before);
     } else {
       result.created_before.emplace(std::move(*rhs.created_before));
@@ -159,7 +159,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.num_newer_versions.has_value()) {
     if (result.num_newer_versions.has_value()) {
-      *result.num_newer_versions =
+      result.num_newer_versions =
           std::max(*result.num_newer_versions, *rhs.num_newer_versions);
     } else {
       auto tmp = *rhs.num_newer_versions;
@@ -168,7 +168,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.days_since_noncurrent_time.has_value()) {
     if (result.days_since_noncurrent_time.has_value()) {
-      *result.days_since_noncurrent_time = (std::max)(
+      result.days_since_noncurrent_time = (std::max)(
           *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
     } else {
       result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
@@ -176,23 +176,23 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.noncurrent_time_before.has_value()) {
     if (result.noncurrent_time_before.has_value()) {
-      *result.noncurrent_time_before = (std::min)(
-          *result.noncurrent_time_before, *rhs.noncurrent_time_before);
+      result.noncurrent_time_before = (std::min)(*result.noncurrent_time_before,
+                                                 *rhs.noncurrent_time_before);
     } else {
       result.noncurrent_time_before = *rhs.noncurrent_time_before;
     }
   }
   if (rhs.days_since_custom_time.has_value()) {
     if (result.days_since_custom_time.has_value()) {
-      *result.days_since_custom_time = (std::max)(
-          *result.days_since_custom_time, *rhs.days_since_custom_time);
+      result.days_since_custom_time = (std::max)(*result.days_since_custom_time,
+                                                 *rhs.days_since_custom_time);
     } else {
       result.days_since_custom_time = *rhs.days_since_custom_time;
     }
   }
   if (rhs.custom_time_before.has_value()) {
     if (result.custom_time_before.has_value()) {
-      *result.custom_time_before =
+      result.custom_time_before =
           (std::min)(*result.custom_time_before, *rhs.custom_time_before);
     } else {
       result.custom_time_before = *rhs.custom_time_before;
