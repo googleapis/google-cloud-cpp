@@ -18,14 +18,12 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module lib/io.sh
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: $(basename "$0") <branch-name>"
+if [[ $# -ne 2 ]]; then
+  echo "Usage: $(basename "$0") <branch-name> <build-output>"
   exit 1
 fi
-BRANCH="$1"
-
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+readonly BRANCH="$1"
+readonly BUILD_OUTPUT="$2"
 
 # Exit successfully (and silently) if there are no documents to upload.
 if [[ "${GENERATE_DOCS:-}" != "yes" ]]; then
@@ -38,24 +36,11 @@ if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   exit 0
 fi
 
-if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
-  echo "Will not upload documents as KOKORO_GFILE_DIR not set."
-  exit 0
-fi
-
-if [[ ! -r "${KOKORO_GFILE_DIR}/github-io-upload-token" ]]; then
-  echo "Will not upload documents as the upload token is not available."
-  exit 0
-fi
-
-GH_TOKEN="$(cat "${KOKORO_GFILE_DIR}/github-io-upload-token")"
-readonly GH_TOKEN
-
 # Allow the user to override the destination directory.
 if [[ -n "${DOCS_SUBDIR:-}" ]]; then
-  subdir="${DOCS_SUBDIR}"
+  subdir="${DOCS_SUBDIR}/"
 else
-  subdir=""
+  subdir="latest/"
 fi
 
 echo "================================================================"
@@ -78,27 +63,36 @@ else
   (cd cmake-out/github-io-staging && git checkout gh-pages && git pull)
 fi
 
+readonly LIBRARIES=(common bigtable firestore pubsub storage spanner)
 # Remove any previous content in the subdirectory used for this release. We will
 # recover any unmodified files in a second.
 (
   cd cmake-out/github-io-staging
-  git rm -qfr --ignore-unmatch \
-    "${subdir}/{common,bigtable,firestore,storage}"
+  for lib in "${LIBRARIES[@]}"; do
+    if [[ -d "${subdir}${lib}" ]]; then
+      git rm -qfr --ignore-unmatch "${subdir}${lib}"
+    fi
+  done
 )
 
 io::log "Copy the build results into the gh-pages clone."
 mkdir -p "cmake-out/github-io-staging/${subdir}"
-cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
-  "cmake-out/github-io-staging/${subdir}/common"
-for lib in bigtable firestore storage; do
-  cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
-    "cmake-out/github-io-staging/${subdir}/${lib}"
+for lib in "${LIBRARIES[@]}"; do
+  if [[ "${lib}" == "common" ]]; then
+    cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
+      "cmake-out/github-io-staging/${subdir}/common"
+  else
+    cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
+      "cmake-out/github-io-staging/${subdir}${lib}"
+  fi
 done
 
 cd cmake-out/github-io-staging
 git config user.name "Google Cloud C++ Project Robot"
 git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
-git add --all "latest"
+for lib in "${LIBRARIES[@]}"; do
+  git add --all "${subdir}${lib}"
+done
 
 if git diff --quiet HEAD; then
   io::log "No changes to the documentation, skipping upload."
@@ -114,10 +108,18 @@ if [[ "${REPO_URL:0:8}" != "https://" ]]; then
   exit 0
 fi
 
-if [[ -z "${GH_TOKEN:-}" ]]; then
-  io::log "Skipping documentation upload as GH_TOKEN is not configured."
+if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
+  echo "Will not upload documents as KOKORO_GFILE_DIR not set."
   exit 0
 fi
+
+if [[ ! -r "${KOKORO_GFILE_DIR}/github-io-upload-token" ]]; then
+  echo "Will not upload documents as the upload token is not available."
+  exit 0
+fi
+
+GH_TOKEN="$(cat "${KOKORO_GFILE_DIR}/github-io-upload-token")"
+readonly GH_TOKEN
 
 readonly REPO_REF=${REPO_URL/https:\/\//}
 git push https://"${GH_TOKEN}@${REPO_REF}" gh-pages
