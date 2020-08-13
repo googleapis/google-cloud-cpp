@@ -15,7 +15,6 @@
 #include "generator/generator.h"
 #include "google/cloud/status_or.h"
 #include "generator/internal/codegen_utils.h"
-#include "generator/internal/service_generator.h"
 #include <google/api/client.pb.h>
 #include <string>
 #include <vector>
@@ -28,6 +27,9 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
                          std::string const& parameters,
                          google::protobuf::compiler::GeneratorContext* context,
                          std::string* error) const {
+  using ServiceGenerator =
+      std::vector<std::unique_ptr<generator_internal::ClassGeneratorInterface>>;
+
   if (file->options().cc_generic_services()) {
     *error =
         "cpp codegen proto compiler plugin does not work with generic "
@@ -43,23 +45,22 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
     return false;
   }
 
-  std::vector<generator_internal::ServiceGenerator> services;
+  std::vector<ServiceGenerator> services;
   services.reserve(file->service_count());
   for (int i = 0; i < file->service_count(); ++i) {
-    services.emplace_back(
-        file->service(i), context,
-        std::map<std::string, std::string>(command_line_args->begin(),
-                                           command_line_args->end()));
+    services.push_back(generator_internal::MakeGenerators(
+        file->service(i), context, *command_line_args));
   }
 
-  for (auto const& service : services) {
-    auto result = service.Generate();
-    if (!result.ok()) {
-      *error = result.message();
-      return false;
+  for (auto const& class_generators : services) {
+    for (auto const& c : class_generators) {
+      auto result = c->Generate();
+      if (!result.ok()) {
+        *error = result.message();
+        return false;
+      }
     }
   }
-
   return true;
 }
 

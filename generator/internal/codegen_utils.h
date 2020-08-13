@@ -16,6 +16,8 @@
 
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include "generator/internal/class_generator_interface.h"
+#include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <string>
 
@@ -89,6 +91,23 @@ ProcessCommandLineArgs(std::string const& parameters);
  * Standard legal boilerplate file header.
  */
 std::string CopyrightLicenseFileHeader();
+
+/**
+ * Extracts service wide substitution data required by all class generators from
+ * the provided descriptor.
+ */
+std::map<std::string, std::string> CreateServiceVars(
+    google::protobuf::ServiceDescriptor const& descriptor,
+    std::vector<std::pair<std::string, std::string>> const& initial_values);
+
+/**
+ * Creates and initializes the collection of ClassGenerators necessary to
+ * generate all code for the given service.
+ */
+std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
+    google::protobuf::ServiceDescriptor const* service,
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<std::pair<std::string, std::string>> const& vars);
 
 }  // namespace generator_internal
 }  // namespace cloud

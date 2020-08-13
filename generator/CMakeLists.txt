@@ -27,8 +27,6 @@ add_library(
     internal/codegen_utils.cc
     internal/codegen_utils.h
     internal/printer.h
-    internal/service_generator.cc
-    internal/service_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h)
 target_include_directories(google_cloud_cpp_generator
@@ -61,7 +59,7 @@ function (google_cloud_cpp_generator_define_tests)
     set(google_cloud_cpp_generator_unit_tests
         # cmake-format: sort
         generator_test.cc internal/codegen_utils_test.cc
-        internal/printer_test.cc internal/service_generator_test.cc)
+        internal/printer_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
