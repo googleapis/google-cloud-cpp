@@ -85,6 +85,11 @@ StatusOr<std::vector<std::string>> BuildNamespaces(
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters);
 
+/**
+ * Standard legal boilerplate file header.
+ */
+std::string CopyrightLicenseFileHeader();
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
