@@ -75,12 +75,34 @@ class PublisherOptions {
   }
 
   std::size_t maximum_message_count() const { return maximum_message_count_; }
+
+  /**
+   * Set the maximum number of messages in a batch.
+   *
+   * @note Application developers should keep in mind that Cloud Pub/Sub
+   *    sets [limits][pubsub-quota-link] on the size of a batch (1,000 messages)
+   *    The library makes no ttempt to validate the value provided in this
+   *    function.
+   *
+   * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
+   */
   PublisherOptions& set_maximum_message_count(std::size_t v) {
     maximum_message_count_ = v;
     return *this;
   }
 
   std::size_t maximum_batch_bytes() const { return maximum_batch_bytes_; }
+
+  /**
+   * Set the maximum size for the messages in a batch.
+   *
+   * @note Application developers should keep in mind that Cloud Pub/Sub
+   *    sets [limits][pubsub-quota-link] on the size of a batch (10MB). The
+   *    library makes no attempt to validate the value provided in this
+   *    function.
+   *
+   * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
+   */
   PublisherOptions& set_maximum_batch_bytes(std::size_t v) {
     maximum_batch_bytes_ = v;
     return *this;
