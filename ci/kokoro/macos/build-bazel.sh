@@ -54,6 +54,23 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
   bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
+readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
+readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
+readonly TEST_KEY_FILE_P12="${CONFIG_DIR}/kokoro-run-key.p12"
+readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
+
+# If we have the right credentials, tell bazel to cache build results in a GCS
+# bucket. Note: this will not cache external deps, so the "fetch" below will
+# not hit this cache.
+if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
+  io::log "Using bazel remote cache: ${BAZEL_CACHE}"
+  bazel_args+=("--remote_cache=${BAZEL_CACHE}")
+  bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
+  # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+  # and https://github.com/bazelbuild/bazel/issues/3360
+  bazel_args+=("--experimental_guard_against_concurrent_changes")
+fi
+
 echo
 echo "================================================================"
 for repeat in 1 2 3; do
@@ -75,10 +92,6 @@ echo
 echo "================================================================"
 io::log_yellow "build all targets."
 "${BAZEL_BIN}" build "${bazel_args[@]}" ...
-
-readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
-readonly TEST_KEY_FILE_P12="${CONFIG_DIR}/kokoro-run-key.p12"
 
 should_run_integration_tests() {
   if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
