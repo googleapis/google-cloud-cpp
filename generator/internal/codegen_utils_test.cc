@@ -13,12 +13,18 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include <google/protobuf/descriptor.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
+using google::protobuf::DescriptorPool;
+using google::protobuf::FileDescriptor;
+using google::protobuf::FileDescriptorProto;
+using google::protobuf::ServiceDescriptorProto;
 
 TEST(GeneratedFileSuffix, Success) {
   EXPECT_EQ(".gcpcxx.pb", GeneratedFileSuffix());
@@ -146,6 +152,57 @@ TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
   EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
 }
 
+class CreateServiceVarsTest
+    : public testing::TestWithParam<std::pair<std::string, std::string>> {
+ protected:
+  static void SetUpTestSuite() {
+    proto_file_.set_name("google/cloud/frobber/v1/frobber.proto");
+    proto_file_.set_package("google.cloud.frobber.v1");
+    ServiceDescriptorProto* s = proto_file_.add_service();
+    s->set_name("FrobberService");
+    const FileDescriptor* file_descriptor = pool_.BuildFile(proto_file_);
+    vars_ = CreateServiceVars(
+        *file_descriptor->service(0),
+        {std::make_pair("product_path", "google/cloud/frobber/")});
+  }
+
+  static DescriptorPool pool_;
+  static FileDescriptorProto proto_file_;
+  static std::map<std::string, std::string> vars_;
+};
+
+DescriptorPool CreateServiceVarsTest::pool_;
+FileDescriptorProto CreateServiceVarsTest::proto_file_;
+std::map<std::string, std::string> CreateServiceVarsTest::vars_;
+
+TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
+  auto iter = vars_.find(GetParam().first);
+  EXPECT_TRUE(iter != vars_.end());
+  EXPECT_EQ(iter->second, GetParam().second);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ServiceVars, CreateServiceVarsTest,
+    testing::Values(
+        std::make_pair("class_comment_block", "// TODO: pull in comments"),
+        std::make_pair("client_class_name", "FrobberServiceClient"),
+        std::make_pair("grpc_stub_fqn",
+                       "::google::cloud::frobber::v1::FrobberService"),
+        std::make_pair("logging_class_name", "FrobberServiceLogging"),
+        std::make_pair("metadata_class_name", "FrobberServiceMetadata"),
+        std::make_pair("proto_file_name",
+                       "google/cloud/frobber/v1/frobber.proto"),
+        std::make_pair("service_endpoint", ""),
+        std::make_pair(
+            "stub_cc_path",
+            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.cc"),
+        std::make_pair("stub_class_name", "FrobberServiceStub"),
+        std::make_pair(
+            "stub_header_path",
+            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.h")),
+    [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
+      return std::get<0>(info.param);
+    });
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
