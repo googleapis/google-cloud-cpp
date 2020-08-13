@@ -85,8 +85,9 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       auto const date = condition.value("createdBefore", "");
       absl::CivilDay day;
       if (!absl::ParseCivilTime(date, &day)) {
-        return Status(StatusCode::kInvalidArgument,
-                      "Cannot parse " + date + " as a date");
+        return Status(
+            StatusCode::kInvalidArgument,
+            "Cannot parse createdBefore value (" + date + ") as a date");
       }
       result.condition_.created_before.emplace(std::move(day));
     }
@@ -104,6 +105,34 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     if (condition.count("numNewerVersions") != 0) {
       result.condition_.num_newer_versions.emplace(
           internal::ParseIntField(condition, "numNewerVersions"));
+    }
+    if (condition.count("daysSinceNoncurrentTime") != 0) {
+      result.condition_.days_since_noncurrent_time.emplace(
+          internal::ParseIntField(condition, "daysSinceNoncurrentTime"));
+    }
+    if (condition.count("noncurrentTimeBefore") != 0) {
+      auto const date = condition.value("noncurrentTimeBefore", "");
+      absl::CivilDay day;
+      if (!absl::ParseCivilTime(date, &day)) {
+        return Status(
+            StatusCode::kInvalidArgument,
+            "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
+      }
+      result.condition_.noncurrent_time_before.emplace(std::move(day));
+    }
+    if (condition.count("daysSinceCustomTime") != 0) {
+      result.condition_.days_since_custom_time.emplace(
+          internal::ParseIntField(condition, "daysSinceCustomTime"));
+    }
+    if (condition.count("customTimeBefore") != 0) {
+      auto const date = condition.value("customTimeBefore", "");
+      absl::CivilDay day;
+      if (!absl::ParseCivilTime(date, &day)) {
+        return Status(
+            StatusCode::kInvalidArgument,
+            "Cannot parse customTimeBefore value (" + date + ") as a date");
+      }
+      result.condition_.custom_time_before.emplace(std::move(day));
     }
   }
   return result;

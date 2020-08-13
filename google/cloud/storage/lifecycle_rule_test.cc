@@ -30,7 +30,11 @@ LifecycleRule CreateLifecycleRuleForTest() {
         "createdBefore": "2018-07-23",
         "isLive": true,
         "matchesStorageClass": [ "STANDARD" ],
-        "numNewerVersions": 7
+        "numNewerVersions": 7,
+        "daysSinceNoncurrentTime": 3,
+        "noncurrentTimeBefore": "2020-07-22",
+        "daysSinceCustomTime": 30,
+        "customTimeBefore": "2020-07-23"
       },
       "action": {
         "type": "SetStorageClass",
@@ -239,6 +243,66 @@ TEST(LifecycleRuleTest, NumNewerVersions) {
   EXPECT_EQ(7, condition.num_newer_versions.value());
 }
 
+/// @test Verify that LifecycleRule::DaysSinceNoncurrent() works as expected.
+TEST(LifecycleRuleTest, DaysSinceNoncurrentTime) {
+  auto const c1 = LifecycleRule::DaysSinceNoncurrentTime(3);
+  ASSERT_TRUE(c1.days_since_noncurrent_time.has_value());
+  EXPECT_EQ(3, c1.days_since_noncurrent_time.value());
+  EXPECT_EQ(c1, c1);
+  auto const c2 = LifecycleRule::DaysSinceNoncurrentTime(4);
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
+/// @test Verify that LifecycleRule::NoncurrentTimeBefore() works as expected.
+TEST(LifecycleRuleTest, NoncurrentTimeBefore) {
+  auto const c1 =
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2020, 7, 22));
+  ASSERT_TRUE(c1.noncurrent_time_before.has_value());
+  EXPECT_EQ(c1, c1);
+  auto const c2 =
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2020, 7, 23));
+  ASSERT_TRUE(c2.noncurrent_time_before.has_value());
+  EXPECT_EQ(c2, c2);
+
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
+/// @test Verify that LifecycleRule::DaysSinceCustomTime() works as expected.
+TEST(LifecycleRuleTest, DaysSinceCustomTime) {
+  auto const c1 = LifecycleRule::DaysSinceCustomTime(3);
+  ASSERT_TRUE(c1.days_since_custom_time.has_value());
+  EXPECT_EQ(3, c1.days_since_custom_time.value());
+  EXPECT_EQ(c1, c1);
+  auto const c2 = LifecycleRule::DaysSinceCustomTime(4);
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
+/// @test Verify that LifecycleRule::NoncurrentTimeBefore() works as expected.
+TEST(LifecycleRuleTest, CustomTimeBefore) {
+  auto const c1 = LifecycleRule::CustomTimeBefore(absl::CivilDay(2020, 7, 23));
+  ASSERT_TRUE(c1.custom_time_before.has_value());
+  EXPECT_EQ(c1, c1);
+  auto const c2 = LifecycleRule::CustomTimeBefore(absl::CivilDay(2020, 7, 24));
+  ASSERT_TRUE(c2.custom_time_before.has_value());
+  EXPECT_EQ(c2, c2);
+
+  EXPECT_NE(c1, c2);
+  EXPECT_LT(c1, c2);
+
+  auto const empty = LifecycleRuleCondition{};
+  EXPECT_NE(c1, empty);
+}
+
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
 TEST(LifecycleRuleTest, ConditionConjunctionAge) {
   auto c1 = LifecycleRule::MaxAge(7);
@@ -318,6 +382,44 @@ TEST(LifecycleRuleTest, ConditionConjunctionNumNewerVersions) {
 }
 
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionDaysSinceNoncurrentTime) {
+  auto const c1 = LifecycleRule::DaysSinceNoncurrentTime(7);
+  auto const c2 = LifecycleRule::DaysSinceNoncurrentTime(42);
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.days_since_noncurrent_time.has_value());
+  EXPECT_EQ(42, *condition.days_since_noncurrent_time);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionNoncurrentTimeBefore) {
+  auto const c1 =
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2020, 7, 22));
+  auto const c2 =
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2020, 7, 23));
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.noncurrent_time_before.has_value());
+  EXPECT_EQ(absl::CivilDay(2020, 7, 22), *condition.noncurrent_time_before);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionDaysSinceCustomTime) {
+  auto const c1 = LifecycleRule::DaysSinceCustomTime(7);
+  auto const c2 = LifecycleRule::DaysSinceCustomTime(42);
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.days_since_custom_time.has_value());
+  EXPECT_EQ(42, *condition.days_since_custom_time);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
+TEST(LifecycleRuleTest, ConditionConjunctionCustomTimeBefore) {
+  auto const c1 = LifecycleRule::CustomTimeBefore(absl::CivilDay(2020, 7, 23));
+  auto const c2 = LifecycleRule::CustomTimeBefore(absl::CivilDay(2020, 7, 24));
+  auto const condition = LifecycleRule::ConditionConjunction(c1, c2);
+  ASSERT_TRUE(condition.custom_time_before.has_value());
+  EXPECT_EQ(absl::CivilDay(2020, 7, 23), *condition.custom_time_before);
+}
+
+/// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
 TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
   auto c1 = LifecycleRule::NumNewerVersions(7);
   auto c2 = LifecycleRule::MaxAge(42);
@@ -348,7 +450,11 @@ TEST(LifecycleRuleTest, Parsing) {
           LifecycleRule::CreatedBefore(absl::CivilDay(2018, 7, 23)),
           LifecycleRule::IsLive(true),
           LifecycleRule::MatchesStorageClassStandard(),
-          LifecycleRule::NumNewerVersions(7));
+          LifecycleRule::NumNewerVersions(7),
+          LifecycleRule::DaysSinceNoncurrentTime(3),
+          LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2020, 7, 22)),
+          LifecycleRule::DaysSinceCustomTime(30),
+          LifecycleRule::CustomTimeBefore(absl::CivilDay(2020, 7, 23)));
   EXPECT_EQ(expected_condition, actual.condition());
 
   LifecycleRuleAction expected_action =
@@ -364,6 +470,8 @@ TEST(LifecycleRuleTest, LifecycleRuleStream) {
   auto actual = os.str();
   EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
   EXPECT_THAT(actual, ::testing::HasSubstr("NEARLINE"));
+  EXPECT_THAT(actual, ::testing::HasSubstr("days_since_custom_time="));
+  EXPECT_THAT(actual, ::testing::HasSubstr("custom_time_before="));
 }
 
 }  // namespace
