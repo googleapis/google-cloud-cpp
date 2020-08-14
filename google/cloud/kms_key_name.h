@@ -24,6 +24,13 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
+class KmsKeyName;
+/**
+ * Constructs a `KmsKeyName` from the given @p full_name.
+ * Returns a non-OK Status if `full_name` is improperly formed.
+ */
+StatusOr<KmsKeyName> MakeKmsKeyName(std::string full_name);
+
 /**
  * This class identifies a Google Cloud KMS Key
  *
@@ -45,12 +52,6 @@ class KmsKeyName {
    */
   KmsKeyName(std::string const& project_id, std::string const& location,
              std::string const& key_ring, std::string const& kms_key_name);
-
-  /**
-   * Constructs a KmsKeyName from the given @p full_name.
-   * Returns a non-OK Status if `full_name` is improperly formed.
-   */
-  static StatusOr<KmsKeyName> FromString(std::string full_name);
 
   /// @name Copy and move
   //@{
@@ -77,6 +78,8 @@ class KmsKeyName {
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, KmsKeyName const& key);
+
+  friend StatusOr<KmsKeyName> MakeKmsKeyName(std::string full_name);
 
  private:
   explicit KmsKeyName(std::string full_name)

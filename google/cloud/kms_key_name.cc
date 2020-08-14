@@ -13,20 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/kms_key_name.h"
-#include <array>
 #include <regex>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-KmsKeyName::KmsKeyName(std::string const& project_id,
-                       std::string const& location, std::string const& key_ring,
-                       std::string const& kms_key_name)
-    : full_name_("projects/" + project_id + "/locations/" + location +
-                 "/keyRings/" + key_ring + "/cryptoKeys/" + kms_key_name) {}
-
-StatusOr<KmsKeyName> KmsKeyName::FromString(std::string full_name) {
+StatusOr<KmsKeyName> MakeKmsKeyName(std::string full_name) {
   std::regex re(
       "projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+");
   if (!std::regex_match(full_name, re)) {
@@ -35,6 +28,12 @@ StatusOr<KmsKeyName> KmsKeyName::FromString(std::string full_name) {
   }
   return KmsKeyName(std::move(full_name));
 }
+
+KmsKeyName::KmsKeyName(std::string const& project_id,
+                       std::string const& location, std::string const& key_ring,
+                       std::string const& kms_key_name)
+    : full_name_("projects/" + project_id + "/locations/" + location +
+                 "/keyRings/" + key_ring + "/cryptoKeys/" + kms_key_name) {}
 
 bool operator==(KmsKeyName const& a, KmsKeyName const& b) {
   return a.full_name_ == b.full_name_;

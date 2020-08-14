@@ -34,9 +34,9 @@ TEST(KmsKeyNameTest, FromComponents) {
       key.FullName());
 }
 
-TEST(KmsKeyNameTest, FromString) {
+TEST(KmsKeyNameTest, MakeKmsKeyName) {
   std::string key_str("projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1");
-  auto key(KmsKeyName::FromString(key_str));
+  auto key = MakeKmsKeyName(key_str);
   ASSERT_STATUS_OK(key);
   EXPECT_EQ(key_str, key->FullName());
 
@@ -49,7 +49,7 @@ TEST(KmsKeyNameTest, FromString) {
            "plojects/p1/locations/l1/keyRings/r1/cryptoKeys/n1",
            "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1/",
        }) {
-    auto key = KmsKeyName::FromString(key_str);
+    auto key = MakeKmsKeyName(key_str);
     EXPECT_THAT(key, StatusIs(StatusCode::kInvalidArgument,
                               "Improperly formatted KmsKeyName: " + key_str));
   }
@@ -57,8 +57,8 @@ TEST(KmsKeyNameTest, FromString) {
 
 TEST(KmsKeyNameTest, Equality) {
   KmsKeyName key1("proj", "loc", "ring", "keyname");
-  auto key2(KmsKeyName::FromString(
-      "projects/proj/locations/loc/keyRings/ring/cryptoKeys/keyname"));
+  auto key2 = MakeKmsKeyName(
+      "projects/proj/locations/loc/keyRings/ring/cryptoKeys/keyname");
   ASSERT_STATUS_OK(key2);
   EXPECT_EQ(key1, *key2);
 
