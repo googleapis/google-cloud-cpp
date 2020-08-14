@@ -80,9 +80,9 @@ class GeneratorIntegrationTest : public testing::Test {
                            .value_or("/tmp");
 
     google::cloud::generator::Generator generator;
-    //    google::protobuf::compiler::CommandLineInterface cli;
-    cli_.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
-                           "Codegen C++ Generator");
+    google::protobuf::compiler::CommandLineInterface cli;
+    cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
+                          "Codegen C++ Generator");
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -94,36 +94,32 @@ class GeneratorIntegrationTest : public testing::Test {
     args.emplace_back("--cpp_codegen_opt=product_path=google/cloud/test/");
     args.emplace_back("generator/integration_tests/test.proto");
 
-    c_args_.reserve(args.size());
+    std::vector<char const*> c_args;
+    c_args.reserve(args.size());
     for (auto const& arg : args) {
-      std::cout << "args : " << arg << std::endl;
-      c_args_.push_back(arg.c_str());
+      std::cout << "args : " << arg << "\n";
+      c_args.push_back(arg.c_str());
     }
-  }
 
-  int GenerateOnce() {
-    static int result =
-        cli_.Run(static_cast<int>(c_args_.size()), c_args_.data());
-    return result;
-  }
+    static int const kResult =
+        cli.Run(static_cast<int>(c_args.size()), c_args.data());
 
-  google::protobuf::compiler::CommandLineInterface cli_;
-  std::vector<char const*> c_args_;
+    EXPECT_EQ(0, kResult);
+  }
 };
 
 TEST_F(GeneratorIntegrationTest, StubHeader) {
-  EXPECT_EQ(0, GenerateOnce());
   auto golden_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
           .value_or("");
-  auto golden_file = ReadFile(
-      golden_path +
-      "generator/integration_tests/golden/database_admin_stub.gcpcxx.pb.h");
+  auto golden_file = ReadFile(golden_path +
+                              "generator/integration_tests/golden/"
+                              "database_admin_stub.gcpcxx.pb.h.golden");
   EXPECT_TRUE(golden_file.ok());
 
   auto output_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or("/tmp");
+          .value_or(::testing::TempDir());
 
   auto generated_file =
       ReadFile(output_path +
