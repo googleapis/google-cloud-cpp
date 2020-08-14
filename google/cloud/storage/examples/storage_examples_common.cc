@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "absl/time/civil_time.h"
 #include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <sstream>
 
 namespace google {
