@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/random_names.h"
+#include "absl/time/civil_time.h"
+#include "absl/time/clock.h"
 
 namespace google {
 namespace cloud {
@@ -23,11 +25,13 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix) {
   // The total length of this bucket name must be <= 63 characters,
   static std::size_t const kMaxBucketNameLength = 63;
-  std::size_t const max_random_characters =
-      kMaxBucketNameLength - prefix.size();
-  return prefix + google::cloud::internal::Sample(
-                      gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
+  auto const date =
+      absl::FormatCivilTime(absl::ToCivilDay(absl::Now(), absl::UTCTimeZone()));
+  auto const full = prefix + date + "_";
+  std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
+  return full + google::cloud::internal::Sample(
+                    gen, static_cast<int>(max_random_characters),
+                    "abcdefghijklmnopqrstuvwxyz012456789");
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {

@@ -51,7 +51,7 @@ TEST(StorageBenchmarksUtilsTest, MakeRandomBucket) {
   EXPECT_EQ(0, d1.rfind("prefix-", 0));
   EXPECT_GE(63U, d1.size());
   EXPECT_EQ(std::string::npos,
-            d1.find_first_not_of("-abcdefghijklmnopqrstuvwxyz012456789"));
+            d1.find_first_not_of("-_abcdefghijklmnopqrstuvwxyz012456789"));
 }
 
 }  // namespace
