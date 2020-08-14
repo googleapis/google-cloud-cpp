@@ -28,7 +28,7 @@ KmsKeyName::KmsKeyName(std::string const& project_id,
 
 StatusOr<KmsKeyName> KmsKeyName::FromString(std::string full_name) {
   std::regex re(
-      "projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+))");
+      "projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+");
   if (!std::regex_match(full_name, re)) {
     return Status(StatusCode::kInvalidArgument,
                   "Improperly formatted KmsKeyName: " + full_name);
