@@ -94,6 +94,9 @@ upload_docs "google-cloud-common" \
 upload_docs "google-cloud-bigtable" \
   "${BUILD_OUTPUT}/google/cloud/bigtable/html" "${BRANCH}" \
   "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
+upload_docs "google-cloud-pubsub" \
+  "${BUILD_OUTPUT}/google/cloud/pubsub/html" "${BRANCH}" \
+  "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
 upload_docs "google-cloud-spanner" "${BUILD_OUTPUT}/google/cloud/spanner/html" \
   "${BRANCH}" "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
 upload_docs "google-cloud-storage" "${BUILD_OUTPUT}/google/cloud/storage/html" \
