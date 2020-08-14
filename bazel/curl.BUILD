@@ -46,9 +46,9 @@ genrule(
 cc_library(
     name = "define-ca-bundle-location",
     hdrs = select({
-       ":windows": [],
-       ":macos": [],
-       "//conditions:default": ["include/curl_ca_bundle_location.h"],
+        ":windows": [],
+        ":macos": [],
+        "//conditions:default": ["include/curl_ca_bundle_location.h"],
     }),
 )
 
@@ -368,7 +368,7 @@ cc_library(
     deps = [
         # Use the same version of zlib that gRPC does.
         "//external:madler_zlib",
-        ":define-ca-bundle-location"
+        ":define-ca-bundle-location",
     ] + select({
         ":windows": [],
         "//conditions:default": [
