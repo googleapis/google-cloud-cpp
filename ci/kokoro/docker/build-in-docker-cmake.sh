@@ -232,6 +232,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
       "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+
+    echo
+    io::log_yellow "running generator integration tests via CTest"
+    echo
+    "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
+      "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
