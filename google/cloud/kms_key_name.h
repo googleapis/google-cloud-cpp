@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_KEY_NAME_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_KEY_NAME_H
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <ostream>
+#include <iosfwd>
 #include <string>
 
 namespace google {
@@ -34,8 +35,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  *     location, key ring, and KMS key name. Passing invalid values will not
  *     be checked until the key is used in a RPC.
  *
- * TODO(mr-salty) provide a documentation link when it is published.
- * For more info about the `KmsKeyName` format, see (doc link TBD)
+ * See https://cloud.google.com/kms/docs for more information on KMS.
  */
 class KmsKeyName {
  public:
@@ -46,8 +46,11 @@ class KmsKeyName {
   KmsKeyName(std::string const& project_id, std::string const& location,
              std::string const& key_ring, std::string const& kms_key_name);
 
-  /// Construct a KmsKeyName from the given @p full_name
-  KmsKeyName(std::string full_name) : full_name_(std::move(full_name)) {}
+  /**
+   * Constructs a KmsKeyName from the given @p full_name.
+   * Returns a non-OK Status if `full_name` is improperly formed.
+   */
+  static StatusOr<KmsKeyName> FromString(std::string full_name);
 
   /// @name Copy and move
   //@{
@@ -67,13 +70,18 @@ class KmsKeyName {
   /// @name Equality operators
   //@{
   friend bool operator==(KmsKeyName const& a, KmsKeyName const& b);
-  friend bool operator!=(KmsKeyName const& a, KmsKeyName const& b);
+  friend bool operator!=(KmsKeyName const& a, KmsKeyName const& b) {
+    return !(a == b);
+  }
   //@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, KmsKeyName const& key);
 
  private:
+  explicit KmsKeyName(std::string full_name)
+      : full_name_(std::move(full_name)) {}
+
   std::string full_name_;
 };
 
