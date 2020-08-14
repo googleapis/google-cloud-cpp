@@ -5,6 +5,7 @@ var searchData=
   ['make_5fstatus_5for',['make_status_or',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#adf3538accad2fc97d248127f7892d34d',1,'google::cloud::v1']]],
   ['makedeadlinetimer',['MakeDeadlineTimer',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a3dc0077cfca94f5e8532c42c2e25ca0c',1,'google::cloud::v1::CompletionQueue']]],
   ['makejwtassertion',['MakeJWTAssertion',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a8594787a5755f25bed85dded82811c5b',1,'google::cloud::storage::v1::oauth2']]],
+  ['makekmskeyname',['MakeKmsKeyName',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a1581bd51abfa31a8e8782e3430c54528',1,'google::cloud::v1']]],
   ['makerandombucketname',['MakeRandomBucketName',['../namespacegoogle_1_1cloud_1_1storage_1_1examples.html#ae46a184be6b659012746c65d3aac1df4',1,'google::cloud::storage::examples']]],
   ['makerandomobjectname',['MakeRandomObjectName',['../namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a34618094f6e57758fb58285e9423eb6c',1,'google::cloud::storage::examples']]],
   ['makerelativetimer',['MakeRelativeTimer',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a998c6ce6f8aca6e94a77ddccc1fa0956',1,'google::cloud::v1::CompletionQueue']]],

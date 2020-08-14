@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['_7easyncoperation',['~AsyncOperation',['../classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html#a3c9c8c558787206f4755dd545fbd8245',1,'google::cloud::v1::AsyncOperation']]],
-  ['_7ebackgroundthreads',['~BackgroundThreads',['../classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html#aed514432c34edf57c654ccdc3f263f1a',1,'google::cloud::v1::BackgroundThreads']]],
-  ['_7elogbackend',['~LogBackend',['../classgoogle_1_1cloud_1_1v1_1_1LogBackend.html#a11b5c667bd3f5d13a8e931f553cecdf3',1,'google::cloud::v1::LogBackend']]],
-  ['_7epromise',['~promise',['../classgoogle_1_1cloud_1_1v1_1_1promise.html#a7b4419833a492510a1797eb5457a9243',1,'google::cloud::v1::promise::~promise()'],['../classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#a8e3a76a247ae095b0d23180907cf0ae7',1,'google::cloud::v1::promise&lt; void &gt;::~promise()']]],
-  ['_7estatusor',['~StatusOr',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a9eea8ae52ccba36ee15acd9c1d91894b',1,'google::cloud::v1::StatusOr']]]
+  ['value',['value',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#abafb9b3d590ae31fba8445139dc93fb6',1,'google::cloud::v1::StatusOr::value() &amp;'],['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a058b670260d2df7021f3897e78de5a66',1,'google::cloud::v1::StatusOr::value() const &amp;'],['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a7f4a8f407dd49c42f65511b86c319a1a',1,'google::cloud::v1::StatusOr::value() &amp;&amp;'],['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a9badf10258a38b45823d9b38f487e5b8',1,'google::cloud::v1::StatusOr::value() const &amp;&amp;']]],
+  ['version',['version',['../namespacegoogle_1_1cloud_1_1v1.html#a43e78c1e822651248db6f268ef3c4c7e',1,'google::cloud::v1']]],
+  ['version_5fmajor',['version_major',['../namespacegoogle_1_1cloud_1_1v1.html#aa998fe4e2f3757d710a555d508005224',1,'google::cloud::v1']]],
+  ['version_5fminor',['version_minor',['../namespacegoogle_1_1cloud_1_1v1.html#a148b924c894f5d506b7c8711668ff0d1',1,'google::cloud::v1']]],
+  ['version_5fpatch',['version_patch',['../namespacegoogle_1_1cloud_1_1v1.html#a276a34b7bdfb2a5faf7152a2a3c1f324',1,'google::cloud::v1']]],
+  ['version_5fstring',['version_string',['../namespacegoogle_1_1cloud_1_1v1.html#aeeb10f6b22196897eb6c9e881842b710',1,'google::cloud::v1']]]
 ];

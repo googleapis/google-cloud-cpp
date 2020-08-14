@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['options',['Options',['../structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MutationBatcher_1_1Options.html',1,'google::cloud::bigtable::v1::MutationBatcher']]]
+  ['nullstream',['NullStream',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1NullStream.html',1,'google::cloud::v1']]]
 ];
