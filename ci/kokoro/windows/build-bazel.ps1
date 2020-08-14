@@ -138,19 +138,14 @@ Get-Item -ErrorAction SilentlyContinue "${bazel_root}"  | `
     Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
     Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
-$warning_flags = @(
+$build_flags = @(
+    "--keep_going",
     "--per_file_copt=^//google/cloud@-W3",
     "--per_file_copt=^//google/cloud@-WX",
     "--per_file_copt=^//google/cloud@-experimental:external",
     "--per_file_copt=^//google/cloud@-external:W0",
     "--per_file_copt=^//google/cloud@-external:anglebrackets"
 )
-$test_flags = @("--test_output=errors",
-                "--verbose_failures=true",
-                "--keep_going")
-$test_flags += $warning_flags
-$build_flags = @("--keep_going")
-$build_flags += $warning_flags
 
 $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 
@@ -168,8 +163,7 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
 }
 
 if (${env:BUILD_NAME} -eq "bazel-release") {
-    $test_flags+=("-c", "opt")
-    $build_flags+=("-c", "opt")
+    $build_flags += ("-c", "opt")
 }
 
 $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
@@ -181,6 +175,11 @@ ForEach($_ in (1, 2, 3)) {
         break
     }
 }
+
+# All the build_flags should be set by now, so we'll copy them, and add a few
+# more test-only flags.
+$test_flags = $build_flags
+$test_flags += @("--test_output=errors", "--verbose_failures=true")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling and running unit tests"
 bazel $common_flags test $test_flags --test_tag_filters=-integration-test ...
