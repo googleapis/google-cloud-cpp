@@ -49,6 +49,12 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
   bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
+if [[ -r "/etc/pki/tls/certs/ca-bundle.crt" ]]; then
+  bazel_args+=("--define" "ca_bundle_style=redhat")
+elif [[ -r "/etc/ssl/certs/ca-certificates.crt" ]]; then
+  bazel_args+=("--define" "ca_bundle_style=debian")
+fi
+
 readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
 readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
@@ -75,6 +81,7 @@ io::log "Fetching dependencies"
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
+echo "bazel test" "${bazel_args[@]}"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 

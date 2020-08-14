@@ -25,6 +25,38 @@ config_setting(
     visibility = ["//visibility:public"],
 )
 
+# On Linux, libcurl needs to know, at compile time, the location for the
+# Certificate Authority (CA) bundle file. By default we dynamically guess the
+# location for most common Linux distribution, but this guessing makes the build
+# not cacheable.
+#
+# In our CI builds we define the CA bundle location using a --define option.
+# This makes the CI results more amenable to caching, at the cost of "some"
+# complexity in this BUILD file.
+#
+# Note that builds issued by developers in the command-line should continue to
+# work, it is just that the build results are less cacheable than they make
+# wish.
+
+# First convert the --define ca_bundle_style=... option into a config_setting
+# rule:
+config_setting(
+    name = "ca_bundle_style_is_redhat",
+    define_values = {
+        "ca_bundle_style": "redhat",
+    },
+)
+
+config_setting(
+    name = "ca_bundle_style_is_debian",
+    define_values = {
+        "ca_bundle_style": "debian",
+    },
+)
+
+# This just generates a header file with the right value for the CURL_CA_BUNDLE
+# macro. The file is included by curl_config.h if the macro is *not* provided
+# in the build line using -DCURL_CA_BUNDLE=<some-path>:
 genrule(
     name = "gen-ca-bundle-linux",
     outs = ["include/curl_ca_bundle_location.h"],
@@ -40,15 +72,54 @@ genrule(
         exit 1
       fi >$@
     """,
+)
+
+# This is the default depending to define CURL_CA_BUNDLE on Linux, it is tagged
+# as `no-cache` because the output on one host cannot be used in another host.
+cc_library(
+    name = "define-ca-bundle-location-guess",
+    hdrs = ["include/curl_ca_bundle_location.h"],
     tags = ["no-cache"],
 )
 
+# This library is used on redhat-like hosts (RHEL, CentOS, and Fedora for
+# example), because all such hosts use the same value, we can cache this
+# library.
+cc_library(
+    name = "define-ca-bundle-location-redhat",
+    hdrs = [],
+    defines = ["""CURL_CA_BUNDLE='"/etc/pki/tls/certs/ca-bundle.crt"'"""],
+    tags = [],
+)
+
+# This library is used on debian-like hosts (Debian, and Ubuntu for example),
+# because all such hosts use the same value, we can cache this library.
+cc_library(
+    name = "define-ca-bundle-location-debian",
+    hdrs = [],
+    defines = ["""CURL_CA_BUNDLE='"/etc/ssl/certs/ca-certificates.crt"'"""],
+    tags = [],
+)
+
+# This library uses the `ca_bundle_style*` config setting to branch the
+# dependency
+cc_library(
+    name = "define-ca-bundle-location-linux",
+    deps = select({
+        ":ca_bundle_style_is_redhat": [":define-ca-bundle-location-redhat"],
+        ":ca_bundle_style_is_debian": [":define-ca-bundle-location-debian"],
+        "//conditions:default": [":define-ca-bundle-location-guess"],
+    }),
+)
+
+# Finally, on Windows and macOS we do not need to define CURL_CA_BUNDLE at all,
+# so on those platforms we skip the branch of the dependencies altogether.
 cc_library(
     name = "define-ca-bundle-location",
-    hdrs = select({
+    deps = select({
         ":windows": [],
         ":macos": [],
-        "//conditions:default": ["include/curl_ca_bundle_location.h"],
+        "//conditions:default": [":define-ca-bundle-location-linux"],
     }),
 )
 
@@ -420,7 +491,9 @@ genrule(
         "#  define OS \"x86_64-apple-darwin15.5.0\"",
         "#  define USE_SECTRANSP 1",
         "#else",
-        "#  include \"include/curl_ca_bundle_location.h\"",
+        "#  if !defined(CURL_CA_BUNDLE)",
+        "#    include \"include/curl_ca_bundle_location.h\"",
+        "#  endif  // CURL_CA_BUNDLE",
         "#  define GETSERVBYPORT_R_ARGS 6",
         "#  define GETSERVBYPORT_R_BUFSIZE 4096",
         "#  define HAVE_BORINGSSL 1",
