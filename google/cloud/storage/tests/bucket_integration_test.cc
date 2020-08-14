@@ -79,7 +79,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
     }
     return names;
   };
-  EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)))
+  ASSERT_THAT(list_bucket_names(), Not(Contains(bucket_name)))
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
@@ -606,7 +606,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   ASSERT_FALSE(meta->default_acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  EXPECT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)))
+  ASSERT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";

@@ -55,7 +55,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   };
 
   auto object_name = MakeRandomObjectName();
-  EXPECT_THAT(list_object_names(), Not(Contains(object_name)))
+  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
       << "Test aborted. The object <" << object_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 

@@ -515,8 +515,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   StatusOr<std::vector<ObjectAccessControl>> initial_acl =
       client->ListObjectAcl(bucket_name_, object_name);
   ASSERT_STATUS_OK(initial_acl);
-
-  EXPECT_THAT(AclEntityNames(*initial_acl), Not(Contains(entity_name)))
+  ASSERT_THAT(AclEntityNames(*initial_acl), Not(Contains(entity_name)))
       << "Test aborted. The entity <" << entity_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
