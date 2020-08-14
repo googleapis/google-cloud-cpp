@@ -585,6 +585,37 @@ void SubscribeErrorListener(
   (std::move(subscriber), std::move(subscription));
 }
 
+void SubscribeCustomAttributes(
+    google::cloud::pubsub::Subscriber subscriber,
+    google::cloud::pubsub::Subscription const& subscription,
+    std::vector<std::string> const&) {
+  //! [START pubsub_async_pull_custom_attributes]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+    std::atomic<int> count{0};
+    google::cloud::promise<void> received_message;
+    auto result = subscriber.Subscribe(
+        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::cout << "Received message with attributes:\n";
+          for (auto const& kv : m.attributes()) {
+            std::cout << "  " << kv.first << ": " << kv.second << "\n";
+          }
+          // synchronize with the waiting thread to gracefully end the example
+          if (count++ == 0) received_message.set_value();
+          std::move(h).ack();
+        });
+    received_message.get_future()
+        .then([&result](google::cloud::future<void>) { result.cancel(); })
+        .get();
+    std::cout << "Message count = " << count.load()
+              << ", status = " << result.get() << "\n";
+  }
+  //! [END pubsub_async_pull_custom_attributes]
+  (std::move(subscriber), std::move(subscription));
+}
+
 void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -836,7 +867,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
 
-  std::cout << "\nRunning PublishCustomAttributes() sample" << std::endl;
+  std::cout << "\nRunning PublishCustomAttributes() sample [1]" << std::endl;
   PublishCustomAttributes(publisher, {});
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
@@ -856,6 +887,12 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning the CustomThreadPoolSubscriber() sample" << std::endl;
   CustomThreadPoolSubscriber({project_id, subscription_id});
+
+  std::cout << "\nRunning PublishCustomAttributes() sample [2]" << std::endl;
+  PublishCustomAttributes(publisher, {});
+
+  std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
+  SubscribeCustomAttributes(subscriber, subscription, {});
 
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
@@ -938,6 +975,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
+      CreateSubscriberCommand("subscribe-custom-attributes", {},
+                              SubscribeCustomAttributes),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
