@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['scopes',['scopes',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a0bd4ab3186aeb52f544ebad919b5f671',1,'google::cloud::storage::v1::oauth2::ServiceAccountCredentialsInfo']]],
-  ['severity',['severity',['../../common/structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#afb528a645766c4c4955a5d06c9ee20d8',1,'google::cloud::v0::LogRecord']]],
-  ['sha256',['sha256',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1EncryptionKeyData.html#ad5a3adee752ce63306b0619e16551563',1,'google::cloud::storage::v1::EncryptionKeyData']]],
-  ['signature',['signature',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentResult.html#ab351ad4b8542da6ed41be84a0c6bcdf0',1,'google::cloud::storage::v1::PolicyDocumentResult']]],
-  ['storage_5fclass',['storage_class',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRuleAction.html#a0f0a4c1cb874cd352478ec2cc43d7e32',1,'google::cloud::storage::v1::LifecycleRuleAction']]],
-  ['subject',['subject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a3baa5aba9802af9e67bcad51a7756519',1,'google::cloud::storage::v1::oauth2::ServiceAccountCredentialsInfo']]]
+  ['timestamp',['timestamp',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a784d0c31f9ec08d343a737082f00ec33',1,'google::cloud::v1::LogRecord::timestamp()'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html#ae87143fb1e861e8f354384f766b67e31',1,'google::cloud::storage::v1::PolicyDocumentV4::timestamp()']]],
+  ['token',['token',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1RefreshingCredentialsWrapper_1_1TemporaryToken.html#a443453e6fece03c091f2e9c35908ab3c',1,'google::cloud::storage::v1::oauth2::RefreshingCredentialsWrapper::TemporaryToken']]],
+  ['token_5furi',['token_uri',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1AuthorizedUserCredentialsInfo.html#a6f7ed56ea6adc96d0f526f02470d7f52',1,'google::cloud::storage::v1::oauth2::AuthorizedUserCredentialsInfo::token_uri()'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a8a2ef56816a1cdab60c5b463a7d72380',1,'google::cloud::storage::v1::oauth2::ServiceAccountCredentialsInfo::token_uri()']]],
+  ['total_5fbytes_5frewritten',['total_bytes_rewritten',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1RewriteProgress.html#a34e0d1d68ecd6206a5cac2d68556accf',1,'google::cloud::storage::v1::RewriteProgress']]],
+  ['type',['type',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRuleAction.html#a4aa13c9f40d116d41e54743c99590902',1,'google::cloud::storage::v1::LifecycleRuleAction']]]
 ];

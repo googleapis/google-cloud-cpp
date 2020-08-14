@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['uniform_5fbucket_5flevel_5faccess',['uniform_bucket_level_access',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketIamConfiguration.html#aebf5f2453d0e0376e3f49f7e62213261',1,'google::cloud::storage::v1::BucketIamConfiguration']]],
+  ['uniformbucketlevelaccess',['UniformBucketLevelAccess',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UniformBucketLevelAccess.html',1,'google::cloud::storage::v1']]],
   ['updatebucket',['UpdateBucket',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a735213a919f71a041c2548303a914c30',1,'google::cloud::storage::v1::Client']]],
   ['updatebucketacl',['UpdateBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a7686d8097a8b64cb70dac36fece598b8',1,'google::cloud::storage::v1::Client']]],
   ['updated',['updated',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1HmacKeyMetadata.html#a870c666ed4852fe4ea87d70bfea9de52',1,'google::cloud::storage::v1::HmacKeyMetadata']]],
@@ -9,11 +11,17 @@ var searchData=
   ['updateobjectacl',['UpdateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a7220d8aa814d2d0aff2d21c5e7163c51',1,'google::cloud::storage::v1::Client']]],
   ['upload_5fbuffer_5fsize',['upload_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a536ceec3abcdd6c31a049137bf18fee4',1,'google::cloud::storage::v1::ClientOptions']]],
   ['upload_5foptions_2eh',['upload_options.h',['../upload__options_8h.html',1,'']]],
+  ['uploadcontentlength',['UploadContentLength',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UploadContentLength.html',1,'google::cloud::storage::v1']]],
   ['uploadfile',['UploadFile',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a466bafc6323d3d66dc7ef1bfd214e3be',1,'google::cloud::storage::v1::Client']]],
+  ['uploadfromoffset',['UploadFromOffset',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UploadFromOffset.html',1,'google::cloud::storage::v1::UploadFromOffset'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UploadFromOffset.html#a6aa5e78593c980ce453ccfaf2a6c7424',1,'google::cloud::storage::v1::UploadFromOffset::UploadFromOffset()']]],
+  ['uploadlimit',['UploadLimit',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UploadLimit.html',1,'google::cloud::storage::v1::UploadLimit'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UploadLimit.html#aa745ac2c232c54bd403e297d78120b9f',1,'google::cloud::storage::v1::UploadLimit::UploadLimit()']]],
   ['upsert_5fcustom_5fattributes',['upsert_custom_attributes',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#aa28e5fdcd628811c3ced2e038e50e6b3',1,'google::cloud::storage::v1::NotificationMetadata']]],
   ['upsert_5flabel',['upsert_label',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a840e65cf14b1f433eba251df3d5be072',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['upsert_5fmetadata',['upsert_metadata',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a4b54cb93c9feb2961204f42c0915977e',1,'google::cloud::storage::v1::ObjectMetadata']]],
-  ['user_5fagent_5fprefix',['user_agent_prefix',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a2e367a4a8a5c1c78292acf1631e5d73d',1,'google::cloud::storage::v1::ClientOptions']]],
-  ['useresumableuploadsession',['UseResumableUploadSession',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UseResumableUploadSession.html',1,'google::cloud::storage::v1']]],
-  ['userproject',['UserProject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UserProject.html',1,'google::cloud::storage::v1']]]
+  ['url',['url',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result.html#a195f6ba6fcb8e129f4ee67a3df0bad38',1,'google::cloud::storage::v1::PolicyDocumentV4Result']]],
+  ['use_5fshort_5frepeated_5fprimitives',['use_short_repeated_primitives',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html#a501733cf21b9532bfac27781d1097869',1,'google::cloud::v1::TracingOptions']]],
+  ['user_5fagent_5fprefix',['user_agent_prefix',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#aca5362e3eacab6433de0157e2a29db33',1,'google::cloud::v1::ConnectionOptions::user_agent_prefix()'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a2e367a4a8a5c1c78292acf1631e5d73d',1,'google::cloud::storage::v1::ClientOptions::user_agent_prefix()']]],
+  ['useresumableuploadsession',['UseResumableUploadSession',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UseResumableUploadSession.html',1,'google::cloud::storage::v1::UseResumableUploadSession'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UseResumableUploadSession.html#a4ebc7d26c69b547a7d5492f51859a467',1,'google::cloud::storage::v1::UseResumableUploadSession::UseResumableUploadSession()']]],
+  ['userproject',['UserProject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UserProject.html',1,'google::cloud::storage::v1']]],
+  ['usingtestbench',['UsingTestbench',['../namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a24330fe026300b5086a42a399a8f9d62',1,'google::cloud::storage::examples']]]
 ];

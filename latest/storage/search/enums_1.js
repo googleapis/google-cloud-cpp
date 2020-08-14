@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['optype',['OpType',['../storage__latency__benchmark_8cc.html#aa1aa1c6a8f3bbed5b167bc2d4511b969',1,'OpType():&#160;storage_latency_benchmark.cc'],['../storage__throughput__benchmark_8cc.html#aa1aa1c6a8f3bbed5b167bc2d4511b969',1,'OpType():&#160;storage_throughput_benchmark.cc'],['../storage__throughput__vs__cpu__benchmark_8cc.html#aa1aa1c6a8f3bbed5b167bc2d4511b969',1,'OpType():&#160;storage_throughput_vs_cpu_benchmark.cc']]]
+  ['severity',['Severity',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#ac4c72b23eec2946858a43c41386b1dd4',1,'google::cloud::v1']]],
+  ['statuscode',['StatusCode',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a3555ac1a663dcca8417ae42c54266ba2',1,'google::cloud::v1']]]
 ];

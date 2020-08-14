@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['help',['help',['../structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html#a45a05628028193d976b1551409101dc1',1,'google::cloud::storage_benchmarks::OptionDescriptor']]]
+  ['if_5fgeneration_5fmatch',['if_generation_match',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ComposeSourceObject.html#a33273dfce0e3a262955c00fc82c3e786',1,'google::cloud::storage::v1::ComposeSourceObject']]],
+  ['is_5flive',['is_live',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRuleCondition.html#abf95c69e7a7ae10ab765b977a99661c0',1,'google::cloud::storage::v1::LifecycleRuleCondition']]],
+  ['is_5flocked',['is_locked',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketRetentionPolicy.html#a0048e5eec52192799c5c401a01c02540',1,'google::cloud::storage::v1::BucketRetentionPolicy']]]
 ];

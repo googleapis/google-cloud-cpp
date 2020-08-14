@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['iambinding',['IamBinding',['../classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a6b5030fb6c58bd21503893c1045c1618',1,'google::cloud::v0::IamBinding']]],
-  ['iambindings',['IamBindings',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#af702c99d9ea9cefb2ef2421d04715f48',1,'google::cloud::v0::IamBindings::IamBindings()=default'],['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a36c058032de6d0ff10d98104975efa82',1,'google::cloud::v0::IamBindings::IamBindings(std::vector&lt; IamBinding &gt; bindings)'],['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a643f51217eeb6b8275a759a3ea7e6a13',1,'google::cloud::v0::IamBindings::IamBindings(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
-  ['instance',['Instance',['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#af3392b3c4b0bdba600a93e4bb3151ea3',1,'google::cloud::v0::LogSink']]],
-  ['is_5fenabled',['is_enabled',['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a18dbd5816ff8f437e1203f1a60ea81bc',1,'google::cloud::v0::LogSink']]]
+  ['log',['Log',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a37dba0d38faf5d103859d8bc73c61312',1,'google::cloud::v1::LogSink']]],
+  ['logger',['Logger',['../classgoogle_1_1cloud_1_1v1_1_1Logger.html#a8d861d2365b8cce93dc94ba2b1980701',1,'google::cloud::v1::Logger::Logger()'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#a99c95a9e7bebab948a751943559f1abd',1,'google::cloud::v1::Logger&lt; false &gt;::Logger()=default'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#a49294322009f9d580dd09b3671adcc2c',1,'google::cloud::v1::Logger&lt; false &gt;::Logger(Severity, char const *, char const *, int, LogSink &amp;)']]],
+  ['logsink',['LogSink',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a732506f5ba04acb9d4b5b8d421ff3a18',1,'google::cloud::v1::LogSink']]],
+  ['logto',['LogTo',['../classgoogle_1_1cloud_1_1v1_1_1Logger.html#aaf7b214bf5a547b77bec499359d7fffe',1,'google::cloud::v1::Logger::LogTo()'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#af6f6cdd54d4f9855f4dddf9ebff9ce0e',1,'google::cloud::v1::Logger&lt; false &gt;::LogTo()']]]
 ];

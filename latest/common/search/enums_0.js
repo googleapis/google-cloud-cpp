@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['severity',['Severity',['../namespacegoogle_1_1cloud_1_1v0.html#a3668412f87c3e8e0c056860840b950e5',1,'google::cloud::v0']]],
-  ['statuscode',['StatusCode',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9c',1,'google::cloud::v0']]]
+  ['severity',['Severity',['../namespacegoogle_1_1cloud_1_1v1.html#ac4c72b23eec2946858a43c41386b1dd4',1,'google::cloud::v1']]],
+  ['statuscode',['StatusCode',['../namespacegoogle_1_1cloud_1_1v1.html#a3555ac1a663dcca8417ae42c54266ba2',1,'google::cloud::v1']]]
 ];

@@ -7,7 +7,5 @@ var searchData=
   ['objectreadstream',['ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html',1,'google::cloud::storage::v1']]],
   ['objectrewriter',['ObjectRewriter',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectRewriter.html',1,'google::cloud::storage::v1']]],
   ['objectwritestream',['ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html',1,'google::cloud::storage::v1']]],
-  ['optional',['optional',['../../common/classgoogle_1_1cloud_1_1v0_1_1optional.html',1,'google::cloud::v0']]],
-  ['optiondescriptor',['OptionDescriptor',['../structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html',1,'google::cloud::storage_benchmarks']]],
   ['overridedefaultproject',['OverrideDefaultProject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject.html',1,'google::cloud::storage::v1']]]
 ];

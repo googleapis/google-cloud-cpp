@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['operator_3c',['operator&lt;',['../classgoogle_1_1cloud_1_1firestore_1_1FieldPath.html#a3460ad7ce806fd97986e731d3794c3f9',1,'google::cloud::firestore::FieldPath']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../classgoogle_1_1cloud_1_1firestore_1_1FieldPath.html#a4cb91216971d9ed91d0c004e3876526f',1,'google::cloud::firestore::FieldPath']]]
+  ['future',['future',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1future.html#acba1c206f9365d980493bbd3520adb25',1,'google::cloud::v1::future::future()'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1future.html#a71efa7eadf567e13f34076e5bd60fc70',1,'google::cloud::v1::future::future()'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1future_3_01void_01_4.html#acba1c206f9365d980493bbd3520adb25',1,'google::cloud::v1::future&lt; void &gt;::future()']]]
 ];

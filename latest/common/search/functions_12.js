@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['_7elogbackend',['~LogBackend',['../classgoogle_1_1cloud_1_1v0_1_1LogBackend.html#ad3ce83605a3b1f1d0c6c523404acb156',1,'google::cloud::v0::LogBackend']]],
-  ['_7eobservable',['~Observable',['../classgoogle_1_1cloud_1_1v0_1_1testing__util_1_1Observable.html#a3a33eaba35d0f11b599bafb5dcf8fdc9',1,'google::cloud::v0::testing_util::Observable']]],
-  ['_7eoptional',['~optional',['../classgoogle_1_1cloud_1_1v0_1_1optional.html#a2cd83b7ff654b35b4e22aa7a1a57a436',1,'google::cloud::v0::optional']]],
-  ['_7epromise',['~promise',['../classgoogle_1_1cloud_1_1v0_1_1promise.html#ac6103c43416c0a2080eadecbf50723d6',1,'google::cloud::v0::promise::~promise()'],['../classgoogle_1_1cloud_1_1v0_1_1promise_3_01void_01_4.html#a78b43b4aa164053893199202ce49b2b6',1,'google::cloud::v0::promise&lt; void &gt;::~promise()']]],
-  ['_7estatusor',['~StatusOr',['../classgoogle_1_1cloud_1_1v0_1_1StatusOr.html#a78e6c158da8717631dee09f3d4e6d84b',1,'google::cloud::v0::StatusOr']]]
+  ['_7easyncoperation',['~AsyncOperation',['../classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html#a3c9c8c558787206f4755dd545fbd8245',1,'google::cloud::v1::AsyncOperation']]],
+  ['_7ebackgroundthreads',['~BackgroundThreads',['../classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html#aed514432c34edf57c654ccdc3f263f1a',1,'google::cloud::v1::BackgroundThreads']]],
+  ['_7elogbackend',['~LogBackend',['../classgoogle_1_1cloud_1_1v1_1_1LogBackend.html#a11b5c667bd3f5d13a8e931f553cecdf3',1,'google::cloud::v1::LogBackend']]],
+  ['_7epromise',['~promise',['../classgoogle_1_1cloud_1_1v1_1_1promise.html#a7b4419833a492510a1797eb5457a9243',1,'google::cloud::v1::promise::~promise()'],['../classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#a8e3a76a247ae095b0d23180907cf0ae7',1,'google::cloud::v1::promise&lt; void &gt;::~promise()']]],
+  ['_7estatusor',['~StatusOr',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a9eea8ae52ccba36ee15acd9c1d91894b',1,'google::cloud::v1::StatusOr']]]
 ];

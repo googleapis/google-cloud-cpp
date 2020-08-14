@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timestamp',['timestamp',['../structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#a37d8f887b77620c40a0b2c59d768dd7a',1,'google::cloud::v0::LogRecord']]]
+  ['message',['message',['../structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a69b8424a3cac34a4b83b533be1e14159',1,'google::cloud::v1::LogRecord']]]
 ];

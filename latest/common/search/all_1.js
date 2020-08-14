@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['backendcount',['BackendCount',['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#ab169b4a4e7920707757787142c4bda02',1,'google::cloud::v0::LogSink']]],
-  ['begin',['begin',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aee6bb90a41aa973e37f6d69d81147c1c',1,'google::cloud::v0::IamBindings']]],
-  ['bindings',['bindings',['../structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#a94aea5b484c1e9f20529d33ee5de18fe',1,'google::cloud::v0::IamPolicy::bindings()'],['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a494c1f66c64993db2b79c92c2f601660',1,'google::cloud::v0::IamBindings::bindings()']]]
+  ['backendcount',['BackendCount',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a6bdc998062721aece514382850a8610a',1,'google::cloud::v1::LogSink']]],
+  ['background_5fthreads_2eh',['background_threads.h',['../background__threads_8h.html',1,'']]],
+  ['background_5fthreads_5ffactory',['background_threads_factory',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a43284354d8c932382f45510f42788541',1,'google::cloud::v1::ConnectionOptions']]],
+  ['backgroundthreads',['BackgroundThreads',['../classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html',1,'google::cloud::v1']]],
+  ['backgroundthreadsfactory',['BackgroundThreadsFactory',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ad60fc34066e5b46d52e0437dea969d12',1,'google::cloud::v1::ConnectionOptions']]],
+  ['begin',['begin',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9',1,'google::cloud::v1::IamBindings']]],
+  ['bindings',['bindings',['../structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#adf55f038b6b4e6fe8a270738173cd591',1,'google::cloud::v1::IamPolicy::bindings()'],['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6a4a65be49d3f8432c4b9345dcdf74fb',1,'google::cloud::v1::IamBindings::bindings()']]]
 ];

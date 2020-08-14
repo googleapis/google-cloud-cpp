@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['removebackend',['RemoveBackend',['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a3063bc447d387afe061a12dd1e515f1a',1,'google::cloud::v0::LogSink']]],
-  ['removemember',['RemoveMember',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a96e5a4e1472285758eaca6207e46e337',1,'google::cloud::v0::IamBindings']]],
-  ['removemembers',['RemoveMembers',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a6cc9094eaf557b8c794689b918ab636b',1,'google::cloud::v0::IamBindings::RemoveMembers(google::cloud::IamBinding const &amp;iam_binding)'],['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a4df2f9b793ef5baa93dc73cad57951e9',1,'google::cloud::v0::IamBindings::RemoveMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
-  ['reset',['reset',['../classgoogle_1_1cloud_1_1v0_1_1optional.html#a202eec41e2896363c6acef05323f4dba',1,'google::cloud::v0::optional']]],
-  ['role',['role',['../classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a08ec903b646b4b4cb4e4fedeaf3a3fee',1,'google::cloud::v0::IamBinding']]],
-  ['runtimestatuserror',['RuntimeStatusError',['../classgoogle_1_1cloud_1_1v0_1_1RuntimeStatusError.html#a0530e8de1a2eb8d6b37dc4b570d2f669',1,'google::cloud::v0::RuntimeStatusError']]]
+  ['removebackend',['RemoveBackend',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a715301591f0514604df49811751c7e7a',1,'google::cloud::v1::LogSink']]],
+  ['removemember',['RemoveMember',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa284d4bba56800387d416d82faceeb63',1,'google::cloud::v1::IamBindings']]],
+  ['removemembers',['RemoveMembers',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af47fc13f7e3944ead0df2440b38a3d8d',1,'google::cloud::v1::IamBindings::RemoveMembers(google::cloud::IamBinding const &amp;iam_binding)'],['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a972cff96749fa8cd484c9df836ce5d3d',1,'google::cloud::v1::IamBindings::RemoveMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
+  ['role',['role',['../classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a85c927bccf66d5813255cf57c779fb8e',1,'google::cloud::v1::IamBinding']]],
+  ['run',['Run',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a0026334d6cd6f6bbf287788d87b3c3ef',1,'google::cloud::v1::CompletionQueue']]],
+  ['runasync',['RunAsync',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#aa0f154baefdec8d4d5572ecfccf971b3',1,'google::cloud::v1::CompletionQueue::RunAsync(Functor &amp;&amp;functor)'],['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#aa0f154baefdec8d4d5572ecfccf971b3',1,'google::cloud::v1::CompletionQueue::RunAsync(Functor &amp;&amp;functor)']]],
+  ['runtimestatuserror',['RuntimeStatusError',['../classgoogle_1_1cloud_1_1v1_1_1RuntimeStatusError.html#a4188b2e9f9c5248541101d555ae1a087',1,'google::cloud::v1::RuntimeStatusError']]]
 ];

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['value_5f',['value_',['../../common/classgoogle_1_1cloud_1_1v0_1_1StatusOr.html#ad1c759d091fc4e1a86b88c011ed5740f',1,'google::cloud::v0::StatusOr']]],
-  ['version',['version',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#afcce19b41adb89af1daac9287a8b744d',1,'google::cloud::v0::IamPolicy']]],
-  ['view_5funspecified',['VIEW_UNSPECIFIED',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af81e84428b9a164603d8096dcc39d37f',1,'google::cloud::bigtable::v1::TableAdmin']]]
+  ['schema_5fview',['SCHEMA_VIEW',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a91f01cafd7f93de3072d6d816de43972',1,'google::cloud::bigtable::v1::TableAdmin']]],
+  ['severity',['severity',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a352c94a2fd0d055c41fe58ad4ed48288',1,'google::cloud::v1::LogRecord']]],
+  ['ssd',['SSD',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html#aafd4cd8a0c3309844d4f87941a7a9110',1,'google::cloud::bigtable::v1::ClusterConfig']]],
+  ['state_5fnot_5fknown',['STATE_NOT_KNOWN',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html#a064d951abe84911ba18dc33d418e6d36',1,'google::cloud::bigtable::v1::InstanceUpdateConfig']]],
+  ['storage_5ftype_5funspecified',['STORAGE_TYPE_UNSPECIFIED',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html#a33d89554c6fd022fd161ffdcaae9a967',1,'google::cloud::bigtable::v1::ClusterConfig']]]
 ];

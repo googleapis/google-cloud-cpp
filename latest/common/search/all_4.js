@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['emplace',['emplace',['../classgoogle_1_1cloud_1_1v0_1_1optional.html#a1c6b7e3e7273d8cad73c2d1ce7ea5a64',1,'google::cloud::v0::optional']]],
-  ['empty',['empty',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a8ac77f669a35747797b27b63199aecb7',1,'google::cloud::v0::IamBindings::empty()'],['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a23d912e1f49819b5bf93351e9f1f7c95',1,'google::cloud::v0::LogSink::empty()']]],
-  ['enabled',['enabled',['../classgoogle_1_1cloud_1_1v0_1_1Logger.html#ae53b366c265eff45dede4368bea61f71',1,'google::cloud::v0::Logger::enabled()'],['../classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a2e278de38952df5c00fd21fde8bc9edc',1,'google::cloud::v0::Logger&lt; false &gt;::enabled()']]],
-  ['enablestdclog',['EnableStdClog',['../classgoogle_1_1cloud_1_1v0_1_1LogSink.html#aa1dec24bcc0e765c6dee00846ad4cbe0',1,'google::cloud::v0::LogSink']]],
-  ['end',['end',['../classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#ab3f7705ec738faa1c60766db8b024fd5',1,'google::cloud::v0::IamBindings']]],
-  ['etag',['etag',['../structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#a3aa421f13af714c3fee5318cc9e5ad22',1,'google::cloud::v0::IamPolicy']]]
+  ['empty',['empty',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a4d0ba32b574d2067e7ee36d3c0a184d5',1,'google::cloud::v1::IamBindings::empty()'],['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#acb95cd93e37d18dcc8dbc2be598bd694',1,'google::cloud::v1::LogSink::empty()']]],
+  ['enable_5ftracing',['enable_tracing',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a327bb0123c1bc40613dd79cdf00b0f4e',1,'google::cloud::v1::ConnectionOptions']]],
+  ['enabled',['enabled',['../classgoogle_1_1cloud_1_1v1_1_1Logger.html#ab8fb64c231d99227887c5e59b82f3c01',1,'google::cloud::v1::Logger::enabled()'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#a10fc1ed4b60bcfc634e03c7e41c8b4ad',1,'google::cloud::v1::Logger&lt; false &gt;::enabled()']]],
+  ['enablestdclog',['EnableStdClog',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a01dc98ce3a03076cd9f74c6614eeca31',1,'google::cloud::v1::LogSink']]],
+  ['end',['end',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a1c7300b46ad365f0928f65063058d635',1,'google::cloud::v1::IamBindings']]],
+  ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2075c888b810090452199ddf6feeb7ff',1,'google::cloud::v1::ConnectionOptions']]],
+  ['etag',['etag',['../structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#a42dba773688281abf5c330fcf9d591a8',1,'google::cloud::v1::IamPolicy']]]
 ];

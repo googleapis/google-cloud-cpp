@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['iambinding',['IamBinding',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html',1,'google::cloud::v0']]],
-  ['iambindings',['IamBindings',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html',1,'google::cloud::v0']]],
-  ['iampolicy',['IamPolicy',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html',1,'google::cloud::v0']]],
+  ['iambinding',['IamBinding',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBinding.html',1,'google::cloud::v1']]],
+  ['iambindings',['IamBindings',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html',1,'google::cloud::v1']]],
+  ['iampolicy',['IamPolicy',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html',1,'google::cloud::v1']]],
   ['idempotencypolicy',['IdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1IdempotencyPolicy.html',1,'google::cloud::storage::v1']]],
   ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfGenerationMatch.html',1,'google::cloud::storage::v1']]],
   ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v1']]],
@@ -13,5 +13,6 @@ var searchData=
   ['ifsourcegenerationmatch',['IfSourceGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfSourceGenerationMatch.html',1,'google::cloud::storage::v1']]],
   ['ifsourcegenerationnotmatch',['IfSourceGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfSourceGenerationNotMatch.html',1,'google::cloud::storage::v1']]],
   ['ifsourcemetagenerationmatch',['IfSourceMetagenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfSourceMetagenerationMatch.html',1,'google::cloud::storage::v1']]],
-  ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v1']]]
+  ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v1']]],
+  ['impl',['Impl',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1NativeExpression_1_1Impl.html',1,'google::cloud::storage::v1::NativeExpression::Impl'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1NativeIamBinding_1_1Impl.html',1,'google::cloud::storage::v1::NativeIamBinding::Impl'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1NativeIamPolicy_1_1Impl.html',1,'google::cloud::storage::v1::NativeIamPolicy::Impl']]]
 ];
