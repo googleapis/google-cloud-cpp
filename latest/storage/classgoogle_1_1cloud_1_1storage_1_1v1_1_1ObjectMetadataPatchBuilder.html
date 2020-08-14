@@ -125,13 +125,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae4b15bed2aebd6f12e11c15679eeb6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dfae130e292e7cd8c230387bc458bf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html#a7dfae130e292e7cd8c230387bc458bf0">ResetTemporaryHold</a> ()</td></tr>
 <tr class="separator:a7dfae130e292e7cd8c230387bc458bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5df0cee251bb5016d26279817727c75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html#af5df0cee251bb5016d26279817727c75">SetCustomTime</a> (std::chrono::system_clock::time_point tp)</td></tr>
+<tr class="memdesc:af5df0cee251bb5016d26279817727c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the <code>custom_time</code> field.  <a href="#af5df0cee251bb5016d26279817727c75">More...</a><br /></td></tr>
+<tr class="separator:af5df0cee251bb5016d26279817727c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8410cb92189385c9788eb9e72f85b3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html#af8410cb92189385c9788eb9e72f85b3a">ResetCustomTime</a> ()</td></tr>
+<tr class="separator:af8410cb92189385c9788eb9e72f85b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Prepares a patch for the Bucket resource. </p>
 <p>The Bucket resource has many modifiable fields. The application may send a patch request to change (or delete) a small fraction of these fields by using this object.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch">https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch</a> for general information on PATCH requests for the Google Cloud Storage JSON API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00281">281</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00295">295</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8d919c8791f395875e671907ad8476b2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8d919c8791f395875e671907ad8476b2">&#9670;&nbsp;</a></span>ObjectMetadataPatchBuilder()</h2>
@@ -174,7 +179,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00100">100</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00106">106</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -196,7 +201,7 @@ Public Member Functions</h2></td></tr>
 <p>Clears the ACL. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Currently the server ignores requests to reset the full ACL. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00129">129</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00135">135</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -215,7 +220,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00143">143</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00149">149</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -234,7 +239,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00158">158</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00164">164</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -253,7 +258,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00172">172</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00178">178</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -272,7 +277,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00186">186</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00192">192</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -291,7 +296,26 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00200">200</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00206">206</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+
+</div>
+</div>
+<a id="af8410cb92189385c9788eb9e72f85b3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8410cb92189385c9788eb9e72f85b3a">&#9670;&nbsp;</a></span>ResetCustomTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> &amp; google::cloud::storage::v1::ObjectMetadataPatchBuilder::ResetCustomTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00260">260</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -310,7 +334,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00211">211</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00217">217</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -330,7 +354,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00223">223</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00229">229</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -349,7 +373,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00230">230</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00236">236</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -368,7 +392,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00242">242</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00248">248</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -388,7 +412,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00112">112</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00118">118</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -408,7 +432,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00134">134</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00140">140</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -428,7 +452,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00148">148</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00154">154</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -448,7 +472,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00163">163</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00169">169</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -468,7 +492,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00177">177</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00183">183</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -488,7 +512,30 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00191">191</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00197">197</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+
+</div>
+</div>
+<a id="af5df0cee251bb5016d26279817727c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5df0cee251bb5016d26279817727c75">&#9670;&nbsp;</a></span>SetCustomTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html">ObjectMetadataPatchBuilder</a> &amp; google::cloud::storage::v1::ObjectMetadataPatchBuilder::SetCustomTime </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
+          <td class="paramname"><em>tp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change the <code>custom_time</code> field. </p>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string <span class="keyword">const</span>&amp; bucket_name,</div><div class="line">     std::string <span class="keyword">const</span>&amp; object_name) {</div><div class="line">    <span class="keyword">auto</span> original = client.GetObjectMetadata(bucket_name, object_name);</div><div class="line">    <span class="keywordflow">if</span> (!original) <span class="keywordflow">throw</span> std::runtime_error(original.status().message());</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> tp = std::chrono::system_clock::now() - std::chrono::hours(48);</div><div class="line">    <span class="keyword">auto</span> updated =</div><div class="line">        client.PatchObject(bucket_name, object_name,</div><div class="line">                           gcs::ObjectMetadataPatchBuilder{}.SetCustomTime(tp));</div><div class="line">    <span class="keywordflow">if</span> (!updated) <span class="keywordflow">throw</span> std::runtime_error(updated.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The custom time for object &quot;</span> &lt;&lt; updated-&gt;name()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; updated-&gt;bucket() &lt;&lt; <span class="stringliteral">&quot; was successfully set. &quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full object details: &quot;</span> &lt;&lt; *updated &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00253">253</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -508,7 +555,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00205">205</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00211">211</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -538,7 +585,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00216">216</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00222">222</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -558,7 +605,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00236">236</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00242">242</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>

@@ -147,6 +147,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a639ce96b8e752e2ed794333724dd5ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08e852f4df7614fa22c7aafe5a1facec"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a08e852f4df7614fa22c7aafe5a1facec">time_storage_class_updated</a> () const</td></tr>
 <tr class="separator:a08e852f4df7614fa22c7aafe5a1facec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82c103e37c755cdabc0028abe92d6483"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a82c103e37c755cdabc0028abe92d6483">has_custom_time</a> () const</td></tr>
+<tr class="separator:a82c103e37c755cdabc0028abe92d6483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07b8806d209fa000ddbe43f79ef3e8f4"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a07b8806d209fa000ddbe43f79ef3e8f4">custom_time</a> () const</td></tr>
+<tr class="separator:a07b8806d209fa000ddbe43f79ef3e8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ed76e91ddb3cd94e52313eb72902943"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">ObjectMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a3ed76e91ddb3cd94e52313eb72902943">set_custom_time</a> (std::chrono::system_clock::time_point v)</td></tr>
+<tr class="separator:a3ed76e91ddb3cd94e52313eb72902943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02fea51d0a88a1162dcd12b2a781b24b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">ObjectMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a02fea51d0a88a1162dcd12b2a781b24b">reset_custom_time</a> ()</td></tr>
+<tr class="separator:a02fea51d0a88a1162dcd12b2a781b24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors and modifiers to the &lt;tt&gt;metadata&lt;/tt&gt; labels.</div></td></tr>
 <tr class="memitem:a3d168ab93269669c31c66657b79e0581"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a3d168ab93269669c31c66657b79e0581">has_metadata</a> (std::string const &amp;key) const</td></tr>
 <tr class="memdesc:a3d168ab93269669c31c66657b79e0581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a metadata entry. This is a no-op if the key does not exist.  <a href="#a3d168ab93269669c31c66657b79e0581">More...</a><br /></td></tr>
@@ -450,6 +458,33 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a07b8806d209fa000ddbe43f79ef3e8f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07b8806d209fa000ddbe43f79ef3e8f4">&#9670;&nbsp;</a></span>custom_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::system_clock::time_point google::cloud::storage::v1::ObjectMetadata::custom_time </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00234">234</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+
+</div>
+</div>
 <a id="a5a2d3cb7c259f7c2a87c1bca6a515de9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a2d3cb7c259f7c2a87c1bca6a515de9">&#9670;&nbsp;</a></span>customer_encryption()</h2>
 
@@ -558,6 +593,33 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00152">152</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+
+</div>
+</div>
+<a id="a82c103e37c755cdabc0028abe92d6483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82c103e37c755cdabc0028abe92d6483">&#9670;&nbsp;</a></span>has_custom_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage::v1::ObjectMetadata::has_custom_time </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00233">233</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -814,6 +876,33 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a02fea51d0a88a1162dcd12b2a781b24b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02fea51d0a88a1162dcd12b2a781b24b">&#9670;&nbsp;</a></span>reset_custom_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">ObjectMetadata</a>&amp; google::cloud::storage::v1::ObjectMetadata::reset_custom_time </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00241">241</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+
+</div>
+</div>
 <a id="afec860525eee30f874eb2391d430a305"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afec860525eee30f874eb2391d430a305">&#9670;&nbsp;</a></span>retention_expiration_time()</h2>
 
@@ -1006,6 +1095,34 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00130">130</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+
+</div>
+</div>
+<a id="a3ed76e91ddb3cd94e52313eb72902943"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ed76e91ddb3cd94e52313eb72902943">&#9670;&nbsp;</a></span>set_custom_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">ObjectMetadata</a>&amp; google::cloud::storage::v1::ObjectMetadata::set_custom_time </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00237">237</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -1276,7 +1393,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00234">234</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8h_source.html#l00247">247</a> of file <a class="el" href="object__metadata_8h_source.html">object_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -1314,7 +1431,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00048">48</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00051">51</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
@@ -1352,7 +1469,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00025">25</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__metadata_8cc_source.html#l00028">28</a> of file <a class="el" href="object__metadata_8cc_source.html">object_metadata.cc</a>.</p>
 
 </div>
 </div>
