@@ -27,6 +27,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
 class ObjectChecksumIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -167,13 +168,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto count =
-      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
-                    [](std::string const& line) {
-                      return line.rfind("x-goog-hash: crc32c=", 0) == 0;
-                    });
-  // The count could be > 1 if there was a retry.
-  EXPECT_LE(1, count);
+  EXPECT_THAT(backend->log_lines, Contains(StartsWith("x-goog-hash: crc32c=")));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -196,17 +191,13 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto count = std::count_if(
-      backend->log_lines.begin(), backend->log_lines.end(),
-      [](std::string const& line) {
-        // This is a big indirect, we detect if the upload changed to
-        // multipart/related, and if so, we assume the hash value is being used.
-        // Unfortunately I (@coryan) cannot think of a way to examine the upload
-        // contents.
-        return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
-      });
-  // The count could be > 1 if there was a retry.
-  EXPECT_LE(1, count);
+  // This is a big indirect, we detect if the upload changed to
+  // multipart/related, and if so, we assume the hash value is being used.
+  // Unfortunately I (@coryan) cannot think of a way to examine the upload
+  // contents.
+  EXPECT_THAT(
+      backend->log_lines,
+      Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to

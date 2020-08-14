@@ -37,6 +37,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::Contains;
+using ::testing::Not;
+
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
@@ -66,13 +69,16 @@ TEST_F(GrpcIntegrationTest, BucketCRUD) {
 
   EXPECT_EQ(bucket_name, bucket_metadata->name());
 
-  auto bucket_reader = client->ListBucketsForProject(project_id());
-
-  auto count = std::count_if(bucket_reader.begin(), bucket_reader.end(),
-                             [&](StatusOr<BucketMetadata> const& b) {
-                               return b && b->name() == bucket_name;
-                             });
-  EXPECT_NE(0, count);
+  auto list_bucket_names = [&client, this] {
+    std::vector<std::string> names;
+    for (auto b : client->ListBucketsForProject(project_id())) {
+      EXPECT_STATUS_OK(b);
+      if (!b) break;
+      names.push_back(b->name());
+    }
+    return names;
+  };
+  EXPECT_THAT(list_bucket_names(), Contains(bucket_name));
 
   auto get = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get);
@@ -81,11 +87,7 @@ TEST_F(GrpcIntegrationTest, BucketCRUD) {
 
   auto delete_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_status);
-  count = std::count_if(bucket_reader.begin(), bucket_reader.end(),
-                        [&](StatusOr<BucketMetadata> const& b) {
-                          return b && b->name() == bucket_name;
-                        });
-  EXPECT_EQ(0, count);
+  EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
 }
 
 TEST_F(GrpcIntegrationTest, ObjectCRUD) {
