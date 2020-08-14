@@ -24,7 +24,7 @@ export BAZEL_CONFIG=""
 export RUN_INTEGRATION_TESTS="no"
 driver_script="ci/kokoro/macos/build-bazel.sh"
 
-# Disable generator integration tests for macos
+# TODO(#4896): Enable generator integration tests for macos.
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="no"
 
 if [[ $# -eq 1 ]]; then

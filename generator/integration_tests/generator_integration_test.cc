@@ -27,6 +27,19 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
+  std::string line;
+  std::vector<std::string> file_contents;
+  std::ifstream input_file(filepath);
+
+  if (!input_file)
+    return Status(StatusCode::kNotFound, "Cannot open: " + filepath);
+  while (std::getline(input_file, line)) {
+    file_contents.push_back(line);
+  }
+  return file_contents;
+}
+
 class GeneratorIntegrationTest : public testing::Test {
  protected:
   void SetUp() override {
@@ -67,9 +80,9 @@ class GeneratorIntegrationTest : public testing::Test {
                            .value_or("/tmp");
 
     google::cloud::generator::Generator generator;
-    google::protobuf::compiler::CommandLineInterface cli;
-    cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
-                          "Codegen C++ Generator");
+    //    google::protobuf::compiler::CommandLineInterface cli;
+    cli_.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
+                           "Codegen C++ Generator");
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -81,32 +94,25 @@ class GeneratorIntegrationTest : public testing::Test {
     args.emplace_back("--cpp_codegen_opt=product_path=google/cloud/test/");
     args.emplace_back("generator/integration_tests/test.proto");
 
-    std::vector<char const*> c_args;
-    c_args.reserve(args.size());
+    c_args_.reserve(args.size());
     for (auto const& arg : args) {
       std::cout << "args : " << arg << std::endl;
-      c_args.push_back(arg.c_str());
+      c_args_.push_back(arg.c_str());
     }
-
-    EXPECT_EQ(0, cli.Run(static_cast<int>(args.size()), c_args.data()));
   }
 
-  static StatusOr<std::vector<std::string>> ReadFile(
-      std::string const& filepath) {
-    std::string line;
-    std::vector<std::string> file_contents;
-    std::ifstream input_file(filepath);
-
-    if (!input_file)
-      return Status(StatusCode::kNotFound, "Cannot open: " + filepath);
-    while (std::getline(input_file, line)) {
-      file_contents.push_back(line);
-    }
-    return file_contents;
+  int GenerateOnce() {
+    static int result =
+        cli_.Run(static_cast<int>(c_args_.size()), c_args_.data());
+    return result;
   }
+
+  google::protobuf::compiler::CommandLineInterface cli_;
+  std::vector<char const*> c_args_;
 };
 
 TEST_F(GeneratorIntegrationTest, StubHeader) {
+  EXPECT_EQ(0, GenerateOnce());
   auto golden_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
           .value_or("");
