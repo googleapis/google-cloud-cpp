@@ -22,6 +22,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
+using ::google::cloud::internal::FormatRfc3339;
+
 bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
   return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(lhs) ==
              rhs &&
@@ -42,7 +45,7 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          lhs.temporary_hold_ == rhs.temporary_hold_ &&
          lhs.time_deleted_ == rhs.time_deleted_ &&
          lhs.time_storage_class_updated_ == rhs.time_storage_class_updated_ &&
-         lhs.size_ == rhs.size_;
+         lhs.size_ == rhs.size_ && lhs.custom_time_ == rhs.custom_time_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
@@ -85,7 +88,7 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   }
 
   os << ", retention_expiration_time="
-     << google::cloud::internal::FormatRfc3339(rhs.retention_expiration_time())
+     << FormatRfc3339(rhs.retention_expiration_time())
      << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
      << ", temporary_hold=" << std::boolalpha << rhs.temporary_hold()
@@ -93,8 +96,11 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << ", time_deleted=" << rhs.time_deleted().time_since_epoch().count()
      << ", time_storage_class_updated="
      << rhs.time_storage_class_updated().time_since_epoch().count()
-     << ", updated=" << rhs.updated().time_since_epoch().count() << "}";
-  return os;
+     << ", updated=" << rhs.updated().time_since_epoch().count();
+  if (rhs.has_custom_time()) {
+    os << ", custom_time=" << FormatRfc3339(rhs.custom_time());
+  }
+  return os << "}";
 }
 
 std::string ObjectMetadataPatchBuilder::BuildPatch() const {
@@ -241,6 +247,18 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(
 
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetTemporaryHold() {
   impl_.RemoveField("temporaryHold");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetCustomTime(
+    std::chrono::system_clock::time_point tp) {
+  impl_.SetStringField("customTime",
+                       google::cloud::internal::FormatRfc3339(tp));
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetCustomTime() {
+  impl_.RemoveField("customTime");
   return *this;
 }
 

@@ -230,6 +230,19 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   using CommonMetadata::updated;
 
+  bool has_custom_time() const { return custom_time_.has_value(); }
+  std::chrono::system_clock::time_point custom_time() const {
+    return custom_time_.value_or(std::chrono::system_clock::time_point{});
+  }
+  ObjectMetadata& set_custom_time(std::chrono::system_clock::time_point v) {
+    custom_time_ = v;
+    return *this;
+  }
+  ObjectMetadata& reset_custom_time() {
+    custom_time_.reset();
+    return *this;
+  }
+
   friend bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs);
   friend bool operator!=(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
     return !(lhs == rhs);
@@ -262,6 +275,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool temporary_hold_{false};
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
+  absl::optional<std::chrono::system_clock::time_point> custom_time_;
 };
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
@@ -313,6 +327,16 @@ class ObjectMetadataPatchBuilder {
 
   ObjectMetadataPatchBuilder& SetTemporaryHold(bool v);
   ObjectMetadataPatchBuilder& ResetTemporaryHold();
+
+  /**
+   * Change the `custom_time` field.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc object custom time
+   */
+  ObjectMetadataPatchBuilder& SetCustomTime(
+      std::chrono::system_clock::time_point tp);
+  ObjectMetadataPatchBuilder& ResetCustomTime();
 
  private:
   internal::PatchBuilder impl_;

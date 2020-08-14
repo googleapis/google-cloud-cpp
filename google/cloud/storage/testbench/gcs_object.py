@@ -428,8 +428,12 @@ class GcsObject(object):
             "metadata",
             "temporaryHold",
             "storageClass",
+            "customTime",
         }
-        for key in metadata.keys():
+        # Cannot change `metadata` while we are iterating over it, so we make
+        # a copy
+        keys = [key for key in metadata.keys()]
+        for key in keys:
             if key not in writeable_keys:
                 metadata.pop(key, None)
         return metadata

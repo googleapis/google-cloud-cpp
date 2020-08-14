@@ -806,6 +806,7 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
         google::cloud::internal::ToChronoTimePoint(
             object.time_storage_class_updated());
   }
+  // TODO(#4893) - support customTime for GCS+gRPC
 
   return metadata;
 }
