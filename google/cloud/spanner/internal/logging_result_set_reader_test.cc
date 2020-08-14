@@ -28,6 +28,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::Contains;
+using ::testing::HasSubstr;
 namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
@@ -46,12 +48,7 @@ class LoggingResultSetReaderTest : public ::testing::Test {
   void ClearLogCapture() { backend_->log_lines.clear(); }
 
   void HasLogLineWith(std::string const& contents) {
-    auto count =
-        std::count_if(backend_->log_lines.begin(), backend_->log_lines.end(),
-                      [&contents](std::string const& line) {
-                        return std::string::npos != line.find(contents);
-                      });
-    EXPECT_NE(0, count);
+    EXPECT_THAT(backend_->log_lines, Contains(HasSubstr(contents)));
   }
 
  private:

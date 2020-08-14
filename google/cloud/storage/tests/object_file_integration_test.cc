@@ -358,13 +358,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   ASSERT_STATUS_OK(meta);
   LogSink::Instance().RemoveBackend(id);
 
-  auto count = std::count_if(
-      backend->log_lines.begin(), backend->log_lines.end(),
-      [file_name](std::string const& line) {
-        return line.find(file_name) != std::string::npos &&
-               line.find("not a regular file") != std::string::npos;
-      });
-  EXPECT_NE(0U, count);
+  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("not a regular file")));
 
   t.join();
   auto status = client->DeleteObject(bucket_name_, object_name);

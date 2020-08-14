@@ -25,6 +25,8 @@ namespace internal {
 namespace {
 
 using ::testing::AnyOf;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
   auto stub = CreateDefaultSpannerStub(Database("foo", "bar", "baz"),
@@ -54,12 +56,8 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
               AnyOf(StatusCode::kUnavailable, StatusCode::kInvalidArgument,
                     StatusCode::kDeadlineExceeded));
 
-  auto const& lines = backend->log_lines;
-  auto count = std::count_if(
-      lines.begin(), lines.end(), [&session](std::string const& line) {
-        return line.find(session.status().message()) != std::string::npos;
-      });
-  EXPECT_NE(0, count);
+  EXPECT_THAT(backend->log_lines,
+              Contains(HasSubstr(session.status().message())));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }

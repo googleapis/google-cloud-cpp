@@ -19,6 +19,7 @@
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <chrono>
 #include <string>
 #include <thread>
@@ -124,6 +125,15 @@ CountMatchingEntities(std::vector<AccessControlResource> const& acl,
       acl.begin(), acl.end(), [&expected](AccessControlResource const& x) {
         return x.entity() == expected.entity() && x.role() == expected.role();
       });
+}
+
+template <typename AccessControlResource>
+std::vector<std::string> AclEntityNames(
+    std::vector<AccessControlResource> const& acl) {
+  std::vector<std::string> names(acl.size());
+  std::transform(acl.begin(), acl.end(), names.begin(),
+                 [](AccessControlResource const& x) { return x.entity(); });
+  return names;
 }
 
 }  // namespace testing

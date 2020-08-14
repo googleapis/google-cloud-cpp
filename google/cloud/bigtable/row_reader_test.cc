@@ -25,13 +25,16 @@
 #include <deque>
 #include <initializer_list>
 
-using testing::_;
-using testing::DoAll;
-using testing::Eq;
-using testing::Matcher;
-using testing::Property;
-using testing::Return;
-using testing::SetArgPointee;
+using ::testing::_;
+using ::testing::Contains;
+using ::testing::DoAll;
+using ::testing::Eq;
+using ::testing::HasSubstr;
+using ::testing::Matcher;
+using ::testing::Not;
+using ::testing::Property;
+using ::testing::Return;
+using ::testing::SetArgPointee;
 
 using google::bigtable::v2::ReadRowsRequest;
 using google::bigtable::v2::ReadRowsResponse_CellChunk;
@@ -721,15 +724,10 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 
-  std::string const expected_message =
-      "RowReader has an error, and the error status was not retrieved";
-  auto count =
-      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
-                    [&expected_message](std::string const& line) {
-                      return line.find(expected_message) != std::string::npos;
-                    });
-  EXPECT_EQ(0, count) << "Unexpected log captured: "
-                      << backend->log_lines.front();
+  EXPECT_THAT(
+      backend->log_lines,
+      Not(Contains(HasSubstr(
+          "RowReader has an error, and the error status was not retrieved"))));
 }
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
