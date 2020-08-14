@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/match.h"
 #include "absl/strings/string_view.h"
 #include "generator/generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
@@ -28,7 +29,16 @@ namespace {
 
 class GeneratorIntegrationTest : public testing::Test {
  protected:
-  static void SetUpTestSuite() {
+  void SetUp() override {
+    auto run_integration_tests =
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS")
+            .value_or("");
+    if (run_integration_tests != "yes") {
+      GTEST_SKIP();
+    }
+
+    EXPECT_EQ(run_integration_tests, "yes");
     ASSERT_TRUE(
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH")
             .has_value());

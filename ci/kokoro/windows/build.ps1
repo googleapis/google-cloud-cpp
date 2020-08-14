@@ -47,6 +47,9 @@ the KOKORO_JOB_NAME environment variable.
     Exit 1
 }
 
+# Disable generator integration tests for Windows
+$env:GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS = "no"
+
 $DependencyScriptArgs=@()
 if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:CONFIG = "Debug"

@@ -26,6 +26,8 @@ export DISTRO=fedora-install
 export DISTRO_VERSION=31
 export CMAKE_SOURCE_DIR="."
 
+export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
+
 in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
 if [[ $# -ge 1 ]]; then
