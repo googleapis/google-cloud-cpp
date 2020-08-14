@@ -102,7 +102,8 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeCreated": "2018-05-19T19:31:14Z",
       "timeDeleted": "2018-05-19T19:32:24Z",
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
-      "updated": "2018-05-19T19:31:24Z"
+      "updated": "2018-05-19T19:31:24Z",
+      "customTime": "2020-08-10T12:34:56Z"
 })""";
   return internal::ObjectMetadataParser::FromString(text).value();
 }
@@ -181,6 +182,7 @@ TEST(ObjectMetadataTest, IOStream) {
               HasSubstr("retention_expiration_time=2019-01-01T00:00:00Z"));
   EXPECT_THAT(actual, HasSubstr("size=102400"));
   EXPECT_THAT(actual, HasSubstr("temporary_hold=true"));
+  EXPECT_THAT(actual, HasSubstr("custom_time=2020-08-10T12:34:56Z"));
 }
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
@@ -357,6 +359,7 @@ TEST(ObjectMetadataTest, JsonForUpdate) {
            {"foo", "bar"},
            {"baz", "qux"},
        }},
+      {"customTime", "2020-08-10T12:34:56Z"},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -448,6 +451,27 @@ TEST(ObjectMetadataTest, SetStorageClass) {
   auto copy = expected;
   copy.set_storage_class("NEARLINE");
   EXPECT_EQ("NEARLINE", copy.storage_class());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the customTime field.
+TEST(ObjectMetadataTest, SetCustomTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  auto tp = google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z");
+  copy.set_custom_time(tp);
+  EXPECT_TRUE(expected.has_custom_time());
+  EXPECT_TRUE(copy.has_custom_time());
+  EXPECT_EQ(tp, copy.custom_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can Reset the customTime field.
+TEST(ObjectMetadataTest, ResetCustomTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  copy.reset_custom_time();
+  EXPECT_FALSE(copy.has_custom_time());
   EXPECT_NE(expected, copy);
 }
 
@@ -648,7 +672,7 @@ TEST(ObjectMetadataPatchBuilder, SetMetadata) {
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
-TEST(ObjectMetadataPatchBuilder, Resetmetadata) {
+TEST(ObjectMetadataPatchBuilder, ResetMetadata) {
   ObjectMetadataPatchBuilder builder;
   builder.ResetMetadata();
 
@@ -677,6 +701,27 @@ TEST(ObjectMetadataPatchBuilder, ResetTemporaryHold) {
   auto actual = builder.BuildPatch();
   auto actual_as_json = nlohmann::json::parse(actual);
   nlohmann::json expected{{"temporaryHold", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetCustomTime) {
+  ObjectMetadataPatchBuilder builder;
+  auto const tp = google::cloud::internal::ParseRfc3339("2020-08-10T09:00:00Z");
+  builder.SetCustomTime(tp);
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"customTime", "2020-08-10T09:00:00Z"}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetCustomTime) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetCustomTime();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = nlohmann::json::parse(actual);
+  nlohmann::json expected{{"customTime", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 

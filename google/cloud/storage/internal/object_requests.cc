@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
 #include <cinttypes>
 #include <sstream>
@@ -95,6 +96,11 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
   result.time_storage_class_updated_ =
       internal::ParseTimestampField(json, "timeStorageClassUpdated");
+  if (json.count("customTime") == 0) {
+    result.custom_time_.reset();
+  } else {
+    result.custom_time_ = internal::ParseTimestampField(json, "customTime");
+  }
   return result;
 }
 
@@ -181,6 +187,11 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
       meta_as_json[kv.first] = kv.second;
     }
     metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  if (meta.has_custom_time()) {
+    metadata_as_json["customTime"] =
+        google::cloud::internal::FormatRfc3339(meta.custom_time());
   }
 
   return metadata_as_json;

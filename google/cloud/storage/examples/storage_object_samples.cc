@@ -528,6 +528,30 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void ChangeObjectCustomTime(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
+  //! [object custom time]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    auto original = client.GetObjectMetadata(bucket_name, object_name);
+    if (!original) throw std::runtime_error(original.status().message());
+
+    auto const tp = std::chrono::system_clock::now() - std::chrono::hours(48);
+    auto updated =
+        client.PatchObject(bucket_name, object_name,
+                           gcs::ObjectMetadataPatchBuilder{}.SetCustomTime(tp));
+    if (!updated) throw std::runtime_error(updated.status().message());
+
+    std::cout << "The custom time for object " << updated->name()
+              << " in bucket " << updated->bucket() << " was successfully set. "
+              << "Full object details: " << *updated << "\n";
+  }
+  //! [object custom time]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -587,6 +611,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning ChangeObjectStorageClass() example" << std::endl;
   ChangeObjectStorageClass(client, {bucket_name, object_name, "NEARLINE"});
+
+  std::cout << "\nRunning ChangeObjectCustomTime() example" << std::endl;
+  ChangeObjectCustomTime(client, {bucket_name, object_name});
 
   std::cout << "\nRunning ReadObject() example" << std::endl;
   ReadObject(client, {bucket_name, object_name});
@@ -714,6 +741,8 @@ int main(int argc, char* argv[]) {
       make_entry("change-object-storage-class",
                  {"<object-name>", "<storage-class>"},
                  ChangeObjectStorageClass),
+      make_entry("change-object-custom-time", {"<object-name>"},
+                 ChangeObjectCustomTime),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
