@@ -66,8 +66,6 @@ function (google_cloud_cpp_generator_define_integration_tests)
     endif ()
 endfunction ()
 
-add_subdirectory(golden)
-
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
 # is installed from source.

@@ -23,7 +23,7 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     timeout = "long",
     srcs = [test],
     data = [
-        ":golden/database_admin_stub.gcpcxx.pb.h",
+        ":golden/database_admin_stub.gcpcxx.pb.h.golden",
     ],
     tags = [
         "integration-test",
