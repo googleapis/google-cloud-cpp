@@ -82,7 +82,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_THAT(
-        TableNames(*previous_table_list),
+        TableNames(*current_table_list),
         ContainsOnce(table_admin_->instance_name() + "/tables/" + table_id));
   }
   for (auto const& table_id : expected_table_list) {
@@ -93,7 +93,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_THAT(
-        TableNames(*previous_table_list),
+        TableNames(*current_table_list),
         Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
   }
 }

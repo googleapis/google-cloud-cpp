@@ -388,9 +388,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   };
 
   EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id2))));
+              Not(Contains(EndsWith("/appProfiles/" + id2))));
 
   auto profile_1 = instance_admin_
                        ->AsyncCreateAppProfile(
@@ -409,9 +409,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
       instance_admin_->AsyncListAppProfiles(cq, instance_id).get();
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id1)));
+              ContainsOnce(EndsWith("/appProfiles/" + id1)));
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id2)));
+              ContainsOnce(EndsWith("/appProfiles/" + id2)));
 
   auto detail_1 =
       instance_admin_->AsyncGetAppProfile(cq, instance_id, id1).get();
@@ -445,9 +445,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id2)));
+              ContainsOnce(EndsWith("/appProfiles/" + id2)));
 
   ASSERT_STATUS_OK(instance_admin_
                        ->AsyncDeleteAppProfile(cq, instance_id, id2,
@@ -456,9 +456,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id2))));
+              Not(Contains(EndsWith("/appProfiles/" + id2))));
 
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 

@@ -177,9 +177,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   };
 
   EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id2))));
+              Not(Contains(EndsWith("/appProfiles/" + id2))));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
       instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
@@ -191,9 +191,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id1)));
+              ContainsOnce(EndsWith("/appProfiles/" + id1)));
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id2)));
+              ContainsOnce(EndsWith("/appProfiles/" + id2)));
 
   auto detail_1 = instance_admin_->GetAppProfile(instance_id, id1);
   ASSERT_STATUS_OK(detail_1);
@@ -221,17 +221,17 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles" + id2)));
+              ContainsOnce(EndsWith("/appProfiles/" + id2)));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id2, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id1))));
+              Not(Contains(EndsWith("/appProfiles/" + id1))));
   EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles" + id2))));
+              Not(Contains(EndsWith("/appProfiles/" + id2))));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
