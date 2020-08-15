@@ -26,6 +26,8 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
+using PollingPolicy = ::google::cloud::PollingPolicy;
+
 /**
  * Combine a RetryPolicy and a BackoffPolicy to create simple polling policies.
  */
