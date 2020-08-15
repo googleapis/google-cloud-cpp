@@ -24,6 +24,7 @@ if (BUILD_TESTING)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
+        contains_once.h
         crash_handler.cc
         crash_handler.h
         example_driver.cc
@@ -46,8 +47,12 @@ if (BUILD_TESTING)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
-        assert_ok_test.cc crash_handler_test.cc example_driver_test.cc
-        scoped_environment_test.cc status_matchers_test.cc)
+        assert_ok_test.cc
+        contains_once_test.cc
+        crash_handler_test.cc
+        example_driver_test.cc
+        scoped_environment_test.cc
+        status_matchers_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
