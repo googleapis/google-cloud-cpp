@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
 
-#include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/backoff_policy.h"
 
 namespace google {
 namespace cloud {
