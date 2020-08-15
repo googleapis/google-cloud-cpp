@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
@@ -36,6 +37,7 @@ namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::storage::testing::TestPermanentFailure;
+using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Eq;
@@ -528,7 +530,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_THAT(AclEntityNames(*current_acl), Contains(result->entity()));
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
 
   auto get_result =
       client->GetObjectAcl(bucket_name_, object_name, entity_name);

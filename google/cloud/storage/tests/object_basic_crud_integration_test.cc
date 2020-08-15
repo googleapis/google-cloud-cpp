@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
@@ -34,6 +35,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
 using ObjectBasicCRUDIntegrationTest =
@@ -64,7 +66,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
-  EXPECT_THAT(list_object_names(), Contains(object_name));
+  EXPECT_THAT(list_object_names(), ContainsOnce(object_name));
 
   StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
       bucket_name_, object_name, Generation(insert_meta->generation()),

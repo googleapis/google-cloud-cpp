@@ -17,6 +17,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -28,6 +29,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
+using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -89,9 +91,11 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
+  EXPECT_THAT(
+      log_backend_->log_lines,
+      ContainsOnce(HasSubstr("upload_size=" + std::to_string(513 * 1024))));
   EXPECT_THAT(log_backend_->log_lines,
-              Contains(HasSubstr("upload_size=" + std::to_string(513 * 1024))));
-  EXPECT_THAT(log_backend_->log_lines, Contains(HasSubstr("[UNAVAILABLE]")));
+              ContainsOnce(HasSubstr("[UNAVAILABLE]")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -109,7 +113,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   EXPECT_EQ("uh oh", result.status().message());
 
   EXPECT_THAT(log_backend_->log_lines,
-              Contains(HasSubstr("[FAILED_PRECONDITION]")));
+              ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
@@ -125,7 +129,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   EXPECT_EQ(512 * 1024, result);
 
   EXPECT_THAT(log_backend_->log_lines,
-              Contains(HasSubstr(std::to_string(512 * 1024))));
+              ContainsOnce(HasSubstr(std::to_string(512 * 1024))));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
@@ -140,8 +144,8 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto result = session.last_response();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result.value(), last_response.value());
-  EXPECT_THAT(log_backend_->log_lines, Contains(HasSubstr("upload url")));
-  EXPECT_THAT(log_backend_->log_lines, Contains(HasSubstr("payload={}")));
+  EXPECT_THAT(log_backend_->log_lines, ContainsOnce(HasSubstr("upload url")));
+  EXPECT_THAT(log_backend_->log_lines, ContainsOnce(HasSubstr("payload={}")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
@@ -158,7 +162,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   EXPECT_EQ("something bad", result.status().message());
 
   EXPECT_THAT(log_backend_->log_lines,
-              Contains(HasSubstr("[FAILED_PRECONDITION]")));
+              ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 
 }  // namespace
