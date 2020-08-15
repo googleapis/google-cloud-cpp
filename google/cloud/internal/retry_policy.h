@@ -44,7 +44,7 @@ class RetryPolicy {
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusTypeP, typename RetryableTraitsP>
+template <typename RetryableTraitsP>
 class TraitBasedRetryPolicy : public RetryPolicy {
  public:
   ///@{
@@ -85,11 +85,11 @@ class TraitBasedRetryPolicy : public RetryPolicy {
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusType, typename RetryablePolicy>
+template <typename RetryablePolicy>
 class LimitedErrorCountRetryPolicy
-    : public TraitBasedRetryPolicy<StatusType, RetryablePolicy> {
+    : public TraitBasedRetryPolicy<RetryablePolicy> {
  public:
-  using BaseType = TraitBasedRetryPolicy<StatusType, RetryablePolicy>;
+  using BaseType = TraitBasedRetryPolicy<RetryablePolicy>;
 
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
       : failure_count_(0), maximum_failures_(maximum_failures) {}
@@ -122,11 +122,10 @@ class LimitedErrorCountRetryPolicy
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusType, typename RetryablePolicy>
-class LimitedTimeRetryPolicy
-    : public TraitBasedRetryPolicy<StatusType, RetryablePolicy> {
+template <typename RetryablePolicy>
+class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
  public:
-  using BaseType = TraitBasedRetryPolicy<StatusType, RetryablePolicy>;
+  using BaseType = TraitBasedRetryPolicy<RetryablePolicy>;
 
   /**
    * Constructor given a `std::chrono::duration<>` object.

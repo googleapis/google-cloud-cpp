@@ -38,12 +38,11 @@ google::cloud::Status CreatePermanentError() {
 }
 
 using RetryPolicyForTest =
-    google::cloud::internal::TraitBasedRetryPolicy<Status, IsRetryablePolicy>;
+    google::cloud::internal::TraitBasedRetryPolicy<IsRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    google::cloud::internal::LimitedTimeRetryPolicy<Status, IsRetryablePolicy>;
+    google::cloud::internal::LimitedTimeRetryPolicy<IsRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<Status,
-                                                          IsRetryablePolicy>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryablePolicy>;
 
 auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
 auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
