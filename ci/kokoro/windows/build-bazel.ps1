@@ -78,54 +78,6 @@ if (Test-Path env:TEMP) {
 }
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Using ${download_dir} as download directory"
 
-# Download and extract the cache tarball
-if ($RunningCI -and $IsPR -and $CacheConfigured -and $Has7z) {
-    gcloud auth activate-service-account --key-file `
-        "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "downloading Bazel cache."
-    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z" "${download_dir}"
-    if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "gsutil download failed with exit code ${LastExitCode}."
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "continue building without a cache"
-    } else {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "decompressing build cache."
-        7z x "${download_dir}/${CACHE_BASENAME}.7z" "-o${download_dir}" "-aoa" "-bso0" "-bsp0"
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "extracting build cache."
-        $extract_flags=@(
-            # Preserve full path
-            "-spf",
-            # Preserve symbolic links
-            "-snl",
-            # Preserve hard links
-            "-snh",
-            # Overwrite all items
-            "-aoa",
-            # Suppress progress messages
-            "-bsp0",
-            # Suppress typicaly output messages
-            "-bso0"
-        )
-        7z x "${download_dir}/${CACHE_BASENAME}.tar" ${extract_flags}
-        if ($LastExitCode) {
-            # Ignore errors, caching failures should not break the build.
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "extracting build cache failed with exit code ${LastExitCode}."
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "Continue building without a cache"
-        }
-        # Remove the tarball after extraction, this was about 25GiB on 2020-07, and consumes
-        # too much space in the boot disk.
-        Remove-Item -ErrorAction SilentlyContinue "${download_dir}/${CACHE_BASENAME}.tar"
-        Remove-Item -ErrorAction SilentlyContinue "${download_dir}/${CACHE_BASENAME}.7z"
-    }
-}
-
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
 Get-CimInstance -Class CIM_LogicalDisk | `
     Select-Object -Property DeviceID, DriveType, VolumeName, `
@@ -264,63 +216,6 @@ if (Integration-Tests-Enabled) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
 bazel shutdown
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk | `
-    Select-Object -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
-Get-Item -ErrorAction SilentlyContinue "${bazel_root}"  | `
-    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
-    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
-    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
-
-if ($RunningCI -and $IsCI -and $CacheConfigured -and $Has7z) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
-    # We use 7z because it knows how to handle locked files better than Unix
-    # tools like tar(1).
-    $archive_flags=@(
-        # Preserve hard links
-        "-snh",
-        # Preserve soft links
-        "-snl",
-        # Preserve full path
-        "-spf",
-        # Exclude directories named "install"
-        "-xr!install",
-        # Suppress standard logging
-        "-bso0",
-        # Suppress progress
-        "-bsp0"
-    )
-    Remove-Item "${download_dir}\${CACHE_BASENAME}.tar" -ErrorAction SilentlyContinue
-    7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compressing cache tarball"
-    Remove-Item "${download_dir}\${CACHE_BASENAME}.7z" -ErrorAction SilentlyContinue
-    7z a "${download_dir}\${CACHE_BASENAME}.7z" "${download_dir}\${CACHE_BASENAME}.tar" -bso0 -bsp0
-    if ($LastExitCode) {
-        # Just report these errors and continue, caching failures should
-        # not break the build.
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "zipping cache contents failed with exit code ${LastExitCode}."
-    } else {
-        gcloud auth activate-service-account --key-file `
-            "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "uploading Bazel cache."
-        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.7z" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.7z"
-        if ($LastExitCode) {
-            # Just report these errors and continue, caching failures should
-            # not break the build.
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "uploading cache failed exit code ${LastExitCode}."
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "cache not updated, this will not cause a build failure."
-        }
-    }
-}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
 Get-CimInstance -Class CIM_LogicalDisk | `
