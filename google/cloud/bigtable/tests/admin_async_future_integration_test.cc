@@ -141,7 +141,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
           .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
             StatusOr<std::vector<btadmin::Table>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            EXPECT_THAT(TableNames(*result),
+            ASSERT_THAT(TableNames(*result),
                         Not(Contains(table_admin_->instance_name() +
                                      "/tables/" + table_id)))
                 << "Table (" << table_id << ") already exists."
