@@ -122,7 +122,7 @@ class RetryAsyncUnaryRpc {
     }
     if (!self->rpc_retry_policy_->OnFailure(result.status())) {
       auto failure_description =
-          RPCRetryPolicy::RetryableTraits::IsPermanentFailure(result.status())
+          self->rpc_retry_policy_->IsPermanentFailure(result.status())
               ? "permanent failure"
               : "retry policy exhausted";
       self->final_result_.set_value(

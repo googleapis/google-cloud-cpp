@@ -138,7 +138,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl = google::cloud::internal::LimitedErrorCountRetryPolicy<
-      internal::SafeGrpcRetry>;
+      Status, internal::SafeGrpcRetry>;
   Impl impl_;
 };
 
@@ -160,7 +160,8 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl =
-      google::cloud::internal::LimitedTimeRetryPolicy<internal::SafeGrpcRetry>;
+      google::cloud::internal::LimitedTimeRetryPolicy<Status,
+                                                      internal::SafeGrpcRetry>;
   Impl impl_;
 };
 

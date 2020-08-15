@@ -35,8 +35,10 @@ class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:
   using LimitedErrorCountRetryPolicy::LimitedErrorCountRetryPolicy;
 
-  std::unique_ptr<RetryPolicy> clone() const override {
-    return std::unique_ptr<RetryPolicy>(new ObservableRetryPolicy(*this));
+  std::unique_ptr<LimitedErrorCountRetryPolicy::BaseType> clone()
+      const override {
+    return std::unique_ptr<LimitedErrorCountRetryPolicy::BaseType>(
+        new ObservableRetryPolicy(*this));
   }
 
   bool IsExhausted() const override {

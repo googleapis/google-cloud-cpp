@@ -38,16 +38,18 @@ struct StatusTraits {
 
 /// The retry policy base class
 using RetryPolicy =
-    google::cloud::internal::RetryPolicy<internal::StatusTraits>;
+    google::cloud::internal::TraitBasedRetryPolicy<Status,
+                                                   internal::StatusTraits>;
 
 /// Keep retrying until some time has expired.
 using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<internal::StatusTraits>;
+    google::cloud::internal::LimitedTimeRetryPolicy<Status,
+                                                    internal::StatusTraits>;
 
 /// Keep retrying until the error count has been exceeded.
 using LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
-        internal::StatusTraits>;
+        Status, internal::StatusTraits>;
 
 /// The backoff policy base class.
 using BackoffPolicy = google::cloud::internal::BackoffPolicy;

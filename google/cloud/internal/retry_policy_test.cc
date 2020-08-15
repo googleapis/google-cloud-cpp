@@ -38,11 +38,12 @@ google::cloud::Status CreatePermanentError() {
 }
 
 using RetryPolicyForTest =
-    google::cloud::internal::RetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::TraitBasedRetryPolicy<Status, IsRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    google::cloud::internal::LimitedTimeRetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::LimitedTimeRetryPolicy<Status, IsRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<Status,
+                                                          IsRetryablePolicy>;
 
 auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
 auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
@@ -52,7 +53,7 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
  *
  * This eliminates some amount of code duplication in the following tests.
  */
-void CheckLimitedTime(RetryPolicyForTest& tested) {
+void CheckLimitedTime(RetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(CreateTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,

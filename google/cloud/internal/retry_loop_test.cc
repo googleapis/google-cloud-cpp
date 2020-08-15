@@ -33,8 +33,8 @@ struct IsRetryablePolicy {
   }
 };
 
-std::unique_ptr<RetryPolicyInterface> TestRetryPolicy() {
-  return LimitedErrorCountRetryPolicy<IsRetryablePolicy>(5).clone();
+std::unique_ptr<RetryPolicy> TestRetryPolicy() {
+  return LimitedErrorCountRetryPolicy<Status, IsRetryablePolicy>(5).clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {

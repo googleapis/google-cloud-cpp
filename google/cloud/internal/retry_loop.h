@@ -69,7 +69,7 @@ template <typename Functor, typename Request, typename Sleeper,
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&, Request const&>::value,
               int>::type = 0>
-auto RetryLoopImpl(std::unique_ptr<RetryPolicyInterface> retry_policy,
+auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    bool is_idempotent, Functor&& functor,
                    Request const& request, char const* location,
@@ -111,7 +111,7 @@ template <typename Functor, typename Request,
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&, Request const&>::value,
               int>::type = 0>
-auto RetryLoop(std::unique_ptr<RetryPolicyInterface> retry_policy,
+auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                std::unique_ptr<BackoffPolicy> backoff_policy,
                bool is_idempotent, Functor&& functor, Request const& request,
                char const* location)
