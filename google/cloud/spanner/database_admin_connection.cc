@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/polling_loop.h"
-#include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/time_utils.h"
 #include <chrono>
 

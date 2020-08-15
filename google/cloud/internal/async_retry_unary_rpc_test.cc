@@ -71,11 +71,9 @@ struct IsRetryableTraits {
   }
 };
 
-using RpcRetryPolicy =
-    google::cloud::internal::RetryPolicy<Status, IsRetryableTraits>;
+using RpcRetryPolicy = google::cloud::internal::RetryPolicy<IsRetryableTraits>;
 using RpcLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<Status,
-                                                          IsRetryableTraits>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryableTraits>;
 using RpcBackoffPolicy = google::cloud::internal::BackoffPolicy;
 using RpcExponentialBackoffPolicy =
     google::cloud::internal::ExponentialBackoffPolicy;

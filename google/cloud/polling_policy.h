@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {

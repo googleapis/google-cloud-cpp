@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -27,8 +26,15 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-std::unique_ptr<RetryPolicy> TestRetryPolicy() {
-  return LimitedErrorCountRetryPolicy(5).clone();
+struct IsRetryablePolicy {
+  static bool IsPermanentFailure(google::cloud::Status const& s) {
+    return !s.ok() &&
+           (s.code() == google::cloud::StatusCode::kPermissionDenied);
+  }
+};
+
+std::unique_ptr<RetryPolicyInterface> TestRetryPolicy() {
+  return LimitedErrorCountRetryPolicy<IsRetryablePolicy>(5).clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
@@ -155,7 +161,6 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
 
 }  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

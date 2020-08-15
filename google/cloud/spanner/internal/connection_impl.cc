@@ -16,11 +16,11 @@
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
-#include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/retry_loop.h"
 #include "absl/memory/memory.h"
 #include <limits>
 
@@ -332,7 +332,7 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
   *begin.mutable_options() = std::move(options);
 
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
+  auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
       [&stub](grpc::ClientContext& context,
@@ -452,7 +452,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
-    auto response = internal::RetryLoop(
+    auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [&stub](grpc::ClientContext& context,
@@ -648,7 +648,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
       [function_name, stub, retry_policy, backoff_policy,
        session](spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
-    StatusOr<spanner_proto::ResultSet> response = internal::RetryLoop(
+    StatusOr<spanner_proto::ResultSet> response = RetryLoop(
         retry_policy->clone(), backoff_policy->clone(), true,
         [stub](grpc::ClientContext& context,
                spanner_proto::ExecuteSqlRequest const& request) {
@@ -720,7 +720,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
-    auto response = internal::RetryLoop(
+    auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [&stub](grpc::ClientContext& context,
@@ -783,7 +783,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
-    auto response = internal::RetryLoop(
+    auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [&stub](grpc::ClientContext& context,
@@ -851,7 +851,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
+  auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
       [&stub](grpc::ClientContext& context,
@@ -903,7 +903,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   request.set_transaction_id(s->id());
 
   auto stub = session_pool_->GetStub(*session);
-  auto response = internal::RetryLoop(
+  auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
       [&stub](grpc::ClientContext& context,
@@ -951,7 +951,7 @@ Status ConnectionImpl::RollbackImpl(
   request.set_session(session->session_name());
   request.set_transaction_id(s->id());
   auto stub = session_pool_->GetStub(*session);
-  auto status = internal::RetryLoop(
+  auto status = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
       [&stub](grpc::ClientContext& context,

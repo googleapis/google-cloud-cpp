@@ -13,30 +13,36 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 namespace {
-struct Status {
-  bool is_retryable;
-  bool is_ok;
-};
+
 struct IsRetryablePolicy {
-  static bool IsPermanentFailure(Status const& s) {
-    return s.is_ok || !s.is_retryable;
+  static bool IsPermanentFailure(google::cloud::Status const& s) {
+    return !s.ok() &&
+           (s.code() == google::cloud::StatusCode::kPermissionDenied);
   }
 };
 
-Status CreateTransientError() { return Status{true, false}; }
-Status CreatePermanentError() { return Status{false, false}; }
+google::cloud::Status CreateTransientError() {
+  return Status(StatusCode::kUnavailable, "");
+}
+google::cloud::Status CreatePermanentError() {
+  return Status(StatusCode::kPermissionDenied, "");
+}
 
 using RetryPolicyForTest =
-    google::cloud::internal::RetryPolicy<Status, IsRetryablePolicy>;
+    google::cloud::internal::RetryPolicy<IsRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    google::cloud::internal::LimitedTimeRetryPolicy<Status, IsRetryablePolicy>;
+    google::cloud::internal::LimitedTimeRetryPolicy<IsRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<Status,
-                                                          IsRetryablePolicy>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryablePolicy>;
 
 auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
 auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
@@ -52,8 +58,6 @@ void CheckLimitedTime(RetryPolicyForTest& tested) {
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
 }
-
-}  // anonymous namespace
 
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
@@ -100,3 +104,9 @@ TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   LimitedErrorCountRetryPolicyForTest tested(3);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
