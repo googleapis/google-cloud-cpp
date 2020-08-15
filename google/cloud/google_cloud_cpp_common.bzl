@@ -53,6 +53,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/version_info.h",
     "log.h",
     "optional.h",
+    "polling_policy.h",
     "status.h",
     "status_or.h",
     "terminate_handler.h",

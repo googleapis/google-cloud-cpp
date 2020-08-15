@@ -41,7 +41,7 @@ inline std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
       .clone();
 }
 
-inline std::unique_ptr<spanner::PollingPolicy> TestPollingPolicy() {
+inline std::unique_ptr<PollingPolicy> TestPollingPolicy() {
   return spanner::GenericPollingPolicy<>(
              spanner::LimitedTimeRetryPolicy(
                  std::chrono::minutes(kMaximumWaitTimeMinutes)),
