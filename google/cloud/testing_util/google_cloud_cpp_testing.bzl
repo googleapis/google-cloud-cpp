@@ -21,6 +21,7 @@ google_cloud_cpp_testing_hdrs = [
     "capture_log_lines_backend.h",
     "check_predicate_becomes_false.h",
     "chrono_literals.h",
+    "contains_once.h",
     "crash_handler.h",
     "example_driver.h",
     "expect_exception.h",
