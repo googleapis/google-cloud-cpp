@@ -17,6 +17,8 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include <chrono>
+#include <memory>
 
 namespace google {
 namespace cloud {
