@@ -26,12 +26,9 @@ config_setting(
 )
 
 genrule(
-    name = "get-ca-bundle-location",
+    name = "gen-ca-bundle-linux",
     outs = ["include/curl_ca_bundle_location.h"],
-    cmd = select({
-        ":windows": """echo '#define CURL_CA_BUNDLE ""'>$@""",
-        ":macos": """echo '#define CURL_CA_BUNDLE ""'>$@""",
-        "//conditions:default": """
+    cmd = """
       if [ -f /etc/fedora-release ]; then
         echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
       elif [ -f /etc/redhat-release ]; then
@@ -43,8 +40,16 @@ genrule(
         exit 1
       fi >$@
     """,
-    }),
     tags = ["no-cache"],
+)
+
+cc_library(
+    name = "define-ca-bundle-location",
+    hdrs = select({
+        ":windows": [],
+        ":macos": [],
+        "//conditions:default": ["include/curl_ca_bundle_location.h"],
+    }),
 )
 
 CURL_WIN_COPTS = [
@@ -77,7 +82,6 @@ cc_library(
     name = "curl",
     srcs = [
         "include/curl_config.h",
-        "include/curl_ca_bundle_location.h",
         "lib/amigaos.h",
         "lib/arpa_telnet.h",
         "lib/asyn.h",
@@ -360,125 +364,17 @@ cc_library(
             "-lrt",
         ],
     }),
-    tags = ["no-cache"],
     visibility = ["//visibility:public"],
     deps = [
         # Use the same version of zlib that gRPC does.
         "//external:madler_zlib",
+        ":define-ca-bundle-location",
     ] + select({
         ":windows": [],
         "//conditions:default": [
             "@boringssl//:ssl",
         ],
     }),
-)
-
-CURL_BIN_WIN_COPTS = [
-    "/Iexternal/com_github_curl_curl/lib",
-    "/DHAVE_CONFIG_H",
-    "/DCURL_DISABLE_LIBCURL_OPTION",
-]
-
-cc_binary(
-    name = "curl_bin",
-    srcs = [
-        "lib/config-win32.h",
-        "src/slist_wc.c",
-        "src/slist_wc.h",
-        "src/tool_binmode.c",
-        "src/tool_binmode.h",
-        "src/tool_bname.c",
-        "src/tool_bname.h",
-        "src/tool_cb_dbg.c",
-        "src/tool_cb_dbg.h",
-        "src/tool_cb_hdr.c",
-        "src/tool_cb_hdr.h",
-        "src/tool_cb_prg.c",
-        "src/tool_cb_prg.h",
-        "src/tool_cb_rea.c",
-        "src/tool_cb_rea.h",
-        "src/tool_cb_see.c",
-        "src/tool_cb_see.h",
-        "src/tool_cb_wrt.c",
-        "src/tool_cb_wrt.h",
-        "src/tool_cfgable.c",
-        "src/tool_cfgable.h",
-        "src/tool_convert.c",
-        "src/tool_convert.h",
-        "src/tool_dirhie.c",
-        "src/tool_dirhie.h",
-        "src/tool_doswin.c",
-        "src/tool_doswin.h",
-        "src/tool_easysrc.c",
-        "src/tool_easysrc.h",
-        "src/tool_formparse.c",
-        "src/tool_formparse.h",
-        "src/tool_getparam.c",
-        "src/tool_getparam.h",
-        "src/tool_getpass.c",
-        "src/tool_getpass.h",
-        "src/tool_help.c",
-        "src/tool_help.h",
-        "src/tool_helpers.c",
-        "src/tool_helpers.h",
-        "src/tool_homedir.c",
-        "src/tool_homedir.h",
-        "src/tool_hugehelp.c",
-        "src/tool_hugehelp.h",
-        "src/tool_libinfo.c",
-        "src/tool_libinfo.h",
-        "src/tool_main.c",
-        "src/tool_main.h",
-        "src/tool_metalink.c",
-        "src/tool_metalink.h",
-        "src/tool_mfiles.c",
-        "src/tool_mfiles.h",
-        "src/tool_msgs.c",
-        "src/tool_msgs.h",
-        "src/tool_operate.c",
-        "src/tool_operate.h",
-        "src/tool_operhlp.c",
-        "src/tool_operhlp.h",
-        "src/tool_panykey.c",
-        "src/tool_panykey.h",
-        "src/tool_paramhlp.c",
-        "src/tool_paramhlp.h",
-        "src/tool_parsecfg.c",
-        "src/tool_parsecfg.h",
-        "src/tool_sdecls.h",
-        "src/tool_setopt.c",
-        "src/tool_setopt.h",
-        "src/tool_setup.h",
-        "src/tool_sleep.c",
-        "src/tool_sleep.h",
-        "src/tool_strdup.c",
-        "src/tool_strdup.h",
-        "src/tool_urlglob.c",
-        "src/tool_urlglob.h",
-        "src/tool_util.c",
-        "src/tool_util.h",
-        "src/tool_version.h",
-        "src/tool_vms.c",
-        "src/tool_vms.h",
-        "src/tool_writeenv.c",
-        "src/tool_writeenv.h",
-        "src/tool_writeout.c",
-        "src/tool_writeout.h",
-        "src/tool_xattr.c",
-        "src/tool_xattr.h",
-    ],
-    copts = select({
-        ":windows": CURL_BIN_WIN_COPTS,
-        "//conditions:default": [
-            "-Iexternal/com_github_curl_curl/lib",
-            "-D_GNU_SOURCE",
-            "-DHAVE_CONFIG_H",
-            "-DCURL_DISABLE_LIBCURL_OPTION",
-            "-Wno-string-plus-int",
-        ],
-    }),
-    tags = ["no-cache"],
-    deps = [":curl"],
 )
 
 genrule(
@@ -748,5 +644,4 @@ genrule(
         "#endif  // EXTERNAL_CURL_INCLUDE_CURL_CONFIG_H_",
         "EOF",
     ]),
-    tags = ["no-cache"],
 )
