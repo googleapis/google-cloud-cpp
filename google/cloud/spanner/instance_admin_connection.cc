@@ -35,7 +35,7 @@ std::unique_ptr<RetryPolicy> DefaultInstanceAdminRetryPolicy() {
 
 std::unique_ptr<BackoffPolicy> DefaultInstanceAdminBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return google::cloud::spanner::ExponentialBackoffPolicy(
+  return google::cloud::ExponentialBackoffPolicy(
              std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }

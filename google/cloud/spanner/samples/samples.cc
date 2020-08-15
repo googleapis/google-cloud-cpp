@@ -1687,8 +1687,8 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
           .clone(),
       // After a failure backoff for 2 seconds (with jitter), then triple the
       // backoff time on each retry, up to 5 minutes.
-      spanner::ExponentialBackoffPolicy(std::chrono::seconds(2),
-                                        std::chrono::minutes(5), 3.0)
+      google::cloud::ExponentialBackoffPolicy(std::chrono::seconds(2),
+                                              std::chrono::minutes(5), 3.0)
           .clone());
   if (!commit) throw std::runtime_error(commit.status().message());
   std::cout << "commit-with-policies was successful\n";
@@ -2232,7 +2232,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
         // retries:
         //   https://en.wikipedia.org/wiki/Exponential_backoff
         //   https://cloud.google.com/storage/docs/exponential-backoff
-        spanner::ExponentialBackoffPolicy(
+        google::cloud::ExponentialBackoffPolicy(
             /*initial_delay=*/std::chrono::seconds(2),
             /*maximum_delay=*/std::chrono::minutes(10),
             /*scaling=*/1.5)
@@ -2267,7 +2267,7 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
     // with jitter:
     //   https://en.wikipedia.org/wiki/Exponential_backoff
     //   https://cloud.google.com/storage/docs/exponential-backoff
-    auto backoff_policy = spanner::ExponentialBackoffPolicy(
+    auto backoff_policy = google::cloud::ExponentialBackoffPolicy(
                               /*initial_delay=*/std::chrono::seconds(2),
                               /*maximum_delay=*/std::chrono::minutes(10),
                               /*scaling=*/2.0)
@@ -2282,7 +2282,7 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
         spanner::GenericPollingPolicy<>(
             spanner::LimitedTimeRetryPolicy(
                 /*maximum_duration=*/std::chrono::minutes(45)),
-            spanner::ExponentialBackoffPolicy(
+            google::cloud::ExponentialBackoffPolicy(
                 /*initial_delay=*/std::chrono::seconds(10),
                 /*maximum_delay=*/std::chrono::minutes(2),
                 /*scaling=*/4.0))
@@ -2322,7 +2322,7 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
     // with jitter:
     //   https://en.wikipedia.org/wiki/Exponential_backoff
     //   https://cloud.google.com/storage/docs/exponential-backoff
-    auto backoff_policy = spanner::ExponentialBackoffPolicy(
+    auto backoff_policy = google::cloud::ExponentialBackoffPolicy(
                               /*initial_delay=*/std::chrono::seconds(2),
                               /*maximum_delay=*/std::chrono::minutes(10),
                               /*scaling=*/2.0)
@@ -2337,7 +2337,7 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
         spanner::GenericPollingPolicy<>(
             spanner::LimitedTimeRetryPolicy(
                 /*maximum_duration=*/std::chrono::minutes(45)),
-            spanner::ExponentialBackoffPolicy(
+            google::cloud::ExponentialBackoffPolicy(
                 /*initial_delay=*/std::chrono::seconds(10),
                 /*maximum_delay=*/std::chrono::minutes(2),
                 /*scaling=*/4.0))

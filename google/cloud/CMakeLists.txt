@@ -103,6 +103,7 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    backoff_policy.h
     future.h
     future_generic.h
     future_void.h

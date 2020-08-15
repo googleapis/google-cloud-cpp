@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
 
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/backoff_policy.h"
 
 namespace google {
 namespace cloud {
@@ -35,9 +35,9 @@ inline std::unique_ptr<spanner::RetryPolicy> TestRetryPolicy() {
       .clone();
 }
 
-inline std::unique_ptr<spanner::BackoffPolicy> TestBackoffPolicy() {
-  return spanner::ExponentialBackoffPolicy(
-             std::chrono::seconds(1), std::chrono::minutes(1), kBackoffScaling)
+inline std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
+  return ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                  std::chrono::minutes(1), kBackoffScaling)
       .clone();
 }
 
@@ -45,9 +45,8 @@ inline std::unique_ptr<spanner::PollingPolicy> TestPollingPolicy() {
   return spanner::GenericPollingPolicy<>(
              spanner::LimitedTimeRetryPolicy(
                  std::chrono::minutes(kMaximumWaitTimeMinutes)),
-             spanner::ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                               std::chrono::minutes(1),
-                                               kBackoffScaling))
+             ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                      std::chrono::minutes(1), kBackoffScaling))
       .clone();
 }
 
