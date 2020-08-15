@@ -105,7 +105,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_THAT(AclEntityNames(patched->acl()),
-              Contains("allAuthenticatedUsers"));
+              ContainsOnce("allAuthenticatedUsers"));
 
   EXPECT_EQ(desired.cache_control(), patched->cache_control());
   EXPECT_EQ(desired.content_disposition(), patched->content_disposition());

@@ -18,6 +18,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 
@@ -26,6 +27,10 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
+using ::testing::Not;
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
@@ -54,29 +59,6 @@ class AdminBackupAsyncFutureIntegrationTest
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
-
-  int CountMatchingTables(std::string const& table_id,
-                          std::vector<btadmin::Table> const& tables) {
-    std::string table_name =
-        table_admin_->instance_name() + "/tables/" + table_id;
-    auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](btadmin::Table const& t) {
-                                 return table_name == t.name();
-                               });
-    return static_cast<int>(count);
-  }
-
-  int CountMatchingBackups(std::string const& cluster_id,
-                           std::string const& backup_id,
-                           std::vector<btadmin::Backup> const& backups) {
-    std::string backup_name = table_admin_->instance_name() + "/clusters/" +
-                              cluster_id + "/backups/" + backup_id;
-    auto count = std::count_if(backups.begin(), backups.end(),
-                               [&backup_name](btadmin::Backup const& t) {
-                                 return backup_name == t.name();
-                               });
-    return static_cast<int>(count);
-  }
 };
 
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work
@@ -91,10 +73,12 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest,
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
+  ASSERT_THAT(
+      TableNames(*previous_table_list),
+      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
+      << "Table (" << table_id << ") already exists."
+      << " This is unexpected, as the table ids are"
+      << " generated at random.";
 
   TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
                             {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
@@ -125,9 +109,9 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest,
           .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
             StatusOr<std::vector<btadmin::Backup>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count =
-                CountMatchingBackups(backup_cluster_id, backup_id, *result);
-            EXPECT_EQ(0, previous_count)
+            EXPECT_THAT(BackupNames(*result),
+                        Not(Contains(table_admin_->instance_name() +
+                                     "/backups/" + backup_id)))
                 << "Backup (" << backup_id << ") already exists."
                 << " This is unexpected, as the backup ids are"
                 << " generated at random.";
@@ -179,8 +163,9 @@ TEST_F(AdminBackupAsyncFutureIntegrationTest,
   // verify table was restored
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
-  auto table_count = CountMatchingTables(table_id, *current_table_list);
-  EXPECT_EQ(1, table_count);
+  EXPECT_THAT(
+      TableNames(*current_table_list),
+      ContainsOnce(table_admin_->instance_name() + "/tables/" + table_id));
 
   // delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));

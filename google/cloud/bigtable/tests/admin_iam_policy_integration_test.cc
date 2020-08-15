@@ -24,6 +24,9 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::testing::Contains;
+using ::testing::Not;
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
@@ -46,17 +49,6 @@ class AdminIAMPolicyIntegrationTest
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
-
-  int CountMatchingTables(std::string const& table_id,
-                          std::vector<btadmin::Table> const& tables) {
-    std::string table_name =
-        table_admin_->instance_name() + "/tables/" + table_id;
-    auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](btadmin::Table const& t) {
-                                 return table_name == t.name();
-                               });
-    return static_cast<int>(count);
-  }
 };
 
 TEST_F(AdminIAMPolicyIntegrationTest, AsyncSetGetTestIamAPIsTest) {
@@ -77,8 +69,9 @@ TEST_F(AdminIAMPolicyIntegrationTest, AsyncSetGetTestIamAPIsTest) {
           .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
             StatusOr<std::vector<btadmin::Table>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            EXPECT_EQ(0, previous_count)
+            EXPECT_THAT(TableNames(*result),
+                        Not(Contains(table_admin_->instance_name() +
+                                     "/tables/" + table_id)))
                 << "Table (" << table_id << ") already exists."
                 << " This is unexpected, as the table ids are"
                 << " generated at random.";
@@ -116,8 +109,9 @@ TEST_F(AdminIAMPolicyIntegrationTest, AsyncSetGetTestIamAPIsTest) {
           .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
             StatusOr<std::vector<btadmin::Table>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            ASSERT_EQ(0, previous_count)
+            EXPECT_THAT(TableNames(*result),
+                        Not(Contains(table_admin_->instance_name() +
+                                     "/tables/" + table_id)))
                 << "Table (" << table_id << ") already exists."
                 << " This is unexpected, as the table ids are"
                 << " generated at random.";
@@ -139,10 +133,12 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
+  ASSERT_THAT(
+      TableNames(*previous_table_list),
+      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
+      << "Table (" << table_id << ") already exists."
+      << " This is unexpected, as the table ids are generated at random.";
+
   // create table config
   bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
@@ -171,7 +167,7 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   EXPECT_EQ(2, permission_set->size());
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 }
-// Test Cases Finished
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

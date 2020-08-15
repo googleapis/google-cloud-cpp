@@ -31,7 +31,6 @@ namespace {
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::_;
-using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::ReturnRef;
@@ -70,7 +69,8 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_THAT(log_backend_->log_lines, Contains(HasSubstr("[UNAVAILABLE]")));
+  EXPECT_THAT(log_backend_->log_lines,
+              ContainsOnce(HasSubstr("[UNAVAILABLE]")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {

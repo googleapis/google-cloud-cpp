@@ -17,15 +17,23 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
-namespace btadmin = google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
-using testing::HasSubstr;
-
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
+using ::testing::EndsWith;
+using ::testing::HasSubstr;
+using ::testing::Not;
+namespace btadmin = google::bigtable::admin::v2;
 
 class InstanceAdminIntegrationTest : public ::testing::Test {
  protected:
@@ -100,8 +108,6 @@ bigtable::InstanceConfig IntegrationTestConfig(
   return config;
 }
 
-}  // anonymous namespace
-
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   std::string id1 =
@@ -163,17 +169,17 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   ASSERT_STATUS_OK(initial_profiles);
 
   // Simplify writing the rest of the test.
-  auto count_matching_profiles =
-      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
-        std::string suffix = "/appProfiles/" + id;
-        return std::count_if(
-            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
-              return std::string::npos != x.name().find(suffix);
-            });
-      };
+  auto profile_names = [](std::vector<btadmin::AppProfile> const& list) {
+    std::vector<std::string> names(list.size());
+    std::transform(list.begin(), list.end(), names.begin(),
+                   [](btadmin::AppProfile const& x) { return x.name(); });
+    return names;
+  };
 
-  EXPECT_EQ(0, count_matching_profiles(id1, *initial_profiles));
-  EXPECT_EQ(0, count_matching_profiles(id2, *initial_profiles));
+  EXPECT_THAT(profile_names(*initial_profiles),
+              Not(Contains(EndsWith("/appProfiles" + id1))));
+  EXPECT_THAT(profile_names(*initial_profiles),
+              Not(Contains(EndsWith("/appProfiles" + id2))));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
       instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
@@ -184,8 +190,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(1, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(1, count_matching_profiles(id2, *current_profiles));
+  EXPECT_THAT(profile_names(*current_profiles),
+              ContainsOnce(EndsWith("/appProfiles" + id1)));
+  EXPECT_THAT(profile_names(*current_profiles),
+              ContainsOnce(EndsWith("/appProfiles" + id2)));
 
   auto detail_1 = instance_admin_->GetAppProfile(instance_id, id1);
   ASSERT_STATUS_OK(detail_1);
@@ -212,14 +220,18 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id1, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(0, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(1, count_matching_profiles(id2, *current_profiles));
+  EXPECT_THAT(profile_names(*current_profiles),
+              Not(Contains(EndsWith("/appProfiles" + id1))));
+  EXPECT_THAT(profile_names(*current_profiles),
+              ContainsOnce(EndsWith("/appProfiles" + id2)));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id2, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(0, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(0, count_matching_profiles(id2, *current_profiles));
+  EXPECT_THAT(profile_names(*current_profiles),
+              Not(Contains(EndsWith("/appProfiles" + id1))));
+  EXPECT_THAT(profile_names(*current_profiles),
+              Not(Contains(EndsWith("/appProfiles" + id2))));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
@@ -413,3 +425,9 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
   EXPECT_EQ(2, permission_set->size());
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

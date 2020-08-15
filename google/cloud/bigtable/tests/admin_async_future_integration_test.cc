@@ -26,6 +26,9 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::testing::Contains;
+using ::testing::Not;
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
@@ -47,17 +50,6 @@ class AdminAsyncFutureIntegrationTest
         testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
-  }
-
-  int CountMatchingTables(std::string const& table_id,
-                          std::vector<btadmin::Table> const& tables) {
-    std::string table_name =
-        table_admin_->instance_name() + "/tables/" + table_id;
-    auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](btadmin::Table const& t) {
-                                 return table_name == t.name();
-                               });
-    return static_cast<int>(count);
   }
 };
 
@@ -93,8 +85,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
           .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
             StatusOr<std::vector<btadmin::Table>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            EXPECT_EQ(0, previous_count)
+            EXPECT_THAT(TableNames(*result),
+                        Not(Contains(table_admin_->instance_name() +
+                                     "/tables/" + table_id)))
                 << "Table (" << table_id << ") already exists."
                 << " This is unexpected, as the table ids are"
                 << " generated at random.";
@@ -148,8 +141,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
           .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
             StatusOr<std::vector<btadmin::Table>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingTables(table_id, *result);
-            ASSERT_EQ(0, previous_count)
+            EXPECT_THAT(TableNames(*result),
+                        Not(Contains(table_admin_->instance_name() +
+                                     "/tables/" + table_id)))
                 << "Table (" << table_id << ") already exists."
                 << " This is unexpected, as the table ids are"
                 << " generated at random.";

@@ -525,18 +525,10 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
   auto entity_name = MakeEntityName();
 
-  auto name_counter = [](std::string const& name,
-                         std::vector<BucketAccessControl> const& list) {
-    auto name_matcher = [](std::string const& name) {
-      return
-          [name](BucketAccessControl const& m) { return m.entity() == name; };
-    };
-    return std::count_if(list.begin(), list.end(), name_matcher(name));
-  };
   ASSERT_FALSE(meta->acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_EQ(0, name_counter(entity_name, meta->acl()))
+  ASSERT_THAT(AclEntityNames(meta->acl()), Not(Contains(entity_name)))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
@@ -553,7 +545,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
 
   StatusOr<BucketAccessControl> get_result =
       client->GetBucketAcl(bucket_name, entity_name);
@@ -584,7 +576,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
   current_acl = client->ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
-  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -676,7 +668,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
     for (auto const& notification : *list) ids.push_back(notification.id());
     return ids;
   };
-  EXPECT_TRUE(notification_ids().empty())
+  ASSERT_TRUE(notification_ids().empty())
       << "Test aborted. Non-empty notification list returned from newly"
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
