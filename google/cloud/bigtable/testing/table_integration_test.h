@@ -149,11 +149,29 @@ class TableIntegrationTest : public ::testing::Test {
     return TableTestEnvironment::UsingCloudBigtableEmulator();
   }
 
- protected:
+  static std::vector<std::string> TableNames(
+      std::vector<google::bigtable::admin::v2::Table> const& tables) {
+    std::vector<std::string> names(tables.size());
+    std::transform(
+        tables.begin(), tables.end(), names.begin(),
+        [](google::bigtable::admin::v2::Table const& x) { return x.name(); });
+    return names;
+  }
+
+  static std::vector<std::string> BackupNames(
+      std::vector<google::bigtable::admin::v2::Backup> const& backups) {
+    std::vector<std::string> names(backups.size());
+    std::transform(
+        backups.begin(), backups.end(), names.begin(),
+        [](google::bigtable::admin::v2::Backup const& x) { return x.name(); });
+    return names;
+  }
+
   std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
   std::shared_ptr<bigtable::DataClient> data_client_;
 };
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

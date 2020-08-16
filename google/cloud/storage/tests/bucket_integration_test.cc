@@ -17,6 +17,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
@@ -27,8 +28,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::testing::AclEntityNames;
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -67,18 +72,16 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto buckets = client->ListBucketsForProject(project_id_);
-  std::vector<BucketMetadata> initial_buckets;
-  for (auto&& b : buckets) {
-    initial_buckets.emplace_back(std::move(b).value());
-  }
-  auto name_counter = [](std::string const& name,
-                         std::vector<BucketMetadata> const& list) {
-    return std::count_if(
-        list.begin(), list.end(),
-        [name](BucketMetadata const& m) { return m.name() == name; });
+  auto list_bucket_names = [&client, this] {
+    std::vector<std::string> names;
+    for (auto b : client->ListBucketsForProject(project_id_)) {
+      EXPECT_STATUS_OK(b);
+      if (!b) break;
+      names.push_back(b->name());
+    }
+    return names;
   };
-  ASSERT_EQ(0, name_counter(bucket_name, initial_buckets))
+  ASSERT_THAT(list_bucket_names(), Not(Contains(bucket_name)))
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
@@ -86,13 +89,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
                                                     BucketMetadata());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
-
-  buckets = client->ListBucketsForProject(project_id_);
-  std::vector<BucketMetadata> current_buckets;
-  for (auto&& b : buckets) {
-    current_buckets.emplace_back(std::move(b).value());
-  }
-  EXPECT_EQ(1, name_counter(bucket_name, current_buckets));
+  EXPECT_THAT(list_bucket_names(), ContainsOnce(bucket_name));
 
   StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get_meta);
@@ -138,12 +135,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
-  buckets = client->ListBucketsForProject(project_id_);
-  current_buckets.clear();
-  for (auto&& b : buckets) {
-    current_buckets.emplace_back(std::move(b).value());
-  }
-  EXPECT_EQ(0, name_counter(bucket_name, current_buckets));
+  EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
 }
 
 TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
@@ -353,10 +345,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   ASSERT_STATUS_OK(patched);
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
-                             [](BucketAccessControl const& x) {
-                               return x.entity() == "allAuthenticatedUsers";
-                             }));
+  EXPECT_THAT(AclEntityNames(patched->acl()),
+              ContainsOnce("allAuthenticatedUsers"));
 
   // billing()
   EXPECT_EQ(desired_state.billing_as_optional(),
@@ -367,11 +357,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // default_acl() - cannot compare for equality because many fields are updated
   // with unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1, std::count_if(patched->default_acl().begin(),
-                             patched->default_acl().end(),
-                             [](ObjectAccessControl const& x) {
-                               return x.entity() == "allAuthenticatedUsers";
-                             }));
+  EXPECT_THAT(AclEntityNames(patched->default_acl()),
+              ContainsOnce("allAuthenticatedUsers"));
 
   // encryption() - TODO(#1003) - verify the key was correctly used.
 
@@ -538,18 +525,10 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
   auto entity_name = MakeEntityName();
 
-  auto name_counter = [](std::string const& name,
-                         std::vector<BucketAccessControl> const& list) {
-    auto name_matcher = [](std::string const& name) {
-      return
-          [name](BucketAccessControl const& m) { return m.entity() == name; };
-    };
-    return std::count_if(list.begin(), list.end(), name_matcher(name));
-  };
   ASSERT_FALSE(meta->acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_EQ(0, name_counter(entity_name, meta->acl()))
+  ASSERT_THAT(AclEntityNames(meta->acl()), Not(Contains(entity_name)))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
@@ -566,7 +545,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
 
   StatusOr<BucketAccessControl> get_result =
       client->GetBucketAcl(bucket_name, entity_name);
@@ -597,7 +576,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
   current_acl = client->ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
-  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -618,18 +597,10 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 
   auto entity_name = MakeEntityName();
 
-  auto name_counter = [](std::string const& name,
-                         std::vector<ObjectAccessControl> const& list) {
-    auto name_matcher = [](std::string const& name) {
-      return
-          [name](ObjectAccessControl const& m) { return m.entity() == name; };
-    };
-    return std::count_if(list.begin(), list.end(), name_matcher(name));
-  };
   ASSERT_FALSE(meta->default_acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_EQ(0, name_counter(entity_name, meta->default_acl()))
+  ASSERT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
@@ -645,7 +616,8 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id_>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(meta->default_acl()),
+              ContainsOnce(result->entity()));
 
   auto get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(get_result);
@@ -673,7 +645,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 
   current_acl = client->ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
-  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)));
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -689,9 +661,14 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
-  auto current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_STATUS_OK(current_notifications);
-  EXPECT_TRUE(current_notifications->empty())
+  auto notification_ids = [&client, bucket_name] {
+    std::vector<std::string> ids;
+    auto list = client->ListNotifications(bucket_name);
+    EXPECT_STATUS_OK(list);
+    for (auto const& notification : *list) ids.push_back(notification.id());
+    return ids;
+  };
+  ASSERT_TRUE(notification_ids().empty())
       << "Test aborted. Non-empty notification list returned from newly"
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
@@ -703,15 +680,8 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
   EXPECT_THAT(create->topic(), HasSubstr(topic_name_));
-
-  current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_STATUS_OK(current_notifications);
-  auto count = std::count_if(current_notifications->begin(),
-                             current_notifications->end(),
-                             [create](NotificationMetadata const& x) {
-                               return x.id() == create->id();
-                             });
-  EXPECT_EQ(1, count) << "create=" << *create;
+  EXPECT_THAT(notification_ids(), ContainsOnce(create->id()))
+      << "create=" << *create;
 
   auto get = client->GetNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(get);
@@ -719,15 +689,8 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 
   auto status = client->DeleteNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(status);
-
-  current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_STATUS_OK(current_notifications);
-  count = std::count_if(current_notifications->begin(),
-                        current_notifications->end(),
-                        [create](NotificationMetadata const& x) {
-                          return x.id() == create->id();
-                        });
-  EXPECT_EQ(0, count) << "create=" << *create;
+  EXPECT_THAT(notification_ids(), Not(Contains(create->id())))
+      << "create=" << *create;
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);

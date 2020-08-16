@@ -18,14 +18,22 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
+using ::testing::Not;
 namespace btadmin = google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -46,17 +54,6 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
-
-  int CountMatchingTables(std::string const& table_id,
-                          std::vector<btadmin::Table> const& tables) {
-    std::string table_name =
-        table_admin_->instance_name() + "/tables/" + table_id;
-    auto count = std::count_if(tables.begin(), tables.end(),
-                               [&table_name](btadmin::Table const& t) {
-                                 return table_name == t.name();
-                               });
-    return static_cast<int>(count);
-  }
 };
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
@@ -71,10 +68,11 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   int constexpr kTableCount = 5;
   for (int index = 0; index < kTableCount; ++index) {
     std::string table_id = RandomTableId();
-    auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-    ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                                 << " This is unexpected, as the table ids are"
-                                 << " generated at random.";
+    ASSERT_THAT(
+        TableNames(*previous_table_list),
+        Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
+        << "Table (" << table_id << ") already exists."
+        << " This is unexpected, as the table ids are generated at random.";
     EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
     expected_table_list.emplace_back(table_id);
@@ -83,7 +81,9 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   ASSERT_STATUS_OK(current_table_list);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
-    EXPECT_EQ(1, CountMatchingTables(table_id, *current_table_list));
+    EXPECT_THAT(
+        TableNames(*current_table_list),
+        ContainsOnce(table_admin_->instance_name() + "/tables/" + table_id));
   }
   for (auto const& table_id : expected_table_list) {
     EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
@@ -92,7 +92,9 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   ASSERT_STATUS_OK(current_table_list);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
-    EXPECT_EQ(0, CountMatchingTables(table_id, *current_table_list));
+    EXPECT_THAT(
+        TableNames(*current_table_list),
+        Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
   }
 }
 
@@ -161,10 +163,12 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
+  ASSERT_THAT(
+      TableNames(*previous_table_list),
+      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
+      << "Table (" << table_id << ") already exists."
+      << " This is unexpected, as the table ids are generated at random.";
+
   // create table config
   bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
@@ -221,8 +225,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
-  auto table_count = CountMatchingTables(table_id, *current_table_list);
-  EXPECT_EQ(0, table_count);
+  EXPECT_THAT(
+      TableNames(*current_table_list),
+      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
 }
 
 /// @test Verify that `bigtable::TableAdmin` WaitForConsistencyCheck works as
@@ -309,11 +314,14 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 }
 
 }  // namespace
-// Test Cases Finished
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable::testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

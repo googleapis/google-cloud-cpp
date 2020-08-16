@@ -28,6 +28,8 @@ namespace internal {
 namespace {
 
 using ::testing::_;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Return;
 namespace gcsa = ::google::spanner::admin::instance::v1;
 
@@ -50,12 +52,7 @@ class InstanceAdminLoggingTest : public ::testing::Test {
   }
 
   void HasLogLineWith(std::string const& contents) {
-    auto count =
-        std::count_if(backend_->log_lines.begin(), backend_->log_lines.end(),
-                      [&contents](std::string const& line) {
-                        return std::string::npos != line.find(contents);
-                      });
-    EXPECT_NE(0, count) << "expected to find line with " << contents;
+    EXPECT_THAT(backend_->log_lines, Contains(HasSubstr(contents)));
   }
 
   std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock_;

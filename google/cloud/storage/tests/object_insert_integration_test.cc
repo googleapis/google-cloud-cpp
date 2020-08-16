@@ -30,6 +30,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
+using ::testing::AllOf;
+using ::testing::HasSubstr;
 
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -60,17 +62,6 @@ class ObjectInsertIntegrationTest
   ::google::cloud::testing_util::ScopedEnvironment application_credentials_;
   std::string bucket_name_;
 };
-
-std::string GetLinesWith(testing_util::CaptureLogLinesBackend const& backend,
-                         std::string const& text) {
-  std::string msg;
-  for (auto const& l : backend.log_lines) {
-    if (l.find(text) == std::string::npos) continue;
-    msg += l;
-    msg += "\n";
-  }
-  return msg;
-}
 
 TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -567,15 +558,10 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto predicate = [this](std::string const& line) {
-    return line.find(" POST ") != std::string::npos &&
-           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
-           line.find("quotaUser=test-quota-user") != std::string::npos;
-  };
-  auto count = std::count_if(backend->log_lines.begin(),
-                             backend->log_lines.end(), predicate);
-  EXPECT_LT(0, count) << ", logs matching POST="
-                      << GetLinesWith(*backend, " POST ") << "\n";
+  EXPECT_THAT(backend->log_lines,
+              Contains(AllOf(HasSubstr(" POST "),
+                             HasSubstr("/b/" + bucket_name_ + "/o"),
+                             HasSubstr("quotaUser=test-quota-user"))));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -607,15 +593,10 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto predicate = [this](std::string const& line) {
-    return line.find(" POST ") != std::string::npos &&
-           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
-           line.find("userIp=127.0.0.1") != std::string::npos;
-  };
-  auto count = std::count_if(backend->log_lines.begin(),
-                             backend->log_lines.end(), predicate);
-  EXPECT_LT(0, count) << ", logs matching POST="
-                      << GetLinesWith(*backend, " POST ") << "\n";
+  EXPECT_THAT(backend->log_lines,
+              Contains(AllOf(HasSubstr(" POST "),
+                             HasSubstr("/b/" + bucket_name_ + "/o"),
+                             HasSubstr("userIp=127.0.0.1"))));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -659,15 +640,10 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto predicate = [this](std::string const& line) {
-    return line.find(" POST ") != std::string::npos &&
-           line.find("/b/" + bucket_name_ + "/o") != std::string::npos &&
-           line.find("userIp=") != std::string::npos;
-  };
-  auto count = std::count_if(backend->log_lines.begin(),
-                             backend->log_lines.end(), predicate);
-  EXPECT_LT(0, count) << ", logs matching POST="
-                      << GetLinesWith(*backend, " POST ") << "\n";
+  EXPECT_THAT(backend->log_lines,
+              Contains(AllOf(HasSubstr(" POST "),
+                             HasSubstr("/b/" + bucket_name_ + "/o"),
+                             HasSubstr("userIp="))));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);

@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
@@ -34,6 +35,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
+using ::testing::Not;
 using ObjectBasicCRUDIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
@@ -42,21 +46,18 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto objects = client->ListObjects(bucket_name_);
-  std::vector<ObjectMetadata> initial_list;
-  for (auto&& o : objects) {
-    initial_list.emplace_back(std::move(o).value());
-  }
-
-  auto name_counter = [](std::string const& name,
-                         std::vector<ObjectMetadata> const& list) {
-    return std::count_if(
-        list.begin(), list.end(),
-        [name](ObjectMetadata const& m) { return m.name() == name; });
+  auto list_object_names = [&client, this] {
+    std::vector<std::string> names;
+    for (auto o : client->ListObjects(bucket_name_)) {
+      EXPECT_STATUS_OK(o);
+      if (!o) break;
+      names.push_back(o->name());
+    }
+    return names;
   };
 
   auto object_name = MakeRandomObjectName();
-  ASSERT_EQ(0, name_counter(object_name, initial_list))
+  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
       << "Test aborted. The object <" << object_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
@@ -65,14 +66,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
-
-  objects = client->ListObjects(bucket_name_);
-
-  std::vector<ObjectMetadata> current_list;
-  for (auto&& o : objects) {
-    current_list.emplace_back(std::move(o).value());
-  }
-  EXPECT_EQ(1, name_counter(object_name, current_list));
+  EXPECT_THAT(list_object_names(), ContainsOnce(object_name));
 
   StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
       bucket_name_, object_name, Generation(insert_meta->generation()),
@@ -137,14 +131,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
-
-  objects = client->ListObjects(bucket_name_);
-  current_list.clear();
-  for (auto&& o : objects) {
-    current_list.emplace_back(std::move(o).value());
-  }
-
-  EXPECT_EQ(0, name_counter(object_name, current_list));
+  EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
 }
 
 }  // anonymous namespace

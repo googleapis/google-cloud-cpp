@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
@@ -34,9 +35,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::storage::testing::TestPermanentFailure;
+using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::AnyOf;
+using ::testing::Contains;
 using ::testing::Eq;
+using ::testing::Not;
 using ::testing::UnorderedElementsAre;
 
 using ObjectIntegrationTest =
@@ -99,10 +104,8 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
-                             [](ObjectAccessControl const& x) {
-                               return x.entity() == "allAuthenticatedUsers";
-                             }));
+  EXPECT_THAT(AclEntityNames(patched->acl()),
+              ContainsOnce("allAuthenticatedUsers"));
 
   EXPECT_EQ(desired.cache_control(), patched->cache_control());
   EXPECT_EQ(desired.content_disposition(), patched->content_disposition());
@@ -514,16 +517,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   StatusOr<std::vector<ObjectAccessControl>> initial_acl =
       client->ListObjectAcl(bucket_name_, object_name);
   ASSERT_STATUS_OK(initial_acl);
-
-  auto name_counter = [](std::string const& name,
-                         std::vector<ObjectAccessControl> const& list) {
-    auto name_matcher = [](std::string const& name) {
-      return
-          [name](ObjectAccessControl const& m) { return m.entity() == name; };
-    };
-    return std::count_if(list.begin(), list.end(), name_matcher(name));
-  };
-  ASSERT_EQ(0, name_counter(entity_name, *initial_acl))
+  ASSERT_THAT(AclEntityNames(*initial_acl), Not(Contains(entity_name)))
       << "Test aborted. The entity <" << entity_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
@@ -536,7 +530,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
 
   auto get_result =
       client->GetObjectAcl(bucket_name_, object_name, entity_name);
@@ -566,7 +560,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   ASSERT_STATUS_OK(status);
   current_acl = client->ListObjectAcl(bucket_name_, object_name);
   ASSERT_STATUS_OK(current_acl);
-  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
+  EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
 
   status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
