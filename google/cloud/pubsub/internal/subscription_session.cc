@@ -110,15 +110,28 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
 }
 
 future<Status> SubscriptionSession::Start() {
+  // Transfer the result from shutdown_manager_'s future to a new future that
+  // has a proper cancellation callback.
+  class MoveCapture {
+   public:
+    explicit MoveCapture(std::weak_ptr<SubscriptionSession> const& w)
+        : cancel_([w] {
+            auto self = w.lock();
+            if (!self) return;
+            self->Cancel();
+          }) {}
+
+    void operator()(future<Status> f) { cancel_.set_value(f.get()); }
+    future<Status> get_future() { return cancel_.get_future(); }
+
+   private:
+    promise<Status> cancel_;
+  };
+
   auto self = shared_from_this();
-  std::weak_ptr<SubscriptionSession> w(self);
-  promise<Status> p{[w] {
-    auto self = w.lock();
-    if (!self) return;
-    self->Cancel();
-  }};
-  auto f = p.get_future();
-  shutdown_manager_.Start(std::move(p));
+  MoveCapture chain(self);
+  auto f = chain.get_future();
+  shutdown_manager_.Start().then(std::move(chain));
   shutdown_manager_.StartAsyncOperation(__func__, "PullOne", executor_,
                                         [self] { self->PullOne(); });
   return f;
