@@ -46,11 +46,7 @@ cache_download_tarball "${CACHE_FOLDER}" "${DOWNLOAD}" "${CACHE_NAME}.tar.gz"
 
 echo "================================================================"
 io::log "Extracting build cache"
-# Ignore timestamp warnings, Bazel has files with timestamps 10 years
-# into the future :shrug:
-# DEBUG DEBUG Only extract ${HOME}/.ccache, we need this to test the
-# PR build before the cache gets updated.
-tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" "${HOME}/.ccache"
+tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz"
 io::log "Extraction completed"
 
 exit 0
