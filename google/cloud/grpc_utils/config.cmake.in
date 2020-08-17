@@ -16,5 +16,6 @@ include(CMakeFindDependencyMacro)
 # googleapis finds both gRPC and Protobuf, no need to load them here.
 find_dependency(googleapis)
 find_dependency(google_cloud_cpp_common)
+find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/grpc_utils-targets.cmake")

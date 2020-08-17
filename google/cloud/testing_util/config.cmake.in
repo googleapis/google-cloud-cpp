@@ -16,5 +16,6 @@ include(CMakeFindDependencyMacro)
 find_dependency(GTest)
 include("${CMAKE_CURRENT_LIST_DIR}/FindGMockWithTargets.cmake")
 find_dependency(google_cloud_cpp_common)
+find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_testing-targets.cmake")
