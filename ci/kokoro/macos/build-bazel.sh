@@ -85,6 +85,7 @@ done
 echo
 echo "================================================================"
 io::log_yellow "build and run unit tests."
+echo "bazel test " "${bazel_args[@]}"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 

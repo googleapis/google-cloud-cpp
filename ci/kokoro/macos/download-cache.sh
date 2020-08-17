@@ -46,10 +46,7 @@ cache_download_tarball "${CACHE_FOLDER}" "${DOWNLOAD}" "${CACHE_NAME}.tar.gz"
 
 echo "================================================================"
 io::log "Extracting build cache"
-# Ignore timestamp warnings, Bazel has files with timestamps 10 years
-# into the future :shrug:
-tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 |
-  grep -E -v 'tar:.*in the future'
+tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz"
 io::log "Extraction completed"
 
 exit 0
