@@ -47,28 +47,11 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
   bazel_args+=(--config "${BAZEL_CONFIG}")
 fi
 
-if [[ -r "/etc/pki/tls/certs/ca-bundle.crt" ]]; then
-  bazel_args+=("--define" "ca_bundle_style=redhat")
-elif [[ -r "/etc/ssl/certs/ca-certificates.crt" ]]; then
-  bazel_args+=("--define" "ca_bundle_style=debian")
-fi
-
-readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
-readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
-
-# If we have the right credentials, tell bazel to cache build results in a GCS
-# bucket. Note: this will not cache external deps, so the "fetch" below will
-# not hit this cache.
-if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
+if [[ -r "/c/kokoro-run-key.json" ]]; then
   run_vars+=(
-    "GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
+    "GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
     "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
   )
-  bazel_args+=("--remote_cache=${BAZEL_CACHE}")
-  bazel_args+=("--google_credentials=${GOOGLE_APPLICATION_CREDENTIALS}")
-  # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
-  # and https://github.com/bazelbuild/bazel/issues/3360
-  bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi
 
 build_quickstart() {
@@ -85,7 +68,6 @@ build_quickstart() {
 
   echo
   io::log_yellow "Compiling ${library}'s quickstart"
-  echo "bazel build" "${bazel_args[@]}"
   "${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
   if [[ -r "/c/kokoro-run-key.json" ]]; then
