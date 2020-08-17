@@ -77,7 +77,7 @@ class GeneratorIntegrationTest : public testing::Test {
     // Path to location where generated code is written.
     auto output_path = google::cloud::internal::GetEnv(
                            "GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-                           .value_or("/tmp");
+                           .value_or(::testing::TempDir());
 
     google::cloud::generator::Generator generator;
     google::protobuf::compiler::CommandLineInterface cli;

@@ -34,7 +34,7 @@ readonly GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=$(bazel info output_base)"/extern
   --test_env="GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH=${GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH}" \
   --test_env="GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=${GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH}" \
   --test_tag_filters="integration-test" -- \
-  "//generator/...:all"
+  "//generator/..."
 exit_status=$?
 
 exit "${exit_status}"
