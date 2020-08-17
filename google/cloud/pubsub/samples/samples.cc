@@ -518,27 +518,29 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
-    std::atomic<int> count{0};
-    google::cloud::promise<void> received_message;
+    std::mutex mu;
+    std::condition_variable cv;
+    bool done = true;
+    int message_count = 0;
     auto result = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
-          // Signal the waiting thread to detach the subscription after the
-          // first message.
-          if (count.load() == 0) received_message.set_value();
-          ++count;
-          // Only then ack the message, preventing any new requests from being
-          // issued.
+          std::unique_lock<std::mutex> lk(mu);
+          ++message_count;
+          done = true;
+          cv.notify_one();
+          lk.unlock();
           std::move(h).ack();
         });
-    // Cancel the subscription as soon as the first message is received, and
-    // block until that happens.
-    received_message.get_future()
-        .then([&result](google::cloud::future<void>) { result.cancel(); })
-        .get();
+    // Wait until at least one message has been received.
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&done] { return done; });
+    lk.unlock();
+    // Cancel the subscription session.
+    result.cancel();
     // Report any final status, blocking.
-    std::cout << "Message count = " << count.load()
-              << ", status = " << result.get() << "\n";
+    std::cout << "Message count: " << message_count
+              << ", status: " << result.get() << "\n";
   }
   //! [END pubsub_subscriber_async_pull] [subscribe]
   //! [END pubsub_quickstart_subscriber]
@@ -554,32 +556,37 @@ void SubscribeErrorListener(
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
-    std::atomic<int> count{0};
-    google::cloud::promise<void> done;
+    std::mutex mu;
+    std::condition_variable cv;
+    bool done = false;
+    int message_count = 0;
     auto session =
         subscriber
             .Subscribe(subscription,
                        [&](pubsub::Message const& m, pubsub::AckHandler h) {
                          std::cout << "Received message " << m << "\n";
-                         // Signal the waiting thread to detach the subscription
-                         // after the first message.
-                         if (count.load() == 0) done.set_value();
-                         ++count;
+                         std::unique_lock<std::mutex> lk(mu);
+                         ++message_count;
+                         done = true;
+                         cv.notify_one();
+                         lk.unlock();
                          std::move(h).ack();
                        })
             // Setup an error handler for the subscription session
             .then([&](future<google::cloud::Status> f) {
               std::cout << "Subscription session result: " << f.get() << "\n";
+              std::unique_lock<std::mutex> lk(mu);
+              done = true;
+              cv.notify_one();
             });
     // Most applications would just release the `session` object at this point,
-    // but we want to gracefully close down this example. Setup a callback to
-    // cancel (close) the session when it receives the first message.
-    auto cancelled =
-        done.get_future().then([&session](future<void>) { session.cancel(); });
-    // Now block until the cancel operation and the session have finished
-    cancelled.get();
+    // but we want to gracefully close down this example.
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&done] { return done; });
+    lk.unlock();
+    session.cancel();
     session.get();
-    std::cout << "Message count = " << count.load() << "\n";
+    std::cout << "Message count:" << message_count << "\n";
   }
   // [END pubsub_subscriber_error_listener]
   (std::move(subscriber), std::move(subscription));
@@ -594,23 +601,30 @@ void SubscribeCustomAttributes(
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
-    std::atomic<int> count{0};
-    google::cloud::promise<void> received_message;
-    auto result = subscriber.Subscribe(
+    std::mutex mu;
+    std::condition_variable cv;
+    bool done = false;
+    int message_count = 0;
+    auto session = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message with attributes:\n";
           for (auto const& kv : m.attributes()) {
             std::cout << "  " << kv.first << ": " << kv.second << "\n";
           }
-          // synchronize with the waiting thread to gracefully end the example
-          if (count++ == 0) received_message.set_value();
+          std::unique_lock<std::mutex> lk(mu);
+          ++message_count;
+          done = true;
+          cv.notify_one();
+          lk.unlock();
           std::move(h).ack();
         });
-    received_message.get_future()
-        .then([&result](google::cloud::future<void>) { result.cancel(); })
-        .get();
-    std::cout << "Message count = " << count.load()
-              << ", status = " << result.get() << "\n";
+    // Most applications would just release the `session` object at this point,
+    // but we want to gracefully close down this example.
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&done] { return done; });
+    session.cancel();
+    std::cout << "Message count: " << message_count
+              << ", status: " << session.get() << "\n";
   }
   //! [END pubsub_async_pull_custom_attributes]
   (std::move(subscriber), std::move(subscription));
