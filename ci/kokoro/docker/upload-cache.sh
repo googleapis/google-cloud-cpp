@@ -43,9 +43,6 @@ maybe_dirs=(
   # directory, but we have to separate it from the other files in `vcpkg` or
   # things like `git clone` do not work as expected.
   "${HOME_DIR}/vcpkg-quickstart-cache"
-
-  # Bazel, when running inside the Docker container, puts its cache here:
-  "${HOME_DIR}/.cache"
 )
 
 dirs=()
