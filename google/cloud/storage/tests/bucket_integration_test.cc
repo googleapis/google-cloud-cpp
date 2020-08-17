@@ -1128,7 +1128,7 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 
   auto meta =
       client->CreateBucketForProject(bucket_name, project_id_, original);
-  ASSERT_STATUS_OK(meta);
+  ASSERT_STATUS_OK(meta) << bucket_name;
 
   StatusOr<NativeIamPolicy> policy =
       client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(1));
