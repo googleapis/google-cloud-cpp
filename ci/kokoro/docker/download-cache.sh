@@ -46,6 +46,11 @@ cache_download_tarball "${CACHE_FOLDER}" "${HOME_DIR}" "${CACHE_NAME}.tar.gz"
 echo "================================================================"
 io::log "Extracting build cache"
 tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | grep -E -v 'tar:.*in the future'
+# DEBUG DEBUG DO NOT MERGE
+# Remove the Bazel cache to verify the PR builds are fast, just before this is
+# merged we can remove this hack as the full CI build will cleanup the tarballs
+rm -fr "${HOME_DIR}/.cache"
+# END EBUG DEBUG
 io::log "Extraction completed"
 
 exit 0

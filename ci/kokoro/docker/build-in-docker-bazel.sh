@@ -81,7 +81,7 @@ io::log "Fetching dependencies"
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
-echo "bazel test" "${bazel_args[@]}"
+echo "bazel test " "${bazel_args[@]}"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
