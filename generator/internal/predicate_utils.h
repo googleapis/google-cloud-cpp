@@ -28,23 +28,23 @@ namespace generator_internal {
  *
  * https://google.aip.dev/client-libraries/4233
  */
-bool IsPaginated(google::protobuf::MethodDescriptor const* method);
+bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Detemines if the given method has neither client-side streaming, server-side
  * streaming, nor bidirectional streaming.
  */
-bool IsNonStreaming(google::protobuf::MethodDescriptor const* method);
+bool IsNonStreaming(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Determines if the given method is a long running operation.
  */
-bool IsLongrunningOperation(google::protobuf::MethodDescriptor const* method);
+bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Determines if the given method returns `google::protobug::Empty`.
  */
-bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* method);
+bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method);
 
 /**
  * If method meets pagination criteria, provides paginated field type and field
@@ -53,7 +53,7 @@ bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* method);
  * https://google.aip.dev/client-libraries/4233
  */
 google::cloud::optional<std::pair<std::string, std::string>>
-DeterminePagination(google::protobuf::MethodDescriptor const* method);
+DeterminePagination(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Returns true if all predicates return true.
@@ -62,9 +62,10 @@ template <typename T>
 class GenericAll {
  public:
   template <typename... Predicates>
-  explicit GenericAll(Predicates... p) : predicates_({p...}) {}
+  explicit GenericAll(Predicates&&... p)
+      : predicates_({std::forward<Predicates>(p)...}) {}
 
-  bool operator()(T const* m) const {
+  bool operator()(T const& m) const {
     for (auto const& p : predicates_) {
       if (!p(m)) return false;
     }
@@ -72,7 +73,7 @@ class GenericAll {
   }
 
  private:
-  std::vector<std::function<bool(T const* m)>> predicates_;
+  std::vector<std::function<bool(T const& m)>> predicates_;
 };
 
 using All = GenericAll<google::protobuf::MethodDescriptor>;
@@ -85,9 +86,10 @@ template <typename T>
 class GenericAny {
  public:
   template <typename... Predicates>
-  explicit GenericAny(Predicates... p) : predicates_({p...}) {}
+  explicit GenericAny(Predicates&&... p)
+      : predicates_({std::forward<Predicates>(p)...}) {}
 
-  bool operator()(T const* m) const {
+  bool operator()(T const& m) const {
     for (auto const& p : predicates_) {
       if (p(m)) return true;
     }
@@ -95,7 +97,7 @@ class GenericAny {
   }
 
  private:
-  std::vector<std::function<bool(T const* m)>> predicates_;
+  std::vector<std::function<bool(T const& m)>> predicates_;
 };
 
 using Any = GenericAny<google::protobuf::MethodDescriptor>;
@@ -106,14 +108,14 @@ using Any = GenericAny<google::protobuf::MethodDescriptor>;
 template <typename T>
 class GenericAnd {
  public:
-  GenericAnd(std::function<bool(T const* m)> lhs,
-             std::function<bool(T const* m)> rhs)
+  GenericAnd(std::function<bool(T const& m)> lhs,
+             std::function<bool(T const& m)> rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(T const* m) const { return lhs_(m) && rhs_(m); }
+  bool operator()(T const& m) const { return lhs_(m) && rhs_(m); }
 
  private:
-  std::function<bool(T const* m)> lhs_;
-  std::function<bool(T const* m)> rhs_;
+  std::function<bool(T const& m)> lhs_;
+  std::function<bool(T const& m)> rhs_;
 };
 
 using And = GenericAnd<google::protobuf::MethodDescriptor>;
@@ -124,14 +126,14 @@ using And = GenericAnd<google::protobuf::MethodDescriptor>;
 template <typename T>
 class GenericOr {
  public:
-  GenericOr(std::function<bool(T const* m)> lhs,
-            std::function<bool(T const* m)> rhs)
+  GenericOr(std::function<bool(T const& m)> lhs,
+            std::function<bool(T const& m)> rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(T const* m) const { return lhs_(m) || rhs_(m); }
+  bool operator()(T const& m) const { return lhs_(m) || rhs_(m); }
 
  private:
-  std::function<bool(T const* m)> lhs_;
-  std::function<bool(T const* m)> rhs_;
+  std::function<bool(T const& m)> lhs_;
+  std::function<bool(T const& m)> rhs_;
 };
 
 using Or = GenericOr<google::protobuf::MethodDescriptor>;
@@ -142,12 +144,12 @@ using Or = GenericOr<google::protobuf::MethodDescriptor>;
 template <typename T>
 class GenericNot {
  public:
-  explicit GenericNot(std::function<bool(T const* m)> lhs)
+  explicit GenericNot(std::function<bool(T const& m)> lhs)
       : lhs_(std::move(lhs)) {}
-  bool operator()(T const* m) const { return !lhs_(m); }
+  bool operator()(T const& m) const { return !lhs_(m); }
 
  private:
-  std::function<bool(T const* m)> lhs_;
+  std::function<bool(T const& m)> lhs_;
 };
 
 using Not = GenericNot<google::protobuf::MethodDescriptor>;
@@ -161,7 +163,7 @@ using Not = GenericNot<google::protobuf::MethodDescriptor>;
 template <typename T>
 class PredicatedFragment {
  public:
-  using PredicateFn = std::function<bool(T const*)>;
+  using PredicateFn = std::function<bool(T const&)>;
 
   PredicatedFragment(PredicateFn predicate, std::string fragment_if_true,
                      std::string fragment_if_false)
@@ -170,11 +172,11 @@ class PredicatedFragment {
         fragment_if_false_(std::move(fragment_if_false)) {}
 
   PredicatedFragment(std::string fragment_always_true)  // NOLINT
-      : predicate_([](T const*) { return true; }),
+      : predicate_([](T const&) { return true; }),
         fragment_if_true_(std::move(fragment_always_true)),
         fragment_if_false_({}) {}
 
-  std::string operator()(T const* descriptor) const {
+  std::string operator()(T const& descriptor) const {
     if (predicate_(descriptor)) {
       return fragment_if_true_;
     }

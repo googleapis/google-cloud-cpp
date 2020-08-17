@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/predicate_utils.h"
+#include "google/cloud/log.h"
 #include "google/cloud/optional.h"
 #include <string>
 
@@ -26,9 +27,9 @@ using ::google::protobuf::MethodDescriptor;
 
 // https://google.aip.dev/client-libraries/4233
 google::cloud::optional<std::pair<std::string, std::string>>
-DeterminePagination(google::protobuf::MethodDescriptor const* method) {
+DeterminePagination(google::protobuf::MethodDescriptor const& method) {
   std::string paginated_type;
-  Descriptor const* request_message = method->input_type();
+  Descriptor const* request_message = method.input_type();
   FieldDescriptor const* page_size =
       request_message->FindFieldByName("page_size");
   if (!page_size || page_size->type() != FieldDescriptor::TYPE_INT32) return {};
@@ -37,7 +38,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const* method) {
   if (!page_token || page_token->type() != FieldDescriptor::TYPE_STRING)
     return {};
 
-  Descriptor const* response_message = method->output_type();
+  Descriptor const* response_message = method.output_type();
   FieldDescriptor const* next_page_token =
       response_message->FindFieldByName("next_page_token");
   if (!next_page_token ||
@@ -46,12 +47,8 @@ DeterminePagination(google::protobuf::MethodDescriptor const* method) {
 
   std::vector<std::tuple<std::string, Descriptor const*, int>>
       repeated_message_fields;
-  std::cout << "response_message->field_count(): "
-            << response_message->field_count() << "\n";
   for (int i = 0; i < response_message->field_count(); ++i) {
     FieldDescriptor const* field = response_message->field(i);
-    std::cout << "field: " << field->name() << "; number: " << field->number()
-              << "\n";
     if (field->is_repeated() &&
         field->type() == FieldDescriptor::TYPE_MESSAGE) {
       repeated_message_fields.emplace_back(std::make_tuple(
@@ -70,9 +67,9 @@ DeterminePagination(google::protobuf::MethodDescriptor const* method) {
         });
     int min_field_number = std::get<2>(*min_field);
     if (min_field_number != std::get<2>(repeated_message_fields[0])) {
-      std::cerr << "Repeated field in paginated response must be first "
-                   "appearing and lowest field number: "
-                << method->full_name() << std::endl;
+      GCP_LOG(FATAL) << "Repeated field in paginated response must be first "
+                        "appearing and lowest field number: "
+                     << method.full_name() << std::endl;
       std::exit(1);
     }
   }
@@ -80,20 +77,20 @@ DeterminePagination(google::protobuf::MethodDescriptor const* method) {
                         std::get<1>(repeated_message_fields[0])->full_name());
 }
 
-bool IsPaginated(google::protobuf::MethodDescriptor const* method) {
+bool IsPaginated(google::protobuf::MethodDescriptor const& method) {
   return DeterminePagination(method).has_value();
 }
 
-bool IsNonStreaming(google::protobuf::MethodDescriptor const* method) {
-  return !method->client_streaming() && !method->server_streaming();
+bool IsNonStreaming(google::protobuf::MethodDescriptor const& method) {
+  return !method.client_streaming() && !method.server_streaming();
 }
 
-bool IsLongrunningOperation(google::protobuf::MethodDescriptor const* method) {
-  return method->output_type()->full_name() == "google.longrunning.Operation";
+bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method) {
+  return method.output_type()->full_name() == "google.longrunning.Operation";
 }
 
-bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* method) {
-  return method->output_type()->full_name() == "google.protobuf.Empty";
+bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method) {
+  return method.output_type()->full_name() == "google.protobuf.Empty";
 }
 
 }  // namespace generator_internal

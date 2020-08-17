@@ -27,71 +27,71 @@ using ::google::protobuf::FieldDescriptorProto;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 
-bool PredicateTrue(int const*) { return true; }
-bool PredicateFalse(int const*) { return false; }
+bool PredicateTrue(int const&) { return true; }
+bool PredicateFalse(int const&) { return false; }
 
 TEST(PredicateUtilsTest, GenericNot) {
   int bar;
-  EXPECT_TRUE(GenericNot<int>(PredicateFalse)(&bar));
-  EXPECT_FALSE(GenericNot<int>(PredicateTrue)(&bar));
+  EXPECT_TRUE(GenericNot<int>(PredicateFalse)(bar));
+  EXPECT_FALSE(GenericNot<int>(PredicateTrue)(bar));
 }
 
 TEST(PredicateUtilsTest, GenericAnd) {
   int bar;
-  EXPECT_TRUE(GenericAnd<int>(PredicateTrue, PredicateTrue)(&bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateTrue)(&bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateTrue, PredicateFalse)(&bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateFalse)(&bar));
+  EXPECT_TRUE(GenericAnd<int>(PredicateTrue, PredicateTrue)(bar));
+  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateTrue)(bar));
+  EXPECT_FALSE(GenericAnd<int>(PredicateTrue, PredicateFalse)(bar));
+  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateFalse)(bar));
 
   EXPECT_TRUE(
-      GenericAnd<int>(PredicateTrue, GenericNot<int>(PredicateFalse))(&bar));
+      GenericAnd<int>(PredicateTrue, GenericNot<int>(PredicateFalse))(bar));
   EXPECT_TRUE(
-      GenericAnd<int>(GenericNot<int>(PredicateFalse), PredicateTrue)(&bar));
+      GenericAnd<int>(GenericNot<int>(PredicateFalse), PredicateTrue)(bar));
   EXPECT_TRUE(
-      GenericNot<int>(GenericAnd<int>(PredicateTrue, PredicateFalse))(&bar));
+      GenericNot<int>(GenericAnd<int>(PredicateTrue, PredicateFalse))(bar));
 }
 
 TEST(PredicateUtilsTest, GenericOr) {
   int bar;
-  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateTrue)(&bar));
-  EXPECT_TRUE(GenericOr<int>(PredicateFalse, PredicateTrue)(&bar));
-  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateFalse)(&bar));
-  EXPECT_FALSE(GenericOr<int>(PredicateFalse, PredicateFalse)(&bar));
+  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateTrue)(bar));
+  EXPECT_TRUE(GenericOr<int>(PredicateFalse, PredicateTrue)(bar));
+  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateFalse)(bar));
+  EXPECT_FALSE(GenericOr<int>(PredicateFalse, PredicateFalse)(bar));
 }
 
 TEST(PredicateUtilsTest, GenericAll) {
   int bar;
-  EXPECT_TRUE(GenericAll<int>(PredicateTrue)(&bar));
-  EXPECT_FALSE(GenericAll<int>(PredicateFalse)(&bar));
-  EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse)(&bar));
-  EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue)(&bar));
+  EXPECT_TRUE(GenericAll<int>(PredicateTrue)(bar));
+  EXPECT_FALSE(GenericAll<int>(PredicateFalse)(bar));
+  EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse)(bar));
+  EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue)(bar));
   EXPECT_TRUE(
-      GenericAll<int>(PredicateTrue, PredicateTrue, PredicateTrue)(&bar));
+      GenericAll<int>(PredicateTrue, PredicateTrue, PredicateTrue)(bar));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateFalse, PredicateTrue, PredicateTrue)(&bar));
+      GenericAll<int>(PredicateFalse, PredicateTrue, PredicateTrue)(bar));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateTrue, PredicateFalse, PredicateTrue)(&bar));
+      GenericAll<int>(PredicateTrue, PredicateFalse, PredicateTrue)(bar));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateFalse, PredicateFalse, PredicateFalse)(&bar));
+      GenericAll<int>(PredicateFalse, PredicateFalse, PredicateFalse)(bar));
 
   EXPECT_FALSE(GenericAll<int>(
-      PredicateFalse, GenericOr<int>(PredicateFalse, PredicateTrue))(&bar));
+      PredicateFalse, GenericOr<int>(PredicateFalse, PredicateTrue))(bar));
 }
 
 TEST(PredicateUtilsTest, GenericAny) {
   int bar;
-  EXPECT_TRUE(GenericAny<int>(PredicateTrue)(&bar));
-  EXPECT_FALSE(GenericAny<int>(PredicateFalse)(&bar));
-  EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse)(&bar));
-  EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue)(&bar));
+  EXPECT_TRUE(GenericAny<int>(PredicateTrue)(bar));
+  EXPECT_FALSE(GenericAny<int>(PredicateFalse)(bar));
+  EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse)(bar));
+  EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue)(bar));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateTrue, PredicateTrue, PredicateTrue)(&bar));
+      GenericAny<int>(PredicateTrue, PredicateTrue, PredicateTrue)(bar));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateFalse, PredicateTrue, PredicateTrue)(&bar));
+      GenericAny<int>(PredicateFalse, PredicateTrue, PredicateTrue)(bar));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateTrue, PredicateFalse, PredicateTrue)(&bar));
+      GenericAny<int>(PredicateTrue, PredicateFalse, PredicateTrue)(bar));
   EXPECT_FALSE(
-      GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(&bar));
+      GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(bar));
 }
 
 TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
@@ -117,9 +117,9 @@ TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
-      IsResponseTypeEmpty(service_file_descriptor->service(0)->method(0)));
+      IsResponseTypeEmpty(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
-      IsResponseTypeEmpty(service_file_descriptor->service(0)->method(1)));
+      IsResponseTypeEmpty(*service_file_descriptor->service(0)->method(1)));
 }
 
 TEST(PredicateUtilsTest, IsLongrunningOperation) {
@@ -145,9 +145,9 @@ TEST(PredicateUtilsTest, IsLongrunningOperation) {
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
-      IsLongrunningOperation(service_file_descriptor->service(0)->method(0)));
+      IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
-      IsLongrunningOperation(service_file_descriptor->service(0)->method(1)));
+      IsLongrunningOperation(*service_file_descriptor->service(0)->method(1)));
 }
 
 TEST(PredicateUtilsTest, IsNonStreaming) {
@@ -188,13 +188,13 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
   const FileDescriptor* service_file_descriptor_lro =
       pool.BuildFile(service_file);
   EXPECT_TRUE(
-      IsNonStreaming(service_file_descriptor_lro->service(0)->method(0)));
+      IsNonStreaming(*service_file_descriptor_lro->service(0)->method(0)));
   EXPECT_FALSE(
-      IsNonStreaming(service_file_descriptor_lro->service(0)->method(1)));
+      IsNonStreaming(*service_file_descriptor_lro->service(0)->method(1)));
   EXPECT_FALSE(
-      IsNonStreaming(service_file_descriptor_lro->service(0)->method(2)));
+      IsNonStreaming(*service_file_descriptor_lro->service(0)->method(2)));
   EXPECT_FALSE(
-      IsNonStreaming(service_file_descriptor_lro->service(0)->method(3)));
+      IsNonStreaming(*service_file_descriptor_lro->service(0)->method(3)));
 }
 
 TEST(PredicateUtilsTest, PaginationSuccess) {
@@ -241,9 +241,9 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_TRUE(IsPaginated(service_file_descriptor->service(0)->method(0)));
+  EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
   auto result =
-      DeterminePagination(service_file_descriptor->service(0)->method(0));
+      DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
   EXPECT_EQ(result->second, "google.protobuf.Bar");
@@ -270,7 +270,7 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_FALSE(IsPaginated(service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, PaginationNoPageToken) {
@@ -298,7 +298,7 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_FALSE(IsPaginated(service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
@@ -332,7 +332,7 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_FALSE(IsPaginated(service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
@@ -379,7 +379,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_FALSE(IsPaginated(service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
@@ -442,27 +442,26 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
 
   DescriptorPool pool;
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_DEATH(
-      IsPaginated(service_file_descriptor->service(0)->method(0)),
-      "Repeated field in paginated response must be first appearing and lowest "
-      "field number: google.protobuf.Service.RepeatedOrderMismatch");
+  EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
+               "");
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentTrueString) {
-  PredicatedFragment<int> f = {[](int const*) { return true; }, "True",
-                               "False"};
-  EXPECT_EQ(f(nullptr), "True");
+  int bar;
+  PredicatedFragment<int> f = {PredicateTrue, "True", "False"};
+  EXPECT_EQ(f(bar), "True");
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentFalseString) {
-  PredicatedFragment<int> f = {[](int const*) { return false; }, "True",
-                               "False"};
-  EXPECT_EQ(f(nullptr), "False");
+  int bar;
+  PredicatedFragment<int> f = {PredicateFalse, "True", "False"};
+  EXPECT_EQ(f(bar), "False");
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentStringOnly) {
+  int bar;
   PredicatedFragment<int> f = {"True"};
-  EXPECT_EQ(f(nullptr), "True");
+  EXPECT_EQ(f(bar), "True");
 }
 
 }  // namespace
