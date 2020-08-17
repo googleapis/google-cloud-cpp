@@ -14,64 +14,30 @@
 # limitations under the License.
 # ~~~
 
-include(GoogleCloudCppCommon)
-include(FindProtobufWithTargets)
-
-find_package(ProtobufWithTargets REQUIRED)
-
-add_library(
-    google_cloud_cpp_generator # cmake-format: sort
-    generator.cc
-    generator.h
-    internal/class_generator_interface.h
-    internal/codegen_utils.cc
-    internal/codegen_utils.h
-    internal/predicate_utils.cc
-    internal/predicate_utils.h
-    internal/printer.h
-    internal/stub_generator.cc
-    internal/stub_generator.h)
-target_include_directories(google_cloud_cpp_generator
-                           PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
-target_link_libraries(
-    google_cloud_cpp_generator
-    PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-           googleapis-c++::api_client_protos
-           googleapis-c++::longrunning_operations_protos)
-google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
-target_compile_options(google_cloud_cpp_generator
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-add_library(googleapis-c++::google_cloud_cpp_generator ALIAS
-            google_cloud_cpp_generator)
-
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_generator YEAR "2020")
-
-# Define the tests in a function so we have a new scope for variable names.
-function (google_cloud_cpp_generator_define_tests)
+function (google_cloud_cpp_generator_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
     # config file for googletest (that is, the CMake file installed by
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(google_cloud_cpp_generator_unit_tests
+    set(google_cloud_cpp_generator_integration_tests
         # cmake-format: sort
-        generator_test.cc internal/codegen_utils_test.cc
-        internal/predicate_utils_test.cc internal/printer_test.cc)
+        generator_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
-    export_list_to_bazel("google_cloud_cpp_generator_unit_tests.bzl"
-                         "google_cloud_cpp_generator_unit_tests" YEAR "2020")
+    export_list_to_bazel(
+        "google_cloud_cpp_generator_integration_tests.bzl"
+        "google_cloud_cpp_generator_integration_tests" YEAR "2020")
 
-    # Generate a target for each unit test.
-    foreach (fname ${google_cloud_cpp_generator_unit_tests})
-        google_cloud_cpp_add_executable(target "google_cloud_cpp_generator"
-                                        "${fname}")
+    # Create a custom target so we can say "build all the tests"
+    add_custom_target(generator-integration-tests)
+
+    # Generate a target for each integration test.
+    foreach (fname ${google_cloud_cpp_generator_integration_tests})
+        google_cloud_cpp_add_executable(
+            target "google_cloud_cpp_generator_integration" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_generator
@@ -90,14 +56,19 @@ function (google_cloud_cpp_generator_define_tests)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
         add_test(NAME ${target} COMMAND ${target})
+        set_tests_properties(
+            ${target} PROPERTIES LABELS
+                                 "integration-test;integration-test-emulator")
+        add_dependencies(generator-integration-tests ${target})
     endforeach ()
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        return()
+    endif ()
 endfunction ()
-
-add_subdirectory(integration_tests)
 
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
 # is installed from source.
 if (BUILD_TESTING)
-    google_cloud_cpp_generator_define_tests()
+    google_cloud_cpp_generator_define_integration_tests()
 endif (BUILD_TESTING)

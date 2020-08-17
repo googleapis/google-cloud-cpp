@@ -164,6 +164,11 @@ if should_run_integration_tests; then
   "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
 
+  echo "================================================================"
+  io::log_yellow "running generator integration tests via Bazel"
+  "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
+    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
+
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
   # Manually restarting the build clears up the problem, but that is just a
