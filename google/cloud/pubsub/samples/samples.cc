@@ -520,7 +520,7 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::mutex mu;
     std::condition_variable cv;
-    bool done = true;
+    bool done = false;
     int message_count = 0;
     auto result = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
