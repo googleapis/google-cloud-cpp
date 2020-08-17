@@ -57,9 +57,8 @@ class SessionShutdownManager {
   SessionShutdownManager() = default;
   ~SessionShutdownManager();
 
-  // TODO(#4898) - I think a `.then()` call would work better here.
   /// Set the promise to signal when the shutdown has completed.
-  void Start(promise<Status> p) { done_ = std::move(p); }
+  future<Status> Start() { return done_.get_future(); }
 
   /**
    * Start an operation, using the current thread of control.
