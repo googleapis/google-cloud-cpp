@@ -75,7 +75,7 @@ StatusOr<T> DecodeBigEndian(std::string const& value) {
   for (auto const& c : value) {
     auto const n = *reinterpret_cast<std::uint8_t const*>(&c);
     shift -= 8;
-    result |= unsigned_type{n} << shift;
+    result = static_cast<unsigned_type>(result | (unsigned_type{n} << shift));
   }
   return *reinterpret_cast<T*>(&result);
 }

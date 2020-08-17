@@ -63,7 +63,7 @@ TEST(PostPolicyV4EscapeTest, OnlyAscii) {
 TEST(PostPolicyV4EscapeTest, InvalidUtf) {
   // In UTF8 a byte larger than 0x7f indicates that there is a byte following
   // it. Here we truncate the string to cause the UTF parser to fail.
-  std::string invalid_utf8(1, 0x80);
+  std::string invalid_utf8(1, '\x80');
   EXPECT_EQ(StatusCode::kInvalidArgument,
             PostPolicyV4Escape(invalid_utf8).status().code());
 }

@@ -34,8 +34,8 @@ int flag_threads = 0;  // 0 means use the threads_per_core setting.
 int flag_threads_per_core = 4;
 
 struct Result {
-  std::int64_t failure_count = 0;
-  std::int64_t success_count = 0;
+  std::int32_t failure_count = 0;
+  std::int32_t success_count = 0;
 
   void Update(Status const& s) {
     if (!s.ok()) {
@@ -122,7 +122,9 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
   }
 
   auto experiments_count = total.failure_count + total.success_count;
-  EXPECT_LE(total.failure_count, experiments_count * 0.001);
+  EXPECT_LE(total.failure_count * 1000, experiments_count)
+      << "total.failure_count=" << total.failure_count
+      << ", total.success_count=" << total.success_count;
 }
 
 /// @test Stress test the library using Read calls.

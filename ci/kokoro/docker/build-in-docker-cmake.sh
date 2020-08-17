@@ -143,13 +143,16 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   HEADER_FILTER_REGEX=$(clang-tidy -dump-config |
     sed -n "s/HeaderFilterRegex: *'\([^']*\)'/\1/p")
   SOURCE_FILTER_REGEX='google/cloud/.*\.cc$'
-  # We disable the misc-unused-using-decls check because it produces false
-  # positives when run on headers. For more details, see issue #4230.
+  # We disable the following checks:
+  #     misc-unused-using-decls
+  #     readability-redundant-declaration
+  # because they produce false positives when run on headers.
+  # For more details, see issue #4230.
   git diff --diff-filter=d --name-only "${TARGET_BRANCH}" |
     grep -E "(${HEADER_FILTER_REGEX})|(${SOURCE_FILTER_REGEX})" |
     grep -v google/cloud/bigtable/examples/opencensus |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
-      -checks="-misc-unused-using-decls"
+      -checks="-misc-unused-using-decls,-readability-redundant-declaration"
 fi
 
 echo "================================================================"

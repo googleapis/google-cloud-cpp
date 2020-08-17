@@ -55,7 +55,8 @@ StatusOr<absl::optional<Row>> StreamingReadResultSource::NextRow() {
   fraction_consumed_ =
       progress.at_response_start() +
       (progress.at_response_end() - progress.at_response_start()) *
-          offset_in_curr_response_ * 1.0 / curr_->row_count();
+          static_cast<double>(offset_in_curr_response_) /
+          static_cast<double>(curr_->row_count());
 
   return absl::optional<Row>(Row());
 }

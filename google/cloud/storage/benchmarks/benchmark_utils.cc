@@ -195,8 +195,8 @@ void SimpleTimer::Stop() {
   cpu_time_ = utime + stime;
   double cpu_fraction = 0;
   if (elapsed_time_.count() != 0) {
-    cpu_fraction =
-        (cpu_time_).count() / static_cast<double>(elapsed_time_.count());
+    cpu_fraction = static_cast<double>(cpu_time_.count()) /
+                   static_cast<double>(elapsed_time_.count());
   }
   now.ru_minflt -= start_usage_.ru_minflt;
   now.ru_majflt -= start_usage_.ru_majflt;
@@ -250,7 +250,7 @@ std::string FormatSize(std::uintmax_t size) {
       {kGiB, kMiB, "MiB"},
       {kTiB, kGiB, "GiB"},
   };
-  auto resolution = kTiB;
+  std::uintmax_t resolution = kTiB;
   char const* name = "TiB";
   for (auto const& r : ranges) {
     if (size < r.limit) {
@@ -262,7 +262,7 @@ std::string FormatSize(std::uintmax_t size) {
   std::ostringstream os;
   os.setf(std::ios::fixed);
   os.precision(1);
-  os << static_cast<double>(size) / resolution << name;
+  os << (static_cast<double>(size) / static_cast<double>(resolution)) << name;
   return os.str();
 }
 
