@@ -26,7 +26,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-struct IsRetryablePolicy {
+struct TestRetryablePolicy {
   static bool IsPermanentFailure(google::cloud::Status const& s) {
     return !s.ok() &&
            (s.code() == google::cloud::StatusCode::kPermissionDenied);
@@ -34,7 +34,7 @@ struct IsRetryablePolicy {
 };
 
 std::unique_ptr<RetryPolicy> TestRetryPolicy() {
-  return LimitedErrorCountRetryPolicy<IsRetryablePolicy>(5).clone();
+  return LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {

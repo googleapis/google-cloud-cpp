@@ -23,26 +23,24 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-struct IsRetryablePolicy {
+struct TestRetryablePolicy {
   static bool IsPermanentFailure(google::cloud::Status const& s) {
     return !s.ok() &&
            (s.code() == google::cloud::StatusCode::kPermissionDenied);
   }
 };
 
-google::cloud::Status CreateTransientError() {
-  return Status(StatusCode::kUnavailable, "");
-}
-google::cloud::Status CreatePermanentError() {
+Status CreateTransientError() { return Status(StatusCode::kUnavailable, ""); }
+Status CreatePermanentError() {
   return Status(StatusCode::kPermissionDenied, "");
 }
 
 using RetryPolicyForTest =
-    google::cloud::internal::TraitBasedRetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    google::cloud::internal::LimitedTimeRetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::LimitedTimeRetryPolicy<TestRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryablePolicy>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>;
 
 auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
 auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);

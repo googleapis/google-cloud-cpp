@@ -62,11 +62,11 @@ class TraitBasedRetryPolicy : public RetryPolicy {
 
   virtual std::unique_ptr<TraitBasedRetryPolicy> clone() const = 0;
 
-  bool IsPermanentFailure(Status const& status) const override {
+  bool IsPermanentFailure(Status const& status) const final {
     return RetryableTraits::IsPermanentFailure(status);
   }
 
-  bool OnFailure(Status const& status) override {
+  bool OnFailure(Status const& status) final {
     if (RetryableTraits::IsPermanentFailure(status)) {
       return false;
     }
