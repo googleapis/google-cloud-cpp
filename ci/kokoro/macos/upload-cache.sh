@@ -49,21 +49,6 @@ maybe_dirs=(
   "${PROJECT_ROOT}/cmake-out/upload/vcpkg-installed"
 )
 
-readonly BAZEL_BIN="$HOME/bin/bazel"
-if [[ -x "${BAZEL_BIN}" ]]; then
-  maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
-  maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
-  "${BAZEL_BIN}" shutdown
-
-  for library in $(quickstart::libraries); do
-    cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
-    maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
-    maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
-    "${BAZEL_BIN}" shutdown
-  done
-  cd "${PROJECT_ROOT}"
-fi
-
 dirs=()
 for dir in "${maybe_dirs[@]}"; do
   if [[ -d "${dir}" ]]; then dirs+=("${dir}"); fi
