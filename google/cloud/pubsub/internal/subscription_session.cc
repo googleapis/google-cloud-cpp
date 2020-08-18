@@ -147,6 +147,7 @@ void SubscriptionSession::MessageHandled(std::string const& ack_id,
   if (shutdown_manager_.FinishedOperation("callback")) return;
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
+  if (!callback_flow_control_.Release(1)) return;
   auto self = shared_from_this();
   // After the callback re-schedule ourselves.
   shutdown_manager_.StartAsyncOperation(__func__, "HandleQueue", executor_,
@@ -236,30 +237,32 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
     return;
   }
 
-  auto m = std::move(messages_.front());
-  messages_.pop_front();
+  while (!messages_.empty() && callback_flow_control_.MaybeAdmit(1)) {
+    auto m = std::move(messages_.front());
+    messages_.pop_front();
 
-  struct MoveCapture {
-    std::function<void(pubsub::Message, pubsub::AckHandler)> callback;
-    pubsub::Message m;
-    std::unique_ptr<pubsub::AckHandler::Impl> h;
-    void operator()() {
-      GCP_LOG(DEBUG) << "calling callback(" << h->ack_id() << ")";
-      callback(std::move(m), pubsub::AckHandler(std::move(h)));
-    }
-  };
-  auto const message_size = MessageSize(m.message());
-  auto message = FromProto(std::move(*m.mutable_message()));
-  std::unique_ptr<pubsub::AckHandler::Impl> handler =
-      absl::make_unique<DefaultAckHandlerImpl>(
-          executor_, stub_, params_.full_subscription_name,
-          std::move(*m.mutable_ack_id()), m.delivery_attempt());
-  handler = absl::make_unique<NotifyWhenMessageHandled>(
-      self, std::move(handler), message_size);
+    struct MoveCapture {
+      std::function<void(pubsub::Message, pubsub::AckHandler)> callback;
+      pubsub::Message m;
+      std::unique_ptr<pubsub::AckHandler::Impl> h;
+      void operator()() {
+        GCP_LOG(DEBUG) << "calling callback(" << h->ack_id() << ")";
+        callback(std::move(m), pubsub::AckHandler(std::move(h)));
+      }
+    };
+    auto const message_size = MessageSize(m.message());
+    auto message = FromProto(std::move(*m.mutable_message()));
+    std::unique_ptr<pubsub::AckHandler::Impl> handler =
+        absl::make_unique<DefaultAckHandlerImpl>(
+            executor_, stub_, params_.full_subscription_name,
+            std::move(*m.mutable_ack_id()), m.delivery_attempt());
+    handler = absl::make_unique<NotifyWhenMessageHandled>(
+        self, std::move(handler), message_size);
 
-  shutdown_manager_.StartAsyncOperation(
-      __func__, "callback", executor_,
-      MoveCapture{params_.callback, std::move(message), std::move(handler)});
+    shutdown_manager_.StartAsyncOperation(
+        __func__, "callback", executor_,
+        MoveCapture{params_.callback, std::move(message), std::move(handler)});
+  }
 }
 
 void SubscriptionSession::RefreshMessageLeases(

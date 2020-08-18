@@ -55,8 +55,42 @@ class SubscriptionOptions {
 
   // TODO(#4645) - add options for flow control
 
+  /**
+   * Set the high watermark and low watermarks for callback concurrency.
+   *
+   * The Cloud Pub/Sub C++ client library will schedule parallel callbacks as
+   * long as the number of outstanding callbacks is less than the high
+   * watermark. Once the watermark is reached the client will not resume
+   * scheduling callbacks until the number of outstanding callbacks is at or
+   * below the low watermark. Using hysteresis prevents and instability.
+   *
+   * Note that this controls the number of callbacks *scheduled*, not the number
+   * of callbacks actually executing at a time. The application needs to create
+   * (or configure) the background threads pool with enough parallelism to
+   * execute more than one callback at a time.
+   *
+   * Some applications many want to share a thread pool across many
+   * subscriptions, the additional level of control (scheduled vs. running
+   * callbacks) allows applications, for example, to ensure that at most `K`
+   * threads in the pool are used by any given subscription.
+   *
+   * @note applications that want to have a single outstanding callback can set
+   *     these parameters to `lwm==0` and `hwm==1`.
+   *
+   * @param hwm the high watermark, if this parameter is `0` the high watermark
+   *     is set to `1`, to avoid starvation for the callbacks
+   * @param lwm the low watermark, if this parameter greater than @p hwm then
+   *    the low watermark is set to the same value as the high watermark
+   */
+  SubscriptionOptions& set_concurrency_watermarks(std::size_t lwm,
+                                                  std::size_t hwm);
+  std::size_t concurrency_lwm() const { return concurrency_lwm_; }
+  std::size_t concurrency_hwm() const { return concurrency_hwm_; }
+
  private:
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
+  std::size_t concurrency_lwm_ = 0;
+  std::size_t concurrency_hwm_ = 1;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_SESSION_H
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/internal/watermark_flow_control.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/completion_queue.h"
@@ -154,6 +155,8 @@ class SubscriptionSession
       : stub_(std::move(s)),
         executor_(std::move(executor)),
         params_(std::move(p)),
+        callback_flow_control_(params_.options.concurrency_lwm(),
+                               params_.options.concurrency_hwm()),
         test_refresh_period_(0) {}
 
   /// Stop fetching message batchines and stop updating any deadlines
@@ -208,6 +211,9 @@ class SubscriptionSession
 
   // Used to signal the application when all activity has ceased.
   SessionShutdownManager shutdown_manager_;
+
+  // Concurrency control for callbacks.
+  WatermarkFlowControl callback_flow_control_;
 
   // The queue of messages waiting to be delivered to the application callback.
   std::deque<google::pubsub::v1::ReceivedMessage> messages_;
