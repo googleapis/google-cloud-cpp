@@ -522,14 +522,14 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
     std::condition_variable cv;
     bool done = false;
     int message_count = 0;
-    auto result = subscriber.Subscribe(
+    auto session = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           done = true;
-          cv.notify_one();
           lk.unlock();
+          cv.notify_one();
           std::move(h).ack();
         });
     // Wait until at least one message has been received.
@@ -537,10 +537,13 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
     cv.wait(lk, [&done] { return done; });
     lk.unlock();
     // Cancel the subscription session.
-    result.cancel();
+    session.cancel();
+    // Wait for the session to complete, no more callbacks can happen after this
+    // point.
+    auto status = session.get();
     // Report any final status, blocking.
-    std::cout << "Message count: " << message_count
-              << ", status: " << result.get() << "\n";
+    std::cout << "Message count: " << message_count << ", status: " << status
+              << "\n";
   }
   //! [END pubsub_subscriber_async_pull] [subscribe]
   //! [END pubsub_quickstart_subscriber]
@@ -568,8 +571,8 @@ void SubscribeErrorListener(
                          std::unique_lock<std::mutex> lk(mu);
                          ++message_count;
                          done = true;
-                         cv.notify_one();
                          lk.unlock();
+                         cv.notify_one();
                          std::move(h).ack();
                        })
             // Setup an error handler for the subscription session
@@ -614,17 +617,19 @@ void SubscribeCustomAttributes(
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           done = true;
-          cv.notify_one();
           lk.unlock();
+          cv.notify_one();
           std::move(h).ack();
         });
     // Most applications would just release the `session` object at this point,
     // but we want to gracefully close down this example.
     std::unique_lock<std::mutex> lk(mu);
     cv.wait(lk, [&done] { return done; });
+    lk.unlock();
     session.cancel();
-    std::cout << "Message count: " << message_count
-              << ", status: " << session.get() << "\n";
+    auto status = session.get();
+    std::cout << "Message count: " << message_count << ", status: " << status
+              << "\n";
   }
   //! [END pubsub_async_pull_custom_attributes]
   (std::move(subscriber), std::move(subscription));
