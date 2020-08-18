@@ -12,27 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
-
-#include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/internal/retry_loop.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 
-/// The base class for backoff policies.
-using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
+Status RetryLoopError(char const* loop_message, char const* location,
+                      Status const& last_status) {
+  std::ostringstream os;
+  os << loop_message << " " << location << ": " << last_status;
+  return Status(last_status.code(), std::move(os).str());
+}
 
-/// A truncated exponential backoff policy with randomized periods.
-using ExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H

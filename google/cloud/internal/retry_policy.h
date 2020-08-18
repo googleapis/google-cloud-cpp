@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_POLICY_H
 
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
@@ -26,37 +27,51 @@ namespace internal {
 /**
  * Define the interface for retry policies.
  *
+ */
+class RetryPolicy {
+ public:
+  virtual ~RetryPolicy() = default;
+  virtual bool OnFailure(Status const&) = 0;
+  virtual bool IsExhausted() const = 0;
+  virtual bool IsPermanentFailure(Status const&) const = 0;
+};
+
+/**
+ * Trait based RetryPolicy.
+ *
  * @tparam StatusType the type used to represent success/failures.
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusTypeP, typename RetryableTraitsP>
-class RetryPolicy {
+template <typename RetryableTraitsP>
+class TraitBasedRetryPolicy : public RetryPolicy {
  public:
   ///@{
   /**
    * @name type traits
    */
-
-  /// The status type used by the retry policy
-  using StatusType = StatusTypeP;
-
   /// The traits describing which errors are permanent failures
   using RetryableTraits = RetryableTraitsP;
+
+  /// The status type used by the retry policy
+  using StatusType = google::cloud::Status;
   ///@}
 
-  virtual ~RetryPolicy() = default;
+  ~TraitBasedRetryPolicy() override = default;
 
-  virtual std::unique_ptr<RetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<TraitBasedRetryPolicy> clone() const = 0;
 
-  bool OnFailure(StatusType const& status) {
+  bool IsPermanentFailure(Status const& status) const override {
+    return RetryableTraits::IsPermanentFailure(status);
+  }
+
+  bool OnFailure(Status const& status) override {
     if (RetryableTraits::IsPermanentFailure(status)) {
       return false;
     }
     OnFailureImpl();
     return !IsExhausted();
   }
-  virtual bool IsExhausted() const = 0;
 
  protected:
   virtual void OnFailureImpl() = 0;
@@ -69,11 +84,11 @@ class RetryPolicy {
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusType, typename RetryablePolicy>
+template <typename RetryablePolicy>
 class LimitedErrorCountRetryPolicy
-    : public RetryPolicy<StatusType, RetryablePolicy> {
+    : public TraitBasedRetryPolicy<RetryablePolicy> {
  public:
-  using BaseType = RetryPolicy<StatusType, RetryablePolicy>;
+  using BaseType = TraitBasedRetryPolicy<RetryablePolicy>;
 
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
       : failure_count_(0), maximum_failures_(maximum_failures) {}
@@ -106,10 +121,10 @@ class LimitedErrorCountRetryPolicy
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusType, typename RetryablePolicy>
-class LimitedTimeRetryPolicy : public RetryPolicy<StatusType, RetryablePolicy> {
+template <typename RetryablePolicy>
+class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
  public:
-  using BaseType = RetryPolicy<StatusType, RetryablePolicy>;
+  using BaseType = TraitBasedRetryPolicy<RetryablePolicy>;
 
   /**
    * Constructor given a `std::chrono::duration<>` object.

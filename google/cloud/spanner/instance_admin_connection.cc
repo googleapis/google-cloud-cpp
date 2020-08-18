@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/polling_loop.h"
-#include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/internal/retry_loop.h"
 #include <chrono>
 
 namespace google {
@@ -35,7 +35,7 @@ std::unique_ptr<RetryPolicy> DefaultInstanceAdminRetryPolicy() {
 
 std::unique_ptr<BackoffPolicy> DefaultInstanceAdminBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return google::cloud::spanner::ExponentialBackoffPolicy(
+  return google::cloud::ExponentialBackoffPolicy(
              std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
@@ -72,7 +72,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   StatusOr<gcsa::Instance> GetInstance(GetInstanceParams gip) override {
     gcsa::GetInstanceRequest request;
     request.set_name(std::move(gip.instance_name));
-    return internal::RetryLoop(
+    return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [this](grpc::ClientContext& context,
@@ -121,7 +121,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   Status DeleteInstance(DeleteInstanceParams p) override {
     gcsa::DeleteInstanceRequest request;
     request.set_name(std::move(p.instance_name));
-    return internal::RetryLoop(
+    return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [this](grpc::ClientContext& context,
@@ -135,7 +135,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       GetInstanceConfigParams p) override {
     gcsa::GetInstanceConfigRequest request;
     request.set_name(std::move(p.instance_config_name));
-    return internal::RetryLoop(
+    return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         true,
         [this](grpc::ClientContext& context,

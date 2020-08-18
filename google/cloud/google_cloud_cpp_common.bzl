@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_common - DO NOT EDIT."""
 
 google_cloud_cpp_common_hdrs = [
+    "backoff_policy.h",
     "future.h",
     "future_generic.h",
     "future_void.h",
@@ -53,6 +54,7 @@ google_cloud_cpp_common_hdrs = [
     "kms_key_name.h",
     "log.h",
     "optional.h",
+    "polling_policy.h",
     "status.h",
     "status_or.h",
     "terminate_handler.h",

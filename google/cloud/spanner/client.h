@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CLIENT_H
 
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
@@ -35,6 +34,7 @@
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"

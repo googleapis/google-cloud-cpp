@@ -15,6 +15,7 @@
 //! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
 //! [END spanner_quickstart]
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"

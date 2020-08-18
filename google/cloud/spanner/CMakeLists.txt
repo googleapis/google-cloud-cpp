@@ -98,8 +98,6 @@ add_library(
     internal/partial_result_set_source.cc
     internal/partial_result_set_source.h
     internal/polling_loop.h
-    internal/retry_loop.cc
-    internal/retry_loop.h
     internal/session.cc
     internal/session.h
     internal/session_pool.cc
@@ -277,7 +275,6 @@ function (spanner_client_define_tests)
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
         internal/polling_loop_test.cc
-        internal/retry_loop_test.cc
         internal/session_pool_test.cc
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc

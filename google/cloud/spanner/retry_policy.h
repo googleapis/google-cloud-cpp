@@ -56,33 +56,30 @@ struct SafeTransactionRerun {
 
 /// The base class for retry policies.
 using RetryPolicy =
-    google::cloud::internal::RetryPolicy<google::cloud::Status,
-                                         internal::SafeGrpcRetry>;
+    google::cloud::internal::TraitBasedRetryPolicy<internal::SafeGrpcRetry>;
 
 /// A retry policy that limits based on time.
 using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,
-                                                    internal::SafeGrpcRetry>;
+    google::cloud::internal::LimitedTimeRetryPolicy<internal::SafeGrpcRetry>;
 
 /// A retry policy that limits the number of times a request can fail.
 using LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
-        google::cloud::Status, internal::SafeGrpcRetry>;
+        internal::SafeGrpcRetry>;
 
 /// The base class for transaction rerun policies.
-using TransactionRerunPolicy =
-    google::cloud::internal::RetryPolicy<google::cloud::Status,
-                                         internal::SafeTransactionRerun>;
+using TransactionRerunPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+    internal::SafeTransactionRerun>;
 
 /// A transaction rerun policy that limits the duration of the rerun loop.
 using LimitedTimeTransactionRerunPolicy =
     google::cloud::internal::LimitedTimeRetryPolicy<
-        google::cloud::Status, internal::SafeTransactionRerun>;
+        internal::SafeTransactionRerun>;
 
 /// A transaction rerun policy that limits the number of failures.
 using LimitedErrorCountTransactionRerunPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
-        google::cloud::Status, internal::SafeTransactionRerun>;
+        internal::SafeTransactionRerun>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

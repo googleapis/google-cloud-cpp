@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_RETRY_LOOP_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_RETRY_LOOP_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_H
 
-#include "google/cloud/spanner/backoff_policy.h"
-#include "google/cloud/spanner/retry_policy.h"
-#include "google/cloud/spanner/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
 #include <thread>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// A helper function to treat all results the same way in `RetryLoop()`.
@@ -125,9 +124,8 @@ auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
 }
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_RETRY_LOOP_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_H

@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_RESUME_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_RESUME_H
 
-#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "absl/types/optional.h"
 #include <functional>
 #include <memory>

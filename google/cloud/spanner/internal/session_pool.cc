@@ -14,10 +14,10 @@
 
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
-#include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "absl/memory/memory.h"
