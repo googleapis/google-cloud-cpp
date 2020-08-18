@@ -13,13 +13,11 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-#include "generator/internal/stub_generator.h"
 // TODO(#4501) - fix by doing #include <absl/...>
 #if _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4244)
 #endif  // _MSC_VER
-#include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
@@ -28,7 +26,6 @@
 #pragma warning(pop)
 #endif  // _MSC_VER
 // TODO(#4501) - end
-#include <google/api/client.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>
@@ -156,40 +153,6 @@ std::string CopyrightLicenseFileHeader() {
   "// limitations under the License.\n\n";
   // clang-format on
   return kHeader;
-}
-
-std::map<std::string, std::string> CreateServiceVars(
-    google::protobuf::ServiceDescriptor const& descriptor,
-    std::vector<std::pair<std::string, std::string>> const& initial_values) {
-  std::map<std::string, std::string> vars(initial_values.begin(),
-                                          initial_values.end());
-  vars["class_comment_block"] = "// TODO: pull in comments";
-  vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
-  vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
-  vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
-  vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
-  vars["proto_file_name"] = descriptor.file()->name();
-  vars["service_endpoint"] =
-      descriptor.options().GetExtension(google::api::default_host);
-  vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
-                                      ServiceNameToFilePath(descriptor.name()),
-                                      "_stub", GeneratedFileSuffix(), ".cc");
-  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
-  vars["stub_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub",
-                   GeneratedFileSuffix(), ".h");
-  return vars;
-}
-
-std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
-    google::protobuf::ServiceDescriptor const* service,
-    google::protobuf::compiler::GeneratorContext* context,
-    std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
-  class_generators.push_back(absl::make_unique<StubGenerator>(
-      service, CreateServiceVars(*service, vars), context));
-  return class_generators;
 }
 
 }  // namespace generator_internal

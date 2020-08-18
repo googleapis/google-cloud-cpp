@@ -20,6 +20,7 @@ google_cloud_cpp_generator_hdrs = [
     "generator.h",
     "internal/class_generator_interface.h",
     "internal/codegen_utils.h",
+    "internal/descriptor_utils.h",
     "internal/predicate_utils.h",
     "internal/printer.h",
     "internal/stub_generator.h",
@@ -28,6 +29,7 @@ google_cloud_cpp_generator_hdrs = [
 google_cloud_cpp_generator_srcs = [
     "generator.cc",
     "internal/codegen_utils.cc",
+    "internal/descriptor_utils.cc",
     "internal/predicate_utils.cc",
     "internal/stub_generator.cc",
 ]
