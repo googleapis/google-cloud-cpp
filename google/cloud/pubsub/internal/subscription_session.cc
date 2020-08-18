@@ -141,7 +141,7 @@ void SubscriptionSession::MessageHandled(std::string const& ack_id,
                                          std::size_t) {
   if (shutdown_manager_.FinishedOperation("callback")) return;
   std::unique_lock<std::mutex> lk(mu_);
-  ack_deadlines_.erase(ack_id);
+  leases_.erase(ack_id);
   auto self = shared_from_this();
   // After the callback re-schedule ourselves.
   shutdown_manager_.StartAsyncOperation(__func__, "HandleQueue", executor_,
@@ -195,8 +195,8 @@ void SubscriptionSession::OnPull(StatusOr<google::pubsub::v1::PullResponse> r) {
   auto const estimated_server_deadline = now + std::chrono::seconds(10);
   auto const handling_deadline = now + params_.options.max_deadline_time();
   for (auto const& rm : r->received_messages()) {
-    ack_deadlines_.emplace(
-        rm.ack_id(), AckStatus{estimated_server_deadline, handling_deadline});
+    leases_.emplace(rm.ack_id(),
+                    LeaseStatus{estimated_server_deadline, handling_deadline});
   }
   std::move(r->mutable_received_messages()->begin(),
             r->mutable_received_messages()->end(),
@@ -209,9 +209,13 @@ void SubscriptionSession::OnPull(StatusOr<google::pubsub::v1::PullResponse> r) {
   shutdown_manager_.StartAsyncOperation(__func__, "HandleQueue", executor_,
                                         [self] { self->HandleQueue(); });
 
-  StartRefreshAckDeadlinesTimer(
-      std::move(lk), std::chrono::system_clock::now() +
-                         std::chrono::seconds(kMinimumAckDeadlineSeconds));
+  // Setup a timer to refresh the message leases. We do not want to immediately
+  // refresh them because there is a good chance they will be handled before
+  // the minimum lease time, and it seems wasteful to refresh the lease just to
+  // quickly turnaround and ack or nack the message.
+  StartRefreshTimer(std::move(lk),
+                    std::chrono::system_clock::now() +
+                        std::chrono::seconds(kMinimumAckDeadlineSeconds));
 }
 
 void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
@@ -254,17 +258,18 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
       MoveCapture{params_.callback, std::move(message), std::move(handler)});
 }
 
-void SubscriptionSession::RefreshAckDeadlines(std::unique_lock<std::mutex> lk) {
-  if (ack_deadlines_.empty() || refreshing_deadlines_) return;
+void SubscriptionSession::RefreshMessageLeases(
+    std::unique_lock<std::mutex> lk) {
+  if (leases_.empty() || refreshing_leases_) return;
 
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   auto const now = std::chrono::system_clock::now();
   request.set_subscription(params_.full_subscription_name);
   using seconds = std::chrono::seconds;
   auto extension = seconds(kMaximumAckDeadlineSeconds);
-  for (auto const& kv : ack_deadlines_) {
-    // This message cannot be extended any further, and we do not want to send
-    // an extension of 0 seconds because that is a nack.
+  for (auto const& kv : leases_) {
+    // This message lease cannot be extended any further, and we do not want to
+    // send an extension of 0 seconds because that is a nack.
     if (kv.second.handling_deadline < now + seconds(1)) continue;
     auto const message_extension =
         std::chrono::duration_cast<seconds>(kv.second.handling_deadline - now);
@@ -273,40 +278,40 @@ void SubscriptionSession::RefreshAckDeadlines(std::unique_lock<std::mutex> lk) {
   }
   auto const new_deadline = now + extension;
   if (request.ack_ids().empty()) {
-    StartRefreshAckDeadlinesTimer(std::move(lk), new_deadline);
+    StartRefreshTimer(std::move(lk), new_deadline);
     return;
   }
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(extension.count()));
-  refreshing_deadlines_ = true;
+  refreshing_leases_ = true;
   auto context = absl::make_unique<grpc::ClientContext>();
   auto weak = std::weak_ptr<SubscriptionSession>(shared_from_this());
   lk.unlock();
 
-  shutdown_manager_.StartOperation(__func__, "OnRefreshAckDeadlines", [&] {
+  shutdown_manager_.StartOperation(__func__, "OnRefreshMessageLeases", [&] {
     stub_->AsyncModifyAckDeadline(executor_, std::move(context), request)
         .then([weak, request, new_deadline](future<Status>) {
           auto self = weak.lock();
           if (!self) return;
-          self->OnRefreshAckDeadlines(request, new_deadline);
+          self->OnRefreshMessageLeases(request, new_deadline);
         });
   });
 }
 
-void SubscriptionSession::OnRefreshAckDeadlines(
+void SubscriptionSession::OnRefreshMessageLeases(
     google::pubsub::v1::ModifyAckDeadlineRequest const& request,
     std::chrono::system_clock::time_point new_server_deadline) {
   if (shutdown_manager_.FinishedOperation(__func__)) return;
   std::unique_lock<std::mutex> lk(mu_);
   for (auto const& ack : request.ack_ids()) {
-    auto i = ack_deadlines_.find(ack);
-    if (i == ack_deadlines_.end()) continue;
+    auto i = leases_.find(ack);
+    if (i == leases_.end()) continue;
     i->second.estimated_server_deadline = new_server_deadline;
   }
-  StartRefreshAckDeadlinesTimer(std::move(lk), new_server_deadline);
+  StartRefreshTimer(std::move(lk), new_server_deadline);
 }
 
-void SubscriptionSession::StartRefreshAckDeadlinesTimer(
+void SubscriptionSession::StartRefreshTimer(
     std::unique_lock<std::mutex>,
     std::chrono::system_clock::time_point new_server_deadline) {
   auto weak = std::weak_ptr<SubscriptionSession>(shared_from_this());
@@ -316,23 +321,23 @@ void SubscriptionSession::StartRefreshAckDeadlinesTimer(
     deadline = std::chrono::system_clock::now() + test_refresh_period_;
   }
 
-  shutdown_manager_.StartOperation(__func__, "OnRefreshAckDeadlinesTimer", [&] {
+  shutdown_manager_.StartOperation(__func__, "OnRefreshTimer", [&] {
     refresh_timer_ = executor_.MakeDeadlineTimer(deadline).then(
         [weak](future<StatusOr<std::chrono::system_clock::time_point>> f) {
           auto self = weak.lock();
           if (!self) return;
-          self->OnRefreshAckDeadlinesTimer(f.get().ok());
+          self->OnRefreshTimer(f.get().ok());
         });
   });
 }
 
-void SubscriptionSession::OnRefreshAckDeadlinesTimer(bool restart) {
+void SubscriptionSession::OnRefreshTimer(bool restart) {
   std::unique_lock<std::mutex> lk(mu_);
-  refreshing_deadlines_ = false;
+  refreshing_leases_ = false;
   refresh_timer_ = {};
   if (shutdown_manager_.FinishedOperation(__func__)) return;
   if (!restart) return;
-  RefreshAckDeadlines(std::move(lk));
+  RefreshMessageLeases(std::move(lk));
 }
 
 void SubscriptionSession::NackAll(

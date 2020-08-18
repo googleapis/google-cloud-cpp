@@ -168,22 +168,21 @@ class SubscriptionSession
   /// Handle the queue of messages, invoking `callback_` on the next message.
   void HandleQueue(std::unique_lock<std::mutex> lk);
 
-  // TODO(#4899) - rename these functions to *MessageLeases()
-  /// If needed asynchronous update the ack deadlines in the server.
-  void RefreshAckDeadlines(std::unique_lock<std::mutex> lk);
+  /// If needed asynchronous update the message leases in the server.
+  void RefreshMessageLeases(std::unique_lock<std::mutex> lk);
 
-  /// Invoked when the asynchronous RPC to update ack deadlines completes.
-  void OnRefreshAckDeadlines(
+  /// Invoked when the asynchronous RPC to update message leases completes.
+  void OnRefreshMessageLeases(
       google::pubsub::v1::ModifyAckDeadlineRequest const& request,
       std::chrono::system_clock::time_point new_server_deadline);
 
   /// Start the timer to update ack deadlines.
-  void StartRefreshAckDeadlinesTimer(
+  void StartRefreshTimer(
       std::unique_lock<std::mutex> lk,
       std::chrono::system_clock::time_point new_server_deadline);
 
   /// The timer to update ack deadlines has triggered.
-  void OnRefreshAckDeadlinesTimer(bool restart);
+  void OnRefreshTimer(bool restart);
 
   template <typename Iterator>
   void NackAll(std::unique_lock<std::mutex> const& lk, Iterator begin,
@@ -212,13 +211,13 @@ class SubscriptionSession
   std::deque<google::pubsub::v1::ReceivedMessage> messages_;
 
   // A collection of message ack_ids to maintain the message leases.
-  struct AckStatus {
+  struct LeaseStatus {
     std::chrono::system_clock::time_point estimated_server_deadline;
     std::chrono::system_clock::time_point handling_deadline;
   };
-  std::map<std::string, AckStatus> ack_deadlines_;
+  std::map<std::string, LeaseStatus> leases_;
 
-  bool refreshing_deadlines_ = false;
+  bool refreshing_leases_ = false;
   future<void> refresh_timer_;
 
   std::chrono::milliseconds test_refresh_period_;
