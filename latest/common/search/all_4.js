@@ -6,5 +6,6 @@ var searchData=
   ['enablestdclog',['EnableStdClog',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a01dc98ce3a03076cd9f74c6614eeca31',1,'google::cloud::v1::LogSink']]],
   ['end',['end',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a1c7300b46ad365f0928f65063058d635',1,'google::cloud::v1::IamBindings']]],
   ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2075c888b810090452199ddf6feeb7ff',1,'google::cloud::v1::ConnectionOptions']]],
-  ['etag',['etag',['../structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#a42dba773688281abf5c330fcf9d591a8',1,'google::cloud::v1::IamPolicy']]]
+  ['etag',['etag',['../structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#a42dba773688281abf5c330fcf9d591a8',1,'google::cloud::v1::IamPolicy']]],
+  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5',1,'google::cloud::v1']]]
 ];

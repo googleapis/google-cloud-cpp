@@ -5,6 +5,7 @@ var searchData=
   ['cancelled',['cancelled',['../structgoogle_1_1cloud_1_1v1_1_1AsyncTimerResult.html#a1fb82bebdafb738a1f9f14ffa95e8634',1,'google::cloud::v1::AsyncTimerResult']]],
   ['channel_5fpool_5fdomain',['channel_pool_domain',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac',1,'google::cloud::v1::ConnectionOptions']]],
   ['clearbackends',['ClearBackends',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81',1,'google::cloud::v1::LogSink']]],
+  ['clone',['clone',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421',1,'google::cloud::v1::PollingPolicy']]],
   ['code',['code',['../classgoogle_1_1cloud_1_1v1_1_1Status.html#a8df5a85749c7653de743f2228d25026b',1,'google::cloud::v1::Status']]],
   ['common_2dmain_2edox',['common-main.dox',['../common-main_8dox.html',1,'']]],
   ['compiletimeenabled',['CompileTimeEnabled',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a0519575ea9d74fddbca548863297b39a',1,'google::cloud::v1::LogSink']]],

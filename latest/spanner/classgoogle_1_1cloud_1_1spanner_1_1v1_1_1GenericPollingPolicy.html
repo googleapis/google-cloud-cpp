@@ -85,14 +85,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4555484b8f3a11f300d74d29d7e59a59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html#a4555484b8f3a11f300d74d29d7e59a59">GenericPollingPolicy</a> (Retry retry_policy, Backoff backoff_policy)</td></tr>
 <tr class="separator:a4555484b8f3a11f300d74d29d7e59a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
-<tr class="memitem:a081d4328122cbeed2bc5a24fb4ad4432"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html#a081d4328122cbeed2bc5a24fb4ad4432">clone</a> () const override</td></tr>
-<tr class="memdesc:a081d4328122cbeed2bc5a24fb4ad4432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a copy of the current policy.  <a href="#a081d4328122cbeed2bc5a24fb4ad4432">More...</a><br /></td></tr>
+<tr class="memitem:a081d4328122cbeed2bc5a24fb4ad4432"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html#a081d4328122cbeed2bc5a24fb4ad4432">clone</a> () const override</td></tr>
 <tr class="separator:a081d4328122cbeed2bc5a24fb4ad4432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6ddd6bcde307ab13f6862b3dfd7630e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html#ae6ddd6bcde307ab13f6862b3dfd7630e">OnFailure</a> (google::cloud::Status const &amp;status) override</td></tr>
-<tr class="memdesc:ae6ddd6bcde307ab13f6862b3dfd7630e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback to indicate that a polling attempt failed.  <a href="#ae6ddd6bcde307ab13f6862b3dfd7630e">More...</a><br /></td></tr>
 <tr class="separator:ae6ddd6bcde307ab13f6862b3dfd7630e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12b3751daf84e1c33fd4228988b10288"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html#a12b3751daf84e1c33fd4228988b10288">WaitPeriod</a> () override</td></tr>
-<tr class="memdesc:a12b3751daf84e1c33fd4228988b10288"><td class="mdescLeft">&#160;</td><td class="mdescRight">How long should the polling loop wait before trying again.  <a href="#a12b3751daf84e1c33fd4228988b10288">More...</a><br /></td></tr>
 <tr class="separator:a12b3751daf84e1c33fd4228988b10288"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -101,7 +98,7 @@ class google::cloud::spanner::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</
 
 <p>Combine a RetryPolicy and a BackoffPolicy to create simple polling policies. </p>
 
-<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00082">82</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00036">36</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4555484b8f3a11f300d74d29d7e59a59"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4555484b8f3a11f300d74d29d7e59a59">&#9670;&nbsp;</a></span>GenericPollingPolicy()</h2>
@@ -139,7 +136,7 @@ template&lt;typename Retry  = LimitedTimeRetryPolicy, typename Backoff  = Expone
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00084">84</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00038">38</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
 
 </div>
 </div>
@@ -156,7 +153,7 @@ template&lt;typename Retry  = LimitedTimeRetryPolicy, typename Backoff  = Expone
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a>&gt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html">google::cloud::spanner::v1::GenericPollingPolicy</a>&lt; Retry, Backoff &gt;::clone </td>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a>&gt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1GenericPollingPolicy.html">google::cloud::spanner::v1::GenericPollingPolicy</a>&lt; Retry, Backoff &gt;::clone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -164,17 +161,12 @@ template&lt;typename Retry  = LimitedTimeRetryPolicy, typename Backoff  = Expone
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return a copy of the current policy. </p>
-<p>This function is called at the beginning of the polling loop. Policies that are based on relative time should restart their timers when this function is called. </p>
-
-<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html#ab81642f2f60d7f9fb2cfb797266be36d">google::cloud::spanner::v1::PollingPolicy</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00089">89</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00043">43</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
 
 </div>
 </div>
@@ -199,18 +191,12 @@ template&lt;typename Retry  = LimitedTimeRetryPolicy, typename Backoff  = Expone
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>A callback to indicate that a polling attempt failed. </p>
-<p>This is called when a polling request fails. Note that this callback is not invoked when the polling request succeeds with "operation not done".</p>
-<dl class="section return"><dt>Returns</dt><dd>true if the failure should be treated as transient and the polling loop should continue. </dd></dl>
-
-<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html#a3485c780084f0325d007f1ac79b06259">google::cloud::spanner::v1::PollingPolicy</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00093">93</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00047">47</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
 
 </div>
 </div>
@@ -234,16 +220,12 @@ template&lt;typename Retry  = LimitedTimeRetryPolicy, typename Backoff  = Expone
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>How long should the polling loop wait before trying again. </p>
-
-<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html#a2f5e5662e12740af909b2365192744b3">google::cloud::spanner::v1::PollingPolicy</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00097">97</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00051">51</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
 
 </div>
 </div>

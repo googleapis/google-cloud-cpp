@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iterator',['iterator',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac',1,'google::cloud::v1::IamBindings']]]
+  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5',1,'google::cloud::v1']]]
 ];

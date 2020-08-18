@@ -63,7 +63,7 @@ var searchData=
   ['retention_5fpolicy',['retention_policy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#ad4a46c3211fcd3f65f39faf97cb15764',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['retention_5fpolicy_5fas_5foptional',['retention_policy_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a35de2d2d7791e6d6402319df924cdeff',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]],
-  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a99e1202eef729ee7576ee748a7ba7c1d',1,'google::cloud::storage::v1']]],
+  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a45a8cc7d57e5b12071421768233525ce',1,'google::cloud::storage::v1']]],
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a670ede04cb5a3d19ebf4ea87f8f5f046',1,'google::cloud::storage::v1::Client']]],
   ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#aeeb6f49ec69059b67fbbc62863a0a032',1,'google::cloud::storage::v1::Client']]],
   ['rewriteprogress',['RewriteProgress',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1RewriteProgress.html',1,'google::cloud::storage::v1']]],

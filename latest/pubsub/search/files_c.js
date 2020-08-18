@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['polling_5fpolicy_2eh',['polling_policy.h',['https://googleapis.dev/google-cloud-common/master/polling__policy_8h.html',1,'']]],
   ['publisher_2ecc',['publisher.cc',['../publisher_8cc.html',1,'']]],
   ['publisher_2eh',['publisher.h',['../publisher_8h.html',1,'']]],
   ['publisher_5fconnection_2ecc',['publisher_connection.cc',['../publisher__connection_8cc.html',1,'']]],

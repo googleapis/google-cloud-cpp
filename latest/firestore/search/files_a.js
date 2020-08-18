@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['terminate_5fhandler_2ecc',['terminate_handler.cc',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8cc.html',1,'']]],
-  ['terminate_5fhandler_2eh',['terminate_handler.h',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8h.html',1,'']]],
-  ['tracing_5foptions_2ecc',['tracing_options.cc',['https://googleapis.dev/google-cloud-common/master/tracing__options_8cc.html',1,'']]],
-  ['tracing_5foptions_2eh',['tracing_options.h',['https://googleapis.dev/google-cloud-common/master/tracing__options_8h.html',1,'']]]
+  ['status_2ecc',['status.cc',['https://googleapis.dev/google-cloud-common/master/status_8cc.html',1,'']]],
+  ['status_2eh',['status.h',['https://googleapis.dev/google-cloud-common/master/status_8h.html',1,'']]],
+  ['status_5for_2eh',['status_or.h',['https://googleapis.dev/google-cloud-common/master/status__or_8h.html',1,'']]]
 ];

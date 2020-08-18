@@ -133,6 +133,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1v1_1_1NullStream.html">NullStream</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements operator&lt;&lt; for all types, without any effect.  <a href="structgoogle_1_1cloud_1_1v1_1_1NullStream.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html">PollingPolicy</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the Cloud C++ client library behavior with respect to polling on long running operations.  <a href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">promise</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement <code>promise&lt;T&gt;</code> as defined in ISO/IEC TS 19571:2016.  <a href="classgoogle_1_1cloud_1_1v1_1_1promise.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,6 +156,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a9cc78873b34952b05cf266563dcca8ae"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae">BackoffPolicy</a> = ::google::cloud::internal::BackoffPolicy</td></tr>
+<tr class="memdesc:a9cc78873b34952b05cf266563dcca8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for backoff policies.  <a href="#a9cc78873b34952b05cf266563dcca8ae">More...</a><br /></td></tr>
+<tr class="separator:a9cc78873b34952b05cf266563dcca8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67c01b1a851ec3bf8c4cc8d845c899d5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5">ExponentialBackoffPolicy</a> = google::cloud::internal::ExponentialBackoffPolicy</td></tr>
+<tr class="memdesc:a67c01b1a851ec3bf8c4cc8d845c899d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A truncated exponential backoff policy with randomized periods.  <a href="#a67c01b1a851ec3bf8c4cc8d845c899d5">More...</a><br /></td></tr>
+<tr class="separator:a67c01b1a851ec3bf8c4cc8d845c899d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af18c5300be7dd3ffb1c356157bf147cd"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af18c5300be7dd3ffb1c356157bf147cd"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">optional</a> = absl::optional&lt; T &gt;</td></tr>
 <tr class="memdesc:af18c5300be7dd3ffb1c356157bf147cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias template for google::cloud::optional.  <a href="#af18c5300be7dd3ffb1c356157bf147cd">More...</a><br /></td></tr>
@@ -323,6 +332,42 @@ Control behaviour on unrecoverable errors.</h2></td></tr>
 <p>Applications may need to link multiple versions of the Google Cloud C++ Libraries, for example, if they link a library that uses an older version of the libraries than they do. This namespace is inlined, so applications can use <code>google::cloud::Foo</code> in their source, but the symbols are versioned, i.e., the symbol becomes <code>google::cloud::v1::Foo</code>.</p>
 <p>Note that, consistent with the semver.org guidelines, the v0 version makes no guarantees with respect to backwards compatibility. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9cc78873b34952b05cf266563dcca8ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cc78873b34952b05cf266563dcca8ae">&#9670;&nbsp;</a></span>BackoffPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae">google::cloud::v1::BackoffPolicy</a> = typedef ::google::cloud::internal::BackoffPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The base class for backoff policies. </p>
+
+<p class="definition">Definition at line <a class="el" href="backoff__policy_8h_source.html#l00026">26</a> of file <a class="el" href="backoff__policy_8h_source.html">backoff_policy.h</a>.</p>
+
+</div>
+</div>
+<a id="a67c01b1a851ec3bf8c4cc8d845c899d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67c01b1a851ec3bf8c4cc8d845c899d5">&#9670;&nbsp;</a></span>ExponentialBackoffPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5">google::cloud::v1::ExponentialBackoffPolicy</a> = typedef google::cloud::internal::ExponentialBackoffPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A truncated exponential backoff policy with randomized periods. </p>
+
+<p class="definition">Definition at line <a class="el" href="backoff__policy_8h_source.html#l00030">30</a> of file <a class="el" href="backoff__policy_8h_source.html">backoff_policy.h</a>.</p>
+
+</div>
+</div>
 <a id="af18c5300be7dd3ffb1c356157bf147cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af18c5300be7dd3ffb1c356157bf147cd">&#9670;&nbsp;</a></span>optional</h2>
 

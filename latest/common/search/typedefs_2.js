@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optional',['optional',['../namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]]
+  ['iterator',['iterator',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac',1,'google::cloud::v1::IamBindings']]]
 ];

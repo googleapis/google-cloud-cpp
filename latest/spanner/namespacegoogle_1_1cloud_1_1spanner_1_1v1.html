@@ -154,9 +154,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1PartitionOptions.html">PartitionOptions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options passed to <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#abb890671663af5bbfc3e409d98db98cf" title="Creates a set of partitions that can be used to execute a read operation in parallel.">Client::PartitionRead</a></code> or <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a322867f2d4e574e6bf73008946604ed2" title="Creates a set of partitions that can be used to execute a query operation in parallel.">Client::PartitionQuery</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1PartitionOptions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the Cloud Spanner C++ client library behavior with respect to polling on long running operations.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html">ProfileDmlResult</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the result and profile stats of a data modifying operation using <code>spanner::Client::ProfileDml()</code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,7 +209,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a82490621a0064a08ed19471b8eee2c1a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> = ::google::cloud::internal::BackoffPolicy</td></tr>
-<tr class="memdesc:a82490621a0064a08ed19471b8eee2c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for spanner's backoff policies.  <a href="#a82490621a0064a08ed19471b8eee2c1a">More...</a><br /></td></tr>
+<tr class="memdesc:a82490621a0064a08ed19471b8eee2c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for backoff policies.  <a href="#a82490621a0064a08ed19471b8eee2c1a">More...</a><br /></td></tr>
 <tr class="separator:a82490621a0064a08ed19471b8eee2c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc88c5a7d61b451fac89c920aa5a330c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">ExponentialBackoffPolicy</a> = google::cloud::internal::ExponentialBackoffPolicy</td></tr>
 <tr class="memdesc:afc88c5a7d61b451fac89c920aa5a330c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A truncated exponential backoff policy with randomized periods.  <a href="#afc88c5a7d61b451fac89c920aa5a330c">More...</a><br /></td></tr>
@@ -264,27 +261,29 @@ Typedefs</h2></td></tr>
 <tr class="memitem:afe794c587172a6b1663c5b70a21da5b6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afe794c587172a6b1663c5b70a21da5b6">DeleteMutationBuilder</a> = internal::DeleteMutationBuilder</td></tr>
 <tr class="memdesc:afe794c587172a6b1663c5b70a21da5b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper class to construct "delete" mutations.  <a href="#afe794c587172a6b1663c5b70a21da5b6">More...</a><br /></td></tr>
 <tr class="separator:afe794c587172a6b1663c5b70a21da5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322c3e1eeb5393de86e7afd2cc08f991"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> = ::google::cloud::PollingPolicy</td></tr>
+<tr class="separator:a322c3e1eeb5393de86e7afd2cc08f991"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57eb7dbf9c7a4bd4b33dd3a96fe56dd1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a57eb7dbf9c7a4bd4b33dd3a96fe56dd1">ExecutionPlan</a> = ::google::spanner::v1::QueryPlan</td></tr>
 <tr class="memdesc:a57eb7dbf9c7a4bd4b33dd3a96fe56dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a hierarchical representation of the operations the database server performs in order to execute a particular SQL statement.  <a href="#a57eb7dbf9c7a4bd4b33dd3a96fe56dd1">More...</a><br /></td></tr>
 <tr class="separator:a57eb7dbf9c7a4bd4b33dd3a96fe56dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6f212ac417db25226f570953f8ca0a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; google::cloud::Status, internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:a0a6f212ac417db25226f570953f8ca0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for retry policies.  <a href="#a0a6f212ac417db25226f570953f8ca0a">More...</a><br /></td></tr>
-<tr class="separator:a0a6f212ac417db25226f570953f8ca0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add72dc0bb0c129a27bbb1407feef8d5d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; google::cloud::Status, internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:add72dc0bb0c129a27bbb1407feef8d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits based on time.  <a href="#add72dc0bb0c129a27bbb1407feef8d5d">More...</a><br /></td></tr>
-<tr class="separator:add72dc0bb0c129a27bbb1407feef8d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57a7da2cd136ebd02af8b57d9bfc196e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a57a7da2cd136ebd02af8b57d9bfc196e">LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; google::cloud::Status, internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:a57a7da2cd136ebd02af8b57d9bfc196e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits the number of times a request can fail.  <a href="#a57a7da2cd136ebd02af8b57d9bfc196e">More...</a><br /></td></tr>
-<tr class="separator:a57a7da2cd136ebd02af8b57d9bfc196e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa48b9b1b133a8212ab096b0e80a7d879"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa48b9b1b133a8212ab096b0e80a7d879">TransactionRerunPolicy</a> = google::cloud::internal::RetryPolicy&lt; google::cloud::Status, internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:aa48b9b1b133a8212ab096b0e80a7d879"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for transaction rerun policies.  <a href="#aa48b9b1b133a8212ab096b0e80a7d879">More...</a><br /></td></tr>
-<tr class="separator:aa48b9b1b133a8212ab096b0e80a7d879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fa903247d99d618ac8c4b95820a89fd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8fa903247d99d618ac8c4b95820a89fd">LimitedTimeTransactionRerunPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; google::cloud::Status, internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:a8fa903247d99d618ac8c4b95820a89fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the duration of the rerun loop.  <a href="#a8fa903247d99d618ac8c4b95820a89fd">More...</a><br /></td></tr>
-<tr class="separator:a8fa903247d99d618ac8c4b95820a89fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70820cc796f2939b685cdd17b0bad226"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a70820cc796f2939b685cdd17b0bad226">LimitedErrorCountTransactionRerunPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; google::cloud::Status, internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:a70820cc796f2939b685cdd17b0bad226"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the number of failures.  <a href="#a70820cc796f2939b685cdd17b0bad226">More...</a><br /></td></tr>
-<tr class="separator:a70820cc796f2939b685cdd17b0bad226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for retry policies.  <a href="#a96281f521d44f8ddb7feaf70bbaf75b2">More...</a><br /></td></tr>
+<tr class="separator:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits based on time.  <a href="#ab71d44a90f8b6b7546b4d3793b60d57f">More...</a><br /></td></tr>
+<tr class="separator:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf44a27becc6172f976da6aa37f3e2ba"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aaf44a27becc6172f976da6aa37f3e2ba">LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:aaf44a27becc6172f976da6aa37f3e2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits the number of times a request can fail.  <a href="#aaf44a27becc6172f976da6aa37f3e2ba">More...</a><br /></td></tr>
+<tr class="separator:aaf44a27becc6172f976da6aa37f3e2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a5f4f65fc512f92165abcbf6171002"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a08a5f4f65fc512f92165abcbf6171002">TransactionRerunPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:a08a5f4f65fc512f92165abcbf6171002"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for transaction rerun policies.  <a href="#a08a5f4f65fc512f92165abcbf6171002">More...</a><br /></td></tr>
+<tr class="separator:a08a5f4f65fc512f92165abcbf6171002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade6893a33c3305367040eb1b6c3253b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aade6893a33c3305367040eb1b6c3253b">LimitedTimeTransactionRerunPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:aade6893a33c3305367040eb1b6c3253b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the duration of the rerun loop.  <a href="#aade6893a33c3305367040eb1b6c3253b">More...</a><br /></td></tr>
+<tr class="separator:aade6893a33c3305367040eb1b6c3253b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">LimitedErrorCountTransactionRerunPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the number of failures.  <a href="#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">More...</a><br /></td></tr>
+<tr class="separator:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c4710c3947e498043bd11dfd9d3a70c"><td class="memTemplParams" colspan="2">template&lt;typename Duration &gt; </td></tr>
 <tr class="memitem:a7c4710c3947e498043bd11dfd9d3a70c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a7c4710c3947e498043bd11dfd9d3a70c">sys_time</a> = std::chrono::time_point&lt; std::chrono::system_clock, Duration &gt;</td></tr>
 <tr class="memdesc:a7c4710c3947e498043bd11dfd9d3a70c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience alias.  <a href="#a7c4710c3947e498043bd11dfd9d3a70c">More...</a><br /></td></tr>
@@ -313,7 +312,7 @@ Functions</h2></td></tr>
 <tr class="memitem:aef558059b23cddd57ddbb33ac4825ae4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html">Connection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aef558059b23cddd57ddbb33ac4825ae4">MakeConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> const  &amp;db, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;connection_options=<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a>(), <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a> session_pool_options=<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a>())</td></tr>
 <tr class="memdesc:aef558059b23cddd57ddbb33ac4825ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html" title="A connection to a Spanner database instance.">Connection</a> object that can be used for interacting with Spanner.  <a href="#aef558059b23cddd57ddbb33ac4825ae4">More...</a><br /></td></tr>
 <tr class="separator:aef558059b23cddd57ddbb33ac4825ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa84a1b1edc2531ba3d960bf1e17cb756"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html">Connection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa84a1b1edc2531ba3d960bf1e17cb756">MakeConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> const  &amp;db, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;connection_options, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a> session_pool_options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy)</td></tr>
+<tr class="memitem:aa84a1b1edc2531ba3d960bf1e17cb756"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html">Connection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa84a1b1edc2531ba3d960bf1e17cb756">MakeConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> const  &amp;db, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;connection_options, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a> session_pool_options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy)</td></tr>
 <tr class="memdesc:aa84a1b1edc2531ba3d960bf1e17cb756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html" title="A connection to a Spanner database instance.">Connection</a> object that can be used for interacting with Spanner.  <a href="#aa84a1b1edc2531ba3d960bf1e17cb756">More...</a><br /></td></tr>
 <tr class="separator:aa84a1b1edc2531ba3d960bf1e17cb756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaf7a9876f4533ccbc55dc9e8ab622a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aeaf7a9876f4533ccbc55dc9e8ab622a4">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> const &amp;b)</td></tr>
@@ -325,7 +324,7 @@ Functions</h2></td></tr>
 <tr class="memitem:acda29471ee1be4f4b2ecc2f21a57275c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acda29471ee1be4f4b2ecc2f21a57275c">MakeDatabaseAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a>())</td></tr>
 <tr class="memdesc:acda29471ee1be4f4b2ecc2f21a57275c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html" title="A connection to the Cloud Spanner instance administration service.">DatabaseAdminConnection</a> object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="#acda29471ee1be4f4b2ecc2f21a57275c">More...</a><br /></td></tr>
 <tr class="separator:acda29471ee1be4f4b2ecc2f21a57275c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acb6f2ab6c3b387c6dab8c42a8183ddda">MakeDatabaseAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a> &gt; polling_policy)</td></tr>
+<tr class="memitem:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acb6f2ab6c3b387c6dab8c42a8183ddda">MakeDatabaseAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> &gt; polling_policy)</td></tr>
 <tr class="memdesc:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html" title="A connection to the Cloud Spanner instance administration service.">DatabaseAdminConnection</a> object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="#acb6f2ab6c3b387c6dab8c42a8183ddda">More...</a><br /></td></tr>
 <tr class="separator:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8627e834b6e4fa7618b4049283d4581"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad8627e834b6e4fa7618b4049283d4581">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">Instance</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">Instance</a> const &amp;b)</td></tr>
@@ -337,7 +336,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a8348092a49586c1c7d2dba9864c652e2"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html">InstanceAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a>())</td></tr>
 <tr class="memdesc:a8348092a49586c1c7d2dba9864c652e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html" title="A connection to the Cloud Spanner instance administration service.">InstanceAdminConnection</a> object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="#a8348092a49586c1c7d2dba9864c652e2">More...</a><br /></td></tr>
 <tr class="separator:a8348092a49586c1c7d2dba9864c652e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5c7a5710f85cd99a0100a9aafff2ebd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html">InstanceAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad5c7a5710f85cd99a0100a9aafff2ebd">MakeInstanceAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a> &gt; polling_policy)</td></tr>
+<tr class="memitem:ad5c7a5710f85cd99a0100a9aafff2ebd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html">InstanceAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad5c7a5710f85cd99a0100a9aafff2ebd">MakeInstanceAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> const  &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> &gt; polling_policy)</td></tr>
 <tr class="memdesc:ad5c7a5710f85cd99a0100a9aafff2ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html" title="A connection to the Cloud Spanner instance administration service.">InstanceAdminConnection</a> object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="#ad5c7a5710f85cd99a0100a9aafff2ebd">More...</a><br /></td></tr>
 <tr class="separator:ad5c7a5710f85cd99a0100a9aafff2ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c2ff79662b9536b14a33974fb4f5372"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1c2ff79662b9536b14a33974fb4f5372">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1KeyBound.html">KeyBound</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1KeyBound.html">KeyBound</a> const &amp;b)</td></tr>
@@ -504,7 +503,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The base class for spanner's backoff policies. </p>
+<p>The base class for backoff policies. </p>
 
 <p class="definition">Definition at line <a class="el" href="backoff__policy_8h_source.html#l00027">27</a> of file <a class="el" href="backoff__policy_8h_source.html">backoff_policy.h</a>.</p>
 
@@ -688,75 +687,75 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a57a7da2cd136ebd02af8b57d9bfc196e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57a7da2cd136ebd02af8b57d9bfc196e">&#9670;&nbsp;</a></span>LimitedErrorCountRetryPolicy</h2>
+<a id="aaf44a27becc6172f976da6aa37f3e2ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf44a27becc6172f976da6aa37f3e2ba">&#9670;&nbsp;</a></span>LimitedErrorCountRetryPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a57a7da2cd136ebd02af8b57d9bfc196e">google::cloud::spanner::v1::LimitedErrorCountRetryPolicy</a> = typedef google::cloud::internal::LimitedErrorCountRetryPolicy&lt; google::cloud::Status, internal::SafeGrpcRetry&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aaf44a27becc6172f976da6aa37f3e2ba">google::cloud::spanner::v1::LimitedErrorCountRetryPolicy</a> = typedef google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeGrpcRetry&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>A retry policy that limits the number of times a request can fail. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00070">70</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00068">68</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
-<a id="a70820cc796f2939b685cdd17b0bad226"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70820cc796f2939b685cdd17b0bad226">&#9670;&nbsp;</a></span>LimitedErrorCountTransactionRerunPolicy</h2>
+<a id="a4520c8ce79a7b8ff8fe7f8b5ac31cc64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">&#9670;&nbsp;</a></span>LimitedErrorCountTransactionRerunPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a70820cc796f2939b685cdd17b0bad226">google::cloud::spanner::v1::LimitedErrorCountTransactionRerunPolicy</a> = typedef google::cloud::internal::LimitedErrorCountRetryPolicy&lt; google::cloud::Status, internal::SafeTransactionRerun&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">google::cloud::spanner::v1::LimitedErrorCountTransactionRerunPolicy</a> = typedef google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeTransactionRerun&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>A transaction rerun policy that limits the number of failures. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00085">85</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00082">82</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
-<a id="add72dc0bb0c129a27bbb1407feef8d5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add72dc0bb0c129a27bbb1407feef8d5d">&#9670;&nbsp;</a></span>LimitedTimeRetryPolicy</h2>
+<a id="ab71d44a90f8b6b7546b4d3793b60d57f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab71d44a90f8b6b7546b4d3793b60d57f">&#9670;&nbsp;</a></span>LimitedTimeRetryPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">google::cloud::spanner::v1::LimitedTimeRetryPolicy</a> = typedef google::cloud::internal::LimitedTimeRetryPolicy&lt;google::cloud::Status, internal::SafeGrpcRetry&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">google::cloud::spanner::v1::LimitedTimeRetryPolicy</a> = typedef google::cloud::internal::LimitedTimeRetryPolicy&lt;internal::SafeGrpcRetry&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>A retry policy that limits based on time. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00065">65</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00063">63</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
-<a id="a8fa903247d99d618ac8c4b95820a89fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fa903247d99d618ac8c4b95820a89fd">&#9670;&nbsp;</a></span>LimitedTimeTransactionRerunPolicy</h2>
+<a id="aade6893a33c3305367040eb1b6c3253b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aade6893a33c3305367040eb1b6c3253b">&#9670;&nbsp;</a></span>LimitedTimeTransactionRerunPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8fa903247d99d618ac8c4b95820a89fd">google::cloud::spanner::v1::LimitedTimeTransactionRerunPolicy</a> = typedef google::cloud::internal::LimitedTimeRetryPolicy&lt; google::cloud::Status, internal::SafeTransactionRerun&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aade6893a33c3305367040eb1b6c3253b">google::cloud::spanner::v1::LimitedTimeTransactionRerunPolicy</a> = typedef google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeTransactionRerun&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>A transaction rerun policy that limits the duration of the rerun loop. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00080">80</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00077">77</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
@@ -892,6 +891,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a322c3e1eeb5393de86e7afd2cc08f991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a322c3e1eeb5393de86e7afd2cc08f991">&#9670;&nbsp;</a></span>PollingPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">google::cloud::spanner::v1::PollingPolicy</a> = typedef ::google::cloud::PollingPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="polling__policy_8h_source.html#l00029">29</a> of file <a class="el" href="polling__policy_8h_source.html">polling_policy.h</a>.</p>
+
+</div>
+</div>
 <a id="a56a097f42f92c1d739e64c72867840e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56a097f42f92c1d739e64c72867840e4">&#9670;&nbsp;</a></span>ReplaceMutationBuilder</h2>
 
@@ -914,21 +929,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a6f212ac417db25226f570953f8ca0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a6f212ac417db25226f570953f8ca0a">&#9670;&nbsp;</a></span>RetryPolicy</h2>
+<a id="a96281f521d44f8ddb7feaf70bbaf75b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96281f521d44f8ddb7feaf70bbaf75b2">&#9670;&nbsp;</a></span>RetryPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">google::cloud::spanner::v1::RetryPolicy</a> = typedef google::cloud::internal::RetryPolicy&lt;google::cloud::Status, internal::SafeGrpcRetry&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">google::cloud::spanner::v1::RetryPolicy</a> = typedef google::cloud::internal::TraitBasedRetryPolicy&lt;internal::SafeGrpcRetry&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>The base class for retry policies. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00060">60</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00059">59</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
@@ -972,21 +987,21 @@ template&lt;typename Duration &gt; </div>
 
 </div>
 </div>
-<a id="aa48b9b1b133a8212ab096b0e80a7d879"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa48b9b1b133a8212ab096b0e80a7d879">&#9670;&nbsp;</a></span>TransactionRerunPolicy</h2>
+<a id="a08a5f4f65fc512f92165abcbf6171002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08a5f4f65fc512f92165abcbf6171002">&#9670;&nbsp;</a></span>TransactionRerunPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa48b9b1b133a8212ab096b0e80a7d879">google::cloud::spanner::v1::TransactionRerunPolicy</a> = typedef google::cloud::internal::RetryPolicy&lt;google::cloud::Status, internal::SafeTransactionRerun&gt;</td>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a08a5f4f65fc512f92165abcbf6171002">google::cloud::spanner::v1::TransactionRerunPolicy</a> = typedef google::cloud::internal::TraitBasedRetryPolicy&lt; internal::SafeTransactionRerun&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>The base class for transaction rerun policies. </p>
 
-<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00075">75</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00072">72</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1206,7 +1221,7 @@ template&lt;typename RowRange &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt;&#160;</td>
           <td class="paramname"><em>retry_policy</em>, </td>
         </tr>
         <tr>
@@ -1286,7 +1301,7 @@ template&lt;typename RowRange &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt;&#160;</td>
           <td class="paramname"><em>retry_policy</em>, </td>
         </tr>
         <tr>
@@ -1298,7 +1313,7 @@ template&lt;typename RowRange &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> &gt;&#160;</td>
           <td class="paramname"><em>polling_policy</em>&#160;</td>
         </tr>
         <tr>
@@ -1321,7 +1336,7 @@ template&lt;typename RowRange &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div><div class="line">  [](std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id) {</div><div class="line">    <span class="comment">// A database admin client is controlled by three policies. The retry</span></div><div class="line">    <span class="comment">// policy determines for how long the client will retry transient failures.</span></div><div class="line">    <span class="keyword">auto</span> retry_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                            <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(25))</div><div class="line">                            .clone();</div><div class="line">    <span class="comment">// The backoff policy controls how long does the client waits to retry after</span></div><div class="line">    <span class="comment">// a transient failure. Here we configure a truncated exponential backoff</span></div><div class="line">    <span class="comment">// with jitter:</span></div><div class="line">    <span class="comment">//   https://en.wikipedia.org/wiki/Exponential_backoff</span></div><div class="line">    <span class="comment">//   https://cloud.google.com/storage/docs/exponential-backoff</span></div><div class="line">    <span class="keyword">auto</span> backoff_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">spanner::ExponentialBackoffPolicy</a>(</div><div class="line">                              <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(2),</div><div class="line">                              <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(10),</div><div class="line">                              <span class="comment">/*scaling=*/</span>2.0)</div><div class="line">                              .clone();</div><div class="line">    <span class="comment">// The polling policy controls how the client waits for long-running</span></div><div class="line">    <span class="comment">// operations (such as creating new instances). `GenericPollingPolicy&lt;&gt;`</span></div><div class="line">    <span class="comment">// combines existing policies.  In this case, keep polling until the</span></div><div class="line">    <span class="comment">// operation completes (with success or error) or 45 minutes, whichever</span></div><div class="line">    <span class="comment">// happens first. Initially pause for 10 seconds between polling requests,</span></div><div class="line">    <span class="comment">// increasing the pause by a factor of 4 until it becomes 2 minutes.</span></div><div class="line">    <span class="keyword">auto</span> polling_policy =</div><div class="line">        spanner::GenericPollingPolicy&lt;&gt;(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(45)),</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">spanner::ExponentialBackoffPolicy</a>(</div><div class="line">                <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(10),</div><div class="line">                <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(2),</div><div class="line">                <span class="comment">/*scaling=*/</span>4.0))</div><div class="line">            .clone();</div><div class="line">    <span class="keyword">auto</span> client =</div><div class="line">        spanner::DatabaseAdminClient(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acda29471ee1be4f4b2ecc2f21a57275c">spanner::MakeDatabaseAdminConnection</a>(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>{}, std::move(retry_policy),</div><div class="line">            std::move(backoff_policy), std::move(polling_policy)));</div><div class="line"></div><div class="line">    <span class="comment">// Use the client as usual.</span></div><div class="line">    spanner::Instance instance(project_id, instance_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Available databases for instance &quot;</span> &lt;&lt; instance &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; db : client.ListDatabases(instance)) {</div><div class="line">      <span class="keywordflow">if</span> (!db) <span class="keywordflow">throw</span> std::runtime_error(db.status().message());</div><div class="line">      std::cout &lt;&lt; db-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;End of available databases\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div><div class="line">  [](std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id) {</div><div class="line">    <span class="comment">// A database admin client is controlled by three policies. The retry</span></div><div class="line">    <span class="comment">// policy determines for how long the client will retry transient failures.</span></div><div class="line">    <span class="keyword">auto</span> retry_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                            <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(25))</div><div class="line">                            .clone();</div><div class="line">    <span class="comment">// The backoff policy controls how long does the client waits to retry after</span></div><div class="line">    <span class="comment">// a transient failure. Here we configure a truncated exponential backoff</span></div><div class="line">    <span class="comment">// with jitter:</span></div><div class="line">    <span class="comment">//   https://en.wikipedia.org/wiki/Exponential_backoff</span></div><div class="line">    <span class="comment">//   https://cloud.google.com/storage/docs/exponential-backoff</span></div><div class="line">    <span class="keyword">auto</span> backoff_policy = spanner::ExponentialBackoffPolicy(</div><div class="line">                              <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(2),</div><div class="line">                              <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(10),</div><div class="line">                              <span class="comment">/*scaling=*/</span>2.0)</div><div class="line">                              .clone();</div><div class="line">    <span class="comment">// The polling policy controls how the client waits for long-running</span></div><div class="line">    <span class="comment">// operations (such as creating new instances). `GenericPollingPolicy&lt;&gt;`</span></div><div class="line">    <span class="comment">// combines existing policies.  In this case, keep polling until the</span></div><div class="line">    <span class="comment">// operation completes (with success or error) or 45 minutes, whichever</span></div><div class="line">    <span class="comment">// happens first. Initially pause for 10 seconds between polling requests,</span></div><div class="line">    <span class="comment">// increasing the pause by a factor of 4 until it becomes 2 minutes.</span></div><div class="line">    <span class="keyword">auto</span> polling_policy =</div><div class="line">        spanner::GenericPollingPolicy&lt;&gt;(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(45)),</div><div class="line">            spanner::ExponentialBackoffPolicy(</div><div class="line">                <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(10),</div><div class="line">                <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(2),</div><div class="line">                <span class="comment">/*scaling=*/</span>4.0))</div><div class="line">            .clone();</div><div class="line">    <span class="keyword">auto</span> client =</div><div class="line">        spanner::DatabaseAdminClient(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acda29471ee1be4f4b2ecc2f21a57275c">spanner::MakeDatabaseAdminConnection</a>(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>{}, std::move(retry_policy),</div><div class="line">            std::move(backoff_policy), std::move(polling_policy)));</div><div class="line"></div><div class="line">    <span class="comment">// Use the client as usual.</span></div><div class="line">    spanner::Instance instance(project_id, instance_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Available databases for instance &quot;</span> &lt;&lt; instance &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; db : client.ListDatabases(instance)) {</div><div class="line">      <span class="keywordflow">if</span> (!db) <span class="keywordflow">throw</span> std::runtime_error(db.status().message());</div><div class="line">      std::cout &lt;&lt; db-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;End of available databases\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00630">630</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
@@ -1504,7 +1519,7 @@ template&lt;typename... Ts&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a">RetryPolicy</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">RetryPolicy</a> &gt;&#160;</td>
           <td class="paramname"><em>retry_policy</em>, </td>
         </tr>
         <tr>
@@ -1516,7 +1531,7 @@ template&lt;typename... Ts&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1PollingPolicy.html">PollingPolicy</a> &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">PollingPolicy</a> &gt;&#160;</td>
           <td class="paramname"><em>polling_policy</em>&#160;</td>
         </tr>
         <tr>
@@ -1539,7 +1554,7 @@ template&lt;typename... Ts&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div><div class="line">  [](std::string <span class="keyword">const</span>&amp; project_id) {</div><div class="line">    <span class="comment">// An instance admin client is controlled by three policies. The retry</span></div><div class="line">    <span class="comment">// policy determines for how long the client will retry transient failures.</span></div><div class="line">    <span class="keyword">auto</span> retry_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                            <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(25))</div><div class="line">                            .clone();</div><div class="line">    <span class="comment">// The backoff policy controls how long does the client waits to retry after</span></div><div class="line">    <span class="comment">// a transient failure. Here we configure a truncated exponential backoff</span></div><div class="line">    <span class="comment">// with jitter:</span></div><div class="line">    <span class="comment">//   https://en.wikipedia.org/wiki/Exponential_backoff</span></div><div class="line">    <span class="comment">//   https://cloud.google.com/storage/docs/exponential-backoff</span></div><div class="line">    <span class="keyword">auto</span> backoff_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">spanner::ExponentialBackoffPolicy</a>(</div><div class="line">                              <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(2),</div><div class="line">                              <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(10),</div><div class="line">                              <span class="comment">/*scaling=*/</span>2.0)</div><div class="line">                              .clone();</div><div class="line">    <span class="comment">// The polling policy controls how the client waits for long-running</span></div><div class="line">    <span class="comment">// operations (such as creating new instances). `GenericPollingPolicy&lt;&gt;`</span></div><div class="line">    <span class="comment">// combines existing policies.  In this case, keep polling until the</span></div><div class="line">    <span class="comment">// operation completes (with success or error) or 45 minutes, whichever</span></div><div class="line">    <span class="comment">// happens first. Initially pause for 10 seconds between polling requests,</span></div><div class="line">    <span class="comment">// increasing the pause by a factor of 4 until it becomes 2 minutes.</span></div><div class="line">    <span class="keyword">auto</span> polling_policy =</div><div class="line">        spanner::GenericPollingPolicy&lt;&gt;(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#add72dc0bb0c129a27bbb1407feef8d5d">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(45)),</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">spanner::ExponentialBackoffPolicy</a>(</div><div class="line">                <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(10),</div><div class="line">                <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(2),</div><div class="line">                <span class="comment">/*scaling=*/</span>4.0))</div><div class="line">            .clone();</div><div class="line">    <span class="keyword">auto</span> client =</div><div class="line">        spanner::InstanceAdminClient(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">spanner::MakeInstanceAdminConnection</a>(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>{}, std::move(retry_policy),</div><div class="line">            std::move(backoff_policy), std::move(polling_policy)));</div><div class="line"></div><div class="line">    <span class="comment">// Use the client as usual.</span></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Available configs for project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; cfg : client.ListInstanceConfigs(project_id)) {</div><div class="line">      <span class="keywordflow">if</span> (!cfg) <span class="keywordflow">throw</span> std::runtime_error(cfg.status().message());</div><div class="line">      std::cout &lt;&lt; cfg-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;End of available configs\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div><div class="line">  [](std::string <span class="keyword">const</span>&amp; project_id) {</div><div class="line">    <span class="comment">// An instance admin client is controlled by three policies. The retry</span></div><div class="line">    <span class="comment">// policy determines for how long the client will retry transient failures.</span></div><div class="line">    <span class="keyword">auto</span> retry_policy = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                            <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(25))</div><div class="line">                            .clone();</div><div class="line">    <span class="comment">// The backoff policy controls how long does the client waits to retry after</span></div><div class="line">    <span class="comment">// a transient failure. Here we configure a truncated exponential backoff</span></div><div class="line">    <span class="comment">// with jitter:</span></div><div class="line">    <span class="comment">//   https://en.wikipedia.org/wiki/Exponential_backoff</span></div><div class="line">    <span class="comment">//   https://cloud.google.com/storage/docs/exponential-backoff</span></div><div class="line">    <span class="keyword">auto</span> backoff_policy = spanner::ExponentialBackoffPolicy(</div><div class="line">                              <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(2),</div><div class="line">                              <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(10),</div><div class="line">                              <span class="comment">/*scaling=*/</span>2.0)</div><div class="line">                              .clone();</div><div class="line">    <span class="comment">// The polling policy controls how the client waits for long-running</span></div><div class="line">    <span class="comment">// operations (such as creating new instances). `GenericPollingPolicy&lt;&gt;`</span></div><div class="line">    <span class="comment">// combines existing policies.  In this case, keep polling until the</span></div><div class="line">    <span class="comment">// operation completes (with success or error) or 45 minutes, whichever</span></div><div class="line">    <span class="comment">// happens first. Initially pause for 10 seconds between polling requests,</span></div><div class="line">    <span class="comment">// increasing the pause by a factor of 4 until it becomes 2 minutes.</span></div><div class="line">    <span class="keyword">auto</span> polling_policy =</div><div class="line">        spanner::GenericPollingPolicy&lt;&gt;(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">spanner::LimitedTimeRetryPolicy</a>(</div><div class="line">                <span class="comment">/*maximum_duration=*/</span>std::chrono::minutes(45)),</div><div class="line">            spanner::ExponentialBackoffPolicy(</div><div class="line">                <span class="comment">/*initial_delay=*/</span>std::chrono::seconds(10),</div><div class="line">                <span class="comment">/*maximum_delay=*/</span>std::chrono::minutes(2),</div><div class="line">                <span class="comment">/*scaling=*/</span>4.0))</div><div class="line">            .clone();</div><div class="line">    <span class="keyword">auto</span> client =</div><div class="line">        spanner::InstanceAdminClient(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">spanner::MakeInstanceAdminConnection</a>(</div><div class="line">            <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>{}, std::move(retry_policy),</div><div class="line">            std::move(backoff_policy), std::move(polling_policy)));</div><div class="line"></div><div class="line">    <span class="comment">// Use the client as usual.</span></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Available configs for project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; cfg : client.ListInstanceConfigs(project_id)) {</div><div class="line">      <span class="keywordflow">if</span> (!cfg) <span class="keywordflow">throw</span> std::runtime_error(cfg.status().message());</div><div class="line">      std::cout &lt;&lt; cfg-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;End of available configs\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00308">308</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
 

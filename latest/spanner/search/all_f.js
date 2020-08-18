@@ -24,7 +24,7 @@ var searchData=
   ['results_2ecc',['results.cc',['../results_8cc.html',1,'']]],
   ['results_2eh',['results.h',['../results_8h.html',1,'']]],
   ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]],
-  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a0a6f212ac417db25226f570953f8ca0a',1,'google::cloud::spanner::v1']]],
+  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2',1,'google::cloud::spanner::v1']]],
   ['role',['role',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a85c927bccf66d5813255cf57c779fb8e',1,'google::cloud::v1::IamBinding']]],
   ['rollback',['Rollback',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a7974b9225d19a93e51f5fd98267e57cb',1,'google::cloud::spanner::v1::Client::Rollback()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html#a4779a85a864fa6ca7b97f66a54431822',1,'google::cloud::spanner::v1::Connection::Rollback()']]],
   ['rollbackparams',['RollbackParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection_1_1RollbackParams.html',1,'google::cloud::spanner::v1::Connection']]],

@@ -10,6 +10,7 @@ var searchData=
   ['_7enativeiampolicy',['~NativeIamPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NativeIamPolicy.html#a2957137686ee85683db5e3b910bc17f7',1,'google::cloud::storage::v1::NativeIamPolicy']]],
   ['_7eobjectreadstream',['~ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html#a44b0339106e1f70b0d1a562bc64622a3',1,'google::cloud::storage::v1::ObjectReadStream']]],
   ['_7eobjectwritestream',['~ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html#a47a1196dd0023ae9854e26af33123bc6',1,'google::cloud::storage::v1::ObjectWriteStream']]],
+  ['_7epollingpolicy',['~PollingPolicy',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#acb179843330cc6c3da4750bfbcb14f12',1,'google::cloud::v1::PollingPolicy']]],
   ['_7epromise',['~promise',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1promise.html#a7b4419833a492510a1797eb5457a9243',1,'google::cloud::v1::promise::~promise()'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#a8e3a76a247ae095b0d23180907cf0ae7',1,'google::cloud::v1::promise&lt; void &gt;::~promise()']]],
   ['_7estatusor',['~StatusOr',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a9eea8ae52ccba36ee15acd9c1d91894b',1,'google::cloud::v1::StatusOr']]]
 ];
