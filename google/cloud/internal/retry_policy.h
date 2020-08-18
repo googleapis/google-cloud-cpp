@@ -24,7 +24,6 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-
 /**
  * Define the interface for retry policies.
  *
