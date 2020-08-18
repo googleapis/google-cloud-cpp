@@ -528,8 +528,8 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           done = true;
-          lk.unlock();
           cv.notify_one();
+          lk.unlock();
           std::move(h).ack();
         });
     // Wait until at least one message has been received.
@@ -571,8 +571,8 @@ void SubscribeErrorListener(
                          std::unique_lock<std::mutex> lk(mu);
                          ++message_count;
                          done = true;
-                         lk.unlock();
                          cv.notify_one();
+                         lk.unlock();
                          std::move(h).ack();
                        })
             // Setup an error handler for the subscription session
@@ -617,8 +617,8 @@ void SubscribeCustomAttributes(
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           done = true;
-          lk.unlock();
           cv.notify_one();
+          lk.unlock();
           std::move(h).ack();
         });
     // Most applications would just release the `session` object at this point,
