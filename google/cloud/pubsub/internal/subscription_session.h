@@ -70,13 +70,14 @@ class SessionShutdownManager {
    * tracing is typically disabled at compile-time.
    */
   template <typename Operation>
-  void StartOperation(char const* caller, char const* name, Operation&& op) {
+  bool StartOperation(char const* caller, char const* name, Operation&& op) {
     std::unique_lock<std::mutex> lk(mu_);
     LogStart(caller, name);
-    if (shutdown_) return;
+    if (shutdown_) return false;
     ++outstanding_operations_;
     lk.unlock();
     op();
+    return true;
   }
 
   /**
@@ -90,17 +91,18 @@ class SessionShutdownManager {
    * tracing is typically disabled at compile-time.
    */
   template <typename Operation>
-  void StartAsyncOperation(char const* caller, char const* name,
+  bool StartAsyncOperation(char const* caller, char const* name,
                            CompletionQueue& executor, Operation&& op) {
     std::unique_lock<std::mutex> lk(mu_);
     LogStart(caller, name);
-    if (shutdown_) return;
+    if (shutdown_) return false;
     ++outstanding_operations_;
     lk.unlock();
     executor.RunAsync(std::forward<Operation>(op));
+    return true;
   }
 
-  /// Record an operation completion
+  /// Record an operation completion, returns true if marked for shutdown.
   bool FinishedOperation(char const* name);
 
   // Start the shutdown process
@@ -181,8 +183,8 @@ class SubscriptionSession
       std::unique_lock<std::mutex> lk,
       std::chrono::system_clock::time_point new_server_deadline);
 
-  /// The timer to update ack deadlines has triggered.
-  void OnRefreshTimer(bool restart);
+  /// The timer to update ack deadlines has triggered or was cancelled.
+  void OnRefreshTimer(bool cancelled);
 
   template <typename Iterator>
   void NackAll(std::unique_lock<std::mutex> const& lk, Iterator begin,

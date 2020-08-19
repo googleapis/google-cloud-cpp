@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
 #include <gmock/gmock.h>
@@ -28,6 +29,42 @@ namespace {
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::InSequence;
+
+/// @test Verify SessionShutdownManager works correctly.
+TEST(SessionShutdownManagerTest, Basic) {
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  CompletionQueue cq = background.cq();
+
+  SessionShutdownManager tested;
+  auto shutdown = tested.Start();
+  EXPECT_TRUE(tested.StartOperation("testing", "operation-1", [] {}));
+  EXPECT_TRUE(tested.StartOperation("testing", "operation-2", [] {}));
+  EXPECT_TRUE(
+      tested.StartAsyncOperation("testing", "async-operation-1", cq, [] {}));
+  EXPECT_TRUE(
+      tested.StartAsyncOperation("testing", "async-operation-2", cq, [] {}));
+
+  EXPECT_FALSE(tested.FinishedOperation("operation-1"));
+  EXPECT_FALSE(tested.FinishedOperation("async-operation-1"));
+
+  auto const expected_status = Status{StatusCode::kAborted, "test-message"};
+  tested.MarkAsShutdown("testing", expected_status);
+  EXPECT_EQ(std::future_status::timeout,
+            shutdown.wait_for(std::chrono::milliseconds(0)));
+
+  EXPECT_FALSE(
+      tested.StartAsyncOperation("testing", "async-operation-3", cq, [] {}));
+  EXPECT_FALSE(tested.StartOperation("testing", "operation-3", [] {}));
+  EXPECT_EQ(std::future_status::timeout,
+            shutdown.wait_for(std::chrono::milliseconds(0)));
+
+  EXPECT_TRUE(tested.FinishedOperation("operation-2-mismatch-does-not-matter"));
+  EXPECT_EQ(std::future_status::timeout,
+            shutdown.wait_for(std::chrono::milliseconds(0)));
+  EXPECT_TRUE(tested.FinishedOperation("async-operation-2"));
+
+  EXPECT_EQ(expected_status, shutdown.get());
+}
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacks) {
@@ -469,6 +506,196 @@ TEST(SubscriptionSessionTest, ShutdownNackOnPull) {
   cq.Shutdown();
   t.join();
   EXPECT_EQ(0, handler_count);
+}
+
+/// @test Verify shutting down a session waits for pending tasks.
+TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  // A number of mocks that return futures satisfied a bit after the call is
+  // made. This better simulates the behavior when running against an actual
+  // service.
+  auto constexpr kMaximumAcks = 5;
+  std::mutex generate_mu;
+  int generate_count = 0;
+
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto generate = [&](google::cloud::CompletionQueue& cq,
+                      std::unique_ptr<grpc::ClientContext>,
+                      google::pubsub::v1::PullRequest const&) {
+    return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
+        .then([&](TimerFuture) {
+          std::unique_lock<std::mutex> lk(generate_mu);
+          google::pubsub::v1::PullResponse response;
+          for (int i = 0; i != 2 * kMaximumAcks; ++i) {
+            auto& m = *response.add_received_messages();
+            m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
+            m.mutable_message()->set_message_id("test-message-id-" +
+                                                std::to_string(generate_count));
+            ++generate_count;
+          }
+          lk.unlock();
+          return make_status_or(response);
+        });
+  };
+  auto generate_ack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::AcknowledgeRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+            .then([](TimerFuture) { return Status{}; });
+      };
+  auto generate_nack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+            .then([](TimerFuture) { return Status{}; });
+      };
+
+  EXPECT_CALL(*mock, AsyncPull).Times(AtLeast(1)).WillRepeatedly(generate);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(1))
+      .WillRepeatedly(generate_ack_response);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .Times(AtLeast(1))
+      .WillRepeatedly(generate_nack_response);
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  std::atomic<int> handler_counter{0};
+  {
+    // Now unto the handler, basically it counts messages and nacks starting at
+    // kMaximumAcks.
+    promise<void> got_one;
+    auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+      if (handler_counter.load() == 0) got_one.set_value();
+      if (++handler_counter > kMaximumAcks) return;
+      std::move(h).ack();
+    };
+
+    auto session = [&] {
+      auto s = SubscriptionSession::Create(
+          mock, background.cq(), {subscription.FullName(), handler, {}});
+      return s->Start();
+    }();
+    got_one.get_future()
+        .then([&session](future<void>) { session.cancel(); })
+        .get();
+    auto status = session.get();
+    EXPECT_STATUS_OK(status);
+    EXPECT_LE(1, handler_counter.load());
+  }
+  // Schedule at least a few more iterations of the CQ loop. If the shutdown is
+  // buggy, we will see TSAN/ASAN errors because the `handler` defined above
+  // is still called.
+  auto const initial_value = handler_counter.load();
+  for (int i = 0; i != 10; ++i) {
+    SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
+    promise<void> done;
+    background.cq().RunAsync([&done] { done.set_value(); });
+    done.get_future().get();
+  }
+  auto const final_value = handler_counter.load();
+  EXPECT_EQ(initial_value, final_value);
+}
+
+/// @test Verify shutting down a session waits for pending tasks.
+TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  // A number of mocks that return futures satisfied a bit after the call is
+  // made. This better simulates the behavior when running against an actual
+  // service.
+  auto constexpr kMaximumAcks = 5;
+  std::mutex generate_mu;
+  int generate_count = 0;
+
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto generate = [&](google::cloud::CompletionQueue& cq,
+                      std::unique_ptr<grpc::ClientContext>,
+                      google::pubsub::v1::PullRequest const&) {
+    return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
+        .then([&](TimerFuture) {
+          std::unique_lock<std::mutex> lk(generate_mu);
+          google::pubsub::v1::PullResponse response;
+          for (int i = 0; i != 2 * kMaximumAcks; ++i) {
+            auto& m = *response.add_received_messages();
+            m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
+            m.mutable_message()->set_message_id("test-message-id-" +
+                                                std::to_string(generate_count));
+            ++generate_count;
+          }
+          lk.unlock();
+          return make_status_or(response);
+        });
+  };
+  auto generate_ack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::AcknowledgeRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+            .then([](TimerFuture) { return Status{}; });
+      };
+  auto generate_nack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+            .then([](TimerFuture) { return Status{}; });
+      };
+
+  EXPECT_CALL(*mock, AsyncPull).Times(AtLeast(1)).WillRepeatedly(generate);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(kMaximumAcks))
+      .WillRepeatedly(generate_ack_response);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .Times(AtLeast(1))
+      .WillRepeatedly(generate_nack_response);
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  std::atomic<int> handler_counter{0};
+  {
+    // Now unto the handler, basically it counts messages and nacks starting at
+    // kMaximumAcks.
+    std::mutex mu;
+    std::condition_variable cv;
+    int ack_count = 0;
+    auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+      ++handler_counter;
+      std::unique_lock<std::mutex> lk(mu);
+      if (++ack_count > kMaximumAcks) return;
+      lk.unlock();
+      cv.notify_one();
+      std::move(h).ack();
+    };
+
+    auto session = [&] {
+      auto s = SubscriptionSession::Create(
+          mock, background.cq(), {subscription.FullName(), handler, {}});
+      return s->Start();
+    }();
+    {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return ack_count >= kMaximumAcks; });
+    }
+    session.cancel();
+    auto status = session.get();
+    EXPECT_STATUS_OK(status);
+  }
+  // Schedule at least a few more iterations of the CQ loop. If the shutdown is
+  // buggy, we will see TSAN/ASAN errors because the `handler` defined above
+  // is still called.
+  auto const initial_value = handler_counter.load();
+  for (int i = 0; i != 10; ++i) {
+    SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
+    promise<void> done;
+    background.cq().RunAsync([&done] { done.set_value(); });
+    done.get_future().get();
+  }
+  auto const final_value = handler_counter.load();
+  EXPECT_EQ(initial_value, final_value);
 }
 
 }  // namespace

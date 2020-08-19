@@ -56,6 +56,7 @@ class NotifyWhenMessageHandled : public pubsub::AckHandler::Impl {
   std::shared_ptr<SubscriptionSession> session_;
   std::unique_ptr<pubsub::AckHandler::Impl> child_;
   std::size_t message_size_;
+  std::string id_;
 };
 
 int constexpr SubscriptionSession::kMinimumAckDeadlineSeconds;
@@ -64,6 +65,10 @@ int constexpr SubscriptionSession::kAckDeadlineSlackSeconds;
 
 SessionShutdownManager::~SessionShutdownManager() {
   if (signaled_) return;
+  GCP_LOG(DEBUG) << __func__ << "() - do signal"
+                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
+                 << ", outstanding_operations=" << outstanding_operations_
+                 << ", result=" << result_;
   signaled_ = true;
   done_.set_value(std::move(result_));
 }
@@ -89,7 +94,7 @@ bool SessionShutdownManager::FinishedOperation(char const* name) {
 
 void SessionShutdownManager::MarkAsShutdown(char const* caller, Status status) {
   std::unique_lock<std::mutex> lk(mu_);
-  GCP_LOG(DEBUG) << caller << "() - shutting down"
+  GCP_LOG(DEBUG) << __func__ << "() - from " << caller << "() - shutting down"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_;
@@ -103,7 +108,7 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_;
-  if (!shutdown_ || signaled_) return;
+  if (outstanding_operations_ > 0 || !shutdown_ || signaled_) return;
   signaled_ = true;
   lk.unlock();
   done_.set_value(std::move(result_));
@@ -149,11 +154,13 @@ void SubscriptionSession::MessageHandled(std::string const& ack_id,
 }
 
 void SubscriptionSession::Cancel() {
+  // Stop any more work from being created as soon as possible.
+  shutdown_manager_.MarkAsShutdown(__func__, {});
   std::unique_lock<std::mutex> lk(mu_);
+  // Cancel any existing timers.
   if (refresh_timer_.valid()) refresh_timer_.cancel();
   // Schedule a nack for each pending message, using the existing executor.
   NackAll(lk, messages_.begin(), messages_.end());
-  shutdown_manager_.MarkAsShutdown(__func__, {});
 }
 
 void SubscriptionSession::PullOne() {
@@ -201,10 +208,6 @@ void SubscriptionSession::OnPull(StatusOr<google::pubsub::v1::PullResponse> r) {
   std::move(r->mutable_received_messages()->begin(),
             r->mutable_received_messages()->end(),
             std::back_inserter(messages_));
-  if (refresh_timer_.valid()) {
-    refresh_timer_.cancel();
-    refresh_timer_ = {};
-  }
   auto self = shared_from_this();
   shutdown_manager_.StartAsyncOperation(__func__, "HandleQueue", executor_,
                                         [self] { self->HandleQueue(); });
@@ -241,6 +244,7 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
     pubsub::Message m;
     std::unique_ptr<pubsub::AckHandler::Impl> h;
     void operator()() {
+      GCP_LOG(DEBUG) << "calling callback(" << h->ack_id() << ")";
       callback(std::move(m), pubsub::AckHandler(std::move(h)));
     }
   };
@@ -303,6 +307,7 @@ void SubscriptionSession::OnRefreshMessageLeases(
     std::chrono::system_clock::time_point new_server_deadline) {
   if (shutdown_manager_.FinishedOperation(__func__)) return;
   std::unique_lock<std::mutex> lk(mu_);
+  refreshing_leases_ = false;
   for (auto const& ack : request.ack_ids()) {
     auto i = leases_.find(ack);
     if (i == leases_.end()) continue;
@@ -322,22 +327,20 @@ void SubscriptionSession::StartRefreshTimer(
   }
 
   shutdown_manager_.StartOperation(__func__, "OnRefreshTimer", [&] {
+    if (refresh_timer_.valid()) refresh_timer_.cancel();
     refresh_timer_ = executor_.MakeDeadlineTimer(deadline).then(
         [weak](future<StatusOr<std::chrono::system_clock::time_point>> f) {
           auto self = weak.lock();
           if (!self) return;
-          self->OnRefreshTimer(f.get().ok());
+          self->OnRefreshTimer(!f.get().ok());
         });
   });
 }
 
-void SubscriptionSession::OnRefreshTimer(bool restart) {
-  std::unique_lock<std::mutex> lk(mu_);
-  refreshing_leases_ = false;
-  refresh_timer_ = {};
+void SubscriptionSession::OnRefreshTimer(bool cancelled) {
   if (shutdown_manager_.FinishedOperation(__func__)) return;
-  if (!restart) return;
-  RefreshMessageLeases(std::move(lk));
+  if (cancelled) return;
+  RefreshMessageLeases(std::unique_lock<std::mutex>(mu_));
 }
 
 void SubscriptionSession::NackAll(
