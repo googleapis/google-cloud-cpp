@@ -17,6 +17,7 @@
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,20 +26,22 @@ namespace generator_internal {
 namespace {
 
 using ::google::protobuf::DescriptorPool;
-using ::google::protobuf::FieldDescriptorProto;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::google::protobuf::ServiceDescriptorProto;
 
 class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
  protected:
   static void SetUpTestSuite() {
     FileDescriptorProto proto_file;
-    proto_file.set_name("google/cloud/frobber/v1/frobber.proto");
-    proto_file.set_package("google.cloud.frobber.v1");
-    ServiceDescriptorProto* s = proto_file.add_service();
-    s->set_name("FrobberService");
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+        R"pb(
+          name: "google/cloud/frobber/v1/frobber.proto"
+          package: "google.cloud.frobber.v1"
+          service { name: "FrobberService" }
+        )pb",
+        &proto_file));
+
     DescriptorPool pool;
     const FileDescriptor* file_descriptor = pool.BuildFile(proto_file);
     vars_ = CreateServiceVars(
@@ -95,116 +98,125 @@ class CreateMethodVarsTest
  protected:
   static void SetUpTestSuite() {
     FileDescriptorProto longrunning_file;
-    longrunning_file.set_name("google/longrunning/operation.proto");
-    *longrunning_file.mutable_package() = "google.longrunning";
-    auto operation_message = longrunning_file.add_message_type();
-    operation_message->set_name("Operation");
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+        R"pb(
+          name: "google/longrunning/operation.proto"
+          package: "google.longrunning"
+          message_type { name: "Operation" }
+        )pb",
+        &longrunning_file));
 
-    FileDescriptorProto service_file;
-    service_file.set_name("google/foo/v1/service.proto");
-    *service_file.mutable_package() = "google.protobuf";
-    service_file.add_dependency("google/longrunning/operation.proto");
-    service_file.add_service()->set_name("Service");
+    google::protobuf::FileDescriptorProto service_file;
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+        R"pb(
+          name: "google/foo/v1/service.proto"
+          package: "google.protobuf"
+          dependency: "google/longrunning/operation.proto"
+          message_type {
+            name: "Bar"
+            field { name: "number" number: 1 type: TYPE_INT32 }
+            field { name: "name" number: 2 type: TYPE_STRING }
+            field {
+              name: "widget"
+              number: 3
+              type: TYPE_MESSAGE
+              type_name: "google.protobuf.Bar"
+            }
+          }
+          message_type { name: "Empty" }
+          message_type {
+            name: "PaginatedInput"
+            field { name: "page_size" number: 1 type: TYPE_INT32 }
+            field { name: "page_token" number: 2 type: TYPE_STRING }
+          }
+          message_type {
+            name: "PaginatedOutput"
+            field { name: "next_page_token" number: 1 type: TYPE_STRING }
+            field {
+              name: "repeated_field"
+              number: 2
+              label: LABEL_REPEATED
+              type: TYPE_MESSAGE
+              type_name: "google.protobuf.Bar"
+            }
+          }
+          service {
+            name: "Service"
+            method {
+              name: "Method0"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.protobuf.Empty"
+            }
+            method {
+              name: "Method1"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.protobuf.Bar"
+            }
+            method {
+              name: "Method2"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.longrunning.Operation"
+              options {
+                [google.longrunning.operation_info] {
+                  response_type: "google.protobuf.Method2Response"
+                  metadata_type: "google.protobuf.Method2Metadata"
+                }
+                [google.api.http] {
+                  patch: "/v1/{parent=projects/*/instances/*}/databases"
+                }
+              }
+            }
+            method {
+              name: "Method3"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.longrunning.Operation"
+              options {
+                [google.longrunning.operation_info] {
+                  response_type: "google.protobuf.Empty"
+                  metadata_type: "google.protobuf.Method2Metadata"
+                }
+                [google.api.http] {
+                  put: "/v1/{parent=projects/*/instances/*}/databases"
+                }
+              }
+            }
+            method {
+              name: "Method4"
+              input_type: "google.protobuf.PaginatedInput"
+              output_type: "google.protobuf.PaginatedOutput"
+              options {
+                [google.api.http] {
+                  delete: "/v1/{name=projects/*/instances/*/backups/*}"
+                }
+              }
+            }
+            method {
+              name: "Method5"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.protobuf.Empty"
+              options {
+                [google.api.method_signature]: "name"
+                [google.api.method_signature]: "number,widget"
+                [google.api.http] {
+                  post: "/v1/{parent=projects/*/instances/*}/databases"
+                  body: "*"
+                }
+              }
+            }
+            method {
+              name: "Method6"
+              input_type: "google.protobuf.Bar"
+              output_type: "google.protobuf.Empty"
+              options {
+                [google.api.http] {
+                  get: "/v1/{name=projects/*/instances/*/databases/*}"
+                }
+              }
+            }
 
-    auto input_message = service_file.add_message_type();
-    input_message->set_name("Bar");
-    auto int32_field = input_message->add_field();
-    int32_field->set_name("number");
-    int32_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-    int32_field->set_number(1);
-    auto string_field = input_message->add_field();
-    string_field->set_name("name");
-    string_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-    string_field->set_number(2);
-    auto message_field = input_message->add_field();
-    message_field->set_name("widget");
-    message_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_MESSAGE);
-    message_field->set_type_name("google.protobuf.Bar");
-    message_field->set_number(3);
-    auto output_message = service_file.add_message_type();
-    output_message->set_name("Empty");
-
-    // method0
-    auto empty_method = service_file.mutable_service(0)->add_method();
-    *empty_method->mutable_name() = "Method0";
-    *empty_method->mutable_input_type() = "google.protobuf.Bar";
-    *empty_method->mutable_output_type() = "google.protobuf.Empty";
-
-    // method1
-    auto non_empty_method = service_file.mutable_service(0)->add_method();
-    *non_empty_method->mutable_name() = "Method1";
-    *non_empty_method->mutable_input_type() = "google.protobuf.Bar";
-    *non_empty_method->mutable_output_type() = "google.protobuf.Bar";
-
-    // method2
-    auto long_running_method = service_file.mutable_service(0)->add_method();
-    *long_running_method->mutable_name() = "Method2";
-    *long_running_method->mutable_input_type() = "google.protobuf.Bar";
-    *long_running_method->mutable_output_type() =
-        "google.longrunning.Operation";
-    auto option = long_running_method->mutable_options()->MutableExtension(
-        google::longrunning::operation_info);
-    option->set_metadata_type("google.protobuf.Method2Metadata");
-    option->set_response_type("google.protobuf.Method2Response");
-
-    // method3
-    auto empty_long_running_method =
-        service_file.mutable_service(0)->add_method();
-    *empty_long_running_method->mutable_name() = "Method3";
-    *empty_long_running_method->mutable_input_type() = "google.protobuf.Bar";
-    *empty_long_running_method->mutable_output_type() =
-        "google.longrunning.Operation";
-    option = empty_long_running_method->mutable_options()->MutableExtension(
-        google::longrunning::operation_info);
-    option->set_metadata_type("google.protobuf.Method2Metadata");
-    option->set_response_type("google.protobuf.Empty");
-
-    // method4
-    auto paginated_input_message = service_file.add_message_type();
-    paginated_input_message->set_name("PaginatedInput");
-    auto page_size_field = paginated_input_message->add_field();
-    page_size_field->set_name("page_size");
-    page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-    page_size_field->set_number(1);
-
-    auto page_token_field = paginated_input_message->add_field();
-    page_token_field->set_name("page_token");
-    page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-    page_token_field->set_number(2);
-
-    auto paginated_output_message = service_file.add_message_type();
-    paginated_output_message->set_name("PaginatedOutput");
-    auto next_page_token_field = paginated_output_message->add_field();
-    next_page_token_field->set_name("next_page_token");
-    next_page_token_field->set_type(
-        protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-    next_page_token_field->set_number(1);
-
-    FieldDescriptorProto* repeated_message_field =
-        paginated_output_message->add_field();
-    repeated_message_field->set_name("repeated_field");
-    repeated_message_field->set_type(
-        protobuf::FieldDescriptorProto_Type_TYPE_MESSAGE);
-    repeated_message_field->set_label(
-        protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
-    repeated_message_field->set_type_name("google.protobuf.Bar");
-    repeated_message_field->set_number(2);
-
-    auto paginated_method = service_file.mutable_service(0)->add_method();
-    *paginated_method->mutable_name() = "Method4";
-    *paginated_method->mutable_input_type() = "google.protobuf.PaginatedInput";
-    *paginated_method->mutable_output_type() =
-        "google.protobuf.PaginatedOutput";
-
-    // method5
-    auto signature_method = service_file.mutable_service(0)->add_method();
-    *signature_method->mutable_name() = "Method5";
-    *signature_method->mutable_input_type() = "google.protobuf.Bar";
-    *signature_method->mutable_output_type() = "google.protobuf.Empty";
-    *signature_method->mutable_options()->AddExtension(
-        google::api::method_signature) = "name";
-    *signature_method->mutable_options()->AddExtension(
-        google::api::method_signature) = "number,widget";
+          }
+        )pb",
+        &service_file));
 
     DescriptorPool pool;
     pool.BuildFile(longrunning_file);
@@ -254,6 +266,16 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_deduced_response_type",
                              "::google::protobuf::Method2Response"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_request_param_key", "parent"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_request_param_value", "parent()"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_request_url_path",
+                             "/v1/{parent=projects/*/instances/*}/databases"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_request_url_substitution",
+                             "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
                              "::google::protobuf::Method2Metadata"),
@@ -263,16 +285,58 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_deduced_response_type",
                              "::google::protobuf::Method2Metadata"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "method_request_param_key", "parent"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "method_request_param_value", "parent()"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "method_request_url_path",
+                             "/v1/{parent=projects/*/instances/*}/databases"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "method_request_url_substitution",
+                             "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "range_output_field_name", "repeated_field"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "range_output_type", "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "method_request_param_key", "name"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "method_request_param_value", "name()"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "method_request_url_path",
+                             "/v1/{name=projects/*/instances/*/backups/*}"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "method_request_url_substitution",
+                             "projects/*/instances/*/backups/*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature0", "std::string const& name"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_signature1",
-            "std::int32_t const& number, ::google::protobuf::Bar "
-            "const& widget")),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature1",
+                             "std::int32_t const& number, "
+                             "::google::protobuf::Bar const& widget"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_param_key", "parent"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_param_value", "parent()"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_url_path",
+                             "/v1/{parent=projects/*/instances/*}/databases"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_url_substitution",
+                             "projects/*/instances/*"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_body", "*"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_request_param_key", "name"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_request_param_value", "name()"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_request_url_path",
+                             "/v1/{name=projects/*/instances/*/databases/*}"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_request_url_substitution",
+                             "projects/*/instances/*/databases/*")),
     [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

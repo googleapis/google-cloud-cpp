@@ -140,9 +140,11 @@ void SetResourceRoutingMethodVars(
       std::exit(1);
   }
 
-  std::regex url_pattern_regex(R"(.*\{(.*)=.*\}.*)");
+  std::regex url_pattern_regex(R"(.*\{(.*)=(.*)\}.*)");
   std::smatch match;
   std::regex_match(url_pattern, match, url_pattern_regex);
+  method_vars["method_request_url_path"] = match[0];
+  method_vars["method_request_url_substitution"] = match[2];
   std::string param = match[1];
   method_vars["method_request_param_key"] = param;
   std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
@@ -157,6 +159,7 @@ void SetResourceRoutingMethodVars(
   } else {
     method_vars["method_request_param_value"] = param + "()";
   }
+  method_vars["method_request_body"] = http_rule.body();
 }
 }  // namespace
 
