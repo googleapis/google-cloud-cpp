@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/background_threads_impl.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -20,7 +21,20 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads()
-    : runner_([](CompletionQueue cq) { cq.Run(); }, cq_) {}
+    : AutomaticallyCreatedBackgroundThreads(1, {}) {}
+
+AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
+    std::size_t thread_count)
+    : AutomaticallyCreatedBackgroundThreads(
+          thread_count == 0 ? 1 : thread_count, {}) {}
+
+AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
+    std::size_t thread_count, Normalized)
+    : pool_(thread_count) {
+  std::generate_n(pool_.begin(), thread_count, [this] {
+    return std::thread([](CompletionQueue cq) { cq.Run(); }, cq_);
+  });
+}
 
 AutomaticallyCreatedBackgroundThreads::
     ~AutomaticallyCreatedBackgroundThreads() {
@@ -29,7 +43,7 @@ AutomaticallyCreatedBackgroundThreads::
 
 void AutomaticallyCreatedBackgroundThreads::Shutdown() {
   cq_.Shutdown();
-  if (runner_.joinable()) runner_.join();
+  for (auto& t : pool_) t.join();
 }
 
 }  // namespace internal

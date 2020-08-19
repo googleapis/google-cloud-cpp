@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/connection_options.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -222,8 +223,14 @@ TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
 }
 
 TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
-  auto actual = internal::DefaultBackgroundThreads();
-  EXPECT_TRUE(actual);
+  auto constexpr kThreadCount = 4;
+  auto options = TestConnectionOptions(grpc::InsecureChannelCredentials())
+                     .set_background_thread_pool_size(kThreadCount);
+  auto background = options.background_threads_factory()();
+  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
+      background.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(kThreadCount, tp->pool_size());
 }
 
 }  // namespace

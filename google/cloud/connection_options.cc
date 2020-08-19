@@ -42,8 +42,10 @@ TracingOptions DefaultTracingOptions() {
   return TracingOptions{}.SetOptions(*tracing_options);
 }
 
-std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads() {
-  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>();
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(
+    std::size_t thread_pool_size) {
+  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>(
+      thread_pool_size);
 }
 
 }  // namespace internal
