@@ -34,13 +34,13 @@ class CreateServiceVarsTest
  protected:
   static void SetUpTestSuite() {
     FileDescriptorProto proto_file;
-    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-        R"pb(
-          name: "google/cloud/frobber/v1/frobber.proto"
-          package: "google.cloud.frobber.v1"
-          service { name: "FrobberService" }
-        )pb",
-        &proto_file));
+    auto constexpr kText = R"pb(
+      name: "google/cloud/frobber/v1/frobber.proto"
+      package: "google.cloud.frobber.v1"
+      service { name: "FrobberService" }
+    )pb";
+    ASSERT_TRUE(
+        google::protobuf::TextFormat::ParseFromString(kText, &proto_file));
 
     DescriptorPool pool;
     const FileDescriptor* file_descriptor = pool.BuildFile(proto_file);
@@ -53,7 +53,6 @@ class CreateServiceVarsTest
 };
 
 std::map<std::string, std::string> CreateServiceVarsTest::vars_;
-
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
   auto iter = vars_.find(GetParam().first);
   EXPECT_TRUE(iter != vars_.end());
@@ -98,125 +97,125 @@ class CreateMethodVarsTest
  protected:
   static void SetUpTestSuite() {
     FileDescriptorProto longrunning_file;
+    auto constexpr kLongrunningText = R"pb(
+      name: "google/longrunning/operation.proto"
+      package: "google.longrunning"
+      message_type { name: "Operation" }
+    )pb";
     ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-        R"pb(
-          name: "google/longrunning/operation.proto"
-          package: "google.longrunning"
-          message_type { name: "Operation" }
-        )pb",
-        &longrunning_file));
+        kLongrunningText, &longrunning_file));
 
     google::protobuf::FileDescriptorProto service_file;
-    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-        R"pb(
-          name: "google/foo/v1/service.proto"
-          package: "google.protobuf"
-          dependency: "google/longrunning/operation.proto"
-          message_type {
-            name: "Bar"
-            field { name: "number" number: 1 type: TYPE_INT32 }
-            field { name: "name" number: 2 type: TYPE_STRING }
-            field {
-              name: "widget"
-              number: 3
-              type: TYPE_MESSAGE
-              type_name: "google.protobuf.Bar"
+    auto constexpr kServiceText = R"pb(
+      name: "google/foo/v1/service.proto"
+      package: "google.protobuf"
+      dependency: "google/longrunning/operation.proto"
+      message_type {
+        name: "Bar"
+        field { name: "number" number: 1 type: TYPE_INT32 }
+        field { name: "name" number: 2 type: TYPE_STRING }
+        field {
+          name: "widget"
+          number: 3
+          type: TYPE_MESSAGE
+          type_name: "google.protobuf.Bar"
+        }
+      }
+      message_type { name: "Empty" }
+      message_type {
+        name: "PaginatedInput"
+        field { name: "page_size" number: 1 type: TYPE_INT32 }
+        field { name: "page_token" number: 2 type: TYPE_STRING }
+      }
+      message_type {
+        name: "PaginatedOutput"
+        field { name: "next_page_token" number: 1 type: TYPE_STRING }
+        field {
+          name: "repeated_field"
+          number: 2
+          label: LABEL_REPEATED
+          type: TYPE_MESSAGE
+          type_name: "google.protobuf.Bar"
+        }
+      }
+      service {
+        name: "Service"
+        method {
+          name: "Method0"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Empty"
+        }
+        method {
+          name: "Method1"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Bar"
+        }
+        method {
+          name: "Method2"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.longrunning.Operation"
+          options {
+            [google.longrunning.operation_info] {
+              response_type: "google.protobuf.Method2Response"
+              metadata_type: "google.protobuf.Method2Metadata"
+            }
+            [google.api.http] {
+              patch: "/v1/{parent=projects/*/instances/*}/databases"
             }
           }
-          message_type { name: "Empty" }
-          message_type {
-            name: "PaginatedInput"
-            field { name: "page_size" number: 1 type: TYPE_INT32 }
-            field { name: "page_token" number: 2 type: TYPE_STRING }
-          }
-          message_type {
-            name: "PaginatedOutput"
-            field { name: "next_page_token" number: 1 type: TYPE_STRING }
-            field {
-              name: "repeated_field"
-              number: 2
-              label: LABEL_REPEATED
-              type: TYPE_MESSAGE
-              type_name: "google.protobuf.Bar"
+        }
+        method {
+          name: "Method3"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.longrunning.Operation"
+          options {
+            [google.longrunning.operation_info] {
+              response_type: "google.protobuf.Empty"
+              metadata_type: "google.protobuf.Method2Metadata"
+            }
+            [google.api.http] {
+              put: "/v1/{parent=projects/*/instances/*}/databases"
             }
           }
-          service {
-            name: "Service"
-            method {
-              name: "Method0"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.protobuf.Empty"
+        }
+        method {
+          name: "Method4"
+          input_type: "google.protobuf.PaginatedInput"
+          output_type: "google.protobuf.PaginatedOutput"
+          options {
+            [google.api.http] {
+              delete: "/v1/{name=projects/*/instances/*/backups/*}"
             }
-            method {
-              name: "Method1"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.protobuf.Bar"
+          }
+        }
+        method {
+          name: "Method5"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Empty"
+          options {
+            [google.api.method_signature]: "name"
+            [google.api.method_signature]: "number,widget"
+            [google.api.http] {
+              post: "/v1/{parent=projects/*/instances/*}/databases"
+              body: "*"
             }
-            method {
-              name: "Method2"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.longrunning.Operation"
-              options {
-                [google.longrunning.operation_info] {
-                  response_type: "google.protobuf.Method2Response"
-                  metadata_type: "google.protobuf.Method2Metadata"
-                }
-                [google.api.http] {
-                  patch: "/v1/{parent=projects/*/instances/*}/databases"
-                }
-              }
+          }
+        }
+        method {
+          name: "Method6"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Empty"
+          options {
+            [google.api.http] {
+              get: "/v1/{name=projects/*/instances/*/databases/*}"
             }
-            method {
-              name: "Method3"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.longrunning.Operation"
-              options {
-                [google.longrunning.operation_info] {
-                  response_type: "google.protobuf.Empty"
-                  metadata_type: "google.protobuf.Method2Metadata"
-                }
-                [google.api.http] {
-                  put: "/v1/{parent=projects/*/instances/*}/databases"
-                }
-              }
-            }
-            method {
-              name: "Method4"
-              input_type: "google.protobuf.PaginatedInput"
-              output_type: "google.protobuf.PaginatedOutput"
-              options {
-                [google.api.http] {
-                  delete: "/v1/{name=projects/*/instances/*/backups/*}"
-                }
-              }
-            }
-            method {
-              name: "Method5"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.protobuf.Empty"
-              options {
-                [google.api.method_signature]: "name"
-                [google.api.method_signature]: "number,widget"
-                [google.api.http] {
-                  post: "/v1/{parent=projects/*/instances/*}/databases"
-                  body: "*"
-                }
-              }
-            }
-            method {
-              name: "Method6"
-              input_type: "google.protobuf.Bar"
-              output_type: "google.protobuf.Empty"
-              options {
-                [google.api.http] {
-                  get: "/v1/{name=projects/*/instances/*/databases/*}"
-                }
-              }
-            }
+          }
+        }
 
-          }
-        )pb",
-        &service_file));
+      }
+    )pb";
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                              &service_file));
 
     DescriptorPool pool;
     pool.BuildFile(longrunning_file);
