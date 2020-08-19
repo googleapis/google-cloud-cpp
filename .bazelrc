@@ -17,6 +17,10 @@
 #   [1]: https://github.com/bazelbuild/bazel/issues/4341
 build --copt=-DGRPC_BAZEL_BUILD
 
+# Do not create the convenience links, they are incovenient when the build runs
+# inside a docker image.
+build --experimental_convenience_symlinks=ignore
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
