@@ -525,7 +525,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
                       std::unique_ptr<grpc::ClientContext>,
                       google::pubsub::v1::PullRequest const&) {
     return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
-        .then([&generate_mu, &generate_count](TimerFuture) {
+        .then([&](TimerFuture) {
           std::unique_lock<std::mutex> lk(generate_mu);
           google::pubsub::v1::PullResponse response;
           for (int i = 0; i != 2 * kMaximumAcks; ++i) {
@@ -592,10 +592,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
   auto const initial_value = handler_counter.load();
   for (int i = 0; i != 10; ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
-    promise<int> done;
-    background.cq().RunAsync([&done, i] { done.set_value(i); });
-    auto f = done.get_future();
-    EXPECT_EQ(f.get(), i);
+    promise<void> done;
+    background.cq().RunAsync([&done, i] { done.set_value(); });
+    done.get_future().get();
   }
   auto const final_value = handler_counter.load();
   EXPECT_EQ(initial_value, final_value);
@@ -618,7 +617,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
                       std::unique_ptr<grpc::ClientContext>,
                       google::pubsub::v1::PullRequest const&) {
     return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
-        .then([&generate_mu, &generate_count](TimerFuture) {
+        .then([&](TimerFuture) {
           std::unique_lock<std::mutex> lk(generate_mu);
           google::pubsub::v1::PullResponse response;
           for (int i = 0; i != 2 * kMaximumAcks; ++i) {
@@ -691,10 +690,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   auto const initial_value = handler_counter.load();
   for (int i = 0; i != 10; ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
-    promise<int> done;
-    background.cq().RunAsync([&done, i] { done.set_value(i); });
-    auto f = done.get_future();
-    EXPECT_EQ(f.get(), i);
+    promise<void> done;
+    background.cq().RunAsync([&done, i] { done.set_value(); });
+    done.get_future().get();
   }
   auto const final_value = handler_counter.load();
   EXPECT_EQ(initial_value, final_value);
