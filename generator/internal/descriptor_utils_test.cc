@@ -34,23 +34,21 @@ class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
  protected:
   static void SetUpTestSuite() {
-    proto_file_.set_name("google/cloud/frobber/v1/frobber.proto");
-    proto_file_.set_package("google.cloud.frobber.v1");
-    ServiceDescriptorProto* s = proto_file_.add_service();
+    FileDescriptorProto proto_file;
+    proto_file.set_name("google/cloud/frobber/v1/frobber.proto");
+    proto_file.set_package("google.cloud.frobber.v1");
+    ServiceDescriptorProto* s = proto_file.add_service();
     s->set_name("FrobberService");
-    const FileDescriptor* file_descriptor = pool_.BuildFile(proto_file_);
+    DescriptorPool pool;
+    const FileDescriptor* file_descriptor = pool.BuildFile(proto_file);
     vars_ = CreateServiceVars(
         *file_descriptor->service(0),
         {std::make_pair("product_path", "google/cloud/frobber/")});
   }
 
-  static DescriptorPool pool_;
-  static FileDescriptorProto proto_file_;
   static std::map<std::string, std::string> vars_;
 };
 
-DescriptorPool CreateServiceVarsTest::pool_;
-FileDescriptorProto CreateServiceVarsTest::proto_file_;
 std::map<std::string, std::string> CreateServiceVarsTest::vars_;
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
@@ -82,9 +80,18 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
+struct MethodVarsTestValues {
+  MethodVarsTestValues(std::string m, std::string k, std::string v)
+      : method(std::move(m)),
+        vars_key(std::move(k)),
+        expected_value(std::move(v)) {}
+  std::string method;
+  std::string vars_key;
+  std::string expected_value;
+};
+
 class CreateMethodVarsTest
-    : public testing::TestWithParam<
-          std::tuple<std::string, std::string, std::string>> {
+    : public testing::TestWithParam<MethodVarsTestValues> {
  protected:
   static void SetUpTestSuite() {
     FileDescriptorProto longrunning_file;
@@ -213,62 +220,62 @@ std::map<std::string, std::map<std::string, std::string>>
     CreateMethodVarsTest::vars_;
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
-  auto method_iter = vars_.find(std::get<0>(GetParam()));
+  auto method_iter = vars_.find(GetParam().method);
   EXPECT_TRUE(method_iter != vars_.end());
-  auto iter = method_iter->second.find(std::get<1>(GetParam()));
-  EXPECT_EQ(iter->second, std::get<2>(GetParam()));
+  auto iter = method_iter->second.find(GetParam().vars_key);
+  EXPECT_EQ(iter->second, GetParam().expected_value);
 }
 
 INSTANTIATE_TEST_SUITE_P(
     MethodVars, CreateMethodVarsTest,
     testing::Values(
-        std::make_tuple("google.protobuf.Service.Method0", "method_name",
-                        "Method0"),
-        std::make_tuple("google.protobuf.Service.Method0", "method_name_snake",
-                        "method0"),
-        std::make_tuple("google.protobuf.Service.Method0", "request_type",
-                        "::google::protobuf::Bar"),
-        std::make_tuple("google.protobuf.Service.Method0", "response_type",
-                        "::google::protobuf::Empty"),
-        std::make_tuple("google.protobuf.Service.Method1", "method_name",
-                        "Method1"),
-        std::make_tuple("google.protobuf.Service.Method1", "method_name_snake",
-                        "method1"),
-        std::make_tuple("google.protobuf.Service.Method1", "request_type",
-                        "::google::protobuf::Bar"),
-        std::make_tuple("google.protobuf.Service.Method1", "response_type",
-                        "::google::protobuf::Bar"),
-        std::make_tuple("google.protobuf.Service.Method2",
-                        "longrunning_metadata_type",
-                        "::google::protobuf::Method2Metadata"),
-        std::make_tuple("google.protobuf.Service.Method2",
-                        "longrunning_response_type",
-                        "::google::protobuf::Method2Response"),
-        std::make_tuple("google.protobuf.Service.Method2",
-                        "longrunning_deduced_response_type",
-                        "::google::protobuf::Method2Response"),
-        std::make_tuple("google.protobuf.Service.Method3",
-                        "longrunning_metadata_type",
-                        "::google::protobuf::Method2Metadata"),
-        std::make_tuple("google.protobuf.Service.Method3",
-                        "longrunning_response_type",
-                        "::google::protobuf::Empty"),
-        std::make_tuple("google.protobuf.Service.Method3",
-                        "longrunning_deduced_response_type",
-                        "::google::protobuf::Method2Metadata"),
-        std::make_tuple("google.protobuf.Service.Method4",
-                        "range_output_field_name", "repeated_field"),
-        std::make_tuple("google.protobuf.Service.Method4", "range_output_type",
-                        "::google::protobuf::Bar"),
-        std::make_tuple("google.protobuf.Service.Method5", "method_signature0",
-                        "std::string const& name"),
-        std::make_tuple("google.protobuf.Service.Method5", "method_signature1",
-                        "std::int32_t const& number, ::google::protobuf::Bar "
-                        "const& widget")),
+        MethodVarsTestValues("google.protobuf.Service.Method0", "method_name",
+                             "Method0"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "method_name_snake", "method0"),
+        MethodVarsTestValues("google.protobuf.Service.Method0", "request_type",
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method0", "response_type",
+                             "::google::protobuf::Empty"),
+        MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
+                             "Method1"),
+        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "method_name_snake", "method1"),
+        MethodVarsTestValues("google.protobuf.Service.Method1", "request_type",
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method1", "response_type",
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "longrunning_metadata_type",
+                             "::google::protobuf::Method2Metadata"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "longrunning_response_type",
+                             "::google::protobuf::Method2Response"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "longrunning_deduced_response_type",
+                             "::google::protobuf::Method2Response"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "longrunning_metadata_type",
+                             "::google::protobuf::Method2Metadata"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "longrunning_response_type",
+                             "::google::protobuf::Empty"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "longrunning_deduced_response_type",
+                             "::google::protobuf::Method2Metadata"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "range_output_field_name", "repeated_field"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "range_output_type", "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature0", "std::string const& name"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_signature1",
+            "std::int32_t const& number, ::google::protobuf::Bar "
+            "const& widget")),
     [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
-      std::vector<std::string> pieces =
-          absl::StrSplit(std::get<0>(info.param), '.');
-      return pieces.back() + "_" + std::get<1>((info.param));
+      std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
+      return pieces.back() + "_" + info.param.vars_key;
     });
 
 }  // namespace

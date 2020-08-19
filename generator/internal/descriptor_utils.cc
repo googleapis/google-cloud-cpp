@@ -113,50 +113,49 @@ void SetMethodSignatureMethodVars(
 void SetResourceRoutingMethodVars(
     google::protobuf::MethodDescriptor const& method,
     std::map<std::string, std::string>& method_vars) {
-  if (method.options().HasExtension(google::api::http)) {
-    google::api::HttpRule http_rule =
-        method.options().GetExtension(google::api::http);
+  if (!method.options().HasExtension(google::api::http)) return;
+  google::api::HttpRule http_rule =
+      method.options().GetExtension(google::api::http);
 
-    std::string url_pattern;
-    switch (http_rule.pattern_case()) {
-      case google::api::HttpRule::kGet:
-        url_pattern = http_rule.get();
-        break;
-      case google::api::HttpRule::kPut:
-        url_pattern = http_rule.put();
-        break;
-      case google::api::HttpRule::kPost:
-        url_pattern = http_rule.post();
-        break;
-      case google::api::HttpRule::kDelete:
-        url_pattern = http_rule.delete_();
-        break;
-      case google::api::HttpRule::kPatch:
-        url_pattern = http_rule.patch();
-        break;
-      default:
-        GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                       << ": google::api::HttpRule not handled" << std::endl;
-        std::exit(1);
-    }
+  std::string url_pattern;
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+      url_pattern = http_rule.get();
+      break;
+    case google::api::HttpRule::kPut:
+      url_pattern = http_rule.put();
+      break;
+    case google::api::HttpRule::kPost:
+      url_pattern = http_rule.post();
+      break;
+    case google::api::HttpRule::kDelete:
+      url_pattern = http_rule.delete_();
+      break;
+    case google::api::HttpRule::kPatch:
+      url_pattern = http_rule.patch();
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
+  }
 
-    std::regex url_pattern_regex(R"(.*\{(.*)=.*\}.*)");
-    std::smatch match;
-    std::regex_match(url_pattern, match, url_pattern_regex);
-    std::string param = match[1];
-    method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
-    if (chunks.size() > 1) {
-      std::string value;
-      unsigned int i = 0;
-      for (; i < chunks.size() - 1; ++i) {
-        value += chunks[i] + "().";
-      }
-      value += chunks[i] + "()";
-      method_vars["method_request_param_value"] = value;
-    } else {
-      method_vars["method_request_param_value"] = param + "()";
+  std::regex url_pattern_regex(R"(.*\{(.*)=.*\}.*)");
+  std::smatch match;
+  std::regex_match(url_pattern, match, url_pattern_regex);
+  std::string param = match[1];
+  method_vars["method_request_param_key"] = param;
+  std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
+  if (chunks.size() > 1) {
+    std::string value;
+    unsigned int i = 0;
+    for (; i < chunks.size() - 1; ++i) {
+      value += chunks[i] + "().";
     }
+    value += chunks[i] + "()";
+    method_vars["method_request_param_value"] = value;
+  } else {
+    method_vars["method_request_param_value"] = param + "()";
   }
 }
 }  // namespace
