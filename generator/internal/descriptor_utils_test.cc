@@ -106,6 +106,7 @@ class CreateMethodVarsTest
         kLongrunningText, &longrunning_file));
 
     google::protobuf::FileDescriptorProto service_file;
+    /// @cond
     auto constexpr kServiceText = R"pb(
       name: "google/foo/v1/service.proto"
       package: "google.protobuf"
@@ -214,6 +215,7 @@ class CreateMethodVarsTest
 
       }
     )pb";
+    /// @endcond
     ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
                                                               &service_file));
 
