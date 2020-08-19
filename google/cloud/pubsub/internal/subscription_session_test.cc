@@ -593,7 +593,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
   for (int i = 0; i != 10; ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
     promise<void> done;
-    background.cq().RunAsync([&done, i] { done.set_value(); });
+    background.cq().RunAsync([&done] { done.set_value(); });
     done.get_future().get();
   }
   auto const final_value = handler_counter.load();
@@ -691,7 +691,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   for (int i = 0; i != 10; ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
     promise<void> done;
-    background.cq().RunAsync([&done, i] { done.set_value(); });
+    background.cq().RunAsync([&done] { done.set_value(); });
     done.get_future().get();
   }
   auto const final_value = handler_counter.load();
