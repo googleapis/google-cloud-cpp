@@ -30,7 +30,7 @@ using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::InSequence;
 
-/// @test Verify SessionShutdownManager works correctly
+/// @test Verify SessionShutdownManager works correctly.
 TEST(SessionShutdownManagerTest, Basic) {
   internal::AutomaticallyCreatedBackgroundThreads background;
   CompletionQueue cq = background.cq();
@@ -514,7 +514,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
   pubsub::Subscription const subscription("test-project", "test-subscription");
 
   // A number of mocks that return futures satisfied a bit after the call is
-  // made, this better simulates the behavior when running against an actual
+  // made. This better simulates the behavior when running against an actual
   // service.
   auto constexpr kMaximumAcks = 5;
   std::mutex generate_mu;
@@ -586,7 +586,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
     EXPECT_STATUS_OK(status);
     EXPECT_LE(1, handler_counter.load());
   }
-  // Schedule at least a few more iterations of the CQ loop, if the shutdown is
+  // Schedule at least a few more iterations of the CQ loop. If the shutdown is
   // buggy, we will see TSAN/ASAN errors because the `handler` defined above
   // is still called.
   auto const initial_value = handler_counter.load();
@@ -606,7 +606,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   pubsub::Subscription const subscription("test-project", "test-subscription");
 
   // A number of mocks that return futures satisfied a bit after the call is
-  // made, this better simulates the behavior when running against an actual
+  // made. This better simulates the behavior when running against an actual
   // service.
   auto constexpr kMaximumAcks = 5;
   std::mutex generate_mu;
@@ -684,7 +684,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
     auto status = session.get();
     EXPECT_STATUS_OK(status);
   }
-  // Schedule at least a few more iterations of the CQ loop, if the shutdown is
+  // Schedule at least a few more iterations of the CQ loop. If the shutdown is
   // buggy, we will see TSAN/ASAN errors because the `handler` defined above
   // is still called.
   auto const initial_value = handler_counter.load();
