@@ -30,7 +30,6 @@ bigtable_client_testing_hdrs = [
     "testing/mock_sample_row_keys_reader.h",
     "testing/table_integration_test.h",
     "testing/table_test_fixture.h",
-    "testing/validate_metadata.h",
 ]
 
 bigtable_client_testing_srcs = [
@@ -39,5 +38,4 @@ bigtable_client_testing_srcs = [
     "testing/inprocess_data_client.cc",
     "testing/table_integration_test.cc",
     "testing/table_test_fixture.cc",
-    "testing/validate_metadata.cc",
 ]

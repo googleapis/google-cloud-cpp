@@ -13,13 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutation_batcher.h"
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
@@ -32,6 +33,7 @@ namespace {
 namespace btproto = google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::MockCompletionQueue;
@@ -166,8 +168,9 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
           .WillOnce([reader, exchange](grpc::ClientContext* context,
                                        btproto::MutateRowsRequest const& r,
                                        grpc::CompletionQueue*) {
-            EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-                *context, "google.bigtable.v2.Bigtable.MutateRows"));
+            EXPECT_STATUS_OK(IsContextMDValid(
+                *context, "google.bigtable.v2.Bigtable.MutateRows",
+                bigtable::internal::ApiClientHeader()));
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;

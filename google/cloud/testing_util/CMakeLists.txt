@@ -74,10 +74,11 @@ if (BUILD_TESTING)
     add_library(
         google_cloud_cpp_testing_grpc # cmake-format: sort
         is_proto_equal.cc is_proto_equal.h mock_async_response_reader.h
-        mock_completion_queue.h)
+        mock_completion_queue.h validate_metadata.cc validate_metadata.h)
     target_link_libraries(
-        google_cloud_cpp_testing_grpc PUBLIC google_cloud_cpp_common
-                                             protobuf::libprotobuf GTest::gmock)
+        google_cloud_cpp_testing_grpc
+        PUBLIC google_cloud_cpp_common googleapis-c++::api_annotations_protos
+               protobuf::libprotobuf GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
 
     create_bazel_config(google_cloud_cpp_testing_grpc YEAR 2020)

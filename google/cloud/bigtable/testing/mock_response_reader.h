@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H
 
-#include "google/cloud/bigtable/testing/validate_metadata.h"
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/impl/codegen/async_stream.h>
@@ -65,8 +66,8 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
   std::function<UniquePtr(grpc::ClientContext*, Request const&)>
   MakeMockReturner() {
     return [this](grpc::ClientContext* context, Request const&) {
-      EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-          *context, method_));
+      EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+          *context, method_, internal::ApiClientHeader()));
       return UniquePtr(this);
     };
   }

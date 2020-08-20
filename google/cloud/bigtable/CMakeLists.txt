@@ -99,6 +99,8 @@ add_library(
     instance_list_responses.h
     instance_update_config.cc
     instance_update_config.h
+    internal/api_client_header.cc
+    internal/api_client_header.h
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_longrunning_op.h
@@ -201,9 +203,7 @@ if (BUILD_TESTING)
         testing/table_integration_test.cc
         testing/table_integration_test.h
         testing/table_test_fixture.cc
-        testing/table_test_fixture.h
-        testing/validate_metadata.cc
-        testing/validate_metadata.h)
+        testing/table_test_fixture.h)
     target_link_libraries(
         bigtable_client_testing
         PUBLIC absl::memory
@@ -292,6 +292,7 @@ if (BUILD_TESTING)
                     bigtable_client
                     bigtable_protos
                     google_cloud_cpp_testing
+                    google_cloud_cpp_testing_grpc
                     google_cloud_cpp_common
                     google_cloud_cpp_grpc_utils
                     GTest::gmock_main

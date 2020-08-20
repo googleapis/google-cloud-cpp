@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/testing/validate_metadata.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace testing_util {
 
 namespace {
 
@@ -41,6 +41,13 @@ namespace {
  */
 std::multimap<std::string, std::string> GetMetadata(
     grpc::ClientContext& context) {
+  // Set the deadline to far in the future. If the deadline is in the past, gRPC
+  // doesn't send the initial metadata at all (which makes sense, given that the
+  // context is already expired). The `context` is destroyed by this function
+  // anyway, so we're not making things worse by changing the deadline.
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::hours(24));
+
   // Start the generic server.
   grpc::ServerBuilder builder;
   grpc::AsyncGenericService generic_service;
@@ -274,7 +281,7 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
   return Status();
 }
 
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_testing
+}  // namespace testing_util
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

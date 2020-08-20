@@ -50,6 +50,9 @@ cc_library(
     hdrs = google_cloud_cpp_testing_grpc_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//:googleapis_system_includes",
+        "@com_google_googleapis//google/api:annotations_cc_proto",
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ],
