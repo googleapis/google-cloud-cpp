@@ -32,7 +32,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 std::set<std::string> DefaultTracingComponents();
 TracingOptions DefaultTracingOptions();
-std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads();
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(std::size_t);
 }  // namespace internal
 
 /**
@@ -52,8 +52,7 @@ class ConnectionOptions {
         num_channels_(ConnectionTraits::default_num_channels()),
         tracing_components_(internal::DefaultTracingComponents()),
         tracing_options_(internal::DefaultTracingOptions()),
-        user_agent_prefix_(ConnectionTraits::user_agent_prefix()),
-        background_threads_factory_(internal::DefaultBackgroundThreads) {}
+        user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(
@@ -197,6 +196,19 @@ class ConnectionOptions {
   }
 
   /**
+   * Set the number of background threads.
+   *
+   * @note this value is not used if `DisableBackgroundThreads()` is called.
+   */
+  ConnectionOptions& set_background_thread_pool_size(std::size_t s) {
+    background_thread_pool_size_ = s;
+    return *this;
+  }
+  std::size_t background_thread_pool_size() const {
+    return background_thread_pool_size_;
+  }
+
+  /**
    * Configure the connection to use @p cq for all background work.
    *
    * Connections need to perform background work on behalf of the application.
@@ -217,7 +229,9 @@ class ConnectionOptions {
   using BackgroundThreadsFactory =
       std::function<std::unique_ptr<BackgroundThreads>()>;
   BackgroundThreadsFactory background_threads_factory() const {
-    return background_threads_factory_;
+    if (background_threads_factory_) return background_threads_factory_;
+    auto const s = background_thread_pool_size_;
+    return [s] { return internal::DefaultBackgroundThreads(s); };
   }
 
  private:
@@ -229,6 +243,7 @@ class ConnectionOptions {
   std::string channel_pool_domain_;
 
   std::string user_agent_prefix_;
+  std::size_t background_thread_pool_size_ = 0;
   BackgroundThreadsFactory background_threads_factory_;
 };
 

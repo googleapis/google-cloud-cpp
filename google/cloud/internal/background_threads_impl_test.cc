@@ -22,6 +22,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::testing::Contains;
+using ::testing::Not;
 using testing_util::ScopedThread;
 
 /// @test Verify we can create and use a CustomerSuppliedBackgroundThreads
@@ -72,10 +74,38 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
 /// @test Verify that automatically created completion queues are usable.
 TEST(AutomaticallyCreatedBackgroundThreads, IsActive) {
   AutomaticallyCreatedBackgroundThreads actual;
+  EXPECT_EQ(1, actual.pool_size());
 
   promise<std::thread::id> bg;
   actual.cq().RunAsync([&bg] { bg.set_value(std::this_thread::get_id()); });
   EXPECT_NE(std::this_thread::get_id(), bg.get_future().get());
+}
+
+/// @test Verify that automatically created completion queues are usable.
+TEST(AutomaticallyCreatedBackgroundThreads, NoEmptyPools) {
+  AutomaticallyCreatedBackgroundThreads actual(0);
+  EXPECT_EQ(1, actual.pool_size());
+
+  promise<std::thread::id> bg;
+  actual.cq().RunAsync([&bg] { bg.set_value(std::this_thread::get_id()); });
+  EXPECT_NE(std::this_thread::get_id(), bg.get_future().get());
+}
+
+/// @test Verify that automatically created completion queues work.
+TEST(AutomaticallyCreatedBackgroundThreads, ManyThreads) {
+  auto constexpr kThreadCount = 4;
+  AutomaticallyCreatedBackgroundThreads actual(kThreadCount);
+  EXPECT_EQ(kThreadCount, actual.pool_size());
+
+  std::vector<promise<std::thread::id>> promises(100 * kThreadCount);
+  for (auto& p : promises) {
+    actual.cq().RunAsync([&p] { p.set_value(std::this_thread::get_id()); });
+  }
+  std::set<std::thread::id> ids;
+  for (auto& p : promises) ids.insert(p.get_future().get());
+  EXPECT_FALSE(ids.empty());
+  EXPECT_GE(kThreadCount, ids.size());
+  EXPECT_THAT(ids, Not(Contains(std::this_thread::get_id())));
 }
 
 }  // namespace

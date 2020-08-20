@@ -19,6 +19,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/version.h"
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -42,14 +43,19 @@ class CustomerSuppliedBackgroundThreads : public BackgroundThreads {
 class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
  public:
   AutomaticallyCreatedBackgroundThreads();
+  explicit AutomaticallyCreatedBackgroundThreads(std::size_t thread_count);
   ~AutomaticallyCreatedBackgroundThreads() override;
 
   CompletionQueue cq() const override { return cq_; }
   void Shutdown();
+  std::size_t pool_size() const { return pool_.size(); }
 
  private:
+  struct NormalizeTag {};
+  AutomaticallyCreatedBackgroundThreads(std::size_t thread_count, NormalizeTag);
+
   CompletionQueue cq_;
-  std::thread runner_;
+  std::vector<std::thread> pool_;
 };
 
 }  // namespace internal
