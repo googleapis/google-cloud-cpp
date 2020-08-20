@@ -25,13 +25,12 @@ AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads()
 
 AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
     std::size_t thread_count)
-    : AutomaticallyCreatedBackgroundThreads(
-          thread_count == 0 ? 1 : thread_count, {}) {}
+    : AutomaticallyCreatedBackgroundThreads(thread_count, {}) {}
 
 AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
-    std::size_t thread_count, Normalized)
-    : pool_(thread_count) {
-  std::generate_n(pool_.begin(), thread_count, [this] {
+    std::size_t thread_count, NormalizeTag)
+    : pool_(thread_count == 0 ? 1 : thread_count) {
+  std::generate_n(pool_.begin(), pool_.size(), [this] {
     return std::thread([](CompletionQueue cq) { cq.Run(); }, cq_);
   });
 }

@@ -99,16 +99,12 @@ TEST(AutomaticallyCreatedBackgroundThreads, ManyThreads) {
 
   std::vector<promise<std::thread::id>> promises(100 * kThreadCount);
   for (auto& p : promises) {
-    actual.cq().RunAsync([&p] {
-      p.set_value(std::this_thread::get_id());
-      // Keep the thread busy for a bit so the other functors schedule in a
-      // different thread.
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    });
+    actual.cq().RunAsync([&p] { p.set_value(std::this_thread::get_id()); });
   }
   std::set<std::thread::id> ids;
   for (auto& p : promises) ids.insert(p.get_future().get());
-  EXPECT_LE(2, ids.size());
+  EXPECT_FALSE(ids.empty());
+  EXPECT_GE(kThreadCount, ids.size());
   EXPECT_THAT(ids, Not(Contains(std::this_thread::get_id())));
 }
 

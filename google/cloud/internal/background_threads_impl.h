@@ -51,8 +51,9 @@ class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
   std::size_t pool_size() const { return pool_.size(); }
 
  private:
-  struct Normalized {};
-  AutomaticallyCreatedBackgroundThreads(std::size_t thread_count, Normalized);
+  struct NormalizeTag {};
+  AutomaticallyCreatedBackgroundThreads(std::size_t thread_count, NormalizeTag);
+
   CompletionQueue cq_;
   std::vector<std::thread> pool_;
 };
