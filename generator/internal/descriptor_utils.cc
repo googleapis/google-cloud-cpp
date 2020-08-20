@@ -14,8 +14,17 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/log.h"
+// TODO(#4501) - fix by doing #include <absl/...>
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
+#if _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+// TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/stub_generator.h"
