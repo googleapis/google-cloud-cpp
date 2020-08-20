@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
+#include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -153,6 +154,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
     pubsub::ConnectionOptions const& options,
     std::shared_ptr<PublisherStub> stub) {
+  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(

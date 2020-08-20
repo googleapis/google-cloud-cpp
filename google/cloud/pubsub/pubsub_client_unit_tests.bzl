@@ -23,6 +23,7 @@ pubsub_client_unit_tests = [
     "internal/emulator_overrides_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
     "internal/publisher_logging_test.cc",
+    "internal/publisher_metadata_test.cc",
     "internal/subscriber_logging_test.cc",
     "internal/subscription_concurrency_control_test.cc",
     "internal/subscription_session_test.cc",

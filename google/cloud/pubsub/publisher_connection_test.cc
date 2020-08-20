@@ -14,8 +14,10 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <tuple>
 
@@ -53,6 +55,33 @@ TEST(PublisherConnectionTest, Basic) {
           .get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ("test-message-id-0", *response);
+}
+
+TEST(PublisherConnectionTest, Metadata) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, AsyncPublish)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext> context,
+                          google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+            *context, "google.pubsub.v1.Publisher.Publish",
+            google::cloud::internal::ApiClientHeader()));
+        google::pubsub::v1::PublishResponse response;
+        for (auto const& m : request.messages()) {
+          response.add_message_ids("ack-" + m.message_id());
+        }
+        return make_ready_future(make_status_or(response));
+      });
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, {}, ConnectionOptions{}.enable_tracing("rpc"), mock);
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
+  ASSERT_STATUS_OK(response);
 }
 
 TEST(PublisherConnectionTest, Logging) {
