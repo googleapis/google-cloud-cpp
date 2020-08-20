@@ -19,7 +19,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <atomic>
 #include <tuple>
 #include <utility>
 
@@ -520,31 +519,28 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::mutex mu;
     std::condition_variable cv;
-    bool done = false;
     int message_count = 0;
     auto session = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
-          std::cout << "Received message " << m << std::endl;
+          std::cout << "Received message " << m << "\n";
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
-          done = true;
           lk.unlock();
           cv.notify_one();
           std::move(h).ack();
         });
     // Wait until at least one message has been received.
     std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&done] { return done; });
+    cv.wait(lk, [&message_count] { return message_count > 0; });
     lk.unlock();
     // Cancel the subscription session.
     session.cancel();
     // Wait for the session to complete, no more callbacks can happen after this
     // point.
-    std::cout << "GET=" << done << std::endl;
     auto status = session.get();
     // Report any final status, blocking.
     std::cout << "Message count: " << message_count << ", status: " << status
-              << std::endl;
+              << "\n";
   }
   //! [END pubsub_subscriber_async_pull] [subscribe]
   //! [END pubsub_quickstart_subscriber]
@@ -607,7 +603,6 @@ void SubscribeCustomAttributes(
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::mutex mu;
     std::condition_variable cv;
-    bool done = false;
     int message_count = 0;
     auto session = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -617,7 +612,6 @@ void SubscribeCustomAttributes(
           }
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
-          done = true;
           lk.unlock();
           cv.notify_one();
           std::move(h).ack();
@@ -625,7 +619,7 @@ void SubscribeCustomAttributes(
     // Most applications would just release the `session` object at this point,
     // but we want to gracefully close down this example.
     std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&done] { return done; });
+    cv.wait(lk, [&message_count] { return message_count > 0; });
     lk.unlock();
     session.cancel();
     auto status = session.get();
@@ -753,7 +747,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     google::cloud::promise<void> received_message;
     auto result = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
-          std::cout << "Received message " << m << std::endl;
+          std::cout << "Received message " << m << "\n";
           {
             std::lock_guard<std::mutex> lk(mu);
             if (++count == 4) received_message.set_value();
