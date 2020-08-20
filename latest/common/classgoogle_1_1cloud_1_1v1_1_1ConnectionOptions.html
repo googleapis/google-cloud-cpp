@@ -139,6 +139,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a83484d52c6ba34dab4d5f8c2d8550fee"><td class="memItemLeft" align="right" valign="top">grpc::ChannelArguments&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a83484d52c6ba34dab4d5f8c2d8550fee">CreateChannelArguments</a> () const</td></tr>
 <tr class="memdesc:a83484d52c6ba34dab4d5f8c2d8550fee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <code>grpc::ChannelArguments</code> configured with the options in this object.  <a href="#a83484d52c6ba34dab4d5f8c2d8550fee">More...</a><br /></td></tr>
 <tr class="separator:a83484d52c6ba34dab4d5f8c2d8550fee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bf89e3f7dd45c06bab45ab560d0513f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html">ConnectionOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a0bf89e3f7dd45c06bab45ab560d0513f">set_background_thread_pool_size</a> (std::size_t s)</td></tr>
+<tr class="memdesc:a0bf89e3f7dd45c06bab45ab560d0513f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of background threads.  <a href="#a0bf89e3f7dd45c06bab45ab560d0513f">More...</a><br /></td></tr>
+<tr class="separator:a0bf89e3f7dd45c06bab45ab560d0513f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7971d6e9593ce1669e7a09c75f71efed"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a7971d6e9593ce1669e7a09c75f71efed">background_thread_pool_size</a> () const</td></tr>
+<tr class="separator:a7971d6e9593ce1669e7a09c75f71efed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8513daa27c205ff9511946386e75aad0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html">ConnectionOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a8513daa27c205ff9511946386e75aad0">DisableBackgroundThreads</a> (google::cloud::CompletionQueue const &amp;cq)</td></tr>
 <tr class="memdesc:a8513daa27c205ff9511946386e75aad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the connection to use <code>cq</code> for all background work.  <a href="#a8513daa27c205ff9511946386e75aad0">More...</a><br /></td></tr>
 <tr class="separator:a8513daa27c205ff9511946386e75aad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,7 +172,7 @@ template&lt;typename ConnectionTraits &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00218">218</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00230">230</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +270,36 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>Prepend <code>prefix</code> to the user-agent string. </p>
 <p>Libraries or services that use Cloud C++ clients may want to set their own user-agent prefix. This can help them develop telemetry information about number of users running particular versions of their system or library. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00167">167</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00166">166</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a7971d6e9593ce1669e7a09c75f71efed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7971d6e9593ce1669e7a09c75f71efed">&#9670;&nbsp;</a></span>background_thread_pool_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConnectionTraits &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html">google::cloud::v1::ConnectionOptions</a>&lt; ConnectionTraits &gt;::background_thread_pool_size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00207">207</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -294,7 +328,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00219">219</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00231">231</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -327,7 +361,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>In some cases applications may want to use a separate gRPC connections for different clients. gRPC may share the connection used by separate channels created with the same configuration. The client objects created with this object will create gRPC channels configured with <code>grpc.channel_pooling_domain</code> set to the value returned by <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac" title="Define the gRPC channel domain for clients configured with this object.">channel_pool_domain()</a></code>. gRPC channels with different values for <code>grpc.channel_pooling_domain</code> are guaranteed to use different connections. Note that there is no guarantee that channels with the same value will have the same connection though.</p>
 <p>This option might be useful for applications that want to segregate traffic for whatever reason. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00149">149</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00148">148</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +393,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>Create a new <code>grpc::ChannelArguments</code> configured with the options in this object. </p>
 <p>The caller would typically pass this argument to <code>grpc::CreateCustomChannel</code> and create one more more gRPC channels. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00184">184</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00183">183</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -390,7 +424,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>The gRPC credentials used by clients configured with this object. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00067">67</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00066">66</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -422,7 +456,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Disable tracing for <code>component</code> in clients configured with this object. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00125">125</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00124">124</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -455,7 +489,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>Configure the connection to use <code>cq</code> for all background work. </p>
 <p>Connections need to perform background work on behalf of the application. Normally they just create a background thread and a <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html" title="Call the functor associated with asynchronous operations when they complete.">CompletionQueue</a></code> for this work, but the application may need more fine-grained control of their threads. In this case the application can provide the <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html" title="Call the functor associated with asynchronous operations when they complete.">CompletionQueue</a></code> and it assumes responsibility for creating one or more threads blocked on <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a0026334d6cd6f6bbf287788d87b3c3ef" title="Run the completion queue event loop.">CompletionQueue::Run()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00209">209</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00221">221</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -487,7 +521,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Enable tracing for <code>component</code> in clients configured with this object. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00119">119</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00118">118</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -518,7 +552,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>The endpoint used by clients configured with this object. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00087">87</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00086">86</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -551,7 +585,40 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>Some transports limit the number of simultaneous calls in progress on a channel (for gRPC the limit is 100). Increasing the number of channels thus increases the number of operations that can be in progress in parallel.</p>
 <p>The default value is set by <code>ConnectionTraits::default_num_channels()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00099">99</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00098">98</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a0bf89e3f7dd45c06bab45ab560d0513f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bf89e3f7dd45c06bab45ab560d0513f">&#9670;&nbsp;</a></span>set_background_thread_pool_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConnectionTraits &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html">ConnectionOptions</a>&amp; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html">google::cloud::v1::ConnectionOptions</a>&lt; ConnectionTraits &gt;::set_background_thread_pool_size </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the number of background threads. </p>
+<dl class="section note"><dt>Note</dt><dd>this value is not used if <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a8513daa27c205ff9511946386e75aad0" title="Configure the connection to use cq for all background work.">DisableBackgroundThreads()</a></code> is called. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00203">203</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -583,7 +650,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Set the value for <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac" title="Define the gRPC channel domain for clients configured with this object.">channel_pool_domain()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00155">155</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00154">154</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -615,7 +682,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Change the gRPC credentials value. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00059">59</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00058">58</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -649,7 +716,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>In almost all cases the default is the correct endpoint to use. Applications may need to be changed to (1) test against a fake or simulator, or (2) to use a beta or EAP version of the service.</p>
 <p>The default value is set by <code>ConnectionTraits::default_endpoint()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00081">81</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00080">80</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -681,7 +748,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Set the value for <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332" title="The number of transport channels to create.">num_channels()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00102">102</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00101">101</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -714,7 +781,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 <p>Return whether tracing is enabled for the given <code>component</code>. </p>
 <p>The C++ clients can log interesting events to help library and application developers troubleshoot problems. This flag returns true if tracing should be enabled by clients configured with this option. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00114">114</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00113">113</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -745,7 +812,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Return the options for use when tracing RPCs. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00131">131</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00130">130</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>
@@ -776,7 +843,7 @@ template&lt;typename ConnectionTraits &gt; </div>
 
 <p>Return the current value for the user agent string. </p>
 
-<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00175">175</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="connection__options_8h_source.html#l00174">174</a> of file <a class="el" href="connection__options_8h_source.html">connection_options.h</a>.</p>
 
 </div>
 </div>

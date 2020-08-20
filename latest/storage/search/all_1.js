@@ -1,6 +1,7 @@
 var searchData=
 [
   ['backendcount',['BackendCount',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a6bdc998062721aece514382850a8610a',1,'google::cloud::v1::LogSink']]],
+  ['background_5fthread_5fpool_5fsize',['background_thread_pool_size',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a7971d6e9593ce1669e7a09c75f71efed',1,'google::cloud::v1::ConnectionOptions']]],
   ['background_5fthreads_2eh',['background_threads.h',['https://googleapis.dev/google-cloud-common/master/background__threads_8h.html',1,'']]],
   ['background_5fthreads_5ffactory',['background_threads_factory',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a43284354d8c932382f45510f42788541',1,'google::cloud::v1::ConnectionOptions']]],
   ['backgroundthreads',['BackgroundThreads',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html',1,'google::cloud::v1']]],

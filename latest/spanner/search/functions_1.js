@@ -1,6 +1,7 @@
 var searchData=
 [
   ['backendcount',['BackendCount',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a6bdc998062721aece514382850a8610a',1,'google::cloud::v1::LogSink']]],
+  ['background_5fthread_5fpool_5fsize',['background_thread_pool_size',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a7971d6e9593ce1669e7a09c75f71efed',1,'google::cloud::v1::ConnectionOptions']]],
   ['background_5fthreads_5ffactory',['background_threads_factory',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a43284354d8c932382f45510f42788541',1,'google::cloud::v1::ConnectionOptions']]],
   ['backup',['Backup',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html#a337b7ab1d2240529115b97acd766a49e',1,'google::cloud::spanner::v1::Backup::Backup(Instance instance, std::string backup_id)'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html#a25fcc4c525a934f0080fcf7b66fae8ca',1,'google::cloud::spanner::v1::Backup::Backup(Backup const &amp;)=default'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html#a64e708669fd62f76a688cd575b23200a',1,'google::cloud::spanner::v1::Backup::Backup(Backup &amp;&amp;)=default']]],
   ['backup_5fid',['backup_id',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html#add2eb80befadfe503c9ae3905beeaa3c',1,'google::cloud::spanner::v1::Backup']]],
