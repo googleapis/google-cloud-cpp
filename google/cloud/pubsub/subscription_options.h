@@ -62,7 +62,7 @@ class SubscriptionOptions {
    * long as the number of outstanding callbacks is less than the high
    * watermark. Once the watermark is reached the client will not resume
    * scheduling callbacks until the number of outstanding callbacks is at or
-   * below the low watermark. Using hysteresis prevents and instability.
+   * below the low watermark. Using hysteresis prevents instability.
    *
    * Note that this controls the number of callbacks *scheduled*, not the number
    * of callbacks actually executing at a time. The application needs to create

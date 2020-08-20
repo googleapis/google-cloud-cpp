@@ -29,7 +29,11 @@ bool WatermarkFlowControl::MaybeAdmit(std::size_t size) {
 
 bool WatermarkFlowControl::Release(std::size_t size) {
   std::lock_guard<std::mutex> lk(mu_);
-  current_ -= size;
+  if (size < current_) {
+    current_ -= size;
+  } else {
+    current_ = 0;
+  }
   if (current_ <= lwm_) overflow_ = false;
   return !overflow_ && current_ < hwm_;
 }

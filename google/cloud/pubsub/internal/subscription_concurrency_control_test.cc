@@ -19,6 +19,11 @@
 #include "google/cloud/testing_util/mock_completion_queue.h"
 #include <gmock/gmock.h>
 #include <atomic>
+#include <condition_variable>
+#include <deque>
+#include <mutex>
+#include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -35,10 +40,8 @@ TEST(SubscriptionConcurrentControlTest, ScheduleParallelCallbacks) {
 
   std::mutex mu;
   int count = 0;
-  auto constexpr kBatchSize = 8;
   auto constexpr kTestHwm = 4;
-  static_assert(kBatchSize % kTestHwm == 0,
-                "batch size must be a multiple of hwm for this test");
+  auto constexpr kBatchSize = 2 * kTestHwm;
 
   auto generate = [&](google::cloud::CompletionQueue&,
                       std::unique_ptr<grpc::ClientContext>,
