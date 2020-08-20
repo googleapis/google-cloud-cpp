@@ -85,7 +85,8 @@ TEST(SubscriptionConcurrentControlTest, ScheduleParallelCallbacks) {
   auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
     std::lock_guard<std::mutex> lk(handlers_mu);
     handlers.push_back(std::move(h));
-    if (handlers.size() >= kTestHwm) handlers_cv.notify_one();
+    auto const m = static_cast<std::size_t>(kTestHwm);
+    if (handlers.size() >= m) handlers_cv.notify_one();
   };
 
   auto session = SubscriptionSession::Create(
@@ -102,7 +103,8 @@ TEST(SubscriptionConcurrentControlTest, ScheduleParallelCallbacks) {
   };
   for (auto i = 0; i != kBatchSize / kTestHwm; ++i) {
     std::unique_lock<std::mutex> lk(handlers_mu);
-    handlers_cv.wait(lk, [&] { return handlers.size() >= kTestHwm; });
+    auto const m = static_cast<std::size_t>(kTestHwm);
+    handlers_cv.wait(lk, [&] { return handlers.size() >= m; });
     ack_current(std::move(lk));
   }
 
