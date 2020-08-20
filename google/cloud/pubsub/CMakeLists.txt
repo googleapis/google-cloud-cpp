@@ -51,6 +51,8 @@ add_library(
     internal/subscription_session.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
+    internal/watermark_flow_control.cc
+    internal/watermark_flow_control.h
     message.cc
     message.h
     publisher.cc
@@ -73,6 +75,7 @@ add_library(
     subscription_admin_connection.h
     subscription_mutation_builder.cc
     subscription_mutation_builder.h
+    subscription_options.cc
     subscription_options.h
     topic.cc
     topic.h
@@ -161,8 +164,10 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
         internal/subscriber_logging_test.cc
+        internal/subscription_concurrency_control_test.cc
         internal/subscription_session_test.cc
         internal/user_agent_prefix_test.cc
+        internal/watermark_flow_control_test.cc
         message_test.cc
         publisher_connection_test.cc
         publisher_option_test.cc
@@ -174,6 +179,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         subscription_admin_client_test.cc
         subscription_admin_connection_test.cc
         subscription_mutation_builder_test.cc
+        subscription_options_test.cc
         subscription_test.cc
         topic_admin_client_test.cc
         topic_admin_connection_test.cc
