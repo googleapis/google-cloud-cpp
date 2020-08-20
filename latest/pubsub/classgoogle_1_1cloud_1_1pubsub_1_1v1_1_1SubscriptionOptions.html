@@ -90,6 +90,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a78f94d17d13fff644a416bfd0c09124f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html">SubscriptionOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#a78f94d17d13fff644a416bfd0c09124f">set_max_deadline_time</a> (std::chrono::seconds d)</td></tr>
 <tr class="memdesc:a78f94d17d13fff644a416bfd0c09124f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum deadline for incoming messages.  <a href="#a78f94d17d13fff644a416bfd0c09124f">More...</a><br /></td></tr>
 <tr class="separator:a78f94d17d13fff644a416bfd0c09124f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae318d01d73b994a1773022e78c1d1cee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html">SubscriptionOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#ae318d01d73b994a1773022e78c1d1cee">set_concurrency_watermarks</a> (std::size_t lwm, std::size_t hwm)</td></tr>
+<tr class="memdesc:ae318d01d73b994a1773022e78c1d1cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the high watermark and low watermarks for callback concurrency.  <a href="#ae318d01d73b994a1773022e78c1d1cee">More...</a><br /></td></tr>
+<tr class="separator:ae318d01d73b994a1773022e78c1d1cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a112e06f9296080a9d64e840fdacb0f74"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#a112e06f9296080a9d64e840fdacb0f74">concurrency_lwm</a> () const</td></tr>
+<tr class="separator:a112e06f9296080a9d64e840fdacb0f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d452cdade021e24b70a39692d69c3cb"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#a8d452cdade021e24b70a39692d69c3cb">concurrency_hwm</a> () const</td></tr>
+<tr class="separator:a8d452cdade021e24b70a39692d69c3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configure how a subscription handles incoming messages. </p>
@@ -122,6 +129,60 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8d452cdade021e24b70a39692d69c3cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d452cdade021e24b70a39692d69c3cb">&#9670;&nbsp;</a></span>concurrency_hwm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t google::cloud::pubsub::v1::SubscriptionOptions::concurrency_hwm </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__options_8h_source.html#l00088">88</a> of file <a class="el" href="subscription__options_8h_source.html">subscription_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a112e06f9296080a9d64e840fdacb0f74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a112e06f9296080a9d64e840fdacb0f74">&#9670;&nbsp;</a></span>concurrency_lwm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t google::cloud::pubsub::v1::SubscriptionOptions::concurrency_lwm </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__options_8h_source.html#l00087">87</a> of file <a class="el" href="subscription__options_8h_source.html">subscription_options.h</a>.</p>
+
+</div>
+</div>
 <a id="ac079e189fe7027f88b0fb39070613e22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac079e189fe7027f88b0fb39070613e22">&#9670;&nbsp;</a></span>max_deadline_time()</h2>
 
@@ -151,6 +212,49 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>The deadline applies to each message as it is delivered to the application, thus, if the library receives a batch of N messages their deadline for all the messages is extended repeatedly. Only once the message is delivered to a callback does the deadline become immutable. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="subscription__options_8h_source.html#l00048">48</a> of file <a class="el" href="subscription__options_8h_source.html">subscription_options.h</a>.</p>
+
+</div>
+</div>
+<a id="ae318d01d73b994a1773022e78c1d1cee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae318d01d73b994a1773022e78c1d1cee">&#9670;&nbsp;</a></span>set_concurrency_watermarks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html">SubscriptionOptions</a> &amp; google::cloud::pubsub::v1::SubscriptionOptions::set_concurrency_watermarks </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>lwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>hwm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the high watermark and low watermarks for callback concurrency. </p>
+<p>The Cloud Pub/Sub C++ client library will schedule parallel callbacks as long as the number of outstanding callbacks is less than the high watermark. Once the watermark is reached the client will not resume scheduling callbacks until the number of outstanding callbacks is at or below the low watermark. Using hysteresis prevents instability.</p>
+<p>Note that this controls the number of callbacks <em>scheduled</em>, not the number of callbacks actually executing at a time. The application needs to create (or configure) the background threads pool with enough parallelism to execute more than one callback at a time.</p>
+<p>Some applications many want to share a thread pool across many subscriptions, the additional level of control (scheduled vs. running callbacks) allows applications, for example, to ensure that at most <code>K</code> threads in the pool are used by any given subscription.</p>
+<dl class="section note"><dt>Note</dt><dd>applications that want to have a single outstanding callback can set these parameters to <code>lwm==0</code> and <code>hwm==1</code>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hwm</td><td>the high watermark, if this parameter is <code>0</code> the high watermark is set to <code>1</code>, to avoid starvation for the callbacks </td></tr>
+    <tr><td class="paramname">lwm</td><td>the low watermark, if this parameter greater than <code>hwm</code> then the low watermark is set to the same value as the high watermark </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="subscription__options_8cc_source.html#l00023">23</a> of file <a class="el" href="subscription__options_8cc_source.html">subscription_options.cc</a>.</p>
 
 </div>
 </div>
