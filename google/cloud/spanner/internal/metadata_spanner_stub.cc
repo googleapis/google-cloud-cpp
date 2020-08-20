@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
-#include "google/cloud/spanner/internal/api_client_header.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 
@@ -28,7 +28,7 @@ namespace spanner_proto = ::google::spanner::v1;
 MetadataSpannerStub::MetadataSpannerStub(std::shared_ptr<SpannerStub> child,
                                          std::string resource_prefix_header)
     : child_(std::move(child)),
-      api_client_header_(ApiClientHeader()),
+      api_client_header_(google::cloud::internal::ApiClientHeader()),
       resource_prefix_header_(std::move(resource_prefix_header)) {}
 
 StatusOr<spanner_proto::Session> MetadataSpannerStub::CreateSession(

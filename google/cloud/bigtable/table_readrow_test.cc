@@ -57,7 +57,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
                                 btproto::ReadRowsRequest const& req) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             bigtable::internal::ApiClientHeader()));
+                             google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -83,7 +83,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
                                 btproto::ReadRowsRequest const& req) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             bigtable::internal::ApiClientHeader()));
+                             google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -109,7 +109,7 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
                                 btproto::ReadRowsRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             bigtable::internal::ApiClientHeader()));
+                             google::cloud::internal::ApiClientHeader()));
         return stream.release()->AsUniqueMocked();
       });
 

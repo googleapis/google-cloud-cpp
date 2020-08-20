@@ -29,7 +29,6 @@ spanner_client_unit_tests = [
     "instance_admin_client_test.cc",
     "instance_admin_connection_test.cc",
     "instance_test.cc",
-    "internal/api_client_header_test.cc",
     "internal/clock_test.cc",
     "internal/connection_impl_test.cc",
     "internal/database_admin_logging_test.cc",

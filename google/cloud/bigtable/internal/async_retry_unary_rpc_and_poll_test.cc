@@ -89,7 +89,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
           EXPECT_STATUS_OK(IsContextMDValid(
               *context,
               "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster",
-              bigtable::internal::ApiClientHeader()));
+              google::cloud::internal::ApiClientHeader()));
           EXPECT_EQ("my_newly_created_cluster", request.cluster_id());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<
@@ -131,7 +131,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
                          grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(IsContextMDValid(
               *context, "google.longrunning.Operations.GetOperation",
-              bigtable::internal::ApiClientHeader()));
+              google::cloud::internal::ApiClientHeader()));
           EXPECT_EQ("create_cluster_op_1", request.name());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<

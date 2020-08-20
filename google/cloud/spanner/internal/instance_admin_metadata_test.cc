@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
-#include "google/cloud/spanner/internal/api_client_header.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -35,7 +35,7 @@ class InstanceAdminMetadataTest : public ::testing::Test {
   void SetUp() override {
     mock_ = std::make_shared<spanner_testing::MockInstanceAdminStub>();
     InstanceAdminMetadata stub(mock_);
-    expected_api_client_header_ = ApiClientHeader();
+    expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
   }
 
   void TearDown() override {}

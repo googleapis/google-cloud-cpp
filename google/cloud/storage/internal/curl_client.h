@@ -215,6 +215,7 @@ class CurlClient : public RawClient,
   CreateResumableSessionGeneric(RequestType const& request);
 
   ClientOptions options_;
+  std::string const x_goog_api_client_header_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;
   std::string xml_upload_endpoint_;

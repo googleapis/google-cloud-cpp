@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/api_client_header.h"
 
 namespace google {
 namespace cloud {
