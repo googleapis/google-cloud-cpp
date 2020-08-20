@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -34,6 +35,7 @@ namespace {
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
@@ -72,8 +74,9 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
                       grpc::ClientContext* context,
                       btproto::ReadRowsRequest const& r,
                       grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-              *context, "google.bigtable.v2.Bigtable.ReadRows"));
+          EXPECT_STATUS_OK(
+              IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
+                               bigtable::internal::ApiClientHeader()));
           (*request_expectations_ptr)(r);
           return std::unique_ptr<
               MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(

@@ -16,8 +16,8 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/api_client_header.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
-#include "google/cloud/spanner/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +27,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -63,9 +64,9 @@ class MetadataSpannerStubTest : public ::testing::Test {
                      MemberFunction member_function) {
     call.WillOnce(
         [this, rpc_name](grpc::ClientContext& context, Request const&) {
-          EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-              context, "google.spanner.v1.Spanner." + rpc_name,
-              expected_api_client_header_, db_.FullName()));
+          EXPECT_STATUS_OK(
+              IsContextMDValid(context, "google.spanner.v1.Spanner." + rpc_name,
+                               expected_api_client_header_, db_.FullName()));
           return TransientError();
         });
 
@@ -90,9 +91,9 @@ TEST_F(MetadataSpannerStubTest, CreateSession) {
   EXPECT_CALL(*mock_, CreateSession(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::CreateSessionRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context, "google.spanner.v1.Spanner.CreateSession",
-            expected_api_client_header_, db_.FullName()));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context, "google.spanner.v1.Spanner.CreateSession",
+                             expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -108,7 +109,7 @@ TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
   EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::BatchCreateSessionsRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.spanner.v1.Spanner.BatchCreateSessions",
             expected_api_client_header_, db_.FullName()));
         return TransientError();
@@ -127,9 +128,9 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
   EXPECT_CALL(*mock_, GetSession(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::GetSessionRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context, "google.spanner.v1.Spanner.GetSession",
-            expected_api_client_header_, db_.FullName()));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context, "google.spanner.v1.Spanner.GetSession",
+                             expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -149,9 +150,9 @@ TEST_F(MetadataSpannerStubTest, ListSessions) {
   EXPECT_CALL(*mock_, ListSessions(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ListSessionsRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context, "google.spanner.v1.Spanner.ListSessions",
-            expected_api_client_header_, db_.FullName()));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context, "google.spanner.v1.Spanner.ListSessions",
+                             expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -167,9 +168,9 @@ TEST_F(MetadataSpannerStubTest, DeleteSession) {
   EXPECT_CALL(*mock_, DeleteSession(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::DeleteSessionRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context, "google.spanner.v1.Spanner.DeleteSession",
-            expected_api_client_header_, db_.FullName()));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context, "google.spanner.v1.Spanner.DeleteSession",
+                             expected_api_client_header_, db_.FullName()));
         return TransientError();
       });
 
@@ -193,7 +194,7 @@ TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
   EXPECT_CALL(*mock_, ExecuteStreamingSql(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ExecuteSqlRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.spanner.v1.Spanner.ExecuteStreamingSql",
             expected_api_client_header_, db_.FullName()));
         return std::unique_ptr<
@@ -220,9 +221,9 @@ TEST_F(MetadataSpannerStubTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ReadRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context, "google.spanner.v1.Spanner.StreamingRead",
-            expected_api_client_header_, db_.FullName()));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context, "google.spanner.v1.Spanner.StreamingRead",
+                             expected_api_client_header_, db_.FullName()));
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
       });

@@ -14,13 +14,14 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -32,6 +33,7 @@ namespace {
 
 namespace btadmin = google::bigtable::admin::v2;
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
@@ -107,9 +109,10 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -136,9 +139,10 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -147,9 +151,10 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -158,9 +163,10 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_EQ("token_2", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -206,9 +212,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -217,9 +224,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -228,9 +236,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
-        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles"));
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListAppProfiles",
+            bigtable::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<

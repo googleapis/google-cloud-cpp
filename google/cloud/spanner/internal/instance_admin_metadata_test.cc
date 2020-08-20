@@ -15,8 +15,8 @@
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
 #include "google/cloud/spanner/internal/api_client_header.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
-#include "google/cloud/spanner/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,6 +26,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 namespace gcsa = ::google::spanner::admin::instance::v1;
 
@@ -51,11 +52,11 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
   EXPECT_CALL(*mock_, GetInstance(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::GetInstanceRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "GetInstance",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "GetInstance",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -73,11 +74,11 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
   EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::GetInstanceConfigRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "GetInstanceConfig",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "GetInstanceConfig",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -95,11 +96,11 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
   EXPECT_CALL(*mock_, ListInstanceConfigs(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListInstanceConfigsRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "ListInstanceConfigs",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "ListInstanceConfigs",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -115,11 +116,11 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   EXPECT_CALL(*mock_, CreateInstance(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::CreateInstanceRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "CreateInstance",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "CreateInstance",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -136,11 +137,11 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
   EXPECT_CALL(*mock_, UpdateInstance(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::UpdateInstanceRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "UpdateInstance",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "UpdateInstance",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -157,11 +158,11 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
   EXPECT_CALL(*mock_, DeleteInstance(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::DeleteInstanceRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "DeleteInstance",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "DeleteInstance",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -177,11 +178,11 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListInstancesRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "ListInstances",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "ListInstances",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -197,11 +198,11 @@ TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "GetIamPolicy",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "GetIamPolicy",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -218,11 +219,11 @@ TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "SetIamPolicy",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "SetIamPolicy",
+                             expected_api_client_header_));
         return TransientError();
       });
 
@@ -238,11 +239,11 @@ TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::TestIamPermissionsRequest const&) {
-        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-            context,
-            "google.spanner.admin.instance.v1.InstanceAdmin."
-            "TestIamPermissions",
-            expected_api_client_header_));
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.spanner.admin.instance.v1.InstanceAdmin."
+                             "TestIamPermissions",
+                             expected_api_client_header_));
         return TransientError();
       });
 

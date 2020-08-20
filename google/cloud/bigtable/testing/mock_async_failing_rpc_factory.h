@@ -15,9 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_ASYNC_FAILING_RPC_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_ASYNC_FAILING_RPC_FACTORY_H
 
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
-#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <grpcpp/support/async_unary_call.h>
@@ -56,7 +57,8 @@ struct MockAsyncFailingRpcFactory {
                                             RequestType const& request,
                                             grpc::CompletionQueue*) {
       using ::testing::_;
-      EXPECT_STATUS_OK(IsContextMDValid(*context, method));
+      EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+          *context, method, bigtable::internal::ApiClientHeader()));
       RequestType expected;
       // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
       EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(

@@ -228,9 +228,7 @@ function (spanner_client_define_tests)
         testing/random_database_name.cc
         testing/random_database_name.h
         testing/random_instance_name.cc
-        testing/random_instance_name.h
-        testing/validate_metadata.cc
-        testing/validate_metadata.h)
+        testing/random_instance_name.h)
     target_link_libraries(
         spanner_client_testing
         PUBLIC spanner_client_mocks googleapis-c++::spanner_client

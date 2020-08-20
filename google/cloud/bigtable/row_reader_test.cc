@@ -13,18 +13,22 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <initializer_list>
 
+using ::google::bigtable::v2::ReadRowsRequest;
+using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::DoAll;
@@ -35,9 +39,6 @@ using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::SetArgPointee;
-
-using google::bigtable::v2::ReadRowsRequest;
-using google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 namespace bigtable = google::cloud::bigtable;
 using bigtable::Row;
@@ -224,8 +225,9 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
     EXPECT_CALL(*client_, ReadRows(_, _))
         .WillOnce([expected_id, &stream](grpc::ClientContext* context,
                                          ReadRowsRequest const& req) {
-          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-              *context, "google.bigtable.v2.Bigtable.ReadRows"));
+          EXPECT_STATUS_OK(
+              IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
+                               bigtable::internal::ApiClientHeader()));
           EXPECT_EQ(expected_id, req.app_profile_id());
           return stream->AsUniqueMocked();
         });

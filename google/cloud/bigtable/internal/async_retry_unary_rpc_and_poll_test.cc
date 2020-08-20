@@ -35,6 +35,7 @@ namespace internal {
 namespace {
 
 namespace btproto = google::bigtable::admin::v2;
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using MockAsyncLongrunningOpReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
@@ -85,9 +86,10 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         .WillOnce([this](grpc::ClientContext* context,
                          btproto::CreateClusterRequest const& request,
                          grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+          EXPECT_STATUS_OK(IsContextMDValid(
               *context,
-              "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster"));
+              "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster",
+              bigtable::internal::ApiClientHeader()));
           EXPECT_EQ("my_newly_created_cluster", request.cluster_id());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<
@@ -127,8 +129,9 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         .WillOnce([this](grpc::ClientContext* context,
                          longrunning::GetOperationRequest const& request,
                          grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
-              *context, "google.longrunning.Operations.GetOperation"));
+          EXPECT_STATUS_OK(IsContextMDValid(
+              *context, "google.longrunning.Operations.GetOperation",
+              bigtable::internal::ApiClientHeader()));
           EXPECT_EQ("create_cluster_op_1", request.name());
           // This is safe, see comments in MockAsyncResponseReader.
           return std::unique_ptr<

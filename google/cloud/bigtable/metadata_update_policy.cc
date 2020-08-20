@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/compiler_info.h"
-#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -40,18 +39,9 @@ MetadataParamTypes const MetadataParamTypes::BACKUP_NAME("backup.name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string const& resource_name,
-    MetadataParamTypes const& metadata_param_type) {
-  std::string value = metadata_param_type.type();
-  value += "=";
-  value += resource_name;
-  value_ = std::move(value);
-  std::string api_client_header =
-      "gl-cpp/" + google::cloud::internal::CompilerId() + "-" +
-      google::cloud::internal::CompilerVersion() + "-" +
-      google::cloud::internal::CompilerFeatures() + "-" +
-      google::cloud::internal::LanguageVersion() + " gccl/" + version_string();
-  api_client_header_ = std::move(api_client_header);
-}
+    MetadataParamTypes const& metadata_param_type)
+    : value_(metadata_param_type.type() + '=' + resource_name),
+      api_client_header_(internal::ApiClientHeader()) {}
 
 void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-request-params"), value());
