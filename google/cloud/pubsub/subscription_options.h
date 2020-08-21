@@ -74,6 +74,9 @@ class SubscriptionOptions {
    * callbacks) allows applications, for example, to ensure that at most `K`
    * threads in the pool are used by any given subscription.
    *
+   * @par Example
+   * @snippet samples.cc subscriber-concurrency
+   *
    * @note applications that want to have a single outstanding callback can set
    *     these parameters to `lwm==0` and `hwm==1`.
    *
