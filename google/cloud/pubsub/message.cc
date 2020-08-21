@@ -44,5 +44,23 @@ std::ostream& operator<<(std::ostream& os, Message const& rhs) {
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+std::size_t MessageSize(pubsub::Message const& m) {
+  // see https://cloud.google.com/pubsub/pricing
+  auto constexpr kTimestampOverhead = 20;
+  std::size_t s = kTimestampOverhead + m.data().size();
+  s += m.message_id().size();
+  s += m.ordering_key().size();
+  for (auto const& kv : m.attributes()) {
+    s += kv.first.size() + kv.second.size();
+  }
+  return s;
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

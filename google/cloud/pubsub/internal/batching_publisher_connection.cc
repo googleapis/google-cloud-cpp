@@ -82,10 +82,11 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
     FlushImpl(std::move(lk));
     return;
   }
-  // TODO(#4809) - use the same size algorithm as the pricing page
-  auto const bytes = std::accumulate(
-      pending_.begin(), pending_.end(), std::size_t{0},
-      [](std::size_t a, Item const& b) { return a + b.message.data().size(); });
+  auto const bytes =
+      std::accumulate(pending_.begin(), pending_.end(), std::size_t{0},
+                      [](std::size_t a, Item const& b) {
+                        return a + pubsub_internal::MessageSize(b.message);
+                      });
   if (bytes >= options_.maximum_batch_bytes()) {
     FlushImpl(std::move(lk));
     return;

@@ -205,6 +205,34 @@ TEST(Message, OutputStream) {
   EXPECT_THAT(actual, HasSubstr("v1"));
 }
 
+TEST(Message, SizeEstimation) {
+  // https://cloud.google.com/pubsub/pricing
+  auto constexpr kMessageSizeOverhead = 20;
+  EXPECT_EQ(kMessageSizeOverhead,
+            pubsub_internal::MessageSize(MessageBuilder{}.SetData("").Build()));
+  EXPECT_EQ(
+      kMessageSizeOverhead + 4,
+      pubsub_internal::MessageSize(MessageBuilder{}.SetData("1234").Build()));
+  EXPECT_EQ(kMessageSizeOverhead + 4 + (2 + 5) + (2 + 5),
+            pubsub_internal::MessageSize(
+                MessageBuilder{}
+                    .SetData("1234")
+                    .SetAttributes({{"k0", "12345"}, {"k1", "12345"}})
+                    .Build()));
+
+  auto constexpr kText = R"pb(
+    data: "1234"
+    attributes: { key: "k0" value: "12345" }
+    attributes: { key: "k1" value: "12345" }
+    message_id: "0123456789"
+    ordering_key: "abcd"
+  )pb";
+  ::google::pubsub::v1::PubsubMessage expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
+  EXPECT_EQ(kMessageSizeOverhead + 4 + (2 + 5) + (2 + 5) + 10 + 4,
+            pubsub_internal::MessageSize(pubsub_internal::FromProto(expected)));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

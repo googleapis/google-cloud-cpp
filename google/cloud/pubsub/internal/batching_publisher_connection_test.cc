@@ -153,7 +153,10 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto constexpr kMaxMessageBytes = sizeof("test-data-N") + 2;
+  // see https://cloud.google.com/pubsub/pricing
+  auto constexpr kMessageSizeOverhead = 20;
+  auto constexpr kMaxMessageBytes =
+      sizeof("test-data-N") + kMessageSizeOverhead + 2;
   // Use our own completion queue, initially inactive, to avoid race conditions
   // due to the zero-maximum-hold-time timer expiring.
   google::cloud::CompletionQueue cq;
