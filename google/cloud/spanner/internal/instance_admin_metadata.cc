@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
-#include "google/cloud/spanner/internal/api_client_header.h"
+#include "google/cloud/internal/api_client_header.h"
 
 namespace google {
 namespace cloud {
@@ -25,7 +25,8 @@ namespace gcsa = ::google::spanner::admin::instance::v1;
 
 InstanceAdminMetadata::InstanceAdminMetadata(
     std::shared_ptr<InstanceAdminStub> child)
-    : child_(std::move(child)), api_client_header_(ApiClientHeader()) {}
+    : child_(std::move(child)),
+      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
 StatusOr<gcsa::Instance> InstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context, gcsa::GetInstanceRequest const& request) {

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -227,7 +227,7 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
                                          ReadRowsRequest const& req) {
           EXPECT_STATUS_OK(
               IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                               bigtable::internal::ApiClientHeader()));
+                               google::cloud::internal::ApiClientHeader()));
           EXPECT_EQ(expected_id, req.app_profile_id());
           return stream->AsUniqueMocked();
         });

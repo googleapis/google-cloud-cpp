@@ -101,7 +101,7 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
   builder.SetMethod(method)
       .ApplyClientOptions(options_)
       .AddHeader(auth_header.value())
-      .AddHeader("x-goog-api-client: " + x_goog_api_client());
+      .AddHeader(x_goog_api_client_header_);
   return Status();
 }
 
@@ -227,6 +227,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
+      x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),

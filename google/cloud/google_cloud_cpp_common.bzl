@@ -24,6 +24,7 @@ google_cloud_cpp_common_hdrs = [
     "iam_binding.h",
     "iam_bindings.h",
     "iam_policy.h",
+    "internal/api_client_header.h",
     "internal/backoff_policy.h",
     "internal/big_endian.h",
     "internal/build_info.h",
@@ -65,6 +66,7 @@ google_cloud_cpp_common_hdrs = [
 google_cloud_cpp_common_srcs = [
     "iam_bindings.cc",
     "iam_policy.cc",
+    "internal/api_client_header.cc",
     "internal/backoff_policy.cc",
     "internal/compiler_info.cc",
     "internal/filesystem.cc",

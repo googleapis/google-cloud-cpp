@@ -112,6 +112,8 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    internal/api_client_header.cc
+    internal/api_client_header.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
     internal/big_endian.h
@@ -223,6 +225,7 @@ if (BUILD_TESTING)
         future_void_test.cc
         future_void_then_test.cc
         iam_bindings_test.cc
+        internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc

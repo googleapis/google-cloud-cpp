@@ -99,8 +99,6 @@ add_library(
     instance_list_responses.h
     instance_update_config.cc
     instance_update_config.h
-    internal/api_client_header.cc
-    internal/api_client_header.h
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_longrunning_op.h

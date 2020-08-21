@@ -14,10 +14,10 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
@@ -114,7 +114,7 @@ TEST_F(AsyncListInstancesTest, Simple) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -147,7 +147,7 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -160,7 +160,7 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -173,7 +173,7 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ("token_2", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -230,7 +230,7 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -243,7 +243,7 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -256,7 +256,7 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<

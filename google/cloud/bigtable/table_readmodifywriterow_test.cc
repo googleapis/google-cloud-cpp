@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -39,7 +39,7 @@ auto create_rules_lambda = [](std::string const& expected_request_string,
              btproto::ReadModifyWriteRowResponse* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-        bigtable::internal::ApiClientHeader()));
+        google::cloud::internal::ApiClientHeader()));
     btproto::ReadModifyWriteRowRequest expected_request;
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         expected_request_string, &expected_request));
@@ -270,7 +270,7 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
                          google::bigtable::v2::ReadModifyWriteRowResponse*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-            bigtable::internal::ApiClientHeader()));
+            google::cloud::internal::ApiClientHeader()));
         return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
       });
 

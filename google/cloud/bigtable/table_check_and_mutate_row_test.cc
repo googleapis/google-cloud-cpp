@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/api_client_header.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -36,7 +36,7 @@ auto mock_check_and_mutate = [](grpc::Status const& status) {
                   google::bigtable::v2::CheckAndMutateRowResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow",
-        bigtable::internal::ApiClientHeader()));
+        google::cloud::internal::ApiClientHeader()));
     return status;
   };
 };

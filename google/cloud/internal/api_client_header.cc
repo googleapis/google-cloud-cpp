@@ -12,33 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/api_client_header.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/compiler_info.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-namespace {
 
-using ::testing::HasSubstr;
-
-TEST(ApiClientHeaderTest, Basic) {
-  auto actual = ApiClientHeader();
-
-  EXPECT_THAT(actual, HasSubstr("gccl/" + VersionString()));
-  EXPECT_THAT(actual,
-              HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
-                        "-" + google::cloud::internal::CompilerVersion() + "-" +
-                        google::cloud::internal::CompilerFeatures() + "-" +
-                        google::cloud::internal::LanguageVersion()));
+std::string ApiClientHeader() {
+  return "gl-cpp/" + google::cloud::internal::CompilerId() + "-" +
+         google::cloud::internal::CompilerVersion() + "-" +
+         google::cloud::internal::CompilerFeatures() + "-" +
+         google::cloud::internal::LanguageVersion() + " gccl/" +
+         version_string();
 }
 
-}  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

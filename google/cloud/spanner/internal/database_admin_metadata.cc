@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
-#include "google/cloud/spanner/internal/api_client_header.h"
+#include "google/cloud/internal/api_client_header.h"
 
 namespace google {
 namespace cloud {
@@ -25,7 +25,8 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 
 DatabaseAdminMetadata::DatabaseAdminMetadata(
     std::shared_ptr<DatabaseAdminStub> child)
-    : child_(std::move(child)), api_client_header_(ApiClientHeader()) {}
+    : child_(std::move(child)),
+      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::CreateDatabase(
     grpc::ClientContext& context, gcsa::CreateDatabaseRequest const& request) {
