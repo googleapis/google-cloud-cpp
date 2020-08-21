@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -160,6 +161,7 @@ class SubscriptionAdminConnectionImpl
 std::shared_ptr<pubsub::SubscriptionAdminConnection>
 MakeSubscriptionAdminConnection(pubsub::ConnectionOptions const& options,
                                 std::shared_ptr<SubscriberStub> stub) {
+  stub = std::make_shared<SubscriberMetadata>(std::move(stub));
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(

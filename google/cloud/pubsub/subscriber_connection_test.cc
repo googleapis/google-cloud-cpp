@@ -14,8 +14,10 @@
 
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <atomic>
 
@@ -25,6 +27,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Contains;
@@ -175,6 +178,55 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncPull")));
   EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncAcknowledge")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+/// @test Verify the metadata decorator is configured
+TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, AsyncPull)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext> context,
+                          google::pubsub::v1::PullRequest const&) {
+        EXPECT_STATUS_OK(
+            IsContextMDValid(*context, "google.pubsub.v1.Subscriber.Pull",
+                             google::cloud::internal::ApiClientHeader()));
+        google::pubsub::v1::PullResponse response;
+        auto& m = *response.add_received_messages();
+        m.set_ack_id("test-ack-id-0");
+        m.mutable_message()->set_message_id("test-message-id-0");
+        return make_ready_future(make_status_or(response));
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(1))
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
+      });
+  // Depending on timing this might be called, but it is very rare.
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  std::atomic_flag received_one{false};
+  promise<void> waiter;
+  auto handler = [&](Message const&, AckHandler h) {
+    std::move(h).ack();
+    if (received_one.test_and_set()) return;
+    waiter.set_value();
+  };
+  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  waiter.get_future().wait();
+  response.cancel();
+  ASSERT_STATUS_OK(response.get());
 }
 
 }  // namespace
