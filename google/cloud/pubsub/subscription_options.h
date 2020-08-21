@@ -54,7 +54,56 @@ class SubscriptionOptions {
     return *this;
   }
 
-  // TODO(#4645) - add options for flow control
+  /**
+   * Set the parameters for message-count-based flow control.
+   *
+   * The Cloud Pub/Sub C++ client library will pull more messages from a
+   * subscription as long as the number of pending messages (that is received,
+   * but not fully processed is less than the high watermark (@p hwm). Once the
+   * @p hwm value is reached the client will not pull more messages until the
+   * number of pending messages is at or below the low watermark (@p lwm).
+   *
+   * @par Example
+   * TODO(#4644) - add a working example of this setting.
+   *
+   * @note applications that want to have a single pull request at a time, can
+   *     set these parameters to `lwm==0` and `hwm==1`.
+   *
+   * @param hwm the high watermark, if this parameter is `0` the high watermark
+   *     is set to `1`, to avoid starvation
+   * @param lwm the low watermark, if this parameter greater than @p hwm then
+   *    the low watermark is set to the same value as the high watermark
+   */
+  SubscriptionOptions& set_message_count_watermarks(std::size_t lwm,
+                                                    std::size_t hwm);
+  std::size_t message_count_lwm() const { return message_count_lwm_; }
+  std::size_t message_count_hwm() const { return message_count_hwm_; }
+
+  /**
+   * Set the parameters for message-size-based flow control.
+   *
+   * The Cloud Pub/Sub C++ client library will pull more messages from a
+   * subscription as long as the total size of the pending messages (that is
+   * received, but not fully processed is less than the high watermark (@p hwm).
+   * Once the @p hwm value is reached the client will not pull more messages
+   * until the total size of the pending messages is at or below the low
+   * watermark (@p lwm).
+   *
+   * @par Example
+   * TODO(#4644) - add a working example of this setting.
+   *
+   * @note applications that want to have a single pull request at a time, can
+   *     set these parameters to `lwm==0` and `hwm==1`.
+   *
+   * @param hwm the high watermark, if this parameter is `0` the high watermark
+   *     is set to `1`, to avoid starvation
+   * @param lwm the low watermark, if this parameter greater than @p hwm then
+   *    the low watermark is set to the same value as the high watermark
+   */
+  SubscriptionOptions& set_message_size_watermarks(std::size_t lwm,
+                                                   std::size_t hwm);
+  std::size_t message_size_lwm() const { return message_size_lwm_; }
+  std::size_t message_size_hwm() const { return message_size_hwm_; }
 
   /**
    * Set the high watermark and low watermarks for callback concurrency.
@@ -99,6 +148,10 @@ class SubscriptionOptions {
   }
 
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
+  std::size_t message_count_lwm_ = 0;
+  std::size_t message_count_hwm_ = 1000;
+  std::size_t message_size_lwm_ = 0;
+  std::size_t message_size_hwm_ = 100 * 1024 * 1024L;
   std::size_t concurrency_lwm_ = 0;
   std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
 };
