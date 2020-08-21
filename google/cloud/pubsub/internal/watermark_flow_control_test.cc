@@ -21,22 +21,41 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-TEST(WatermarkFlowControlTest, Single) {
-  WatermarkFlowControl control(0, 1);
-  EXPECT_TRUE(control.MaybeAdmit(1));
-  EXPECT_FALSE(control.MaybeAdmit(1));
-  EXPECT_FALSE(control.MaybeAdmit(1));
-  EXPECT_FALSE(control.MaybeAdmit(1));
-  EXPECT_TRUE(control.Release(1));
-  EXPECT_TRUE(control.MaybeAdmit(1));
-  EXPECT_TRUE(control.Release(1));
-  EXPECT_TRUE(control.MaybeAdmit(1));
-  EXPECT_TRUE(control.Release(1));
-  EXPECT_TRUE(control.MaybeAdmit(1));
+TEST(WatermarkFlowControlCountOnlyTest, Single) {
+  WatermarkFlowControlCountOnly control(0, 1);
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+  EXPECT_TRUE(control.Release());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.Release());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.Release());
+  EXPECT_TRUE(control.MaybeAdmit());
 }
 
-TEST(WatermarkFlowControlTest, Basic) {
-  WatermarkFlowControl control(2, 4);
+TEST(WatermarkFlowControlCountOnlyTest, Basic) {
+  WatermarkFlowControlCountOnly control(2, 4);
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+
+  EXPECT_FALSE(control.Release());
+  EXPECT_TRUE(control.Release());
+  EXPECT_TRUE(control.Release());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_TRUE(control.MaybeAdmit());
+  EXPECT_FALSE(control.MaybeAdmit());
+}
+
+TEST(WatermarkFlowControlTest, CountLimited) {
+  WatermarkFlowControl control(2, 4, 200, 400);
   EXPECT_TRUE(control.MaybeAdmit(1));
   EXPECT_TRUE(control.MaybeAdmit(1));
   EXPECT_TRUE(control.MaybeAdmit(1));
@@ -54,8 +73,8 @@ TEST(WatermarkFlowControlTest, Basic) {
   EXPECT_FALSE(control.MaybeAdmit(1));
 }
 
-TEST(WatermarkFlowControlTest, Sized) {
-  WatermarkFlowControl control(200, 400);
+TEST(WatermarkFlowControlTest, SizeLimited) {
+  WatermarkFlowControl control(2, 4, 200, 400);
   EXPECT_TRUE(control.MaybeAdmit(100));
   EXPECT_TRUE(control.MaybeAdmit(100));
   EXPECT_TRUE(control.MaybeAdmit(100));

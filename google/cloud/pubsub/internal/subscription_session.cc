@@ -147,7 +147,7 @@ void SubscriptionSession::MessageHandled(std::string const& ack_id,
   if (shutdown_manager_.FinishedOperation("callback")) return;
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
-  if (!callback_flow_control_.Release(1)) return;
+  if (!callback_flow_control_.Release()) return;
   auto self = shared_from_this();
   // After the callback re-schedule ourselves.
   shutdown_manager_.StartAsyncOperation(__func__, "HandleQueue", executor_,
@@ -237,7 +237,7 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
     return;
   }
 
-  while (!messages_.empty() && callback_flow_control_.MaybeAdmit(1)) {
+  while (!messages_.empty() && callback_flow_control_.MaybeAdmit()) {
     auto m = std::move(messages_.front());
     messages_.pop_front();
 

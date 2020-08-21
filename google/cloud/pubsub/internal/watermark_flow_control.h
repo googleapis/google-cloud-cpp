@@ -30,8 +30,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class WatermarkFlowControl {
  public:
-  WatermarkFlowControl(std::size_t lwm, std::size_t hwm)
-      : lwm_(lwm), hwm_(hwm) {}
+  WatermarkFlowControl(std::size_t count_lwm, std::size_t count_hwm,
+                       std::size_t size_lwm, std::size_t size_hwm)
+      : count_lwm_(count_lwm),
+        count_hwm_(count_hwm),
+        size_lwm_(size_lwm),
+        size_hwm_(size_hwm) {}
 
   /// Admit some work if there is capacity, returns true if admitted.
   bool MaybeAdmit(std::size_t size);
@@ -40,11 +44,42 @@ class WatermarkFlowControl {
   bool Release(std::size_t size);
 
  private:
-  std::size_t const lwm_;
-  std::size_t const hwm_;
+  bool IsFull() const {
+    return current_count_ >= count_hwm_ || current_size_ >= size_hwm_;
+  }
+
+  bool HasCapacity() const {
+    return current_count_ <= count_lwm_ && current_size_ <= size_lwm_;
+  }
+
+  std::size_t const count_lwm_;
+  std::size_t const count_hwm_;
+  std::size_t const size_lwm_;
+  std::size_t const size_hwm_;
   std::mutex mu_;
-  std::size_t current_ = 0;
+  std::size_t current_count_ = 0;
+  std::size_t current_size_ = 0;
   bool overflow_ = false;
+};
+
+/**
+ * Implement a simple admission control check.
+ *
+ * This class is used in the implementation of flow control
+ */
+class WatermarkFlowControlCountOnly {
+ public:
+  WatermarkFlowControlCountOnly(std::size_t count_lwm, std::size_t count_hwm)
+      : flow_control_(count_lwm, count_hwm, count_lwm, count_hwm) {}
+
+  /// Admit some work if there is capacity, returns true if admitted.
+  bool MaybeAdmit() { return flow_control_.MaybeAdmit(1); }
+
+  /// Release some work, returns true if more work can be scheduled.
+  bool Release() { return flow_control_.Release(1); }
+
+ private:
+  WatermarkFlowControl flow_control_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
