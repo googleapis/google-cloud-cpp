@@ -16,9 +16,11 @@
 #include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/topic.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +29,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -39,6 +42,31 @@ TEST(SubscriptionAdminConnectionTest, Create) {
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::Subscription const& request) {
+        EXPECT_EQ(subscription.FullName(), request.name());
+        return make_status_or(request);
+      });
+
+  auto subscription_admin =
+      pubsub_internal::MakeSubscriptionAdminConnection({}, mock);
+  google::pubsub::v1::Subscription expected;
+  expected.set_topic("test-topic-name");
+  expected.set_name(subscription.FullName());
+  auto response = subscription_admin->CreateSubscription({expected});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
+/// @test Verify the metadata decorator is configured by default
+TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  Subscription const subscription("test-project", "test-subscription");
+
+  EXPECT_CALL(*mock, CreateSubscription)
+      .WillOnce([&](grpc::ClientContext& context,
+                    google::pubsub::v1::Subscription const& request) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.pubsub.v1.Subscriber.CreateSubscription",
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ(subscription.FullName(), request.name());
         return make_status_or(request);
       });
