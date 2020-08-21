@@ -771,6 +771,59 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "subscriber-concurrency-control <project-id> <topic-id>"};
+  }
+
+  //! [START pubsub_subscriber_concurrency_control] [subscriber-concurrency]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string subscription_id) {
+    // Create a subscriber with 16 threads handling I/O work
+    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
+    auto subscription =
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
+
+    std::mutex mu;
+    std::condition_variable cv;
+    int count = 0;
+    auto constexpr kExpectedMessageCount = 4;
+    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+      // This handler executes in the I/O threads, applications could use,
+      // std::async(), a thread-pool,
+      // google::cloud::CompletionQueue::RunAsync(), or any other mechanism to
+      // transfer the execution to other threads.
+      std::cout << "Received message " << m << "\n";
+      std::move(h).ack();
+      {
+        std::lock_guard<std::mutex> lk(mu);
+        if (++count < kExpectedMessageCount) return;
+      }
+      cv.notify_one();
+    };
+
+    // Create a subscription where up to 8 messages are handled concurrently.
+    auto session = subscriber.Subscribe(
+        subscription, std::move(handler),
+        pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
+            /*lwm=*/4, /*hwm=*/8));
+    {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
+    }
+    session.cancel();
+    auto status = session.get();
+    std::cout << "Message count: " << count << ", status: " << status << "\n";
+  }
+  //! [END pubsub_subscriber_concurrency_control] [subscriber-concurrency]
+  (argv.at(0), argv.at(1));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -908,6 +961,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
   SubscribeCustomAttributes(subscriber, subscription, {});
 
+  std::cout << "\nRunning Publish() sample [3]" << std::endl;
+  Publish(publisher, {});
+
+  std::cout << "\nRunning SubscriberConcurrencyControl() sample" << std::endl;
+  SubscriberConcurrencyControl({project_id, subscription_id});
+
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
 
@@ -994,6 +1053,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
+      {"subscriber-concurrency-control", SubscriberConcurrencyControl},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
