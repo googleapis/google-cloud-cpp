@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/version.h"
 #include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -91,9 +92,15 @@ class SubscriptionOptions {
   std::size_t concurrency_hwm() const { return concurrency_hwm_; }
 
  private:
+  static std::size_t DefaultConcurrencyHwm() {
+    auto constexpr kDefaultHwm = 4;
+    auto const n = std::thread::hardware_concurrency();
+    return n == 0 ? kDefaultHwm : n;
+  }
+
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
   std::size_t concurrency_lwm_ = 0;
-  std::size_t concurrency_hwm_ = 1;
+  std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
