@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
+#include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -66,6 +67,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
     pubsub::ConnectionOptions const& connection_options,
     std::shared_ptr<PublisherStub> stub) {
+  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
   if (connection_options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(

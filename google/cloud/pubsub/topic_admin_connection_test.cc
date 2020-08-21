@@ -15,9 +15,11 @@
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -41,6 +43,27 @@ TEST(TopicAdminConnectionTest, Create) {
             EXPECT_EQ(topic.FullName(), request.name());
             return make_status_or(request);
           });
+
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
+  auto response = topic_admin->CreateTopic({expected});
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(expected));
+}
+
+/// @test verify the metadata decorator is automatically configured.
+TEST(TopicAdminConnectionTest, Metadata) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, CreateTopic)
+      .WillOnce([&](grpc::ClientContext& context,
+                    google::pubsub::v1::Topic const& request) {
+        EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+            context, "google.pubsub.v1.Publisher.CreateTopic",
+            google::cloud::internal::ApiClientHeader()));
+        return make_status_or(request);
+      });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
   auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
