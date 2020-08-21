@@ -49,11 +49,11 @@ PublisherConnection::~PublisherConnection() = default;
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options,
-    ConnectionOptions const& connection_options) {
+    ConnectionOptions connection_options) {
   auto stub = pubsub_internal::CreateDefaultPublisherStub(connection_options,
                                                           /*channel_id=*/0);
   return pubsub_internal::MakePublisherConnection(
-      std::move(topic), std::move(options), connection_options,
+      std::move(topic), std::move(options), std::move(connection_options),
       std::move(stub));
 }
 
@@ -65,7 +65,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
-    pubsub::ConnectionOptions const& connection_options,
+    pubsub::ConnectionOptions connection_options,
     std::shared_ptr<PublisherStub> stub) {
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
   if (connection_options.tracing_enabled("rpc")) {
@@ -73,6 +73,17 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
         std::move(stub), connection_options.tracing_options());
   }
+
+  auto default_thread_pool_size = []() -> std::size_t {
+    auto constexpr kMinThreadPoolSize = 4;
+    auto const n = std::thread::hardware_concurrency();
+    return n == 0 ? kMinThreadPoolSize : n;
+  };
+  if (connection_options.background_thread_pool_size() == 0) {
+    connection_options.set_background_thread_pool_size(
+        default_thread_pool_size());
+  }
+
   auto background = connection_options.background_threads_factory()();
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();

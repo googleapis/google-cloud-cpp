@@ -61,7 +61,7 @@ class SubscriberConnection {
  *     this function.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    ConnectionOptions options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -70,8 +70,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub,
-    pubsub::ConnectionOptions const& options);
+    std::shared_ptr<SubscriberStub> stub, pubsub::ConnectionOptions options);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

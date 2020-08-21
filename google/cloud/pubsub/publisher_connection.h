@@ -64,17 +64,19 @@ class PublisherConnection {
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options,
-    ConnectionOptions const& connection_options = ConnectionOptions());
+    ConnectionOptions connection_options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
-    pubsub::ConnectionOptions const& connection_options,
+    pubsub::ConnectionOptions connection_options,
     std::shared_ptr<PublisherStub> stub);
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
