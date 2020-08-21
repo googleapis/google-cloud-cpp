@@ -20,6 +20,20 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+SubscriptionOptions& SubscriptionOptions::set_message_count_watermarks(
+    std::size_t lwm, std::size_t hwm) {
+  message_count_hwm_ = (std::max<std::size_t>)(1, hwm);
+  message_count_lwm_ = (std::min)(message_count_hwm_, lwm);
+  return *this;
+}
+
+SubscriptionOptions& SubscriptionOptions::set_message_size_watermarks(
+    std::size_t lwm, std::size_t hwm) {
+  message_size_hwm_ = (std::max<std::size_t>)(1, hwm);
+  message_size_lwm_ = (std::min)(message_size_hwm_, lwm);
+  return *this;
+}
+
 SubscriptionOptions& SubscriptionOptions::set_concurrency_watermarks(
     std::size_t lwm, std::size_t hwm) {
   concurrency_hwm_ = (std::max<std::size_t>)(1, hwm);
