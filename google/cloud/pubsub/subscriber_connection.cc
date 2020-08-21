@@ -28,10 +28,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 SubscriberConnection::~SubscriberConnection() = default;
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    ConnectionOptions const& options) {
+    ConnectionOptions options) {
   auto stub =
       pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0);
-  return pubsub_internal::MakeSubscriberConnection(std::move(stub), options);
+  return pubsub_internal::MakeSubscriberConnection(std::move(stub),
+                                                   std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -63,13 +64,20 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 }  // namespace
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub,
-    pubsub::ConnectionOptions const& options) {
+    std::shared_ptr<SubscriberStub> stub, pubsub::ConnectionOptions options) {
   stub = std::make_shared<SubscriberMetadata>(std::move(stub));
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
         std::move(stub), options.tracing_options());
+  }
+  auto default_thread_pool_size = []() -> std::size_t {
+    auto constexpr kMinThreadPoolSize = 4;
+    auto const n = std::thread::hardware_concurrency();
+    return n == 0 ? kMinThreadPoolSize : n;
+  };
+  if (options.background_thread_pool_size() == 0) {
+    options.set_background_thread_pool_size(default_thread_pool_size());
   }
   return std::make_shared<SubscriberConnectionImpl>(std::move(stub), options);
 }
