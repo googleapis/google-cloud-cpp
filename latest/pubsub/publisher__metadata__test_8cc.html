@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Pub/Sub C++ Client: topic_admin_connection_test.cc File Reference</title>
+<title>Google Cloud Pub/Sub C++ Client: internal/publisher_metadata_test.cc File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,25 +61,29 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_7374381ecdb819c64ee9b6ea2bd3370d.html">internal</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">topic_admin_connection_test.cc File Reference</div>  </div>
+<div class="title">publisher_metadata_test.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="topic__admin__connection_8h_source.html">google/cloud/pubsub/topic_admin_connection.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="publisher__metadata_8h_source.html">google/cloud/pubsub/internal/publisher_metadata.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="subscription_8h_source.html">google/cloud/pubsub/subscription.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="mock__publisher__stub_8h_source.html">google/cloud/pubsub/testing/mock_publisher_stub.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="topic__mutation__builder_8h_source.html">google/cloud/pubsub/topic_mutation_builder.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="topic_8h_source.html">google/cloud/pubsub/topic.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/internal/api_client_header.h&quot;</code><br />
 <code>#include &quot;google/cloud/testing_util/assert_ok.h&quot;</code><br />
-<code>#include &quot;google/cloud/testing_util/capture_log_lines_backend.h&quot;</code><br />
-<code>#include &quot;google/cloud/testing_util/is_proto_equal.h&quot;</code><br />
 <code>#include &quot;google/cloud/testing_util/validate_metadata.h&quot;</code><br />
+<code>#include &quot;absl/memory/memory.h&quot;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 </div>
-<p><a href="topic__admin__connection__test_8cc_source.html">Go to the source code of this file.</a></p>
+<p><a href="publisher__metadata__test_8cc_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -87,12 +91,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></td></tr>
-<tr class="memdesc:namespacegoogle_1_1cloud_1_1pubsub"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the Cloud Pubsub C++ client types and functions. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html">google::cloud::pubsub::v1</a></td></tr>
-<tr class="memdesc:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Pubsub C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
