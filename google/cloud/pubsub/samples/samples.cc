@@ -459,6 +459,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
 
 void Publish(google::cloud::pubsub::Publisher publisher,
              std::vector<std::string> const&) {
+  //! [START pubsub_publish_messages_error_handler]
   //! [START pubsub_publish_with_error_handler]
   //! [START pubsub_publish] [publish]
   namespace pubsub = google::cloud::pubsub;
@@ -477,6 +478,7 @@ void Publish(google::cloud::pubsub::Publisher publisher,
   }
   //! [END pubsub_publish] [publish]
   //! [END pubsub_publish_with_error_handler]
+  //! [END pubsub_publish_messages_error_handler]
   (std::move(publisher));
 }
 
