@@ -210,7 +210,7 @@ class SubscriptionSession
   SessionShutdownManager shutdown_manager_;
 
   // Concurrency control for callbacks.
-  WatermarkFlowControl callback_flow_control_;
+  WatermarkFlowControlCountOnly callback_flow_control_;
 
   // The queue of messages waiting to be delivered to the application callback.
   std::deque<google::pubsub::v1::ReceivedMessage> messages_;

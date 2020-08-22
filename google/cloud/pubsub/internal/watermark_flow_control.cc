@@ -21,21 +21,23 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 bool WatermarkFlowControl::MaybeAdmit(std::size_t size) {
   std::lock_guard<std::mutex> lk(mu_);
-  if (overflow_ || current_ >= hwm_) return false;
-  current_ += size;
-  if (current_ >= hwm_) overflow_ = true;
+  if (overflow_ || IsFull()) return false;
+  current_size_ += size;
+  ++current_count_;
+  if (IsFull()) overflow_ = true;
   return true;
 }
 
 bool WatermarkFlowControl::Release(std::size_t size) {
   std::lock_guard<std::mutex> lk(mu_);
-  if (size < current_) {
-    current_ -= size;
+  if (current_count_ > 0) --current_count_;
+  if (size < current_size_) {
+    current_size_ -= size;
   } else {
-    current_ = 0;
+    current_size_ = 0;
   }
-  if (current_ <= lwm_) overflow_ = false;
-  return !overflow_ && current_ < hwm_;
+  if (HasCapacity()) overflow_ = false;
+  return !overflow_ && !IsFull();
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
