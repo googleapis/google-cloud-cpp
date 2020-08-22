@@ -26,7 +26,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * Implement a simple admission control check.
  *
- * This class is used in the implementation of flow control
+ * This class is used in the implementation of flow control. It admits work
+ * until *either* the high-watermark for size or count is reached, and then
+ * rejects work until *both* the low-watermark for size and count are cleared.
  */
 class WatermarkFlowControl {
  public:
