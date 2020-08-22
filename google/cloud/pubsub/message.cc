@@ -56,11 +56,5 @@ std::ostream& operator<<(std::ostream& os, Message const& rhs) {
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
-
-namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
