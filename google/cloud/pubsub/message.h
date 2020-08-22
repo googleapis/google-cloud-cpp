@@ -34,6 +34,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 ::google::pubsub::v1::PubsubMessage const& ToProto(pubsub::Message const&);
 ::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&&);
 pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
+
+/// Estimate the size of a message.
+std::size_t MessageSize(pubsub::Message const&);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 
@@ -116,12 +119,15 @@ class Message {
       Message const& m);
   friend ::google::pubsub::v1::PubsubMessage&& pubsub_internal::ToProto(
       Message&& m);
+  friend std::size_t pubsub_internal::MessageSize(Message const&);
   friend class MessageBuilder;
 
   Message() = default;
 
   explicit Message(::google::pubsub::v1::PubsubMessage m)
       : proto_(std::move(m)) {}
+
+  std::size_t MessageSize() const;
 
   google::pubsub::v1::PubsubMessage proto_;
 };
@@ -237,9 +243,12 @@ inline pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage m) {
   return pubsub::Message(std::move(m));
 }
 
+inline std::size_t MessageSize(pubsub::Message const& m) {
+  return m.MessageSize();
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
-
 }  // namespace cloud
 }  // namespace google
 

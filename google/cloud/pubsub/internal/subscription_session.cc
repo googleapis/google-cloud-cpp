@@ -250,8 +250,8 @@ void SubscriptionSession::HandleQueue(std::unique_lock<std::mutex> lk) {
         callback(std::move(m), pubsub::AckHandler(std::move(h)));
       }
     };
-    auto const message_size = MessageSize(m.message());
     auto message = FromProto(std::move(*m.mutable_message()));
+    auto const message_size = MessageSize(message);
     std::unique_ptr<pubsub::AckHandler::Impl> handler =
         absl::make_unique<DefaultAckHandlerImpl>(
             executor_, stub_, params_.full_subscription_name,
@@ -357,16 +357,6 @@ void SubscriptionSession::NackAll(
   // simply let the normal timeouts expire any messages.
   (void)stub_->AsyncModifyAckDeadline(
       executor_, absl::make_unique<grpc::ClientContext>(), request);
-}
-
-std::size_t SubscriptionSession::MessageSize(
-    google::pubsub::v1::PubsubMessage const& m) {
-  // TODO(#4645) - use a better estimation for the message size.
-  std::size_t s = m.data().size();
-  for (auto const& kv : m.attributes()) {
-    s += kv.first.size() + kv.second.size();
-  }
-  return s;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

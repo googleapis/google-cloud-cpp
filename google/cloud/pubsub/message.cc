@@ -27,6 +27,18 @@ std::chrono::system_clock::time_point Message::publish_time() const {
   return google::cloud::internal::ToChronoTimePoint(proto_.publish_time());
 }
 
+std::size_t Message::MessageSize() const {
+  // see https://cloud.google.com/pubsub/pricing
+  auto constexpr kTimestampOverhead = 20;
+  std::size_t s = kTimestampOverhead + data().size();
+  s += message_id().size();
+  s += ordering_key().size();
+  for (auto const& kv : proto_.attributes()) {
+    s += kv.first.size() + kv.second.size();
+  }
+  return s;
+}
+
 bool operator==(Message const& a, Message const& b) {
   google::protobuf::util::MessageDifferencer diff;
   return diff.Compare(a.proto_, b.proto_);

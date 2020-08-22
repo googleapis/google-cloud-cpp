@@ -201,9 +201,6 @@ class SubscriptionSession
   void NackAll(std::unique_lock<std::mutex> const&,
                google::pubsub::v1::ModifyAckDeadlineRequest request);
 
-  /// Estimate the size of a message.
-  static std::size_t MessageSize(google::pubsub::v1::PubsubMessage const& m);
-
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   google::cloud::CompletionQueue executor_;
   pubsub::SubscriberConnection::SubscribeParams params_;
