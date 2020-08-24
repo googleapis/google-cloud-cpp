@@ -31,7 +31,7 @@ namespace internal {
  *
  * The client libraries need to hide partial and temporary failures from the
  * application. Exponential backoff is generally considered a best practice when
- * retrying operations. However, the details of how exponetial backoff is
+ * retrying operations. However, the details of how exponential backoff is
  * implemented and tuned varies widely. We need to give the users enough
  * flexibility, and also provide sensible default implementations.
  *
