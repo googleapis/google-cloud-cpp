@@ -26,13 +26,18 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Define the interface for retry policies.
- *
  */
 class RetryPolicy {
  public:
   virtual ~RetryPolicy() = default;
+
+  /// Handle a failure, return `true` if the retry loop can continue.
   virtual bool OnFailure(Status const&) = 0;
+
+  /// Return `true` if no more retries should be attempted.
   virtual bool IsExhausted() const = 0;
+
+  /// Return `true` if the error is not retryable.
   virtual bool IsPermanentFailure(Status const&) const = 0;
 };
 
