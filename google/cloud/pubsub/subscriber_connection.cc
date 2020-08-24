@@ -72,9 +72,9 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
         std::move(stub), options.tracing_options());
   }
   auto default_thread_pool_size = []() -> std::size_t {
-    auto constexpr kMinThreadPoolSize = 4;
+    auto constexpr kDefaultThreadPoolSize = 4;
     auto const n = std::thread::hardware_concurrency();
-    return n == 0 ? kMinThreadPoolSize : n;
+    return n == 0 ? kDefaultThreadPoolSize : n;
   };
   if (options.background_thread_pool_size() == 0) {
     options.set_background_thread_pool_size(default_thread_pool_size());

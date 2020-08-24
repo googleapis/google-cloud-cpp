@@ -75,9 +75,9 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
   }
 
   auto default_thread_pool_size = []() -> std::size_t {
-    auto constexpr kMinThreadPoolSize = 4;
+    auto constexpr kDefaultThreadPoolSize = 4;
     auto const n = std::thread::hardware_concurrency();
-    return n == 0 ? kMinThreadPoolSize : n;
+    return n == 0 ? kDefaultThreadPoolSize : n;
   };
   if (connection_options.background_thread_pool_size() == 0) {
     connection_options.set_background_thread_pool_size(
