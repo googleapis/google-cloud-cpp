@@ -48,6 +48,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string topic_id) {
     auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
+    // Note that kAlreadyExist is a possible error when the library retries.
     if (!topic) throw std::runtime_error(topic.status().message());
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
@@ -121,6 +122,7 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string const& topic_id) {
     auto status = client.DeleteTopic(
         pubsub::Topic(std::move(project_id), std::move(topic_id)));
+    // Note that kNotFound is a possible error when the library retries.
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The topic was successfully deleted\n";
@@ -849,14 +851,7 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
   std::cout << "\nRunning CreateTopic() sample" << std::endl;
-  try {
-    CreateTopic(topic_admin_client, {project_id, topic_id});
-  } catch (std::runtime_error const& ex) {
-    // Ignore errors caused by duplicate calls to CreateTopic().
-    auto get = topic_admin_client.GetTopic(
-        google::cloud::pubsub::Topic(project_id, topic_id));
-    if (!get) throw;
-  }
+  CreateTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
