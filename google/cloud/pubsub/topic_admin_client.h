@@ -73,7 +73,9 @@ class TopicAdminClient {
    * Create a new topic in Cloud Pub/Sub.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, as it succeeds only once, therefore the
+   * library retries the call. It might return a status code of
+   * `kAlreadyExists` if successful more than one time.
    *
    * @par Example
    * @snippet samples.cc create-topic
@@ -102,7 +104,8 @@ class TopicAdminClient {
    * Update the configuration of an existing Cloud Pub/Sub topic.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and thefeore it is always retried.
    *
    * @par Example
    * @snippet samples.cc update-topic
@@ -118,8 +121,7 @@ class TopicAdminClient {
    * List all the topics for a given project id.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-topics
@@ -132,7 +134,8 @@ class TopicAdminClient {
    * Delete an existing topic in Cloud Pub/Sub.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc delete-topic
@@ -154,7 +157,8 @@ class TopicAdminClient {
    *   project in an early access program.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc detach-subscription
@@ -175,8 +179,7 @@ class TopicAdminClient {
    * need to parse these names to use with other APIs.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-topic-subscriptions
@@ -194,8 +197,7 @@ class TopicAdminClient {
    * need to parse these names to use with other APIs.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-topic-snapshots

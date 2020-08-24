@@ -443,7 +443,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
     // we expect it'll most often be declared with auto like this.
     for (auto const& topic : client.ListTopics(project_id)) {
-      // Use `topic` like a smart pointer; check it before dereferencing
+      // Use `topic` like a smart pointer; check it before de-referencing
       if (!topic) {
         // `topic` doesn't contain a value, so `.status()` will contain error
         // info
@@ -849,7 +849,14 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
   std::cout << "\nRunning CreateTopic() sample" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
+  try {
+    CreateTopic(topic_admin_client, {project_id, topic_id});
+  } catch (std::runtime_error const& ex) {
+    // Ignore errors caused by duplicate calls to CreateTopic().
+    auto get = topic_admin_client.GetTopic(
+        google::cloud::pubsub::Topic(project_id, topic_id));
+    if (!get) throw;
+  }
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});

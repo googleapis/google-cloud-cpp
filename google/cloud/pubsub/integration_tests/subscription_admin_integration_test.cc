@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -33,6 +34,8 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Not;
 
@@ -80,7 +83,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
               Not(Contains(subscription.FullName())));
 
   auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
-  ASSERT_STATUS_OK(topic_metadata);
+  ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
+                                    StatusIs(StatusCode::kAlreadyExists)));
 
   struct Cleanup {
     std::function<void()> action;
