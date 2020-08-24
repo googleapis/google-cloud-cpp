@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
+#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
@@ -212,16 +213,6 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 }  // namespace
-
-std::unique_ptr<pubsub::RetryPolicy const> DefaultRetryPolicy() {
-  return absl::make_unique<pubsub::LimitedTimeRetryPolicy>(
-      std::chrono::seconds(60));
-}
-
-std::unique_ptr<pubsub::BackoffPolicy const> DefaultBackoffPolicy() {
-  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
-      std::chrono::milliseconds(100), std::chrono::seconds(60), 1.3);
-}
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
     pubsub::ConnectionOptions const& options,
