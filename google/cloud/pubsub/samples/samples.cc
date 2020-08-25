@@ -141,7 +141,7 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
 
 void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [START pubsub_subscription_detachment] [detach-subscription]
+  //! [START pubsub_detach_subscription] [detach-subscription]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string subscription_id) {
@@ -152,7 +152,7 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
     std::cout << "The subscription was successfully detached: "
               << response->DebugString() << "\n";
   }
-  //! [END pubsub_subscription_detachment] [detach-subscription]
+  //! [END pubsub_detach_subscription] [detach-subscription]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -176,7 +176,7 @@ void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
 
 void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_snapshots] [list-topic-snapshots]
+  //! [list-topic-snapshots]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
@@ -188,7 +188,7 @@ void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "  " << *name << "\n";
     }
   }
-  //! [END pubsub_list_topic_snapshots] [list-topic-snapshots]
+  //! [list-topic-snapshots]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -319,7 +319,7 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
 
 void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
                       std::vector<std::string> const& argv) {
-  //! [START pubsub_update_push_subscription] [modify-push-config]
+  //! [START pubsub_update_push_configuration] [modify-push-config]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& endpoint) {
@@ -331,7 +331,7 @@ void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
     std::cout << "The subscription push configuration was successfully"
               << " modified\n";
   }
-  //! [END pubsub_update_push_subscription] [modify-push-config]
+  //! [END pubsub_update_push_configuration] [modify-push-config]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -629,7 +629,7 @@ void SubscribeCustomAttributes(
     google::cloud::pubsub::Subscriber subscriber,
     google::cloud::pubsub::Subscription const& subscription,
     std::vector<std::string> const&) {
-  //! [START pubsub_async_pull_custom_attributes]
+  //! [START pubsub_subscriber_async_pull_custom_attributes]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -659,7 +659,7 @@ void SubscribeCustomAttributes(
     std::cout << "Message count: " << message_count << ", status: " << status
               << "\n";
   }
-  //! [END pubsub_async_pull_custom_attributes]
+  //! [END pubsub_subscriber_async_pull_custom_attributes]
   (std::move(subscriber), std::move(subscription));
 }
 
