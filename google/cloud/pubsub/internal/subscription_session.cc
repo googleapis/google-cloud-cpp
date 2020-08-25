@@ -63,57 +63,6 @@ int constexpr SubscriptionSession::kMinimumAckDeadlineSeconds;
 int constexpr SubscriptionSession::kMaximumAckDeadlineSeconds;
 int constexpr SubscriptionSession::kAckDeadlineSlackSeconds;
 
-SessionShutdownManager::~SessionShutdownManager() {
-  if (signaled_) return;
-  GCP_LOG(DEBUG) << __func__ << "() - do signal"
-                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
-                 << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
-  signaled_ = true;
-  done_.set_value(std::move(result_));
-}
-
-void SessionShutdownManager::LogStart(const char* caller, const char* name) {
-  GCP_LOG(DEBUG) << "operation <" << name << "> starting from " << caller
-                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
-                 << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
-}
-
-bool SessionShutdownManager::FinishedOperation(char const* name) {
-  std::unique_lock<std::mutex> lk(mu_);
-  GCP_LOG(DEBUG) << "operation <" << name << "> finished"
-                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
-                 << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
-  bool r = shutdown_;
-  --outstanding_operations_;
-  SignalOnShutdown(std::move(lk));
-  return r;
-}
-
-void SessionShutdownManager::MarkAsShutdown(char const* caller, Status status) {
-  std::unique_lock<std::mutex> lk(mu_);
-  GCP_LOG(DEBUG) << __func__ << "() - from " << caller << "() - shutting down"
-                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
-                 << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
-  shutdown_ = true;
-  result_ = std::move(status);
-  SignalOnShutdown(std::move(lk));
-}
-
-void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
-  GCP_LOG(DEBUG) << __func__ << "() - maybe signal"
-                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
-                 << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
-  if (outstanding_operations_ > 0 || !shutdown_ || signaled_) return;
-  signaled_ = true;
-  lk.unlock();
-  done_.set_value(std::move(result_));
-}
-
 future<Status> SubscriptionSession::Start() {
   // Transfer the result from shutdown_manager_'s future to a new future that
   // has a proper cancellation callback.

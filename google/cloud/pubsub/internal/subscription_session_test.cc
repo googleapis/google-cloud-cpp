@@ -30,42 +30,6 @@ using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::InSequence;
 
-/// @test Verify SessionShutdownManager works correctly.
-TEST(SessionShutdownManagerTest, Basic) {
-  internal::AutomaticallyCreatedBackgroundThreads background;
-  CompletionQueue cq = background.cq();
-
-  SessionShutdownManager tested;
-  auto shutdown = tested.Start();
-  EXPECT_TRUE(tested.StartOperation("testing", "operation-1", [] {}));
-  EXPECT_TRUE(tested.StartOperation("testing", "operation-2", [] {}));
-  EXPECT_TRUE(
-      tested.StartAsyncOperation("testing", "async-operation-1", cq, [] {}));
-  EXPECT_TRUE(
-      tested.StartAsyncOperation("testing", "async-operation-2", cq, [] {}));
-
-  EXPECT_FALSE(tested.FinishedOperation("operation-1"));
-  EXPECT_FALSE(tested.FinishedOperation("async-operation-1"));
-
-  auto const expected_status = Status{StatusCode::kAborted, "test-message"};
-  tested.MarkAsShutdown("testing", expected_status);
-  EXPECT_EQ(std::future_status::timeout,
-            shutdown.wait_for(std::chrono::milliseconds(0)));
-
-  EXPECT_FALSE(
-      tested.StartAsyncOperation("testing", "async-operation-3", cq, [] {}));
-  EXPECT_FALSE(tested.StartOperation("testing", "operation-3", [] {}));
-  EXPECT_EQ(std::future_status::timeout,
-            shutdown.wait_for(std::chrono::milliseconds(0)));
-
-  EXPECT_TRUE(tested.FinishedOperation("operation-2-mismatch-does-not-matter"));
-  EXPECT_EQ(std::future_status::timeout,
-            shutdown.wait_for(std::chrono::milliseconds(0)));
-  EXPECT_TRUE(tested.FinishedOperation("async-operation-2"));
-
-  EXPECT_EQ(expected_status, shutdown.get());
-}
-
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
