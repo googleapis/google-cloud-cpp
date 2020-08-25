@@ -48,6 +48,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string topic_id) {
     auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
+    // Note that kAlreadyExist is a possible error when the library retries.
     if (!topic) throw std::runtime_error(topic.status().message());
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
@@ -121,6 +122,7 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string const& topic_id) {
     auto status = client.DeleteTopic(
         pubsub::Topic(std::move(project_id), std::move(topic_id)));
+    // Note that kNotFound is a possible error when the library retries.
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The topic was successfully deleted\n";
@@ -443,7 +445,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
     // we expect it'll most often be declared with auto like this.
     for (auto const& topic : client.ListTopics(project_id)) {
-      // Use `topic` like a smart pointer; check it before dereferencing
+      // Use `topic` like a smart pointer; check it before de-referencing
       if (!topic) {
         // `topic` doesn't contain a value, so `.status()` will contain error
         // info

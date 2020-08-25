@@ -18,6 +18,7 @@
 
 pubsub_client_hdrs = [
     "ack_handler.h",
+    "backoff_policy.h",
     "connection_options.h",
     "internal/batching_publisher_connection.h",
     "internal/default_ack_handler_impl.h",
@@ -37,6 +38,7 @@ pubsub_client_hdrs = [
     "publisher.h",
     "publisher_connection.h",
     "publisher_options.h",
+    "retry_policy.h",
     "snapshot.h",
     "snapshot_mutation_builder.h",
     "subscriber.h",

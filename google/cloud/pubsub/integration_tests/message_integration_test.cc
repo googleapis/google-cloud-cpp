@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <map>
 
@@ -30,6 +31,9 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 
 TEST(MessageIntegrationTest, PublishPullAck) {
   auto project_id =
@@ -46,7 +50,8 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
   auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
-  ASSERT_STATUS_OK(topic_metadata);
+  ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
+                                    StatusIs(StatusCode::kAlreadyExists)));
 
   struct Cleanup {
     std::function<void()> action;

@@ -29,6 +29,7 @@ add_library(
     pubsub_client # cmake-format: sort
     ack_handler.cc
     ack_handler.h
+    backoff_policy.h
     connection_options.cc
     connection_options.h
     internal/batching_publisher_connection.cc
@@ -66,6 +67,7 @@ add_library(
     publisher_connection.cc
     publisher_connection.h
     publisher_options.h
+    retry_policy.h
     snapshot.cc
     snapshot.h
     snapshot_mutation_builder.cc

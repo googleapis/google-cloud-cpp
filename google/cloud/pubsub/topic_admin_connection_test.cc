@@ -32,19 +32,31 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Return;
+
+std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {
+  return absl::make_unique<pubsub::LimitedErrorCountRetryPolicy>(3);
+}
+
+std::unique_ptr<pubsub::BackoffPolicy const> TestBackoffPolicy() {
+  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
+      std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0);
+}
 
 TEST(TopicAdminConnectionTest, Create) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, CreateTopic)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
           [&](grpc::ClientContext&, google::pubsub::v1::Topic const& request) {
             EXPECT_EQ(topic.FullName(), request.name());
             return make_status_or(request);
           });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -57,6 +69,7 @@ TEST(TopicAdminConnectionTest, Metadata) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, CreateTopic)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::Topic const& request) {
         EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
@@ -65,7 +78,8 @@ TEST(TopicAdminConnectionTest, Metadata) {
         return make_status_or(request);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -79,13 +93,15 @@ TEST(TopicAdminConnectionTest, Get) {
   expected.set_name(topic.FullName());
 
   EXPECT_CALL(*mock, GetTopic)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::GetTopicRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
         return make_status_or(expected);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = topic_admin->GetTopic({topic});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -98,6 +114,7 @@ TEST(TopicAdminConnectionTest, Update) {
   expected.set_name(topic.FullName());
 
   EXPECT_CALL(*mock, UpdateTopic)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::UpdateTopicRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic().name());
@@ -105,7 +122,8 @@ TEST(TopicAdminConnectionTest, Update) {
         return make_status_or(expected);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response =
       topic_admin->UpdateTopic({TopicMutationBuilder(topic)
                                     .add_label("test-key", "test-value")
@@ -118,6 +136,7 @@ TEST(TopicAdminConnectionTest, List) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
 
   EXPECT_CALL(*mock, ListTopics)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::ListTopicsRequest const& request) {
         EXPECT_EQ("projects/test-project-id", request.project());
@@ -128,7 +147,8 @@ TEST(TopicAdminConnectionTest, List) {
         return make_status_or(response);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> topic_names;
   for (auto& t : topic_admin->ListTopics({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
@@ -151,6 +171,7 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
   auto id = google::cloud::LogSink::Instance().AddBackend(backend);
 
   EXPECT_CALL(*mock, DeleteTopic)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::DeleteTopicRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
@@ -158,7 +179,8 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
       });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock);
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   auto response = topic_admin->DeleteTopic({topic});
   ASSERT_STATUS_OK(response);
 
@@ -171,6 +193,7 @@ TEST(TopicAdminConnectionTest, DetachSubscription) {
   Subscription const subscription("test-project", "test-subscription");
 
   EXPECT_CALL(*mock, DetachSubscription)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
           [&](grpc::ClientContext&,
               google::pubsub::v1::DetachSubscriptionRequest const& request) {
@@ -180,7 +203,8 @@ TEST(TopicAdminConnectionTest, DetachSubscription) {
           });
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock);
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   auto response = topic_admin->DetachSubscription({subscription});
   ASSERT_STATUS_OK(response);
 }
@@ -189,6 +213,7 @@ TEST(TopicAdminConnectionTest, ListSubscriptions) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   auto const topic_name = Topic("test-project-id", "test-topic-id").FullName();
   EXPECT_CALL(*mock, ListTopicSubscriptions)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext&,
                     google::pubsub::v1::ListTopicSubscriptionsRequest const&
                         request) {
@@ -200,7 +225,8 @@ TEST(TopicAdminConnectionTest, ListSubscriptions) {
         return make_status_or(response);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSubscriptions({topic_name})) {
     ASSERT_STATUS_OK(t);
@@ -214,6 +240,7 @@ TEST(TopicAdminConnectionTest, ListSnapshots) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   auto const topic_name = Topic("test-project-id", "test-topic-id").FullName();
   EXPECT_CALL(*mock, ListTopicSnapshots)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
           [&](grpc::ClientContext&,
               google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
@@ -225,7 +252,8 @@ TEST(TopicAdminConnectionTest, ListSnapshots) {
             return make_status_or(response);
           });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection({}, mock);
+  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSnapshots({topic_name})) {
     ASSERT_STATUS_OK(t);

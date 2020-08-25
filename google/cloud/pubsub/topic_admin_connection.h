@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_ADMIN_CONNECTION_H
 
+#include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
@@ -70,14 +72,13 @@ using ListTopicSnapshotsRange = google::cloud::internal::PaginationRange<
     google::pubsub::v1::ListTopicSnapshotsResponse>;
 
 /**
- * A connection to Cloud Pub/Sub.
+ * A connection to Cloud Pub/Sub for topic-related administrative operations.
  *
  * This interface defines pure-virtual methods for each of the user-facing
- * overload sets in `PublisherClient`. That is, all of `PublisherClient`'s
- * `Publish()` overloads will forward to the one pure-virtual `Publish()` method
- * declared in this interface, and similar for `PublisherClient`'s other
- * methods. This allows users to inject custom behavior (e.g., with a Google
- * Mock object) in a `PublisherClient` object for use in their own tests.
+ * overload sets in `TopicAdminClient`. That is, all of `TopicAdminClient`'s
+ * overloads will forward to the one pure-virtual method declared in this
+ * interface. This allows users to inject custom behavior (e.g., with a Google
+ * Mock object) in a `TopicAdminClient` object for use in their own tests.
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeTopicAdminConnection()`.
@@ -88,6 +89,8 @@ class TopicAdminConnection {
 
   //@{
   /**
+   * @name The parameter wrapper types.
+   *
    * Define the arguments for each member function.
    *
    * Applications may define classes derived from `PublisherConnection`, for
@@ -95,6 +98,7 @@ class TopicAdminConnection {
    * derived classes when we change the number or type of the arguments to the
    * member functions we define light weight structures to pass the arguments.
    */
+
   /// Wrap the arguments for `CreateTopic()`
   struct CreateTopicParams {
     google::pubsub::v1::Topic topic;
@@ -167,20 +171,25 @@ class TopicAdminConnection {
 };
 
 /**
- * Returns an PublisherConnection object to work with Cloud Pub/Sub publisher
- * APIs.
+ * Returns a `TopicAdminConnection` object to work with `TopicAdminClient`.
  *
- * The `PublisherConnection` class is not intended for direct use in
- * applications, it is provided for applications wanting to mock the
- * `PublisherClient` behavior in their tests.
+ * The `TopicAdminConnection` class is provided for applications wanting to mock
+ * the `TopicAdminClient` behavior in their tests. It is not intended for direct
+ * use.
  *
- * @see `PublisherConnection`
+ * @see `TopicAdminClient`
  *
  * @param options (optional) configure the `PublisherConnection` created by
  *     this function.
+ * @param retry_policy control for how long (or how many times) are retryable
+ *     RPCs attempted.
+ * @param backoff_policy controls the backoff behavior between retry attempts,
+ *     typically some form of exponential backoff with jitter.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    ConnectionOptions const& options = ConnectionOptions(),
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -190,7 +199,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
     pubsub::ConnectionOptions const& options,
-    std::shared_ptr<PublisherStub> stub);
+    std::shared_ptr<PublisherStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

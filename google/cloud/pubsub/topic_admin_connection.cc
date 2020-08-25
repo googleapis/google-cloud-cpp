@@ -16,53 +16,89 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace pubsub {
+namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
 namespace {
-class TopicAdminConnectionImpl : public TopicAdminConnection {
+
+using google::cloud::internal::RetryLoop;
+
+class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
  public:
   explicit TopicAdminConnectionImpl(
-      std::shared_ptr<pubsub_internal::PublisherStub> stub)
-      : stub_(std::move(stub)) {}
+      std::shared_ptr<pubsub_internal::PublisherStub> stub,
+      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+      : stub_(std::move(stub)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
 
   ~TopicAdminConnectionImpl() override = default;
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
-    grpc::ClientContext context;
-    return stub_->CreateTopic(context, p.topic);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::pubsub::v1::Topic const& request) {
+          return stub_->CreateTopic(context, request);
+        },
+        p.topic, __func__);
   }
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams p) override {
-    grpc::ClientContext context;
     google::pubsub::v1::GetTopicRequest request;
     request.set_topic(p.topic.FullName());
-    return stub_->GetTopic(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::pubsub::v1::GetTopicRequest const& request) {
+          return stub_->GetTopic(context, request);
+        },
+        request, __func__);
   }
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
       UpdateTopicParams p) override {
-    grpc::ClientContext context;
-    return stub_->UpdateTopic(context, p.request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::pubsub::v1::UpdateTopicRequest const& request) {
+          return stub_->UpdateTopic(context, request);
+        },
+        p.request, __func__);
   }
 
-  ListTopicsRange ListTopics(ListTopicsParams p) override {
+  pubsub::ListTopicsRange ListTopics(ListTopicsParams p) override {
     google::pubsub::v1::ListTopicsRequest request;
     request.set_project(std::move(p.project_id));
     auto& stub = stub_;
-    return ListTopicsRange(
-        std::move(request),
-        [stub](google::pubsub::v1::ListTopicsRequest const& request) {
-          grpc::ClientContext context;
-          return stub->ListTopics(context, request);
-        },
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry =
+        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto backoff =
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+    char const* function_name = __func__;
+    auto list_functor =
+        [stub, retry, backoff,
+         function_name](google::pubsub::v1::ListTopicsRequest const& request) {
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](grpc::ClientContext& c,
+                     google::pubsub::v1::ListTopicsRequest const& r) {
+                return stub->ListTopics(c, r);
+              },
+              request, function_name);
+        };
+    return pubsub::ListTopicsRange(
+        std::move(request), list_functor,
         [](google::pubsub::v1::ListTopicsResponse response) {
           std::vector<google::pubsub::v1::Topic> items;
           items.reserve(response.topics_size());
@@ -76,8 +112,13 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
   Status DeleteTopic(DeleteTopicParams p) override {
     google::pubsub::v1::DeleteTopicRequest request;
     request.set_topic(p.topic.FullName());
-    grpc::ClientContext context;
-    return stub_->DeleteTopic(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::pubsub::v1::DeleteTopicRequest const& request) {
+          return stub_->DeleteTopic(context, request);
+        },
+        request, __func__);
   }
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
@@ -85,21 +126,41 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
     google::pubsub::v1::DetachSubscriptionRequest request;
     request.set_subscription(p.subscription.FullName());
     grpc::ClientContext context;
-    return stub_->DetachSubscription(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::pubsub::v1::DetachSubscriptionRequest const& request) {
+          return stub_->DetachSubscription(context, request);
+        },
+        request, __func__);
   }
 
-  ListTopicSubscriptionsRange ListTopicSubscriptions(
+  pubsub::ListTopicSubscriptionsRange ListTopicSubscriptions(
       ListTopicSubscriptionsParams p) override {
     google::pubsub::v1::ListTopicSubscriptionsRequest request;
     request.set_topic(std::move(p.topic_full_name));
     auto& stub = stub_;
-    return ListTopicSubscriptionsRange(
-        std::move(request),
-        [stub](
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry =
+        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto backoff =
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+    char const* function_name = __func__;
+    auto list_functor =
+        [stub, retry, backoff, function_name](
             google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-          grpc::ClientContext context;
-          return stub->ListTopicSubscriptions(context, request);
-        },
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](
+                  grpc::ClientContext& c,
+                  google::pubsub::v1::ListTopicSubscriptionsRequest const& r) {
+                return stub->ListTopicSubscriptions(c, r);
+              },
+              request, function_name);
+        };
+    return pubsub::ListTopicSubscriptionsRange(
+        std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListTopicSubscriptionsResponse response) {
           std::vector<std::string> items;
           items.reserve(response.subscriptions_size());
@@ -110,17 +171,31 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
         });
   }
 
-  ListTopicSnapshotsRange ListTopicSnapshots(
+  pubsub::ListTopicSnapshotsRange ListTopicSnapshots(
       ListTopicSnapshotsParams p) override {
     google::pubsub::v1::ListTopicSnapshotsRequest request;
     request.set_topic(std::move(p.topic_full_name));
     auto& stub = stub_;
-    return ListTopicSnapshotsRange(
-        std::move(request),
-        [stub](google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-          grpc::ClientContext context;
-          return stub->ListTopicSnapshots(context, request);
-        },
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry =
+        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto backoff =
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+    char const* function_name = __func__;
+    auto list_functor =
+        [stub, retry, backoff, function_name](
+            google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](grpc::ClientContext& c,
+                     google::pubsub::v1::ListTopicSnapshotsRequest const& r) {
+                return stub->ListTopicSnapshots(c, r);
+              },
+              request, function_name);
+        };
+    return pubsub::ListTopicSnapshotsRange(
+        std::move(request), list_functor,
         [](google::pubsub::v1::ListTopicSnapshotsResponse response) {
           std::vector<std::string> items;
           items.reserve(response.snapshots_size());
@@ -133,37 +208,58 @@ class TopicAdminConnectionImpl : public TopicAdminConnection {
 
  private:
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
+  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
+  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 }  // namespace
 
-TopicAdminConnection::~TopicAdminConnection() = default;
-
-std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    ConnectionOptions const& options) {
-  auto stub =
-      pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
-  return pubsub_internal::MakeTopicAdminConnection(options, std::move(stub));
+std::unique_ptr<pubsub::RetryPolicy const> DefaultRetryPolicy() {
+  return absl::make_unique<pubsub::LimitedTimeRetryPolicy>(
+      std::chrono::seconds(60));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub
-
-namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+std::unique_ptr<pubsub::BackoffPolicy const> DefaultBackoffPolicy() {
+  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
+      std::chrono::milliseconds(100), std::chrono::seconds(60), 1.3);
+}
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
     pubsub::ConnectionOptions const& options,
-    std::shared_ptr<PublisherStub> stub) {
+    std::shared_ptr<PublisherStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
         std::move(stub), options.tracing_options());
   }
-  return std::make_shared<pubsub::TopicAdminConnectionImpl>(std::move(stub));
+  return std::make_shared<TopicAdminConnectionImpl>(
+      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
+
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+TopicAdminConnection::~TopicAdminConnection() = default;
+
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    ConnectionOptions const& options,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  auto stub =
+      pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
+  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
+  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
+  return pubsub_internal::MakeTopicAdminConnection(options, std::move(stub),
+                                                   std::move(retry_policy),
+                                                   std::move(backoff_policy));
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
