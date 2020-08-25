@@ -27,19 +27,19 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Performs subscriber operations in Cloud Pub/Sub.
+ * Performs subscription administrative operations in Cloud Pub/Sub.
  *
- * Applications use this class to perform operations on
- * [Cloud Pub/Sub][pubsub-doc-link].
+ * Applications use this class to perform subscription administrative operations
+ * on [Cloud Pub/Sub][pubsub-doc-link].
  *
  * @par Performance
  *
- * `SubscriberClient` objects are relatively cheap to create, copy, and move.
- * However, each `SubscriberClient` object must be created with a
- * `std::shared_ptr<SubscriberConnection>`, which itself is relatively
+ * `SubscriptionAdminClient` objects are relatively cheap to create, copy, and
+ * move. However, each `SubscriptionAdminClient` object must be created with a
+ * `std::shared_ptr<SubscriptionAdminConnection>`, which itself is relatively
  * expensive to create. Therefore, connection instances should be shared when
  * possible. See the `MakeSubscriptionAdminConnection()` function and the
- * `SubscriberConnection` interface for more details.
+ * `SubscriptionAdminConnection` interface for more details.
  *
  * @par Thread Safety
  *
@@ -74,7 +74,8 @@ class SubscriptionAdminClient {
    * Create a new subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example: Create a Pull Subscription
    * @snippet samples.cc create-subscription
@@ -97,8 +98,7 @@ class SubscriptionAdminClient {
    * Get the metadata for an existing Cloud Pub/Sub subscription.
    *
    * @par Idempotency
-   * This is a read-only operation and therefore always idempotent. The library
-   * always retries this request.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc get-subscription
@@ -112,7 +112,8 @@ class SubscriptionAdminClient {
    * Update an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc update-subscription
@@ -130,8 +131,7 @@ class SubscriptionAdminClient {
    * List all the subscriptions for a given project id.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-subscriptions
@@ -144,7 +144,8 @@ class SubscriptionAdminClient {
    * Delete an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc delete-subscription
@@ -163,7 +164,8 @@ class SubscriptionAdminClient {
    * subscription into a push config.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc modify-push-config
@@ -181,7 +183,9 @@ class SubscriptionAdminClient {
    * Create a new snapshot for a subscription with a server-assigned name.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This is not an idempotent operation, repeated calls would create multiple
+   * snapshots with different names assigned by the service, and therefore
+   * it is never retried.
    *
    * @param subscription the name of the subscription
    * @param builder additional configuration for the snapshot, e.g., labels
@@ -197,7 +201,8 @@ class SubscriptionAdminClient {
    * Create a new snapshot for a subscription with a given name.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc create-snapshot-with-name
@@ -217,8 +222,7 @@ class SubscriptionAdminClient {
    * Get information about an existing snapshot.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc get-snapshot
@@ -233,7 +237,8 @@ class SubscriptionAdminClient {
    * Update an existing snapshot.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc update-snapshot
@@ -251,8 +256,7 @@ class SubscriptionAdminClient {
    * List all the snapshots for a given project id.
    *
    * @par Idempotency
-   * This operation is read-only and therefore it is always treated as
-   * idempotent.
+   * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-snapshots
@@ -265,7 +269,8 @@ class SubscriptionAdminClient {
    * Delete a snapshot.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc create-snapshot-with-name
@@ -284,7 +289,8 @@ class SubscriptionAdminClient {
    * @p timestamp are marked as unacknowledged.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc seek-with-timestamp
@@ -300,7 +306,8 @@ class SubscriptionAdminClient {
    * Seeks a subscription to @p snapshot.
    *
    * @par Idempotency
-   * This is not an idempotent operation and therefore it is never retried.
+   * This operation is idempotent, the state of the system is the same after one
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc seek-with-timestamp

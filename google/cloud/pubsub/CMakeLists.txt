@@ -36,6 +36,8 @@ add_library(
     internal/batching_publisher_connection.h
     internal/default_ack_handler_impl.cc
     internal/default_ack_handler_impl.h
+    internal/default_retry_policies.cc
+    internal/default_retry_policies.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
     internal/ordering_key_publisher_connection.cc
@@ -153,7 +155,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     add_library(
         pubsub_client_testing # cmake-format: sort
         testing/mock_publisher_stub.h testing/mock_subscriber_stub.h
-        testing/random_names.cc testing/random_names.h)
+        testing/random_names.cc testing/random_names.h
+        testing/test_retry_policies.cc testing/test_retry_policies.h)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils

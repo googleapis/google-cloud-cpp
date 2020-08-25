@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_mutation_builder.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -28,20 +29,13 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
-
-std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {
-  return absl::make_unique<pubsub::LimitedErrorCountRetryPolicy>(3);
-}
-
-std::unique_ptr<pubsub::BackoffPolicy const> TestBackoffPolicy() {
-  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
-      std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0);
-}
 
 TEST(TopicAdminConnectionTest, Create) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();

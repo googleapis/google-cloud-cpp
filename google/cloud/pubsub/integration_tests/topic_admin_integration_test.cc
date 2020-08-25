@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/testing/random_names.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
@@ -29,21 +30,14 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Not;
-
-std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {
-  return absl::make_unique<pubsub::LimitedErrorCountRetryPolicy>(3);
-}
-
-std::unique_ptr<pubsub::BackoffPolicy const> TestBackoffPolicy() {
-  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
-      std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0);
-}
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
