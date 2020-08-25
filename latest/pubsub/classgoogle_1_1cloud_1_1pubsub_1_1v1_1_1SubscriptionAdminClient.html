@@ -75,7 +75,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Performs subscriber operations in Cloud Pub/Sub.  
+<p>Performs subscription administrative operations in Cloud Pub/Sub.  
  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="subscription__admin__client_8h_source.html">google/cloud/pubsub/subscription_admin_client.h</a>&gt;</code></p>
@@ -131,10 +131,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a202e11d94a8bde97163c56cabc7e16ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Performs subscriber operations in Cloud Pub/Sub. </p>
-<p>Applications use this class to perform operations on <a href="https://cloud.google.com/pubsub/docs">Cloud Pub/Sub</a>.</p>
+<div class="textblock"><p>Performs subscription administrative operations in Cloud Pub/Sub. </p>
+<p>Applications use this class to perform subscription administrative operations on <a href="https://cloud.google.com/pubsub/docs">Cloud Pub/Sub</a>.</p>
 <dl class="section user"><dt>Performance</dt><dd></dd></dl>
-<p><code>SubscriberClient</code> objects are relatively cheap to create, copy, and move. However, each <code>SubscriberClient</code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">SubscriberConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a27b0731046edafee1df7eb2fb6b760df" title="Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.">MakeSubscriptionAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">SubscriberConnection</a></code> interface for more details.</p>
+<p><code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html" title="Performs subscription administrative operations in Cloud Pub/Sub.">SubscriptionAdminClient</a></code> objects are relatively cheap to create, copy, and move. However, each <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html" title="Performs subscription administrative operations in Cloud Pub/Sub.">SubscriptionAdminClient</a></code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html" title="A connection to Cloud Pub/Sub for subscriber operations.">SubscriptionAdminConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d" title="Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.">MakeSubscriptionAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html" title="A connection to Cloud Pub/Sub for subscriber operations.">SubscriptionAdminConnection</a></code> interface for more details.</p>
 <dl class="section user"><dt>Thread Safety</dt><dd></dd></dl>
 <p>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</p>
 <dl class="section user"><dt>Error Handling</dt><dd></dd></dl>
@@ -234,7 +234,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a new snapshot for a subscription with a server-assigned name. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation, repeated calls would create multiple snapshots with different names assigned by the service, and therefore it is never retried.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">subscription</td><td>the name of the subscription </td></tr>
@@ -243,7 +243,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00190">190</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00194">194</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +288,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a new snapshot for a subscription with a given name. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id, std::string <span class="keyword">const</span>&amp; snapshot_id) {</div><div class="line">    <span class="keyword">auto</span> snapshot = client.CreateSnapshot(</div><div class="line">        pubsub::Subscription(project_id, subscription_id),</div><div class="line">        pubsub::Snapshot(project_id, std::move(snapshot_id)));</div><div class="line">    <span class="keywordflow">if</span> (!snapshot.ok()) <span class="keywordflow">throw</span> std::runtime_error(snapshot.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The snapshot was successfully created: &quot;</span></div><div class="line">              &lt;&lt; snapshot-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -299,7 +299,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00209">209</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00214">214</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a new subscription in Cloud Pub/Sub. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example: Create a Pull Subscription</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; topic_id, std::string <span class="keyword">const</span>&amp; subscription_id) {</div><div class="line">    <span class="keyword">auto</span> subscription = client.CreateSubscription(</div><div class="line">        pubsub::Topic(project_id, std::move(topic_id)),</div><div class="line">        pubsub::Subscription(project_id, std::move(subscription_id)));</div><div class="line">    <span class="keywordflow">if</span> (!subscription)</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(subscription.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription was successfully created: &quot;</span></div><div class="line">              &lt;&lt; subscription-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section user"><dt>Example: Create a Push Subscription</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; topic_id, std::string <span class="keyword">const</span>&amp; subscription_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; endpoint) {</div><div class="line">    <span class="keyword">auto</span> sub = client.CreateSubscription(</div><div class="line">        pubsub::Topic(project_id, std::move(topic_id)),</div><div class="line">        pubsub::Subscription(project_id, std::move(subscription_id)),</div><div class="line">        pubsub::SubscriptionMutationBuilder{}.set_push_config(</div><div class="line">            pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));</div><div class="line">    <span class="keywordflow">if</span> (!sub) <span class="keywordflow">throw</span> std::runtime_error(sub.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription was successfully created: &quot;</span></div><div class="line">              &lt;&lt; sub-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -356,7 +356,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00089">89</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00090">90</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -385,7 +385,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Delete a snapshot. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id, std::string <span class="keyword">const</span>&amp; snapshot_id) {</div><div class="line">    <span class="keyword">auto</span> snapshot = client.CreateSnapshot(</div><div class="line">        pubsub::Subscription(project_id, subscription_id),</div><div class="line">        pubsub::Snapshot(project_id, std::move(snapshot_id)));</div><div class="line">    <span class="keywordflow">if</span> (!snapshot.ok()) <span class="keywordflow">throw</span> std::runtime_error(snapshot.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The snapshot was successfully created: &quot;</span></div><div class="line">              &lt;&lt; snapshot-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -394,7 +394,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00275">275</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00280">280</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -423,7 +423,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Delete an existing subscription in Cloud Pub/Sub. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id) {</div><div class="line">    <span class="keyword">auto</span> status = client.DeleteSubscription(pubsub::Subscription(</div><div class="line">        std::move(project_id), std::move(subscription_id)));</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription was successfully deleted\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -432,7 +432,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00154">154</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00155">155</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -461,7 +461,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get information about an existing snapshot. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; snapshot_id) {</div><div class="line">    <span class="keyword">auto</span> response = client.GetSnapshot(</div><div class="line">        pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));</div><div class="line">    <span class="keywordflow">if</span> (!response.ok()) <span class="keywordflow">throw</span> std::runtime_error(response.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The snapshot details are: &quot;</span> &lt;&lt; response-&gt;DebugString()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -470,7 +470,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00228">228</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00232">232</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -499,7 +499,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the metadata for an existing Cloud Pub/Sub subscription. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent. The library always retries this request.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id) {</div><div class="line">    <span class="keyword">auto</span> s = client.GetSubscription(</div><div class="line">        pubsub::Subscription(project_id, std::move(subscription_id)));</div><div class="line">    <span class="keywordflow">if</span> (!s) <span class="keywordflow">throw</span> std::runtime_error(s.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription exists and its metadata is: &quot;</span></div><div class="line">              &lt;&lt; s-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00106">106</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
@@ -531,10 +531,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>List all the snapshots for a given project id. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot list for project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;:\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; snapshot : client.ListSnapshots(project_id)) {</div><div class="line">      <span class="keywordflow">if</span> (!snapshot) <span class="keywordflow">throw</span> std::runtime_error(snapshot.status().message());</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name: &quot;</span> &lt;&lt; snapshot-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00260">260</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00264">264</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -563,7 +563,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>List all the subscriptions for a given project id. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id) {</div><div class="line">    <span class="keywordtype">int</span> count = 0;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; subscription : client.ListSubscriptions(project_id)) {</div><div class="line">      <span class="keywordflow">if</span> (!subscription)</div><div class="line">        <span class="keywordflow">throw</span> std::runtime_error(subscription.status().message());</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Subscription Name: &quot;</span> &lt;&lt; subscription-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">      ++count;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (count == 0) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;No subscriptions found in project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00139">139</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
@@ -606,7 +606,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Modifies an existing subscription's push configuration. </p>
 <p>This can change a push subscription into a pull subscription (by setting an empty push config), change the push endpoint, or change a pull subscription into a push config.</p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id, std::string <span class="keyword">const</span>&amp; endpoint) {</div><div class="line">    <span class="keyword">auto</span> status = client.ModifyPushSubscription(</div><div class="line">        pubsub::Subscription(project_id, std::move(subscription_id)),</div><div class="line">        pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint));</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription push configuration was successfully&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; modified\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -616,7 +616,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00174">174</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00176">176</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -648,7 +648,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Seeks a subscription to <code>timestamp</code>. </p>
 <p>Messages retained in the subscription that were published before <code>timestamp</code> are marked as acknowledged, while messages published after <code>timestamp</code> are marked as unacknowledged.</p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id, std::string <span class="keyword">const</span>&amp; seconds) {</div><div class="line">    <span class="keyword">auto</span> response =</div><div class="line">        client.Seek(pubsub::Subscription(project_id, subscription_id),</div><div class="line">                    std::chrono::system_clock::now() -</div><div class="line">                        std::chrono::seconds(std::stoi(seconds)));</div><div class="line">    <span class="keywordflow">if</span> (!response.ok()) <span class="keywordflow">throw</span> std::runtime_error(response.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription seek was successful: &quot;</span></div><div class="line">              &lt;&lt; response-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/pubsub/docs/replay-overview">https://cloud.google.com/pubsub/docs/replay-overview</a> for a detailed description of Cloud Pub/Sub's <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to timestamp.">Seek()</a></code> functionality. </dd></dl>
 
@@ -683,7 +683,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Seeks a subscription to <code>snapshot</code>. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id, std::string <span class="keyword">const</span>&amp; seconds) {</div><div class="line">    <span class="keyword">auto</span> response =</div><div class="line">        client.Seek(pubsub::Subscription(project_id, subscription_id),</div><div class="line">                    std::chrono::system_clock::now() -</div><div class="line">                        std::chrono::seconds(std::stoi(seconds)));</div><div class="line">    <span class="keywordflow">if</span> (!response.ok()) <span class="keywordflow">throw</span> std::runtime_error(response.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription seek was successful: &quot;</span></div><div class="line">              &lt;&lt; response-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/pubsub/docs/replay-overview">https://cloud.google.com/pubsub/docs/replay-overview</a> for a detailed description of Cloud Pub/Sub's <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to timestamp.">Seek()</a></code> functionality. </dd></dl>
 
@@ -726,7 +726,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update an existing snapshot. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string snapshot_id) {</div><div class="line">    <span class="keyword">auto</span> snap = client.UpdateSnapshot(</div><div class="line">        pubsub::Snapshot(project_id, std::move(snapshot_id)),</div><div class="line">        pubsub::SnapshotMutationBuilder{}.add_label(<span class="stringliteral">&quot;samples-cpp&quot;</span>, <span class="stringliteral">&quot;gcp&quot;</span>));</div><div class="line">    <span class="keywordflow">if</span> (!snap.ok()) <span class="keywordflow">return</span>;  <span class="comment">// TODO(#4792) - emulator lacks UpdateSnapshot()</span></div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The snapshot was successfully updated: &quot;</span></div><div class="line">              &lt;&lt; snap-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -736,7 +736,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00244">244</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00249">249</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -775,7 +775,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update an existing subscription in Cloud Pub/Sub. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::SubscriptionAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; subscription_id) {</div><div class="line">    <span class="keyword">auto</span> s = client.UpdateSubscription(</div><div class="line">        pubsub::Subscription(project_id, std::move(subscription_id)),</div><div class="line">        pubsub::SubscriptionMutationBuilder{}.set_ack_deadline(</div><div class="line">            std::chrono::seconds(60)));</div><div class="line">    <span class="keywordflow">if</span> (!s) <span class="keywordflow">throw</span> std::runtime_error(s.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription has been updated to: &quot;</span> &lt;&lt; s-&gt;DebugString()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -785,7 +785,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00123">123</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__client_8h_source.html#l00124">124</a> of file <a class="el" href="subscription__admin__client_8h_source.html">subscription_admin_client.h</a>.</p>
 
 </div>
 </div>

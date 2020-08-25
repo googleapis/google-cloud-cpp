@@ -72,8 +72,10 @@ $(function() {
 <div class="title">subscription_admin_connection.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="connection__options_8h_source.html">google/cloud/pubsub/connection_options.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="backoff__policy_8h_source.html">google/cloud/pubsub/backoff_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="connection__options_8h_source.html">google/cloud/pubsub/connection_options.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="subscriber__stub_8h_source.html">google/cloud/pubsub/internal/subscriber_stub.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="retry__policy_8h_source.html">google/cloud/pubsub/retry_policy.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="snapshot_8h_source.html">google/cloud/pubsub/snapshot.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="subscription_8h_source.html">google/cloud/pubsub/subscription.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/pubsub/version.h</a>&quot;</code><br />
@@ -151,9 +153,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a27b0731046edafee1df7eb2fb6b760df"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SubscriptionAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a27b0731046edafee1df7eb2fb6b760df">google::cloud::pubsub::v1::MakeSubscriptionAdminConnection</a> (ConnectionOptions const  &amp;options=ConnectionOptions())</td></tr>
-<tr class="memdesc:a27b0731046edafee1df7eb2fb6b760df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">SubscriberConnection</a> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a27b0731046edafee1df7eb2fb6b760df">More...</a><br /></td></tr>
-<tr class="separator:a27b0731046edafee1df7eb2fb6b760df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06670f1b941887915dbe0671c4fe8f3d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SubscriptionAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">google::cloud::pubsub::v1::MakeSubscriptionAdminConnection</a> (ConnectionOptions const  &amp;options=ConnectionOptions(), std::unique_ptr&lt; pubsub::RetryPolicy const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="elRef" doxygen="/v/cmake-out/ci-fedora-install-31-clang-tidy/google/cloud/cloud.tag:https://googleapis.dev/google-cloud-common/master/" href="https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
+<tr class="memdesc:a06670f1b941887915dbe0671c4fe8f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">SubscriberConnection</a> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">More...</a><br /></td></tr>
+<tr class="separator:a06670f1b941887915dbe0671c4fe8f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

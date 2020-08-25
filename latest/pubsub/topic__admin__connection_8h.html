@@ -72,8 +72,10 @@ $(function() {
 <div class="title">topic_admin_connection.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="connection__options_8h_source.html">google/cloud/pubsub/connection_options.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="backoff__policy_8h_source.html">google/cloud/pubsub/backoff_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="connection__options_8h_source.html">google/cloud/pubsub/connection_options.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="publisher__stub_8h_source.html">google/cloud/pubsub/internal/publisher_stub.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="retry__policy_8h_source.html">google/cloud/pubsub/retry_policy.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="subscription_8h_source.html">google/cloud/pubsub/subscription.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="topic_8h_source.html">google/cloud/pubsub/topic.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/pubsub/version.h</a>&quot;</code><br />
@@ -87,10 +89,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html">google::cloud::pubsub::v1::TopicAdminConnection</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub for topic-related administrative operations.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1CreateTopicParams.html">google::cloud::pubsub::v1::TopicAdminConnection::CreateTopicParams</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the arguments for each member function.  <a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1CreateTopicParams.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html#af68124bb129b63d382100a86730655ee" title="Defines the interface for TopicAdminClient::CreateTopic()">CreateTopic()</a></code>  <a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1CreateTopicParams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1GetTopicParams.html">google::cloud::pubsub::v1::TopicAdminConnection::GetTopicParams</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html#a25b06ae1e0161abf2b48e6def6cca10e" title="Defines the interface for TopicAdminClient::GetTopic()">GetTopic()</a></code>  <a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1GetTopicParams.html#details">More...</a><br /></td></tr>
@@ -142,9 +144,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a47e54a2141a9f97647b3ceeb90986467"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; TopicAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a47e54a2141a9f97647b3ceeb90986467">google::cloud::pubsub::v1::MakeTopicAdminConnection</a> (ConnectionOptions const  &amp;options=ConnectionOptions())</td></tr>
-<tr class="memdesc:a47e54a2141a9f97647b3ceeb90986467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a> object to work with Cloud Pub/Sub publisher APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a47e54a2141a9f97647b3ceeb90986467">More...</a><br /></td></tr>
-<tr class="separator:a47e54a2141a9f97647b3ceeb90986467"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; TopicAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">google::cloud::pubsub::v1::MakeTopicAdminConnection</a> (ConnectionOptions const  &amp;options=ConnectionOptions(), std::unique_ptr&lt; pubsub::RetryPolicy const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="elRef" doxygen="/v/cmake-out/ci-fedora-install-31-clang-tidy/google/cloud/cloud.tag:https://googleapis.dev/google-cloud-common/master/" href="https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
+<tr class="memdesc:a7e485b0569d0f7fd44a4cf897e43a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">More...</a><br /></td></tr>
+<tr class="separator:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a98e0197518e30291d1645bafdf7691a6',1,'google::cloud::pubsub::v1']]],
+  ['limitedtimeretrypolicy',['LimitedTimeRetryPolicy',['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a838db478485c19cba0f1e0e08ea30332',1,'google::cloud::pubsub::v1']]],
   ['lineno',['lineno',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a0e897d2f7fa3f45b639a8517e203cad4',1,'google::cloud::v1::LogRecord']]],
   ['listsnapshots',['ListSnapshots',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8684e958d835d950c44047ef513a0200',1,'google::cloud::pubsub::v1::SubscriptionAdminClient::ListSnapshots()'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#abb01e3a7d6924855e0d773051e5ee3bf',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection::ListSnapshots()']]],
   ['listsnapshotsparams',['ListSnapshotsParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],

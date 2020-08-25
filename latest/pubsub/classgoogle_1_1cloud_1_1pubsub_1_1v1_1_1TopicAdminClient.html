@@ -116,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Performs publisher operations in Cloud Pub/Sub. </p>
 <p>Applications use this class to perform operations on <a href="https://cloud.google.com/pubsub/docs">Cloud Pub/Sub</a>.</p>
 <dl class="section user"><dt>Performance</dt><dd></dd></dl>
-<p><code>PublisherClient</code> objects are cheap to create, copy, and move. However, each <code>PublisherClient</code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a47e54a2141a9f97647b3ceeb90986467" title="Returns an PublisherConnection object to work with Cloud Pub/Sub publisher APIs.">MakeTopicAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> interface for more details.</p>
+<p><code>PublisherClient</code> objects are cheap to create, copy, and move. However, each <code>PublisherClient</code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348" title="Returns a TopicAdminConnection object to work with TopicAdminClient.">MakeTopicAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> interface for more details.</p>
 <dl class="section user"><dt>Thread Safety</dt><dd></dd></dl>
 <p>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</p>
 <dl class="section user"><dt>Error Handling</dt><dd></dd></dl>
@@ -206,8 +206,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a new topic in Cloud Pub/Sub. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = client.CreateTopic(pubsub::TopicMutationBuilder(</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id))));</div><div class="line">    <span class="keywordflow">if</span> (!topic) <span class="keywordflow">throw</span> std::runtime_error(topic.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic was successfully created: &quot;</span> &lt;&lt; topic-&gt;DebugString()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, as it succeeds only once, therefore the library retries the call. It might return a status code of <code>kAlreadyExists</code> if successful more than one time.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = client.CreateTopic(pubsub::TopicMutationBuilder(</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id))));</div><div class="line">    <span class="comment">// Note that kAlreadyExist is a possible error when the library retries.</span></div><div class="line">    <span class="keywordflow">if</span> (!topic) <span class="keywordflow">throw</span> std::runtime_error(topic.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic was successfully created: &quot;</span> &lt;&lt; topic-&gt;DebugString()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">builder</td><td>the configuration for the new topic, includes the name. </td></tr>
@@ -215,7 +215,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00083">83</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00085">85</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -244,8 +244,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Delete an existing topic in Cloud Pub/Sub. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; topic_id) {</div><div class="line">    <span class="keyword">auto</span> status = client.DeleteTopic(</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id)));</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic was successfully deleted\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string <span class="keyword">const</span>&amp; project_id,</div><div class="line">     std::string <span class="keyword">const</span>&amp; topic_id) {</div><div class="line">    <span class="keyword">auto</span> status = client.DeleteTopic(</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id)));</div><div class="line">    <span class="comment">// Note that kNotFound is a possible error when the library retries.</span></div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic was successfully deleted\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">topic</td><td>the name of the topic to be deleted. </td></tr>
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00142">142</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00145">145</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -284,7 +284,7 @@ Public Member Functions</h2></td></tr>
 <p>Detaches an existing subscription. </p>
 <p>This operation stops the subscription from receiving any further messages, it drops any messages still retained by the subscription, and any outstanding pull requests will fail with <code>FAILED_PRECONDITION</code>.</p>
 <dl class="section warning"><dt>Warning</dt><dd>this feature is <b>not GA</b> and may require registering your project in an early access program.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and therefore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string subscription_id) {</div><div class="line">    <span class="keyword">auto</span> response = client.DetachSubscription(pubsub::Subscription(</div><div class="line">        std::move(project_id), std::move(subscription_id)));</div><div class="line">    <span class="keywordflow">if</span> (!response.ok()) <span class="keywordflow">return</span>;  <span class="comment">// TODO(#4792) - not implemented in emulator</span></div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The subscription was successfully detached: &quot;</span></div><div class="line">              &lt;&lt; response-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -293,7 +293,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00164">164</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00168">168</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -325,7 +325,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = client.GetTopic(</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id)));</div><div class="line">    <span class="keywordflow">if</span> (!topic) <span class="keywordflow">throw</span> std::runtime_error(topic.status().message());</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic information was successfully retrieved: &quot;</span></div><div class="line">              &lt;&lt; topic-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00097">97</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00099">99</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -354,10 +354,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>List all the topics for a given project id. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string <span class="keyword">const</span>&amp; project_id) {</div><div class="line">    <span class="keywordtype">int</span> count = 0;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; topic : client.ListTopics(project_id)) {</div><div class="line">      <span class="keywordflow">if</span> (!topic) <span class="keywordflow">throw</span> std::runtime_error(topic.status().message());</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Topic Name: &quot;</span> &lt;&lt; topic-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">      ++count;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (count == 0) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;No topics found in project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00127">127</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00129">129</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -387,10 +387,10 @@ Public Member Functions</h2></td></tr>
 
 <p>List all the subscription names for a given topic. </p>
 <dl class="section note"><dt>Note</dt><dd>The returned range contains fully qualified snapshot names, e.g., <code>"projects/my-project/snapshots/my-subscription"</code>. Applications may need to parse these names to use with other APIs.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> topic =</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot list for topic &quot;</span> &lt;&lt; topic &lt;&lt; <span class="stringliteral">&quot;:\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; name : client.ListTopicSnapshots(topic)) {</div><div class="line">      <span class="keywordflow">if</span> (!name) <span class="keywordflow">throw</span> std::runtime_error(name.status().message());</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; *name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00203">203</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00205">205</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -420,10 +420,10 @@ Public Member Functions</h2></td></tr>
 
 <p>List all the subscription names for a given topic. </p>
 <dl class="section note"><dt>Note</dt><dd>The returned range contains fully qualified subscription names, e.g., <code>"projects/my-project/subscriptions/my-subscription"</code>. Applications may need to parse these names to use with other APIs.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always treated as idempotent.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore always idempotent and retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> topic =</div><div class="line">        pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Subscription list for topic &quot;</span> &lt;&lt; topic &lt;&lt; <span class="stringliteral">&quot;:\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; name : client.ListTopicSubscriptions(topic)) {</div><div class="line">      <span class="keywordflow">if</span> (!name) <span class="keywordflow">throw</span> std::runtime_error(name.status().message());</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; *name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00184">184</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00187">187</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -452,7 +452,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update the configuration of an existing Cloud Pub/Sub topic. </p>
-<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation and therefore it is never retried.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent, the state of the system is the same after one or several calls, and thefeore it is always retried.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span>pubsub = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  [](pubsub::TopicAdminClient client, std::string project_id,</div><div class="line">     std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = client.UpdateTopic(</div><div class="line">        pubsub::TopicMutationBuilder(</div><div class="line">            pubsub::Topic(std::move(project_id), std::move(topic_id)))</div><div class="line">            .add_label(<span class="stringliteral">&quot;test-key&quot;</span>, <span class="stringliteral">&quot;test-value&quot;</span>));</div><div class="line">    <span class="keywordflow">if</span> (!topic) <span class="keywordflow">return</span>;  <span class="comment">// TODO(#4792) - emulator lacks UpdateTopic()</span></div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The topic was successfully updated: &quot;</span> &lt;&lt; topic-&gt;DebugString()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -461,7 +461,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00112">112</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00115">115</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>

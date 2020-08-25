@@ -2,6 +2,8 @@ var searchData=
 [
   ['terminate_5fhandler_2ecc',['terminate_handler.cc',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8cc.html',1,'']]],
   ['terminate_5fhandler_2eh',['terminate_handler.h',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8h.html',1,'']]],
+  ['test_5fretry_5fpolicies_2ecc',['test_retry_policies.cc',['../test__retry__policies_8cc.html',1,'']]],
+  ['test_5fretry_5fpolicies_2eh',['test_retry_policies.h',['../test__retry__policies_8h.html',1,'']]],
   ['topic_2ecc',['topic.cc',['../topic_8cc.html',1,'']]],
   ['topic_2eh',['topic.h',['../topic_8h.html',1,'']]],
   ['topic_5fadmin_5fclient_2ecc',['topic_admin_client.cc',['../topic__admin__client_8cc.html',1,'']]],
