@@ -45,6 +45,8 @@ add_library(
     internal/publisher_metadata.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
+    internal/session_shutdown_manager.cc
+    internal/session_shutdown_manager.h
     internal/subscriber_logging.cc
     internal/subscriber_logging.h
     internal/subscriber_metadata.cc
@@ -168,6 +170,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
+        internal/session_shutdown_manager_test.cc
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscription_concurrency_control_test.cc
