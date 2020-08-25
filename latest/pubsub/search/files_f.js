@@ -1,6 +1,9 @@
 var searchData=
 [
   ['samples_2ecc',['samples.cc',['../samples_8cc.html',1,'']]],
+  ['session_5fshutdown_5fmanager_2ecc',['session_shutdown_manager.cc',['../session__shutdown__manager_8cc.html',1,'']]],
+  ['session_5fshutdown_5fmanager_2eh',['session_shutdown_manager.h',['../session__shutdown__manager_8h.html',1,'']]],
+  ['session_5fshutdown_5fmanager_5ftest_2ecc',['session_shutdown_manager_test.cc',['../session__shutdown__manager__test_8cc.html',1,'']]],
   ['snapshot_2ecc',['snapshot.cc',['../snapshot_8cc.html',1,'']]],
   ['snapshot_2eh',['snapshot.h',['../snapshot_8h.html',1,'']]],
   ['snapshot_5fmutation_5fbuilder_2ecc',['snapshot_mutation_builder.cc',['../snapshot__mutation__builder_8cc.html',1,'']]],
