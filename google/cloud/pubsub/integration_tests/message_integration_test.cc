@@ -64,7 +64,9 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   auto subscription_metadata = subscription_admin.CreateSubscription(
       topic, subscription,
       SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
-  ASSERT_STATUS_OK(subscription_metadata);
+  ASSERT_THAT(
+      subscription_metadata,
+      AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
 
   auto publisher = Publisher(MakePublisherConnection(topic, {}));
   auto subscriber = Subscriber(MakeSubscriberConnection());
@@ -112,7 +114,8 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   EXPECT_STATUS_OK(result.get());
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
-  ASSERT_STATUS_OK(delete_response);
+  EXPECT_THAT(delete_response, AnyOf(StatusIs(StatusCode::kOk),
+                                     StatusIs(StatusCode::kNotFound)));
 }
 
 }  // namespace
