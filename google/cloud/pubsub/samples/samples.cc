@@ -49,6 +49,10 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
     auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
     // Note that kAlreadyExist is a possible error when the library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
     if (!topic) throw std::runtime_error(topic.status().message());
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
@@ -122,7 +126,11 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string const& topic_id) {
     auto status = client.DeleteTopic(
         pubsub::Topic(std::move(project_id), std::move(topic_id)));
-    // Note that kNotFound is a possible error when the library retries.
+    // Note that kNotFound is a possible result when the library retries.
+    if (status.code() == google::cloud::StatusCode::kNotFound) {
+      std::cout << "The topic was not found\n";
+      return;
+    }
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The topic was successfully deleted\n";
@@ -190,14 +198,17 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
-    auto subscription = client.CreateSubscription(
+    auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)));
-    if (!subscription)
-      throw std::runtime_error(subscription.status().message());
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
 
     std::cout << "The subscription was successfully created: "
-              << subscription->DebugString() << "\n";
+              << sub->DebugString() << "\n";
   }
   //! [END pubsub_create_pull_subscription] [create-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
@@ -216,6 +227,10 @@ void CreatePushSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionMutationBuilder{}.set_push_config(
             pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
     if (!sub) throw std::runtime_error(sub.status().message());
 
     std::cout << "The subscription was successfully created: "
@@ -231,12 +246,12 @@ void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
-    auto s = client.GetSubscription(
+    auto sub = client.GetSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)));
-    if (!s) throw std::runtime_error(s.status().message());
+    if (!sub) throw std::runtime_error(sub.status().message());
 
     std::cout << "The subscription exists and its metadata is: "
-              << s->DebugString() << "\n";
+              << sub->DebugString() << "\n";
   }
   //! [get-subscription]
   (std::move(client), argv.at(0), argv.at(1));
@@ -289,6 +304,11 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& subscription_id) {
     auto status = client.DeleteSubscription(pubsub::Subscription(
         std::move(project_id), std::move(subscription_id)));
+    // Note that kNotFound is a possible result when the library retries.
+    if (status.code() == google::cloud::StatusCode::kNotFound) {
+      std::cout << "The subscription was not found\n";
+      return;
+    }
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The subscription was successfully deleted\n";
@@ -324,6 +344,10 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
     auto snapshot = client.CreateSnapshot(
         pubsub::Subscription(project_id, subscription_id),
         pubsub::Snapshot(project_id, std::move(snapshot_id)));
+    if (snapshot.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The snapshot already exists\n";
+      return;
+    }
     if (!snapshot.ok()) throw std::runtime_error(snapshot.status().message());
 
     std::cout << "The snapshot was successfully created: "
@@ -391,6 +415,11 @@ void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& snapshot_id) {
     auto status = client.DeleteSnapshot(
         pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
+    // Note that kNotFound is a possible result when the library retries.
+    if (status.code() == google::cloud::StatusCode::kNotFound) {
+      std::cout << "The snapshot was not found\n";
+      return;
+    }
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "The snapshot was successfully deleted\n";
@@ -850,7 +879,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
-  std::cout << "\nRunning CreateTopic() sample" << std::endl;
+  std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
+  CreateTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
@@ -865,7 +897,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(topic_admin_client, {project_id});
 
-  std::cout << "\nRunning CreateSubscription() sample" << std::endl;
+  std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
 
@@ -883,7 +919,12 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto const endpoint1 = "https://" + project_id + ".appspot.com/push1";
   auto const endpoint2 = "https://" + project_id + ".appspot.com/push2";
-  std::cout << "\nRunning CreatePushSubscription() sample" << std::endl;
+  std::cout << "\nRunning CreatePushSubscription() sample [1]" << std::endl;
+  CreatePushSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, push_subscription_id, endpoint1});
+
+  std::cout << "\nRunning CreatePushSubscription() sample [2]" << std::endl;
   CreatePushSubscription(
       subscription_admin_client,
       {project_id, topic_id, push_subscription_id, endpoint1});
@@ -897,7 +938,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(push_subscription_id)});
 
-  std::cout << "\nRunning CreateSnapshot() sample" << std::endl;
+  std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
+  CreateSnapshot(subscription_admin_client,
+                 {project_id, subscription_id, snapshot_id});
+
+  std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
   CreateSnapshot(subscription_admin_client,
                  {project_id, subscription_id, snapshot_id});
 
@@ -917,7 +962,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   SeekWithSnapshot(subscription_admin_client,
                    {project_id, subscription_id, snapshot_id});
 
-  std::cout << "\nRunning DeleteSnapshot() sample" << std::endl;
+  std::cout << "\nRunning DeleteSnapshot() sample [1]" << std::endl;
+  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
+
+  std::cout << "\nRunning DeleteSnapshot() sample [2]" << std::endl;
   DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
   std::cout << "\nRunning SeekWithTimestamp() sample" << std::endl;
@@ -977,7 +1025,13 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning delete-topic sample" << std::endl;
+  std::cout << "\nRunning DeleteSubscription() sample [3]" << std::endl;
+  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 }
 

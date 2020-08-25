@@ -91,7 +91,8 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   // complicate this test with little benefit.
 
   auto delete_response = publisher.DeleteTopic(topic);
-  ASSERT_STATUS_OK(delete_response);
+  EXPECT_THAT(delete_response, AnyOf(StatusIs(StatusCode::kOk),
+                                     StatusIs(StatusCode::kNotFound)));
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
 }

@@ -102,7 +102,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
       topic, subscription,
       SubscriptionMutationBuilder{}.set_push_config(
           PushConfigBuilder{}.set_push_endpoint(endpoint)));
-  ASSERT_STATUS_OK(create_response);
+  ASSERT_THAT(create_response, AnyOf(StatusIs(StatusCode::kOk),
+                                     StatusIs(StatusCode::kAlreadyExists)));
 
   auto get_response = subscription_admin.GetSubscription(subscription);
   ASSERT_STATUS_OK(get_response);
@@ -185,7 +186,8 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   //  }
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
-  ASSERT_STATUS_OK(delete_response);
+  EXPECT_THAT(delete_response, AnyOf(StatusIs(StatusCode::kOk),
+                                     StatusIs(StatusCode::kNotFound)));
 
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
