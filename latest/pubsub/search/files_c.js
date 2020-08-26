@@ -13,6 +13,7 @@ var searchData=
   ['publisher_5fmetadata_2eh',['publisher_metadata.h',['../publisher__metadata_8h.html',1,'']]],
   ['publisher_5fmetadata_5ftest_2ecc',['publisher_metadata_test.cc',['../publisher__metadata__test_8cc.html',1,'']]],
   ['publisher_5foption_5ftest_2ecc',['publisher_option_test.cc',['../publisher__option__test_8cc.html',1,'']]],
+  ['publisher_5foptions_2ecc',['publisher_options.cc',['../publisher__options_8cc.html',1,'']]],
   ['publisher_5foptions_2eh',['publisher_options.h',['../publisher__options_8h.html',1,'']]],
   ['publisher_5fstub_2ecc',['publisher_stub.cc',['../publisher__stub_8cc.html',1,'']]],
   ['publisher_5fstub_2eh',['publisher_stub.h',['../publisher__stub_8h.html',1,'']]],
