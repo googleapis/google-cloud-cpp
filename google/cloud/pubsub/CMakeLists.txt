@@ -68,6 +68,7 @@ add_library(
     publisher.h
     publisher_connection.cc
     publisher_connection.h
+    publisher_options.cc
     publisher_options.h
     retry_policy.h
     snapshot.cc
