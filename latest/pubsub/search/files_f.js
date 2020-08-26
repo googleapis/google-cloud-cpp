@@ -13,6 +13,7 @@ var searchData=
   ['status_2ecc',['status.cc',['https://googleapis.dev/google-cloud-common/master/status_8cc.html',1,'']]],
   ['status_2eh',['status.h',['https://googleapis.dev/google-cloud-common/master/status_8h.html',1,'']]],
   ['status_5for_2eh',['status_or.h',['https://googleapis.dev/google-cloud-common/master/status__or_8h.html',1,'']]],
+  ['subscriber_2dmock_2edox',['subscriber-mock.dox',['../subscriber-mock_8dox.html',1,'']]],
   ['subscriber_2eh',['subscriber.h',['../subscriber_8h.html',1,'']]],
   ['subscriber_5fconnection_2ecc',['subscriber_connection.cc',['../subscriber__connection_8cc.html',1,'']]],
   ['subscriber_5fconnection_2eh',['subscriber_connection.h',['../subscriber__connection_8h.html',1,'']]],

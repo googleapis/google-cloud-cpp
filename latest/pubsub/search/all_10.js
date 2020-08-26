@@ -61,6 +61,7 @@ var searchData=
   ['subscribe',['Subscribe',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html#a219d6e3a03a9db4d4c93bb9bb466ca04',1,'google::cloud::pubsub::v1::Subscriber::Subscribe()'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#adaba3a99aa57d61252088a6ffe9a90c6',1,'google::cloud::pubsub::v1::SubscriberConnection::Subscribe()']]],
   ['subscribeparams',['SubscribeParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html',1,'google::cloud::pubsub::v1::SubscriberConnection']]],
   ['subscriber',['Subscriber',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html',1,'google::cloud::pubsub::v1::Subscriber'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html#a2475af1f53fa45304228aeb6b79027fa',1,'google::cloud::pubsub::v1::Subscriber::Subscriber()']]],
+  ['subscriber_2dmock_2edox',['subscriber-mock.dox',['../subscriber-mock_8dox.html',1,'']]],
   ['subscriber_2eh',['subscriber.h',['../subscriber_8h.html',1,'']]],
   ['subscriber_5fconnection_2ecc',['subscriber_connection.cc',['../subscriber__connection_8cc.html',1,'']]],
   ['subscriber_5fconnection_2eh',['subscriber_connection.h',['../subscriber__connection_8h.html',1,'']]],

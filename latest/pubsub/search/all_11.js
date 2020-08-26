@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['testing_20your_20cloud_20pub_2fsub_20publisher_20application_20with_20googlemock',['Testing your Cloud Pub/Sub publisher application with googlemock',['../publisher-mock.html',1,'']]],
+  ['testing_20your_20cloud_20pub_2fsub_20subscriber_20application_20with_20googlemock',['Testing your Cloud Pub/Sub subscriber application with googlemock',['../subscriber-mock.html',1,'']]],
   ['terminate',['Terminate',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#abb6b83697c07e08cd3919188c4977c00',1,'google::cloud::v1']]],
   ['terminate_5fhandler_2ecc',['terminate_handler.cc',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8cc.html',1,'']]],
   ['terminate_5fhandler_2eh',['terminate_handler.h',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8h.html',1,'']]],

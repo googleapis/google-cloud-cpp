@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "gk",
   9: "fmos",
   10: "g",
-  11: "c"
+  11: "ct"
 };
 
 var indexSectionNames =
