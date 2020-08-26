@@ -111,7 +111,8 @@ there is no value.
 
 ## Next Steps
 
-<!-- TODO(#4620) - write a sample for mocking * @ref pubsub-mocking -->
+- @ref publisher-mock
+- @ref subscriber-mock
 
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'

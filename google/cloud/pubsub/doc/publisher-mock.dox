@@ -1,0 +1,51 @@
+/*!
+
+@page publisher-mock Testing your Cloud Pub/Sub publisher application with googlemock
+
+This document describes how to test your own Cloud Pub/Sub application using
+the Cloud Pub/Sub C++ client library, [Google Test][googletest-link] and the
+and [Google Test Mocking Framework][googlemock-link].
+
+### Mocking a Successful `Publisher::Publish()` call
+
+First include the headers for the Cloud Pub/Sub Publisher Client, the mocking
+class, and the Google Mock framework.
+
+@snippet mock_publisher.cc required-includes
+
+The example uses a number of aliases to save typing and improve readability:
+
+@snippet mock_publisher.cc helper-aliases
+
+Create a mocking object for `google::cloud::pubsub::PublisherConnection`:
+
+@snippet mock_publisher.cc create-mock
+
+It is customary to first setup the expectations for your mock, and then
+write the rest of the code:
+
+@snippet mock_publisher.cc setup-expectations
+
+With the expectations in place, create a
+`google::cloud::pubsub::Publisher` object:
+
+@snippet mock_publisher.cc create-client
+
+And then make calls on the client as usual:
+
+@snippet mock_publisher.cc client-call
+
+And then verify the results meet your expectations:
+
+@snippet mock_publisher.cc expected-results
+
+### Full Listing
+
+Finally we present the full code for this example:
+
+@snippet mock_publisher.cc all
+
+[googletest-link]: https://github.com/google/googletest
+[googlemock-link]: https://github.com/google/googletest/tree/master/googlemock
+
+*/

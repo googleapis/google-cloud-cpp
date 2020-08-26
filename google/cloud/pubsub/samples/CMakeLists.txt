@@ -58,7 +58,7 @@ function (pubsub_client_define_samples)
     set(pubsub_client_integration_samples # cmake-format: sort
                                           samples.cc)
     set(pubsub_client_unit_samples # cmake-format: sort
-    )
+                                   mock_publisher.cc mock_subscriber.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
