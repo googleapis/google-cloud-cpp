@@ -17,4 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 pubsub_client_unit_samples = [
+    "mock_publisher.cc",
+    "mock_subscriber.cc",
 ]

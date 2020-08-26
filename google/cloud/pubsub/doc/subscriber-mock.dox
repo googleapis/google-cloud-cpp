@@ -1,0 +1,61 @@
+/*!
+
+@page subscriber-mock Testing your Cloud Pub/Sub subscriber application with googlemock
+
+This document describes how to test your own Cloud Pub/Sub application using
+the Cloud Pub/Sub C++ client library, [Google Test][googletest-link] and the
+and [Google Test Mocking Framework][googlemock-link].
+
+### Mocking a Successful `Subscriber::Subscribe()` call
+
+First include the headers for the Cloud Pub/Sub Subscriber Client, the mocking
+class, and the Google Mock framework.
+
+@snippet mock_publisher.cc required-includes
+
+The example uses a number of aliases to save typing and improve readability:
+
+@snippet mock_subscriber.cc helper-aliases
+
+Create a mocking object for `google::cloud::pubsub::SubscriberConnection`:
+
+@snippet mock_subscriber.cc create-mock
+
+It is customary to first setup the expectations for your mock, and then
+write the rest of the code. In this case we need to create a mock
+`pubsub::AckHandler` and setup its expectation for each simulated
+message:
+
+@snippet mock_subscriber.cc setup-mock-handler
+
+To simulate the background generation of messages we use a lambda:
+
+@snippet mock_subscriber.cc message-generator
+
+This message generator is used in the `SubscriberConnection` expectations:
+
+@snippet mock_subscriber.cc setup-expectations
+
+With the expectations in place, create a
+`google::cloud::pubsub::Subscriber` object:
+
+@snippet mock_subscriber.cc create-client
+
+And then make calls on this client as usual:
+
+@snippet mock_subscriber.cc client-call
+
+And then verify the results meet your expectations:
+
+@snippet mock_subscriber.cc expected-results
+
+### Full Listing
+
+Finally we present the full code for this example:
+
+@snippet mock_subscriber.cc all
+
+[googletest-link]: https://github.com/google/googletest
+[googlemock-link]: https://github.com/google/googletest/tree/master/googlemock
+
+*/
