@@ -71,6 +71,7 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
         ":pubsub_samples_common",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client",
+        "//google/cloud/pubsub:pubsub_client_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
