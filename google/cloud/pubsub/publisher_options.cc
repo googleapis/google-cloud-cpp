@@ -13,33 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_options.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-namespace {
 
-TEST(PublisherOptions, Setters) {
-  auto const b0 = PublisherOptions{};
-  EXPECT_NE(0, b0.maximum_hold_time().count());
-  EXPECT_FALSE(b0.message_ordering());
+std::chrono::milliseconds constexpr PublisherOptions::kDefaultMaximumHoldTime;
+std::size_t constexpr PublisherOptions::kDefaultMaximumMessageCount;
+std::size_t constexpr PublisherOptions::kDefaultMaximumMessageSize;
 
-  auto const b = PublisherOptions{}
-                     .set_maximum_hold_time(std::chrono::seconds(12))
-                     .set_maximum_batch_bytes(123)
-                     .set_maximum_message_count(10)
-                     .enable_message_ordering();
-  EXPECT_EQ(10, b.maximum_message_count());
-  EXPECT_EQ(123, b.maximum_batch_bytes());
-  auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
-      std::chrono::seconds(12));
-  EXPECT_EQ(expected, b.maximum_hold_time());
-  EXPECT_TRUE(b.message_ordering());
-}
-
-}  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud

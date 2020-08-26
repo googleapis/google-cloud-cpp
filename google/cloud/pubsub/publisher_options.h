@@ -119,9 +119,13 @@ class PublisherOptions {
   }
 
  private:
-  std::chrono::microseconds maximum_hold_time_{0};
-  std::size_t maximum_message_count_{(std::numeric_limits<std::size_t>::max)()};
-  std::size_t maximum_batch_bytes_{(std::numeric_limits<std::size_t>::max)()};
+  static auto constexpr kDefaultMaximumHoldTime = std::chrono::milliseconds(10);
+  static std::size_t constexpr kDefaultMaximumMessageCount = 100;
+  static std::size_t constexpr kDefaultMaximumMessageSize = 1024 * 1024L;
+
+  std::chrono::microseconds maximum_hold_time_ = kDefaultMaximumHoldTime;
+  std::size_t maximum_message_count_ = kDefaultMaximumMessageCount;
+  std::size_t maximum_batch_bytes_ = kDefaultMaximumMessageSize;
   bool message_ordering_{false};
 };
 
