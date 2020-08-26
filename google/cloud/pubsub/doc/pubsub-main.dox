@@ -34,7 +34,6 @@ We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
 includes detailed instructions on how to compile the library for use in your
 application. You can fetch the source from [GitHub][github-link] as normal:
 
-<!-- TODO(#4582) - implement quickstart -->
 @code{.sh}
 git clone https://github.com/googleapis/google-cloud-cpp.git
 cd google-cloud-cpp/google/cloud/pubsub/quickstart
@@ -46,7 +45,7 @@ The following shows the code that you'll run in the
 `google/cloud/pubsub/quickstart/` directory, which should give you a taste of
 the Cloud Pub/Sub C++ client library API.
 
-<!-- TODO(#4582) - add a quickstart @include quickstart.cc -->
+@include quickstart.cc
 
 ## API Notes
 

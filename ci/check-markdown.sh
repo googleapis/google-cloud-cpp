@@ -23,6 +23,7 @@ fi
 declare -A -r GENERATOR_MAP=(
   ["ci/generate-markdown/generate-readme.sh"]="README.md"
   ["ci/generate-markdown/generate-bigtable-readme.sh"]="google/cloud/bigtable/README.md"
+  ["ci/generate-markdown/generate-pubsub-readme.sh"]="google/cloud/pubsub/README.md"
   ["ci/generate-markdown/generate-spanner-readme.sh"]="google/cloud/spanner/README.md"
   ["ci/generate-markdown/generate-storage-readme.sh"]="google/cloud/storage/README.md"
   ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
