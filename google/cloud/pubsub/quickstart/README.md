@@ -70,7 +70,7 @@ https://cloud.google.com/docs/authentication/production
    package for CMake. Likewise, you can install CMake on Windows using a package
    manager such as [chocolatey][choco-cmake-link], and on macOS using
    [homebrew][homebrew-cmake-link]. You can also obtain the software directly
-   from the [cmake.org](ttps://cmake.org/download/).
+   from the [cmake.org](https://cmake.org/download/).
 
 2. Install the dependencies with your favorite tools. As an example, if you use
    [vcpkg](https://github.com/Microsoft/vcpkg.git):
