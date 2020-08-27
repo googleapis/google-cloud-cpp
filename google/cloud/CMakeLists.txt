@@ -342,6 +342,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
         internal/async_read_stream_impl.h
+        internal/async_retry_loop.h
         internal/async_retry_unary_rpc.h
         internal/background_threads_impl.cc
         internal/background_threads_impl.h
@@ -350,8 +351,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/pagination_range.h
-        internal/retry_loop.cc
         internal/retry_loop.h
+        internal/retry_loop_helpers.cc
+        internal/retry_loop_helpers.h
         internal/time_utils.cc
         internal/time_utils.h)
     target_link_libraries(
@@ -381,6 +383,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
+            internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/log_wrapper_test.cc
