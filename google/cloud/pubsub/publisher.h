@@ -112,7 +112,7 @@ class Publisher {
   /**
    * Publishes a message to this publisher's topic
    *
-   * Note that the message may be be batched based on the Publisher's
+   * Note that the message may be batched based on the Publisher's
    * configuration. It could be delayed until the batch has enough messages,
    * or enough data, or enough time has elapsed. See the `PublisherOptions`
    * documentation for more details.
