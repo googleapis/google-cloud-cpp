@@ -56,7 +56,10 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
         return make_ready_future(make_status_or(response));
       });
 
-  std::atomic<int> expected_ack_id{0};
+  std::mutex ack_id_mu;
+  std::condition_variable ack_id_cv;
+  int expected_ack_id = 0;
+  auto constexpr kAckCount = 100;
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _))
       .Times(AtLeast(1))
       .WillRepeatedly(
@@ -65,8 +68,10 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
               google::pubsub::v1::AcknowledgeRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription());
             for (auto const& a : request.ack_ids()) {
+              std::lock_guard<std::mutex> lk(ack_id_mu);
               EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
               ++expected_ack_id;
+              if (expected_ack_id >= kAckCount) ack_id_cv.notify_one();
             }
             return make_ready_future(Status{});
           });
@@ -100,14 +105,15 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
     std::move(h).ack();
   };
 
-  auto session = SubscriptionSession::Create(
-      mock, cq,
-      {subscription.FullName(), handler,
-       pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1)});
-  auto response = session->Start();
-  while (expected_ack_id.load() < 100) {
-    auto s = response.wait_for(std::chrono::milliseconds(5));
-    if (s != std::future_status::timeout) break;
+  auto response =
+      CreateTestingSubscriptionSession(mock, cq,
+                                       {subscription.FullName(), handler,
+                                        pubsub::SubscriptionOptions{}
+                                            .set_message_count_watermarks(0, 1)
+                                            .set_concurrency_watermarks(0, 1)});
+  {
+    std::unique_lock<std::mutex> lk(ack_id_mu);
+    ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
   }
   response.cancel();
   EXPECT_STATUS_OK(response.get());
@@ -193,11 +199,12 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
 
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-  auto session = SubscriptionSession::Create(
-      mock, cq,
-      {subscription.FullName(), handler,
-       pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1)});
-  auto response = session->Start();
+  auto response =
+      CreateTestingSubscriptionSession(mock, cq,
+                                       {subscription.FullName(), handler,
+                                        pubsub::SubscriptionOptions{}
+                                            .set_message_count_watermarks(0, 1)
+                                            .set_concurrency_watermarks(0, 1)});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -317,14 +324,13 @@ TEST(SubscriptionSessionTest, UpdateAckDeadlines) {
   std::generate_n(std::back_inserter(pool), 4,
                   [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
 
-  auto session = SubscriptionSession::Create(
+  auto response = CreateTestingSubscriptionSession(
       mock, cq,
       {subscription.FullName(), handler,
        pubsub::SubscriptionOptions{}
+           .set_message_count_watermarks(0, 1)
            .set_concurrency_watermarks(0, 1)
            .set_max_deadline_time(std::chrono::seconds(60))});
-  session->SetTestRefreshPeriod(std::chrono::milliseconds(50));
-  auto response = session->Start();
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -387,14 +393,13 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
   };
 
   google::cloud::CompletionQueue cq;
-  auto session = SubscriptionSession::Create(
+  auto response = CreateTestingSubscriptionSession(
       mock, cq,
       {subscription.FullName(), handler,
        pubsub::SubscriptionOptions{}
+           .set_message_count_watermarks(0, 1)
            .set_concurrency_watermarks(0, 1)
            .set_max_deadline_time(std::chrono::seconds(60))});
-  session->SetTestRefreshPeriod(std::chrono::milliseconds(50));
-  auto response = session->Start();
   // Setup the system to cancel after the second message.
   auto done = enough_messages.get_future().then(
       [&](future<void>) { response.cancel(); });
@@ -447,13 +452,12 @@ TEST(SubscriptionSessionTest, ShutdownNackOnPull) {
 
   google::cloud::CompletionQueue cq;
   std::thread t{[&cq] { cq.Run(); }};
-  auto session = SubscriptionSession::Create(
+  auto response = CreateTestingSubscriptionSession(
       mock, cq,
       {subscription.FullName(), handler,
-       pubsub::SubscriptionOptions{}.set_max_deadline_time(
-           std::chrono::seconds(60))});
-  session->SetTestRefreshPeriod(std::chrono::milliseconds(50));
-  auto response = session->Start();
+       pubsub::SubscriptionOptions{}
+           .set_message_count_watermarks(0, 1)
+           .set_max_deadline_time(std::chrono::seconds(60))});
   async_pull_called.get_future().get();
   response.cancel();
 
@@ -486,19 +490,20 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
   // A number of mocks that return futures satisfied a bit after the call is
   // made. This better simulates the behavior when running against an actual
   // service.
-  auto constexpr kMaximumAcks = 5;
+  auto constexpr kMaximumAcks = 10;
   std::mutex generate_mu;
   int generate_count = 0;
 
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto generate = [&](google::cloud::CompletionQueue& cq,
                       std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::PullRequest const&) {
-    return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
-        .then([&](TimerFuture) {
+                      google::pubsub::v1::PullRequest const& r) {
+    auto const count = (std::max)(r.max_messages(), 2 * kMaximumAcks);
+    return cq.MakeRelativeTimer(std::chrono::microseconds(10))
+        .then([&generate_mu, &generate_count, count](TimerFuture) {
           std::unique_lock<std::mutex> lk(generate_mu);
           google::pubsub::v1::PullResponse response;
-          for (int i = 0; i != 2 * kMaximumAcks; ++i) {
+          for (int i = 0; i != count; ++i) {
             auto& m = *response.add_received_messages();
             m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
             m.mutable_message()->set_message_id("test-message-id-" +
@@ -513,14 +518,14 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
       [](google::cloud::CompletionQueue& cq,
          std::unique_ptr<grpc::ClientContext>,
          google::pubsub::v1::AcknowledgeRequest const&) {
-        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
             .then([](TimerFuture) { return Status{}; });
       };
   auto generate_nack_response =
       [](google::cloud::CompletionQueue& cq,
          std::unique_ptr<grpc::ClientContext>,
          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
             .then([](TimerFuture) { return Status{}; });
       };
 
@@ -544,11 +549,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
       std::move(h).ack();
     };
 
-    auto session = [&] {
-      auto s = SubscriptionSession::Create(
-          mock, background.cq(), {subscription.FullName(), handler, {}});
-      return s->Start();
-    }();
+    auto session = CreateSubscriptionSession(
+        mock, background.cq(),
+        {subscription.FullName(), handler, pubsub::SubscriptionOptions{}});
     got_one.get_future()
         .then([&session](future<void>) { session.cancel(); })
         .get();
@@ -578,19 +581,20 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   // A number of mocks that return futures satisfied a bit after the call is
   // made. This better simulates the behavior when running against an actual
   // service.
-  auto constexpr kMaximumAcks = 5;
+  auto constexpr kMaximumAcks = 20;
   std::mutex generate_mu;
   int generate_count = 0;
 
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto generate = [&](google::cloud::CompletionQueue& cq,
                       std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::PullRequest const&) {
-    return cq.MakeRelativeTimer(std::chrono::milliseconds(1))
-        .then([&](TimerFuture) {
+                      google::pubsub::v1::PullRequest const& r) {
+    auto const count = (std::max)(r.max_messages(), 2 * kMaximumAcks);
+    return cq.MakeRelativeTimer(std::chrono::microseconds(10))
+        .then([&generate_mu, &generate_count, count](TimerFuture) {
           std::unique_lock<std::mutex> lk(generate_mu);
           google::pubsub::v1::PullResponse response;
-          for (int i = 0; i != 2 * kMaximumAcks; ++i) {
+          for (int i = 0; i != count; ++i) {
             auto& m = *response.add_received_messages();
             m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
             m.mutable_message()->set_message_id("test-message-id-" +
@@ -605,14 +609,14 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
       [](google::cloud::CompletionQueue& cq,
          std::unique_ptr<grpc::ClientContext>,
          google::pubsub::v1::AcknowledgeRequest const&) {
-        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
             .then([](TimerFuture) { return Status{}; });
       };
   auto generate_nack_response =
       [](google::cloud::CompletionQueue& cq,
          std::unique_ptr<grpc::ClientContext>,
          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        return cq.MakeRelativeTimer(std::chrono::microseconds(200))
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
             .then([](TimerFuture) { return Status{}; });
       };
 
@@ -641,11 +645,8 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
       std::move(h).ack();
     };
 
-    auto session = [&] {
-      auto s = SubscriptionSession::Create(
-          mock, background.cq(), {subscription.FullName(), handler, {}});
-      return s->Start();
-    }();
+    auto session = CreateSubscriptionSession(
+        mock, background.cq(), {subscription.FullName(), handler, {}});
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return ack_count >= kMaximumAcks; });

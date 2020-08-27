@@ -122,7 +122,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
     return acks;
   };
 
-  auto done = shutdown_manager->Start();
+  auto done = shutdown_manager->Start({});
   auto response = uut->Pull(3).get();
   ASSERT_THAT(response.status(), StatusIs(StatusCode::kOk));
   EXPECT_THAT(acks(*response), ElementsAre("ack-0-0", "ack-0-1", "ack-0-2"));
@@ -181,7 +181,7 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
       background.cq(), shutdown_manager, make_timer, stub,
       "test-subscription-name", std::chrono::seconds(kTestDeadlineSeconds));
 
-  auto done = shutdown_manager->Start();
+  auto done = shutdown_manager->Start({});
   auto response = uut->Pull(3).get();
   ASSERT_THAT(response.status(), StatusIs(StatusCode::kOk));
   ASSERT_EQ(1, timers.size());
