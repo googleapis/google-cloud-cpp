@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
 
+#include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_options.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
@@ -61,10 +63,17 @@ class PublisherConnection {
  *     returned connection.
  * @param connection_options (optional) general configuration for this
  *    connection, this type is also used to configure `pubsub::Subscriber`.
+ * @param retry_policy (optional) configure the retry loop. This is only used
+ *    if `retry_publish_failures()` is enabled in @p options.
+ * @param backoff_policy (optional) configure the backoff period between
+ *    retries. This is only used if `retry_publish_failures()` is enabled in
+ *    @p options.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options,
-    ConnectionOptions connection_options = {});
+    ConnectionOptions connection_options = {},
+    std::unique_ptr<RetryPolicy const> retry_policy = {},
+    std::unique_ptr<BackoffPolicy const> backoff_policy = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -75,7 +84,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
     pubsub::ConnectionOptions connection_options,
-    std::shared_ptr<PublisherStub> stub);
+    std::shared_ptr<PublisherStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include <numeric>
 
 namespace google {
@@ -143,7 +144,17 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   pending_.clear();
   lk.unlock();
 
-  stub_->AsyncPublish(cq_, std::move(context), request).then(std::move(batch));
+  auto& stub = stub_;
+  google::cloud::internal::AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      options_.retry_publish_failures(), cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::PublishRequest const& request) {
+        return stub->AsyncPublish(cq, std::move(context), request);
+      },
+      std::move(request), __func__)
+      .then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

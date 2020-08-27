@@ -31,10 +31,13 @@ class BatchingPublisherConnection
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::PublisherOptions options,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq) {
+      google::cloud::CompletionQueue cq,
+      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(std::move(topic), std::move(options),
-                                        std::move(stub), std::move(cq)));
+        new BatchingPublisherConnection(
+            std::move(topic), std::move(options), std::move(stub),
+            std::move(cq), std::move(retry_policy), std::move(backoff_policy)));
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
@@ -44,12 +47,16 @@ class BatchingPublisherConnection
   explicit BatchingPublisherConnection(
       pubsub::Topic topic, pubsub::PublisherOptions options,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq)
+      google::cloud::CompletionQueue cq,
+      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         options_(std::move(options)),
         stub_(std::move(stub)),
-        cq_(std::move(cq)) {}
+        cq_(std::move(cq)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
 
   void OnTimer();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
@@ -60,6 +67,8 @@ class BatchingPublisherConnection
   pubsub::PublisherOptions options_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
   google::cloud::CompletionQueue cq_;
+  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
+  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 
   std::mutex mu_;
   struct Item {

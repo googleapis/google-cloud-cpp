@@ -14,8 +14,10 @@
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -25,6 +27,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -57,7 +60,8 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
       pubsub::PublisherOptions{}
           .set_maximum_message_count(4)
           .set_maximum_hold_time(std::chrono::milliseconds(50)),
-      mock, bg.cq());
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
@@ -108,7 +112,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   // due to the zero-maximum-hold-time timer expiring.
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock, cq);
+      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock, cq,
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -165,7 +170,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
       pubsub::PublisherOptions{}
           .set_maximum_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
-      mock, cq);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -218,7 +224,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_message_count(4),
-      mock, cq);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -281,7 +288,8 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_message_count(4),
-      mock, cq);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
 
   std::vector<future<void>> results;
   for (auto i : {0, 1}) {
@@ -334,10 +342,12 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
-      bg.cq());
+      bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
-    EXPECT_EQ(error_status, r.status());
+    EXPECT_THAT(r.status(),
+                StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
   };
   auto r0 =
       publisher
@@ -367,7 +377,8 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
-      bg.cq());
+      bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
     EXPECT_EQ(StatusCode::kUnknown, r.status().code());

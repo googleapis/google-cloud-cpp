@@ -115,6 +115,12 @@ class Publisher {
    * Note that the message maybe be batched based on the Publisher's
    * configuration, the message may not be immediately sent.
    *
+   * @par Idempotency
+   * This is a non-idempotent operation, by default the request is *not* retried
+   * if there is a transient error. Applications wanting to enable retries can
+   * do so by enabling the `retry_publish_failures()` parameter in the
+   * `PublisherOptions`.
+   *
    * @par Example
    * @snippet samples.cc publish
    *
