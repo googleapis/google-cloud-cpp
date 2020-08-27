@@ -17,6 +17,7 @@
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -27,19 +28,6 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-
-/// A helper function to treat all results the same way in `RetryLoop()`.
-inline Status GetResultStatus(Status status) { return status; }
-
-/// @copydoc GetResultStatus(Status)
-template <typename T>
-Status GetResultStatus(StatusOr<T> result) {
-  return std::move(result).status();
-}
-
-/// Generate an error Status for `RetryLoop()`
-Status RetryLoopError(char const* loop_message, char const* location,
-                      Status const& last_status);
 
 /**
  * A generic retry loop for gRPC operations.
