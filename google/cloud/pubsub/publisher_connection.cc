@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
@@ -48,13 +49,14 @@ class ContainingPublisherConnection : public PublisherConnection {
 PublisherConnection::~PublisherConnection() = default;
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Topic topic, PublisherOptions options,
-    ConnectionOptions connection_options) {
+    Topic topic, PublisherOptions options, ConnectionOptions connection_options,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto stub = pubsub_internal::CreateDefaultPublisherStub(connection_options,
                                                           /*channel_id=*/0);
   return pubsub_internal::MakePublisherConnection(
       std::move(topic), std::move(options), std::move(connection_options),
-      std::move(stub));
+      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -66,7 +68,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, pubsub::PublisherOptions options,
     pubsub::ConnectionOptions connection_options,
-    std::shared_ptr<PublisherStub> stub) {
+    std::shared_ptr<PublisherStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  if (!retry_policy) retry_policy = DefaultRetryPolicy();
+  if (!backoff_policy) backoff_policy = DefaultBackoffPolicy();
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
   if (connection_options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
@@ -88,13 +94,22 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
     if (options.message_ordering()) {
-      auto factory = [topic, options, stub, cq](std::string const&) {
-        return BatchingPublisherConnection::Create(topic, options, stub, cq);
+      // We need to copy these values because we will call `clone()` on them
+      // multiple times.
+      std::shared_ptr<pubsub::RetryPolicy const> retry =
+          std::move(retry_policy);
+      std::shared_ptr<pubsub::BackoffPolicy const> backoff =
+          std::move(backoff_policy);
+      auto factory = [topic, options, stub, cq, retry,
+                      backoff](std::string const&) {
+        return BatchingPublisherConnection::Create(
+            topic, options, stub, cq, retry->clone(), backoff->clone());
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
     return BatchingPublisherConnection::Create(
-        std::move(topic), std::move(options), std::move(stub), std::move(cq));
+        std::move(topic), std::move(options), std::move(stub), std::move(cq),
+        std::move(retry_policy), std::move(backoff_policy));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());

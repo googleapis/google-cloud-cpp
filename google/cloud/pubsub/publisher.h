@@ -112,8 +112,16 @@ class Publisher {
   /**
    * Publishes a message to this publisher's topic
    *
-   * Note that the message maybe be batched based on the Publisher's
-   * configuration, the message may not be immediately sent.
+   * Note that the message may be batched based on the Publisher's
+   * configuration. It could be delayed until the batch has enough messages,
+   * or enough data, or enough time has elapsed. See the `PublisherOptions`
+   * documentation for more details.
+   *
+   * @par Idempotency
+   * This is a non-idempotent operation. By default the request is *not* retried
+   * if there is a transient error. Applications wanting to retry requests can
+   * do so by enabling the `retry_publish_failures()` parameter in the
+   * `PublisherOptions`.
    *
    * @par Example
    * @snippet samples.cc publish
