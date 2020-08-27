@@ -175,7 +175,7 @@ TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), false, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
             return make_ready_future(StatusOr<int>(
@@ -186,7 +186,29 @@ TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
   EXPECT_THAT(actual.status(),
               StatusIs(StatusCode::kUnavailable,
                        AllOf(HasSubstr("test-message-try-again"),
-                             HasSubstr("Error in non-idempotent"),
+                             HasSubstr("Retry policy exhausted"),
+                             HasSubstr("test-location"))));
+}
+
+TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
+  using ms = std::chrono::milliseconds;
+  AutomaticallyCreatedBackgroundThreads background;
+  StatusOr<int> actual =
+      AsyncRetryLoop(
+          LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+          ExponentialBackoffPolicy(ms(20), ms(20), 2.0).clone(), true,
+          background.cq(),
+          [](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>, int) {
+            return make_ready_future(StatusOr<int>(
+                Status(StatusCode::kUnavailable, "test-message-try-again")));
+          },
+          42, "test-location")
+          .get();
+  EXPECT_THAT(actual.status(),
+              StatusIs(StatusCode::kUnavailable,
+                       AllOf(HasSubstr("test-message-try-again"),
+                             HasSubstr("Retry policy exhausted"),
                              HasSubstr("test-location"))));
 }
 
