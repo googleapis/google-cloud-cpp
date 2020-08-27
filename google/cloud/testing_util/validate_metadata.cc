@@ -168,8 +168,7 @@ StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
   }
   auto options = method_desc->options();
   if (!options.HasExtension(google::api::http)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Method " + method + " doesn't have a http option.");
+    return std::map<std::string, std::string>{};
   }
   auto const& http = options.GetExtension(google::api::http);
   std::string pattern;
