@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// [START pubsub_quickstart_publisher]
+//! [START pubsub_quickstart_publisher]
 #include "google/cloud/pubsub/publisher.h"
-#include "google/cloud/internal/getenv.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -32,10 +31,6 @@ int main(int argc, char* argv[]) try {
 
   // Create a namespace alias to make the code easier to read.
   namespace pubsub = google::cloud::pubsub;
-
-  std::cout << "Cloud Pub/Sub C++ Client version: "
-            << google::cloud::version_string() << "\n";
-
   auto publisher = pubsub::Publisher(
       pubsub::MakePublisherConnection(pubsub::Topic(project_id, topic_id), {}));
   auto id =
@@ -50,4 +45,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
-// [END pubsub_quickstart_publisher]
+//! [END pubsub_quickstart_publisher]
