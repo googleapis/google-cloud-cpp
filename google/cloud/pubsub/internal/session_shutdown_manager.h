@@ -59,9 +59,6 @@ class SessionShutdownManager {
     return done_.get_future();
   }
 
-  // TODO(#4790) - remove old overload.
-  future<Status> Start() { return done_.get_future(); }
-
   /**
    * Start an operation, using the current thread of control.
    *

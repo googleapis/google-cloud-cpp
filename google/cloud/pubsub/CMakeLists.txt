@@ -36,8 +36,6 @@ add_library(
     connection_options.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
-    internal/default_ack_handler_impl.cc
-    internal/default_ack_handler_impl.h
     internal/default_retry_policies.cc
     internal/default_retry_policies.h
     internal/emulator_overrides.cc
@@ -72,8 +70,6 @@ add_library(
     internal/subscription_session.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
-    internal/watermark_flow_control.cc
-    internal/watermark_flow_control.h
     message.cc
     message.h
     publisher.cc
@@ -188,7 +184,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
-        internal/default_ack_handler_impl_test.cc
         internal/emulator_overrides_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
@@ -202,7 +197,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
         internal/user_agent_prefix_test.cc
-        internal/watermark_flow_control_test.cc
         message_test.cc
         publisher_connection_test.cc
         publisher_option_test.cc
