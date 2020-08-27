@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/retry_policy.h"
 #include <thread>
 
 namespace google {
@@ -102,7 +103,8 @@ struct UnaryClientUtils {
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
       typename Signature<MemberFunction>::RequestType const& request,
-      char const* error_message, grpc::Status& status, bool retry_on_failure) {
+      char const* error_message, grpc::Status& status,
+      google::cloud::internal::Idempotency retry_on_failure) {
     return MakeCall(client, *rpc_policy, *backoff_policy,
                     metadata_update_policy, function, request, error_message,
                     status, retry_on_failure);
@@ -136,7 +138,8 @@ struct UnaryClientUtils {
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
       typename Signature<MemberFunction>::RequestType const& request,
-      char const* error_message, grpc::Status& status, bool retry_on_failure) {
+      char const* error_message, grpc::Status& status,
+      google::cloud::internal::Idempotency retry_on_failure) {
     typename Signature<MemberFunction>::ResponseType response;
     do {
       grpc::ClientContext client_context;
@@ -158,7 +161,8 @@ struct UnaryClientUtils {
       }
       auto delay = backoff_policy.OnCompletion(status);
       std::this_thread::sleep_for(delay);
-    } while (retry_on_failure);
+    } while (retry_on_failure ==
+             google::cloud::internal::Idempotency::kIdempotent);
     return response;
   }
 

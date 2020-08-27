@@ -45,7 +45,7 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 
 TEST(RetryLoopTest, Success) {
   StatusOr<int> actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), true,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       [](grpc::ClientContext&, int request) {
         return StatusOr<int>(2 * request);
       },
@@ -57,7 +57,7 @@ TEST(RetryLoopTest, Success) {
 TEST(RetryLoopTest, TransientThenSuccess) {
   int counter = 0;
   StatusOr<int> actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), true,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       [&counter](grpc::ClientContext&, int request) {
         if (++counter < 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
@@ -72,7 +72,7 @@ TEST(RetryLoopTest, TransientThenSuccess) {
 TEST(RetryLoopTest, ReturnJustStatus) {
   int counter = 0;
   Status actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), true,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       [&counter](grpc::ClientContext&, int) {
         if (++counter <= 3) {
           return Status(StatusCode::kResourceExhausted, "slow-down");
@@ -106,7 +106,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
   int counter = 0;
   std::vector<ms> sleep_for;
   StatusOr<int> actual = RetryLoopImpl(
-      TestRetryPolicy(), std::move(mock), true,
+      TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
       [&counter](grpc::ClientContext&, int request) {
         if (++counter <= 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
@@ -122,7 +122,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
 
 TEST(RetryLoopTest, TransientFailureNonIdempotent) {
   StatusOr<int> actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), false,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
@@ -135,7 +135,7 @@ TEST(RetryLoopTest, TransientFailureNonIdempotent) {
 
 TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
   StatusOr<int> actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), true,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
@@ -148,7 +148,7 @@ TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
 
 TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
   StatusOr<int> actual = RetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), true,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },

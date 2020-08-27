@@ -28,6 +28,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using google::cloud::internal::Idempotency;
 using google::cloud::internal::RetryLoop;
 
 class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
@@ -45,7 +46,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::Topic const& request) {
           return stub_->CreateTopic(context, request);
@@ -57,7 +59,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     google::pubsub::v1::GetTopicRequest request;
     request.set_topic(p.topic.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetTopicRequest const& request) {
           return stub_->GetTopic(context, request);
@@ -68,7 +71,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
       UpdateTopicParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateTopicRequest const& request) {
           return stub_->UpdateTopic(context, request);
@@ -91,7 +95,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
         [stub, retry, backoff,
          function_name](google::pubsub::v1::ListTopicsRequest const& request) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& c,
                      google::pubsub::v1::ListTopicsRequest const& r) {
                 return stub->ListTopics(c, r);
@@ -114,7 +118,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     google::pubsub::v1::DeleteTopicRequest request;
     request.set_topic(p.topic.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteTopicRequest const& request) {
           return stub_->DeleteTopic(context, request);
@@ -128,7 +133,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     request.set_subscription(p.subscription.FullName());
     grpc::ClientContext context;
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DetachSubscriptionRequest const& request) {
           return stub_->DetachSubscription(context, request);
@@ -152,7 +158,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
         [stub, retry, backoff, function_name](
             google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](
                   grpc::ClientContext& c,
                   google::pubsub::v1::ListTopicSubscriptionsRequest const& r) {
@@ -188,7 +194,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
         [stub, retry, backoff, function_name](
             google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& c,
                      google::pubsub::v1::ListTopicSnapshotsRequest const& r) {
                 return stub->ListTopicSnapshots(c, r);

@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "absl/types/optional.h"
 #include <functional>
 #include <memory>
@@ -33,22 +34,17 @@ namespace internal {
 using PartialResultSetReaderFactory =
     std::function<std::unique_ptr<PartialResultSetReader>(std::string)>;
 
-enum class Idempotency {
-  kNotIdempotent,
-  kIdempotent,
-};
-
 /**
  * A PartialResultSetReader that resumes the streaming RPC on retryable errors.
  */
 class PartialResultSetResume : public PartialResultSetReader {
  public:
   PartialResultSetResume(PartialResultSetReaderFactory factory,
-                         Idempotency is_idempotent,
+                         google::cloud::internal::Idempotency idempotency,
                          std::unique_ptr<RetryPolicy> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
-        is_idempotent_(is_idempotent),
+        idempotency_(idempotency),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
         child_(factory_(last_resume_token_)) {}
@@ -61,7 +57,7 @@ class PartialResultSetResume : public PartialResultSetReader {
 
  private:
   PartialResultSetReaderFactory factory_;
-  Idempotency is_idempotent_;
+  google::cloud::internal::Idempotency idempotency_;
   std::unique_ptr<RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
   std::string last_resume_token_;

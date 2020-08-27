@@ -24,6 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
+using google::cloud::internal::Idempotency;
 
 namespace {
 
@@ -74,7 +75,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_name(std::move(gip.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::GetInstanceRequest const& request) {
           return stub_->GetInstance(context, request);
@@ -86,7 +87,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       CreateInstanceParams p) override {
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        false,
+        Idempotency::kNonIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::CreateInstanceRequest const& request) {
           return stub_->CreateInstance(context, request);
@@ -104,7 +105,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       UpdateInstanceParams p) override {
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::UpdateInstanceRequest const& request) {
           return stub_->UpdateInstance(context, request);
@@ -123,7 +124,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_name(std::move(p.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::DeleteInstanceRequest const& request) {
           return stub_->DeleteInstance(context, request);
@@ -137,7 +138,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_name(std::move(p.instance_config_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::GetInstanceConfigRequest const& request) {
           return stub_->GetInstanceConfig(context, request);
@@ -163,7 +164,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListInstanceConfigsRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListInstanceConfigsRequest const& request) {
                 return stub->ListInstanceConfigs(context, request);
@@ -196,7 +197,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListInstancesRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListInstancesRequest const& request) {
                 return stub->ListInstances(context, request);
@@ -216,7 +217,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_resource(std::move(p.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                giam::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -228,10 +229,12 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     google::iam::v1::SetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
     *request.mutable_policy() = std::move(p.policy);
-    bool is_idempotent = !request.policy().etag().empty();
+    auto const idempotency = request.policy().etag().empty()
+                                 ? Idempotency::kNonIdempotent
+                                 : Idempotency::kIdempotent;
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        is_idempotent,
+        idempotency,
         [this](grpc::ClientContext& context,
                giam::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -248,7 +251,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     }
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                giam::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);

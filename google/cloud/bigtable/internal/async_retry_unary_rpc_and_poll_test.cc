@@ -146,7 +146,8 @@ class AsyncStartPollAfterRetryUnaryRpcTest
     auto fut = internal::AsyncStartPollAfterRetryUnaryRpc<btproto::Cluster>(
         __func__, std::move(polling_policy), std::move(rpc_retry_policy),
         std::move(rpc_backoff_policy),
-        internal::ConstantIdempotencyPolicy(false),
+        internal::ConstantIdempotencyPolicy(
+            google::cloud::internal::Idempotency::kNonIdempotent),
         std::move(metadata_update_policy), client,
         [this](grpc::ClientContext* context,
                btproto::CreateClusterRequest const& request,

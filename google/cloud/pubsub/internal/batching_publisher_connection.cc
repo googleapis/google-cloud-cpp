@@ -144,10 +144,13 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   pending_.clear();
   lk.unlock();
 
+  auto const idempotency =
+      options_.retry_publish_failures()
+          ? google::cloud::internal::Idempotency::kIdempotent
+          : google::cloud::internal::Idempotency::kNonIdempotent;
   auto& stub = stub_;
   google::cloud::internal::AsyncRetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(),
-      options_.retry_publish_failures(), cq_,
+      retry_policy_->clone(), backoff_policy_->clone(), idempotency, cq_,
       [stub](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {

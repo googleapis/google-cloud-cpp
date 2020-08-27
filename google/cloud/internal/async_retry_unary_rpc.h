@@ -17,6 +17,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/empty.pb.h>
@@ -82,11 +83,11 @@ class RetryAsyncUnaryRpc {
   static future<StatusOr<Response>> Start(
       CompletionQueue cq, char const* location,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy, bool is_idempotent,
-      AsyncCallType async_call, Request request) {
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      Idempotency idempotency, AsyncCallType async_call, Request request) {
     std::shared_ptr<RetryAsyncUnaryRpc> self(new RetryAsyncUnaryRpc(
         location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-        is_idempotent, std::move(async_call), std::move(request)));
+        idempotency, std::move(async_call), std::move(request)));
     auto future = self->final_result_.get_future();
     self->StartIteration(self, std::move(cq));
     return future;
@@ -99,12 +100,12 @@ class RetryAsyncUnaryRpc {
   RetryAsyncUnaryRpc(char const* location,
                      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                     bool is_idempotent, AsyncCallType async_call,
+                     Idempotency idempotency, AsyncCallType async_call,
                      Request request)
       : location_(location),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
-        is_idempotent_(is_idempotent),
+        idempotency_(idempotency),
         async_call_(std::move(async_call)),
         request_(std::move(request)) {}
 
@@ -115,7 +116,7 @@ class RetryAsyncUnaryRpc {
       self->final_result_.set_value(std::move(result));
       return;
     }
-    if (!self->is_idempotent_) {
+    if (self->idempotency_ == Idempotency::kNonIdempotent) {
       self->final_result_.set_value(self->DetailedStatus(
           "non-idempotent operation failed", result.status()));
       return;
@@ -164,7 +165,7 @@ class RetryAsyncUnaryRpc {
   char const* location_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  bool is_idempotent_;
+  Idempotency idempotency_;
 
   AsyncCallType async_call_;
   Request request_;
@@ -208,13 +209,13 @@ future<StatusOr<typename AsyncCallResponseType<AsyncCallT, RequestT>::type>>
 StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                        bool is_idempotent, AsyncCallType&& async_call,
+                        Idempotency idempotency, AsyncCallType&& async_call,
                         RequestType&& request) {
   return RetryAsyncUnaryRpc<RPCBackoffPolicy, RPCRetryPolicy, AsyncCallT,
                             RequestT>::Start(std::move(cq), location,
                                              std::move(rpc_retry_policy),
                                              std::move(rpc_backoff_policy),
-                                             is_idempotent,
+                                             idempotency,
                                              std::forward<AsyncCallType>(
                                                  async_call),
                                              std::forward<RequestType>(

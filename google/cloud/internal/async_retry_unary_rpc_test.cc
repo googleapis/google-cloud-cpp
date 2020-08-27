@@ -113,7 +113,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
       RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context,
               btadmin::GetTableRequest const& request,
               grpc::CompletionQueue* cq) {
@@ -162,7 +162,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
       RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
-      /*is_idempotent=*/false,
+      Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context,
               btadmin::DeleteTableRequest const& request,
               grpc::CompletionQueue* cq) {
@@ -210,7 +210,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
       RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context,
               btadmin::GetTableRequest const& request,
               grpc::CompletionQueue* cq) {
@@ -279,7 +279,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(2).clone(),
       RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context,
               btadmin::GetTableRequest const& request,
               grpc::CompletionQueue* cq) {
@@ -342,7 +342,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
       RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
-      /*is_idempotent=*/false,
+      Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context,
               btadmin::DeleteTableRequest const& request,
               grpc::CompletionQueue* cq) {

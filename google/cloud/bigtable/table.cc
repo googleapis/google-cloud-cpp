@@ -26,6 +26,9 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
+using google::cloud::internal::Idempotency;
+
 namespace {
 template <typename Request>
 void SetCommonTableOperationRequest(Request& request,
@@ -118,17 +121,20 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   // mutations won't change as the retry loop executes, so we can just compute
   // it once and use a constant value for the loop.
   auto idempotent_mutation_policy = clone_idempotent_mutation_policy();
-  bool const is_idempotent = std::all_of(
-      request.mutations().begin(), request.mutations().end(),
-      [&idempotent_mutation_policy](google::bigtable::v2::Mutation const& m) {
-        return idempotent_mutation_policy->is_idempotent(m);
-      });
+  auto const idempotency =
+      std::all_of(request.mutations().begin(), request.mutations().end(),
+                  [&idempotent_mutation_policy](
+                      google::bigtable::v2::Mutation const& m) {
+                    return idempotent_mutation_policy->is_idempotent(m);
+                  })
+          ? Idempotency::kIdempotent
+          : Idempotency::kNonIdempotent;
 
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             is_idempotent,
+             idempotency,
              [client, metadata_update_policy](
                  grpc::ClientContext* context,
                  google::bigtable::v2::MutateRowRequest const& request,
@@ -232,12 +238,13 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   for (auto& m : false_mutations) {
     *request.add_false_mutations() = std::move(m.op);
   }
-  bool const is_idempotent =
-      idempotent_mutation_policy_->is_idempotent(request);
+  auto const idempotency = idempotent_mutation_policy_->is_idempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, &DataClient::CheckAndMutateRow, request,
-      "Table::CheckAndMutateRow", status, is_idempotent);
+      "Table::CheckAndMutateRow", status, idempotency);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -260,14 +267,15 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
   for (auto& m : false_mutations) {
     *request.add_false_mutations() = std::move(m.op);
   }
-  bool const is_idempotent =
-      idempotent_mutation_policy_->is_idempotent(request);
+  auto const idempotency = idempotent_mutation_policy_->is_idempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
 
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             is_idempotent,
+             idempotency,
              [client, metadata_update_policy](
                  grpc::ClientContext* context,
                  btproto::CheckAndMutateRowRequest const& request,
@@ -363,7 +371,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/false,
+             Idempotency::kNonIdempotent,
              [client, metadata_update_policy](
                  grpc::ClientContext* context,
                  btproto::ReadModifyWriteRowRequest const& request,
