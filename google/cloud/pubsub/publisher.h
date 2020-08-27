@@ -126,6 +126,9 @@ class Publisher {
    * @par Example
    * @snippet samples.cc publish
    *
+   * @par Changing Retry Parameters Example
+   * @snippet samples.cc publisher-retry-settings
+   *
    * @return a future that becomes satisfied when the message is published or on
    *     a unrecoverable error.
    */
