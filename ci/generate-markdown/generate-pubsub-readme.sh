@@ -34,6 +34,9 @@ that process events.
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](http://semver.org/).
 
+> :warning: This library is under development and subject to breaking
+> changes without notice.
+
 ## Supported Platforms
 
 * Windows, macOS, Linux
@@ -72,6 +75,9 @@ cat <<'_EOF_'
 
 Please consult the [packaging guide](../../../doc/packaging.md) for detailed
 instructions to install the Google Cloud C++ client libraries.
+If your project uses [CMake](https://cmake.org) or [Bazel](https://bazel.build)
+check the [quickstart](quickstart/README.md) example for instructions to use
+this library in your project.
 
 ## Contributing changes
 

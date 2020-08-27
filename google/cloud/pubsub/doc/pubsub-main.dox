@@ -21,8 +21,8 @@ using the C++ client library.
 2. Make sure that [billing is enabled][billing-link] for your project.
 3. Learn about [key terms and concepts][concepts-link] for Cloud Pub/Sub.
 4. Setup the authentication for the examples:
-   - [Configure a service account][authentication-quickstart],
-   - or [login with your personal account][gcloud-quickstart]
+   - [Configure a service account][gcloud-authorizing],
+   - or [login with your personal account][gcloud-authorizing]
 
 ### Setting up your repo
 
@@ -116,8 +116,7 @@ there is no value.
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [concepts-link]: https://cloud.google.com/pubsub/docs/concepts 'Pub/Sub Concepts'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[gcloud-authorizing]: https://cloud.google.com/sdk/docs/authorizing 'Authorizing Cloud SDK tools'
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/pubsub/quickstart
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
