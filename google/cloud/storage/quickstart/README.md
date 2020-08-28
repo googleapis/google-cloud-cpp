@@ -5,9 +5,17 @@ library in your own project. These instructions assume that you have some
 experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
+## Before you begin
+
+To run the quickstart examples you will need a working Google Cloud Platform
+(GCP) project and an existing bucket.
+The [GCS quickstarts](https://cloud.google.com/storage/docs/quickstarts) cover
+the necessary steps in detail. Make a note of the GCP project id and the bucket
+name as you will need them below.
+
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, GCS requires that
+Like most Google Cloud Platform services, GCS requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
@@ -41,6 +49,10 @@ https://cloud.google.com/docs/authentication/production
    bazel build ...
    ```
 
+   Note that Bazel automatically downloads and compiles all dependencies of the
+   project. As it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
 3. Run the example, change the place holder to appropriate values:
 
    ```bash
@@ -69,6 +81,9 @@ https://cloud.google.com/docs/authentication/production
    cd $HOME/vcpkg
    ./vcpkg install google-cloud-cpp
    ```
+
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
 
 3. Configure CMake, if necessary, configure the directory where you installed
    the dependencies:

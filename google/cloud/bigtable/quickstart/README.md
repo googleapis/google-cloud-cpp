@@ -5,6 +5,14 @@ C++ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
+## Before you begin
+
+To run the quickstart examples you will need a working Google Cloud Platform
+(GCP) project, as well as a Cloud Bigtable instance and table.
+The [Cloud Bigtable quickstart][bigtable-quickstart] covers the necessary
+steps in detail. Make a note of the GCP project id, the instance id, and the
+table id as you will need them below.
+
 ## Configuring authentication for the C++ Client Library
 
 Like most Google Cloud Platform (GCP) services, Cloud Bigtable requires that
@@ -33,6 +41,9 @@ https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
 
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
+
 1. Install Bazel using [the instructions][bazel-install] from the `bazel.build`
    website.
 
@@ -43,16 +54,20 @@ https://cloud.google.com/docs/authentication/production
    bazel build ...
    ```
 
+   Note that Bazel automatically downloads and compiles all dependencies of the
+   project. As it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
 3. Run the example, change the place holder to appropriate values:
 
    ```bash
    bazel run :quickstart -- [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE]
    ```
 
-If you are using Windows or macOS there are additional instructions at the end
-of this document.
-
 ## Using with CMake
+
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
 
 1. Install CMake. The package managers for most Linux distributions include a
    package for CMake. Likewise, you can install CMake on Windows using a package
@@ -68,6 +83,9 @@ of this document.
    ./vcpkg install google-cloud-cpp
    ```
 
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
 3. Configure CMake, if necessary, configure the directory where you installed
    the dependencies:
 
@@ -82,9 +100,6 @@ of this document.
    ```bash
    .build/quickstart [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE]
    ```
-
-If you are using Windows or macOS there are additional instructions at the end
-of this document.
 
 ## Platform Specific Notes
 
@@ -132,3 +147,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [cmake-download-link]: https://cmake.org/download/
 [bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[bigtable-quickstart]: https://cloud.google.com/bigtable/docs/quickstart-cbt
