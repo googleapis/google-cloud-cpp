@@ -748,6 +748,48 @@ void PublisherConcurrencyControl(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void PublisherRetrySettings(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publisher-retry-settings <project-id> <topic-id>"};
+  }
+  //! [START pubsub_publisher_retry_settings] [publisher-retry-settings]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic),
+        pubsub::PublisherOptions{}.enable_retry_publish_failures(), {},
+        pubsub::LimitedTimeRetryPolicy(
+            /*maximum_duration=*/std::chrono::minutes(10))
+            .clone(),
+        pubsub::ExponentialBackoffPolicy(
+            /*initial_delay=*/std::chrono::milliseconds(200),
+            /*maximum_delay=*/std::chrono::seconds(45),
+            /*scaling=*/2.0)
+            .clone()));
+
+    std::vector<future<bool>> done;
+    for (char const* data : {"1", "2", "3", "go!"}) {
+      done.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([](future<StatusOr<std::string>> f) {
+                return f.get().ok();
+              }));
+    }
+    publisher.Flush();
+    int count = 0;
+    for (auto& f : done) {
+      if (f.get()) ++count;
+    }
+    std::cout << count << " messages sent successfully\n";
+  }
+  //! [END pubsub_publisher_retry_settings] [publisher-retry-settings]
+  (argv.at(0), argv.at(1));
+}
+
 void CustomBatchPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -1042,6 +1084,9 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   PublisherConcurrencyControl({project_id, topic_id});
 
+  std::cout << "\nRunning the PublisherRetrySettings() sample" << std::endl;
+  PublisherRetrySettings({project_id, topic_id});
+
   std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
   CustomBatchPublisher({project_id, topic_id});
 
@@ -1151,6 +1196,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                               SubscribeCustomAttributes),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"publisher-concurrency-control", PublisherConcurrencyControl},
+      {"publisher-retry-settings", PublisherRetrySettings},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
