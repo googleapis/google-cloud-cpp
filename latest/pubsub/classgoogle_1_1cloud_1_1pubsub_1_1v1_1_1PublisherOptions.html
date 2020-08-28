@@ -107,13 +107,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af4bb970e4bd402249c8051ddb06948bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94df7f50e7f4f61b558162014615387c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a94df7f50e7f4f61b558162014615387c">disable_message_ordering</a> ()</td></tr>
 <tr class="separator:a94df7f50e7f4f61b558162014615387c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15fa1dea86ce0d6a3eaf295576ddd002"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a15fa1dea86ce0d6a3eaf295576ddd002">retry_publish_failures</a> () const</td></tr>
+<tr class="separator:a15fa1dea86ce0d6a3eaf295576ddd002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f29aa5a29a986bb25ce6229e432df9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a2f29aa5a29a986bb25ce6229e432df9b">enable_retry_publish_failures</a> ()</td></tr>
+<tr class="separator:a2f29aa5a29a986bb25ce6229e432df9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95fbb938d1bae40d16c8d30272ebbeba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a95fbb938d1bae40d16c8d30272ebbeba">disable_retry_publish_failures</a> ()</td></tr>
+<tr class="separator:a95fbb938d1bae40d16c8d30272ebbeba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuration options for a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Publisher.html" title="Publish messages to the Cloud Pub/Sub service.">Publisher</a></code>. </p>
 <p>By default, the client library does not automatically batch messages, all messages have a maximum holding time of 0. Applications developers can use this class to change these defaults on any <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Publisher.html" title="Publish messages to the Cloud Pub/Sub service.">Publisher</a></code> object they create.</p>
 <dl class="section warning"><dt>Warning</dt><dd>TODO(#4808) - we are planning to change this default.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Applications developers may want to consider batching messages, specially if their messages have small payloads. Consult the Cloud Pub/Sub <a href="https://cloud.google.com/pubsub/pricing">pricing page</a> for details.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::future;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](std::string project_id, std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    <span class="keyword">auto</span> publisher = pubsub::Publisher(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7ddc0692d85e600e30804e67a7ff0e1e">pubsub::MakePublisherConnection</a>(</div><div class="line">        std::move(topic),</div><div class="line">        pubsub::PublisherOptions{}</div><div class="line">            .set_maximum_hold_time(std::chrono::milliseconds(10))</div><div class="line">            .set_maximum_batch_bytes(10 * 1024 * 1024L)</div><div class="line">            .set_maximum_message_count(100),</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}));</div><div class="line"></div><div class="line">    std::vector&lt;future&lt;void&gt;&gt; ids;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">char</span> <span class="keyword">const</span>* data : {<span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;2&quot;</span>, <span class="stringliteral">&quot;3&quot;</span>, <span class="stringliteral">&quot;go!&quot;</span>}) {</div><div class="line">      ids.push_back(</div><div class="line">          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())</div><div class="line">              .then([data](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div><div class="line">                <span class="keyword">auto</span> s = f.get();</div><div class="line">                <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div><div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Sent &#39;&quot;</span> &lt;&lt; data &lt;&lt; <span class="stringliteral">&quot;&#39; (&quot;</span> &lt;&lt; *s &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div><div class="line">              }));</div><div class="line">    }</div><div class="line">    publisher.Flush();</div><div class="line">    <span class="comment">// Block until they are actually sent.</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : ids) <span class="keywordtype">id</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::future;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](std::string project_id, std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    <span class="keyword">auto</span> publisher = pubsub::Publisher(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a52843c207d3a785cc60eb1631527ad06">pubsub::MakePublisherConnection</a>(</div><div class="line">        std::move(topic),</div><div class="line">        pubsub::PublisherOptions{}</div><div class="line">            .set_maximum_hold_time(std::chrono::milliseconds(10))</div><div class="line">            .set_maximum_batch_bytes(10 * 1024 * 1024L)</div><div class="line">            .set_maximum_message_count(100),</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}));</div><div class="line"></div><div class="line">    std::vector&lt;future&lt;void&gt;&gt; ids;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">char</span> <span class="keyword">const</span>* data : {<span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;2&quot;</span>, <span class="stringliteral">&quot;3&quot;</span>, <span class="stringliteral">&quot;go!&quot;</span>}) {</div><div class="line">      ids.push_back(</div><div class="line">          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())</div><div class="line">              .then([data](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div><div class="line">                <span class="keyword">auto</span> s = f.get();</div><div class="line">                <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div><div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Sent &#39;&quot;</span> &lt;&lt; data &lt;&lt; <span class="stringliteral">&quot;&#39; (&quot;</span> &lt;&lt; *s &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div><div class="line">              }));</div><div class="line">    }</div><div class="line">    publisher.Flush();</div><div class="line">    <span class="comment">// Block until they are actually sent.</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : ids) <span class="keywordtype">id</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00046">46</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -170,6 +176,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a95fbb938d1bae40d16c8d30272ebbeba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95fbb938d1bae40d16c8d30272ebbeba">&#9670;&nbsp;</a></span>disable_retry_publish_failures()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a>&amp; google::cloud::pubsub::v1::PublisherOptions::disable_retry_publish_failures </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00126">126</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+
+</div>
+</div>
 <a id="af4bb970e4bd402249c8051ddb06948bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4bb970e4bd402249c8051ddb06948bb">&#9670;&nbsp;</a></span>enable_message_ordering()</h2>
 
@@ -194,6 +227,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00112">112</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a2f29aa5a29a986bb25ce6229e432df9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f29aa5a29a986bb25ce6229e432df9b">&#9670;&nbsp;</a></span>enable_retry_publish_failures()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a>&amp; google::cloud::pubsub::v1::PublisherOptions::enable_retry_publish_failures </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00122">122</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -304,6 +364,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00111">111</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a15fa1dea86ce0d6a3eaf295576ddd002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15fa1dea86ce0d6a3eaf295576ddd002">&#9670;&nbsp;</a></span>retry_publish_failures()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::pubsub::v1::PublisherOptions::retry_publish_failures </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00121">121</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
