@@ -5,6 +5,14 @@ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
+## Before you Begin
+
+To run the quickstart program you will need a working Google Cloud Platform
+(GCP) project, and an existing Cloud Pub/Sub Topic.
+The [Cloud Pub/Sub quickstarts][pubsub-quickstart-link] is a good place to find
+information on how to setup a GCP project and create a topic. Make a note of
+the project and topic ids as you will need them later.
+
 ## Configuring authentication for the C++ Client Library
 
 Like most Google Cloud Platform (GCP) services, Cloud Pub/Sub requires that
@@ -31,6 +39,9 @@ https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
 
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
+
 1. Install Bazel using [the instructions][bazel-install] from the `bazel.build`
    website.
 
@@ -41,22 +52,25 @@ https://cloud.google.com/docs/authentication/production
    bazel build ...
    ```
 
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
 3. Run the example, change the place holder to appropriate values:
 
    ```bash
-   bazel run :quickstart -- [GCP PROJECT] [CLOUD SPANNER INSTANCE] [CLOUD SPANNER DATABASE]
+   bazel run :quickstart -- [GCP PROJECT ID] [TOPIC ID]
    ```
 
-If you are using Windows or macOS there are additional instructions at the end
-of this document.
-
 ## Using with CMake
+
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
 
 1. Install CMake. The package managers for most Linux distributions include a
    package for CMake. Likewise, you can install CMake on Windows using a package
    manager such as [chocolatey][choco-cmake-link], and on macOS using
    [homebrew][homebrew-cmake-link]. You can also obtain the software directly
-   from the [cmake.org][https://cmake.org/download/].
+   from the [cmake.org](https://cmake.org/download/).
 
 2. Install the dependencies with your favorite tools. As an example, if you use
    [vcpkg](https://github.com/Microsoft/vcpkg.git):
@@ -65,6 +79,9 @@ of this document.
    cd $HOME/vcpkg
    ./vcpkg install google-cloud-cpp
    ```
+
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
 
 3. Configure CMake, if necessary, configure the directory where you installed
    the dependencies:
@@ -78,11 +95,9 @@ of this document.
 4. Run the example, change the place holder to appropriate values:
 
    ```bash
-   .build/quickstart [GCP PROJECT] [CLOUD SPANNER INSTANCE] [CLOUD SPANNER DATABASE]
+   .build/quickstart [GCP PROJECT ID] [PUB/SUB TOPIC ID]
    ```
 
-If you are using Windows or macOS there are additional instructions at the end
-of this document.
 
 ## Platform Specific Notes
 
@@ -122,7 +137,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/master/install.html
-[spanner-quickstart-link]: https://cloud.google.com/spanner/docs/quickstart-console
+[pubsub-quickstart-link]: https://cloud.google.com/pubsub/docs/quickstart-console
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
