@@ -19,10 +19,7 @@
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project-id> <topid-ic>\n";
+    std::cerr << "Usage: " << argv[0] << " <project-id> <topic-id>\n";
     return 1;
   }
 
