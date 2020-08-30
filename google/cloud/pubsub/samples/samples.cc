@@ -872,8 +872,8 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
         .get();
     // Report any final status, blocking until the subscription loop completes,
     // either with a failure or because it was canceled.
-    std::cout << "Message count=" << count << ", status=" << result.get()
-              << "\n";
+    auto status = result.get();
+    std::cout << "Message count=" << count << ", status=" << status << "\n";
 
     // Shutdown the completion queue and join the threads
     cq.Shutdown();
