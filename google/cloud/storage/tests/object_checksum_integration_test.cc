@@ -168,7 +168,8 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines, Contains(StartsWith("x-goog-hash: crc32c=")));
+  EXPECT_THAT(backend->ClearLogLines(),
+              Contains(StartsWith("x-goog-hash: crc32c=")));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -196,7 +197,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
   // Unfortunately I (@coryan) cannot think of a way to examine the upload
   // contents.
   EXPECT_THAT(
-      backend->log_lines,
+      backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_testbench_upload")) {

@@ -558,7 +558,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("quotaUser=test-quota-user"))));
@@ -593,7 +593,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp=127.0.0.1"))));
@@ -640,7 +640,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp="))));

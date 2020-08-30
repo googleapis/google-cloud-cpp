@@ -62,7 +62,8 @@ TEST_F(SubscriberLoggingTest, CreateSubscription) {
   google::pubsub::v1::Subscription subscription;
   auto status = stub.CreateSubscription(context, subscription);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("CreateSubscription")));
+  EXPECT_THAT(backend_->ClearLogLines(),
+              Contains(HasSubstr("CreateSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, GetSubscription) {
@@ -74,7 +75,8 @@ TEST_F(SubscriberLoggingTest, GetSubscription) {
   google::pubsub::v1::GetSubscriptionRequest request;
   auto status = stub.GetSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("GetSubscription")));
+  EXPECT_THAT(backend_->ClearLogLines(),
+              Contains(HasSubstr("GetSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, UpdateSubscription) {
@@ -86,7 +88,8 @@ TEST_F(SubscriberLoggingTest, UpdateSubscription) {
   google::pubsub::v1::UpdateSubscriptionRequest request;
   auto status = stub.UpdateSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("UpdateSubscription")));
+  EXPECT_THAT(backend_->ClearLogLines(),
+              Contains(HasSubstr("UpdateSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, ListSubscriptions) {
@@ -100,7 +103,7 @@ TEST_F(SubscriberLoggingTest, ListSubscriptions) {
   request.set_project("test-project-name");
   auto status = stub.ListSubscriptions(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("ListSubscriptions"),
                              HasSubstr("test-project-name"))));
 }
@@ -114,7 +117,7 @@ TEST_F(SubscriberLoggingTest, DeleteSubscription) {
   request.set_subscription("test-subscription-name");
   auto status = stub.DeleteSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("DeleteSubscription"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -128,7 +131,7 @@ TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
   request.set_subscription("test-subscription-name");
   auto status = stub.ModifyPushConfig(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("ModifyPushConfig"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -150,7 +153,7 @@ TEST_F(SubscriberLoggingTest, AsyncPull) {
       stub.AsyncPull(cq, absl::make_unique<grpc::ClientContext>(), request)
           .get();
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("AsyncPull"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -171,7 +174,7 @@ TEST_F(SubscriberLoggingTest, AsyncAcknowledge) {
                         cq, absl::make_unique<grpc::ClientContext>(), request)
                     .get();
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("AsyncAcknowledge"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -192,7 +195,7 @@ TEST_F(SubscriberLoggingTest, AsyncModifyAckDeadline) {
                         cq, absl::make_unique<grpc::ClientContext>(), request)
                     .get();
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("AsyncModifyAckDeadline"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -206,7 +209,7 @@ TEST_F(SubscriberLoggingTest, CreateSnapshot) {
   google::pubsub::v1::CreateSnapshotRequest request;
   auto status = stub.CreateSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("CreateSnapshot")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, GetSnapshot) {
@@ -218,7 +221,7 @@ TEST_F(SubscriberLoggingTest, GetSnapshot) {
   google::pubsub::v1::GetSnapshotRequest request;
   auto status = stub.GetSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("GetSnapshot")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, ListSnapshots) {
@@ -232,7 +235,7 @@ TEST_F(SubscriberLoggingTest, ListSnapshots) {
   request.set_project("test-project-name");
   auto status = stub.ListSnapshots(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("ListSnapshots"),
                              HasSubstr("test-project-name"))));
 }
@@ -246,7 +249,7 @@ TEST_F(SubscriberLoggingTest, UpdateSnapshot) {
   google::pubsub::v1::UpdateSnapshotRequest request;
   auto status = stub.UpdateSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("UpdateSnapshot")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
@@ -257,7 +260,7 @@ TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
   google::pubsub::v1::DeleteSnapshotRequest request;
   auto status = stub.DeleteSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("DeleteSnapshot")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, Seek) {
@@ -271,7 +274,7 @@ TEST_F(SubscriberLoggingTest, Seek) {
   auto status = stub.Seek(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->log_lines,
+      backend_->ClearLogLines(),
       Contains(AllOf(HasSubstr("Seek"), HasSubstr("test-subscription-name"))));
 }
 

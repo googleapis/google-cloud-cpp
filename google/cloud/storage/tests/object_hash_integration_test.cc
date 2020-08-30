@@ -63,7 +63,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Not(Contains(StartsWith("x-goog-hash: md5="))));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -92,7 +92,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   // Unfortunately I (@coryan) cannot think of a way to examine the upload
   // contents.
   EXPECT_THAT(
-      backend->log_lines,
+      backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_testbench_upload")) {
@@ -124,7 +124,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Not(Contains(StartsWith("x-goog-hash: md5="))));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -154,7 +154,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
   // Unfortunately I (@coryan) cannot think of a way to examine the upload
   // contents.
   EXPECT_THAT(
-      backend->log_lines,
+      backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_testbench_upload")) {

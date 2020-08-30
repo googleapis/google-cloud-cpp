@@ -45,11 +45,7 @@ class LoggingResultSetReaderTest : public ::testing::Test {
     logger_id_ = 0;
   }
 
-  void ClearLogCapture() { backend_->log_lines.clear(); }
-
-  void HasLogLineWith(std::string const& contents) {
-    EXPECT_THAT(backend_->log_lines, Contains(HasSubstr(contents)));
-  }
+  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
 
  private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
@@ -62,7 +58,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   reader.TryCancel();
 
-  HasLogLineWith("TryCancel");
+  EXPECT_THAT(ClearLogLines(), Contains(HasSubstr("TryCancel")));
 }
 
 TEST_F(LoggingResultSetReaderTest, Read) {
@@ -80,15 +76,16 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   ASSERT_TRUE(result.has_value());
   EXPECT_EQ("test-token", result->resume_token());
 
-  HasLogLineWith("Read");
-  HasLogLineWith("test-token");
+  auto log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("test-token")));
 
   // Clear previous captured lines to ensure the following checks for new
   // messages.
-  ClearLogCapture();
   result = reader.Read();
   ASSERT_FALSE(result.has_value());
-  HasLogLineWith("(optional-with-no-value)");
+  log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("(optional-with-no-value)")));
 }
 
 TEST_F(LoggingResultSetReaderTest, Finish) {
@@ -101,8 +98,9 @@ TEST_F(LoggingResultSetReaderTest, Finish) {
   auto status = reader.Finish();
   EXPECT_EQ(expected_status, status);
 
-  HasLogLineWith("Finish");
-  HasLogLineWith("weird");
+  auto log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("weird")));
 }
 
 }  // namespace

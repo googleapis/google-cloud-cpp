@@ -727,7 +727,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 
   EXPECT_THAT(
-      backend->log_lines,
+      backend->ClearLogLines(),
       Not(Contains(HasSubstr(
           "RowReader has an error, and the error status was not retrieved"))));
 }

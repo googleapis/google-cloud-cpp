@@ -63,7 +63,7 @@ TEST_F(PublisherLoggingTest, CreateTopic) {
   topic.set_name("test-topic-name");
   auto status = stub.CreateTopic(context, topic);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("CreateTopic")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateTopic")));
 }
 
 TEST_F(PublisherLoggingTest, GetTopic) {
@@ -76,7 +76,7 @@ TEST_F(PublisherLoggingTest, GetTopic) {
   request.set_topic("test-topic-name");
   auto status = stub.GetTopic(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("GetTopic")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetTopic")));
 }
 
 TEST_F(PublisherLoggingTest, UpdateTopic) {
@@ -89,7 +89,7 @@ TEST_F(PublisherLoggingTest, UpdateTopic) {
   request.mutable_topic()->set_name("test-topic-name");
   auto status = stub.UpdateTopic(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines, Contains(HasSubstr("UpdateTopic")));
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateTopic")));
 }
 
 TEST_F(PublisherLoggingTest, ListTopics) {
@@ -104,7 +104,7 @@ TEST_F(PublisherLoggingTest, ListTopics) {
   auto status = stub.ListTopics(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->log_lines,
+      backend_->ClearLogLines(),
       Contains(AllOf(HasSubstr("ListTopics"), HasSubstr("test-project-name"))));
 }
 
@@ -118,7 +118,7 @@ TEST_F(PublisherLoggingTest, DeleteTopic) {
   auto status = stub.DeleteTopic(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->log_lines,
+      backend_->ClearLogLines(),
       Contains(AllOf(HasSubstr("DeleteTopic"), HasSubstr("test-topic-name"))));
 }
 
@@ -133,7 +133,7 @@ TEST_F(PublisherLoggingTest, DetachSubscription) {
   request.set_subscription("test-subscription-name");
   auto status = stub.DetachSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("DetachSubscription"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -149,7 +149,7 @@ TEST_F(PublisherLoggingTest, ListTopicSubscriptions) {
   request.set_topic("test-topic-name");
   auto status = stub.ListTopicSubscriptions(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("ListTopicSubscriptions"),
                              HasSubstr("test-topic-name"))));
 }
@@ -165,7 +165,7 @@ TEST_F(PublisherLoggingTest, ListTopicSnapshots) {
   request.set_topic("test-topic-name");
   auto status = stub.ListTopicSnapshots(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->log_lines,
+  EXPECT_THAT(backend_->ClearLogLines(),
               Contains(AllOf(HasSubstr("ListTopicSnapshots"),
                              HasSubstr("test-topic-name"))));
 }
@@ -188,7 +188,7 @@ TEST_F(PublisherLoggingTest, AsyncPublish) {
           .get();
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->log_lines,
+      backend_->ClearLogLines(),
       Contains(AllOf(HasSubstr("AsyncPublish"), HasSubstr("test-topic-name"))));
 }
 

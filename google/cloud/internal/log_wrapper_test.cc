@@ -157,13 +157,13 @@ TEST(LogWrapper, FutureStatusOrValue) {
 
   LogWrapper(mock, MakeMutation(), "in-test", {});
 
-  EXPECT_THAT(backend->log_lines,
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(backend->log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                                 HasSubstr(" >> response="))));
-  EXPECT_THAT(
-      backend->log_lines,
-      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> response="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
@@ -180,15 +180,15 @@ TEST(LogWrapper, FutureStatusOrError) {
 
   LogWrapper(mock, MakeMutation(), "in-test", {});
 
-  EXPECT_THAT(backend->log_lines,
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
-  EXPECT_THAT(
-      backend->log_lines,
-      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
@@ -209,13 +209,13 @@ TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
   std::unique_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
-  EXPECT_THAT(backend->log_lines,
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(backend->log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                                 HasSubstr(" >> response="))));
-  EXPECT_THAT(
-      backend->log_lines,
-      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> response="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
@@ -237,15 +237,15 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
   std::unique_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
-  EXPECT_THAT(backend->log_lines,
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
-  EXPECT_THAT(
-      backend->log_lines,
-      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
@@ -271,14 +271,14 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
   os << status;
   auto status_as_string = std::move(os).str();
 
-  EXPECT_THAT(backend->log_lines,
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("),
                              HasSubstr(" >> response=" + status_as_string))));
-  EXPECT_THAT(
-      backend->log_lines,
-      Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }

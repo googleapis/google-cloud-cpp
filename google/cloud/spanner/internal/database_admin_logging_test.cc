@@ -51,9 +51,7 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  void HasLogLineWith(std::string const& contents) {
-    EXPECT_THAT(backend_->log_lines, Contains(HasSubstr(contents)));
-  }
+  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
 
   std::shared_ptr<spanner_testing::MockDatabaseAdminStub> mock_;
 
@@ -71,8 +69,9 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   auto status = stub.CreateDatabase(context, gcsa::CreateDatabaseRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("CreateDatabase");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
@@ -84,8 +83,9 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
   auto response = stub.GetDatabase(context, gcsa::GetDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("GetDatabase");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
@@ -97,8 +97,9 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
   auto response = stub.GetDatabaseDdl(context, gcsa::GetDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("GetDatabaseDdl");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetDatabaseDdl")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
@@ -110,8 +111,9 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   auto status = stub.UpdateDatabase(context, gcsa::UpdateDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("UpdateDatabase");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
@@ -123,8 +125,9 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
   auto status = stub.DropDatabase(context, gcsa::DropDatabaseRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  HasLogLineWith("DropDatabase");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DropDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
@@ -136,8 +139,9 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
   auto response = stub.ListDatabases(context, gcsa::ListDatabasesRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("ListDatabases");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListDatabases")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
@@ -149,8 +153,9 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   auto status = stub.RestoreDatabase(context, gcsa::RestoreDatabaseRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("RestoreDatabase");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
@@ -163,8 +168,9 @@ TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
       stub.GetIamPolicy(context, google::iam::v1::GetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("GetIamPolicy");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetIamPolicy")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
@@ -177,8 +183,9 @@ TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
       stub.SetIamPolicy(context, google::iam::v1::SetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("SetIamPolicy");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("SetIamPolicy")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
@@ -192,8 +199,9 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
       context, google::iam::v1::TestIamPermissionsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("TestIamPermissions");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("TestIamPermissions")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
@@ -205,8 +213,9 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   auto status = stub.CreateBackup(context, gcsa::CreateBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("CreateBackup");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetBackup) {
@@ -218,8 +227,9 @@ TEST_F(DatabaseAdminLoggingTest, GetBackup) {
   auto status = stub.GetBackup(context, gcsa::GetBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("GetBackup");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
@@ -231,8 +241,9 @@ TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
   auto status = stub.DeleteBackup(context, gcsa::DeleteBackupRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  HasLogLineWith("DeleteBackup");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListBackups) {
@@ -244,8 +255,9 @@ TEST_F(DatabaseAdminLoggingTest, ListBackups) {
   auto response = stub.ListBackups(context, gcsa::ListBackupsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("ListBackups");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListBackups")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
@@ -257,8 +269,9 @@ TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
   auto status = stub.UpdateBackup(context, gcsa::UpdateBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("UpdateBackup");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
@@ -272,8 +285,9 @@ TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
       stub.ListBackupOperations(context, gcsa::ListBackupOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("ListBackupOperations");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListBackupOperations")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
@@ -287,8 +301,9 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
       context, gcsa::ListDatabaseOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  HasLogLineWith("ListDatabaseOperations");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListDatabaseOperations")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
@@ -301,8 +316,9 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
       stub.GetOperation(context, google::longrunning::GetOperationRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  HasLogLineWith("GetOperation");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetOperation")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
@@ -315,8 +331,9 @@ TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
       context, google::longrunning::CancelOperationRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  HasLogLineWith("CancelOperation");
-  HasLogLineWith(TransientError().message());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CancelOperation")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 }  // namespace

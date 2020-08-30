@@ -358,7 +358,8 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   ASSERT_STATUS_OK(meta);
   LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("not a regular file")));
+  EXPECT_THAT(backend->ClearLogLines(),
+              Contains(HasSubstr("not a regular file")));
 
   t.join();
   auto status = client->DeleteObject(bucket_name_, object_name);
