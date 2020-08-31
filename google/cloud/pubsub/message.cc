@@ -20,6 +20,22 @@
 
 namespace google {
 namespace cloud {
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m) {
+  // see https://cloud.google.com/pubsub/pricing
+  auto constexpr kTimestampOverhead = 20;
+  std::size_t s = kTimestampOverhead + m.data().size();
+  s += m.message_id().size();
+  s += m.ordering_key().size();
+  for (auto const& kv : m.attributes()) {
+    s += kv.first.size() + kv.second.size();
+  }
+  return s;
+}
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
@@ -28,15 +44,7 @@ std::chrono::system_clock::time_point Message::publish_time() const {
 }
 
 std::size_t Message::MessageSize() const {
-  // see https://cloud.google.com/pubsub/pricing
-  auto constexpr kTimestampOverhead = 20;
-  std::size_t s = kTimestampOverhead + data().size();
-  s += message_id().size();
-  s += ordering_key().size();
-  for (auto const& kv : proto_.attributes()) {
-    s += kv.first.size() + kv.second.size();
-  }
-  return s;
+  return pubsub_internal::MessageProtoSize(proto_);
 }
 
 bool operator==(Message const& a, Message const& b) {
