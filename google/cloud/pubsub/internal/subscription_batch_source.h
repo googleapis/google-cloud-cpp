@@ -50,8 +50,8 @@ class SubscriptionBatchSource {
    *
    * The application has successfully handled this message and no new deliveries
    * are necessary. The @p size parameter should be the original message size
-   * estimate. It may be used by the message source to flow control large
-   * messages.
+   * estimate. The @p size parameter may be used by the message source to flow
+   * control large messages.
    */
   virtual future<Status> AckMessage(std::string const& ack_id,
                                     std::size_t size) = 0;
@@ -62,8 +62,8 @@ class SubscriptionBatchSource {
    * The application has not able to handle this message. Nacking a message
    * allows the service to re-deliver it, subject to the topic and subscription
    * configuration. The @p size parameter should be the original message size
-   * estimate. It may be used by the message source to flow control large
-   * messages.
+   * estimate. The @p size parameter may be used by the message source to flow
+   * control large messages.
    */
   virtual future<Status> NackMessage(std::string const& ack_id,
                                      std::size_t size) = 0;

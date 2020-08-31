@@ -44,7 +44,7 @@ class SubscriptionMessageSource {
   /// no effect, only the first callback is used.
   virtual void Start(MessageCallback) = 0;
 
-  /// Shutdown the source, cancel any outstanding requests and or timers, no
+  /// Shutdown the source, cancel any outstanding requests and or timers. No
   /// callbacks should be generated after this call.
   virtual void Shutdown() = 0;
 
@@ -56,8 +56,8 @@ class SubscriptionMessageSource {
    *
    * The application has successfully handled this message and no new deliveries
    * are necessary. The @p size parameter should be the original message size
-   * estimate, it may be used by the message source to flow control large
-   * messages.
+   * estimate. The @p size parameter may be used by the message source to flow
+   * control large messages.
    */
   virtual future<Status> AckMessage(std::string const& ack_id,
                                     std::size_t size) = 0;
@@ -65,11 +65,11 @@ class SubscriptionMessageSource {
   /**
    * Negative acknowledgement for message associated with @p ack_id.
    *
-   * The application has not able to handle this message, the service should
-   * re-deliver the message (subject to the topic and subscription
-   * configuration). The @p size parameter should be the original message size
-   * estimate, it may be used by the message source to flow control large
-   * messages.
+   * The application has not able to handle this message. Nacking a message
+   * allows the service to re-deliver it, subject to the topic and subscription
+   * configuration. The @p size parameter should be the original message size
+   * estimate. The @p size parameter may be used by the message source to flow
+   * control large messages.
    */
   virtual future<Status> NackMessage(std::string const& ack_id,
                                      std::size_t size) = 0;
