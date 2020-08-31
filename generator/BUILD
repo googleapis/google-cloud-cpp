@@ -42,3 +42,11 @@ load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_u
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_unit_tests]
+
+cc_binary(
+    name = "protoc-gen-cpp_codegen",
+    srcs = ["main.cc"],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_generator"],
+)

@@ -52,6 +52,11 @@ add_library(googleapis-c++::google_cloud_cpp_generator ALIAS
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_generator YEAR "2020")
 
+# Build protoc plugin executable
+add_executable(protoc-gen-cpp_codegen main.cc)
+target_link_libraries(protoc-gen-cpp_codegen LINK_PUBLIC
+                      google_cloud_cpp_generator protobuf::libprotoc)
+
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_generator_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
