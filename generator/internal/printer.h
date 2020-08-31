@@ -15,6 +15,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
 #include "absl/memory/memory.h"
+#include "absl/strings/str_format.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -61,6 +62,38 @@ class Printer {
   template <typename... Args>
   void Print(std::string const& text, Args&&... args) {
     printer_->Print(text.c_str(), std::forward<Args>(args)...);
+  }
+
+  /**
+   * Like Print(), except it accepts diagnostic information from the caller
+   * and rethrows exceptions thrown by protoc in order to provide a more
+   * meaningful diagnostic.
+   */
+  void Print(int line, char const* file,
+             const std::map<std::string, std::string>& variables,
+             std::string const& text) {
+    try {
+      printer_->Print(variables, text.c_str());
+    } catch (std::exception& e) {
+      throw std::runtime_error(
+          absl::StrFormat("%s at %s:%d", e.what(), file, line));
+    }
+  }
+
+  /**
+   * Like the variable arg Print(), except it accepts diagnostic information
+   * from the caller and rethrows exceptions thrown by protoc in order to
+   * provide a more meaningful diagnostic.
+   */
+  template <typename... Args>
+  void Print(int line, char const* file, std::string const& text,
+             Args&&... args) {
+    try {
+      printer_->Print(text.c_str(), std::forward<Args>(args)...);
+    } catch (std::exception& e) {
+      throw std::runtime_error(
+          absl::StrFormat("%s at %s:%d", e.what(), file, line));
+    }
   }
 
  private:

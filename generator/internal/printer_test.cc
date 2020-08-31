@@ -65,6 +65,30 @@ TEST(PrinterTest, PrintWithVariableArgs) {
   printer.Print("Hello! My name is $name$.\n", "name", "Inigo Montoya");
 }
 
+TEST(PrinterDeathTest, PrintWithMap) {
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
+  std::map<std::string, std::string> vars;
+  EXPECT_THROW(
+      printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n"),
+      std::runtime_error);
+}
+
+TEST(PrinterDeathTest, PrintWithVariableArgs) {
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
+  EXPECT_THROW(printer.Print(42, "some_file", "Hello! My name is $name$.\n"),
+               std::runtime_error);
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
