@@ -33,6 +33,7 @@
 #include "absl/types/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
+#include <iomanip>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -499,7 +500,7 @@ void CreateTableWithTimestamp(
                 SingerId        INT64 NOT NULL,
                 VenueId         INT64 NOT NULL,
                 EventDate       Date,
-                Revenue         INT64,
+                Revenue         NUMERIC,
                 LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (SingerId, VenueId, EventDate),
@@ -1378,9 +1379,11 @@ void MakeInsertMutation(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5),
+                      spanner::MakeNumeric(11000).value(),
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2),
+                      spanner::MakeNumeric(15000).value(),
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {
@@ -1512,11 +1515,14 @@ void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5),
+                      spanner::MakeNumeric(123456.78).value(),
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2),
+                      spanner::MakeNumeric(987654.32).value(),
                       spanner::CommitTimestamp{})
-          .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23), 7000,
+          .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23),
+                      spanner::MakeNumeric(53721.98).value(),
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {
@@ -1577,6 +1583,49 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
   }
 }
 // [END spanner_query_data_with_timestamp_column]
+
+// [START spanner_query_data_with_numeric]
+void QueryDataWithNumeric(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  auto revenue = spanner::MakeNumeric(100000).value();
+  spanner::SqlStatement select(
+      "SELECT VenueId, EventDate, Revenue"
+      "  FROM Performances"
+      " WHERE Revenue >= @revenue",
+      {{"revenue", spanner::Value(std::move(revenue))}});
+  using RowType = std::tuple<std::int64_t, absl::optional<absl::CivilDay>,
+                             absl::optional<spanner::Numeric>>;
+
+  auto rows = client.ExecuteQuery(select);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row);
+    std::cout << " EventDate: ";
+    auto event_date = std::get<1>(*row);
+    if (!event_date) {
+      std::cout << "NULL";
+    } else {
+      std::cout << *event_date;
+    }
+    std::cout << " Revenue: ";
+    auto revenue = std::get<2>(*row);
+    if (!revenue) {
+      std::cout << "NULL";
+    } else {
+      auto const& numeric = *revenue;
+      // [START spanner_cast_numeric_type]
+      std::string const& str = numeric.ToString();
+      double dbl = spanner::ToDouble(numeric);
+      int scaled_int = *spanner::ToInteger<int>(numeric, 2);  // scale by 10^2
+      // [END spanner_cast_numeric_type]
+      std::cout << str << " (d.16=" << std::setprecision(16) << dbl
+                << ", i*10^2=" << scaled_int << ")";
+    }
+    std::cout << "\n";
+  }
+}
+// [END spanner_query_data_with_numeric]
 
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
@@ -2871,6 +2920,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
+      make_command_entry("query-data-with-numeric", QueryDataWithNumeric),
       make_command_entry("read-only-transaction", ReadOnlyTransaction),
       make_command_entry("read-stale-data", ReadStaleData),
       make_command_entry("use-partition-query", UsePartitionQuery),
@@ -3241,6 +3291,9 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_query_data_with_timestamp_column sample"
             << std::endl;
   QueryDataWithTimestamp(client);
+
+  std::cout << "\nRunning spanner_query_data_with_numeric sample" << std::endl;
+  QueryDataWithNumeric(client);
 
   std::cout << "\nRunning spanner_read_only_transaction sample" << std::endl;
   ReadOnlyTransaction(client);
