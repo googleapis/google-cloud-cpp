@@ -66,9 +66,16 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_;
   if (outstanding_operations_ > 0 || !shutdown_ || signaled_) return;
+  // No other thread will go beyond this point, as `signaled_` is only set
+  // once.
   signaled_ = true;
+  // As satisfying the `done_` promise might trigger callbacks we should release
+  // the lock before doing so. But we also need to modify any variables with
+  // the lock held:
+  auto p = std::move(done_);
+  auto s = std::move(result_);
   lk.unlock();
-  done_.set_value(std::move(result_));
+  p.set_value(std::move(s));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

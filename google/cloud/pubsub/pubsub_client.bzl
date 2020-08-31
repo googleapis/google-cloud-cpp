@@ -18,6 +18,7 @@
 
 pubsub_client_hdrs = [
     "ack_handler.h",
+    "application_callback.h",
     "backoff_policy.h",
     "connection_options.h",
     "internal/batching_publisher_connection.h",
@@ -33,6 +34,7 @@ pubsub_client_hdrs = [
     "internal/subscriber_metadata.h",
     "internal/subscriber_stub.h",
     "internal/subscription_batch_source.h",
+    "internal/subscription_concurrency_control.h",
     "internal/subscription_flow_control.h",
     "internal/subscription_lease_management.h",
     "internal/subscription_message_queue.h",
@@ -77,6 +79,7 @@ pubsub_client_srcs = [
     "internal/subscriber_logging.cc",
     "internal/subscriber_metadata.cc",
     "internal/subscriber_stub.cc",
+    "internal/subscription_concurrency_control.cc",
     "internal/subscription_flow_control.cc",
     "internal/subscription_lease_management.cc",
     "internal/subscription_message_queue.cc",
