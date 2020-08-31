@@ -93,7 +93,7 @@ void SubscriptionFlowControl::OnPull(
   if (!response) {
     shutdown_manager_->FinishedOperation("OnPull");
     shutdown_manager_->MarkAsShutdown(__func__, std::move(response).status());
-    queue_.Shutdown();
+    Shutdown();
     return;
   }
   if (shutdown_manager_->FinishedOperation("OnPull")) {

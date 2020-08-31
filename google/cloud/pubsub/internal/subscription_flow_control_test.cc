@@ -206,6 +206,57 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
 
+/// @test Verify that messages received after a shutdown are nacked.
+TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown);
+
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, Pull)
+        .WillOnce([&](std::int32_t max_messages) {
+          EXPECT_EQ(10, max_messages);
+          return AddAsyncPull().then([](future<void>) {
+            return make_status_or(GenerateMessages("0-", 3));
+          });
+        })
+        .WillOnce([&](std::int32_t max_messages) {
+          EXPECT_EQ(7, max_messages);
+          return AddAsyncPull().then([](future<void>) {
+            return StatusOr<google::pubsub::v1::PullResponse>(
+                Status(StatusCode::kUnknown, "uh?"));
+          });
+        });
+    EXPECT_CALL(*mock, BulkNack)
+        .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
+          EXPECT_THAT(ack_ids, ElementsAre("ack-0-1", "ack-0-2"));
+          return make_ready_future(Status{});
+        });
+  }
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
+                                             /*message_count_lwm=*/0,
+                                             /*message_count_hwm=*/10);
+
+  auto callback = [](google::pubsub::v1::ReceivedMessage const&) {};
+
+  auto done = shutdown->Start();
+  uut->Start(callback);
+  uut->Read(1);
+  WaitAsyncPullCount(1);
+  async_pulls_[0].set_value();
+  WaitAsyncPullCount(2);
+  // Errors are reported to the ShutdownManager by the LeaseManagement layer,
+  // so let's do that here.
+  shutdown->MarkAsShutdown("test-code", Status(StatusCode::kUnknown, "uh?"));
+  // And then simulate the bulk cancel.
+  async_pulls_[1].set_value();
+
+  EXPECT_THAT(done.get(), StatusIs(StatusCode::kUnknown, "uh?"));
+}
+
 TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
