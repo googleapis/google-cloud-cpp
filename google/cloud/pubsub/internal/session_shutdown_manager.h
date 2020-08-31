@@ -54,6 +54,12 @@ class SessionShutdownManager {
   ~SessionShutdownManager();
 
   /// Set the promise to signal when the shutdown has completed.
+  future<Status> Start(promise<Status> p) {
+    done_ = std::move(p);
+    return done_.get_future();
+  }
+
+  // TODO(#4790) - remove old overload.
   future<Status> Start() { return done_.get_future(); }
 
   /**
