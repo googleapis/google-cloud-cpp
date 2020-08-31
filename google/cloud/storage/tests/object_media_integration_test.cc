@@ -62,7 +62,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
   // Create an object with the contents to download.
@@ -102,7 +102,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 
@@ -143,7 +143,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 
@@ -183,7 +183,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 
@@ -224,7 +224,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 
@@ -264,7 +264,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 
@@ -327,7 +327,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
     auto line = google::cloud::internal::Sample(generator_, kLineSize - 1,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
   static_assert(kObjectSize % kLineSize == 0,
@@ -431,7 +431,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
     auto line = google::cloud::internal::Sample(generator_, kLineSize - 1,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
   static_assert(kObjectSize % kLineSize == 0,
@@ -481,7 +481,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
     auto line = google::cloud::internal::Sample(generator_, kLineSize - 1,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
   static_assert(kObjectSize % kLineSize == 0,

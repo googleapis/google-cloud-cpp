@@ -31,7 +31,7 @@ TEST(GenerateMessageBoundaryTest, Simple) {
 
   auto string_generator = [&generator](int n) {
     static std::string const kChars =
-        "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return google::cloud::internal::Sample(generator, n, kChars);
   };
 
@@ -45,7 +45,7 @@ TEST(GenerateMessageBoundaryTest, Simple) {
 
 TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
   static std::string const kChars =
-      "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
