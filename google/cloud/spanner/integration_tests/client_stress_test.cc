@@ -34,11 +34,13 @@ int flag_threads = 0;  // 0 means use the threads_per_core setting.
 int flag_threads_per_core = 4;
 
 struct Result {
+  Status last_failure;
   std::int32_t failure_count = 0;
   std::int32_t success_count = 0;
 
   void Update(Status const& s) {
     if (!s.ok()) {
+      last_failure = s;
       ++failure_count;
     } else {
       ++success_count;
@@ -46,6 +48,7 @@ struct Result {
   }
 
   Result operator+=(Result const& r) {
+    if (!r.last_failure.ok()) last_failure = r.last_failure;
     failure_count += r.failure_count;
     success_count += r.success_count;
     return *this;
@@ -122,9 +125,10 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
   }
 
   auto experiments_count = total.failure_count + total.success_count;
-  EXPECT_LE(total.failure_count * 1000, experiments_count)
-      << "total.failure_count=" << total.failure_count
-      << ", total.success_count=" << total.success_count;
+  EXPECT_LE(total.failure_count, experiments_count / 1000 + 1)
+      << "failure_count=" << total.failure_count
+      << ", success_count=" << total.success_count
+      << ", last_failure=" << total.last_failure;
 }
 
 /// @test Stress test the library using Read calls.
@@ -187,7 +191,10 @@ TEST_F(ClientStressTest, UpsertAndRead) {
   }
 
   auto experiments_count = total.failure_count + total.success_count;
-  EXPECT_LE(total.failure_count, experiments_count * 0.001);
+  EXPECT_LE(total.failure_count, experiments_count / 1000 + 1)
+      << "failure_count=" << total.failure_count
+      << ", success_count=" << total.success_count
+      << ", last_failure=" << total.last_failure;
 }
 
 }  // namespace
