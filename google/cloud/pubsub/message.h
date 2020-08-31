@@ -247,6 +247,8 @@ inline std::size_t MessageSize(pubsub::Message const& m) {
   return m.MessageSize();
 }
 
+std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

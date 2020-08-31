@@ -60,6 +60,9 @@ add_library(
     internal/subscription_batch_source.h
     internal/subscription_lease_management.cc
     internal/subscription_lease_management.h
+    internal/subscription_message_queue.cc
+    internal/subscription_message_queue.h
+    internal/subscription_message_source.h
     internal/subscription_session.cc
     internal/subscription_session.h
     internal/user_agent_prefix.cc
@@ -159,9 +162,13 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     add_library(
         pubsub_client_testing # cmake-format: sort
-        testing/mock_publisher_stub.h testing/mock_subscriber_stub.h
-        testing/random_names.cc testing/random_names.h
-        testing/test_retry_policies.cc testing/test_retry_policies.h)
+        testing/mock_publisher_stub.h
+        testing/mock_subscriber_stub.h
+        testing/mock_subscription_batch_source.h
+        testing/random_names.cc
+        testing/random_names.h
+        testing/test_retry_policies.cc
+        testing/test_retry_policies.h)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils
@@ -185,6 +192,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscriber_metadata_test.cc
         internal/subscription_concurrency_control_test.cc
         internal/subscription_lease_management_test.cc
+        internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
         internal/user_agent_prefix_test.cc
         internal/watermark_flow_control_test.cc
