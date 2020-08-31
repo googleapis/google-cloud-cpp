@@ -35,7 +35,7 @@ std::string RandomInstanceName(
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz012345689-") +
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789-") +
          google::cloud::internal::Sample(generator, 1,
                                          "abcdefghijlkmnopqrstuvwxyz");
 }

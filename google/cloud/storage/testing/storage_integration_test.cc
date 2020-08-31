@@ -133,7 +133,7 @@ std::string StorageIntegrationTest::MakeRandomBucketName(std::string prefix) {
       kMaxBucketNameLength - prefix.size();
   return prefix + google::cloud::internal::Sample(
                       generator_, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
+                      "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 std::string StorageIntegrationTest::MakeRandomObjectName() {

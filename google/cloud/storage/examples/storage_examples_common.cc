@@ -42,7 +42,7 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
   // *need* to use them.
   return full + google::cloud::internal::Sample(
                     gen, static_cast<int>(max_random_characters),
-                    "abcdefghijklmnopqrstuvwxyz012456789");
+                    "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
@@ -56,7 +56,7 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
   // a subset for these purposes.
   return prefix + google::cloud::internal::Sample(
                       gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
+                      "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 Commands::value_type CreateCommandEntry(

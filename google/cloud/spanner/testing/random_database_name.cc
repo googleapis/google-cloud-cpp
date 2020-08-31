@@ -38,7 +38,7 @@ std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz012345689_-") +
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
          google::cloud::internal::Sample(
              generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }

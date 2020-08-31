@@ -395,7 +395,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "012456789");
+                                                "0123456789");
     large_text += line + "\n";
   }
 

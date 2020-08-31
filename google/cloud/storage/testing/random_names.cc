@@ -32,7 +32,7 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
   std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
   return full + google::cloud::internal::Sample(
                     gen, static_cast<int>(max_random_characters),
-                    "abcdefghijklmnopqrstuvwxyz012456789");
+                    "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
@@ -69,7 +69,7 @@ std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
     return google::cloud::internal::Sample(gen, static_cast<int>(count - 1),
                                            "abcdefghijklmnopqrstuvwxyz"
                                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789"
+                                           "0123456789"
                                            " - _ : /") +
            "\n";
   };

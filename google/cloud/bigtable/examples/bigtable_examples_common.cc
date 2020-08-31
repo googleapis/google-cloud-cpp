@@ -34,7 +34,7 @@ std::string RandomTableId(std::string const& prefix,
                           google::cloud::internal::DefaultPRNG& generator) {
   return TablePrefix(prefix, std::chrono::system_clock::now()) +
          google::cloud::internal::Sample(generator, 8,
-                                         "abcdefhijklmnopqrstuvwxyz");
+                                         "abcdefghijklmnopqrstuvwxyz");
 }
 
 void CleanupOldTables(std::string const& prefix,
@@ -106,7 +106,7 @@ std::string RandomInstanceId(std::string const& prefix,
   auto const suffix_len = kMaxInstanceIdLength - timestamped_prefix.size();
   return timestamped_prefix + google::cloud::internal::Sample(
                                   generator, static_cast<int>(suffix_len),
-                                  "abcdefhijklmnopqrstuvwxyz0123456789");
+                                  "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 std::string RandomClusterId(std::string const& prefix,
@@ -117,7 +117,7 @@ std::string RandomClusterId(std::string const& prefix,
   auto const suffix_len = kMaxClusterIdLength - prefix.size();
   return prefix + google::cloud::internal::Sample(
                       generator, static_cast<int>(suffix_len),
-                      "abcdefhijklmnopqrstuvwxyz0123456789");
+                      "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 void CleanupOldInstances(std::string const& prefix,
