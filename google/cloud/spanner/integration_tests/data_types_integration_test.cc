@@ -214,6 +214,26 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
+  auto min = MakeNumeric("-99999999999999999999999999999.999999999");
+  ASSERT_STATUS_OK(min);
+  auto max = MakeNumeric("99999999999999999999999999999.999999999");
+  ASSERT_STATUS_OK(max);
+
+  std::vector<Numeric> const data = {
+      *min,                                //
+      MakeNumeric(-999999999e-3).value(),  //
+      MakeNumeric(-1).value(),             //
+      MakeNumeric(0).value(),              //
+      MakeNumeric(1).value(),              //
+      MakeNumeric(999999999e-3).value(),   //
+      *max,                                //
+  };
+  auto result = WriteReadData(*client_, data, "NumericValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
   std::vector<std::vector<bool>> const data = {
       std::vector<bool>{},
@@ -297,6 +317,21 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayDateValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
+  std::vector<std::vector<Numeric>> const data = {
+      std::vector<Numeric>{},
+      std::vector<Numeric>{Numeric()},
+      std::vector<Numeric>{
+          MakeNumeric(-1e+9).value(),
+          MakeNumeric(1e-9).value(),
+          MakeNumeric(1e+9).value(),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayNumericValue");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }

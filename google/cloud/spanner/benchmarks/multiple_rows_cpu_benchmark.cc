@@ -354,6 +354,21 @@ struct TimestampTraits {
   }
 };
 
+struct NumericTraits {
+  using native_type = spanner::Numeric;
+  static std::string SpannerDataType() { return "NUMERIC"; }
+  static std::string TableSuffix() { return "numeric"; }
+  static native_type MakeRandomValue(
+      google::cloud::internal::DefaultPRNG& generator) {
+    return spanner::MakeNumeric(
+               std::uniform_int_distribution<std::int64_t>(
+                   std::numeric_limits<std::int64_t>::min(),
+                   std::numeric_limits<std::int64_t>::max())(generator),
+               -9)  // scale by 10^-9
+        .value();
+  }
+};
+
 template <typename Traits>
 class ExperimentImpl {
  public:
@@ -1626,6 +1641,7 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"read-int64", MakeReadFactory<Int64Traits>()},
       {"read-string", MakeReadFactory<StringTraits>()},
       {"read-timestamp", MakeReadFactory<TimestampTraits>()},
+      {"read-numeric", MakeReadFactory<NumericTraits>()},
       {"select-bool", MakeSelectFactory<BoolTraits>()},
       {"select-bytes", MakeSelectFactory<BytesTraits>()},
       {"select-date", MakeSelectFactory<DateTraits>()},
@@ -1633,6 +1649,7 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"select-int64", MakeSelectFactory<Int64Traits>()},
       {"select-string", MakeSelectFactory<StringTraits>()},
       {"select-timestamp", MakeSelectFactory<TimestampTraits>()},
+      {"select-numeric", MakeSelectFactory<NumericTraits>()},
       {"update-bool", MakeUpdateFactory<BoolTraits>()},
       {"update-bytes", MakeUpdateFactory<BytesTraits>()},
       {"update-date", MakeUpdateFactory<DateTraits>()},
@@ -1640,6 +1657,7 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"update-int64", MakeUpdateFactory<Int64Traits>()},
       {"update-string", MakeUpdateFactory<StringTraits>()},
       {"update-timestamp", MakeUpdateFactory<TimestampTraits>()},
+      {"update-numeric", MakeUpdateFactory<NumericTraits>()},
       {"mutation-bool", MakeMutationFactory<BoolTraits>()},
       {"mutation-bytes", MakeMutationFactory<BytesTraits>()},
       {"mutation-date", MakeMutationFactory<DateTraits>()},
@@ -1647,6 +1665,7 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"mutation-int64", MakeMutationFactory<Int64Traits>()},
       {"mutation-string", MakeMutationFactory<StringTraits>()},
       {"mutation-timestamp", MakeMutationFactory<TimestampTraits>()},
+      {"mutation-numeric", MakeMutationFactory<NumericTraits>()},
   };
 }
 
