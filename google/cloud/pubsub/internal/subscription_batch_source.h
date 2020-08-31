@@ -41,7 +41,7 @@ class SubscriptionBatchSource {
  public:
   virtual ~SubscriptionBatchSource() = default;
 
-  /// Shutdown the source, cancel any outstanding requests and or timers, no
+  /// Shutdown the source, cancel any outstanding requests and or timers. No
   /// callbacks should be generated after this call.
   virtual void Shutdown() = 0;
 
@@ -50,7 +50,7 @@ class SubscriptionBatchSource {
    *
    * The application has successfully handled this message and no new deliveries
    * are necessary. The @p size parameter should be the original message size
-   * estimate, it may be used by the message source to flow control large
+   * estimate. It may be used by the message source to flow control large
    * messages.
    */
   virtual future<Status> AckMessage(std::string const& ack_id,
@@ -59,10 +59,10 @@ class SubscriptionBatchSource {
   /**
    * Negative acknowledgement for message associated with @p ack_id.
    *
-   * The application has not able to handle this message, the service should
-   * re-deliver the message (subject to the topic and subscription
-   * configuration). The @p size parameter should be the original message size
-   * estimate, it may be used by the message source to flow control large
+   * The application has not able to handle this message. Nacking a message
+   * allows the service re-deliver it, subject to the topic and subscription
+   * configuration. The @p size parameter should be the original message size
+   * estimate. It may be used by the message source to flow control large
    * messages.
    */
   virtual future<Status> NackMessage(std::string const& ack_id,

@@ -43,7 +43,7 @@ google::pubsub::v1::PullResponse MakePullResponse(std::string const& prefix,
 TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   auto stub = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
-  auto constexpr kTestDeadlineSeconds = 345;
+  auto constexpr kTestDeadline = std::chrono::seconds(345);
   {
     ::testing::InSequence sequence;
     EXPECT_CALL(*stub, AsyncPull)
@@ -69,7 +69,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
                       std::unique_ptr<grpc::ClientContext>,
                       google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
           EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-0", "ack-0-2"));
-          EXPECT_NEAR(kTestDeadlineSeconds, r.ack_deadline_seconds(), 2);
+          EXPECT_NEAR(kTestDeadline.count(), r.ack_deadline_seconds(), 2);
           return make_ready_future(Status{});
         });
     EXPECT_CALL(*stub, AsyncModifyAckDeadline)
@@ -86,7 +86,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
                       std::unique_ptr<grpc::ClientContext>,
                       google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
           EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-0"));
-          EXPECT_NEAR(kTestDeadlineSeconds, r.ack_deadline_seconds(), 2);
+          EXPECT_NEAR(kTestDeadline.count(), r.ack_deadline_seconds(), 2);
           return make_ready_future(Status{});
         })
         // Then all unhandled messages are nacked on shutdown.
@@ -110,7 +110,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::CreateForTesting(
       background.cq(), shutdown_manager, make_timer, stub,
-      "test-subscription-name", std::chrono::seconds(kTestDeadlineSeconds));
+      "test-subscription-name", kTestDeadline);
 
   auto acks = [](google::pubsub::v1::PullResponse const& response) {
     std::vector<std::string> acks;
@@ -128,7 +128,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   EXPECT_THAT(acks(*response), ElementsAre("ack-0-0", "ack-0-1", "ack-0-2"));
   ASSERT_EQ(1, timers.size());
 
-  // Ack one of the messages and then fire the timer, the expectations set above
+  // Ack one of the messages and then fire the timer. The expectations set above
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1", 0);
   timers[0].set_value({});
