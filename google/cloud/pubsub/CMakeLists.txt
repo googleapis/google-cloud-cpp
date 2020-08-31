@@ -57,6 +57,9 @@ add_library(
     internal/subscriber_metadata.h
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
+    internal/subscription_batch_source.h
+    internal/subscription_lease_management.cc
+    internal/subscription_lease_management.h
     internal/subscription_session.cc
     internal/subscription_session.h
     internal/user_agent_prefix.cc
@@ -181,6 +184,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscription_concurrency_control_test.cc
+        internal/subscription_lease_management_test.cc
         internal/subscription_session_test.cc
         internal/user_agent_prefix_test.cc
         internal/watermark_flow_control_test.cc
