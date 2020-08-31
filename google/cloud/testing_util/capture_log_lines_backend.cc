@@ -20,9 +20,11 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 std::vector<std::string> CaptureLogLinesBackend::ClearLogLines() {
-  std::lock_guard<std::mutex> lk(mu_);
-  auto result = std::move(log_lines_);
-  log_lines_.clear();
+  std::vector<std::string> result;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    result.swap(log_lines_);
+  }
   return result;
 }
 

@@ -80,8 +80,6 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("test-token")));
 
-  // Clear previous captured lines to ensure the following checks for new
-  // messages.
   result = reader.Read();
   ASSERT_FALSE(result.has_value());
   log_lines = ClearLogLines();
