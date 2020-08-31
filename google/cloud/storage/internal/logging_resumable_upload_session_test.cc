@@ -69,7 +69,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_THAT(log_backend_->log_lines,
+  EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[UNAVAILABLE]")));
 }
 
@@ -91,11 +91,10 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_THAT(
-      log_backend_->log_lines,
-      ContainsOnce(HasSubstr("upload_size=" + std::to_string(513 * 1024))));
-  EXPECT_THAT(log_backend_->log_lines,
-              ContainsOnce(HasSubstr("[UNAVAILABLE]")));
+  auto const log_lines = log_backend_->ClearLogLines();
+  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload_size=" +
+                                                std::to_string(513 * 1024))));
+  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("[UNAVAILABLE]")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -112,7 +111,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_THAT(log_backend_->log_lines,
+  EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 
@@ -128,7 +127,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   auto result = session.next_expected_byte();
   EXPECT_EQ(512 * 1024, result);
 
-  EXPECT_THAT(log_backend_->log_lines,
+  EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr(std::to_string(512 * 1024))));
 }
 
@@ -144,8 +143,9 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto result = session.last_response();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result.value(), last_response.value());
-  EXPECT_THAT(log_backend_->log_lines, ContainsOnce(HasSubstr("upload url")));
-  EXPECT_THAT(log_backend_->log_lines, ContainsOnce(HasSubstr("payload={}")));
+  auto const log_lines = log_backend_->ClearLogLines();
+  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload url")));
+  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("payload={}")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
@@ -161,7 +161,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
   EXPECT_EQ("something bad", result.status().message());
 
-  EXPECT_THAT(log_backend_->log_lines,
+  EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 

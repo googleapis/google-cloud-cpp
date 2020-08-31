@@ -175,8 +175,9 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   cq.Shutdown();
   t.join();
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncPull")));
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncAcknowledge")));
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncPull")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncAcknowledge")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 

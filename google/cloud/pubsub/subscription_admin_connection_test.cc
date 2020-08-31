@@ -196,7 +196,8 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
   auto response = subscription_admin->DeleteSubscription({subscription});
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("DeleteSubscription")));
+  EXPECT_THAT(backend->ClearLogLines(),
+              Contains(HasSubstr("DeleteSubscription")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
@@ -224,7 +225,8 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
   auto response = subscription_admin->ModifyPushConfig({request});
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("ModifyPushConfig")));
+  EXPECT_THAT(backend->ClearLogLines(),
+              Contains(HasSubstr("ModifyPushConfig")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 

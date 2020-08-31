@@ -19,12 +19,22 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
+std::vector<std::string> CaptureLogLinesBackend::ClearLogLines() {
+  std::vector<std::string> result;
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    result.swap(log_lines_);
+  }
+  return result;
+}
+
 void CaptureLogLinesBackend::Process(LogRecord const& lr) {
   // Break the records in lines, it is easier to analyze them as such.
   std::istringstream is(lr.message);
   std::string line;
+  std::lock_guard<std::mutex> lk(mu_);
   while (std::getline(is, line)) {
-    log_lines.emplace_back(line);
+    log_lines_.emplace_back(line);
   }
 }
 

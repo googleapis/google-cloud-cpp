@@ -30,10 +30,14 @@ namespace testing_util {
  */
 class CaptureLogLinesBackend : public LogBackend {
  public:
-  std::vector<std::string> log_lines;
+  std::vector<std::string> ClearLogLines();
 
   void Process(LogRecord const& lr) override;
   void ProcessWithOwnership(LogRecord lr) override;
+
+ private:
+  std::mutex mu_;
+  std::vector<std::string> log_lines_;
 };
 
 }  // namespace testing_util

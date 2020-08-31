@@ -114,7 +114,7 @@ TEST(PublisherConnectionTest, Logging) {
           .get();
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("AsyncPublish")));
+  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("AsyncPublish")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 

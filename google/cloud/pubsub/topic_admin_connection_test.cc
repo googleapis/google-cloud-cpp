@@ -178,7 +178,7 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
   auto response = topic_admin->DeleteTopic({topic});
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->log_lines, Contains(HasSubstr("DeleteTopic")));
+  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("DeleteTopic")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 

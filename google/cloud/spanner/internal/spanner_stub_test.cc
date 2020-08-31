@@ -56,7 +56,7 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
               AnyOf(StatusCode::kUnavailable, StatusCode::kInvalidArgument,
                     StatusCode::kDeadlineExceeded));
 
-  EXPECT_THAT(backend->log_lines,
+  EXPECT_THAT(backend->ClearLogLines(),
               Contains(HasSubstr(session.status().message())));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
