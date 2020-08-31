@@ -60,7 +60,7 @@ class SubscriptionBatchSource {
    * Negative acknowledgement for message associated with @p ack_id.
    *
    * The application has not able to handle this message. Nacking a message
-   * allows the service re-deliver it, subject to the topic and subscription
+   * allows the service to re-deliver it, subject to the topic and subscription
    * configuration. The @p size parameter should be the original message size
    * estimate. It may be used by the message source to flow control large
    * messages.
