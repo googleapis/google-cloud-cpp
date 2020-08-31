@@ -64,7 +64,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.8
 
 # Install Python packages used in the integration tests.
-RUN pip3 install setuptools
+RUN pip3 install setuptools wheel
 RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.0 \
     blinker==1.4 brotlipy==0.7.0 cffi==1.14.0 click==7.1.2 crc32c==2.0 \
     decorator==4.4.2 flask==1.1.1 gevent==1.4.0 greenlet==0.4.16 \
