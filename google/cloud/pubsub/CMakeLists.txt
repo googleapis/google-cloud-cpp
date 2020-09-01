@@ -30,6 +30,7 @@ add_library(
     pubsub_client # cmake-format: sort
     ack_handler.cc
     ack_handler.h
+    application_callback.h
     backoff_policy.h
     connection_options.cc
     connection_options.h
@@ -58,6 +59,8 @@ add_library(
     internal/subscriber_stub.cc
     internal/subscriber_stub.h
     internal/subscription_batch_source.h
+    internal/subscription_concurrency_control.cc
+    internal/subscription_concurrency_control.h
     internal/subscription_flow_control.cc
     internal/subscription_flow_control.h
     internal/subscription_lease_management.cc
@@ -167,6 +170,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
+        testing/mock_subscription_message_source.h
         testing/random_names.cc
         testing/random_names.h
         testing/test_retry_policies.cc

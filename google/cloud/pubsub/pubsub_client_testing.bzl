@@ -20,6 +20,7 @@ pubsub_client_testing_hdrs = [
     "testing/mock_publisher_stub.h",
     "testing/mock_subscriber_stub.h",
     "testing/mock_subscription_batch_source.h",
+    "testing/mock_subscription_message_source.h",
     "testing/random_names.h",
     "testing/test_retry_policies.h",
 ]
