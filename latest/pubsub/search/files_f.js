@@ -37,6 +37,8 @@ var searchData=
   ['subscription_5fadmin_5fconnection_5ftest_2ecc',['subscription_admin_connection_test.cc',['../subscription__admin__connection__test_8cc.html',1,'']]],
   ['subscription_5fadmin_5fintegration_5ftest_2ecc',['subscription_admin_integration_test.cc',['../subscription__admin__integration__test_8cc.html',1,'']]],
   ['subscription_5fbatch_5fsource_2eh',['subscription_batch_source.h',['../subscription__batch__source_8h.html',1,'']]],
+  ['subscription_5fconcurrency_5fcontrol_2ecc',['subscription_concurrency_control.cc',['../subscription__concurrency__control_8cc.html',1,'']]],
+  ['subscription_5fconcurrency_5fcontrol_2eh',['subscription_concurrency_control.h',['../subscription__concurrency__control_8h.html',1,'']]],
   ['subscription_5fconcurrency_5fcontrol_5ftest_2ecc',['subscription_concurrency_control_test.cc',['../subscription__concurrency__control__test_8cc.html',1,'']]],
   ['subscription_5fflow_5fcontrol_2ecc',['subscription_flow_control.cc',['../subscription__flow__control_8cc.html',1,'']]],
   ['subscription_5fflow_5fcontrol_2eh',['subscription_flow_control.h',['../subscription__flow__control_8h.html',1,'']]],

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['backgroundthreadsfactory',['BackgroundThreadsFactory',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ad60fc34066e5b46d52e0437dea969d12',1,'google::cloud::v1::ConnectionOptions']]],
-  ['backoffpolicy',['BackoffPolicy',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae',1,'google::cloud::v1::BackoffPolicy()'],['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9',1,'google::cloud::pubsub::v1::BackoffPolicy()']]]
+  ['applicationcallback',['ApplicationCallback',['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c',1,'google::cloud::pubsub::v1']]]
 ];

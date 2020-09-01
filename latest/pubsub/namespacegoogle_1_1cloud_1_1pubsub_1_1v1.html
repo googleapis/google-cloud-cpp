@@ -148,6 +148,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a3a5898460ba45840c972efd7ee0ca59c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c">ApplicationCallback</a> = std::function&lt; void(<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">Message</a>, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">AckHandler</a>)&gt;</td></tr>
+<tr class="memdesc:a3a5898460ba45840c972efd7ee0ca59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for application-level callbacks.  <a href="#a3a5898460ba45840c972efd7ee0ca59c">More...</a><br /></td></tr>
+<tr class="separator:a3a5898460ba45840c972efd7ee0ca59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3187e9e2cded8d6fc87ebc02f3e242a9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">BackoffPolicy</a> = google::cloud::internal::BackoffPolicy</td></tr>
 <tr class="memdesc:a3187e9e2cded8d6fc87ebc02f3e242a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for backoff policies.  <a href="#a3187e9e2cded8d6fc87ebc02f3e242a9">More...</a><br /></td></tr>
 <tr class="separator:a3187e9e2cded8d6fc87ebc02f3e242a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,6 +236,25 @@ Variables</h2></td></tr>
 <div class="textblock"><p>The inlined, versioned namespace for the Cloud Pubsub C++ client APIs. </p>
 <p>Applications may need to link multiple versions of the Cloud pubsub C++ client, for example, if they link a library that uses an older version of the client than they do. This namespace is inlined, so applications can use <code>pubsub::Foo</code> in their source, but the symbols are versioned, i.e., the symbol becomes <code>pubsub::v1::Foo</code>. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a3a5898460ba45840c972efd7ee0ca59c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a5898460ba45840c972efd7ee0ca59c">&#9670;&nbsp;</a></span>ApplicationCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c">google::cloud::pubsub::v1::ApplicationCallback</a> = typedef std::function&lt;void(<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">Message</a>, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">AckHandler</a>)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the interface for application-level callbacks. </p>
+<p>Applications provide a callable compatible with this type to receive messages. They acknowledge (or reject) messages using <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html" title="Defines the interface to acknowledge and reject messages.">AckHandler</a></code>. This is a move-only type to support asynchronously acknowledgements. </p>
+
+<p class="definition">Definition at line <a class="el" href="application__callback_8h_source.html#l00035">35</a> of file <a class="el" href="application__callback_8h_source.html">application_callback.h</a>.</p>
+
+</div>
+</div>
 <a id="a3187e9e2cded8d6fc87ebc02f3e242a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3187e9e2cded8d6fc87ebc02f3e242a9">&#9670;&nbsp;</a></span>BackoffPolicy</h2>
 

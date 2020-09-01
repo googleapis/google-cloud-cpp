@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Pub/Sub C++ Client: internal/subscription_concurrency_control_test.cc File Reference</title>
+<title>Google Cloud Pub/Sub C++ Client: internal/subscription_concurrency_control.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,21 +70,18 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">subscription_concurrency_control_test.cc File Reference</div>  </div>
+<div class="title">subscription_concurrency_control.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="subscription__concurrency__control_8h_source.html">google/cloud/pubsub/internal/subscription_concurrency_control.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="subscription__session_8h_source.html">google/cloud/pubsub/internal/subscription_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="mock__subscription__message__source_8h_source.html">google/cloud/pubsub/testing/mock_subscription_message_source.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/v/cmake-out/ci-fedora-install-31-clang-tidy/google/cloud/cloud.tag:https://googleapis.dev/google-cloud-common/master/" href="https://googleapis.dev/google-cloud-common/master/log_8h.html">google/cloud/log.h</a>&quot;</code><br />
-<code>#include &quot;google/cloud/testing_util/status_matchers.h&quot;</code><br />
-<code>#include &lt;gmock/gmock.h&gt;</code><br />
-<code>#include &lt;atomic&gt;</code><br />
-<code>#include &lt;condition_variable&gt;</code><br />
-<code>#include &lt;deque&gt;</code><br />
-<code>#include &lt;mutex&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="application__callback_8h_source.html">google/cloud/pubsub/application_callback.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="session__shutdown__manager_8h_source.html">google/cloud/pubsub/internal/session_shutdown_manager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="subscription__message__source_8h_source.html">google/cloud/pubsub/internal/subscription_message_source.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="message_8h_source.html">google/cloud/pubsub/message.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/pubsub/version.h</a>&quot;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 </div>
-<p><a href="subscription__concurrency__control__test_8cc_source.html">Go to the source code of this file.</a></p>
+<p><a href="subscription__concurrency__control_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
