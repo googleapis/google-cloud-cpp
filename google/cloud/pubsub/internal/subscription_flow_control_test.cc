@@ -192,10 +192,8 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   auto uut =
       SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1);
 
-  auto callback = [](google::pubsub::v1::ReceivedMessage const&) {};
-
   auto done = shutdown->Start();
-  uut->Start(callback);
+  uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(kUnlimitedCallbacks);
   WaitAsyncPullCount(1);
 
