@@ -240,10 +240,8 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
                                              /*message_count_lwm=*/0,
                                              /*message_count_hwm=*/10);
 
-  auto callback = [](google::pubsub::v1::ReceivedMessage const&) {};
-
   auto done = shutdown->Start();
-  uut->Start(callback);
+  uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(1);
   WaitAsyncPullCount(1);
   async_pulls_[0].set_value();
@@ -299,12 +297,6 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
       })
       .WillOnce([&](std::string const& ack_id, std::size_t) {
         EXPECT_EQ("ack-1-1", ack_id);
-        return make_ready_future(Status{});
-      })
-      .WillRepeatedly([&](std::string const&, std::size_t) {
-        // After the expected nacks there may be any number of nacks created by
-        // the class, depending on timing, just ignore them, we have other tests
-        // to verify that works.
         return make_ready_future(Status{});
       });
 
