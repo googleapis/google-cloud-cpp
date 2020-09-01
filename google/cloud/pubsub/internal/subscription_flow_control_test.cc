@@ -71,10 +71,7 @@ class SubscriptionFlowControlTest : public ::testing::Test {
     acks_cv_.notify_one();
   }
 
-  void WaitAcks() {
-    std::unique_lock<std::mutex> lk(acks_mu_);
-    acks_cv_.wait(lk, [&] { return !acks_.empty(); });
-  }
+  void WaitAcks() { WaitAcksCount(1); }
 
   void WaitAcksCount(std::size_t n) {
     std::unique_lock<std::mutex> lk(acks_mu_);
@@ -123,8 +120,8 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
         EXPECT_THAT(ack_id, "ack-1-0");
         return make_ready_future(Status{});
       });
-  // There may be a few of these calls during shutdown, ignore them, we have
-  // a separate test for them.
+  // There may be a few of these calls during shutdown. We have a separate test
+  // for this, so we ignore them here.
   EXPECT_CALL(*mock, BulkNack)
       .WillRepeatedly([](std::vector<std::string> const&, std::size_t) {
         return make_ready_future(Status{});

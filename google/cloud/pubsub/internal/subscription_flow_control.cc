@@ -107,7 +107,7 @@ void SubscriptionFlowControl::OnPull(
                      total_size += MessageProtoSize(m.message());
                      return std::move(*m.mutable_ack_id());
                    });
-    (void)child_->BulkNack(std::move(ack_ids), 0);
+    (void)child_->BulkNack(std::move(ack_ids), total_size);
     return;
   }
   message_count_ += response->received_messages_size();
