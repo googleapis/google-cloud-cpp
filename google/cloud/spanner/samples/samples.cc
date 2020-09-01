@@ -463,18 +463,18 @@ void CreateTableWithDatatypes(
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
       f = client.UpdateDatabase(database, {R"""(
-	    CREATE TABLE Venues (
-		VenueId         INT64 NOT NULL,
-		VenueName       STRING(100),
-		VenueInfo       BYTES(MAX),
-		Capacity        INT64,
-		AvailableDates  ARRAY<DATE>,
-		LastContactDate DATE,
-		OutdoorVenue    BOOL,
-		PopularityScore FLOAT64,
-		LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
-		    (allow_commit_timestamp=true)
-	    ) PRIMARY KEY (VenueId))"""});
+            CREATE TABLE Venues (
+                VenueId         INT64 NOT NULL,
+                VenueName       STRING(100),
+                VenueInfo       BYTES(MAX),
+                Capacity        INT64,
+                AvailableDates  ARRAY<DATE>,
+                LastContactDate DATE,
+                OutdoorVenue    BOOL,
+                PopularityScore FLOAT64,
+                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+                    (allow_commit_timestamp=true)
+            ) PRIMARY KEY (VenueId))"""});
   StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
       metadata = f.get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
