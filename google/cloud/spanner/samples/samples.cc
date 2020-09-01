@@ -451,6 +451,38 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [create-database] [END spanner_create_database]
 
+// [START spanner_create_table_with_datatypes]
+void CreateTableWithDatatypes(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(database, {R"""(
+	    CREATE TABLE Venues (
+		VenueId         INT64 NOT NULL,
+		VenueName       STRING(100),
+		VenueInfo       BYTES(MAX),
+		Capacity        INT64,
+		AvailableDates  ARRAY<DATE>,
+		LastContactDate DATE,
+		OutdoorVenue    BOOL,
+		PopularityScore FLOAT64,
+		LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+		    (allow_commit_timestamp=true)
+	    ) PRIMARY KEY (VenueId))"""});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "`Venues` table created, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+// [END spanner_create_table_with_datatypes]
+
 // [START spanner_create_table_with_timestamp_column]
 void CreateTableWithTimestamp(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -1039,6 +1071,41 @@ void InsertData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_insert_data]
 
+//! [START spanner_insert_datatypes_data]
+void InsertDatatypesData(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  std::vector<absl::CivilDay> available_dates1 = {absl::CivilDay(2020, 12, 1),
+                                                  absl::CivilDay(2020, 12, 2),
+                                                  absl::CivilDay(2020, 12, 3)};
+  std::vector<absl::CivilDay> available_dates2 = {absl::CivilDay(2020, 11, 1),
+                                                  absl::CivilDay(2020, 11, 5),
+                                                  absl::CivilDay(2020, 11, 15)};
+  std::vector<absl::CivilDay> available_dates3 = {absl::CivilDay(2020, 10, 1),
+                                                  absl::CivilDay(2020, 10, 7)};
+  auto insert_venues =
+      spanner::InsertMutationBuilder(
+          "Venues", {"VenueId", "VenueName", "VenueInfo", "Capacity",
+                     "AvailableDates", "LastContactDate", "OutdoorVenue",
+                     "PopularityScore", "LastUpdateTime"})
+          .EmplaceRow(4, "Venue 4", "Hello World 1", 1800, available_dates1,
+                      absl::CivilDay(2018, 9, 2), false, 0.85543,
+                      spanner::CommitTimestamp())
+          .EmplaceRow(19, "Venue 19", "Hello World 2", 6300, available_dates2,
+                      absl::CivilDay(2019, 1, 15), true, 0.98716,
+                      spanner::CommitTimestamp())
+          .EmplaceRow(42, "Venue 42", "Hello World 3", 3000, available_dates3,
+                      absl::CivilDay(2018, 10, 1), false, 0.72598,
+                      spanner::CommitTimestamp())
+          .Build();
+
+  auto commit_result = client.Commit(spanner::Mutations{insert_venues});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful [spanner_insert_datatypes_data]\n";
+}
+//! [END spanner_insert_datatypes_data]
+
 //! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   //! [commit-with-mutations]
@@ -1100,6 +1167,7 @@ void DeleteAll(google::cloud::spanner::Client client) {
   // Delete all the performances, albums and singers.
   auto commit = client.Commit(spanner::Mutations{
       spanner::MakeDeleteMutation("Performances", spanner::KeySet::All()),
+      spanner::MakeDeleteMutation("Venues", spanner::KeySet::All()),
       spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
       spanner::MakeDeleteMutation("Singers", spanner::KeySet::All()),
   });
@@ -2591,6 +2659,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"remove-database-reader", RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", InstanceTestIamPermissionsCommand},
       make_database_command_entry("create-database", CreateDatabase),
+      make_database_command_entry("create-table-with-datatypes",
+                                  CreateTableWithDatatypes),
       make_database_command_entry("create-table-with-timestamp",
                                   CreateTableWithTimestamp),
       make_database_command_entry("add-index", AddIndex),
@@ -2618,6 +2688,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"quickstart", QuickstartCommand},
       {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
+      make_command_entry("insert-datatypes-data", InsertDatatypesData),
       make_command_entry("update-data", UpdateData),
       make_command_entry("delete-data", DeleteData),
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
@@ -2883,6 +2954,11 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_create_database sample" << std::endl;
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
+  std::cout << "\nRunning spanner_create_table_with_datatypes sample"
+            << std::endl;
+  CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
+                           database_id);
+
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample"
             << std::endl;
   CreateTableWithTimestamp(database_admin_client, project_id, instance_id,
@@ -2939,6 +3015,9 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_insert_data sample" << std::endl;
   InsertData(client);
+
+  std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
+  InsertDatatypesData(client);
 
   std::cout << "\nRunning spanner_update_data sample" << std::endl;
   UpdateData(client);
