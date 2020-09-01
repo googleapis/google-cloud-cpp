@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/printer.h"
+#include "google/cloud/internal/port_platform.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -52,7 +53,7 @@ TEST(PrinterTest, PrintWithMap) {
   Printer printer(generator_context.get(), "foo");
   std::map<std::string, std::string> vars;
   vars["name"] = "Inigo Montoya";
-  printer.Print(vars, "Hello! My name is $name$.\n");
+  printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n");
 }
 
 TEST(PrinterTest, PrintWithVariableArgs) {
@@ -62,7 +63,8 @@ TEST(PrinterTest, PrintWithVariableArgs) {
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
-  printer.Print("Hello! My name is $name$.\n", "name", "Inigo Montoya");
+  printer.Print(42, "some_file", "Hello! My name is $name$.\n", "name",
+                "Inigo Montoya");
 }
 
 }  // namespace
