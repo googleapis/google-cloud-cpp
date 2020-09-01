@@ -21,24 +21,54 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
-future<Status> CreateSubscriptionSessionImpl(
-    google::cloud::CompletionQueue const& executor,
-    std::shared_ptr<pubsub_internal::SessionShutdownManager> const&
-        shutdown_manager,
-    std::shared_ptr<pubsub_internal::SubscriptionBatchSource> source,
-    pubsub::SubscriberConnection::SubscribeParams p) {
-  auto flow_control = SubscriptionFlowControl::Create(
-      executor, shutdown_manager, std::move(source),
-      p.options.message_count_lwm(), p.options.message_count_hwm());
-  auto concurrency_control = SubscriptionConcurrencyControl::Create(
-      executor, shutdown_manager, std::move(flow_control),
-      p.options.concurrency_lwm(), p.options.concurrency_hwm());
 
-  auto result = shutdown_manager->Start(promise<Status>(
-      [concurrency_control] { concurrency_control->Shutdown(); }));
-  concurrency_control->Start(std::move(p.callback));
-  return result;
-}
+class SubscriptionSessionImpl {
+ public:
+  static future<Status> Create(
+      google::cloud::CompletionQueue const& executor,
+      std::shared_ptr<SessionShutdownManager> shutdown_manager,
+      std::shared_ptr<SubscriptionBatchSource> source,
+      pubsub::SubscriberConnection::SubscribeParams p) {
+    auto flow_control = SubscriptionFlowControl::Create(
+        executor, shutdown_manager, std::move(source),
+        p.options.message_count_lwm(), p.options.message_count_hwm());
+    auto concurrency_control = SubscriptionConcurrencyControl::Create(
+        executor, shutdown_manager, std::move(flow_control),
+        p.options.concurrency_lwm(), p.options.concurrency_hwm());
+
+    // TODO(#4970) - this creates a weird loop where `self` owns a promise that
+    //   owns a cancellation callback that owns `self`.
+    //   That loop is broken by the call to `cancel()` which eventually clears
+    //   the promise.
+    //   This is overly complicated, it works, but should be cleaner. We will
+    //   soon make the cancellation hold a weak pointer (as all callbacks
+    //   should) and transfer the ownership of `self` to a timer is the only
+    //   candidate.
+    auto self = std::make_shared<SubscriptionSessionImpl>(
+        std::move(shutdown_manager), std::move(concurrency_control));
+
+    return self->Start(promise<Status>([self] { self->Shutdown(); }),
+                       std::move(p.callback));
+  }
+
+  SubscriptionSessionImpl(
+      std::shared_ptr<SessionShutdownManager> shutdown_manager,
+      std::shared_ptr<SubscriptionConcurrencyControl> pipeline)
+      : shutdown_manager_(std::move(shutdown_manager)),
+        pipeline_(std::move(pipeline)) {}
+
+  future<Status> Start(promise<Status> p, pubsub::ApplicationCallback cb) {
+    auto result = shutdown_manager_->Start(std::move(p));
+    pipeline_->Start(std::move(cb));
+    return result;
+  }
+
+  void Shutdown() { pipeline_->Shutdown(); }
+
+ private:
+  std::shared_ptr<SessionShutdownManager> shutdown_manager_;
+  std::shared_ptr<SubscriptionConcurrencyControl> pipeline_;
+};
 }  // namespace
 
 future<Status> CreateSubscriptionSession(
@@ -50,9 +80,9 @@ future<Status> CreateSubscriptionSession(
       executor, shutdown_manager, stub, std::move(p.full_subscription_name),
       p.options.max_deadline_time());
 
-  return CreateSubscriptionSessionImpl(executor, std::move(shutdown_manager),
-                                       std::move(lease_management),
-                                       std::move(p));
+  return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
+                                         std::move(lease_management),
+                                         std::move(p));
 }
 
 future<Status> CreateTestingSubscriptionSession(
@@ -72,9 +102,9 @@ future<Status> CreateTestingSubscriptionSession(
       executor, shutdown_manager, timer, stub,
       std::move(p.full_subscription_name), p.options.max_deadline_time());
 
-  return CreateSubscriptionSessionImpl(executor, std::move(shutdown_manager),
-                                       std::move(lease_management),
-                                       std::move(p));
+  return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
+                                         std::move(lease_management),
+                                         std::move(p));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
