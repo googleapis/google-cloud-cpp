@@ -73,9 +73,14 @@ TEST(PrinterDeathTest, PrintWithMap) {
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
   std::map<std::string, std::string> vars;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n"),
       std::runtime_error);
+#else
+      printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n");
+
+#endif
 }
 
 TEST(PrinterDeathTest, PrintWithVariableArgs) {
@@ -85,8 +90,12 @@ TEST(PrinterDeathTest, PrintWithVariableArgs) {
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(printer.Print(42, "some_file", "Hello! My name is $name$.\n"),
                std::runtime_error);
+#else
+      printer.Print(42, "some_file", "Hello! My name is $name$.\n");
+#endif
 }
 
 }  // namespace

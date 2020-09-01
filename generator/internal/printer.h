@@ -69,6 +69,7 @@ class Printer {
    * and rethrows exceptions thrown by protoc in order to provide a more
    * meaningful diagnostic.
    */
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   void Print(int line, char const* file,
              const std::map<std::string, std::string>& variables,
              std::string const& text) {
@@ -79,12 +80,20 @@ class Printer {
           absl::StrFormat("%s at %s:%d", e.what(), file, line));
     }
   }
+#else
+  void Print(int, char const*,
+             const std::map<std::string, std::string>& variables,
+             std::string const& text) {
+    printer_->Print(variables, text.c_str());
+  }
+#endif
 
   /**
    * Like the variable arg Print(), except it accepts diagnostic information
    * from the caller and rethrows exceptions thrown by protoc in order to
    * provide a more meaningful diagnostic.
    */
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   template <typename... Args>
   void Print(int line, char const* file, std::string const& text,
              Args&&... args) {
@@ -95,6 +104,13 @@ class Printer {
           absl::StrFormat("%s at %s:%d", e.what(), file, line));
     }
   }
+#else
+  template <typename... Args>
+  void Print(int, char const*, std::string const& text,
+             Args&&... args) {
+    printer_->Print(text.c_str(), std::forward<Args>(args)...);
+  }
+#endif
 
  private:
   std::unique_ptr<google::protobuf::io::ZeroCopyOutputStream> output_;
