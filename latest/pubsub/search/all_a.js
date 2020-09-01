@@ -45,6 +45,7 @@ var searchData=
   ['mock_5fsubscriber_5fconnection_2eh',['mock_subscriber_connection.h',['../mock__subscriber__connection_8h.html',1,'']]],
   ['mock_5fsubscriber_5fstub_2eh',['mock_subscriber_stub.h',['../mock__subscriber__stub_8h.html',1,'']]],
   ['mock_5fsubscription_5fadmin_5fconnection_2eh',['mock_subscription_admin_connection.h',['../mock__subscription__admin__connection_8h.html',1,'']]],
+  ['mock_5fsubscription_5fbatch_5fsource_2eh',['mock_subscription_batch_source.h',['../mock__subscription__batch__source_8h.html',1,'']]],
   ['mock_5ftopic_5fadmin_5fconnection_2eh',['mock_topic_admin_connection.h',['../mock__topic__admin__connection_8h.html',1,'']]],
   ['mockackhandler',['MockAckHandler',['../classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html',1,'google::cloud::pubsub_mocks::v1']]],
   ['mockpublisherconnection',['MockPublisherConnection',['../classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockPublisherConnection.html',1,'google::cloud::pubsub_mocks::v1']]],
