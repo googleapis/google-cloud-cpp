@@ -40,7 +40,12 @@ class SubscriptionConcurrencyControlTest : public ::testing::Test {
     std::unique_lock<std::mutex> lk(messages_mu_);
     for (int i = 0; i != n; ++i) {
       google::pubsub::v1::ReceivedMessage m;
-      m.set_ack_id(prefix + std::to_string(i));
+      auto const id = prefix + std::to_string(i);
+      m.set_ack_id(id);
+      m.set_delivery_attempt(42);
+      m.mutable_message()->set_message_id("message:" + id);
+      m.mutable_message()->set_data("data:" + id);
+      (*m.mutable_message()->mutable_attributes())["k0"] = "l0:" + id;
       messages_.push_back(std::move(m));
     }
   }
@@ -360,6 +365,74 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   }
   session.cancel();
   EXPECT_THAT(session.get(), StatusIs(StatusCode::kOk));
+}
+
+/// @test Verify SubscriptionConcurrencyControl preserves message contents.
+TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
+  auto source =
+      std::make_shared<pubsub_testing::MockSubscriptionMessageSource>();
+  MessageCallback message_callback;
+  auto push_messages = [&](std::size_t n) {
+    PushMessages(message_callback, static_cast<std::int32_t>(n));
+  };
+  PrepareMessages("ack-0-", 3);
+  PrepareMessages("ack-1-", 2);
+  EXPECT_CALL(*source, Shutdown).Times(1);
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*source, Start)
+        .WillOnce([&message_callback](MessageCallback cb) {
+          message_callback = std::move(cb);
+        });
+    EXPECT_CALL(*source, Read(10)).WillOnce(push_messages);
+    EXPECT_CALL(*source, AckMessage)
+        .Times(5)
+        .WillRepeatedly([](std::string const&, std::size_t) {
+          return make_ready_future(Status{});
+        });
+  }
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
+
+  // Create the unit under test, configured to run 1 event at a time, this makes
+  // it easier to setup expectations.
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+
+  auto uut = SubscriptionConcurrencyControl::Create(
+      background.cq(), shutdown, source, /*message_count_lwm=*/0,
+      /*message_count_hwm=*/10);
+
+  std::mutex handler_mu;
+  std::condition_variable handler_cv;
+  std::vector<std::pair<pubsub::Message, pubsub::AckHandler>> messages;
+  auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+    std::lock_guard<std::mutex> lk(handler_mu);
+    messages.emplace_back(std::move(m), std::move(h));
+    handler_cv.notify_one();
+  };
+  auto wait_message_count = [&](std::size_t n) {
+    std::unique_lock<std::mutex> lk(handler_mu);
+    handler_cv.wait(lk, [&] { return messages.size() >= n; });
+  };
+
+  auto done = shutdown->Start({});
+  uut->Start(handler);
+  wait_message_count(5);
+
+  // We only push 5 messages so after this no more messages will show up.
+  // Nevertheless grab the mutex to avoid
+  std::unique_lock<std::mutex> lk(handler_mu);
+  for (auto& p : messages) {
+    EXPECT_EQ(42, p.second.delivery_attempt());
+    EXPECT_EQ(p.first.message_id(), "message:" + p.second.ack_id());
+    EXPECT_EQ(p.first.data(), "data:" + p.second.ack_id());
+    EXPECT_EQ(p.first.attributes()["k0"], "l0:" + p.second.ack_id());
+    std::move(p.second).ack();
+  }
+
+  shutdown->MarkAsShutdown(__func__, {});
+  uut->Shutdown();
+  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
 
 }  // namespace
