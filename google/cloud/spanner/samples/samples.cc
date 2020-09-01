@@ -1164,7 +1164,7 @@ void DeleteData(google::cloud::spanner::Client client) {
 void DeleteAll(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  // Delete all the performances, albums and singers.
+  // Delete all the performances, venues, albums and singers.
   auto commit = client.Commit(spanner::Mutations{
       spanner::MakeDeleteMutation("Performances", spanner::KeySet::All()),
       spanner::MakeDeleteMutation("Venues", spanner::KeySet::All()),
