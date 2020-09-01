@@ -14,6 +14,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
+#include "google/cloud/internal/port_platform.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -106,8 +107,7 @@ class Printer {
   }
 #else
   template <typename... Args>
-  void Print(int, char const*, std::string const& text,
-             Args&&... args) {
+  void Print(int, char const*, std::string const& text, Args&&... args) {
     printer_->Print(text.c_str(), std::forward<Args>(args)...);
   }
 #endif
