@@ -887,7 +887,7 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
     throw examples::Usage{
-        "subscriber-concurrency-control <project-id> <topic-id>"};
+        "subscriber-concurrency-control <project-id> <subscription-id>"};
   }
 
   //! [START pubsub_subscriber_concurrency_control] [subscriber-concurrency]
@@ -933,6 +933,55 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     std::cout << "Message count: " << count << ", status: " << status << "\n";
   }
   //! [END pubsub_subscriber_concurrency_control] [subscriber-concurrency]
+  (argv.at(0), argv.at(1));
+}
+
+void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "subscriber-flow-control <project-id> <subscription-id>"};
+  }
+
+  //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string subscription_id) {
+    // Create a subscriber with 16 threads handling I/O work
+    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection());
+    auto subscription =
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
+
+    std::mutex mu;
+    std::condition_variable cv;
+    int count = 0;
+    auto constexpr kExpectedMessageCount = 4;
+    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+      std::cout << "Received message " << m << "\n";
+      std::move(h).ack();
+      {
+        std::lock_guard<std::mutex> lk(mu);
+        if (++count < kExpectedMessageCount) return;
+      }
+      cv.notify_one();
+    };
+
+    auto constexpr kMiB = 1024 * 1024L;
+    auto session = subscriber.Subscribe(
+        subscription, std::move(handler),
+        pubsub::SubscriptionOptions{}
+            .set_message_count_watermarks(/*lwm=*/800, /*hwm=*/1000)
+            .set_message_size_watermarks(/*lwm=*/4 * kMiB, /*hwm=*/8 * kMiB));
+    {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
+    }
+    session.cancel();
+    auto status = session.get();
+    std::cout << "Message count: " << count << ", status: " << status << "\n";
+  }
+  //! [END pubsub_subscriber_flow_settings] [subscriber-flow-control]
   (argv.at(0), argv.at(1));
 }
 
@@ -1105,6 +1154,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscriberConcurrencyControl() sample" << std::endl;
   SubscriberConcurrencyControl({project_id, subscription_id});
 
+  std::cout << "\nRunning Publish() sample [4]" << std::endl;
+  Publish(publisher, {});
+
+  std::cout << "\nRunning SubscriberFlowControlSettings() sample" << std::endl;
+  SubscriberFlowControlSettings({project_id, subscription_id});
+
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
 
@@ -1200,6 +1255,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
+      {"subscriber-flow-control-settings", SubscriberFlowControlSettings},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

@@ -64,7 +64,7 @@ class SubscriptionOptions {
    * number of pending messages is at or below the low watermark (@p lwm).
    *
    * @par Example
-   * TODO(#4644) - add a working example of this setting.
+   * @snippet samples.cc subscriber-flow-control
    *
    * @note applications that want to have a single pull request at a time, can
    *     set these parameters to `lwm==0` and `hwm==1`.
@@ -90,7 +90,7 @@ class SubscriptionOptions {
    * watermark (@p lwm).
    *
    * @par Example
-   * TODO(#4644) - add a working example of this setting.
+   * @snippet samples.cc subscriber-flow-control
    *
    * @note applications that want to have a single pull request at a time, can
    *     set these parameters to `lwm==0` and `hwm==1`.
