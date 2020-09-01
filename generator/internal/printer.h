@@ -74,7 +74,7 @@ class Printer {
              const std::map<std::string, std::string>& variables,
              std::string const& text) {
     try {
-      printer_->Print(variables, text.c_str());
+      Print(variables, text);
     } catch (std::exception& e) {
       throw std::runtime_error(
           absl::StrFormat("%s at %s:%d", e.what(), file, line));
@@ -90,7 +90,7 @@ class Printer {
   void Print(int line, char const* file, std::string const& text,
              Args&&... args) {
     try {
-      printer_->Print(text.c_str(), std::forward<Args>(args)...);
+      Print(text, std::forward<Args>(args)...);
     } catch (std::exception& e) {
       throw std::runtime_error(
           absl::StrFormat("%s at %s:%d", e.what(), file, line));

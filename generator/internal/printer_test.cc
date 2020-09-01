@@ -53,7 +53,7 @@ TEST(PrinterTest, PrintWithMap) {
   Printer printer(generator_context.get(), "foo");
   std::map<std::string, std::string> vars;
   vars["name"] = "Inigo Montoya";
-  printer.Print(vars, "Hello! My name is $name$.\n");
+  printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n");
 }
 
 TEST(PrinterTest, PrintWithVariableArgs) {
@@ -63,38 +63,8 @@ TEST(PrinterTest, PrintWithVariableArgs) {
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
-  printer.Print("Hello! My name is $name$.\n", "name", "Inigo Montoya");
-}
-
-TEST(PrinterDeathTest, PrintWithMap) {
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
-  EXPECT_CALL(*generator_context, Open("foo"))
-      .WillOnce(Return(output.release()));
-  Printer printer(generator_context.get(), "foo");
-  std::map<std::string, std::string> vars;
-#ifdef NDEBUG
-  printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n");
-#else
-  EXPECT_ANY_THROW(
-      printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n"));
-#endif
-}
-
-TEST(PrinterDeathTest, PrintWithVariableArgs) {
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
-  EXPECT_CALL(*generator_context, Open("foo"))
-      .WillOnce(Return(output.release()));
-  Printer printer(generator_context.get(), "foo");
-#ifdef NDEBUG
-  printer.Print(42, "some_file", "Hello! My name is $name$.\n");
-#else
-  EXPECT_ANY_THROW(
-      printer.Print(42, "some_file", "Hello! My name is $name$.\n"));
-#endif
+  printer.Print(42, "some_file", "Hello! My name is $name$.\n", "name",
+                "Inigo Montoya");
 }
 
 }  // namespace
