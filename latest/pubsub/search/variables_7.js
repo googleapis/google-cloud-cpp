@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['options',['options',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#a99cc5f2e6e726251f05121a78569b52f',1,'google::cloud::pubsub::v1::SubscriberConnection::SubscribeParams']]]
+  ['message',['message',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a69b8424a3cac34a4b83b533be1e14159',1,'google::cloud::v1::LogRecord::message()'],['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection_1_1PublishParams.html#a250421a86d2b02554f6ae19f1e69518e',1,'google::cloud::pubsub::v1::PublisherConnection::PublishParams::message()']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Pub/Sub C++ Client: File Members</title>
+<title>Google Cloud Pub/Sub C++ Client: internal/subscription_flow_control.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -47,7 +47,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -62,40 +61,35 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_7374381ecdb819c64ee9b6ea2bd3370d.html">internal</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle">
+<div class="title">subscription_flow_control.h File Reference</div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>acks_
-: <a class="el" href="subscription__flow__control__test_8cc.html#abf1dcbe99053c1f62cdcd9c3672df59f">subscription_flow_control_test.cc</a>
-</li>
-<li>acks_cv_
-: <a class="el" href="subscription__flow__control__test_8cc.html#af5f81a2e095d49e2fa34ef240346581c">subscription_flow_control_test.cc</a>
-</li>
-<li>acks_mu_
-: <a class="el" href="subscription__flow__control__test_8cc.html#a926e0e18b4d9c13d4de687e183bd66c9">subscription_flow_control_test.cc</a>
-</li>
-<li>async_pulls_
-: <a class="el" href="subscription__flow__control__test_8cc.html#ad3b0810b03acd2550b2ac1116c72cb29">subscription_flow_control_test.cc</a>
-</li>
-<li>async_pulls_cv_
-: <a class="el" href="subscription__flow__control__test_8cc.html#a8b1a8dec2dff47df6a47f92cee0e2e2f">subscription_flow_control_test.cc</a>
-</li>
-<li>async_pulls_mu_
-: <a class="el" href="subscription__flow__control__test_8cc.html#a7ddf4c362e0df4ef51252df52366101e">subscription_flow_control_test.cc</a>
-</li>
-<li>backend_
-: <a class="el" href="publisher__logging__test_8cc.html#ac37f9a7124f2eb09ef480bedcd715f37">publisher_logging_test.cc</a>
-, <a class="el" href="subscriber__logging__test_8cc.html#ac37f9a7124f2eb09ef480bedcd715f37">subscriber_logging_test.cc</a>
-</li>
-<li>expected
-: <a class="el" href="subscription__mutation__builder__test_8cc.html#acee972ca680b0b6dd502ff16559fcb32">subscription_mutation_builder_test.cc</a>
-</li>
-<li>text
-: <a class="el" href="subscription__mutation__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">subscription_mutation_builder_test.cc</a>
-</li>
-<li>update_mask
-: <a class="el" href="subscription__mutation__builder__test_8cc.html#ad7ab45d03d717f8f1699c0d31ccd42a8">subscription_mutation_builder_test.cc</a>
-</li>
-</ul>
+<div class="textblock"><code>#include &quot;<a class="el" href="session__shutdown__manager_8h_source.html">google/cloud/pubsub/internal/session_shutdown_manager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="subscription__batch__source_8h_source.html">google/cloud/pubsub/internal/subscription_batch_source.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="subscription__message__queue_8h_source.html">google/cloud/pubsub/internal/subscription_message_queue.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/pubsub/version.h</a>&quot;</code><br />
+<code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+</div>
+<p><a href="subscription__flow__control_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacegoogle"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle.html">google</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
+<tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
