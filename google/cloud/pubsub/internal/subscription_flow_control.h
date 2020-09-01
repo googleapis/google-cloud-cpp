@@ -35,10 +35,12 @@ class SubscriptionFlowControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> child,
-      std::size_t message_count_lwm, std::size_t message_count_hwm) {
+      std::size_t message_count_lwm, std::size_t message_count_hwm,
+      std::size_t message_size_lwm, std::size_t message_size_hwm) {
     return std::shared_ptr<SubscriptionFlowControl>(new SubscriptionFlowControl(
         std::move(cq), std::move(shutdown_manager), std::move(child),
-        message_count_lwm, message_count_hwm));
+        message_count_lwm, message_count_hwm, message_size_lwm,
+        message_size_hwm));
   }
 
   void Start(MessageCallback) override;
@@ -54,19 +56,22 @@ class SubscriptionFlowControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> child,
-      std::size_t message_count_lwm, std::size_t message_count_hwm)
+      std::size_t message_count_lwm, std::size_t message_count_hwm,
+      std::size_t message_size_lwm, std::size_t message_size_hwm)
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         child_(std::move(child)),
         message_count_lwm_(std::min(message_count_lwm, message_count_hwm)),
         message_count_hwm_(message_count_hwm),
+        message_size_lwm_(std::min(message_size_lwm, message_size_hwm)),
+        message_size_hwm_(message_size_hwm),
         queue_(child_) {}
 
-  void MessageHandled();
+  void MessageHandled(std::size_t size);
   void PullMore();
   void PullIfNeeded(std::unique_lock<std::mutex> lk);
   void OnPull(StatusOr<google::pubsub::v1::PullResponse> response,
-              std::int32_t pull_size);
+              std::int32_t pull_message_count);
 
   std::size_t total_messages() const {
     return message_count_ + outstanding_pull_count_;
@@ -77,9 +82,12 @@ class SubscriptionFlowControl
   std::shared_ptr<SubscriptionBatchSource> const child_;
   std::size_t const message_count_lwm_;
   std::size_t const message_count_hwm_;
+  std::size_t const message_size_lwm_;
+  std::size_t const message_size_hwm_;
 
   std::mutex mu_;
   std::size_t message_count_ = 0;
+  std::size_t message_size_ = 0;
   bool overflow_ = false;
   std::size_t outstanding_pull_count_ = 0;
   SubscriptionMessageQueue queue_;

@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/subscription_flow_control.h"
 #include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -28,6 +29,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
 auto constexpr kUnlimitedCallbacks = 1000;
+auto constexpr kDefaultSizeLwm = 10 * 1024 * 1024L;
+auto constexpr kDefaultSizeHwm = 20 * 1024 * 1024L;
 
 class SubscriptionFlowControlTest : public ::testing::Test {
  protected:
@@ -39,6 +42,22 @@ class SubscriptionFlowControlTest : public ::testing::Test {
       auto& m = *response.add_received_messages();
       m.set_ack_id("ack-" + id);
       m.mutable_message()->set_message_id("message-" + id);
+    }
+    return response;
+  }
+
+  google::pubsub::v1::PullResponse GenerateSizedMessages(
+      std::string const& prefix, int count, int size) {
+    // see https://cloud.google.com/pubsub/pricing
+    auto constexpr kMessageOverhead = 20;
+    auto const payload = google::cloud::internal::Sample(
+        generator_, size - kMessageOverhead, "0123456789");
+    google::pubsub::v1::PullResponse response;
+    for (int i = 0; i != count; ++i) {
+      auto const id = prefix + std::to_string(i);
+      auto& m = *response.add_received_messages();
+      m.set_ack_id("ack-" + id);
+      m.mutable_message()->set_message_id(payload);
     }
     return response;
   }
@@ -85,6 +104,9 @@ class SubscriptionFlowControlTest : public ::testing::Test {
   std::mutex acks_mu_;
   std::condition_variable acks_cv_;
   std::vector<std::string> acks_;
+
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::DefaultPRNG(std::random_device{}());
 };
 
 TEST_F(SubscriptionFlowControlTest, Basic) {
@@ -129,8 +151,11 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1);
+  auto uut = SubscriptionFlowControl::Create(
+      background.cq(), shutdown, mock, /*message_count_lwm=*/0,
+      /*message_count_hwm=*/1,
+      /*message_size_lwm=*/kDefaultSizeLwm,
+      /*message_size_hwm=*/kDefaultSizeHwm);
 
   auto callback = [this](google::pubsub::v1::ReceivedMessage const& response) {
     SaveAcks(response);
@@ -187,7 +212,9 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1);
+      SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1,
+                                      /*message_size_lwm=*/kDefaultSizeLwm,
+                                      /*message_size_hwm=*/kDefaultSizeHwm);
 
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
@@ -231,9 +258,12 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
-                                             /*message_count_lwm=*/0,
-                                             /*message_count_hwm=*/10);
+  auto uut =
+      SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
+                                      /*message_count_lwm=*/0,
+                                      /*message_count_hwm=*/10,
+                                      /*message_size_lwm=*/kDefaultSizeLwm,
+                                      /*message_size_hwm=*/kDefaultSizeHwm);
 
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
@@ -319,8 +349,11 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 2, 10);
+  auto uut = SubscriptionFlowControl::Create(
+      background.cq(), shutdown, mock, /*message_count_lwm=*/2,
+      /*message_count_hwm=*/10,
+      /*message_size_lwm=*/kDefaultSizeLwm,
+      /*message_size_hwm=*/kDefaultSizeHwm);
 
   auto callback = [&](google::pubsub::v1::ReceivedMessage const& response) {
     this->SaveAcks(response);
@@ -365,6 +398,83 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
   uut->Shutdown();
   // Only after shutdown complete the last AsyncPull().
   async_pulls_[3].set_value();
+
+  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+}
+
+TEST_F(SubscriptionFlowControlTest, ReachMessageSizeHwm) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown);
+
+  auto constexpr kMessageSize = 1024;
+  auto generate_messages = [&](std::string const& prefix, int count) {
+    // Workaround GCC/Clang warnings for capturing constexpr vs. MSVC behavior
+    // around not capturing without defaults.
+    auto const size = kMessageSize;
+    return [=](future<void>) {
+      return make_status_or(GenerateSizedMessages(prefix, count, size));
+    };
+  };
+
+  auto ack_success = [&](std::string const&, std::size_t) {
+    return make_ready_future(Status{});
+  };
+
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, Pull(20)).WillOnce([&](std::int32_t) {
+      return AddAsyncPull().then(generate_messages("0-", 5));
+    });
+    EXPECT_CALL(*mock, Pull(15)).WillOnce([&](std::int32_t) {
+      return AddAsyncPull().then(generate_messages("1-", 5));
+    });
+    EXPECT_CALL(*mock, AckMessage("ack-0-0", 1024)).WillOnce(ack_success);
+    EXPECT_CALL(*mock, AckMessage("ack-0-2", 1024)).WillOnce(ack_success);
+    EXPECT_CALL(*mock, Pull(12)).WillOnce([&](std::int32_t) {
+      return AddAsyncPull().then(generate_messages("2-", 3));
+    });
+  }
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut =
+      SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
+                                      /*message_count_lwm=*/19,
+                                      /*message_count_hwm=*/20,
+                                      /*message_size_lwm=*/8 * kMessageSize,
+                                      /*message_size_hwm=*/10 * kMessageSize);
+
+  auto callback = [&](google::pubsub::v1::ReceivedMessage const& response) {
+    this->SaveAcks(response);
+  };
+
+  auto done = shutdown->Start({});
+  uut->Start(callback);
+  uut->Read(kUnlimitedCallbacks);
+  WaitAsyncPullCount(1);
+  EXPECT_TRUE(acks_.empty());
+  async_pulls_[0].set_value();
+  WaitAcksCount(5);
+  EXPECT_THAT(CurrentAcks(), ElementsAre("ack-0-0", "ack-0-1", "ack-0-2",
+                                         "ack-0-3", "ack-0-4"));
+  WaitAsyncPullCount(2);
+  async_pulls_[1].set_value();
+  WaitAcksCount(5);
+  EXPECT_THAT(CurrentAcks(), ElementsAre("ack-1-0", "ack-1-1", "ack-1-2",
+                                         "ack-1-3", "ack-1-4"));
+
+  // We are below the HWM for message count, and above the HWM for message size.
+  // That means no more calls until we go below the HWM for mesages.
+  uut->AckMessage("ack-0-0", 1024);
+  uut->AckMessage("ack-0-2", 1024);
+  WaitAsyncPullCount(3);
+  async_pulls_[2].set_value();
+  WaitAcksCount(3);
+  EXPECT_THAT(CurrentAcks(), ElementsAre("ack-2-0", "ack-2-1", "ack-2-2"));
+
+  // Shutting things down should prevent any further calls.
+  shutdown->MarkAsShutdown(__func__, {});
+  uut->Shutdown();
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }

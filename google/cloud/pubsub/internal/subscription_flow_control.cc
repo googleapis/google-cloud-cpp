@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscription_flow_control.h"
 #include "google/cloud/pubsub/message.h"
+#include <numeric>
 
 namespace google {
 namespace cloud {
@@ -41,21 +42,25 @@ void SubscriptionFlowControl::Read(std::size_t max_callbacks) {
 future<Status> SubscriptionFlowControl::AckMessage(std::string const& ack_id,
                                                    std::size_t size) {
   auto result = queue_.AckMessage(ack_id, size);
-  MessageHandled();
+  MessageHandled(size);
   return result;
 }
 
 future<Status> SubscriptionFlowControl::NackMessage(std::string const& ack_id,
                                                     std::size_t size) {
   auto result = queue_.NackMessage(ack_id, size);
-  MessageHandled();
+  MessageHandled(size);
   return result;
 }
 
-void SubscriptionFlowControl::MessageHandled() {
+void SubscriptionFlowControl::MessageHandled(std::size_t size) {
   std::unique_lock<std::mutex> lk(mu_);
   if (message_count_ != 0) --message_count_;
-  if (message_count_ <= message_count_lwm_) overflow_ = false;
+  message_size_ -= (std::min)(message_size_, size);
+  if (message_count_ <= message_count_lwm_ &&
+      message_size_ <= message_size_lwm_) {
+    overflow_ = false;
+  }
   auto self = shared_from_this();
   shutdown_manager_->StartAsyncOperation(__func__, "PullMore", cq_,
                                          [self] { self->PullMore(); });
@@ -86,10 +91,10 @@ void SubscriptionFlowControl::PullIfNeeded(std::unique_lock<std::mutex> lk) {
 
 void SubscriptionFlowControl::OnPull(
     StatusOr<google::pubsub::v1::PullResponse> response,
-    std::int32_t pull_size) {
+    std::int32_t pull_message_count) {
   std::unique_lock<std::mutex> lk(mu_);
   outstanding_pull_count_ -=
-      std::min<std::size_t>(pull_size, outstanding_pull_count_);
+      std::min<std::size_t>(pull_message_count, outstanding_pull_count_);
   if (!response) {
     shutdown_manager_->FinishedOperation("OnPull");
     shutdown_manager_->MarkAsShutdown(__func__, std::move(response).status());
@@ -111,7 +116,16 @@ void SubscriptionFlowControl::OnPull(
     return;
   }
   message_count_ += response->received_messages_size();
-  if (message_count_ >= message_count_hwm_) overflow_ = true;
+  message_size_ += std::accumulate(
+      response->received_messages().begin(),
+      response->received_messages().end(), std::size_t{0},
+      [](std::size_t a, google::pubsub::v1::ReceivedMessage const& m) {
+        return a + MessageProtoSize(m.message());
+      });
+  if (message_count_ >= message_count_hwm_ ||
+      message_size_ >= message_size_hwm_) {
+    overflow_ = true;
+  }
   lk.unlock();
   auto self = shared_from_this();
   shutdown_manager_->StartAsyncOperation(__func__, "PullMore", cq_,
