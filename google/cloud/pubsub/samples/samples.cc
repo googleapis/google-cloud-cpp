@@ -936,23 +936,15 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
-void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 2) {
-    throw examples::Usage{
-        "subscriber-flow-control <project-id> <subscription-id>"};
-  }
-
+void SubscriberFlowControlSettings(
+    google::cloud::pubsub::Subscriber subscriber,
+    google::cloud::pubsub::Subscription const& subscription,
+    std::vector<std::string> const&) {
   //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](std::string project_id, std::string subscription_id) {
-    // Create a subscriber with 16 threads handling I/O work
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection());
-    auto subscription =
-        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
-
+  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
     std::mutex mu;
     std::condition_variable cv;
     int count = 0;
@@ -982,7 +974,7 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
     std::cout << "Message count: " << count << ", status: " << status << "\n";
   }
   //! [END pubsub_subscriber_flow_settings] [subscriber-flow-control]
-  (argv.at(0), argv.at(1));
+  (std::move(subscriber), std::move(subscription));
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
@@ -1158,7 +1150,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   Publish(publisher, {});
 
   std::cout << "\nRunning SubscriberFlowControlSettings() sample" << std::endl;
-  SubscriberFlowControlSettings({project_id, subscription_id});
+  SubscriberFlowControlSettings(subscriber, subscription, {});
 
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
@@ -1255,7 +1247,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
-      {"subscriber-flow-control-settings", SubscriberFlowControlSettings},
+      CreateSubscriberCommand("subscriber-flow-control-settings", {},
+                              SubscriberFlowControlSettings),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
