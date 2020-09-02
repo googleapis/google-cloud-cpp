@@ -260,9 +260,9 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacksRespectHwmLimit) {
   std::mutex handler_mu;
   std::condition_variable handler_cv;
 
-  std::size_t current_callbacks = 0;
-  std::size_t total_callbacks = 0;
-  std::size_t observed_hwm = 0;
+  int current_callbacks = 0;
+  int total_callbacks = 0;
+  int observed_hwm = 0;
   auto delayed_handler = [&](pubsub::AckHandler h) {
     {
       std::lock_guard<std::mutex> lk(handler_mu);
