@@ -52,9 +52,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
   ~SubscriberConnectionImpl() override = default;
 
   future<Status> Subscribe(SubscribeParams p) override {
-    auto session =
-        SubscriptionSession::Create(stub_, background_->cq(), std::move(p));
-    return session->Start();
+    return CreateSubscriptionSession(stub_, background_->cq(), std::move(p));
   }
 
  private:

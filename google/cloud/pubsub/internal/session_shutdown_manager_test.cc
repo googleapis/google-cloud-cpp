@@ -29,7 +29,7 @@ TEST(SessionShutdownManagerTest, Basic) {
   CompletionQueue cq = background.cq();
 
   SessionShutdownManager tested;
-  auto shutdown = tested.Start();
+  auto shutdown = tested.Start({});
   EXPECT_TRUE(tested.StartOperation("testing", "operation-1", [] {}));
   EXPECT_TRUE(tested.StartOperation("testing", "operation-2", [] {}));
   EXPECT_TRUE(

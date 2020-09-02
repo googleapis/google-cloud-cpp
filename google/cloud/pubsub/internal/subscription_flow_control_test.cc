@@ -136,7 +136,7 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
     SaveAcks(response);
   };
 
-  auto done = shutdown->Start();
+  auto done = shutdown->Start({});
 
   uut->Start(callback);
   uut->Read(kUnlimitedCallbacks);
@@ -189,7 +189,7 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   auto uut =
       SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1);
 
-  auto done = shutdown->Start();
+  auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(kUnlimitedCallbacks);
   WaitAsyncPullCount(1);
@@ -235,7 +235,7 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
                                              /*message_count_lwm=*/0,
                                              /*message_count_hwm=*/10);
 
-  auto done = shutdown->Start();
+  auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(1);
   WaitAsyncPullCount(1);
@@ -326,7 +326,7 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
     this->SaveAcks(response);
   };
 
-  auto done = shutdown->Start();
+  auto done = shutdown->Start({});
   uut->Start(callback);
   uut->Read(kUnlimitedCallbacks);
   WaitAsyncPullCount(1);

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
 
 #include "google/cloud/pubsub/ack_handler.h"
+#include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
@@ -37,11 +38,9 @@ class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
-  using CallbackType = std::function<void(Message, AckHandler)>;
-
   struct SubscribeParams {
     std::string full_subscription_name;
-    CallbackType callback;
+    ApplicationCallback callback;
     SubscriptionOptions options;
   };
   virtual future<Status> Subscribe(SubscribeParams p) = 0;
