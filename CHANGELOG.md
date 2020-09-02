@@ -1,6 +1,55 @@
 # Changelog
 
-## v1.17.0 - TBD
+## v1.18.0 - TBD
+
+## v1.17.0 - 2020-09
+
+### Bigtable
+
+* doc: update quickstart README files (#4980)
+
+### Storage
+
+**BREAKING CHANGES**
+
+* fix(storage)!: use nlohmann_json library as any other dependency (#4747)
+  * After this change applications using CMake must install the
+  [nlohmann_json][nlohmann-json-gh] library. Automatically downloading
+  the library (a) creates problems for package maintainers, (b) requires
+  brittle code to keep the symbols from leaking, and (c) creates problems
+  for users that need newer versions of this library, for example, because
+  they are using a compiler that was not supported by the version we pick.
+    * Applications using Bazel or CMake super builds should not be impacted.
+    * We have updated our instructions to install this library from source on
+     multiple Linux distributions.
+    * Applications using a package manager will need to update their build
+    scripts to add this dependency.
+  * In addition, this removes a number of symbols in the
+  `google_cloud_cpp_internal_nlohmman_json_3_4_0::` namespace.
+  Obviously we never intended these symbols for public use, but we
+  should have been clearer about it.
+
+[nlohmann-json-gh]: https://github.com/nlohmann/json.git
+
+**Other Changes**
+
+* doc: update quickstart README files (#4980)
+* feat(storage): custom_time in ObjectMetadata (#4901)
+* feat(storage): noncurrent and custom time OLM (#4871)
+* fix: cmake configs missing find_dependency(abseil) (#4919)
+
+### Spanner
+
+* doc(spanner): add samples for "datatypes" region tags (#4999)
+* doc: update quickstart README files (#4855) (#4980)
+* fix(spanner): correct variable used to build instance config (#4791)
+
+### Common Libraries
+
+* feat: add a `KmsKeyName` class (#4891)
+* feat: automatically create background thread pools (#4936)
+* fix: clang-tidy works on all headers (#4844)
+* fix: cmake configs missing find_dependency(abseil) (#4919)
 
 ## v1.16.0 - 2020-08
 
