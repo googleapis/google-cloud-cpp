@@ -188,6 +188,24 @@ class SubscriptionOptions {
   std::size_t concurrency_lwm() const { return concurrency_lwm_; }
   std::size_t concurrency_hwm() const { return concurrency_hwm_; }
 
+  /**
+   * Control how often the session polls for automatic shutdowns.
+   *
+   * Applications can shutdown a session by calling `.cancel()` on the returned
+   * `future<Status>`.  In addition, applications can fire & forget a session,
+   * which is only shutdown once the completion queue servicing the session
+   * shuts down. In this latter case the session polls periodically to detect
+   * if the CQ has shutdown. This controls how often this polling happens.
+   */
+  SubscriptionOptions& set_shutdown_polling_period(
+      std::chrono::milliseconds v) {
+    shutdown_polling_period_ = v;
+    return *this;
+  }
+  std::chrono::milliseconds shutdown_polling_period() const {
+    return shutdown_polling_period_;
+  }
+
  private:
   static std::size_t DefaultConcurrencyHwm() {
     auto constexpr kDefaultHwm = 4;
@@ -202,6 +220,7 @@ class SubscriptionOptions {
   std::size_t message_size_hwm_ = 100 * 1024 * 1024L;
   std::size_t concurrency_lwm_ = 0;
   std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
+  std::chrono::milliseconds shutdown_polling_period_ = std::chrono::seconds(5);
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

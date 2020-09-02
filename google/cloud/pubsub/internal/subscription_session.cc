@@ -23,10 +23,11 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-class SubscriptionSessionImpl {
+class SubscriptionSessionImpl
+    : public std::enable_shared_from_this<SubscriptionSessionImpl> {
  public:
   static future<Status> Create(
-      google::cloud::CompletionQueue const& executor,
+      google::cloud::CompletionQueue executor,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::SubscriberConnection::SubscribeParams p) {
@@ -38,38 +39,120 @@ class SubscriptionSessionImpl {
         executor, shutdown_manager, std::move(flow_control),
         p.options.concurrency_lwm(), p.options.concurrency_hwm());
 
-    // TODO(#4970) - this creates a weird loop where `self` owns a promise that
-    //   owns a cancellation callback that owns `self`.
-    //   That loop is broken by the call to `cancel()` which eventually clears
-    //   the promise.
-    //   This is overly complicated, it works, and should be cleaner. The cancel
-    //   callback should hold a weak pointer to this class (as all callbacks
-    //   should) and we will transfer the ownership of `self` to the completion
-    //   queue, so the subscription works in a fire+forget scenario.
     auto self = std::make_shared<SubscriptionSessionImpl>(
-        std::move(shutdown_manager), std::move(concurrency_control));
+        std::move(executor), std::move(shutdown_manager),
+        std::move(concurrency_control), p.options.shutdown_polling_period());
 
-    return self->Start(promise<Status>([self] { self->Shutdown(); }),
-                       std::move(p.callback));
+    auto weak = std::weak_ptr<SubscriptionSessionImpl>(self);
+    auto result = self->shutdown_manager_->Start(promise<Status>([weak] {
+      if (auto self = weak.lock()) self->InitiateApplicationShutdown();
+    }));
+    // Create a (periodic) timer, this serves two purposes:
+    // 1) Effectively the timer owns "self" and the timer is owned by the
+    //    CompletionQueue.
+    // 2) When the completion queue is shutdown, the timer is canceled and
+    //    `self` gets a chance to shutdown the pipeline.
+    self->ScheduleTimer();
+    self->pipeline_->Start(std::move(p.callback));
+    return result.then([weak](future<Status> f) {
+      if (auto self = weak.lock()) self->ShutdownCompleted();
+      return f.get();
+    });
   }
 
   SubscriptionSessionImpl(
+      CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      std::shared_ptr<SubscriptionConcurrencyControl> pipeline)
-      : shutdown_manager_(std::move(shutdown_manager)),
+      std::shared_ptr<SubscriptionConcurrencyControl> pipeline,
+      std::chrono::milliseconds shutdown_polling_period)
+      : cq_(std::move(cq)),
+        shutdown_manager_(std::move(shutdown_manager)),
+        shutdown_polling_period_(shutdown_polling_period),
         pipeline_(std::move(pipeline)) {}
 
-  future<Status> Start(promise<Status> p, pubsub::ApplicationCallback cb) {
-    auto result = shutdown_manager_->Start(std::move(p));
-    pipeline_->Start(std::move(cb));
-    return result;
+ private:
+  void InitiateApplicationShutdown() {
+    GCP_LOG(DEBUG) << __func__ << "()";
+    std::unique_lock<std::mutex> lk(mu_);
+    std::shared_ptr<SubscriptionConcurrencyControl> p = pipeline_;
+    switch (shutdown_state_) {
+      case kNotInShutdown:
+        shutdown_state_ = kShutdownByApplication;
+        lk.unlock();
+        shutdown_manager_->MarkAsShutdown(__func__, {});
+        if (p) p->Shutdown();
+        break;
+      case kShutdownByApplication:
+      case kShutdownByCompletionQueue:
+      case kShutdownCompleted:
+        break;
+    }
   }
 
-  void Shutdown() { pipeline_->Shutdown(); }
+  void ShutdownCompleted() {
+    GCP_LOG(DEBUG) << __func__ << "()";
+    std::lock_guard<std::mutex> lk(mu_);
+    pipeline_.reset();
+    shutdown_state_ = kShutdownCompleted;
+    if (timer_.valid()) timer_.cancel();
+  }
 
- private:
-  std::shared_ptr<SessionShutdownManager> shutdown_manager_;
+  void ScheduleTimer() {
+    GCP_LOG(DEBUG) << __func__ << "()";
+    using TimerArg = future<StatusOr<std::chrono::system_clock::time_point>>;
+
+    std::unique_lock<std::mutex> lk(mu_);
+    auto self = shared_from_this();
+    lk.unlock();
+    auto t = cq_.MakeRelativeTimer(shutdown_polling_period_)
+                 .then([self](TimerArg f) { self->OnTimer(!f.get().ok()); });
+    if (shutdown_state_ == kShutdownByCompletionQueue) return;
+    lk.lock();
+    timer_ = std::move(t);
+  }
+
+  void OnTimer(bool cancelled) {
+    GCP_LOG(DEBUG) << __func__ << "(" << cancelled << ")";
+    if (!cancelled) {
+      ScheduleTimer();
+      return;
+    }
+    std::unique_lock<std::mutex> lk(mu_);
+    std::shared_ptr<SubscriptionConcurrencyControl> p;
+    switch (shutdown_state_) {
+      case kNotInShutdown:
+        shutdown_state_ = kShutdownByCompletionQueue;
+        p.swap(pipeline_);
+        shutdown_manager_->MarkAsShutdown(__func__, {});
+        lk.unlock();
+        p->Shutdown();
+        break;
+      case kShutdownByApplication:
+        shutdown_state_ = kShutdownCompleted;
+        p.swap(pipeline_);
+        lk.unlock();
+        break;
+      case kShutdownByCompletionQueue:
+      case kShutdownCompleted:
+        break;
+    }
+  }
+
+  enum ShutdownState {
+    kNotInShutdown,
+    kShutdownByCompletionQueue,
+    kShutdownByApplication,
+    kShutdownCompleted,
+  };
+
+  CompletionQueue cq_;
+  std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
+  std::chrono::milliseconds const shutdown_polling_period_;
+
+  std::mutex mu_;
   std::shared_ptr<SubscriptionConcurrencyControl> pipeline_;
+  ShutdownState shutdown_state_ = kNotInShutdown;
+  future<void> timer_;
 };
 }  // namespace
 
@@ -87,9 +170,9 @@ future<Status> CreateSubscriptionSession(
       executor, shutdown_manager, std::move(batch),
       p.options.max_deadline_time());
 
-  return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
-                                         std::move(lease_management),
-                                         std::move(p));
+  return SubscriptionSessionImpl::Create(
+      std::move(executor), std::move(shutdown_manager),
+      std::move(lease_management), std::move(p));
 }
 
 future<Status> CreateTestingSubscriptionSession(
@@ -124,9 +207,9 @@ future<Status> CreateTestingSubscriptionSession(
       executor, shutdown_manager, timer, std::move(batch),
       p.options.max_deadline_time());
 
-  return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
-                                         std::move(lease_management),
-                                         std::move(p));
+  return SubscriptionSessionImpl::Create(
+      std::move(executor), std::move(shutdown_manager),
+      std::move(lease_management), std::move(p));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

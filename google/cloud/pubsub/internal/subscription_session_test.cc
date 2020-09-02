@@ -412,77 +412,6 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
   t.join();
 }
 
-/// @test Verify AsyncPull responses are nacked after shutdown.
-TEST(SubscriptionSessionTest, ShutdownNackOnPull) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  pubsub::Subscription const subscription("test-project", "test-subscription");
-
-  // In this test we are going to return futures that are satisfied much later
-  // in the test, to control the sequence of events with more precision.
-  std::mutex mu;
-  promise<StatusOr<google::pubsub::v1::PullResponse>> async_pull_response;
-  promise<void> async_pull_called;
-  auto pull_handler = [&](google::cloud::CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          google::pubsub::v1::PullRequest const& request) {
-    async_pull_called.set_value();
-    EXPECT_EQ(subscription.FullName(), request.subscription());
-    return async_pull_response.get_future();
-  };
-  auto nack_handler = [&](google::cloud::CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-    return make_ready_future(Status{});
-  };
-
-  // We are going to cancel the pull loop before the first AsyncPull() responds,
-  // we expect all messages to be nacked.
-  {
-    InSequence sequence;
-    EXPECT_CALL(*mock, AsyncPull).WillOnce(pull_handler);
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillOnce(nack_handler);
-  }
-
-  // Now unto the handler, basically it counts messages and from the second one
-  // onwards it just nacks.
-  std::atomic<int> handler_count{0};
-  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
-    ++handler_count;
-    std::move(h).ack();
-  };
-
-  google::cloud::CompletionQueue cq;
-  std::thread t{[&cq] { cq.Run(); }};
-  auto response = CreateTestingSubscriptionSession(
-      mock, cq,
-      {subscription.FullName(), handler,
-       pubsub::SubscriptionOptions{}
-           .set_message_count_watermarks(0, 1)
-           .set_max_deadline_time(std::chrono::seconds(60))});
-  async_pull_called.get_future().get();
-  response.cancel();
-
-  // Now generate the response for AsyncPull():
-  {
-    google::pubsub::v1::PullResponse re;
-    for (int i = 0; i != 5; ++i) {
-      auto& m = *re.add_received_messages();
-      std::lock_guard<std::mutex> lk(mu);
-      m.set_ack_id("test-ack-id-" + std::to_string(i));
-      m.mutable_message()->set_message_id("test-message-id-" +
-                                          std::to_string(i));
-    }
-    // This satisfies the pending AsyncPull() response, but the subscription has
-    // already been canceled.
-    async_pull_response.set_value(std::move(re));
-  }
-  EXPECT_STATUS_OK(response.get());
-
-  cq.Shutdown();
-  t.join();
-  EXPECT_EQ(0, handler_count);
-}
-
 /// @test Verify shutting down a session waits for pending tasks.
 TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -540,6 +469,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   std::atomic<int> handler_counter{0};
+
+  // Create a scope for the handler and its variables, this makes it easier to
+  // discover bugs under TSAN/ASAN.
   {
     // Now unto the handler, basically it counts messages and nacks starting at
     // kMaximumAcks.
@@ -557,6 +489,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
     got_one.get_future()
         .then([&session](future<void>) { session.cancel(); })
         .get();
+
     auto status = session.get();
     EXPECT_STATUS_OK(status);
     EXPECT_LE(1, handler_counter.load());
@@ -632,6 +565,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   std::atomic<int> handler_counter{0};
+
+  // Create a scope for the handler and its variables, makes the errors more
+  // obvious under TSAN/ASAN.
   {
     // Now unto the handler, basically it counts messages and nacks starting at
     // kMaximumAcks.
@@ -670,6 +606,106 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   }
   auto const final_value = handler_counter.load();
   EXPECT_EQ(initial_value, final_value);
+}
+
+/// @test Verify sessions continue even if future is released.
+TEST(SubscriptionSessionTest, FireAndForget) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  auto constexpr kMessageCount = 8;
+  std::mutex generate_mu;
+  int generate_count = 0;
+
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto generate = [&](google::cloud::CompletionQueue& cq,
+                      std::unique_ptr<grpc::ClientContext>,
+                      google::pubsub::v1::PullRequest const& r) {
+    auto const count = (std::max)(r.max_messages(), 2 * kMessageCount);
+    return cq.MakeRelativeTimer(std::chrono::microseconds(10))
+        .then([&generate_mu, &generate_count, count](TimerFuture) {
+          std::unique_lock<std::mutex> lk(generate_mu);
+          google::pubsub::v1::PullResponse response;
+          for (int i = 0; i != count; ++i) {
+            auto& m = *response.add_received_messages();
+            m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
+            m.mutable_message()->set_message_id("test-message-id-" +
+                                                std::to_string(generate_count));
+            ++generate_count;
+          }
+          lk.unlock();
+          return make_status_or(response);
+        });
+  };
+  auto generate_ack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::AcknowledgeRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
+            .then([](TimerFuture) { return Status{}; });
+      };
+  auto generate_nack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
+            .then([](TimerFuture) { return Status{}; });
+      };
+
+  EXPECT_CALL(*mock, AsyncPull).Times(AtLeast(1)).WillRepeatedly(generate);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(kMessageCount))
+      .WillRepeatedly(generate_ack_response);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly(generate_nack_response);
+
+  std::mutex mu;
+  std::condition_variable cv;
+  int ack_count = 0;
+  Status status;
+  auto wait_ack_count = [&](int n) {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return ack_count >= n || !status.ok(); });
+    return ack_count;
+  };
+
+  // Create a scope for the background completion queues and threads.
+  {
+    internal::AutomaticallyCreatedBackgroundThreads background;
+
+    // Create a scope so the future and handler get destroyed, but we want the
+    // test to continue afterwards.
+    {
+      auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+        std::move(h).ack();
+        std::unique_lock<std::mutex> lk(mu);
+        if (++ack_count % kMessageCount == 0) cv.notify_one();
+      };
+
+      (void)CreateSubscriptionSession(
+          mock, background.cq(),
+          {subscription.FullName(), handler,
+           pubsub::SubscriptionOptions{}
+               .set_message_count_watermarks(0, kMessageCount / 2)
+               .set_concurrency_watermarks(0, kMessageCount / 2)
+               .set_shutdown_polling_period(std::chrono::milliseconds(20))},
+          pubsub_testing::TestRetryPolicy(),
+          pubsub_testing::TestBackoffPolicy())
+          .then([&](future<Status> f) {
+            std::unique_lock<std::mutex> lk(mu);
+            status = f.get();
+            cv.notify_one();
+          });
+      wait_ack_count(kMessageCount);
+    }
+
+    auto const initial_value = wait_ack_count(2 * kMessageCount);
+    auto const final_value = wait_ack_count(initial_value + 2 * kMessageCount);
+    EXPECT_NE(initial_value, final_value);
+    std::unique_lock<std::mutex> lk(mu);
+    EXPECT_STATUS_OK(status);
+  }
+  SUCCEED();
 }
 
 }  // namespace
