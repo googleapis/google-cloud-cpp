@@ -31,14 +31,37 @@ class RetryPolicy {
  public:
   virtual ~RetryPolicy() = default;
 
-  /// Handle a failure, return `true` if the retry loop can continue.
+  //@{
+  /**
+   * @name Control retry loop duration.
+   *
+   * This functions are typically used in a retry loop, where they control
+   * whether to continue, whether a failure should be retried, and finally
+   * how to format the error message.
+   *
+   * @code
+   * std::unique_ptr<RetryPolicy> policy = ....;
+   * Status status;
+   * while (!policy->IsExhausted()) {
+   *   auto response = try_rpc();  // typically `response` is StatusOr<T>
+   *   if (response.ok()) return response;
+   *   status = std::move(response).status();
+   *   if (!policy->OnFailure(response->status())) {
+   *     if (policy->IsPermanentFailure(response->status()) {
+   *       return StatusModifiedToSayPermanentFailureCausedTheProblem(status);
+   *     }
+   *     return StatusModifiedToSayPolicyExhaustionCausedTheProblem(status);
+   *   }
+   *   // sleep, which may exhaust the policy, even if it was not exhausted in
+   *   // the last call.
+   * }
+   * return StatusModifiedToSayPolicyExhaustionCausedTheProblem(status);
+   * @endcode
+   */
   virtual bool OnFailure(Status const&) = 0;
-
-  /// Return `true` if no more retries should be attempted.
   virtual bool IsExhausted() const = 0;
-
-  /// Return `true` if the error is not retryable.
   virtual bool IsPermanentFailure(Status const&) const = 0;
+  //@}
 };
 
 /**
