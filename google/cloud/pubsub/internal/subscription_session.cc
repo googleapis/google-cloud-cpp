@@ -31,7 +31,8 @@ class SubscriptionSessionImpl {
       pubsub::SubscriberConnection::SubscribeParams p) {
     auto flow_control = SubscriptionFlowControl::Create(
         executor, shutdown_manager, std::move(source),
-        p.options.message_count_lwm(), p.options.message_count_hwm());
+        p.options.message_count_lwm(), p.options.message_count_hwm(),
+        p.options.message_size_lwm(), p.options.message_size_hwm());
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
         executor, shutdown_manager, std::move(flow_control),
         p.options.concurrency_lwm(), p.options.concurrency_hwm());
