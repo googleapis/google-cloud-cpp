@@ -17,7 +17,7 @@ commands should be useful in identifying important changes for inclusion in the
 release notes.
 
 ### Verify CI passing
-Before beginning the release process, verify all CI builds are passing on 
+Before beginning the release process, verify all CI builds are passing on
 master.
 
 ### Update CHANGELOG.md
@@ -160,3 +160,22 @@ Nudge coryan@ to send a PR to
 [vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
 The PRs are not difficult, but contributing to this repository requires SVP
 approval.
+
+# Creating a patch release of google-cloud-cpp on an existing release branch
+
+In your development fork:
+* Switch to the existing release branch, e.g. `git checkout v1.17.x`.
+* Create a new branch off the release branch.
+* Create or cherry-pick commits with the desired changes.
+* Update `CHANELOG.md` to reflect the changes made.
+* Bump the minor version number in the top-level CMakeLists.txt and run the
+cmake configuration step to update the different `version_info.h` files.
+* After merging the PR(s) with all the above changes, use the Release gui on
+github to create a pre-release along with a new tag for the release.
+* After review, publish the release.
+* Manually run a Kokoro job
+`cloud-devrel/client-libraries/cpp/google-cloud-cpp/publish-refdocs` in the
+Cloud C++ internal testing dashboard and specify the branch name (e.g.
+`v1.17.x`) in the `Committish` field.
+* Nudge coryan@ to send a PR to
+[vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
