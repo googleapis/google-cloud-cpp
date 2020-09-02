@@ -2,9 +2,6 @@ var searchData=
 [
   ['data',['data',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a31c155ed366c2773b4eb829a27396467',1,'google::cloud::pubsub::v1::Message::data() const &amp;'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a25c3c216751016bbfe6c1d60ff2bf4ae',1,'google::cloud::pubsub::v1::Message::data() &amp;&amp;']]],
   ['deadline',['deadline',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1AsyncTimerResult.html#a06c6d39b0d5008175db9670ea1a12f38',1,'google::cloud::v1::AsyncTimerResult']]],
-  ['default_5fack_5fhandler_5fimpl_2ecc',['default_ack_handler_impl.cc',['../default__ack__handler__impl_8cc.html',1,'']]],
-  ['default_5fack_5fhandler_5fimpl_2eh',['default_ack_handler_impl.h',['../default__ack__handler__impl_8h.html',1,'']]],
-  ['default_5fack_5fhandler_5fimpl_5ftest_2ecc',['default_ack_handler_impl_test.cc',['../default__ack__handler__impl__test_8cc.html',1,'']]],
   ['default_5fendpoint',['default_endpoint',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html#ad8dfe6e70823c80f63d9200894ad0cde',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits']]],
   ['default_5fnum_5fchannels',['default_num_channels',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html#a3d8c1bc0965b8625859b084b10bd11fa',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits']]],
   ['default_5fretry_5fpolicies_2ecc',['default_retry_policies.cc',['../default__retry__policies_8cc.html',1,'']]],

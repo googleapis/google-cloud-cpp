@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['callback',['callback',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#a00b9eb58c1ced09b2b97f3d2c1d24c36',1,'google::cloud::pubsub::v1::SubscriberConnection::SubscribeParams']]],
-  ['callbacktype',['CallbackType',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#a96871197ff7b5643618769c04cf4e450',1,'google::cloud::pubsub::v1::SubscriberConnection']]],
+  ['callback',['callback',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#aad0560a133b10b16183c8995c8920b1b',1,'google::cloud::pubsub::v1::SubscriberConnection::SubscribeParams']]],
   ['cancel',['Cancel',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html#a7ef789103c0ecc4c92565a04af097683',1,'google::cloud::v1::AsyncOperation']]],
   ['cancelall',['CancelAll',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a178d873b760bb87ba26960aff4b84164',1,'google::cloud::v1::CompletionQueue']]],
   ['cancelled',['cancelled',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1AsyncTimerResult.html#a1fb82bebdafb738a1f9f14ffa95e8634',1,'google::cloud::v1::AsyncTimerResult']]],
