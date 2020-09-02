@@ -2,6 +2,10 @@
 
 ## v1.18.0 - TBD
 
+## v1.17.1 - 2020-09
+
+* fix(pubsub): build with MSVC+x86 (#5012)
+
 ## v1.17.0 - 2020-09
 
 ### Bigtable
