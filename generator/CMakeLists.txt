@@ -16,7 +16,10 @@
 
 include(GoogleCloudCppCommon)
 include(FindProtobufWithTargets)
+# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
+set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
+unset(FPHSA_NAME_MISMATCHED)
 
 find_package(ProtobufWithTargets REQUIRED)
 
