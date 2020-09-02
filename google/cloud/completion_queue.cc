@@ -96,8 +96,8 @@ class AsyncFunction : public internal::AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(bool) override {
-    fun_->exec();
+  bool Notify(bool ok) override {
+    if (ok) fun_->exec();  // do not run async operations on shutdown CQs
     fun_.reset();
     return true;
   }

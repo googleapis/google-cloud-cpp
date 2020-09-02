@@ -441,6 +441,31 @@ TEST(CompletionQueueTest, RunAsyncThread) {
   for (auto& t : runners) t.join();
 }
 
+TEST(CompletionQueueTest, NoRunAsyncAfterShutdown) {
+  CompletionQueue cq;
+
+  std::thread runner([&cq] { cq.Run(); });
+
+  promise<void> a;
+  promise<void> b;
+  promise<void> c;
+  cq.RunAsync([&] {
+    a.set_value();
+    b.get_future().wait();
+  });
+  a.get_future().wait();
+  cq.Shutdown();
+  b.set_value();
+  cq.RunAsync([&c] { c.set_value(); });
+  auto f = c.get_future();
+  using ms = std::chrono::milliseconds;
+  // After runner is joined there will be no activity in the CQ, so this is not
+  // likely to flake. If the promise was ever going to be satisfied it would
+  // have been
+  runner.join();
+  EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(0)));
+}
+
 // Sets up a timer that reschedules itself and verifies we can shut down
 // cleanly whether we call `CancelAll()` on the queue first or not.
 namespace {
