@@ -76,6 +76,7 @@ $(function() {
 <div class="textblock"><code>#include &quot;<a class="el" href="subscription__flow__control_8h_source.html">google/cloud/pubsub/internal/subscription_flow_control.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="mock__subscription__batch__source_8h_source.html">google/cloud/pubsub/testing/mock_subscription_batch_source.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/internal/background_threads_impl.h&quot;</code><br />
+<code>#include &quot;google/cloud/internal/random.h&quot;</code><br />
 <code>#include &quot;google/cloud/testing_util/status_matchers.h&quot;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 </div>
@@ -110,7 +111,7 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00087">87</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00106">106</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
@@ -134,7 +135,7 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00086">86</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00105">105</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
@@ -158,7 +159,7 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00085">85</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00104">104</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
@@ -182,7 +183,7 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00083">83</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00102">102</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
@@ -206,7 +207,7 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00082">82</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00101">101</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
@@ -230,7 +231,31 @@ Namespaces</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00081">81</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00100">100</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
+
+</div>
+</div>
+<a id="a9abf0e814c9b34c2334fe8ff46018712"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9abf0e814c9b34c2334fe8ff46018712">&#9670;&nbsp;</a></span>generator_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::internal::DefaultPRNG generator_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      google::cloud::internal::DefaultPRNG(std::random_device{}())</div></div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="subscription__flow__control__test_8cc_source.html#l00108">108</a> of file <a class="el" href="subscription__flow__control__test_8cc_source.html">subscription_flow_control_test.cc</a>.</p>
 
 </div>
 </div>
