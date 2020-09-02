@@ -40,6 +40,7 @@
 
 ### Spanner
 
+* doc(spanner): add samples for "datatypes" region tags (#4999)
 * doc: update quickstart README files (#4855) (#4980)
 * fix(spanner): correct variable used to build instance config (#4791)
 
