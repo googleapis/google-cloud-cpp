@@ -16,6 +16,10 @@ and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
 commands should be useful in identifying important changes for inclusion in the
 release notes.
 
+### Verify CI passing
+Before beginning the release process, verify all CI builds are passing on 
+master.
+
 ### Update CHANGELOG.md
 
 Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
