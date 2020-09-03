@@ -69,7 +69,6 @@ function (google_cloud_cpp_generator_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-
     add_library(google_cloud_cpp_generator_testing INTERFACE)
     target_sources(
         google_cloud_cpp_generator_testing
