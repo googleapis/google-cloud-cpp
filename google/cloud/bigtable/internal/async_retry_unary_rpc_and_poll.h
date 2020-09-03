@@ -84,13 +84,9 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
   };
   CallWrapper wrapper{std::move(metadata_update_policy), std::move(async_call)};
 
-  auto const idempotency =
-      idempotent_policy.is_idempotent()
-          ? google::cloud::internal::Idempotency::kIdempotent
-          : google::cloud::internal::Idempotency::kNonIdempotent;
   auto op_future = google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-      idempotency, std::move(wrapper), std::move(request));
+      idempotent_policy.idempotency(), std::move(wrapper), std::move(request));
 
   struct ContinuationWrapper {
     future<StatusOr<Response>> operator()(

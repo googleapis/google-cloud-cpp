@@ -142,11 +142,11 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       CreateSnapshotParams p) override {
-    auto const is_idempotent = p.request.name().empty()
-                                   ? Idempotency::kNonIdempotent
-                                   : Idempotency::kIdempotent;
+    auto const idempotency = p.request.name().empty()
+                                 ? Idempotency::kNonIdempotent
+                                 : Idempotency::kIdempotent;
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+        retry_policy_->clone(), backoff_policy_->clone(), idempotency,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::CreateSnapshotRequest const& request) {
           return stub_->CreateSnapshot(context, request);

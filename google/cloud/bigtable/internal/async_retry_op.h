@@ -48,6 +48,10 @@ class ConstantIdempotencyPolicy {
     return idempotency_ == google::cloud::internal::Idempotency::kIdempotent;
   }
 
+  google::cloud::internal::Idempotency idempotency() const {
+    return idempotency_;
+  }
+
  private:
   google::cloud::internal::Idempotency idempotency_;
 };

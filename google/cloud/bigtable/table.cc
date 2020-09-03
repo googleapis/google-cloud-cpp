@@ -121,14 +121,14 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   // mutations won't change as the retry loop executes, so we can just compute
   // it once and use a constant value for the loop.
   auto idempotent_mutation_policy = clone_idempotent_mutation_policy();
+  auto const is_idempotent = std::all_of(
+      request.mutations().begin(), request.mutations().end(),
+      [&idempotent_mutation_policy](google::bigtable::v2::Mutation const& m) {
+        return idempotent_mutation_policy->is_idempotent(m);
+      });
+
   auto const idempotency =
-      std::all_of(request.mutations().begin(), request.mutations().end(),
-                  [&idempotent_mutation_policy](
-                      google::bigtable::v2::Mutation const& m) {
-                    return idempotent_mutation_policy->is_idempotent(m);
-                  })
-          ? Idempotency::kIdempotent
-          : Idempotency::kNonIdempotent;
+      is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
 
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();

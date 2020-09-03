@@ -37,7 +37,7 @@ namespace internal {
  * @param retry_policy controls the duration of the retry loop.
  * @param backoff_policy controls how the loop backsoff from a recoverable
  *     failure.
- * @param idempotency if `Idempotencu::kNonIdempotent`, the operation is not
+ * @param idempotency if `Idempotency::kNonIdempotent`, the operation is not
  *     retried even on transient errors.
  * @param functor the operation to retry, typically a lambda that encasulates
  *     both the Stub and the function to call.

@@ -139,7 +139,7 @@ struct UnaryClientUtils {
       MemberFunction function,
       typename Signature<MemberFunction>::RequestType const& request,
       char const* error_message, grpc::Status& status,
-      google::cloud::internal::Idempotency retry_on_failure) {
+      google::cloud::internal::Idempotency idempotency) {
     typename Signature<MemberFunction>::ResponseType response;
     do {
       grpc::ClientContext client_context;
@@ -161,8 +161,7 @@ struct UnaryClientUtils {
       }
       auto delay = backoff_policy.OnCompletion(status);
       std::this_thread::sleep_for(delay);
-    } while (retry_on_failure ==
-             google::cloud::internal::Idempotency::kIdempotent);
+    } while (idempotency == google::cloud::internal::Idempotency::kIdempotent);
     return response;
   }
 

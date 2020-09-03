@@ -53,13 +53,14 @@ BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
   int index = 0;
   for (auto const& e : pending_mutations_.entries()) {
     // This is a giant && across all the mutations for each row.
-    auto r = std::all_of(e.mutations().begin(), e.mutations().end(),
-                         [&idempotent_policy](btproto::Mutation const& m) {
-                           return idempotent_policy.is_idempotent(m);
-                         })
-                 ? Idempotency::kIdempotent
-                 : Idempotency::kNonIdempotent;
-    pending_annotations_.push_back(Annotations{index++, r, false});
+    auto is_idempotent =
+        std::all_of(e.mutations().begin(), e.mutations().end(),
+                    [&idempotent_policy](btproto::Mutation const& m) {
+                      return idempotent_policy.is_idempotent(m);
+                    });
+    auto idempotency =
+        is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
+    pending_annotations_.push_back(Annotations{index++, idempotency, false});
   }
 }
 
