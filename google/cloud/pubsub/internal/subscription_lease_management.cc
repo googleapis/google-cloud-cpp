@@ -29,6 +29,7 @@ void SubscriptionLeaseManagement::Shutdown() {
   if (refresh_timer_.valid()) refresh_timer_.cancel();
   // Schedule a nack for each pending message, using the existing executor.
   NackAll(std::move(lk));
+  child_->Shutdown();
 }
 
 future<Status> SubscriptionLeaseManagement::AckMessage(

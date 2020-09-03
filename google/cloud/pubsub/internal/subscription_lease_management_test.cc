@@ -80,6 +80,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
         .WillOnce([](std::vector<std::string> const&, std::size_t) {
           return make_ready_future(Status{});
         });
+    EXPECT_CALL(*mock, Shutdown).Times(1);
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
@@ -167,6 +168,20 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
 
   timers[0].set_value(Status(StatusCode::kCancelled, "test-cancel"));
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+/// @test Verify ExtendLeases does not call the `child` object.
+TEST(SubscriptionLeaseManagementTest, DoesNotPropagateExtendLeases) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionLeaseManagement::Create(
+      background.cq(), shutdown_manager, mock, std::chrono::seconds(30));
+
+  auto result =
+      uut->ExtendLeases({"a", "b", "c"}, std::chrono::seconds(10)).get();
+  ASSERT_THAT(result, StatusIs(StatusCode::kUnimplemented));
 }
 
 }  // namespace
