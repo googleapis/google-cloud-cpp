@@ -85,6 +85,8 @@ function (google_cloud_cpp_generator_define_tests)
                $<INSTALL_INTERFACE:include>)
     target_compile_options(google_cloud_cpp_generator_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    set_target_properties(google_cloud_cpp_generator_testing
+                          PROPERTIES LINKER_LANGUAGE CXX)
 
     set(google_cloud_cpp_generator_unit_tests
         # cmake-format: sort
