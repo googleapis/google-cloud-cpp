@@ -473,6 +473,7 @@ void CreateTableWithDatatypes(
                 LastContactDate DATE,
                 OutdoorVenue    BOOL,
                 PopularityScore FLOAT64,
+                Revenue         NUMERIC,
                 LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (VenueId))"""});
@@ -500,7 +501,7 @@ void CreateTableWithTimestamp(
                 SingerId        INT64 NOT NULL,
                 VenueId         INT64 NOT NULL,
                 EventDate       Date,
-                Revenue         NUMERIC,
+                Revenue         INT64,
                 LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (SingerId, VenueId, EventDate),
@@ -1379,11 +1380,9 @@ void MakeInsertMutation(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5),
-                      spanner::MakeNumeric(11000).value(),
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2),
-                      spanner::MakeNumeric(15000).value(),
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {
@@ -1515,14 +1514,11 @@ void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
       spanner::InsertOrUpdateMutationBuilder(
           "Performances",
           {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5),
-                      spanner::MakeNumeric(123456.78).value(),
+          .EmplaceRow(1, 4, absl::CivilDay(2017, 10, 5), 11000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2),
-                      spanner::MakeNumeric(987654.32).value(),
+          .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
                       spanner::CommitTimestamp{})
-          .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23),
-                      spanner::MakeNumeric(53721.98).value(),
+          .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23), 7000,
                       spanner::CommitTimestamp{})
           .Build()});
   if (!commit_result) {
@@ -1588,25 +1584,25 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
 void QueryDataWithNumeric(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  auto revenue = spanner::MakeNumeric(100000).value();
+  auto revenue = spanner::MakeNumeric(300000).value();
   spanner::SqlStatement select(
-      "SELECT VenueId, EventDate, Revenue"
-      "  FROM Performances"
+      "SELECT VenueId, VenueName, Revenue"
+      "  FROM Venues"
       " WHERE Revenue >= @revenue",
       {{"revenue", spanner::Value(std::move(revenue))}});
-  using RowType = std::tuple<std::int64_t, absl::optional<absl::CivilDay>,
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<spanner::Numeric>>;
 
   auto rows = client.ExecuteQuery(select);
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "VenueId: " << std::get<0>(*row);
-    std::cout << " EventDate: ";
-    auto event_date = std::get<1>(*row);
-    if (!event_date) {
+    std::cout << " VenueName: ";
+    auto venue_name = std::get<1>(*row);
+    if (!venue_name) {
       std::cout << "NULL";
     } else {
-      std::cout << *event_date;
+      std::cout << *venue_name;
     }
     std::cout << " Revenue: ";
     auto revenue = std::get<2>(*row);
