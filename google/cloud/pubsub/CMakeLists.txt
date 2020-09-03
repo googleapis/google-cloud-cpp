@@ -38,6 +38,8 @@ add_library(
     internal/batching_publisher_connection.h
     internal/default_retry_policies.cc
     internal/default_retry_policies.h
+    internal/default_subscription_batch_source.cc
+    internal/default_subscription_batch_source.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
     internal/ordering_key_publisher_connection.cc
@@ -184,6 +186,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
+        internal/default_subscription_batch_source_test.cc
         internal/emulator_overrides_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc

@@ -46,7 +46,7 @@ class SubscriptionLeaseManagement
   static std::shared_ptr<SubscriptionLeaseManagement> Create(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
+      std::shared_ptr<SubscriptionBatchSource> child,
       std::chrono::seconds max_deadline_time) {
     auto timer_factory =
         [cq](std::chrono::system_clock::time_point tp) mutable {
@@ -58,21 +58,19 @@ class SubscriptionLeaseManagement
     return std::shared_ptr<SubscriptionLeaseManagement>(
         new SubscriptionLeaseManagement(
             std::move(cq), std::move(shutdown_manager),
-            std::move(timer_factory), std::move(stub),
-            std::move(subscription_full_name), max_deadline_time));
+            std::move(timer_factory), std::move(child), max_deadline_time));
   }
 
   static std::shared_ptr<SubscriptionLeaseManagement> CreateForTesting(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      TimerFactory timer_factory, std::shared_ptr<SubscriberStub> stub,
-      std::string subscription_full_name,
+      TimerFactory timer_factory,
+      std::shared_ptr<SubscriptionBatchSource> child,
       std::chrono::seconds max_deadline_time) {
     return std::shared_ptr<SubscriptionLeaseManagement>(
         new SubscriptionLeaseManagement(
             std::move(cq), std::move(shutdown_manager),
-            std::move(timer_factory), std::move(stub),
-            std::move(subscription_full_name), max_deadline_time));
+            std::move(timer_factory), std::move(child), max_deadline_time));
   }
 
   void Shutdown() override;
@@ -82,6 +80,8 @@ class SubscriptionLeaseManagement
                              std::size_t size) override;
   future<Status> BulkNack(std::vector<std::string> ack_ids,
                           std::size_t total_size) override;
+  future<Status> ExtendLeases(std::vector<std::string> ack_ids,
+                              std::chrono::seconds extension) override;
   future<StatusOr<google::pubsub::v1::PullResponse>> Pull(
       std::int32_t max_count) override;
 
@@ -89,14 +89,13 @@ class SubscriptionLeaseManagement
   SubscriptionLeaseManagement(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      TimerFactory timer_factory, std::shared_ptr<SubscriberStub> stub,
-      std::string subscription_full_name,
+      TimerFactory timer_factory,
+      std::shared_ptr<SubscriptionBatchSource> child,
       std::chrono::seconds max_deadline_time)
       : cq_(std::move(cq)),
         timer_factory_(std::move(timer_factory)),
-        stub_(std::move(stub)),
+        child_(std::move(child)),
         shutdown_manager_(std::move(shutdown_manager)),
-        subscription_full_name_(std::move(subscription_full_name)),
         max_deadline_time_(max_deadline_time) {}
 
   void OnPull(StatusOr<google::pubsub::v1::PullResponse> const& response);
@@ -106,7 +105,7 @@ class SubscriptionLeaseManagement
 
   /// Invoked when the asynchronous RPC to update message leases completes.
   void OnRefreshMessageLeases(
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request,
+      std::vector<std::string> const& ack_ids,
       std::chrono::system_clock::time_point new_server_deadline);
 
   /// Start the timer to update ack deadlines.
@@ -121,9 +120,8 @@ class SubscriptionLeaseManagement
 
   google::cloud::CompletionQueue cq_;
   TimerFactory const timer_factory_;
-  std::shared_ptr<SubscriberStub> const stub_;
+  std::shared_ptr<SubscriptionBatchSource> const child_;
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
-  std::string const subscription_full_name_;
   std::chrono::seconds const max_deadline_time_;
 
   std::mutex mu_;

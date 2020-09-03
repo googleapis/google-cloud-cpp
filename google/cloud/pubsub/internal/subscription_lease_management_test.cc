@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
-#include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -26,6 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ElementsAre;
 
 google::pubsub::v1::PullResponse MakePullResponse(std::string const& prefix,
@@ -40,60 +41,43 @@ google::pubsub::v1::PullResponse MakePullResponse(std::string const& prefix,
   return response;
 }
 
-TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
-  auto stub = std::make_shared<pubsub_testing::MockSubscriberStub>();
+future<Status> SimpleAckNack(std::string const&, std::size_t) {
+  return make_ready_future(Status{});
+}
 
-  auto constexpr kTestDeadlineSeconds = 345;
+TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+
+  auto constexpr kTestDeadline = std::chrono::seconds(345);
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*stub, AsyncPull)
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::PullRequest const& r) {
-          EXPECT_EQ(3, r.max_messages());
-          EXPECT_EQ("test-subscription-name", r.subscription());
-          return make_ready_future(make_status_or(MakePullResponse("0-", 3)));
-        });
-    EXPECT_CALL(*stub, AsyncAcknowledge)
-        // We expect this message to be acked.
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::AcknowledgeRequest const& r) {
-          EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-1"));
-          return make_ready_future(Status{});
-        });
-    EXPECT_CALL(*stub, AsyncModifyAckDeadline)
+    EXPECT_CALL(*mock, Pull(3)).WillOnce([&](std::int32_t) {
+      return make_ready_future(make_status_or(MakePullResponse("0-", 3)));
+    });
+    // We expect this message to be acked.
+    EXPECT_CALL(*mock, AckMessage("ack-0-1", _)).WillOnce(SimpleAckNack);
+    EXPECT_CALL(*mock, ExtendLeases)
         // Then a simulated timer refreshes the lease for the remaining
         // messages.
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
-          EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-0", "ack-0-2"));
-          EXPECT_NEAR(kTestDeadlineSeconds, r.ack_deadline_seconds(), 2);
+        .WillOnce([&](std::vector<std::string> const& ack_ids,
+                      std::chrono::seconds extension) {
+          EXPECT_THAT(ack_ids, ElementsAre("ack-0-0", "ack-0-2"));
+          EXPECT_LE(std::abs((kTestDeadline - extension).count()), 2);
           return make_ready_future(Status{});
         });
-    EXPECT_CALL(*stub, AsyncModifyAckDeadline)
-        // Then a message is nacked.
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
-          EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-2"));
-          EXPECT_EQ(0, r.ack_deadline_seconds());
-          return make_ready_future(Status{});
-        })
+    // Then a message is nacked.
+    EXPECT_CALL(*mock, NackMessage("ack-0-2", _)).WillOnce(SimpleAckNack);
+    EXPECT_CALL(*mock, ExtendLeases)
         // The a simulated timer refreshes the leases.
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
-          EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-0"));
-          EXPECT_NEAR(kTestDeadlineSeconds, r.ack_deadline_seconds(), 2);
+        .WillOnce([&](std::vector<std::string> const& ack_ids,
+                      std::chrono::seconds extension) {
+          EXPECT_THAT(ack_ids, ElementsAre("ack-0-0"));
+          EXPECT_LE(std::abs((kTestDeadline - extension).count()), 2);
           return make_ready_future(Status{});
-        })
-        // Then all unhandled messages are nacked on shutdown.
-        .WillOnce([&](google::cloud::CompletionQueue&,
-                      std::unique_ptr<grpc::ClientContext>,
-                      google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
-          EXPECT_THAT(r.ack_ids(), ElementsAre("ack-0-0"));
+        });
+    // Then all unhandled messages are nacked on shutdown.
+    EXPECT_CALL(*mock, BulkNack(ElementsAre("ack-0-0"), _))
+        .WillOnce([](std::vector<std::string> const&, std::size_t) {
           return make_ready_future(Status{});
         });
   }
@@ -109,8 +93,8 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   };
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, stub,
-      "test-subscription-name", std::chrono::seconds(kTestDeadlineSeconds));
+      background.cq(), shutdown_manager, make_timer, mock,
+      std::chrono::seconds(kTestDeadline));
 
   auto acks = [](google::pubsub::v1::PullResponse const& response) {
     std::vector<std::string> acks;
@@ -147,25 +131,16 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
 }
 
 TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
-  auto stub = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
 
-  auto constexpr kTestDeadlineSeconds = 345;
-  EXPECT_CALL(*stub, AsyncPull)
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::PullRequest const& r) {
-        EXPECT_EQ(3, r.max_messages());
-        EXPECT_EQ("test-subscription-name", r.subscription());
-        return make_ready_future(make_status_or(MakePullResponse("0-", 3)));
-      })
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::PullRequest const& r) {
-        EXPECT_EQ(4, r.max_messages());
-        EXPECT_EQ("test-subscription-name", r.subscription());
-        return make_ready_future(StatusOr<google::pubsub::v1::PullResponse>(
-            Status(StatusCode::kPermissionDenied, "uh-oh")));
-      });
+  auto constexpr kTestDeadline = 345;
+  EXPECT_CALL(*mock, Pull(3)).WillOnce([&](std::int32_t) {
+    return make_ready_future(make_status_or(MakePullResponse("0-", 3)));
+  });
+  EXPECT_CALL(*mock, Pull(4)).WillOnce([&](std::int32_t) {
+    return make_ready_future(StatusOr<google::pubsub::v1::PullResponse>(
+        Status(StatusCode::kPermissionDenied, "uh-oh")));
+  });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   std::vector<promise<Status>> timers;
@@ -178,8 +153,8 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
   };
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, stub,
-      "test-subscription-name", std::chrono::seconds(kTestDeadlineSeconds));
+      background.cq(), shutdown_manager, make_timer, mock,
+      std::chrono::seconds(kTestDeadline));
 
   auto done = shutdown_manager->Start({});
   auto response = uut->Pull(3).get();

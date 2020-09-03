@@ -34,6 +34,8 @@ class MockSubscriptionBatchSource
                future<Status>(std::string const& ack_id, std::size_t size));
   MOCK_METHOD2(BulkNack, future<Status>(std::vector<std::string> ack_ids,
                                         std::size_t total_size));
+  MOCK_METHOD2(ExtendLeases, future<Status>(std::vector<std::string> ack_ids,
+                                            std::chrono::seconds extension));
   MOCK_METHOD1(
       Pull, future<StatusOr<google::pubsub::v1::PullResponse>>(std::int32_t));
 };

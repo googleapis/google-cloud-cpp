@@ -32,54 +32,42 @@ void SubscriptionLeaseManagement::Shutdown() {
 }
 
 future<Status> SubscriptionLeaseManagement::AckMessage(
-    std::string const& ack_id, std::size_t) {
+    std::string const& ack_id, std::size_t size) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  google::pubsub::v1::AcknowledgeRequest request;
-  request.set_subscription(subscription_full_name_);
-  request.add_ack_ids(ack_id);
-  return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
-                                 request);
+  return child_->AckMessage(ack_id, size);
 }
 
 future<Status> SubscriptionLeaseManagement::NackMessage(
-    std::string const& ack_id, std::size_t) {
+    std::string const& ack_id, std::size_t size) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  google::pubsub::v1::ModifyAckDeadlineRequest request;
-  request.set_subscription(subscription_full_name_);
-  request.add_ack_ids(ack_id);
-  request.set_ack_deadline_seconds(0);
-  return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  return child_->NackMessage(ack_id, size);
 }
 
 future<Status> SubscriptionLeaseManagement::BulkNack(
-    std::vector<std::string> ack_ids, std::size_t) {
+    std::vector<std::string> ack_ids, std::size_t total_size) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto const& id : ack_ids) leases_.erase(id);
   lk.unlock();
-  google::pubsub::v1::ModifyAckDeadlineRequest request;
-  request.set_subscription(subscription_full_name_);
-  for (auto& id : ack_ids) {
-    request.add_ack_ids(std::move(id));
-  }
-  request.set_ack_deadline_seconds(0);
-  return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  return child_->BulkNack(std::move(ack_ids), total_size);
+}
+
+// Users of this class should have no need to call ExtendLeases(), they create
+// it to automate lease management after all. We could create a hierarchy of
+// classes for "BatchSourceWithoutExtendLeases", but that seems like overkill.
+future<Status> SubscriptionLeaseManagement::ExtendLeases(
+    std::vector<std::string>, std::chrono::seconds) {
+  return make_ready_future(Status(StatusCode::kUnimplemented, __func__));
 }
 
 future<StatusOr<google::pubsub::v1::PullResponse>>
 SubscriptionLeaseManagement::Pull(std::int32_t max_count) {
-  auto context = absl::make_unique<grpc::ClientContext>();
-  google::pubsub::v1::PullRequest request;
-  request.set_subscription(subscription_full_name_);
-  request.set_max_messages(max_count);
   auto weak = std::weak_ptr<SubscriptionLeaseManagement>(shared_from_this());
-  return stub_->AsyncPull(cq_, std::move(context), request)
-      .then([weak](future<StatusOr<google::pubsub::v1::PullResponse>> f) {
+  return child_->Pull(max_count).then(
+      [weak](future<StatusOr<google::pubsub::v1::PullResponse>> f) {
         auto response = f.get();
         if (auto self = weak.lock()) self->OnPull(response);
         return response;
@@ -117,10 +105,10 @@ void SubscriptionLeaseManagement::RefreshMessageLeases(
 
   if (leases_.empty() || refreshing_leases_) return;
 
-  google::pubsub::v1::ModifyAckDeadlineRequest request;
-  request.set_subscription(subscription_full_name_);
-  auto const now = std::chrono::system_clock::now();
+  std::vector<std::string> ack_ids;
+  ack_ids.reserve(leases_.size());
   auto extension = kMaximumAckDeadline;
+  auto const now = std::chrono::system_clock::now();
   for (auto const& kv : leases_) {
     // This message lease cannot be extended any further, and we do not want to
     // send an extension of 0 seconds because that is a nack.
@@ -128,37 +116,34 @@ void SubscriptionLeaseManagement::RefreshMessageLeases(
     auto const message_extension =
         std::chrono::duration_cast<seconds>(kv.second.handling_deadline - now);
     extension = (std::min)(extension, message_extension);
-    request.add_ack_ids(kv.first);
+    ack_ids.push_back(kv.first);
   }
   auto const new_deadline = now + extension;
-  if (request.ack_ids().empty()) {
+  if (ack_ids.empty()) {
     StartRefreshTimer(std::move(lk), new_deadline);
     return;
   }
-  request.set_ack_deadline_seconds(
-      static_cast<std::int32_t>(extension.count()));
-  auto context = absl::make_unique<grpc::ClientContext>();
   lk.unlock();
 
   shutdown_manager_->StartOperation(__func__, "OnRefreshMessageLeases", [&] {
     refreshing_leases_ = true;
     std::weak_ptr<SubscriptionLeaseManagement> weak = shared_from_this();
-    stub_->AsyncModifyAckDeadline(cq_, std::move(context), request)
-        .then([weak, request, new_deadline](future<Status>) {
+    child_->ExtendLeases(ack_ids, extension)
+        .then([weak, ack_ids, new_deadline](future<Status>) {
           if (auto self = weak.lock()) {
-            self->OnRefreshMessageLeases(request, new_deadline);
+            self->OnRefreshMessageLeases(ack_ids, new_deadline);
           }
         });
   });
 }
 
 void SubscriptionLeaseManagement::OnRefreshMessageLeases(
-    google::pubsub::v1::ModifyAckDeadlineRequest const& request,
+    std::vector<std::string> const& ack_ids,
     std::chrono::system_clock::time_point new_server_deadline) {
   if (shutdown_manager_->FinishedOperation(__func__)) return;
   std::unique_lock<std::mutex> lk(mu_);
   refreshing_leases_ = false;
-  for (auto const& ack : request.ack_ids()) {
+  for (auto const& ack : ack_ids) {
     auto i = leases_.find(ack);
     if (i == leases_.end()) continue;
     i->second.estimated_server_deadline = new_server_deadline;
