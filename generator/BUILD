@@ -32,6 +32,20 @@ cc_library(
     ],
 )
 
+load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_generator_testing",
+    srcs = google_cloud_cpp_generator_testing_hdrs,
+    hdrs = google_cloud_cpp_generator_testing_srcs,
+    deps = [
+        ":google_cloud_cpp_generator",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_unit_tests")
 
 [cc_test(
@@ -39,6 +53,7 @@ load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_u
     srcs = [test],
     deps = [
         ":google_cloud_cpp_generator",
+        ":google_cloud_cpp_generator_testing",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_unit_tests]

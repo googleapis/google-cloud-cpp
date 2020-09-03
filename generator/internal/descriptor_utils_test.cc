@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "absl/strings/str_split.h"
+#include "generator/testing/printer_mocks.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -28,6 +29,9 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::testing::_;
+using ::testing::HasSubstr;
+using ::testing::Return;
 
 class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
@@ -342,6 +346,120 @@ INSTANTIATE_TEST_SUITE_P(
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
     });
+
+class PrintMethodTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    /// @cond
+    auto constexpr kServiceText = R"pb(
+      name: "google/foo/v1/service.proto"
+      package: "google.protobuf"
+      message_type {
+        name: "Bar"
+        field { name: "number" number: 1 type: TYPE_INT32 }
+        field { name: "name" number: 2 type: TYPE_STRING }
+        field {
+          name: "widget"
+          number: 3
+          type: TYPE_MESSAGE
+          type_name: "google.protobuf.Bar"
+        }
+      }
+      message_type { name: "Empty" }
+      service {
+        name: "Service"
+        method {
+          name: "Method0"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Empty"
+        }
+        method {
+          name: "Method1"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Bar"
+        }
+      }
+    )pb";
+    /// @endcond
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                              &service_file_));
+  }
+
+  google::protobuf::FileDescriptorProto service_file_;
+};
+
+TEST_F(PrintMethodTest, NoMatchingPatterns) {
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
+
+  auto generator_context =
+      absl::make_unique<generator_testing::MockGeneratorContext>();
+  auto output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
+
+  auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
+                            printer, {}, {}, "some_file", 42);
+  EXPECT_FALSE(result.ok());
+  EXPECT_THAT(result.message(), HasSubstr("no matching patterns"));
+}
+
+TEST_F(PrintMethodTest, MoreThanOneMatchingPattern) {
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
+
+  auto generator_context =
+      absl::make_unique<generator_testing::MockGeneratorContext>();
+  auto output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
+
+  auto always_matches = [](google::protobuf::MethodDescriptor const&) {
+    return true;
+  };
+
+  std::vector<MethodPattern> patterns = {
+      MethodPattern({{"always matches"}}, always_matches),
+      MethodPattern({{"also always matches"}}, always_matches)};
+
+  auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
+                            printer, {}, patterns, "some_file", 42);
+  EXPECT_FALSE(result.ok());
+  EXPECT_THAT(result.message(), HasSubstr("more than one pattern"));
+}
+
+TEST_F(PrintMethodTest, ExactlyOnePattern) {
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
+
+  auto generator_context =
+      absl::make_unique<generator_testing::MockGeneratorContext>();
+  auto output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*generator_context, Open("foo"))
+      .WillOnce(Return(output.release()));
+  Printer printer(generator_context.get(), "foo");
+
+  auto always_matches = [](google::protobuf::MethodDescriptor const&) {
+    return true;
+  };
+  auto never_matches = [](google::protobuf::MethodDescriptor const&) {
+    return false;
+  };
+
+  std::vector<MethodPattern> patterns = {
+      MethodPattern({{"matches"}}, always_matches),
+      MethodPattern({{"does not match"}}, never_matches)};
+
+  auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
+                            printer, {}, patterns, "some_file", 42);
+  EXPECT_TRUE(result.ok());
+}
 
 }  // namespace
 }  // namespace generator_internal

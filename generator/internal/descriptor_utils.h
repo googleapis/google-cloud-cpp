@@ -15,6 +15,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DESCRIPTOR_UTILS_H
 
 #include "generator/internal/class_generator_interface.h"
+#include "generator/internal/predicate_utils.h"
+#include "generator/internal/printer.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>
@@ -49,6 +51,24 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars);
+
+/**
+ * Determines which `MethodPattern` to use from patterns for the given method
+ * and invokes the provided printer with the `PredicatedFragment`s in patterns
+ * with the substitution data in vars.
+ *
+ * Exactly one `MethodPattern` in patters should match the method. If none or
+ * more than one match, an error is returned.
+ *
+ * file and line are used to provide better diagnostic messages in case of a
+ * substitution error.
+ *
+ */
+Status PrintMethod(google::protobuf::MethodDescriptor const& method,
+                   Printer& printer,
+                   std::map<std::string, std::string> const& vars,
+                   std::vector<MethodPattern> const& patterns, char const* file,
+                   int line);
 
 }  // namespace generator_internal
 }  // namespace cloud

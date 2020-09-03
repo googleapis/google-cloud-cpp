@@ -189,6 +189,24 @@ class PredicatedFragment {
   std::string fragment_if_false_;
 };
 
+template <typename T>
+class Pattern {
+ public:
+  Pattern(std::vector<PredicatedFragment<T>> f, std::function<bool(T const&)> p)
+      : fragments_(std::move(f)), predicate_(std::move(p)) {}
+
+  bool operator()(T const& p) const { return predicate_(p); }
+  std::vector<PredicatedFragment<T>> const& fragments() const {
+    return fragments_;
+  }
+
+ private:
+  std::vector<PredicatedFragment<T>> fragments_;
+  std::function<bool(T const&)> predicate_;
+};
+
+using MethodPattern = Pattern<google::protobuf::MethodDescriptor>;
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

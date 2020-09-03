@@ -464,6 +464,26 @@ TEST(PredicateUtilsTest, PredicatedFragmentStringOnly) {
   EXPECT_EQ(f(bar), "True");
 }
 
+TEST(Pattern, OperatorParens) {
+  int bar;
+  Pattern<int> p({}, PredicateFalse);
+  EXPECT_FALSE(p(bar));
+}
+
+TEST(Pattern, FragmentsAccessor) {
+  int bar;
+  Pattern<int> p({{PredicateFalse, "fragment0_true", "fragment0_false"},
+                  {PredicateTrue, "fragment1_true", "fragment1_false"}},
+                 PredicateTrue);
+  EXPECT_TRUE(p(bar));
+  std::string result;
+  for (auto const& pf : p.fragments()) {
+    result += pf(bar);
+  }
+
+  EXPECT_EQ(result, std::string("fragment0_falsefragment1_true"));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
