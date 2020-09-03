@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include <limits>
 
@@ -29,6 +30,8 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
+using google::cloud::internal::Idempotency;
 
 class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:
@@ -334,7 +337,7 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
+      Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::BeginTransactionRequest const& request) {
         return stub->BeginTransaction(context, request);
@@ -454,7 +457,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   for (;;) {
     auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::PartitionReadRequest const& request) {
           return stub->PartitionRead(context, request);
@@ -649,7 +652,8 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
        session](spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     StatusOr<spanner_proto::ResultSet> response = RetryLoop(
-        retry_policy->clone(), backoff_policy->clone(), true,
+        retry_policy->clone(), backoff_policy->clone(),
+        Idempotency::kIdempotent,
         [stub](grpc::ClientContext& context,
                spanner_proto::ExecuteSqlRequest const& request) {
           return stub->ExecuteSql(context, request);
@@ -722,7 +726,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   for (;;) {
     auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::PartitionQueryRequest const& request) {
           return stub->PartitionQuery(context, request);
@@ -785,7 +789,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   for (;;) {
     auto response = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::ExecuteBatchDmlRequest const& request) {
           return stub->ExecuteBatchDml(context, request);
@@ -853,7 +857,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
+      Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::ExecuteSqlRequest const& request) {
         return stub->ExecuteSql(context, request);
@@ -905,7 +909,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
+      Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::CommitRequest const& request) {
         return stub->Commit(context, request);
@@ -953,7 +957,7 @@ Status ConnectionImpl::RollbackImpl(
   auto stub = session_pool_->GetStub(*session);
   auto status = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
+      Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::RollbackRequest const& request) {
         return stub->Rollback(context, request);

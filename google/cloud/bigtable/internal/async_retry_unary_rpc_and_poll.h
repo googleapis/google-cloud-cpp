@@ -86,8 +86,7 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
 
   auto op_future = google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-      idempotent_policy.is_idempotent(), std::move(wrapper),
-      std::move(request));
+      idempotent_policy.idempotency(), std::move(wrapper), std::move(request));
 
   struct ContinuationWrapper {
     future<StatusOr<Response>> operator()(

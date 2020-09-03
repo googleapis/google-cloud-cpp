@@ -26,6 +26,8 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
+using google::cloud::internal::Idempotency;
+
 BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                                    std::string const& table_name,
                                    IdempotentMutationPolicy& idempotent_policy,
@@ -51,11 +53,14 @@ BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
   int index = 0;
   for (auto const& e : pending_mutations_.entries()) {
     // This is a giant && across all the mutations for each row.
-    auto r = std::all_of(e.mutations().begin(), e.mutations().end(),
-                         [&idempotent_policy](btproto::Mutation const& m) {
-                           return idempotent_policy.is_idempotent(m);
-                         });
-    pending_annotations_.push_back(Annotations{index++, r, false});
+    auto is_idempotent =
+        std::all_of(e.mutations().begin(), e.mutations().end(),
+                    [&idempotent_policy](btproto::Mutation const& m) {
+                      return idempotent_policy.is_idempotent(m);
+                    });
+    auto idempotency =
+        is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
+    pending_annotations_.push_back(Annotations{index++, idempotency, false});
   }
 }
 
@@ -104,7 +109,8 @@ std::vector<int> BulkMutatorState::OnRead(
     }
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(code) && annotation.is_idempotent) {
+    if (SafeGrpcRetry::IsTransientFailure(code) &&
+        (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
       // vector and other miscellanea.
@@ -132,7 +138,7 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
     }
     // If there are any mutations with unknown state, they need to be handled.
     auto& original = *mutations_.mutable_entries(index);
-    if (annotation.is_idempotent) {
+    if (annotation.idempotency == Idempotency::kIdempotent) {
       // If the mutation was retryable, move it to the pending mutations to try
       // again, along with their index.
       pending_mutations_.add_entries()->Swap(&original);

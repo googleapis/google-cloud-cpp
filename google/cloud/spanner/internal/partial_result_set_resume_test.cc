@@ -33,6 +33,7 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
+using ::google::cloud::internal::Idempotency;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
@@ -49,9 +50,9 @@ struct MockFactory {
 };
 
 std::unique_ptr<PartialResultSetReader> MakeTestResume(
-    PartialResultSetReaderFactory factory, Idempotency is_idempotent) {
+    PartialResultSetReaderFactory factory, Idempotency idempotency) {
   return absl::make_unique<PartialResultSetResume>(
-      std::move(factory), is_idempotent,
+      std::move(factory), idempotency,
       LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
                                /*maximum_delay=*/std::chrono::microseconds(1),
@@ -259,7 +260,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
   };
-  auto reader = MakeTestResume(factory, Idempotency::kNotIdempotent);
+  auto reader = MakeTestResume(factory, Idempotency::kNonIdempotent);
   auto v = reader->Read();
   ASSERT_TRUE(v.has_value());
   EXPECT_THAT(*v, IsProtoEqual(r0));

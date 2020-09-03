@@ -26,6 +26,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using google::cloud::internal::Idempotency;
 using google::cloud::internal::RetryLoop;
 
 class SubscriptionAdminConnectionImpl
@@ -44,7 +45,8 @@ class SubscriptionAdminConnectionImpl
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       CreateSubscriptionParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::Subscription const& request) {
           return stub_->CreateSubscription(context, request);
@@ -57,7 +59,8 @@ class SubscriptionAdminConnectionImpl
     google::pubsub::v1::GetSubscriptionRequest request;
     request.set_subscription(p.subscription.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetSubscriptionRequest const& request) {
           return stub_->GetSubscription(context, request);
@@ -68,7 +71,8 @@ class SubscriptionAdminConnectionImpl
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
       UpdateSubscriptionParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateSubscriptionRequest const& request) {
           return stub_->UpdateSubscription(context, request);
@@ -92,7 +96,7 @@ class SubscriptionAdminConnectionImpl
         [stub, retry, backoff, function_name](
             google::pubsub::v1::ListSubscriptionsRequest const& request) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& c,
                      google::pubsub::v1::ListSubscriptionsRequest const& r) {
                 return stub->ListSubscriptions(c, r);
@@ -116,7 +120,8 @@ class SubscriptionAdminConnectionImpl
     google::pubsub::v1::DeleteSubscriptionRequest request;
     request.set_subscription(p.subscription.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteSubscriptionRequest const& request) {
           return stub_->DeleteSubscription(context, request);
@@ -126,7 +131,8 @@ class SubscriptionAdminConnectionImpl
 
   Status ModifyPushConfig(ModifyPushConfigParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::ModifyPushConfigRequest const& request) {
           return stub_->ModifyPushConfig(context, request);
@@ -136,9 +142,11 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       CreateSnapshotParams p) override {
+    auto const idempotency = p.request.name().empty()
+                                 ? Idempotency::kNonIdempotent
+                                 : Idempotency::kIdempotent;
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        /*is_idempotent=*/!p.request.name().empty(),
+        retry_policy_->clone(), backoff_policy_->clone(), idempotency,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::CreateSnapshotRequest const& request) {
           return stub_->CreateSnapshot(context, request);
@@ -151,7 +159,8 @@ class SubscriptionAdminConnectionImpl
     google::pubsub::v1::GetSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetSnapshotRequest const& request) {
           return stub_->GetSnapshot(context, request);
@@ -174,7 +183,7 @@ class SubscriptionAdminConnectionImpl
         [stub, retry, backoff, function_name](
             google::pubsub::v1::ListSnapshotsRequest const& request) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& c,
                      google::pubsub::v1::ListSnapshotsRequest const& r) {
                 return stub->ListSnapshots(c, r);
@@ -197,7 +206,8 @@ class SubscriptionAdminConnectionImpl
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
       UpdateSnapshotParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateSnapshotRequest const& request) {
           return stub_->UpdateSnapshot(context, request);
@@ -209,7 +219,8 @@ class SubscriptionAdminConnectionImpl
     google::pubsub::v1::DeleteSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteSnapshotRequest const& request) {
           return stub_->DeleteSnapshot(context, request);
@@ -219,7 +230,8 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_->clone(), backoff_policy_->clone(),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::SeekRequest const& request) {
           return stub_->Seek(context, request);

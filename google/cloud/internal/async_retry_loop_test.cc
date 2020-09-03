@@ -50,7 +50,8 @@ TEST(AsyncRetryLoopTest, Success) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int request) -> future<StatusOr<int>> {
@@ -67,7 +68,8 @@ TEST(AsyncRetryLoopTest, TransientThenSuccess) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          background.cq(),
           [&](google::cloud::CompletionQueue&,
               std::unique_ptr<grpc::ClientContext>, int request) {
             if (++counter < 3) {
@@ -85,19 +87,19 @@ TEST(AsyncRetryLoopTest, TransientThenSuccess) {
 TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   int counter = 0;
   AutomaticallyCreatedBackgroundThreads background;
-  Status actual =
-      AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
-          [&](google::cloud::CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext>, int) {
-            if (++counter <= 3) {
-              return make_ready_future(
-                  Status(StatusCode::kResourceExhausted, "slow-down"));
-            }
-            return make_ready_future(Status());
-          },
-          42, "error message")
-          .get();
+  Status actual = AsyncRetryLoop(
+                      TestRetryPolicy(), TestBackoffPolicy(),
+                      Idempotency::kIdempotent, background.cq(),
+                      [&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>, int) {
+                        if (++counter <= 3) {
+                          return make_ready_future(Status(
+                              StatusCode::kResourceExhausted, "slow-down"));
+                        }
+                        return make_ready_future(Status());
+                      },
+                      42, "error message")
+                      .get();
   ASSERT_THAT(actual, StatusIs(StatusCode::kOk));
 }
 
@@ -119,7 +121,8 @@ TEST(AsyncRetryLoopTest, UsesBackoffPolicy) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), std::move(mock), true, background.cq(),
+          TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
+          background.cq(),
           [&](google::cloud::CompletionQueue&,
               std::unique_ptr<grpc::ClientContext>, int request) {
             if (++counter <= 3) {
@@ -138,7 +141,8 @@ TEST(AsyncRetryLoopTest, TransientFailureNonIdempotent) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), false, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
+          background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
             return make_ready_future(StatusOr<int>(
@@ -157,7 +161,8 @@ TEST(AsyncRetryLoopTest, PermanentFailureIdempotent) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
             return make_ready_future(StatusOr<int>(
@@ -175,7 +180,8 @@ TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), true, background.cq(),
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
             return make_ready_future(StatusOr<int>(
@@ -196,8 +202,8 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
   StatusOr<int> actual =
       AsyncRetryLoop(
           LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
-          ExponentialBackoffPolicy(ms(20), ms(20), 2.0).clone(), true,
-          background.cq(),
+          ExponentialBackoffPolicy(ms(20), ms(20), 2.0).clone(),
+          Idempotency::kIdempotent, background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
             return make_ready_future(StatusOr<int>(

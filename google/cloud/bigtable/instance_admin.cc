@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -35,6 +36,7 @@ static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
 using ClientUtils = bigtable::internal::UnaryClientUtils<InstanceAdminClient>;
+using google::cloud::internal::Idempotency;
 
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;
@@ -55,7 +57,7 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
         *(client_), *rpc_policy, *backoff_policy,
         MetadataUpdatePolicy(project_name(), MetadataParamTypes::PARENT),
         &InstanceAdminClient::ListInstances, request,
-        "InstanceAdmin::ListInstances", status, true);
+        "InstanceAdmin::ListInstances", status, Idempotency::kIdempotent);
     if (!status.ok()) {
       break;
     }
@@ -153,7 +155,8 @@ InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(project_name(), MetadataParamTypes::PARENT), client,
       [client](
           grpc::ClientContext* context,
@@ -195,7 +198,8 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::CreateClusterRequest const& request,
@@ -227,7 +231,8 @@ InstanceAdmin::AsyncUpdateInstance(
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::INSTANCE_NAME), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
@@ -255,7 +260,7 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
       *(client_), *rpc_policy, *backoff_policy,
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME),
       &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
-      status, true);
+      status, Idempotency::kIdempotent);
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
   }
@@ -271,7 +276,7 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncGetInstance(
   auto client = client_;
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [client, name](grpc::ClientContext* context,
                      btadmin::GetInstanceRequest const& request,
                      grpc::CompletionQueue* cq) {
@@ -306,7 +311,7 @@ future<Status> InstanceAdmin::AsyncDeleteCluster(
   auto client = client_;
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/false,
+             Idempotency::kNonIdempotent,
              [client, name](grpc::ClientContext* context,
                             btadmin::DeleteClusterRequest const& request,
                             grpc::CompletionQueue* cq) {
@@ -333,7 +338,7 @@ future<Status> InstanceAdmin::AsyncDeleteInstance(
   auto client = client_;
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/true,
+             Idempotency::kIdempotent,
              [client, name](
                  grpc::ClientContext* context,
                  google::bigtable::admin::v2::DeleteInstanceRequest const&
@@ -363,7 +368,7 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
       *(client_), *rpc_policy, *backoff_policy,
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME),
       &InstanceAdminClient::GetCluster, request, "InstanceAdmin::GetCluster",
-      status, true);
+      status, Idempotency::kIdempotent);
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
   }
@@ -381,7 +386,7 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncGetCluster(
   auto client = client_;
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [client, name](grpc::ClientContext* context,
                      btadmin::GetClusterRequest const& request,
                      grpc::CompletionQueue* cq) {
@@ -417,7 +422,7 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
         *(client_), *rpc_policy, *backoff_policy,
         MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT),
         &InstanceAdminClient::ListClusters, request,
-        "InstanceAdmin::ListClusters", status, true);
+        "InstanceAdmin::ListClusters", status, Idempotency::kIdempotent);
     if (!status.ok()) {
       break;
     }
@@ -514,7 +519,8 @@ InstanceAdmin::AsyncUpdateCluster(CompletionQueue& cq,
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::Cluster const& request,
@@ -574,7 +580,7 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/false,
+      Idempotency::kNonIdempotent,
       [client, parent](grpc::ClientContext* context,
                        btadmin::CreateAppProfileRequest const& request,
                        grpc::CompletionQueue* cq) {
@@ -596,7 +602,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
       *(client_), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME),
       &InstanceAdminClient::GetAppProfile, request,
-      "InstanceAdmin::GetAppProfile", status, true);
+      "InstanceAdmin::GetAppProfile", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -615,7 +621,7 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [client, name](grpc::ClientContext* context,
                      btadmin::GetAppProfileRequest const& request,
                      grpc::CompletionQueue* cq) {
@@ -651,7 +657,8 @@ InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::AppProfile>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
-      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::APP_PROFILE_NAME), client,
       [client](
           grpc::ClientContext* context,
@@ -682,7 +689,7 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
         *(client_), *rpc_policy, *backoff_policy,
         MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT),
         &InstanceAdminClient::ListAppProfiles, request,
-        "InstanceAdmin::ListAppProfiles", status, true);
+        "InstanceAdmin::ListAppProfiles", status, Idempotency::kIdempotent);
     if (!status.ok()) {
       break;
     }
@@ -754,7 +761,7 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/false,
+             Idempotency::kNonIdempotent,
              [client, name](grpc::ClientContext* context,
                             btadmin::DeleteAppProfileRequest const& request,
                             grpc::CompletionQueue* cq) {
@@ -788,7 +795,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
   auto proto = ClientUtils::MakeCall(
       *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::GetIamPolicy, request,
-      "InstanceAdmin::GetIamPolicy", status, true);
+      "InstanceAdmin::GetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -813,7 +820,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
   auto proto = ClientUtils::MakeCall(
       *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::GetIamPolicy, request,
-      "InstanceAdmin::GetIamPolicy", status, true);
+      "InstanceAdmin::GetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -832,7 +839,7 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/true,
+             Idempotency::kIdempotent,
              [client, resource](
                  grpc::ClientContext* context,
                  ::google::iam::v1::GetIamPolicyRequest const& request,
@@ -862,7 +869,7 @@ InstanceAdmin::AsyncGetNativeIamPolicy(CompletionQueue& cq,
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/true,
+      Idempotency::kIdempotent,
       [client, resource](grpc::ClientContext* context,
                          ::google::iam::v1::GetIamPolicyRequest const& request,
                          grpc::CompletionQueue* cq) {
@@ -902,7 +909,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
   auto proto = ClientUtils::MakeCall(
       *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::SetIamPolicy, request,
-      "InstanceAdmin::SetIamPolicy", status, true);
+      "InstanceAdmin::SetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -928,7 +935,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
   auto proto = ClientUtils::MakeCall(
       *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::SetIamPolicy, request,
-      "InstanceAdmin::SetIamPolicy", status, true);
+      "InstanceAdmin::SetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -959,7 +966,7 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/false,
+             Idempotency::kNonIdempotent,
              [client, resource](
                  grpc::ClientContext* context,
                  ::google::iam::v1::SetIamPolicyRequest const& request,
@@ -990,7 +997,7 @@ future<StatusOr<google::iam::v1::Policy>> InstanceAdmin::AsyncSetIamPolicy(
   std::shared_ptr<InstanceAdminClient> client(client_);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      /*is_idempotent=*/false,
+      Idempotency::kNonIdempotent,
       [client, resource](grpc::ClientContext* context,
                          ::google::iam::v1::SetIamPolicyRequest const& request,
                          grpc::CompletionQueue* cq) {
@@ -1023,7 +1030,7 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   auto response = ClientUtils::MakeCall(
       *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::TestIamPermissions, request,
-      "InstanceAdmin::TestIamPermissions", status, true);
+      "InstanceAdmin::TestIamPermissions", status, Idempotency::kIdempotent);
 
   std::vector<std::string> resource_permissions;
 
@@ -1052,7 +1059,7 @@ InstanceAdmin::AsyncTestIamPermissions(
   auto client = client_;
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             /*is_idempotent=*/true,
+             Idempotency::kIdempotent,
              [client, resource](
                  grpc::ClientContext* context,
                  ::google::iam::v1::TestIamPermissionsRequest const& request,

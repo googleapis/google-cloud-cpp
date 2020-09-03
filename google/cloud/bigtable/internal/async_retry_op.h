@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/memory/memory.h"
 
@@ -39,13 +40,20 @@ namespace internal {
  */
 class ConstantIdempotencyPolicy {
  public:
-  explicit ConstantIdempotencyPolicy(bool is_idempotent)
-      : is_idempotent_(is_idempotent) {}
+  explicit ConstantIdempotencyPolicy(
+      google::cloud::internal::Idempotency idempotency)
+      : idempotency_(idempotency) {}
 
-  bool is_idempotent() const { return is_idempotent_; }
+  bool is_idempotent() const {
+    return idempotency_ == google::cloud::internal::Idempotency::kIdempotent;
+  }
+
+  google::cloud::internal::Idempotency idempotency() const {
+    return idempotency_;
+  }
 
  private:
-  bool is_idempotent_;
+  google::cloud::internal::Idempotency idempotency_;
 };
 
 }  // namespace internal

@@ -36,6 +36,8 @@ namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
+using google::cloud::internal::Idempotency;
+
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     SessionPoolOptions options, google::cloud::CompletionQueue cq,
@@ -366,7 +368,7 @@ Status SessionPool::CreateSessionsSync(
   auto const& stub = channel->stub;
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      true,
+      google::cloud::internal::Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::BatchCreateSessionsRequest const& request) {
         return stub->BatchCreateSessions(context, request);
@@ -417,8 +419,7 @@ SessionPool::AsyncBatchCreateSessions(
   request.set_session_count(std::int32_t{num_sessions});
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(),
-      /*is_idempotent=*/true,
+      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
       [stub](grpc::ClientContext* context,
              spanner_proto::BatchCreateSessionsRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -434,8 +435,7 @@ future<StatusOr<google::protobuf::Empty>> SessionPool::AsyncDeleteSession(
   request.set_name(std::move(session_name));
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(),
-      /*is_idempotent=*/true,
+      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
       [stub](grpc::ClientContext* context,
              spanner_proto::DeleteSessionRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -453,8 +453,7 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
   request.set_sql("SELECT 1;");
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(),
-      /*is_idempotent=*/true,
+      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
       [stub](grpc::ClientContext* context,
              spanner_proto::ExecuteSqlRequest const& request,
              grpc::CompletionQueue* cq) {

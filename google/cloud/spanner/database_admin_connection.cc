@@ -24,6 +24,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::database::v1;
 
+using google::cloud::internal::Idempotency;
+
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 DatabaseAdminConnection::CreateBackup(CreateBackupParams) {
@@ -150,7 +152,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        false,
+        Idempotency::kNonIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::CreateDatabaseRequest const& request) {
           return stub_->CreateDatabase(context, request);
@@ -170,7 +172,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_name(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::GetDatabaseRequest const& request) {
           return stub_->GetDatabase(context, request);
@@ -184,7 +186,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_database(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::GetDatabaseDdlRequest const& request) {
           return stub_->GetDatabaseDdl(context, request);
@@ -202,7 +204,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     }
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        false,
+        Idempotency::kNonIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::UpdateDatabaseDdlRequest const& request) {
           return stub_->UpdateDatabase(context, request);
@@ -221,7 +223,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_database(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::DropDatabaseRequest const& request) {
           return stub_->DropDatabase(context, request);
@@ -247,7 +249,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListDatabasesRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListDatabasesRequest const& request) {
                 return stub->ListDatabases(context, request);
@@ -270,7 +272,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_backup(std::move(p.backup_full_name));
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        false,
+        Idempotency::kNonIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::RestoreDatabaseRequest const& request) {
           return stub_->RestoreDatabase(context, request);
@@ -290,7 +292,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_resource(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -303,10 +305,12 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     google::iam::v1::SetIamPolicyRequest request;
     request.set_resource(p.database.FullName());
     *request.mutable_policy() = std::move(p.policy);
-    bool is_idempotent = !request.policy().etag().empty();
+    auto const idempotency = request.policy().etag().empty()
+                                 ? Idempotency::kNonIdempotent
+                                 : Idempotency::kIdempotent;
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        is_idempotent,
+        idempotency,
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -323,7 +327,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     }
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -342,7 +346,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     *backup->mutable_expire_time() = proto_expire_time;
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        false,
+        Idempotency::kNonIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::CreateBackupRequest const& request) {
           return stub_->CreateBackup(context, request);
@@ -362,7 +366,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_name(p.backup_full_name);
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::GetBackupRequest const& request) {
           return stub_->GetBackup(context, request);
@@ -375,7 +379,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_name(p.backup_full_name);
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::DeleteBackupRequest const& request) {
           return stub_->DeleteBackup(context, request);
@@ -401,7 +405,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListBackupsRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListBackupsRequest const& request) {
                 return stub->ListBackups(context, request);
@@ -420,7 +424,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       UpdateBackupParams p) override {
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        true,
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                gcsa::UpdateBackupRequest const& request) {
           return stub_->UpdateBackup(context, request);
@@ -447,7 +451,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListBackupOperationsRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListBackupOperationsRequest const& request) {
                 return stub->ListBackupOperations(context, request);
@@ -482,7 +486,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         [stub, retry, backoff,
          function_name](gcsa::ListDatabaseOperationsRequest const& r) {
           return RetryLoop(
-              retry->clone(), backoff->clone(), true,
+              retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
                      gcsa::ListDatabaseOperationsRequest const& request) {
                 return stub->ListDatabaseOperations(context, request);

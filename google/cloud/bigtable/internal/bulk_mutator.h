@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 
 namespace google {
@@ -95,7 +96,7 @@ class BulkMutatorState {
      * request provided by the application.
      */
     int original_index;
-    bool is_idempotent;
+    google::cloud::internal::Idempotency idempotency;
     /// Set to `false` if the result is unknown.
     bool has_mutation_result;
   };
