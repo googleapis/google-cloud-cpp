@@ -991,6 +991,62 @@ void SubscriberFlowControlSettings(
   (std::move(subscriber), std::move(subscription));
 }
 
+void SubscriberRetrySettings(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "subscriber-retry-settings <project-id> <subscription-id>"};
+  }
+
+  //! [subscriber-retry-settings]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string subscription_id) {
+    // By default a subscriber will retry for 60 seconds, with an initial
+    // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will
+    // grow by 30% after each attempt. This changes those defaults.
+    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::ConnectionOptions{},
+        pubsub::LimitedTimeRetryPolicy(
+            /*maximum_duration=*/std::chrono::minutes(1))
+            .clone(),
+        pubsub::ExponentialBackoffPolicy(
+            /*initial_delay=*/std::chrono::milliseconds(200),
+            /*maximum_delay=*/std::chrono::seconds(10),
+            /*scaling=*/2.0)
+            .clone()));
+    auto subscription =
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
+
+    std::mutex mu;
+    std::condition_variable cv;
+    int count = 0;
+    auto constexpr kExpectedMessageCount = 1;
+    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
+      std::move(h).ack();
+      {
+        std::lock_guard<std::mutex> lk(mu);
+        std::cout << "Received message " << m << "\n";
+        if (++count < kExpectedMessageCount) return;
+      }
+      cv.notify_one();
+    };
+
+    auto session = subscriber.Subscribe(subscription, std::move(handler),
+                                        pubsub::SubscriptionOptions{});
+    {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
+    }
+    session.cancel();
+    auto status = session.get();
+    std::cout << "Message count: " << count << ", status: " << status << "\n";
+  }
+  //! [subscriber-retry-settings]
+  (argv.at(0), argv.at(1));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -1166,6 +1222,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscriberFlowControlSettings() sample" << std::endl;
   SubscriberFlowControlSettings(subscriber, subscription, {});
 
+  std::cout << "\nRunning Publish() sample [5]" << std::endl;
+  Publish(publisher, {});
+
+  std::cout << "\nRunning SubscriberRetrySettings() sample" << std::endl;
+  SubscriberRetrySettings({project_id, subscription_id});
+
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
   DetachSubscription(topic_admin_client, {project_id, subscription_id});
 
@@ -1263,6 +1325,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
       CreateSubscriberCommand("subscriber-flow-control-settings", {},
                               SubscriberFlowControlSettings),
+      {"subscriber-retry-settings", SubscriberRetrySettings},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

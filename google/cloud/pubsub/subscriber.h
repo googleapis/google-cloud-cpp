@@ -102,6 +102,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * contains the expected result. Please consult the #google::cloud::v1::StatusOr
  * documentation for more details.
  *
+ * @par Changing Retry Parameters Example
+ * @snippet samples.cc subscriber-retry-settings
+ *
  * [std-future-link]: https://en.cppreference.com/w/cpp/thread/future
  */
 class Subscriber {
