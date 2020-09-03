@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/mock_completion_queue.h"
@@ -551,7 +552,8 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
 
     auto session = CreateSubscriptionSession(
         mock, background.cq(),
-        {subscription.FullName(), handler, pubsub::SubscriptionOptions{}});
+        {subscription.FullName(), handler, pubsub::SubscriptionOptions{}},
+        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
     got_one.get_future()
         .then([&session](future<void>) { session.cancel(); })
         .get();
@@ -646,7 +648,8 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
     };
 
     auto session = CreateSubscriptionSession(
-        mock, background.cq(), {subscription.FullName(), handler, {}});
+        mock, background.cq(), {subscription.FullName(), handler, {}},
+        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return ack_count >= kMaximumAcks; });

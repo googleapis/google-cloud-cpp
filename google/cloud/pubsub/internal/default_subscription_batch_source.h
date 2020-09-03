@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_SUBSCRIPTION_BATCH_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_SUBSCRIPTION_BATCH_SOURCE_H
 
+#include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -33,12 +35,16 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class DefaultSubscriptionBatchSource : public SubscriptionBatchSource {
  public:
-  explicit DefaultSubscriptionBatchSource(google::cloud::CompletionQueue cq,
-                                          std::shared_ptr<SubscriberStub> stub,
-                                          std::string subscription_full_name)
+  explicit DefaultSubscriptionBatchSource(
+      google::cloud::CompletionQueue cq, std::shared_ptr<SubscriberStub> stub,
+      std::string subscription_full_name,
+      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
-        subscription_full_name_(std::move(subscription_full_name)) {}
+        subscription_full_name_(std::move(subscription_full_name)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
 
   ~DefaultSubscriptionBatchSource() override = default;
 
@@ -58,6 +64,8 @@ class DefaultSubscriptionBatchSource : public SubscriptionBatchSource {
   google::cloud::CompletionQueue cq_;
   std::shared_ptr<SubscriberStub> stub_;
   std::string subscription_full_name_;
+  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
+  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

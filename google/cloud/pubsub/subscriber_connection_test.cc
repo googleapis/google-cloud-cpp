@@ -14,9 +14,11 @@
 
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <atomic>
@@ -28,6 +30,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Contains;
@@ -72,8 +75,10 @@ TEST(SubscriberConnectionTest, Basic) {
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()}
-                .DisableBackgroundThreads(cq));
+      mock,
+      ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq),
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -111,10 +116,12 @@ TEST(SubscriberConnectionTest, PullFailure) {
       });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
   auto handler = [&](Message const&, AckHandler const&) {};
   auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
-  EXPECT_EQ(expected, response.get());
+  EXPECT_THAT(response.get(),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
 /// @test Verify key events are logged
@@ -154,9 +161,11 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()}
-                .DisableBackgroundThreads(cq)
-                .enable_tracing("rpc"));
+      mock,
+      ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq)
+          .enable_tracing("rpc"),
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
@@ -216,7 +225,8 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
       });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()});
+      mock, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
