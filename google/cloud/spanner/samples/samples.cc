@@ -1071,41 +1071,6 @@ void InsertData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_insert_data]
 
-//! [START spanner_insert_datatypes_data]
-void InsertDatatypesData(google::cloud::spanner::Client client) {
-  namespace spanner = ::google::cloud::spanner;
-  std::vector<absl::CivilDay> available_dates1 = {absl::CivilDay(2020, 12, 1),
-                                                  absl::CivilDay(2020, 12, 2),
-                                                  absl::CivilDay(2020, 12, 3)};
-  std::vector<absl::CivilDay> available_dates2 = {absl::CivilDay(2020, 11, 1),
-                                                  absl::CivilDay(2020, 11, 5),
-                                                  absl::CivilDay(2020, 11, 15)};
-  std::vector<absl::CivilDay> available_dates3 = {absl::CivilDay(2020, 10, 1),
-                                                  absl::CivilDay(2020, 10, 7)};
-  auto insert_venues =
-      spanner::InsertMutationBuilder(
-          "Venues", {"VenueId", "VenueName", "VenueInfo", "Capacity",
-                     "AvailableDates", "LastContactDate", "OutdoorVenue",
-                     "PopularityScore", "LastUpdateTime"})
-          .EmplaceRow(4, "Venue 4", "Hello World 1", 1800, available_dates1,
-                      absl::CivilDay(2018, 9, 2), false, 0.85543,
-                      spanner::CommitTimestamp())
-          .EmplaceRow(19, "Venue 19", "Hello World 2", 6300, available_dates2,
-                      absl::CivilDay(2019, 1, 15), true, 0.98716,
-                      spanner::CommitTimestamp())
-          .EmplaceRow(42, "Venue 42", "Hello World 3", 3000, available_dates3,
-                      absl::CivilDay(2018, 10, 1), false, 0.72598,
-                      spanner::CommitTimestamp())
-          .Build();
-
-  auto commit_result = client.Commit(spanner::Mutations{insert_venues});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
-  std::cout << "Insert was successful [spanner_insert_datatypes_data]\n";
-}
-//! [END spanner_insert_datatypes_data]
-
 //! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   //! [commit-with-mutations]
@@ -1159,6 +1124,208 @@ void DeleteData(google::cloud::spanner::Client client) {
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
 //! [END spanner_delete_data]
+
+//! [START spanner_insert_datatypes_data]
+void InsertDatatypesData(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  std::vector<absl::CivilDay> available_dates1 = {absl::CivilDay(2020, 12, 1),
+                                                  absl::CivilDay(2020, 12, 2),
+                                                  absl::CivilDay(2020, 12, 3)};
+  std::vector<absl::CivilDay> available_dates2 = {absl::CivilDay(2020, 11, 1),
+                                                  absl::CivilDay(2020, 11, 5),
+                                                  absl::CivilDay(2020, 11, 15)};
+  std::vector<absl::CivilDay> available_dates3 = {absl::CivilDay(2020, 10, 1),
+                                                  absl::CivilDay(2020, 10, 7)};
+  auto insert_venues =
+      spanner::InsertMutationBuilder(
+          "Venues", {"VenueId", "VenueName", "VenueInfo", "Capacity",
+                     "AvailableDates", "LastContactDate", "OutdoorVenue",
+                     "PopularityScore", "LastUpdateTime"})
+          .EmplaceRow(4, "Venue 4", "Hello World 1", 1800, available_dates1,
+                      absl::CivilDay(2018, 9, 2), false, 0.85543,
+                      spanner::CommitTimestamp())
+          .EmplaceRow(19, "Venue 19", "Hello World 2", 6300, available_dates2,
+                      absl::CivilDay(2019, 1, 15), true, 0.98716,
+                      spanner::CommitTimestamp())
+          .EmplaceRow(42, "Venue 42", "Hello World 3", 3000, available_dates3,
+                      absl::CivilDay(2018, 10, 1), false, 0.72598,
+                      spanner::CommitTimestamp())
+          .Build();
+
+  auto commit_result = client.Commit(spanner::Mutations{insert_venues});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful [spanner_insert_datatypes_data]\n";
+}
+//! [END spanner_insert_datatypes_data]
+
+//! [START spanner_query_with_array_parameter]
+void QueryWithArrayParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  std::vector<absl::CivilDay> example_array = {absl::CivilDay(2020, 10, 1),
+                                               absl::CivilDay(2020, 11, 1)};
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, AvailableDate FROM Venues v,"
+      " UNNEST(v.AvailableDates) as AvailableDate "
+      " WHERE AvailableDate in UNNEST(@available_dates)",
+      {{"available_dates", spanner::Value(example_array)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<absl::CivilDay>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "AvailableDate: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_array_parameter]\n";
+}
+//! [END spanner_query_with_array_parameter]
+
+//! [START spanner_query_with_bool_parameter]
+void QueryWithBoolParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  bool example_bool = true;
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, OutdoorVenue FROM Venues"
+      " WHERE OutdoorVenue = @outdoor_venue",
+      {{"outdoor_venue", spanner::Value(example_bool)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<bool>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "OutdoorVenue: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_bool_parameter]\n";
+}
+//! [END spanner_query_with_bool_parameter]
+
+//! [START spanner_query_with_bytes_parameter]
+void QueryWithBytesParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  spanner::Bytes example_bytes("Hello World 1");
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName FROM Venues"
+      " WHERE VenueInfo = @venue_info",
+      {{"venue_info", spanner::Value(example_bytes)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+  }
+  std::cout << "Query completed for [spanner_query_with_bytes_parameter]\n";
+}
+//! [END spanner_query_with_bytes_parameter]
+
+//! [START spanner_query_with_date_parameter]
+void QueryWithDateParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  absl::CivilDay example_date(2019, 1, 1);
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, LastContactDate FROM Venues"
+      " WHERE LastContactDate < @last_contact_date",
+      {{"last_contact_date", spanner::Value(example_date)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<absl::CivilDay>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "LastContactDate: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_date_parameter]\n";
+}
+//! [END spanner_query_with_date_parameter]
+
+//! [START spanner_query_with_float_parameter]
+void QueryWithFloatParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  double example_float = 0.8;
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, PopularityScore FROM Venues"
+      " WHERE PopularityScore > @popularity_score",
+      {{"popularity_score", spanner::Value(example_float)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<double>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "PopularityScore: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_float_parameter]\n";
+}
+//! [END spanner_query_with_float_parameter]
+
+//! [START spanner_query_with_int_parameter]
+void QueryWithIntParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  int example_int = 3000;
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, Capacity FROM Venues"
+      " WHERE Capacity >= @capacity",
+      {{"capacity", spanner::Value(example_int)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<std::int64_t>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "Capacity: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_int_parameter]\n";
+}
+//! [END spanner_query_with_int_parameter]
+
+//! [START spanner_query_with_string_parameter]
+void QueryWithStringParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  std::string example_string = "Venue 42";
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName FROM Venues"
+      " WHERE VenueName = @venue_name",
+      {{"venue_name", spanner::Value(example_string)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+  }
+  std::cout << "Query completed for [spanner_query_with_string_parameter]\n";
+}
+//! [END spanner_query_with_string_parameter]
+
+//! [START spanner_query_with_timestamp_parameter]
+void QueryWithTimestampParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto example_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::now()).value();
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, LastUpdateTime FROM Venues"
+      " WHERE LastUpdateTime < @last_update_time",
+      {{"last_update_time", spanner::Value(example_timestamp)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<spanner::Timestamp>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
+    std::cout << "LastUpdateTime: " << std::get<2>(*row).value() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_with_timestamp_parameter]\n";
+}
+//! [END spanner_query_with_timestamp_parameter]
 
 //! [keyset-all]
 void DeleteAll(google::cloud::spanner::Client client) {
@@ -1603,13 +1770,12 @@ void CreateClientWithQueryOptionsCommand(std::vector<std::string> const& argv) {
   CreateClientWithQueryOptions(argv[0], argv[1], argv[2]);
 }
 
+//! [START spanner_query_with_query_options]
 void QueryWithQueryOptions(google::cloud::spanner::Client client) {
-  //! [START spanner_query_with_query_options]
   namespace spanner = ::google::cloud::spanner;
   auto sql = spanner::SqlStatement("SELECT SingerId, FirstName FROM Singers");
   auto opts = spanner::QueryOptions().set_optimizer_version("1");
   auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
-  //! [END spanner_query_with_query_options]
 
   using RowType = std::tuple<std::int64_t, std::string>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
@@ -1619,6 +1785,7 @@ void QueryWithQueryOptions(google::cloud::spanner::Client client) {
   }
   std::cout << "Read completed for [spanner_query_with_query_options]\n";
 }
+//! [END spanner_query_with_query_options]
 
 //! [START spanner_read_data_with_storing_index]
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
@@ -2071,8 +2238,8 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
 
   spanner::SqlStatement select(
       "SELECT SingerId, FirstName, LastName FROM Singers"
-      " WHERE LastName = @name",
-      {{"name", spanner::Value("Garcia")}});
+      " WHERE LastName = @last_name",
+      {{"last_name", spanner::Value("Garcia")}});
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
@@ -2688,9 +2855,19 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"quickstart", QuickstartCommand},
       {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
-      make_command_entry("insert-datatypes-data", InsertDatatypesData),
       make_command_entry("update-data", UpdateData),
       make_command_entry("delete-data", DeleteData),
+      make_command_entry("insert-datatypes-data", InsertDatatypesData),
+      make_command_entry("query-with-array-parameter", QueryWithArrayParameter),
+      make_command_entry("query-with-bool-parameter", QueryWithBoolParameter),
+      make_command_entry("query-with-bytes-parameter", QueryWithBytesParameter),
+      make_command_entry("query-with-date-parameter", QueryWithDateParameter),
+      make_command_entry("query-with-float-parameter", QueryWithFloatParameter),
+      make_command_entry("query-with-int-parameter", QueryWithIntParameter),
+      make_command_entry("query-with-string-parameter",
+                         QueryWithStringParameter),
+      make_command_entry("query-with-timestamp-parameter",
+                         QueryWithTimestampParameter),
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
@@ -3016,11 +3193,42 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_insert_data sample" << std::endl;
   InsertData(client);
 
+  std::cout << "\nRunning spanner_update_data sample" << std::endl;
+  UpdateData(client);
+
   std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
   InsertDatatypesData(client);
 
-  std::cout << "\nRunning spanner_update_data sample" << std::endl;
-  UpdateData(client);
+  std::cout << "\nRunning spanner_query_with_array_parameter sample"
+            << std::endl;
+  QueryWithArrayParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_bool_parameter sample"
+            << std::endl;
+  QueryWithBoolParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
+            << std::endl;
+  QueryWithBytesParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_date_parameter sample"
+            << std::endl;
+  QueryWithDateParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_float_parameter sample"
+            << std::endl;
+  QueryWithFloatParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_int_parameter sample" << std::endl;
+  QueryWithIntParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_string_parameter sample"
+            << std::endl;
+  QueryWithStringParameter(client);
+
+  std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
+            << std::endl;
+  QueryWithTimestampParameter(client);
 
   std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample"
             << std::endl;
