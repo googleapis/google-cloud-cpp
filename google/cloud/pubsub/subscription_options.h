@@ -40,11 +40,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * A callback is "executing" until the `AckHandler::ack()` or
  * `AckHandler::nack()` function is called on the associated `AckHandler`.
- * Applications can use this to move long running computations out of the
+ * Applications can use this to move long-running computations out of the
  * library internal thread pool.
  *
- * Note that callbacks are "scheduled", but they may not immediately execute,
- * for example, callbacks may be sequenced if the concurrency control parameters
+ * Note that callbacks are "scheduled", but they may not immediately execute.
+ * For example, callbacks may be sequenced if the concurrency control parameters
  * are higher than the number of I/O threads configured in the
  * `SubscriberConnection`.
  *
@@ -55,7 +55,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @par Message Flow Control
  *
  * The subscription will request more messages from the service as long as
- * neither the outstanding message count (see `set_message_count_watermarks()`)
+ * both the outstanding message count (see `set_message_count_watermarks()`)
  * and the number of bytes in the outstanding messages (see
  * `set_message_size_watermarks()`) are below the high watermarks for these
  * values.
