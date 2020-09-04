@@ -48,7 +48,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string topic_id) {
     auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
-    // Note that kAlreadyExist is a possible error when the library retries.
+    // Note that kAlreadyExists is a possible error when the library retries.
     if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The topic already exists\n";
       return;
