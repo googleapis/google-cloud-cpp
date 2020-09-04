@@ -759,6 +759,9 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
   using google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    // By default a publisher will retry for 60 seconds, with an initial backoff
+    // of 100ms, a maximum backoff of 60 seconds, and the backoff will grow by
+    // 30% after each attempt. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
         std::move(topic),
         pubsub::PublisherOptions{}.enable_retry_publish_failures(), {},
@@ -802,12 +805,15 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
   using google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    // By default the publisher will flush a batch after 10ms, after it contains
+    // more than 100 message, or after it contains more than 1MiB of data,
+    // whichever comes first. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
         std::move(topic),
         pubsub::PublisherOptions{}
-            .set_maximum_hold_time(std::chrono::milliseconds(10))
-            .set_maximum_batch_bytes(10 * 1024 * 1024L)
-            .set_maximum_message_count(100),
+            .set_maximum_hold_time(std::chrono::milliseconds(20))
+            .set_maximum_batch_bytes(4 * 1024 * 1024L)
+            .set_maximum_message_count(200),
         pubsub::ConnectionOptions{}));
 
     std::vector<future<void>> ids;
@@ -895,7 +901,8 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
-    // Create a subscriber with 16 threads handling I/O work
+    // Create a subscriber with 16 threads handling I/O work, by default the
+    // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
     auto subscription =
@@ -919,7 +926,9 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
       cv.notify_one();
     };
 
-    // Create a subscription where up to 8 messages are handled concurrently.
+    // Create a subscription where up to 8 messages are handled concurrently. By
+    // default the library uses `0` and `std::thread::hardwarde_concurrency()`
+    // for the concurrency watermarks.
     auto session = subscriber.Subscribe(
         subscription, std::move(handler),
         pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
@@ -959,6 +968,11 @@ void SubscriberFlowControlSettings(
       cv.notify_one();
     };
 
+    // Change the flow control watermarks, by default the client library uses
+    // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
+    // size watermarks. Recall that the library stops requesting messages if
+    // any of the high watermarks are reached, and the library resumes
+    // requesting messages when *both* low watermarks are reached.
     auto constexpr kMiB = 1024 * 1024L;
     auto session = subscriber.Subscribe(
         subscription, std::move(handler),
