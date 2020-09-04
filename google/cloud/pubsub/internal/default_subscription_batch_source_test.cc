@@ -99,14 +99,36 @@ TEST(DefaultSubscriptionBatchSourceTest, ExtendLeases) {
             EXPECT_THAT(
                 request.ack_ids(),
                 ElementsAre("test-ack-01", "test-ack-02", "test-ack-03"));
-            EXPECT_EQ(1234, request.ack_deadline_seconds());
+            EXPECT_EQ(123, request.ack_deadline_seconds());
+            return make_ready_future(Status{});
+          })
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+            EXPECT_EQ(subscription.FullName(), request.subscription());
+            EXPECT_THAT(request.ack_ids(), ElementsAre("test-ack-04"));
+            EXPECT_EQ(0, request.ack_deadline_seconds());
+            return make_ready_future(Status{});
+          })
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+            EXPECT_EQ(subscription.FullName(), request.subscription());
+            EXPECT_THAT(request.ack_ids(), ElementsAre("test-ack-05"));
+            EXPECT_EQ(600, request.ack_deadline_seconds());
             return make_ready_future(Status{});
           });
 
   google::cloud::CompletionQueue cq;
   DefaultSubscriptionBatchSource uut(cq, mock, subscription.FullName());
   auto result = uut.ExtendLeases({"test-ack-01", "test-ack-02", "test-ack-03"},
-                                 std::chrono::seconds(1234));
+                                 std::chrono::seconds(123));
+  EXPECT_THAT(result.get(), StatusIs(StatusCode::kOk));
+
+  result = uut.ExtendLeases({"test-ack-04"}, std::chrono::seconds(-12));
+  EXPECT_THAT(result.get(), StatusIs(StatusCode::kOk));
+
+  result = uut.ExtendLeases({"test-ack-05"}, std::chrono::seconds(1234));
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kOk));
 }
 

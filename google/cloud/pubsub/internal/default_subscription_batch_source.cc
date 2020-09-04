@@ -51,12 +51,21 @@ future<Status> DefaultSubscriptionBatchSource::BulkNack(
   return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
+
 future<Status> DefaultSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
+  auto const actual_extension = [extension] {
+    // The service does not allow extending the deadline by more than 10
+    // minutes.
+    auto constexpr kMaximumAckDeadline = std::chrono::seconds(600);
+    if (extension < std::chrono::seconds(0)) return std::chrono::seconds(0);
+    if (extension > kMaximumAckDeadline) return kMaximumAckDeadline;
+    return extension;
+  }();
   request.set_ack_deadline_seconds(
-      static_cast<std::int32_t>(extension.count()));
+      static_cast<std::int32_t>(actual_extension.count()));
   for (auto& a : ack_ids) request.add_ack_ids(std::move(a));
   return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);

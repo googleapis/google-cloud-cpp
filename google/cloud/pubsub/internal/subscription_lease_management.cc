@@ -56,7 +56,7 @@ future<Status> SubscriptionLeaseManagement::BulkNack(
   return child_->BulkNack(std::move(ack_ids), total_size);
 }
 
-// Users of this class should have no need to call ExtendLeases(), they create
+// Users of this class should have no need to call ExtendLeases(); they create
 // it to automate lease management after all. We could create a hierarchy of
 // classes for "BatchSourceWithoutExtendLeases", but that seems like overkill.
 future<Status> SubscriptionLeaseManagement::ExtendLeases(
