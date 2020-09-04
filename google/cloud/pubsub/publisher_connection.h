@@ -33,17 +33,45 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A connection to the Cloud Pub/Sub service to publish events.
+ *
+ * This interface defines pure-virtual methods for each of the user-facing
+ * overload sets in `Publisher`. That is, all of `Publisher`'s overloads will
+ * forward to the one pure-virtual method declared in this interface. This
+ * allows users to inject custom behavior (e.g., with a Google Mock object) in a
+ * `Publisher` object for use in their own tests.
+ *
+ * To create a concrete instance that connects you to the real Cloud Pub/Sub
+ * service, see `MakePublisherConnection()`.
  */
 class PublisherConnection {
  public:
   virtual ~PublisherConnection() = 0;
 
+  //@{
+  /**
+   * @name The parameter wrapper types.
+   *
+   * Define the arguments for each member function.
+   *
+   * Applications may define classes derived from `PublisherConnection`, for
+   * example, because they want to mock the class. To avoid breaking all such
+   * derived classes when we change the number or type of the arguments to the
+   * member functions we define light weight structures to pass the arguments.
+   */
+
+  /// Wrap the arguments for `Publish()`
   struct PublishParams {
     Message message;
   };
+
+  /// Wrap the arguments for `Flush()`
+  struct FlushParams {};
+  //@}
+
+  /// Defines the interface for `Publisher::Publish()`
   virtual future<StatusOr<std::string>> Publish(PublishParams p) = 0;
 
-  struct FlushParams {};
+  /// Defines the interface for `Publisher::Flush()`
   virtual void Flush(FlushParams) = 0;
 };
 

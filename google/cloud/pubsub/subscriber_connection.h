@@ -32,17 +32,42 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * A connection to the Cloud Pub/Sub service to publish events.
+ * A connection to the Cloud Pub/Sub service to receive events.
+ *
+ * This interface defines pure-virtual methods for each of the user-facing
+ * overload sets in `Subscriber`. That is, all of `Subscriber`'s overloads will
+ * forward to the one pure-virtual method declared in this interface. This
+ * allows users to inject custom behavior (e.g., with a Google Mock object) in a
+ * `Subscriber` object for use in their own tests.
+ *
+ * To create a concrete instance that connects you to the real Cloud Pub/Sub
+ * service, see `MakeSubscriberConnection()`.
  */
 class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
+  //@{
+  /**
+   * @name The parameter wrapper types.
+   *
+   * Define the arguments for each member function.
+   *
+   * Applications may define classes derived from `SubscriberConnection`, for
+   * example, because they want to mock the class. To avoid breaking all such
+   * derived classes when we change the number or type of the arguments to the
+   * member functions we define light weight structures to pass the arguments.
+   */
+
+  /// Wrap the arguments for `Subscribe()`
   struct SubscribeParams {
     std::string full_subscription_name;
     ApplicationCallback callback;
     SubscriptionOptions options;
   };
+  //@}
+
+  /// Defines the interface for `Subscriber::Subscribe()`
   virtual future<Status> Subscribe(SubscribeParams p) = 0;
 };
 

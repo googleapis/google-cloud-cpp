@@ -36,6 +36,20 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @see https://cloud.google.com/pubsub for an overview of the Cloud Pub/Sub
  *   service.
  *
+ * @par Example
+ *
+ * @code
+ * namespace pubsub = ::google::cloud::pubsub;
+ *
+ * auto topic = pubsub::Topic("my-project", "my-topic");
+ * auto publisher = pubsub::Publisher(MakePublisherConnection(topic));
+ * auto id = publisher->Publish(
+ *     pubsub::MessageBuilder{}.SetData("my-data").Build());
+ * id.then([](future<std::string> f) {
+ *     std::cout << "published with id = " << f.get() << "\n";
+ * });
+ * @endcode
+ *
  * @par Performance
  *
  * `Publisher` objects are relatively cheap to create, copy, and move. However,
@@ -60,6 +74,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
  * attaching any number of threads to the completion queue.
  *
+ * @par Example: using a custom thread pool
  * @snippet samples.cc custom-thread-pool-publisher
  *
  * @par Asynchronous Functions
@@ -79,18 +94,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the #google::cloud::v1::StatusOr
  * documentation for more details.
- *
- * @code
- * namespace pubsub = ::google::cloud::pubsub;
- *
- * auto topic = pubsub::Topic("my-project", "my-topic");
- * auto publisher = pubsub::Publisher(MakePublisherConnection(topic));
- * auto id = publisher->Publish(
- *     pubsub::MessageBuilder{}.SetData("my-data").Build());
- * id.then([](future<std::string> f) {
- *     std::cout << "published with id = " << f.get() << "\n";
- * });
- * @endcode
  *
  * @par Batching Configuration Example
  * @snippet samples.cc publisher-options
@@ -142,6 +145,9 @@ class Publisher {
    * As applications can configure a `Publisher` to buffer messages, it is
    * sometimes useful to flush them before any of the normal criteria to send
    * the RPCs is met.
+   *
+   * @par Example
+   * @snippet samples.cc publish-custom-attributes
    *
    * @note This function does not return any status or error codes, the
    *     application can use the `future<StatusOr<std::string>>` returned in

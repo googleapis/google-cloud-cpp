@@ -93,7 +93,7 @@ class TopicAdminConnection {
    *
    * Define the arguments for each member function.
    *
-   * Applications may define classes derived from `PublisherConnection`, for
+   * Applications may define classes derived from `TopicAdminConnection`, for
    * example, because they want to mock the class. To avoid breaking all such
    * derived classes when we change the number or type of the arguments to the
    * member functions we define light weight structures to pass the arguments.
@@ -114,7 +114,7 @@ class TopicAdminConnection {
     google::pubsub::v1::UpdateTopicRequest request;
   };
 
-  /// Wrap the arguments for `ListTopics`
+  /// Wrap the arguments for `ListTopics()`
   struct ListTopicsParams {
     std::string project_id;
   };

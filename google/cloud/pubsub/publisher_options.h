@@ -28,15 +28,15 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * Configuration options for a `Publisher`.
  *
- * By default, the client library does not automatically batch messages, all
- * messages have a maximum holding time of 0. Applications developers can use
- * this class to change these defaults on any `Publisher` object they create.
+ * These are largely used to control the batching configuration for a publisher.
+ * By default a publishers flushes a batch as soon as any of these conditions
+ * are met:
+ * - 10ms after the first message is put in the batch,
+ * - when the batch contains 100 messages or more,
+ * - when the batch contains 1MiB of data or more.
  *
- * @warning TODO(#4808) - we are planning to change this default.
- *
- * @note Applications developers may want to consider batching messages,
- *     specially if their messages have small payloads. Consult the Cloud
- *     Pub/Sub [pricing page][pubsub-pricing-link] for details.
+ * Applications developers should consult the Cloud Pub/Sub
+ * [pricing page][pubsub-pricing-link] when selecting a batching configuration.
  *
  * @par Example
  * @snippet samples.cc publisher-options

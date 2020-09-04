@@ -23,6 +23,11 @@ namespace cloud {
 namespace pubsub_mocks {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+/**
+ * A googlemock-based mock for [pubsub::TopicAdminConnection][mocked-link]
+ *
+ * [mocked-link]: @ref google::cloud::pubsub::v1::TopicAdminConnection
+ */
 class MockTopicAdminConnection : public pubsub::TopicAdminConnection {
  public:
   MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, CreateTopic,
