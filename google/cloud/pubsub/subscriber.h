@@ -27,7 +27,7 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
- * Receive messages fromthe Cloud Pub/Sub service.
+ * Receive messages from the Cloud Pub/Sub service.
  *
  * This class is used to receive message from a given subscription, with a fixed
  * configuration such as credentials, and background threads. Applications that
@@ -37,6 +37,25 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * @see https://cloud.google.com/pubsub for an overview of the Cloud Pub/Sub
  *   service.
+ *
+ * @par Example
+ *
+ * @code
+ * namespace pubsub = ::google::cloud::pubsub;
+ *
+ * auto subscription = pubsub::Subscription("my-project", "my-subscription");
+ * auto subscriber = pubsub::Subscriber(MakeSubscriberConnection());
+ * subscriber->Subscribe(
+ *     subscription, [](Message m, AckHandler h) {
+ *         std::cout << "received " << m.message_id() << "\n";
+ *         std::move(h).ack();
+ *     }).then(
+ *     [](future<Status> f) {
+ *         auto s = f.get();
+ *         if (s) return;
+ *         std::cout << "unrecoverable error in subscription: " << s << "\n";
+ *     });
+ * @endcode
  *
  * @par Performance
  *
@@ -62,6 +81,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
  * attaching any number of threads to the completion queue.
  *
+ * @par Example: using a custom thread pool
  * @snippet samples.cc custom-thread-pool-subscriber
  *
  * @par Asynchronous Functions
@@ -81,23 +101,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the #google::cloud::v1::StatusOr
  * documentation for more details.
- *
- * @code
- * namespace pubsub = ::google::cloud::pubsub;
- *
- * auto subscription = pubsub::Subscription("my-project", "my-subscription");
- * auto subscriber = pubsub::Subscriber(MakeSubscriberConnection());
- * subscriber->Subscribe(
- *     subscription, [](Message m, AckHandler h) {
- *         std::cout << "received " << m.message_id() << "\n";
- *         std::move(h).ack();
- *     }).then(
- *     [](future<Status> f) {
- *         auto s = f.get();
- *         if (s) return;
- *         std::cout << "unrecoverable error in subscription: " << s << "\n";
- *     });
- * @endcode
  *
  * [std-future-link]: https://en.cppreference.com/w/cpp/thread/future
  */

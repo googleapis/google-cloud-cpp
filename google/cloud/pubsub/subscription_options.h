@@ -26,6 +26,54 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Configure how a subscription handles incoming messages.
+ *
+ * There are two main algorithms controlled by this function: the dispatching of
+ * application callbacks, and requesting more data from the service.
+ *
+ * @par Callback Concurrency Control
+ *
+ * The subscription configuration determines the upper limit (set
+ * `set_concurrency_watermarks()`) how many callbacks are *scheduled* at a time.
+ * As long as this limit is not reached the library will continue to schedule
+ * callbacks, once the limit is reached the library will wait until the number
+ * of executing callbacks goes below the low watermark.
+ *
+ * A callback is "executing" until the `AckHandler::ack()` or
+ * `AckHandler::nack()` function is called on the associated `AckHandler`.
+ * Applications can use this to move long running computations out of the
+ * library internal thread pool.
+ *
+ * Note that callbacks are "scheduled", but they may not immediately execute,
+ * for example, callbacks may be sequenced if the concurrency control parameters
+ * are higher than the number of I/O threads configured in the
+ * `SubscriberConnection`.
+ *
+ * The default value for the concurrency high watermarks is set to the value
+ * returned by `std::thread::hardware_concurrency()` (or 4 if your standard
+ * library returns `0` for this parameter).
+ *
+ * @par Message Flow Control
+ *
+ * The subscription will request more messages from the service as long as
+ * neither the outstanding message count (see `set_message_count_watermarks()`)
+ * and the number of bytes in the outstanding messages (see
+ * `set_message_size_watermarks()`) are below the high watermarks for these
+ * values.
+ *
+ * Once either of the high watermarks are breached the library will wait until
+ * **both** the values are below their low watermarks before requesting more
+ * messages from the service.
+ *
+ * In this algorithm a message is outstanding until the `AckHandler::ack()` or
+ * `AckHandler::nack()` function is called on the associated `AckHandler`. Note
+ * that if the concurrency control algorithm has not scheduled a callback this
+ * can also put back pressure on the flow control algorithm.
+ *
+ * @par Example: setting the concurrency control parameters
+ * @snippet samples.cc subscriber-concurrency
+ *
+ * @par Example: setting the flow control parameters
+ * @snippet samples.cc subscriber-flow-control
  */
 class SubscriptionOptions {
  public:
@@ -36,7 +84,7 @@ class SubscriptionOptions {
    *
    * Configure how long does the application have to respond (ACK or NACK) an
    * incoming message. Note that this might be longer, or shorter, than the
-   * deadline configured in the server-side subcription.
+   * deadline configured in the server-side subscription.
    *
    * The value `0` is reserved to leave the deadline unmodified and just use the
    * server-side configuration.

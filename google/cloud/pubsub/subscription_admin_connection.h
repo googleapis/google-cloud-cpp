@@ -63,12 +63,12 @@ using ListSnapshotsRange = google::cloud::internal::PaginationRange<
  * A connection to Cloud Pub/Sub for subscriber operations.
  *
  * This interface defines pure-virtual methods for each of the user-facing
- * overload sets in `SubscriberClient`. That is, all of `SubscriberClient`'s
- * `CreateSubscription()` overloads will forward to the one pure-virtual
- * `CreateSubscription()` method declared in this interface, and similar for
- * `SubscriberClient`'s other methods. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) in a `SubscriberClient` object for
- * use in their own tests.
+ * overload sets in `SubscriberAdminClient`. That is, all of
+ * `SubscriberAdminClient`'s `CreateSubscription()` overloads will forward to
+ * the one pure-virtual `CreateSubscription()` method declared in this
+ * interface, and similar for `SubscriberClient`'s other methods. This allows
+ * users to inject custom behavior (e.g., with a Google Mock object) in a
+ * `SubscriberClient` object for use in their own tests.
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeSubscriptionAdminConnection()`.
@@ -79,13 +79,17 @@ class SubscriptionAdminConnection {
 
   //@{
   /**
+   * @name The parameter wrapper types.
+   *
    * Define the arguments for each member function.
    *
-   * Applications may define classes derived from `SubscriberConnection`, for
-   * example, because they want to mock the class. To avoid breaking all such
-   * derived classes when we change the number or type of the arguments to the
-   * member functions we define light weight structures to pass the arguments.
+   * Applications may define classes derived from `SubscriptionAdminConnection`,
+   * for example, because they want to mock the class. To avoid breaking all
+   * such derived classes when we change the number or type of the arguments to
+   * the member functions we define light weight structures to pass the
+   * arguments.
    */
+
   /// Wrap the arguments for `CreateSubscription()`
   struct CreateSubscriptionParams {
     google::pubsub::v1::Subscription subscription;
@@ -101,7 +105,7 @@ class SubscriptionAdminConnection {
     google::pubsub::v1::UpdateSubscriptionRequest request;
   };
 
-  /// Wrap the arguments for `ListSubscription()`
+  /// Wrap the arguments for `ListSubscriptions()`
   struct ListSubscriptionsParams {
     std::string project_id;
   };
@@ -126,7 +130,7 @@ class SubscriptionAdminConnection {
     Snapshot snapshot;
   };
 
-  /// Wrap the arguments for `ListSubscription()`
+  /// Wrap the arguments for `ListSnapshots()`
   struct ListSnapshotsParams {
     std::string project_id;
   };

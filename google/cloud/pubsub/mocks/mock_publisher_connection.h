@@ -24,7 +24,9 @@ namespace pubsub_mocks {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * A googlemock-based mock for `pubsub::PublisherConnection`
+ * A googlemock-based mock for [pubsub::PublisherConnection][mocked-link]
+ *
+ * [mocked-link]: @ref google::cloud::pubsub::v1::PublisherConnection
  *
  * @see @ref publisher-mock for an example using this class.
  */
