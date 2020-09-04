@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A connection to the Cloud Pub/Sub service to publish events.  
+<p>A connection to the Cloud Pub/Sub service to receive events.  
  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="subscriber__connection_8h_source.html">google/cloud/pubsub/subscriber_connection.h</a>&gt;</code></p>
@@ -84,6 +84,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html">SubscribeParams</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#adaba3a99aa57d61252088a6ffe9a90c6" title="Defines the interface for Subscriber::Subscribe()">Subscribe()</a></code>  <a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -91,12 +92,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac4409b19ac85e8d2976bcb35b55de5e9"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#ac4409b19ac85e8d2976bcb35b55de5e9">~SubscriberConnection</a> ()=0</td></tr>
 <tr class="separator:ac4409b19ac85e8d2976bcb35b55de5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaba3a99aa57d61252088a6ffe9a90c6"><td class="memItemLeft" align="right" valign="top">virtual future&lt; Status &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html#adaba3a99aa57d61252088a6ffe9a90c6">Subscribe</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html">SubscribeParams</a> p)=0</td></tr>
+<tr class="memdesc:adaba3a99aa57d61252088a6ffe9a90c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html#a219d6e3a03a9db4d4c93bb9bb466ca04" title="Create a new session to receive messages from subscription.">Subscriber::Subscribe()</a></code>  <a href="#adaba3a99aa57d61252088a6ffe9a90c6">More...</a><br /></td></tr>
 <tr class="separator:adaba3a99aa57d61252088a6ffe9a90c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A connection to the Cloud Pub/Sub service to publish events. </p>
+<div class="textblock"><p>A connection to the Cloud Pub/Sub service to receive events. </p>
+<p>This interface defines pure-virtual methods for each of the user-facing overload sets in <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code>. That is, all of <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code>'s overloads will forward to the one pure-virtual method declared in this interface. This allows users to inject custom behavior (e.g., with a Google Mock object) in a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code> object for use in their own tests.</p>
+<p>To create a concrete instance that connects you to the real Cloud Pub/Sub service, see <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a2258e0ef7da16c922aed9cc69416d164" title="Returns a SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.">MakeSubscriberConnection()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="subscriber__connection_8h_source.html#l00037">37</a> of file <a class="el" href="subscriber__connection_8h_source.html">subscriber_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscriber__connection_8h_source.html#l00046">46</a> of file <a class="el" href="subscriber__connection_8h_source.html">subscriber_connection.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac4409b19ac85e8d2976bcb35b55de5e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac4409b19ac85e8d2976bcb35b55de5e9">&#9670;&nbsp;</a></span>~SubscriberConnection()</h2>
@@ -147,6 +151,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html#a219d6e3a03a9db4d4c93bb9bb466ca04" title="Create a new session to receive messages from subscription.">Subscriber::Subscribe()</a></code> </p>
 
 </div>
 </div>
