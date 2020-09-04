@@ -77,6 +77,12 @@ class SubscriptionBatchSource {
                                   std::size_t total_size) = 0;
 
   /**
+   * Extend the lease of multiple messages by @p extension.
+   */
+  virtual future<Status> ExtendLeases(std::vector<std::string> ack_ids,
+                                      std::chrono::seconds extension) = 0;
+
+  /**
    * Request more messages from the source.
    */
   virtual future<StatusOr<google::pubsub::v1::PullResponse>> Pull(

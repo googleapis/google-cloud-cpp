@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/pubsub/internal/default_subscription_batch_source.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 
@@ -77,8 +78,10 @@ future<Status> CreateSubscriptionSession(
     google::cloud::CompletionQueue const& executor,
     pubsub::SubscriberConnection::SubscribeParams p) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
+      executor, stub, std::move(p.full_subscription_name));
   auto lease_management = SubscriptionLeaseManagement::Create(
-      executor, shutdown_manager, stub, std::move(p.full_subscription_name),
+      executor, shutdown_manager, std::move(batch),
       p.options.max_deadline_time());
 
   return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
@@ -91,6 +94,8 @@ future<Status> CreateTestingSubscriptionSession(
     google::cloud::CompletionQueue const& executor,
     pubsub::SubscriberConnection::SubscribeParams p) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
+      executor, stub, std::move(p.full_subscription_name));
 
   auto cq = executor;  // need a copy to make it mutable
   auto timer = [cq](std::chrono::system_clock::time_point) mutable {
@@ -100,8 +105,8 @@ future<Status> CreateTestingSubscriptionSession(
         });
   };
   auto lease_management = SubscriptionLeaseManagement::CreateForTesting(
-      executor, shutdown_manager, timer, stub,
-      std::move(p.full_subscription_name), p.options.max_deadline_time());
+      executor, shutdown_manager, timer, std::move(batch),
+      p.options.max_deadline_time());
 
   return SubscriptionSessionImpl::Create(executor, std::move(shutdown_manager),
                                          std::move(lease_management),

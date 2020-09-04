@@ -19,6 +19,7 @@
 pubsub_client_unit_tests = [
     "ack_handler_test.cc",
     "internal/batching_publisher_connection_test.cc",
+    "internal/default_subscription_batch_source_test.cc",
     "internal/emulator_overrides_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
     "internal/publisher_logging_test.cc",
