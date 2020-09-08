@@ -64,7 +64,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * FLOAT64      | `double`
  * STRING       | `std::string`
  * BYTES        | `google::cloud::spanner::Bytes`
- * NUMERIC      | `google::cloud::spanner::Numeric`  // [2]
+ * NUMERIC      | `google::cloud::spanner::Numeric`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `absl::CivilDay`
  * ARRAY        | `std::vector<T>`  // [1]
@@ -72,8 +72,6 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  *
  * [1] The type `T` may be any of the other supported types, except for
  *     ARRAY/`std::vector`.
- *
- * [2] NUMERIC columns are not yet available for use in database schemas.
  *
  * Value is a regular C++ value type with support for copy, move, equality,
  * etc. A default-constructed Value represents an empty value with no type.

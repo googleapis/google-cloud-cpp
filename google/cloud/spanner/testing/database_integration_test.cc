@@ -48,29 +48,48 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       std::chrono::system_clock::now() - std::chrono::hours(48));
 
   std::cout << "Creating database and table " << std::flush;
-  auto database_future =
-      admin_client.CreateDatabase(*db_, {R"sql(CREATE TABLE Singers (
-                                SingerId   INT64 NOT NULL,
-                                FirstName  STRING(1024),
-                                LastName   STRING(1024)
-                             ) PRIMARY KEY (SingerId))sql",
-                                         R"sql(CREATE TABLE DataTypes (
-    Id STRING(256) NOT NULL,
-    BoolValue BOOL,
-    Int64Value INT64,
-    Float64Value FLOAT64,
-    StringValue STRING(1024),
-    BytesValue BYTES(1024),
-    TimestampValue TIMESTAMP,
-    DateValue DATE,
-    ArrayBoolValue ARRAY<BOOL>,
-    ArrayInt64Value ARRAY<INT64>,
-    ArrayFloat64Value ARRAY<FLOAT64>,
-    ArrayStringValue ARRAY<STRING(1024)>,
-    ArrayBytesValue ARRAY<BYTES(1024)>,
-    ArrayTimestampValue ARRAY<TIMESTAMP>,
-    ArrayDateValue ARRAY<DATE>
-  ) PRIMARY KEY (Id))sql"});
+  std::string create_singers = R"sql(
+        CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024)
+        ) PRIMARY KEY (SingerId)
+      )sql";
+  // TODO(#5024): Remove these checks when the emulator supports NUMERIC.
+  bool const emulator =
+      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+  std::string create_datatypes = R"sql(
+        CREATE TABLE DataTypes (
+          Id STRING(256) NOT NULL,
+          BoolValue BOOL,
+          Int64Value INT64,
+          Float64Value FLOAT64,
+          StringValue STRING(1024),
+          BytesValue BYTES(1024),
+          TimestampValue TIMESTAMP,
+          DateValue DATE,
+      )sql";
+  if (!emulator) {
+    create_datatypes.append(R"sql(NumericValue NUMERIC,)sql");
+  }
+  create_datatypes.append(R"sql(
+          ArrayBoolValue ARRAY<BOOL>,
+          ArrayInt64Value ARRAY<INT64>,
+          ArrayFloat64Value ARRAY<FLOAT64>,
+          ArrayStringValue ARRAY<STRING(1024)>,
+          ArrayBytesValue ARRAY<BYTES(1024)>,
+          ArrayTimestampValue ARRAY<TIMESTAMP>,
+          ArrayDateValue ARRAY<DATE>
+      )sql");
+  if (!emulator) {
+    create_datatypes.append(R"sql(,ArrayNumericValue ARRAY<NUMERIC>)sql");
+  }
+  create_datatypes.append(R"sql(
+        ) PRIMARY KEY (Id)
+      )sql");
+  auto database_future = admin_client.CreateDatabase(
+      *db_, {std::move(create_singers), std::move(create_datatypes)});
+
   int i = 0;
   int const timeout = 120;
   while (++i < timeout) {
