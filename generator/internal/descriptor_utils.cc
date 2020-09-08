@@ -233,6 +233,33 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
   return class_generators;
 }
 
+Status PrintMethod(google::protobuf::MethodDescriptor const& method,
+                   Printer& printer,
+                   std::map<std::string, std::string> const& vars,
+                   std::vector<MethodPattern> const& patterns, char const* file,
+                   int line) {
+  std::vector<MethodPattern> matching_patterns;
+  for (auto const& p : patterns) {
+    if (p(method)) {
+      matching_patterns.push_back(p);
+    }
+  }
+
+  if (matching_patterns.empty())
+    return Status(StatusCode::kNotFound,
+                  absl::StrCat(file, ":", line, ": no matching patterns for: ",
+                               method.full_name()));
+  if (matching_patterns.size() > 1)
+    return Status(
+        StatusCode::kInternal,
+        absl::StrCat(file, ":", line, ": more than one pattern found for: ",
+                     method.full_name()));
+  for (auto const& f : matching_patterns[0].fragments()) {
+    printer.Print(line, file, vars, f(method));
+  }
+  return {};
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
