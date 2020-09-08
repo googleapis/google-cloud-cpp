@@ -83,6 +83,9 @@ class SubscriberConnection {
  *
  * @see `SubscriberConnection`
  *
+ * @par Changing Retry Parameters Example
+ * @snippet samples.cc subscriber-retry-settings
+ *
  * @param options (optional) configure the `SubscriberConnection` created by
  *     this function.
  * @param retry_policy control for how long (or how many times) are retryable
