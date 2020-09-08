@@ -485,6 +485,36 @@ void CreateTableWithDatatypes(
 }
 // [END spanner_create_table_with_datatypes]
 
+void CreateTableWithDatatypesEmulator(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(database, {R"""(
+            CREATE TABLE Venues (
+                VenueId         INT64 NOT NULL,
+                VenueName       STRING(100),
+                VenueInfo       BYTES(MAX),
+                Capacity        INT64,
+                AvailableDates  ARRAY<DATE>,
+                LastContactDate DATE,
+                OutdoorVenue    BOOL,
+                PopularityScore FLOAT64,
+                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+                    (allow_commit_timestamp=true)
+            ) PRIMARY KEY (VenueId))"""});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "`Venues` table created, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+
 // [START spanner_create_table_with_timestamp_column]
 void CreateTableWithTimestamp(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -3191,12 +3221,15 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_create_database sample" << std::endl;
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
+  std::cout << "\nRunning spanner_create_table_with_datatypes sample"
+            << std::endl;
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (!emulator) {
-    std::cout << "\nRunning spanner_create_table_with_datatypes sample"
-              << std::endl;
     CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
                              database_id);
+  } else {
+    CreateTableWithDatatypesEmulator(database_admin_client, project_id,
+                                     instance_id, database_id);
   }
 
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample"
@@ -3259,43 +3292,39 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_update_data sample" << std::endl;
   UpdateData(client);
 
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (!emulator) {
-    std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
-    InsertDatatypesData(client);
+  std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
+  InsertDatatypesData(client);
 
-    std::cout << "\nRunning spanner_query_with_array_parameter sample"
-              << std::endl;
-    QueryWithArrayParameter(client);
+  std::cout << "\nRunning spanner_query_with_array_parameter sample"
+            << std::endl;
+  QueryWithArrayParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_bool_parameter sample"
-              << std::endl;
-    QueryWithBoolParameter(client);
+  std::cout << "\nRunning spanner_query_with_bool_parameter sample"
+            << std::endl;
+  QueryWithBoolParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
-              << std::endl;
-    QueryWithBytesParameter(client);
+  std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
+            << std::endl;
+  QueryWithBytesParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_date_parameter sample"
-              << std::endl;
-    QueryWithDateParameter(client);
+  std::cout << "\nRunning spanner_query_with_date_parameter sample"
+            << std::endl;
+  QueryWithDateParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_float_parameter sample"
-              << std::endl;
-    QueryWithFloatParameter(client);
+  std::cout << "\nRunning spanner_query_with_float_parameter sample"
+            << std::endl;
+  QueryWithFloatParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_int_parameter sample"
-              << std::endl;
-    QueryWithIntParameter(client);
+  std::cout << "\nRunning spanner_query_with_int_parameter sample" << std::endl;
+  QueryWithIntParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_string_parameter sample"
-              << std::endl;
-    QueryWithStringParameter(client);
+  std::cout << "\nRunning spanner_query_with_string_parameter sample"
+            << std::endl;
+  QueryWithStringParameter(client);
 
-    std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
-              << std::endl;
-    QueryWithTimestampParameter(client);
-  }
+  std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
+            << std::endl;
+  QueryWithTimestampParameter(client);
 
   std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample"
             << std::endl;
