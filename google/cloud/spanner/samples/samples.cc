@@ -33,6 +33,7 @@
 #include "absl/types/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
+#include <iomanip>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -472,6 +473,7 @@ void CreateTableWithDatatypes(
                 LastContactDate DATE,
                 OutdoorVenue    BOOL,
                 PopularityScore FLOAT64,
+                Revenue         NUMERIC,
                 LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (VenueId))"""});
@@ -1343,6 +1345,20 @@ void DeleteAll(google::cloud::spanner::Client client) {
 }
 //! [keyset-all]
 
+// TODO(#5024): Remove DeleteAllEmulator() when the emulator supports NUMERIC.
+void DeleteAllEmulator(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  // Delete all the performances, venues, albums and singers.
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeDeleteMutation("Performances", spanner::KeySet::All()),
+      spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
+      spanner::MakeDeleteMutation("Singers", spanner::KeySet::All()),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "delete-all was successful\n";
+}
+
 //! [insert-mutation-builder]
 void InsertMutationBuilder(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -1577,6 +1593,49 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
   }
 }
 // [END spanner_query_data_with_timestamp_column]
+
+// [START spanner_query_data_with_numeric]
+void QueryDataWithNumeric(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  auto revenue = spanner::MakeNumeric(300000).value();
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueName, Revenue"
+      "  FROM Venues"
+      " WHERE Revenue >= @revenue",
+      {{"revenue", spanner::Value(std::move(revenue))}});
+  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                             absl::optional<spanner::Numeric>>;
+
+  auto rows = client.ExecuteQuery(select);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row);
+    std::cout << " VenueName: ";
+    auto venue_name = std::get<1>(*row);
+    if (!venue_name) {
+      std::cout << "NULL";
+    } else {
+      std::cout << *venue_name;
+    }
+    std::cout << " Revenue: ";
+    auto revenue = std::get<2>(*row);
+    if (!revenue) {
+      std::cout << "NULL";
+    } else {
+      auto const& numeric = *revenue;
+      // [START spanner_cast_numeric_type]
+      std::string const& str = numeric.ToString();
+      double dbl = spanner::ToDouble(numeric);
+      int scaled_int = *spanner::ToInteger<int>(numeric, 2);  // scale by 10^2
+      // [END spanner_cast_numeric_type]
+      std::cout << str << " (d.16=" << std::setprecision(16) << dbl
+                << ", i*10^2=" << scaled_int << ")";
+    }
+    std::cout << "\n";
+  }
+}
+// [END spanner_query_data_with_numeric]
 
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
@@ -2871,6 +2930,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
+      make_command_entry("query-data-with-numeric", QueryDataWithNumeric),
       make_command_entry("read-only-transaction", ReadOnlyTransaction),
       make_command_entry("read-stale-data", ReadStaleData),
       make_command_entry("use-partition-query", UsePartitionQuery),
@@ -3131,10 +3191,13 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_create_database sample" << std::endl;
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning spanner_create_table_with_datatypes sample"
-            << std::endl;
-  CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
-                           database_id);
+  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_create_table_with_datatypes sample"
+              << std::endl;
+    CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
+                             database_id);
+  }
 
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample"
             << std::endl;
@@ -3196,39 +3259,43 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_update_data sample" << std::endl;
   UpdateData(client);
 
-  std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
-  InsertDatatypesData(client);
+  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
+    InsertDatatypesData(client);
 
-  std::cout << "\nRunning spanner_query_with_array_parameter sample"
-            << std::endl;
-  QueryWithArrayParameter(client);
+    std::cout << "\nRunning spanner_query_with_array_parameter sample"
+              << std::endl;
+    QueryWithArrayParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_bool_parameter sample"
-            << std::endl;
-  QueryWithBoolParameter(client);
+    std::cout << "\nRunning spanner_query_with_bool_parameter sample"
+              << std::endl;
+    QueryWithBoolParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
-            << std::endl;
-  QueryWithBytesParameter(client);
+    std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
+              << std::endl;
+    QueryWithBytesParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_date_parameter sample"
-            << std::endl;
-  QueryWithDateParameter(client);
+    std::cout << "\nRunning spanner_query_with_date_parameter sample"
+              << std::endl;
+    QueryWithDateParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_float_parameter sample"
-            << std::endl;
-  QueryWithFloatParameter(client);
+    std::cout << "\nRunning spanner_query_with_float_parameter sample"
+              << std::endl;
+    QueryWithFloatParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_int_parameter sample" << std::endl;
-  QueryWithIntParameter(client);
+    std::cout << "\nRunning spanner_query_with_int_parameter sample"
+              << std::endl;
+    QueryWithIntParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_string_parameter sample"
-            << std::endl;
-  QueryWithStringParameter(client);
+    std::cout << "\nRunning spanner_query_with_string_parameter sample"
+              << std::endl;
+    QueryWithStringParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
-            << std::endl;
-  QueryWithTimestampParameter(client);
+    std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
+              << std::endl;
+    QueryWithTimestampParameter(client);
+  }
 
   std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample"
             << std::endl;
@@ -3241,6 +3308,13 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_query_data_with_timestamp_column sample"
             << std::endl;
   QueryDataWithTimestamp(client);
+
+  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_query_data_with_numeric sample"
+              << std::endl;
+    QueryDataWithNumeric(client);
+  }
 
   std::cout << "\nRunning spanner_read_only_transaction sample" << std::endl;
   ReadOnlyTransaction(client);
@@ -3386,7 +3460,11 @@ void RunAll(bool emulator) {
   DeleteData(client);
 
   std::cout << "\nDeleting all data to run the mutation examples" << std::endl;
-  DeleteAll(client);
+  if (!emulator) {
+    DeleteAll(client);
+  } else {
+    DeleteAllEmulator(client);
+  }
 
   std::cout << "\nRunning the insert-mutation-builder example" << std::endl;
   InsertMutationBuilder(client);
@@ -3421,7 +3499,11 @@ void RunAll(bool emulator) {
   MakeDeleteMutation(client);
 
   std::cout << "\nRunning spanner_drop_database sample" << std::endl;
-  DeleteAll(client);
+  if (!emulator) {
+    DeleteAll(client);
+  } else {
+    DeleteAllEmulator(client);
+  }
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 }
 
