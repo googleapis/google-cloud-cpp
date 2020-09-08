@@ -17,9 +17,11 @@
 
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/application_callback.h"
+#include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_options.h"
 #include "google/cloud/pubsub/version.h"
@@ -83,9 +85,15 @@ class SubscriberConnection {
  *
  * @param options (optional) configure the `SubscriberConnection` created by
  *     this function.
+ * @param retry_policy control for how long (or how many times) are retryable
+ *     RPCs attempted.
+ * @param backoff_policy controls the backoff behavior between retry attempts,
+ *     typically some form of exponential backoff with jitter.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    ConnectionOptions options = {});
+    ConnectionOptions options = {},
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
@@ -94,7 +102,9 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub, pubsub::ConnectionOptions options);
+    std::shared_ptr<SubscriberStub> stub, pubsub::ConnectionOptions options,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

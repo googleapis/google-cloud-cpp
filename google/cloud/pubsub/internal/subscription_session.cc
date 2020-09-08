@@ -76,10 +76,13 @@ class SubscriptionSessionImpl {
 future<Status> CreateSubscriptionSession(
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor,
-    pubsub::SubscriberConnection::SubscribeParams p) {
+    pubsub::SubscriberConnection::SubscribeParams p,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
-      executor, stub, std::move(p.full_subscription_name));
+      executor, stub, std::move(p.full_subscription_name),
+      std::move(retry_policy), std::move(backoff_policy));
   auto lease_management = SubscriptionLeaseManagement::Create(
       executor, shutdown_manager, std::move(batch),
       p.options.max_deadline_time());
@@ -92,10 +95,23 @@ future<Status> CreateSubscriptionSession(
 future<Status> CreateTestingSubscriptionSession(
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor,
-    pubsub::SubscriberConnection::SubscribeParams p) {
+    pubsub::SubscriberConnection::SubscribeParams p,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  if (!retry_policy) {
+    retry_policy = pubsub::LimitedErrorCountRetryPolicy(3).clone();
+  }
+  if (!backoff_policy) {
+    using us = std::chrono::microseconds;
+    backoff_policy =
+        pubsub::ExponentialBackoffPolicy(
+            /*initial_delay=*/us(10), /*maximum_delay=*/us(20), /*scaling=*/2.0)
+            .clone();
+  }
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
-      executor, stub, std::move(p.full_subscription_name));
+      executor, stub, std::move(p.full_subscription_name),
+      std::move(retry_policy), std::move(backoff_policy));
 
   auto cq = executor;  // need a copy to make it mutable
   auto timer = [cq](std::chrono::system_clock::time_point) mutable {

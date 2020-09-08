@@ -13,11 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_subscription_batch_source.h"
+#include "google/cloud/internal/async_retry_loop.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+using google::cloud::internal::AsyncRetryLoop;
+using google::cloud::internal::Idempotency;
 
 void DefaultSubscriptionBatchSource::Shutdown() {}
 
@@ -26,8 +30,16 @@ future<Status> DefaultSubscriptionBatchSource::AckMessage(
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   request.add_ack_ids(ack_id);
-  return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
-                                 request);
+  auto& stub = stub_;
+  return AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::AcknowledgeRequest const& request) {
+        return stub->AsyncAcknowledge(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 future<Status> DefaultSubscriptionBatchSource::NackMessage(
@@ -36,8 +48,16 @@ future<Status> DefaultSubscriptionBatchSource::NackMessage(
   request.set_subscription(subscription_full_name_);
   request.add_ack_ids(ack_id);
   request.set_ack_deadline_seconds(0);
-  return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  auto& stub = stub_;
+  return AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+        return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 future<Status> DefaultSubscriptionBatchSource::BulkNack(
@@ -48,8 +68,16 @@ future<Status> DefaultSubscriptionBatchSource::BulkNack(
     request.add_ack_ids(std::move(id));
   }
   request.set_ack_deadline_seconds(0);
-  return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  auto& stub = stub_;
+  return AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+        return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 future<Status> DefaultSubscriptionBatchSource::ExtendLeases(
@@ -67,17 +95,34 @@ future<Status> DefaultSubscriptionBatchSource::ExtendLeases(
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(actual_extension.count()));
   for (auto& a : ack_ids) request.add_ack_ids(std::move(a));
-  return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  auto& stub = stub_;
+  return AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+        return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 future<StatusOr<google::pubsub::v1::PullResponse>>
 DefaultSubscriptionBatchSource::Pull(std::int32_t max_count) {
-  auto context = absl::make_unique<grpc::ClientContext>();
   google::pubsub::v1::PullRequest request;
   request.set_subscription(subscription_full_name_);
   request.set_max_messages(max_count);
-  return stub_->AsyncPull(cq_, std::move(context), request);
+
+  auto& stub = stub_;
+  return AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::PullRequest const& request) {
+        return stub->AsyncPull(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
