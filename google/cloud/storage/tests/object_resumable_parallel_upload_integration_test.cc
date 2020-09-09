@@ -38,6 +38,8 @@ using ObjectResumableParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
+  // TODO(b/146890058) - reenable the test for gRPC
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -79,6 +81,8 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
 }
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
+  // TODO(b/146890058) - reenable the test for gRPC
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -107,6 +111,7 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), IfGenerationMatch(0),
       UseResumableUploadSession(resumable_session_id));
+  ASSERT_STATUS_OK(object_metadata);
 
   auto stream =
       client->ReadObject(bucket_name_, dest_object_name,

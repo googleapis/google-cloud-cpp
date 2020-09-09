@@ -180,50 +180,62 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   fi
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
+    force_on_prod() {
+      echo "${FORCE_TEST_IN_PRODUCTION:-}" | grep -qw "$1"
+    }
+
     readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
 
-    echo
-    io::log_yellow "running pusub integration tests via CTest+Emulator"
-    echo
-    "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
-
-    # TODO(#441) - remove the for loops below.
-    # Sometimes the integration tests manage to crash the Bigtable emulator.
-    # Manually restarting the build clears up the problem, but that is just a
-    # waste of everybody's time. Use a (short) timeout to run the test and try
-    # 3 times.
-    set +e
-    success=no
-    for attempt in 1 2 3; do
+    if ! force_on_prod "pubsub"; then
       echo
-      io::log_yellow "running bigtable integration tests via CTest [${attempt}]"
+      io::log_yellow "running pusub integration tests via CTest+Emulator"
       echo
-      # TODO(#441) - when the emulator crashes the tests can take a long time.
-      # The slowest test normally finishes in about 6 seconds, 60 seems safe.
-      if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator --timeout 60; then
-        success=yes
-        break
-      fi
-    done
-    if [[ "${success}" != "yes" ]]; then
-      io::log_red "integration tests failed multiple times, aborting tests."
-      exit 1
+      "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
     fi
-    set -e
 
-    echo
-    io::log_yellow "running storage integration tests via CTest+Emulator"
-    echo
-    "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+    if ! force_on_prod "bigtable"; then
+      # TODO(#441) - remove the for loops below.
+      # Sometimes the integration tests manage to crash the Bigtable emulator.
+      # Manually restarting the build clears up the problem, but that is just a
+      # waste of everybody's time. Use a (short) timeout to run the test and try
+      # 3 times.
+      set +e
+      success=no
+      for attempt in 1 2 3; do
+        echo
+        io::log_yellow "running bigtable integration tests via CTest [${attempt}]"
+        echo
+        # TODO(#441) - when the emulator crashes the tests can take a long time.
+        # The slowest test normally finishes in about 6 seconds, 60 seems safe.
+        if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+          "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator --timeout 60; then
+          success=yes
+          break
+        fi
+      done
+      if [[ "${success}" != "yes" ]]; then
+        io::log_red "integration tests failed multiple times, aborting tests."
+        exit 1
+      fi
+      set -e
+    fi
 
-    echo
-    io::log_yellow "running spanner integration tests via CTest+Emulator"
-    echo
-    "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-      "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+    if ! force_on_prod "storage"; then
+      echo
+      io::log_yellow "running storage integration tests via CTest+Emulator"
+      echo
+      "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+    fi
+
+    if ! force_on_prod "spanner"; then
+      echo
+      io::log_yellow "running spanner integration tests via CTest+Emulator"
+      echo
+      "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+    fi
 
     echo
     io::log_yellow "running generator integration tests via CTest"
@@ -261,6 +273,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     export GOOGLE_APPLICATION_CREDENTIALS
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 
     # Changing the PATH disables the Bazel cache, so use an absolute path.
@@ -309,6 +323,36 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     ctest_args+=(-E "^bigtable_")
     env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
       -L integration-test-production
+
+    if force_on_prod "pubsub"; then
+      echo
+      io::log_yellow "running PubSub emulator integration tests on production"
+      echo
+      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+        -L integration-test-emulator -R "^pubsub_"
+    fi
+    if force_on_prod "bigtable"; then
+      echo
+      io::log_yellow "running Bigtable emulator integration tests on production"
+      echo
+      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+        -L integration-test-emulator -R "^storage_"
+    fi
+    if force_on_prod "storage"; then
+      echo
+      io::log_yellow "running storage emulator integration tests on production"
+      echo
+      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+        -L integration-test-emulator -R "^storage_" \
+        -E "(storage_service_account_samples|service_account_integration_test)"
+    fi
+    if force_on_prod "spanner"; then
+      echo
+      io::log_yellow "running Spanner emulator integration tests on production"
+      echo
+      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+        -L integration-test-emulator -R "^spanner_"
+    fi
 
     echo "================================================================"
     io::log_yellow "Completed the integration tests against production"

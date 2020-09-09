@@ -244,6 +244,16 @@ elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-cmake.sh"
+elif [[ "${BUILD_NAME}" = "gcs-grpc" ]]; then
+  # Test if GCS over gRPC works.
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
+  # Integration tests were explicitly requested.
+  RUN_INTEGRATION_TESTS="yes"
+  GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Test gRPC data plane
+  # Run all GCS tests on prod - the emulator doesn't support gRPC
+  FORCE_TEST_IN_PRODUCTION="storage"
+  in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-cmake.sh"
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
@@ -447,6 +457,15 @@ docker_flags=(
 
   # If set to 'no', skip the integration tests.
   "--env" "RUN_INTEGRATION_TESTS=${RUN_INTEGRATION_TESTS:-}"
+
+  # Comma-separated list of components whose integration tests should be run
+  # against production even if they're tagged as for the emulator.
+  "--env" "FORCE_TEST_IN_PRODUCTION=${FORCE_TEST_IN_PRODUCTION:-}"
+
+  # GCS tests may use gRPC for parts of the protocol. This variable controls it.
+  # Setting it to 'media' will use gRPC for the data plane. Setting it to
+  # 'metadata' will use gRPC for everything.
+  "--env" "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
 
   # The Bigtable Admin integration tests can only run in nightly builds, the
   # quota (as in calls per day) is too restrictive to run more often.

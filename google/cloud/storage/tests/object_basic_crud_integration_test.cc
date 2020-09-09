@@ -22,6 +22,10 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <memory>
+#include <regex>
 #include <string>
 
 namespace google {
@@ -67,7 +71,24 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       bucket_name_, object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
-  EXPECT_EQ(*get_meta, *insert_meta);
+
+  if (UsingGrpc()) {
+    // The metadata returned by gRPC (InsertObject) doesn't contain `media_link`
+    // and `self_link`. The easiest way to do the comparison is by replacing the
+    // relevant parts in the string representations.
+
+    std::stringstream get_meta_stream;
+    get_meta_stream << *get_meta;
+    std::string get_meta_rep =
+        std::regex_replace(get_meta_stream.str(),
+                           std::regex("(media|self)_link=[^,)}]*"), "$1_link=");
+    std::stringstream insert_meta_stream;
+    insert_meta_stream << *insert_meta;
+    std::string insert_meta_rep = insert_meta_stream.str();
+    EXPECT_EQ(get_meta_rep, insert_meta_rep);
+  } else {
+    EXPECT_EQ(*get_meta, *insert_meta);
+  }
 
   ObjectMetadata update = *get_meta;
   update.mutable_acl().emplace_back(
