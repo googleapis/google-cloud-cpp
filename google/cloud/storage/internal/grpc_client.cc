@@ -1198,6 +1198,13 @@ google::storage::v1::CommonEnums::PredefinedBucketAcl GrpcClient::ToProtoBucket(
 
 google::storage::v1::CommonEnums::PredefinedObjectAcl GrpcClient::ToProtoObject(
     PredefinedAcl const& acl) {
+  if (acl.value() == PredefinedAcl::BucketOwnerFullControl().value()) {
+    return google::storage::v1::CommonEnums::
+        OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL;
+  }
+  if (acl.value() == PredefinedAcl::BucketOwnerRead().value()) {
+    return google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_READ;
+  }
   if (acl.value() == PredefinedAcl::AuthenticatedRead().value()) {
     return google::storage::v1::CommonEnums::OBJECT_ACL_AUTHENTICATED_READ;
   }
