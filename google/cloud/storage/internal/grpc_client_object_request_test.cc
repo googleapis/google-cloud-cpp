@@ -230,6 +230,25 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientObjectRequest, ResumableUploadRequestContentLength) {
+  google::storage::v1::StartResumableWriteRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+      insert_object_spec: {
+          resource: {
+            name: "test-object"
+            bucket: "test-bucket"
+            size: 3
+          }
+      })""",
+                                                            &expected));
+
+  ResumableUploadRequest req("test-bucket", "test-object");
+  req.set_multiple_options(UploadContentLength(3));
+
+  auto actual = GrpcClient::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
   google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(

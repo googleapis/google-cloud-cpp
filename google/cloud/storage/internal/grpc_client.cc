@@ -1411,6 +1411,10 @@ google::storage::v1::StartResumableWriteRequest GrpcClient::ToProto(
   SetProjection(object_spec, request);
   SetCommonParameters(result, request);
   SetCommonObjectParameters(result, request);
+  if (request.HasOption<UploadContentLength>()) {
+    // TODO(5032): make sure it actually works when implemented in service
+    resource.set_size(request.GetOption<UploadContentLength>().value());
+  }
 
   resource.set_bucket(request.bucket_name());
   resource.set_name(request.object_name());
