@@ -1655,7 +1655,7 @@ template&lt;typename T &gt; </div>
 <p>Factory to construct a "null" <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html" title="The Value class represents a type-safe, nullable Spanner value.">Value</a> of the specified type <code>T</code>. </p>
 <p>This is equivalent to passing an <code>absl::optional&lt;T&gt;</code> without a value to the constructor, though this factory may be easier to invoke and result in clearer code at the call site. </p>
 
-<p class="definition">Definition at line <a class="el" href="value_8h_source.html#l00661">661</a> of file <a class="el" href="value_8h_source.html">value.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="value_8h_source.html#l00659">659</a> of file <a class="el" href="value_8h_source.html">value.h</a>.</p>
 
 </div>
 </div>
@@ -1690,7 +1690,7 @@ template&lt;typename T , typename std::enable_if&lt; std::numeric_limits&lt; T &
 <p>Construction from an integer <code>i</code>, scaled by 10^<code>exponent</code>. </p>
 <p>Fails on any (scaled) argument outside the NUMERIC value range. </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00172">172</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00170">170</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
 
 </div>
 </div>
@@ -3032,7 +3032,7 @@ template&lt;typename Tuple , typename RowRange &gt; </div>
 <p>Conversion to the closest double value, with possible loss of precision. </p>
 <p>Always succeeds (i.e., can never overflow, assuming a double can hold values up to 10^(kIntPrec+1)). </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00182">182</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00180">180</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
 
 </div>
 </div>
@@ -3068,7 +3068,7 @@ template&lt;typename T , typename std::enable_if&lt; std::numeric_limits&lt; T &
 <p>Rounds halfway cases away from zero. Fails when the destination type cannot hold that value.</p>
 <dl class="section user"><dt>Example</dt><dd></dd></dl>
 <div class="fragment"><div class="line">spanner::Numeric n = spanner::MakeNumeric(123456789, -2).value();</div><div class="line">assert(n.ToString() == <span class="stringliteral">&quot;1234567.89&quot;</span>);</div><div class="line">assert(spanner::ToInteger&lt;int&gt;(n).value() == 1234568);</div><div class="line">assert(spanner::ToInteger&lt;int&gt;(n, 2).value() == 123456789);</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00206">206</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="numeric_8h_source.html#l00204">204</a> of file <a class="el" href="numeric_8h_source.html">numeric.h</a>.</p>
 
 </div>
 </div>
