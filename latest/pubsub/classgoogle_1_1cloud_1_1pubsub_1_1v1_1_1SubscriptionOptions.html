@@ -111,6 +111,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a112e06f9296080a9d64e840fdacb0f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d452cdade021e24b70a39692d69c3cb"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#a8d452cdade021e24b70a39692d69c3cb">concurrency_hwm</a> () const</td></tr>
 <tr class="separator:a8d452cdade021e24b70a39692d69c3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb243c4b0dc5d8267d7f98284b41c1f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html">SubscriptionOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#acb243c4b0dc5d8267d7f98284b41c1f0">set_shutdown_polling_period</a> (std::chrono::milliseconds v)</td></tr>
+<tr class="memdesc:acb243c4b0dc5d8267d7f98284b41c1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control how often the session polls for automatic shutdowns.  <a href="#acb243c4b0dc5d8267d7f98284b41c1f0">More...</a><br /></td></tr>
+<tr class="separator:acb243c4b0dc5d8267d7f98284b41c1f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62393d40ff90a11395e1616776e23b18"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html#a62393d40ff90a11395e1616776e23b18">shutdown_polling_period</a> () const</td></tr>
+<tr class="separator:a62393d40ff90a11395e1616776e23b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configure how a subscription handles incoming messages. </p>
@@ -504,6 +509,64 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="subscription__options_8cc_source.html#l00030">30</a> of file <a class="el" href="subscription__options_8cc_source.html">subscription_options.cc</a>.</p>
+
+</div>
+</div>
+<a id="acb243c4b0dc5d8267d7f98284b41c1f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb243c4b0dc5d8267d7f98284b41c1f0">&#9670;&nbsp;</a></span>set_shutdown_polling_period()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionOptions.html">SubscriptionOptions</a>&amp; google::cloud::pubsub::v1::SubscriptionOptions::set_shutdown_polling_period </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Control how often the session polls for automatic shutdowns. </p>
+<p>Applications can shutdown a session by calling <code>.cancel()</code> on the returned <code>future&lt;Status&gt;</code>. In addition, applications can fire &amp; forget a session, which is only shutdown once the completion queue servicing the session shuts down. In this latter case the session polls periodically to detect if the CQ has shutdown. This controls how often this polling happens. </p>
+
+<p class="definition">Definition at line <a class="el" href="subscription__options_8h_source.html#l00200">200</a> of file <a class="el" href="subscription__options_8h_source.html">subscription_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a62393d40ff90a11395e1616776e23b18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62393d40ff90a11395e1616776e23b18">&#9670;&nbsp;</a></span>shutdown_polling_period()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds google::cloud::pubsub::v1::SubscriptionOptions::shutdown_polling_period </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__options_8h_source.html#l00205">205</a> of file <a class="el" href="subscription__options_8h_source.html">subscription_options.h</a>.</p>
 
 </div>
 </div>

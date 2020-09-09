@@ -46,6 +46,7 @@ var searchData=
   ['subscription_5flease_5fmanagement_2ecc',['subscription_lease_management.cc',['../subscription__lease__management_8cc.html',1,'']]],
   ['subscription_5flease_5fmanagement_2eh',['subscription_lease_management.h',['../subscription__lease__management_8h.html',1,'']]],
   ['subscription_5flease_5fmanagement_5ftest_2ecc',['subscription_lease_management_test.cc',['../subscription__lease__management__test_8cc.html',1,'']]],
+  ['subscription_5flifecycle_5ftest_2ecc',['subscription_lifecycle_test.cc',['../subscription__lifecycle__test_8cc.html',1,'']]],
   ['subscription_5fmessage_5fqueue_2ecc',['subscription_message_queue.cc',['../subscription__message__queue_8cc.html',1,'']]],
   ['subscription_5fmessage_5fqueue_2eh',['subscription_message_queue.h',['../subscription__message__queue_8h.html',1,'']]],
   ['subscription_5fmessage_5fqueue_5ftest_2ecc',['subscription_message_queue_test.cc',['../subscription__message__queue__test_8cc.html',1,'']]],
