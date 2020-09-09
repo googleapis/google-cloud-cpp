@@ -32,12 +32,13 @@
 
 // Abort compilation if the compiler does not support C++11.
 #ifndef _MSC_VER
-// Microsoft Visual Studio does not define __cplusplus correctly for C++11.
+// Microsoft Visual Studio does not define __cplusplus correctly:
+// https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus
 #  if __cplusplus < 201103L
-#    error "Bigtable C++ Client requires C++11"
+#    error "C++11 or newer is required"
 #  endif  // __cplusplus < 201103L
 #elif _MSC_VER < 1900
-#  error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
+#  error "C++11 or newer is required, your version of MSVC is too old"
 #endif  // _MSC_VER
 
 // Abort the build if the version of the compiler is too old. With CMake we
