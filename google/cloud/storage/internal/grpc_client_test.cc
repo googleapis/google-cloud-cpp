@@ -292,6 +292,11 @@ TEST(GrpcClientToProto, PredefinedAclObject) {
             GrpcClient::ToProtoObject(PredefinedAcl::PublicRead()));
   EXPECT_EQ(storage_proto::CommonEnums::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
             GrpcClient::ToProtoObject(PredefinedAcl::PublicReadWrite()));
+  EXPECT_EQ(
+      google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
+      GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerFullControl()));
+  EXPECT_EQ(google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_READ,
+            GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
 }
 
 TEST(GrpcClientToProto, PredefinedDefaultObjectAcl) {
