@@ -24,7 +24,11 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <map>
+#include <condition_variable>
+#include <mutex>
+#include <set>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

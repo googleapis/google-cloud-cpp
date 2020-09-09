@@ -19,6 +19,6 @@
 pubsub_client_integration_tests = [
     "message_integration_test.cc",
     "subscription_admin_integration_test.cc",
-    "subscription_lifecycle.cc",
+    "subscription_lifecycle_test.cc",
     "topic_admin_integration_test.cc",
 ]

@@ -106,8 +106,8 @@ class SubscriptionSessionImpl
     lk.unlock();
     auto t = cq_.MakeRelativeTimer(shutdown_polling_period_)
                  .then([self](TimerArg f) { self->OnTimer(!f.get().ok()); });
-    if (shutdown_state_ == kShutdownByCompletionQueue) return;
     lk.lock();
+    if (shutdown_state_ == kShutdownByCompletionQueue) return;
     timer_ = std::move(t);
   }
 

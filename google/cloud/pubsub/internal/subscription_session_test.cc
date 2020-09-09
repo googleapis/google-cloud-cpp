@@ -705,7 +705,6 @@ TEST(SubscriptionSessionTest, FireAndForget) {
     std::unique_lock<std::mutex> lk(mu);
     EXPECT_STATUS_OK(status);
   }
-  SUCCEED();
 }
 
 }  // namespace
