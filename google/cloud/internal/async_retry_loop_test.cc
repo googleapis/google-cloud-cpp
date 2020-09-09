@@ -14,8 +14,10 @@
 
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <deque>
 
 namespace google {
 namespace cloud {
@@ -45,6 +47,48 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
                                   std::chrono::microseconds(5), 2.0)
       .clone();
 }
+
+class AsyncRetryLoopCancelTest : public ::testing::Test {
+ protected:
+  int CancelCount() {
+    std::lock_guard<std::mutex> lk(mu_);
+    int n = cancel_count_;
+    cancel_count_ = 0;
+    return n;
+  }
+
+  future<StatusOr<int>> SimulateRequest(int x) {
+    promise<Status> p([this] {
+      std::lock_guard<std::mutex> lk(mu_);
+      ++cancel_count_;
+    });
+    auto f = p.get_future().then([x](future<Status> g) -> StatusOr<int> {
+      auto status = g.get();
+      if (!status.ok()) return status;
+      return 2 * x;
+    });
+    std::lock_guard<std::mutex> lk(mu_);
+    requests_.push_back(std::move(p));
+    cv_.notify_one();
+    return f;
+  }
+
+  promise<Status> WaitForRequest() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&] { return !requests_.empty(); });
+    auto p = std::move(requests_.front());
+    requests_.pop_front();
+    return p;
+  }
+
+ private:
+  // We will simulate the asynchronous requests by pushing promises into this
+  // queue. The test pulls element from the queue to verify the work.
+  std::mutex mu_;
+  std::condition_variable cv_;
+  std::deque<promise<Status>> requests_;
+  int cancel_count_ = 0;
+};
 
 TEST(AsyncRetryLoopTest, Success) {
   AutomaticallyCreatedBackgroundThreads background;
@@ -216,6 +260,128 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
                        AllOf(HasSubstr("test-message-try-again"),
                              HasSubstr("Retry policy exhausted"),
                              HasSubstr("test-location"))));
+}
+
+TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
+  using ms = std::chrono::milliseconds;
+
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
+
+  AutomaticallyCreatedBackgroundThreads background;
+  future<StatusOr<int>> actual = AsyncRetryLoop(
+      LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+      ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone(),
+      Idempotency::kIdempotent, background.cq(),
+      [this](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>,
+             int x) { return SimulateRequest(x); },
+      42, "test-location");
+
+  // First simulate a regular request.
+  auto p = WaitForRequest();
+  p.set_value(transient);
+  p = WaitForRequest();
+  EXPECT_EQ(0, CancelCount());
+  actual.cancel();
+  EXPECT_EQ(1, CancelCount());
+  p.set_value({});
+  auto value = actual.get();
+  ASSERT_THAT(value, StatusIs(StatusCode::kOk));
+  EXPECT_EQ(84, *value);
+}
+
+TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
+  using ms = std::chrono::milliseconds;
+
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
+
+  AutomaticallyCreatedBackgroundThreads background;
+  future<StatusOr<int>> actual = AsyncRetryLoop(
+      LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+      ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone(),
+      Idempotency::kIdempotent, background.cq(),
+      [this](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>,
+             int x) { return SimulateRequest(x); },
+      42, "test-location");
+
+  // First simulate a regular request.
+  auto p = WaitForRequest();
+  p.set_value(transient);
+  p = WaitForRequest();
+  EXPECT_EQ(0, CancelCount());
+  actual.cancel();
+  EXPECT_EQ(1, CancelCount());
+  p.set_value(transient);
+  auto value = actual.get();
+  EXPECT_THAT(value, StatusIs(StatusCode::kUnavailable,
+                              AllOf(HasSubstr("try-again"),
+                                    HasSubstr("Retry loop cancelled"),
+                                    HasSubstr("test-location"))));
+}
+
+TEST_F(AsyncRetryLoopCancelTest, CancelDuringTimer) {
+  using ms = std::chrono::milliseconds;
+
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
+
+  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  google::cloud::CompletionQueue cq(fake);
+  future<StatusOr<int>> actual = AsyncRetryLoop(
+      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
+      ExponentialBackoffPolicy(ms(2000), ms(8000), 2.0).clone(),
+      Idempotency::kIdempotent, cq,
+      [this](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>,
+             int x) { return SimulateRequest(x); },
+      42, "test-location");
+
+  // First simulate a regular request.
+  auto p = WaitForRequest();
+  p.set_value(transient);
+  // At this point there is a timer in the completion queue, cancel the call and
+  // simulate a cancel for the timer.
+  EXPECT_EQ(0, CancelCount());
+  actual.cancel();
+  EXPECT_EQ(0, CancelCount());
+  fake->SimulateCompletion(/*ok=*/false);
+  // the retry loop should *not* create any more calls, the value should be
+  // available immediately.
+  auto value = actual.get();
+  EXPECT_THAT(value, StatusIs(StatusCode::kUnavailable,
+                              AllOf(HasSubstr("try-again"),
+                                    HasSubstr("Retry loop cancelled"),
+                                    HasSubstr("test-location"))));
+}
+
+TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
+  using ms = std::chrono::milliseconds;
+
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
+
+  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  google::cloud::CompletionQueue cq(fake);
+  future<StatusOr<int>> actual = AsyncRetryLoop(
+      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
+      ExponentialBackoffPolicy(ms(2000), ms(8000), 2.0).clone(),
+      Idempotency::kIdempotent, cq,
+      [this](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>,
+             int x) { return SimulateRequest(x); },
+      42, "test-location");
+
+  // First simulate a regular request.
+  auto p = WaitForRequest();
+  p.set_value(transient);
+  // At this point there is a timer in the completion queue, simulate a
+  // CancelAll() + Shutdown().
+  fake->CancelAll();
+  fake->Shutdown();
+  // the retry loop should exit
+  auto value = actual.get();
+  EXPECT_THAT(value, StatusIs(StatusCode::kCancelled,
+                              AllOf(HasSubstr("Timer failure in"),
+                                    HasSubstr("test-location"))));
 }
 
 }  // namespace
