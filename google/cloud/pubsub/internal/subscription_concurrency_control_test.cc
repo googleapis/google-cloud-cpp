@@ -353,7 +353,10 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     auto uut = SubscriptionConcurrencyControl::Create(
         background.cq(), shutdown, source,
         /*message_count_lwm=*/0, /*message_count_hwm=*/4);
-    promise<Status> p([uut] { uut->Shutdown(); });
+    promise<Status> p([shutdown, uut] {
+      shutdown->MarkAsShutdown("test-function-", {});
+      uut->Shutdown();
+    });
 
     auto f = shutdown->Start(std::move(p));
     uut->Start(std::move(handler));
