@@ -15,7 +15,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
@@ -30,7 +30,7 @@ namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::StrictMock;
@@ -88,7 +88,7 @@ TEST(CompletionQueueTest, TimerSmokeTest) {
 }
 
 TEST(CompletionQueueTest, MockSmokeTest) {
-  auto mock = std::make_shared<MockCompletionQueue>();
+  auto mock = std::make_shared<FakeCompletionQueueImpl>();
 
   CompletionQueue cq(mock);
   using ms = std::chrono::milliseconds;
@@ -165,7 +165,7 @@ TEST(CompletionQueueTest, CanCancelAllEvents) {
 TEST(CompletionQueueTest, MakeUnaryRpc) {
   using ms = std::chrono::milliseconds;
 
-  auto mock_cq = std::make_shared<MockCompletionQueue>();
+  auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
   auto mock_reader = absl::make_unique<MockTableReader>();
@@ -215,7 +215,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
 }
 
 TEST(CompletionQueueTest, MakeStreamingReadRpc) {
-  auto mock_cq = std::make_shared<MockCompletionQueue>();
+  auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
   auto mock_reader = absl::make_unique<MockRowReader>();
@@ -278,7 +278,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
 TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
   using ms = std::chrono::milliseconds;
 
-  auto mock_cq = std::make_shared<MockCompletionQueue>();
+  auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
   // Use `StrictMock` to enforce that there are no calls made on the client.
@@ -353,7 +353,7 @@ TEST(CompletionQueueTest, RunAsyncVoid) {
 }
 
 TEST(CompletionQueueTest, RunAsyncCompletionQueueDestroyed) {
-  auto cq_impl = std::make_shared<MockCompletionQueue>();
+  auto cq_impl = std::make_shared<FakeCompletionQueueImpl>();
 
   std::promise<void> done_promise;
   {

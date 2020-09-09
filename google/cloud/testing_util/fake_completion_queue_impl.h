@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H
 
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
@@ -26,7 +26,7 @@ namespace testing_util {
 // Tests typically create an instance of this class, then create a
 // `google::cloud::bigtable::CompletionQueue` to wrap it, keeping a reference to
 // the instance to manipulate its state directly.
-class MockCompletionQueue
+class FakeCompletionQueueImpl
     : public google::cloud::internal::CompletionQueueImpl {
  public:
   std::unique_ptr<grpc::Alarm> CreateAlarm() const override {
@@ -46,4 +46,4 @@ class MockCompletionQueue
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_COMPLETION_QUEUE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H

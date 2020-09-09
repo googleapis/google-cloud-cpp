@@ -21,7 +21,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <future>
 #include <thread>
@@ -34,7 +34,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Return;
 
@@ -100,7 +100,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         shared_backoff_policy_mock_(
             absl::make_unique<SharedBackoffPolicyMock>()),
-        cq_impl_(new google::cloud::testing_util::MockCompletionQueue),
+        cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new testing::MockInstanceAdminClient),
         metadata_update_policy_("my_instance", MetadataParamTypes::NAME) {}
@@ -185,7 +185,8 @@ class AsyncMultipageFutureTest : public ::testing::Test {
  protected:
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<SharedBackoffPolicyMock> shared_backoff_policy_mock_;
-  std::shared_ptr<google::cloud::testing_util::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<google::cloud::testing_util::FakeCompletionQueueImpl>
+      cq_impl_;
   CompletionQueue cq_;
   std::shared_ptr<testing::MockInstanceAdminClient> client_;
   MetadataUpdatePolicy metadata_update_policy_;

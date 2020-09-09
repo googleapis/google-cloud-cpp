@@ -19,7 +19,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -36,7 +36,7 @@ namespace bt = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::WithParamInterface;
 
@@ -134,7 +134,7 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
 class MutationBatcherTest : public bigtable::testing::TableTestFixture {
  protected:
   MutationBatcherTest()
-      : cq_impl_(std::make_shared<MockCompletionQueue>()),
+      : cq_impl_(std::make_shared<FakeCompletionQueueImpl>()),
         cq_(cq_impl_),
         batcher_(new MutationBatcher(table_)) {}
 
@@ -248,7 +248,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
   std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
   std::unique_ptr<MutationBatcher> batcher_;
 };

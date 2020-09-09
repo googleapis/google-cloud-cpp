@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -33,7 +33,7 @@ namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::bigtable::v2::SampleRowKeysResponse;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::WithParamInterface;
 
@@ -59,7 +59,7 @@ class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
   auto client = std::make_shared<testing::MockAdminClient>();
-  auto cq_impl = std::make_shared<MockCompletionQueue>();
+  auto cq_impl = std::make_shared<FakeCompletionQueueImpl>();
   bigtable::CompletionQueue cq(cq_impl);
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
@@ -123,7 +123,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
  public:
   AsyncLongrunningOperationTest()
       : client_(std::make_shared<testing::MockAdminClient>()),
-        cq_impl_(std::make_shared<MockCompletionQueue>()),
+        cq_impl_(std::make_shared<FakeCompletionQueueImpl>()),
         cq_(cq_impl_),
         longrunning_reader_(absl::make_unique<MockAsyncLongrunningOpReader>()),
         context_(new grpc::ClientContext) {}
@@ -172,7 +172,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
   }
 
   std::shared_ptr<testing::MockAdminClient> client_;
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::unique_ptr<MockAsyncLongrunningOpReader> longrunning_reader_;
   std::unique_ptr<grpc::ClientContext> context_;

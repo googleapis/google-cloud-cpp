@@ -19,7 +19,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -33,7 +33,7 @@ namespace bigtable = google::cloud::bigtable;
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -645,7 +645,7 @@ using MockAsyncIamPolicyReader =
 class AsyncGetIamPolicyTest : public ::testing::Test {
  public:
   AsyncGetIamPolicyTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
@@ -677,7 +677,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         instance_admin.AsyncGetNativeIamPolicy(cq_, "test-instance");
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
@@ -1013,7 +1013,7 @@ using MockAsyncDeleteClusterReader =
 class AsyncDeleteClusterTest : public ::testing::Test {
  public:
   AsyncDeleteClusterTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncDeleteClusterReader) {
@@ -1043,7 +1043,7 @@ class AsyncDeleteClusterTest : public ::testing::Test {
         instance_admin.AsyncDeleteCluster(cq_, "test-instance", "the-cluster");
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::Status> user_future_;
@@ -1098,7 +1098,7 @@ using MockAsyncSetIamPolicyReader =
 class AsyncSetIamPolicyTest : public ::testing::Test {
  public:
   AsyncSetIamPolicyTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
@@ -1138,7 +1138,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
                             "test-tag", 0));
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
@@ -1259,7 +1259,7 @@ using MockAsyncTestIamPermissionsReader =
 class AsyncTestIamPermissionsTest : public ::testing::Test {
  public:
   AsyncTestIamPermissionsTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
@@ -1290,7 +1290,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
                                                           permissions);
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<std::vector<std::string>>>
@@ -1349,7 +1349,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
 class ValidContextMdAsyncTest : public ::testing::Test {
  public:
   ValidContextMdAsyncTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient) {
     EXPECT_CALL(*client_, project())
@@ -1369,7 +1369,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
               res.status().code());
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;

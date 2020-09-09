@@ -20,8 +20,8 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -39,8 +39,8 @@ namespace internal {
 namespace {
 
 using ::google::cloud::spanner_testing::FakeSteadyClock;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
-using ::google::cloud::testing_util::MockCompletionQueue;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
@@ -429,7 +429,7 @@ TEST(SessionPool, SessionRefresh) {
   auto db = Database("project", "instance", "database");
   SessionPoolOptions options;
   options.set_keep_alive_interval(std::chrono::seconds(1));
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   auto clock = std::make_shared<FakeSteadyClock>();
   auto pool =
       MakeSessionPool(db, {mock}, options, CompletionQueue(impl), clock);
