@@ -93,6 +93,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_common",
         "@com_github_grpc_grpc//:grpc++",
+        "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_googleapis//:googleapis_system_includes",

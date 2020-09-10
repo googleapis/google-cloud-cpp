@@ -22,6 +22,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/functional/function_ref.h"
 #include <grpcpp/alarm.h>
 #include <grpcpp/support/async_stream.h>
 #include <grpcpp/support/async_unary_call.h>
@@ -34,6 +35,12 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 class CompletionQueue;
 namespace internal {
 class CompletionQueueImpl;
+
+// Type erase the callables in RunAsync()
+struct RunAsyncBase {
+  virtual ~RunAsyncBase() = default;
+  virtual void exec() = 0;
+};
 
 /**
  * Represents an AsyncOperation which gRPC understands.
@@ -241,36 +248,19 @@ class CompletionQueueImpl {
   /// Cancel all existing operations.
   void CancelAll();
 
-  /// Create a new alarm object.
-  virtual std::unique_ptr<grpc::Alarm> CreateAlarm() const;
+  /// Create a new timer.
+  virtual future<StatusOr<std::chrono::system_clock::time_point>>
+  MakeDeadlineTimer(std::chrono::system_clock::time_point deadline);
+
+  /// Enqueue a new asynchronous function.
+  virtual void RunAsync(std::unique_ptr<RunAsyncBase> function);
 
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() { return cq_; }
 
   /// Atomically add a new operation to the completion queue and start it.
-  template <typename Callable,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<Callable, void*>::value,
-                int>::type = 0>
   void StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
-                      Callable&& start) {
-    void* tag = op.get();
-    std::unique_lock<std::mutex> lk(mu_);
-    if (shutdown_) {
-      lk.unlock();
-      op->Notify(/*ok=*/false);
-      return;
-    }
-    auto ins = pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag),
-                                    std::move(op));
-    if (ins.second) {
-      start(tag);
-      lk.unlock();
-      return;
-    }
-    google::cloud::internal::ThrowRuntimeError(
-        "assertion failure: insertion should succeed");
-  }
+                      absl::FunctionRef<void(void*)> start);
 
  protected:
   /// Return the asynchronous operation associated with @p tag.

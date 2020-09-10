@@ -26,13 +26,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
-// Type erase the callables in RunAsync()
-struct RunAsyncBase {
-  virtual ~RunAsyncBase() = default;
-  virtual void exec() = 0;
-};
-}  // namespace internal
 
 /**
  * Call the functor associated with asynchronous operations when they complete.
@@ -67,7 +60,9 @@ class CompletionQueue {
    *     Status if the timer did not run to expiration (e.g. it was cancelled).
    */
   google::cloud::future<StatusOr<std::chrono::system_clock::time_point>>
-  MakeDeadlineTimer(std::chrono::system_clock::time_point deadline);
+  MakeDeadlineTimer(std::chrono::system_clock::time_point deadline) {
+    return impl_->MakeDeadlineTimer(deadline);
+  }
 
   /**
    * Create a timer that fires after the @p duration.
@@ -201,7 +196,7 @@ class CompletionQueue {
       std::weak_ptr<internal::CompletionQueueImpl> impl_;
       absl::decay_t<Functor> fun_;
     };
-    RunAsyncImpl(
+    impl_->RunAsync(
         absl::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
   }
 
@@ -225,12 +220,10 @@ class CompletionQueue {
      private:
       absl::decay_t<Functor> fun_;
     };
-    RunAsyncImpl(absl::make_unique<Wrapper>(std::forward<Functor>(functor)));
+    impl_->RunAsync(absl::make_unique<Wrapper>(std::forward<Functor>(functor)));
   }
 
  private:
-  void RunAsyncImpl(std::unique_ptr<internal::RunAsyncBase>);
-
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
 

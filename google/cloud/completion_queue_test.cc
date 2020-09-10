@@ -33,6 +33,7 @@ namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::StrictMock;
 
 class MockClient {
@@ -65,6 +66,12 @@ class MockRowReader
   MOCK_METHOD1(ReadInitialMetadata, void(void*));
   MOCK_METHOD2(Read, void(btproto::ReadRowsResponse*, void*));
   MOCK_METHOD2(Finish, void(grpc::Status*, void*));
+};
+
+class MockOperation : public internal::AsyncGrpcOperation {
+ public:
+  MOCK_METHOD0(Cancel, void());
+  MOCK_METHOD1(Notify, bool(bool));
 };
 
 /// @test Verify that the basic functionality in a CompletionQueue works.
@@ -558,6 +565,27 @@ TEST(CompletionQueueTest, CancelTimerContinuation) {
   EXPECT_FALSE(status.ok()) << ", status=" << status;
   cq.Shutdown();
   t.join();
+}
+
+TEST(CompletionQueueTest, ImplStartOperationDuplicate) {
+  auto impl = std::make_shared<internal::CompletionQueueImpl>();
+  auto op = std::make_shared<MockOperation>();
+
+  impl->StartOperation(op, [](void*) {});
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        impl->StartOperation(op, [](void*) {});
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("duplicate operation"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(impl->StartOperation(op, [](void*) {}),
+                            "duplicate operation");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 }  // namespace

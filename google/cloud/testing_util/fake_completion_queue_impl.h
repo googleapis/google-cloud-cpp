@@ -15,8 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_FAKE_COMPLETION_QUEUE_IMPL_H
 
+#include "google/cloud/future.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -29,7 +32,9 @@ namespace testing_util {
 class FakeCompletionQueueImpl
     : public google::cloud::internal::CompletionQueueImpl {
  public:
-  std::unique_ptr<grpc::Alarm> CreateAlarm() const override;
+  future<StatusOr<std::chrono::system_clock::time_point>> MakeDeadlineTimer(
+      std::chrono::system_clock::time_point deadline) override;
+  void RunAsync(std::unique_ptr<internal::RunAsyncBase> function) override;
 
   using CompletionQueueImpl::empty;
   using CompletionQueueImpl::SimulateCompletion;
