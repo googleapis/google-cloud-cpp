@@ -23,21 +23,21 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace testing_util {
-
-namespace internal {
+namespace testing_util_internal {
 // Allows the matchers to work with `Status` or `StatusOr<T>`
-inline const ::google::cloud::Status& GetStatus(
-    const ::google::cloud::Status& status) {
+inline ::google::cloud::Status const& GetStatus(
+    ::google::cloud::Status const& status) {
   return status;
 }
 
 template <typename T>
-inline const ::google::cloud::Status& GetStatus(
-    const ::google::cloud::StatusOr<T>& status) {
+inline ::google::cloud::Status const& GetStatus(
+    ::google::cloud::StatusOr<T> const& status) {
   return status.status();
 }
-}  // namespace internal
+}  // namespace testing_util_internal
+
+namespace testing_util {
 
 /**
  * Match the `code` and `message` of a `google::cloud::Status`.
@@ -53,7 +53,7 @@ inline const ::google::cloud::Status& GetStatus(
 // NOLINTNEXTLINE(readability-redundant-string-init)
 MATCHER_P2(StatusIs, code_matcher, message_matcher, "") {
   ::testing::StringMatchResultListener code_listener;
-  auto const& status = ::google::cloud::testing_util::internal::GetStatus(arg);
+  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
   bool result = true;
   if (!::testing::MatcherCast<::google::cloud::StatusCode const&>(code_matcher)
            .MatchAndExplain(status.code(), &code_listener)) {
@@ -84,7 +84,7 @@ MATCHER_P2(StatusIs, code_matcher, message_matcher, "") {
 /// Match the `code` of a `google::cloud::Status`, disregarding the message
 // NOLINTNEXTLINE(readability-redundant-string-init)
 MATCHER_P(StatusIs, code_matcher, "") {
-  auto const& status = ::google::cloud::testing_util::internal::GetStatus(arg);
+  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
   return ::testing::MatcherCast<::google::cloud::Status const&>(
              StatusIs(code_matcher, ::testing::_))
       .MatchAndExplain(status, result_listener);
@@ -93,7 +93,7 @@ MATCHER_P(StatusIs, code_matcher, "") {
 /// Shorthand for `StatusIs(StatusCode::kOk)`
 // NOLINTNEXTLINE(readability-redundant-string-init)
 MATCHER(IsOk, "") {
-  auto const& status = ::google::cloud::testing_util::internal::GetStatus(arg);
+  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
   return ::testing::MatcherCast<::google::cloud::Status const&>(
              StatusIs(::google::cloud::StatusCode::kOk, ::testing::_))
       .MatchAndExplain(status, result_listener);

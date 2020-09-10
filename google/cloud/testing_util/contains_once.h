@@ -24,9 +24,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace testing_util {
-
-namespace internal {
+namespace testing_util_internal {
 
 template <typename Container>
 class ContainsOnceMatcherImpl : public ::testing::MatcherInterface<Container> {
@@ -84,7 +82,9 @@ class ContainsOnceMatcher {
   InnerMatcher const inner_matcher_;
 };
 
-}  // namespace internal
+}  // namespace testing_util_internal
+
+namespace testing_util {
 
 /**
  * Matches an STL-style container or a native array that contains exactly
@@ -101,9 +101,11 @@ class ContainsOnceMatcher {
  * @endcode
  */
 template <typename InnerMatcher>
-internal::ContainsOnceMatcher<typename std::decay<InnerMatcher>::type>
+testing_util_internal::ContainsOnceMatcher<
+    typename std::decay<InnerMatcher>::type>
 ContainsOnce(InnerMatcher&& inner_matcher) {
-  return internal::ContainsOnceMatcher<typename std::decay<InnerMatcher>::type>(
+  return testing_util_internal::ContainsOnceMatcher<
+      typename std::decay<InnerMatcher>::type>(
       std::forward<InnerMatcher>(inner_matcher));
 }
 
