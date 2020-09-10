@@ -16,8 +16,8 @@
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
-# TODO(#4878) - restore the version number in the documents
-set(DOXYGEN_PROJECT_NUMBER "0.0.0 (dev)") # "${GOOGLE_CLOUD_CPP_VERSION}")
+# TODO(#4878) - remove the Beta label
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION} (Beta)")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing")
