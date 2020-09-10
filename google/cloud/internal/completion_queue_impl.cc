@@ -15,6 +15,7 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/memory/memory.h"
+#include <sstream>
 
 // There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
@@ -177,15 +178,17 @@ void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
     op->Notify(/*ok=*/false);
     return;
   }
-  auto ins =
-      pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag), std::move(op));
+  auto const itag = reinterpret_cast<std::intptr_t>(tag);
+  auto ins = pending_ops_.emplace(itag, std::move(op));
   if (ins.second) {
     start(tag);
     lk.unlock();
     return;
   }
-  google::cloud::internal::ThrowRuntimeError(
-      "assertion failure: insertion should succeed");
+  std::ostringstream os;
+  os << "assertion failure: duplicate operation tag (" << itag << "),"
+     << "did you try to start the same asynchronous operation twice?";
+  google::cloud::internal::ThrowRuntimeError(std::move(os).str());
 }
 
 std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(
