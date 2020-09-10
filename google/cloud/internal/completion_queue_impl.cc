@@ -187,7 +187,9 @@ void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
   }
   std::ostringstream os;
   os << "assertion failure: duplicate operation tag (" << itag << "),"
-     << "did you try to start the same asynchronous operation twice?";
+     << " asynchronous operations should complete before they are rescheduled."
+     << " This might be a bug in the library, please report it at"
+     << " https://github.com/google-cloud-cpp/issues";
   google::cloud::internal::ThrowRuntimeError(std::move(os).str());
 }
 
