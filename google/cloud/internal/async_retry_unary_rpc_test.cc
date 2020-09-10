@@ -17,8 +17,8 @@
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -30,8 +30,8 @@ namespace internal {
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
-using ::google::cloud::testing_util::MockCompletionQueue;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
 using ::testing::HasSubstr;
@@ -102,7 +102,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
             btadmin::Table>>(reader.get());
       });
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(impl);
 
   // Do some basic initialization of the request to verify the values get
@@ -151,7 +151,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
             google::protobuf::Empty>>(reader.get());
       });
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(impl);
 
   // Do some basic initialization of the request to verify the values get
@@ -199,7 +199,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
             btadmin::Table>>(reader.get());
       });
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(impl);
 
   // Do some basic initialization of the request to verify the values get
@@ -268,7 +268,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
             grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(r3.get());
       });
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(impl);
 
   // Do some basic initialization of the request to verify the values get
@@ -331,7 +331,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
             google::protobuf::Empty>>(reader.get());
       });
 
-  auto impl = std::make_shared<MockCompletionQueue>();
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(impl);
 
   // Do some basic initialization of the request to verify the values get

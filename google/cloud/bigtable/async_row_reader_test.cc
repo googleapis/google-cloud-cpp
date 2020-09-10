@@ -20,7 +20,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -37,7 +37,7 @@ namespace btproto = google::bigtable::v2;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Values;
@@ -51,7 +51,7 @@ bool Unsatisfied(future<T> const& fut) {
 class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
  protected:
   TableAsyncReadRowsTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         stream_status_future_(stream_status_promise_.get_future()) {}
 
@@ -136,7 +136,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     }
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::vector<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>*>
       readers_;

@@ -20,7 +20,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -39,7 +39,7 @@ using ::testing::ReturnRef;
 using MockAsyncListInstancesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         btproto::ListInstancesResponse>;
-using google::cloud::testing_util::MockCompletionQueue;
+using google::cloud::testing_util::FakeCompletionQueueImpl;
 
 using Functor =
     std::function<void(CompletionQueue&, InstanceList&, grpc::Status&)>;
@@ -49,7 +49,7 @@ std::string const kProjectId = "the-project";
 class AsyncListInstancesTest : public ::testing::Test {
  public:
   AsyncListInstancesTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new testing::MockInstanceAdminClient),
         instances_reader_1_(new MockAsyncListInstancesReader),
@@ -64,7 +64,7 @@ class AsyncListInstancesTest : public ::testing::Test {
     user_future_ = instance_admin.AsyncListInstances(cq_);
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
   std::shared_ptr<testing::MockInstanceAdminClient> client_;
   future<StatusOr<InstanceList>> user_future_;

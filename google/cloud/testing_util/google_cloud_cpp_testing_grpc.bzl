@@ -17,13 +17,14 @@
 """Automatically generated source lists for google_cloud_cpp_testing_grpc - DO NOT EDIT."""
 
 google_cloud_cpp_testing_grpc_hdrs = [
+    "fake_completion_queue_impl.h",
     "is_proto_equal.h",
     "mock_async_response_reader.h",
-    "mock_completion_queue.h",
     "validate_metadata.h",
 ]
 
 google_cloud_cpp_testing_grpc_srcs = [
+    "fake_completion_queue_impl.cc",
     "is_proto_equal.cc",
     "validate_metadata.cc",
 ]

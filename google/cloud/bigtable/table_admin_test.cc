@@ -21,7 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -40,7 +40,7 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
 using ::google::cloud::testing_util::chrono_literals::operator"" _s;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::MockCompletionQueue;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -1147,7 +1147,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
       .WillOnce(make_invoke(r2))
       .WillOnce(make_invoke(r3));
 
-  std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl(new FakeCompletionQueueImpl);
   bigtable::CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
@@ -1222,7 +1222,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
             ::btadmin::CheckConsistencyResponse>>(reader.get());
       });
 
-  std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl(new FakeCompletionQueueImpl);
   bigtable::CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
@@ -1248,7 +1248,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
 class ValidContextMdAsyncTest : public ::testing::Test {
  public:
   ValidContextMdAsyncTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new MockAdminClient) {
     EXPECT_CALL(*client_, project())
@@ -1278,7 +1278,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockAdminClient> client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
@@ -1433,7 +1433,7 @@ using MockAsyncIamPolicyReader =
 class AsyncGetIamPolicyTest : public ::testing::Test {
  public:
   AsyncGetIamPolicyTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
@@ -1461,7 +1461,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
     user_future_ = table_admin.AsyncGetIamPolicy(cq_, "the-table");
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
@@ -1521,7 +1521,7 @@ using MockAsyncSetIamPolicyReader =
 class AsyncSetIamPolicyTest : public ::testing::Test {
  public:
   AsyncSetIamPolicyTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
@@ -1553,7 +1553,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
                             "test-tag", 0));
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
@@ -1618,7 +1618,7 @@ using MockAsyncTestIamPermissionsReader =
 class AsyncTestIamPermissionsTest : public ::testing::Test {
  public:
   AsyncTestIamPermissionsTest()
-      : cq_impl_(new MockCompletionQueue),
+      : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
@@ -1649,7 +1649,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         table_admin.AsyncTestIamPermissions(cq_, "the-table", permissions);
   }
 
-  std::shared_ptr<MockCompletionQueue> cq_impl_;
+  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<std::vector<std::string>>>

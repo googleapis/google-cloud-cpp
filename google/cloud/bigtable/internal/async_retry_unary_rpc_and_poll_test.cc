@@ -22,7 +22,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/mock_completion_queue.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -63,7 +63,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
             "projects/" + k_project_id + "/instances/" + k_instance_id,
             MetadataParamTypes::PARENT),
         client(std::make_shared<testing::MockInstanceAdminClient>()),
-        cq_impl(std::make_shared<testing_util::MockCompletionQueue>()),
+        cq_impl(std::make_shared<testing_util::FakeCompletionQueueImpl>()),
         cq(cq_impl),
         create_cluster_reader(
             absl::make_unique<MockAsyncLongrunningOpReader>()),
@@ -172,7 +172,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy;
   MetadataUpdatePolicy metadata_update_policy;
   std::shared_ptr<testing::MockInstanceAdminClient> client;
-  std::shared_ptr<testing_util::MockCompletionQueue> cq_impl;
+  std::shared_ptr<testing_util::FakeCompletionQueueImpl> cq_impl;
   bigtable::CompletionQueue cq;
   std::unique_ptr<MockAsyncLongrunningOpReader> create_cluster_reader;
   std::unique_ptr<MockAsyncLongrunningOpReader> get_operation_reader;
