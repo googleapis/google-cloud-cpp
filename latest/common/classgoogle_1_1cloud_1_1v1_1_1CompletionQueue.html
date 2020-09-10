@@ -95,9 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a178d873b760bb87ba26960aff4b84164"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a178d873b760bb87ba26960aff4b84164">CancelAll</a> ()</td></tr>
 <tr class="memdesc:a178d873b760bb87ba26960aff4b84164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel all pending operations.  <a href="#a178d873b760bb87ba26960aff4b84164">More...</a><br /></td></tr>
 <tr class="separator:a178d873b760bb87ba26960aff4b84164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dc0077cfca94f5e8532c42c2e25ca0c"><td class="memItemLeft" align="right" valign="top">google::cloud::future&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html">StatusOr</a>&lt; std::chrono::system_clock::time_point &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a3dc0077cfca94f5e8532c42c2e25ca0c">MakeDeadlineTimer</a> (std::chrono::system_clock::time_point deadline)</td></tr>
-<tr class="memdesc:a3dc0077cfca94f5e8532c42c2e25ca0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires at <code>deadline</code>.  <a href="#a3dc0077cfca94f5e8532c42c2e25ca0c">More...</a><br /></td></tr>
-<tr class="separator:a3dc0077cfca94f5e8532c42c2e25ca0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6ddf6fdd2511dc008ffd70da0f1bc40"><td class="memItemLeft" align="right" valign="top">google::cloud::future&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html">StatusOr</a>&lt; std::chrono::system_clock::time_point &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#ab6ddf6fdd2511dc008ffd70da0f1bc40">MakeDeadlineTimer</a> (std::chrono::system_clock::time_point deadline)</td></tr>
+<tr class="memdesc:ab6ddf6fdd2511dc008ffd70da0f1bc40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires at <code>deadline</code>.  <a href="#ab6ddf6fdd2511dc008ffd70da0f1bc40">More...</a><br /></td></tr>
+<tr class="separator:ab6ddf6fdd2511dc008ffd70da0f1bc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a998c6ce6f8aca6e94a77ddccc1fa0956"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
 <tr class="memitem:a998c6ce6f8aca6e94a77ddccc1fa0956"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1future.html">future</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html">StatusOr</a>&lt; std::chrono::system_clock::time_point &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a998c6ce6f8aca6e94a77ddccc1fa0956">MakeRelativeTimer</a> (std::chrono::duration&lt; Rep, Period &gt; duration)</td></tr>
 <tr class="memdesc:a998c6ce6f8aca6e94a77ddccc1fa0956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires after the <code>duration</code>.  <a href="#a998c6ce6f8aca6e94a77ddccc1fa0956">More...</a><br /></td></tr>
@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Call the functor associated with asynchronous operations when they complete. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00040">40</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00033">33</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a046fcd2a14f38d366b10133ad87b6910"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a046fcd2a14f38d366b10133ad87b6910">&#9670;&nbsp;</a></span>CompletionQueue() <span class="overload">[1/2]</span></h2>
@@ -139,7 +139,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00113">113</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00022">22</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
 
 </div>
 </div>
@@ -167,7 +167,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00043">43</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00036">36</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -189,24 +189,32 @@ Public Member Functions</h2></td></tr>
 
 <p>Cancel all pending operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00119">119</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00028">28</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
 
 </div>
 </div>
-<a id="a3dc0077cfca94f5e8532c42c2e25ca0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3dc0077cfca94f5e8532c42c2e25ca0c">&#9670;&nbsp;</a></span>MakeDeadlineTimer()</h2>
+<a id="ab6ddf6fdd2511dc008ffd70da0f1bc40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6ddf6fdd2511dc008ffd70da0f1bc40">&#9670;&nbsp;</a></span>MakeDeadlineTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::future&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html">StatusOr</a>&lt; std::chrono::system_clock::time_point &gt; &gt; google::cloud::v1::CompletionQueue::MakeDeadlineTimer </td>
+          <td class="memname">google::cloud::future&lt;<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html">StatusOr</a>&lt;std::chrono::system_clock::time_point&gt; &gt; google::cloud::v1::CompletionQueue::MakeDeadlineTimer </td>
           <td>(</td>
           <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
           <td class="paramname"><em>deadline</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Create a timer that fires at <code>deadline</code>. </p>
@@ -218,7 +226,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied after <code>deadline</code>. The result of the future is the time at which it expired, or an error <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Status.html" title="Reports error code and details from a remote request.">Status</a> if the timer did not run to expiration (e.g. it was cancelled). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00122">122</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00063">63</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -264,7 +272,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied after <code>duration</code> time has elapsed. The result of the future is the time at which it expired, or an error <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Status.html" title="Reports error code and details from a remote request.">Status</a> if the timer did not run to expiration (e.g. it was cancelled). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00093">93</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00088">88</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -345,7 +353,7 @@ template&lt;typename AsyncCallType , typename Request , typename Response  = typ
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00165">165</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00160">160</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +417,7 @@ template&lt;typename AsyncCallType , typename Request , typename Sig  = internal
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when the operation completes. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00122">122</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00117">117</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +439,7 @@ template&lt;typename AsyncCallType , typename Request , typename Sig  = internal
 <p>Run the completion queue event loop. </p>
 <p>Note that more than one thread can call this member function, to create a pool of threads completing asynchronous operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00115">115</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00024">24</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
 
 </div>
 </div>
@@ -475,7 +483,7 @@ template&lt;typename Functor , typename std::enable_if&lt; internal::CheckRunAsy
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00187">187</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00182">182</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -519,7 +527,7 @@ template&lt;typename Functor , typename std::enable_if&lt; internal::is_invocabl
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00218">218</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00213">213</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -540,7 +548,7 @@ template&lt;typename Functor , typename std::enable_if&lt; internal::is_invocabl
 
 <p>Terminate the completion queue event loop. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00117">117</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8cc_source.html#l00026">26</a> of file <a class="el" href="completion__queue_8cc_source.html">completion_queue.cc</a>.</p>
 
 </div>
 </div>
