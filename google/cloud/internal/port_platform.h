@@ -30,9 +30,16 @@
 // readable with indentation.
 // clang-format off
 
-// Microsoft Visual Studio does not define __cplusplus correctly:
+// Microsoft Visual Studio does not define __cplusplus correctly by default:
+//
 //   https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus
-// Define a macro to hide this detail.
+//
+// Here we define a macro to hide this detail.
+//
+// We considered using the `/Zc:__cplusplus` flag with MSVC, but because we
+// use `__cplusplus` in headers we would be forcing downstream code to set
+// this flag too. That might break existing user code that wants to use our
+// library, and we prefer not to do so.
 #ifdef _MSC_VER
 #  define GOOGLE_CLOUD_CPP_CPP_VERSION _MSVC_LANG
 #else
