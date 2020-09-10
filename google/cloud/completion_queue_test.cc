@@ -144,6 +144,15 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
   EXPECT_EQ(std::future_status::ready, timer.wait_for(ms(0)));
 }
 
+TEST(CompletionQueueTest, ShutdownWithPendingFake) {
+  using ms = std::chrono::milliseconds;
+  CompletionQueue cq(std::make_shared<FakeCompletionQueueImpl>());
+  auto timer = cq.MakeRelativeTimer(ms(500));
+  cq.CancelAll();
+  cq.Shutdown();
+  EXPECT_EQ(StatusCode::kCancelled, timer.get().status().code());
+}
+
 TEST(CompletionQueueTest, CanCancelAllEvents) {
   CompletionQueue cq;
   promise<void> done;
