@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/internal/port_platform.h"
 #include <sstream>
 
 namespace google {
@@ -85,7 +86,7 @@ std::string LanguageVersion() {
   auto constexpr kMagicVersionCxx11 = 201103L;
   auto constexpr kMagicVersionCxx14 = 201402L;
   auto constexpr kMagicVersionCxx17 = 201703L;
-  switch (__cplusplus) {
+  switch (GOOGLE_CLOUD_CPP_CPP_VERSION) {
     case kMagicVersionCxx98:
       return "1998";
     case kMagicVersionCxx11:
