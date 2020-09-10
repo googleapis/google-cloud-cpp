@@ -29,10 +29,8 @@ extern "C" void test_cb(int /*mode*/, int /*type*/, char const* /*file*/,
 
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingDisabledTest) {
-  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) {
-    // The test cannot execute in this case.
-    return;
-  }
+  // The test cannot execute in this case.
+  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) GTEST_SKIP();
   // Install a trivial callback, this should disable the installation of the
   // normal callbacks in the the curl wrappers.
   CRYPTO_set_locking_callback(test_cb);

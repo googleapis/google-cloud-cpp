@@ -33,12 +33,12 @@ TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
 #if __has_feature(memory_sanitizer)
   // The memory sanitizer seems to intercept SIGPIPE, simply disable the test
   // in this case.
-  return;
+  GTEST_SKIP();
 #endif  // __has_feature(memory_sanitizer)
 #endif  // __has_fature
 
 #if !defined(SIGPIPE)
-  return;  // nothing to do
+  GTEST_SKIP();  // nothing to do
 #elif CURL_AT_LEAST_VERSION(7, 30, 0)
   // libcurl <= 7.29.0 installs its own signal handler for SIGPIPE during
   // curl_global_init(). Unfortunately 7.29.0 is the default on CentOS-7, and

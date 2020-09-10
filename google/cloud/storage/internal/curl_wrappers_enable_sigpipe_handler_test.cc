@@ -30,7 +30,7 @@ extern "C" void test_handler(int) {}
 /// works as expected.
 TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
 #if !defined(SIGPIPE)
-  return;  // nothing to do
+  GTEST_SKIP();  // nothing to do
 #else
   auto initial_handler = std::signal(SIGPIPE, &test_handler);
   CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())

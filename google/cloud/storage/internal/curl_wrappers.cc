@@ -192,7 +192,8 @@ class CurlInitializer {
 
 std::string CurlSslLibraryId() {
   auto vinfo = curl_version_info(CURLVERSION_NOW);
-  return vinfo->ssl_version;
+  auto const is_null = vinfo == nullptr || vinfo->ssl_version == nullptr;
+  return is_null ? "" : vinfo->ssl_version;
 }
 
 bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
