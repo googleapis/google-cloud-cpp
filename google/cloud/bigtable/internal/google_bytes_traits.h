@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/port_platform.h"
 
 namespace google {
 namespace cloud {
@@ -40,10 +41,10 @@ inline bool IsEmptyRowKey(std::string const& key) { return key.empty(); }
 /// Return true if the row key is empty.
 inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
-#if __cplusplus >= 201703L
+#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
 /// Return true if the row key is empty.
 inline bool IsEmptyRowKey(std::string_view key) { return key.empty(); }
-#endif  // __cplusplus >= 201703L
+#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
 
 /// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.
 inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {

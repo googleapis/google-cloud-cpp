@@ -30,16 +30,19 @@
 // readable with indentation.
 // clang-format off
 
-// Abort compilation if the compiler does not support C++11.
-#ifndef _MSC_VER
 // Microsoft Visual Studio does not define __cplusplus correctly:
-// https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus
-#  if __cplusplus < 201103L
-#    error "C++11 or newer is required"
-#  endif  // __cplusplus < 201103L
-#elif _MSC_VER < 1900
-#  error "C++11 or newer is required, your version of MSVC is too old"
+//   https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus
+// Define a macro to hide this detail.
+#ifdef _MSC_VER
+#  define GOOGLE_CLOUD_CPP_CPP_VERSION _MSVC_LANG
+#else
+#  define GOOGLE_CLOUD_CPP_CPP_VERSION __cplusplus
 #endif  // _MSC_VER
+
+// Abort compilation if the compiler does not support C++11.
+#if GOOGLE_CLOUD_CPP_CPP_VERSION < 201103L
+#  error "C++11 or newer is required"
+#endif  // GOOGLE_CLOUD_CPP_CPP_VBERSION < 201103L
 
 // Abort the build if the version of the compiler is too old. With CMake we
 // never start the build, but with Bazel we may start the build only to find
