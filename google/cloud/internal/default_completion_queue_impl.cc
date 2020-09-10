@@ -181,14 +181,13 @@ void DefaultCompletionQueueImpl::StartOperation(
     op->Notify(/*ok=*/false);
     return;
   }
-  auto const itag = reinterpret_cast<std::intptr_t>(tag);
-  auto ins = pending_ops_.emplace(itag, std::move(op));
+  auto ins = pending_ops_.emplace(tag, std::move(op));
   if (ins.second) {
     start(tag);
     return;
   }
   std::ostringstream os;
-  os << "assertion failure: duplicate operation tag (" << itag << "),"
+  os << "assertion failure: duplicate operation tag (" << tag << "),"
      << " asynchronous operations should complete before they are rescheduled."
      << " This might be a bug in the library, please report it at"
      << " https://github.com/google-cloud-cpp/issues";
@@ -200,7 +199,7 @@ grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
 std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
     void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
-  auto loc = pending_ops_.find(reinterpret_cast<std::intptr_t>(tag));
+  auto loc = pending_ops_.find(tag);
   if (pending_ops_.end() == loc) {
     google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag");
@@ -210,8 +209,7 @@ std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
 
 void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
-  auto const num_erased =
-      pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
+  auto const num_erased = pending_ops_.erase(tag);
   if (num_erased != 1) {
     google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag when trying to "

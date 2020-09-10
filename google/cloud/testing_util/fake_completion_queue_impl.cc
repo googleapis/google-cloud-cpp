@@ -30,7 +30,6 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
 
   void Cancel() override {}
 
- private:
   bool Notify(bool ok) override {
     if (!ok) {
       promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
@@ -40,6 +39,7 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
     return true;
   }
 
+ private:
   std::chrono::system_clock::time_point const deadline_;
   promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
 };
@@ -95,6 +95,11 @@ FakeCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto op = std::make_shared<FakeAsyncTimer>(deadline);
   std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    lk.unlock();
+    op->Notify(/*ok=*/false);
+    return op->GetFuture();
+  }
   pending_ops_.push_back(op);
   return op->GetFuture();
 }
@@ -103,6 +108,9 @@ void FakeCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   auto op = std::make_shared<FakeAsyncFunction>(std::move(function));
   std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    return;
+  }
   pending_ops_.push_back(op);
 }
 

@@ -45,7 +45,6 @@ google_cloud_cpp_grpc_utils_srcs = [
     "connection_options.cc",
     "grpc_error_delegate.cc",
     "internal/background_threads_impl.cc",
-    "internal/completion_queue_impl.cc",
     "internal/default_completion_queue_impl.cc",
     "internal/log_wrapper.cc",
     "internal/retry_loop_helpers.cc",

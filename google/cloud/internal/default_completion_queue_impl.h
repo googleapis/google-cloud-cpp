@@ -65,7 +65,7 @@ class DefaultCompletionQueueImpl : public CompletionQueueImpl {
   grpc::CompletionQueue cq_;
   mutable std::mutex mu_;
   bool shutdown_{false};  // GUARDED_BY(mu_)
-  std::unordered_map<std::intptr_t, std::shared_ptr<AsyncGrpcOperation>>
+  std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;  // GUARDED_BY(mu_)
 };
 

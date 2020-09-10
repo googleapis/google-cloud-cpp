@@ -347,7 +347,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/async_rpc_details.h
         internal/background_threads_impl.cc
         internal/background_threads_impl.h
-        internal/completion_queue_impl.cc
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h

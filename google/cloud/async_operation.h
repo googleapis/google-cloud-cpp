@@ -53,7 +53,7 @@ namespace internal {
 /**
  * Represents an AsyncOperation which gRPC understands.
  *
- * When applications create an asynchronous operations with a `CompletionQueue`
+ * When applications create an asynchronous operation with a `CompletionQueue`
  * they provide a callback to be invoked when the operation completes
  * (successfully or not). The completion queue type-erases the callback and
  * hides it in a class derived from `AsyncOperation`. A shared pointer to the
