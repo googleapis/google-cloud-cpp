@@ -182,7 +182,6 @@ void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
   auto ins = pending_ops_.emplace(itag, std::move(op));
   if (ins.second) {
     start(tag);
-    lk.unlock();
     return;
   }
   std::ostringstream os;
