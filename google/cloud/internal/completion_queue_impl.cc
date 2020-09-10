@@ -25,6 +25,90 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+namespace {
+
+/**
+ * Wrap a gRPC timer into an `AsyncOperation`.
+ *
+ * Applications (or more likely, other components in the client library) will
+ * associate timers with a completion queue. gRPC timers require applications
+ * to create a unique `grpc::Alarm` object for each timer, and then to
+ * associate them with the completion queue using a `void*` tag.
+ *
+ * This class collaborates with our wrapper for `CompletionQueue` to associate
+ * a `future<AsyncTimerResult>` for each timer. This class takes care of
+ * allocating the `grpc::Alarm`, creating a unique `void*` associated with the
+ * timer, and satisfying the future when the timer expires.
+ *
+ * Note that this class is an implementation detail, hidden from the
+ * application developers.
+ */
+class AsyncTimerFuture : public internal::AsyncGrpcOperation {
+ public:
+  explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
+      : promise_(/*cancellation_callback=*/[this] { Cancel(); }),
+        alarm_(std::move(alarm)) {}
+
+  future<StatusOr<std::chrono::system_clock::time_point>> GetFuture() {
+    return promise_.get_future();
+  }
+
+  void Set(grpc::CompletionQueue& cq,
+           std::chrono::system_clock::time_point deadline, void* tag) {
+    deadline_ = deadline;
+
+    if (alarm_) {
+      alarm_->Set(&cq, deadline, tag);
+    }
+  }
+
+  void Cancel() override {
+    auto a = std::move(alarm_);
+    if (a) a->Cancel();
+  }
+
+ private:
+  bool Notify(bool ok) override {
+    if (!ok) {
+      promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
+    } else {
+      promise_.set_value(deadline_);
+    }
+    return true;
+  }
+
+  promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
+  std::chrono::system_clock::time_point deadline_;
+  /// Holds the underlying handle. It might be a nullptr in tests.
+  std::unique_ptr<grpc::Alarm> alarm_;
+};
+
+class AsyncFunction : public internal::AsyncGrpcOperation {
+ public:
+  explicit AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun)
+      : fun_(std::move(fun)), alarm_(absl::make_unique<grpc::Alarm>()) {}
+
+  void Set(grpc::CompletionQueue& cq, void* tag) {
+    alarm_->Set(&cq, std::chrono::system_clock::now(), tag);
+  }
+
+  void Cancel() override {}
+
+ private:
+  bool Notify(bool ok) override {
+    auto f = std::move(fun_);
+    alarm_.reset();
+    if (!ok) return true;  // do not run async operations on shutdown CQs
+    f->exec();
+    return true;
+  }
+
+  std::unique_ptr<internal::RunAsyncBase> fun_;
+  std::unique_ptr<grpc::Alarm> alarm_;
+};
+
+}  // namespace
+
 void CompletionQueueImpl::Run() {
   void* tag;
   bool ok;
@@ -69,8 +153,39 @@ void CompletionQueueImpl::CancelAll() {
   }
 }
 
-std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
-  return absl::make_unique<grpc::Alarm>();
+future<StatusOr<std::chrono::system_clock::time_point>>
+CompletionQueueImpl::MakeDeadlineTimer(
+    std::chrono::system_clock::time_point deadline) {
+  auto op =
+      std::make_shared<AsyncTimerFuture>(absl::make_unique<grpc::Alarm>());
+  StartOperation(op, [&](void* tag) { op->Set(cq(), deadline, tag); });
+  return op->GetFuture();
+}
+
+void CompletionQueueImpl::RunAsync(
+    std::unique_ptr<internal::RunAsyncBase> function) {
+  auto op = std::make_shared<AsyncFunction>(std::move(function));
+  StartOperation(op, [&](void* tag) { op->Set(cq(), tag); });
+}
+
+void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
+                                         absl::FunctionRef<void(void*)> start) {
+  void* tag = op.get();
+  std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    lk.unlock();
+    op->Notify(/*ok=*/false);
+    return;
+  }
+  auto ins =
+      pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag), std::move(op));
+  if (ins.second) {
+    start(tag);
+    lk.unlock();
+    return;
+  }
+  google::cloud::internal::ThrowRuntimeError(
+      "assertion failure: insertion should succeed");
 }
 
 std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(

@@ -18,97 +18,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace {
-/**
- * Wrap a gRPC timer into an `AsyncOperation`.
- *
- * Applications (or more likely, other components in the client library) will
- * associate timers with a completion queue. gRPC timers require applications to
- * create a unique `grpc::Alarm` object for each timer, and then to associate
- * them with the completion queue using a `void*` tag.
- *
- * This class collaborates with our wrapper for `CompletionQueue` to associate
- * a `future<AsyncTimerResult>` for each timer. This class takes care of
- * allocating the `grpc::Alarm`, creating a unique `void*` associated with the
- * timer, and satisfying the future when the timer expires.
- *
- * Note that this class is an implementation detail, hidden from the application
- * developers.
- */
-class AsyncTimerFuture : public internal::AsyncGrpcOperation {
- public:
-  explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
-      : promise_(/*cancellation_callback=*/[this] { Cancel(); }),
-        alarm_(std::move(alarm)) {}
-
-  future<StatusOr<std::chrono::system_clock::time_point>> GetFuture() {
-    return promise_.get_future();
-  }
-
-  void Set(grpc::CompletionQueue& cq,
-           std::chrono::system_clock::time_point deadline, void* tag) {
-    deadline_ = deadline;
-
-    if (alarm_) {
-      alarm_->Set(&cq, deadline, tag);
-    }
-  }
-
-  void Cancel() override {
-    if (alarm_) {
-      alarm_->Cancel();
-    }
-  }
-
- private:
-  bool Notify(bool ok) override {
-    if (!ok) {
-      promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
-    } else {
-      promise_.set_value(deadline_);
-    }
-    return true;
-  }
-
-  promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
-  std::chrono::system_clock::time_point deadline_;
-  /// Holds the underlying handle. It might be a nullptr in tests.
-  std::unique_ptr<grpc::Alarm> alarm_;
-};
-
-class AsyncFunction : public internal::AsyncGrpcOperation {
- public:
-  AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun,
-                std::unique_ptr<grpc::Alarm> alarm)
-      : fun_(std::move(fun)), alarm_(std::move(alarm)) {}
-
-  void Set(grpc::CompletionQueue& cq,
-           std::chrono::system_clock::time_point deadline, void* tag) {
-    if (alarm_) {
-      alarm_->Set(&cq, deadline, tag);
-    }
-  }
-
-  void Cancel() override {
-    if (alarm_) {
-      alarm_->Cancel();
-    }
-  }
-
- private:
-  bool Notify(bool ok) override {
-    if (ok) fun_->exec();  // do not run async operations on shutdown CQs
-    fun_.reset();
-    return true;
-  }
-
-  std::shared_ptr<internal::CompletionQueueImpl> cq_;
-  std::unique_ptr<internal::RunAsyncBase> fun_;
-  // Holds the underlying handle, it might be a nullptr in tests.
-  std::unique_ptr<grpc::Alarm> alarm_;
-};
-
-}  // namespace
 
 CompletionQueue::CompletionQueue() : impl_(new internal::CompletionQueueImpl) {}
 
@@ -117,22 +26,6 @@ void CompletionQueue::Run() { impl_->Run(); }
 void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 
 void CompletionQueue::CancelAll() { impl_->CancelAll(); }
-
-google::cloud::future<StatusOr<std::chrono::system_clock::time_point>>
-CompletionQueue::MakeDeadlineTimer(
-    std::chrono::system_clock::time_point deadline) {
-  auto op = std::make_shared<AsyncTimerFuture>(impl_->CreateAlarm());
-  impl_->StartOperation(
-      op, [&](void* tag) { op->Set(impl_->cq(), deadline, tag); });
-  return op->GetFuture();
-}
-
-void CompletionQueue::RunAsyncImpl(std::unique_ptr<internal::RunAsyncBase> f) {
-  auto deadline = std::chrono::system_clock::now();
-  auto op = std::make_shared<AsyncFunction>(std::move(f), impl_->CreateAlarm());
-  impl_->StartOperation(
-      op, [&](void* tag) { op->Set(impl_->cq(), deadline, tag); });
-}
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
