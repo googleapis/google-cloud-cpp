@@ -88,7 +88,8 @@ class CompletionQueue {
   template <typename Rep, typename Period>
   future<StatusOr<std::chrono::system_clock::time_point>> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration) {
-    return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
+    return impl_->MakeRelativeTimer(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(duration));
   }
 
   /**
