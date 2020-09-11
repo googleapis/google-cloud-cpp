@@ -473,7 +473,6 @@ void CreateTableWithDatatypes(
                 LastContactDate DATE,
                 OutdoorVenue    BOOL,
                 PopularityScore FLOAT64,
-                Revenue         NUMERIC,
                 LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (VenueId))"""});
@@ -484,36 +483,6 @@ void CreateTableWithDatatypes(
             << metadata->DebugString() << "\n";
 }
 // [END spanner_create_table_with_datatypes]
-
-void CreateTableWithDatatypesEmulator(
-    google::cloud::spanner::DatabaseAdminClient client,
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
-  google::cloud::spanner::Database database(project_id, instance_id,
-                                            database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(database, {R"""(
-            CREATE TABLE Venues (
-                VenueId         INT64 NOT NULL,
-                VenueName       STRING(100),
-                VenueInfo       BYTES(MAX),
-                Capacity        INT64,
-                AvailableDates  ARRAY<DATE>,
-                LastContactDate DATE,
-                OutdoorVenue    BOOL,
-                PopularityScore FLOAT64,
-                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
-                    (allow_commit_timestamp=true)
-            ) PRIMARY KEY (VenueId))"""});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
-  std::cout << "`Venues` table created, new DDL:\n"
-            << metadata->DebugString() << "\n";
-}
 
 // [START spanner_create_table_with_timestamp_column]
 void CreateTableWithTimestamp(
@@ -1375,20 +1344,6 @@ void DeleteAll(google::cloud::spanner::Client client) {
 }
 //! [keyset-all]
 
-// TODO(#5024): Remove DeleteAllEmulator() when the emulator supports NUMERIC.
-void DeleteAllEmulator(google::cloud::spanner::Client client) {
-  namespace spanner = ::google::cloud::spanner;
-
-  // Delete all the performances, venues, albums and singers.
-  auto commit = client.Commit(spanner::Mutations{
-      spanner::MakeDeleteMutation("Performances", spanner::KeySet::All()),
-      spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
-      spanner::MakeDeleteMutation("Singers", spanner::KeySet::All()),
-  });
-  if (!commit) throw std::runtime_error(commit.status().message());
-  std::cout << "delete-all was successful\n";
-}
-
 //! [insert-mutation-builder]
 void InsertMutationBuilder(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -1624,48 +1579,76 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
 }
 // [END spanner_query_data_with_timestamp_column]
 
-// [START spanner_query_data_with_numeric]
-void QueryDataWithNumeric(google::cloud::spanner::Client client) {
+// [START spanner_add_numeric_column]
+void AddNumericColumn(google::cloud::spanner::DatabaseAdminClient client,
+                      std::string const& project_id,
+                      std::string const& instance_id,
+                      std::string const& database_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(database, {R"""(
+            ALTER TABLE Venues ADD COLUMN Revenue NUMERIC)"""});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "`Venues` table altered, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+// [END spanner_add_numeric_column]
+
+//! [START spanner_update_data_with_numeric]
+void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto insert_venues =
+      spanner::InsertMutationBuilder(
+          "Venues", {"VenueId", "VenueName", "Revenue", "LastUpdateTime"})
+          .EmplaceRow(1, "Venue 1", spanner::MakeNumeric(35000).value(),
+                      spanner::CommitTimestamp())
+          .EmplaceRow(6, "Venue 6", spanner::MakeNumeric(104500).value(),
+                      spanner::CommitTimestamp())
+          .EmplaceRow(
+              14, "Venue 14",
+              spanner::MakeNumeric("99999999999999999999999999999.99").value(),
+              spanner::CommitTimestamp())
+          .Build();
+
+  auto commit_result = client.Commit(spanner::Mutations{insert_venues});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful [spanner_update_data_with_numeric]\n";
+}
+//! [END spanner_update_data_with_numeric]
+
+// [START spanner_query_with_numeric_parameter]
+void QueryWithNumericParameter(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  auto revenue = spanner::MakeNumeric(300000).value();
+  auto revenue = spanner::MakeNumeric(100000).value();
   spanner::SqlStatement select(
-      "SELECT VenueId, VenueName, Revenue"
+      "SELECT VenueId, Revenue"
       "  FROM Venues"
-      " WHERE Revenue >= @revenue",
+      " WHERE Revenue < @revenue",
       {{"revenue", spanner::Value(std::move(revenue))}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<spanner::Numeric>>;
+  using RowType = std::tuple<std::int64_t, absl::optional<spanner::Numeric>>;
 
   auto rows = client.ExecuteQuery(select);
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
-    std::cout << "VenueId: " << std::get<0>(*row);
-    std::cout << " VenueName: ";
-    auto venue_name = std::get<1>(*row);
-    if (!venue_name) {
-      std::cout << "NULL";
-    } else {
-      std::cout << *venue_name;
-    }
-    std::cout << " Revenue: ";
-    auto revenue = std::get<2>(*row);
-    if (!revenue) {
-      std::cout << "NULL";
-    } else {
-      auto const& numeric = *revenue;
-      // [START spanner_cast_numeric_type]
-      std::string const& str = numeric.ToString();
-      double dbl = spanner::ToDouble(numeric);
-      int scaled_int = *spanner::ToInteger<int>(numeric, 2);  // scale by 10^2
-      // [END spanner_cast_numeric_type]
-      std::cout << str << " (d.16=" << std::setprecision(16) << dbl
-                << ", i*10^2=" << scaled_int << ")";
-    }
-    std::cout << "\n";
+    std::cout << "VenueId: " << std::get<0>(*row) << "\t";
+    auto revenue = std::get<1>(*row).value();
+    std::cout << "Revenue: " << revenue.ToString()
+              << " (d.16=" << std::setprecision(16)
+              << spanner::ToDouble(revenue)
+              << ", i*10^2=" << spanner::ToInteger<int>(revenue, 2).value()
+              << ")\n";
   }
 }
-// [END spanner_query_data_with_numeric]
+// [END spanner_query_with_numeric_parameter]
 
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
@@ -2960,7 +2943,10 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
-      make_command_entry("query-data-with-numeric", QueryDataWithNumeric),
+      make_database_command_entry("add-numeric-column", AddNumericColumn),
+      make_command_entry("update-data-with-numeric", UpdateDataWithNumeric),
+      make_command_entry("query-with-numeric-parameter",
+                         QueryWithNumericParameter),
       make_command_entry("read-only-transaction", ReadOnlyTransaction),
       make_command_entry("read-stale-data", ReadStaleData),
       make_command_entry("use-partition-query", UsePartitionQuery),
@@ -3223,14 +3209,8 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_create_table_with_datatypes sample"
             << std::endl;
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (!emulator) {
-    CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
-                             database_id);
-  } else {
-    CreateTableWithDatatypesEmulator(database_admin_client, project_id,
-                                     instance_id, database_id);
-  }
+  CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
+                           database_id);
 
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample"
             << std::endl;
@@ -3340,9 +3320,17 @@ void RunAll(bool emulator) {
 
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (!emulator) {
-    std::cout << "\nRunning spanner_query_data_with_numeric sample"
+    std::cout << "\nRunning spanner_add_numeric_column sample" << std::endl;
+    AddNumericColumn(database_admin_client, project_id, instance_id,
+                     database_id);
+
+    std::cout << "\nRunning spanner_update_data_with_numeric sample"
               << std::endl;
-    QueryDataWithNumeric(client);
+    UpdateDataWithNumeric(client);
+
+    std::cout << "\nRunning spanner_query_with_numeric_parameter sample"
+              << std::endl;
+    QueryWithNumericParameter(client);
   }
 
   std::cout << "\nRunning spanner_read_only_transaction sample" << std::endl;
@@ -3489,11 +3477,7 @@ void RunAll(bool emulator) {
   DeleteData(client);
 
   std::cout << "\nDeleting all data to run the mutation examples" << std::endl;
-  if (!emulator) {
-    DeleteAll(client);
-  } else {
-    DeleteAllEmulator(client);
-  }
+  DeleteAll(client);
 
   std::cout << "\nRunning the insert-mutation-builder example" << std::endl;
   InsertMutationBuilder(client);
@@ -3528,11 +3512,7 @@ void RunAll(bool emulator) {
   MakeDeleteMutation(client);
 
   std::cout << "\nRunning spanner_drop_database sample" << std::endl;
-  if (!emulator) {
-    DeleteAll(client);
-  } else {
-    DeleteAllEmulator(client);
-  }
+  DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 }
 
