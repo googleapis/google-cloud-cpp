@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/memory/memory.h"
+#include <grpcpp/alarm.h>
 #include <sstream>
 
-// There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
+// There is no way to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
 // shutdown the run.
 std::chrono::milliseconds constexpr kLoopTimeout(50);
@@ -26,6 +27,7 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
 namespace {
 
 /**
@@ -110,7 +112,7 @@ class AsyncFunction : public internal::AsyncGrpcOperation {
 
 }  // namespace
 
-void CompletionQueueImpl::Run() {
+void DefaultCompletionQueueImpl::Run() {
   void* tag;
   bool ok;
   auto deadline = [] {
@@ -132,7 +134,7 @@ void CompletionQueueImpl::Run() {
   }
 }
 
-void CompletionQueueImpl::Shutdown() {
+void DefaultCompletionQueueImpl::Shutdown() {
   {
     std::lock_guard<std::mutex> lk(mu_);
     shutdown_ = true;
@@ -140,7 +142,7 @@ void CompletionQueueImpl::Shutdown() {
   cq_.Shutdown();
 }
 
-void CompletionQueueImpl::CancelAll() {
+void DefaultCompletionQueueImpl::CancelAll() {
   // Cancel all operations. We need to make a copy of the operations because
   // canceling them may trigger a recursive call that needs the lock. And we
   // need the lock because canceling might trigger calls that invalidate the
@@ -155,7 +157,7 @@ void CompletionQueueImpl::CancelAll() {
 }
 
 future<StatusOr<std::chrono::system_clock::time_point>>
-CompletionQueueImpl::MakeDeadlineTimer(
+DefaultCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto op =
       std::make_shared<AsyncTimerFuture>(absl::make_unique<grpc::Alarm>());
@@ -163,14 +165,15 @@ CompletionQueueImpl::MakeDeadlineTimer(
   return op->GetFuture();
 }
 
-void CompletionQueueImpl::RunAsync(
+void DefaultCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   auto op = std::make_shared<AsyncFunction>(std::move(function));
   StartOperation(op, [&](void* tag) { op->Set(cq(), tag); });
 }
 
-void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
-                                         absl::FunctionRef<void(void*)> start) {
+void DefaultCompletionQueueImpl::StartOperation(
+    std::shared_ptr<AsyncGrpcOperation> op,
+    absl::FunctionRef<void(void*)> start) {
   void* tag = op.get();
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_) {
@@ -178,24 +181,25 @@ void CompletionQueueImpl::StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
     op->Notify(/*ok=*/false);
     return;
   }
-  auto const itag = reinterpret_cast<std::intptr_t>(tag);
-  auto ins = pending_ops_.emplace(itag, std::move(op));
+  auto ins = pending_ops_.emplace(tag, std::move(op));
   if (ins.second) {
     start(tag);
     return;
   }
   std::ostringstream os;
-  os << "assertion failure: duplicate operation tag (" << itag << "),"
+  os << "assertion failure: duplicate operation tag (" << tag << "),"
      << " asynchronous operations should complete before they are rescheduled."
      << " This might be a bug in the library, please report it at"
      << " https://github.com/google-cloud-cpp/issues";
   google::cloud::internal::ThrowRuntimeError(std::move(os).str());
 }
 
-std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(
+grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
+
+std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
     void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
-  auto loc = pending_ops_.find(reinterpret_cast<std::intptr_t>(tag));
+  auto loc = pending_ops_.find(tag);
   if (pending_ops_.end() == loc) {
     google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag");
@@ -203,57 +207,14 @@ std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(
   return loc->second;
 }
 
-void CompletionQueueImpl::ForgetOperation(void* tag) {
+void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
-  auto const num_erased =
-      pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
+  auto const num_erased = pending_ops_.erase(tag);
   if (num_erased != 1) {
     google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag when trying to "
         "unregister");
   }
-}
-
-// This function is used in unit tests to simulate the completion of an
-// operation. The unit test is expected to create a class derived from
-// `CompletionQueueImpl`, wrap it in a `CompletionQueue` and call this function
-// to simulate the operation lifecycle. Note that the unit test must simulate
-// the operation results separately.
-void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op, bool ok) {
-  auto internal_op = FindOperation(op);
-  internal_op->Cancel();
-  if (internal_op->Notify(ok)) {
-    ForgetOperation(op);
-  }
-}
-
-void CompletionQueueImpl::SimulateCompletion(bool ok) {
-  // Make a copy to avoid race conditions or iterator invalidation.
-  std::vector<void*> tags;
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    tags.reserve(pending_ops_.size());
-    for (auto&& kv : pending_ops_) {
-      tags.push_back(reinterpret_cast<void*>(kv.first));
-    }
-  }
-  for (void* tag : tags) {
-    auto internal_op = FindOperation(tag);
-    internal_op->Cancel();
-    if (internal_op->Notify(ok)) {
-      ForgetOperation(tag);
-    }
-  }
-
-  // Discard any pending events.
-  grpc::CompletionQueue::NextStatus status;
-  do {
-    void* tag;
-    bool async_next_ok;
-    auto deadline =
-        std::chrono::system_clock::now() + std::chrono::milliseconds(1);
-    status = cq_.AsyncNext(&tag, &async_next_ok, deadline);
-  } while (status == grpc::CompletionQueue::GOT_EVENT);
 }
 
 }  // namespace internal

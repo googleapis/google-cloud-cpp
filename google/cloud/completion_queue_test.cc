@@ -14,6 +14,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
@@ -141,6 +142,15 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
     runner.join();
   }
   EXPECT_EQ(std::future_status::ready, timer.wait_for(ms(0)));
+}
+
+TEST(CompletionQueueTest, ShutdownWithPendingFake) {
+  using ms = std::chrono::milliseconds;
+  CompletionQueue cq(std::make_shared<FakeCompletionQueueImpl>());
+  auto timer = cq.MakeRelativeTimer(ms(500));
+  cq.CancelAll();
+  cq.Shutdown();
+  EXPECT_EQ(StatusCode::kCancelled, timer.get().status().code());
 }
 
 TEST(CompletionQueueTest, CanCancelAllEvents) {
@@ -568,7 +578,7 @@ TEST(CompletionQueueTest, CancelTimerContinuation) {
 }
 
 TEST(CompletionQueueTest, ImplStartOperationDuplicate) {
-  auto impl = std::make_shared<internal::CompletionQueueImpl>();
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
   auto op = std::make_shared<MockOperation>();
 
   impl->StartOperation(op, [](void*) {});

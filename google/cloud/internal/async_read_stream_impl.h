@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_STREAM_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_STREAM_IMPL_H
 
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
+#include <grpcpp/support/async_stream.h>
 #include <memory>
 
 namespace google {

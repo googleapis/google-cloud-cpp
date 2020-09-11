@@ -48,6 +48,36 @@ class AsyncOperation {
   virtual void Cancel() = 0;
 };
 
+namespace internal {
+
+/**
+ * Represents an AsyncOperation which gRPC understands.
+ *
+ * When applications create an asynchronous operation with a `CompletionQueue`
+ * they provide a callback to be invoked when the operation completes
+ * (successfully or not). The completion queue type-erases the callback and
+ * hides it in a class derived from `AsyncOperation`. A shared pointer to the
+ * `AsyncOperation` is returned by the completion queue so library developers
+ * can cancel the operation if needed.
+ */
+class AsyncGrpcOperation : public AsyncOperation {
+ public:
+  /**
+   * Notifies the application that the operation completed.
+   *
+   * Derived classes wrap the callbacks provided by the application and invoke
+   * the callback when this virtual member function is called.
+   *
+   * @param ok opaque parameter returned by grpc::CompletionQueue.  The
+   *   semantics defined by gRPC depend on the type of operation, therefore the
+   *   operation needs to interpret this parameter based on those semantics.
+   * @return Whether the operation is completed (e.g. in case of streaming
+   *   response, it would return true only after the stream is finished).
+   */
+  virtual bool Notify(bool ok) = 0;
+};
+
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

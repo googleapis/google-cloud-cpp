@@ -344,10 +344,12 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/async_read_stream_impl.h
         internal/async_retry_loop.h
         internal/async_retry_unary_rpc.h
+        internal/async_rpc_details.h
         internal/background_threads_impl.cc
         internal/background_threads_impl.h
-        internal/completion_queue_impl.cc
         internal/completion_queue_impl.h
+        internal/default_completion_queue_impl.cc
+        internal/default_completion_queue_impl.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/pagination_range.h

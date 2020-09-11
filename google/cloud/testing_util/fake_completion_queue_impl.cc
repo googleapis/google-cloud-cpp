@@ -30,7 +30,6 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
 
   void Cancel() override {}
 
- private:
   bool Notify(bool ok) override {
     if (!ok) {
       promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
@@ -40,6 +39,7 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
     return true;
   }
 
+ private:
   std::chrono::system_clock::time_point const deadline_;
   promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
 };
@@ -64,18 +64,80 @@ class FakeAsyncFunction : public internal::AsyncGrpcOperation {
 
 }  // namespace
 
+void FakeCompletionQueueImpl::Run() {
+  std::unique_lock<std::mutex> lk(mu_);
+  cv_.wait(lk, [&] { return shutdown_ && pending_ops_.empty(); });
+}
+
+void FakeCompletionQueueImpl::Shutdown() {
+  std::unique_lock<std::mutex> lk(mu_);
+  shutdown_ = true;
+  while (!pending_ops_.empty()) {
+    auto op = std::move(pending_ops_.back());
+    pending_ops_.pop_back();
+    lk.unlock();
+    op->Notify(false);
+    lk.lock();
+  }
+  cv_.notify_all();
+}
+
+void FakeCompletionQueueImpl::CancelAll() {
+  auto ops = [this] {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_;
+  }();
+  for (auto& op : ops) op->Cancel();
+}
+
 future<StatusOr<std::chrono::system_clock::time_point>>
 FakeCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto op = std::make_shared<FakeAsyncTimer>(deadline);
-  StartOperation(op, [](void*) {});
+  std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    lk.unlock();
+    op->Notify(/*ok=*/false);
+    return op->GetFuture();
+  }
+  pending_ops_.push_back(op);
   return op->GetFuture();
 }
 
 void FakeCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   auto op = std::make_shared<FakeAsyncFunction>(std::move(function));
-  StartOperation(op, [](void*) {});
+  std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    return;
+  }
+  pending_ops_.push_back(op);
+}
+
+void FakeCompletionQueueImpl::StartOperation(
+    std::shared_ptr<internal::AsyncGrpcOperation> op,
+    absl::FunctionRef<void(void*)> start) {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    lk.unlock();
+    op->Notify(/*ok=*/false);
+    return;
+  }
+  pending_ops_.push_back(op);
+  start(op.get());
+}
+
+void FakeCompletionQueueImpl::SimulateCompletion(bool ok) {
+  auto ops = [this] {
+    std::unique_lock<std::mutex> lk(mu_);
+    std::vector<std::shared_ptr<internal::AsyncGrpcOperation>> ops;
+    ops.swap(pending_ops_);
+    return ops;
+  }();
+
+  for (auto& op : ops) {
+    op->Notify(ok);
+  }
 }
 
 }  // namespace testing_util

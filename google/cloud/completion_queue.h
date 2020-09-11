@@ -17,6 +17,7 @@
 
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_stream_impl.h"
+#include "google/cloud/internal/async_rpc_details.h"
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,13 +43,13 @@ class CompletionQueue {
    * Note that more than one thread can call this member function, to create a
    * pool of threads completing asynchronous operations.
    */
-  void Run();
+  void Run() { impl_->Run(); }
 
   /// Terminate the completion queue event loop.
-  void Shutdown();
+  void Shutdown() { impl_->Shutdown(); }
 
   /// Cancel all pending operations.
-  void CancelAll();
+  void CancelAll() { impl_->CancelAll(); }
 
   /**
    * Create a timer that fires at @p deadline.

@@ -20,6 +20,10 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <condition_variable>
+#include <memory>
+#include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -32,13 +36,36 @@ namespace testing_util {
 class FakeCompletionQueueImpl
     : public google::cloud::internal::CompletionQueueImpl {
  public:
+  void Run() override;
+  void Shutdown() override;
+  void CancelAll() override;
+  grpc::CompletionQueue& cq() override { return cq_; }
+
   future<StatusOr<std::chrono::system_clock::time_point>> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline) override;
   void RunAsync(std::unique_ptr<internal::RunAsyncBase> function) override;
 
-  using CompletionQueueImpl::empty;
-  using CompletionQueueImpl::SimulateCompletion;
-  using CompletionQueueImpl::size;
+  void StartOperation(std::shared_ptr<internal::AsyncGrpcOperation> op,
+                      absl::FunctionRef<void(void*)> start) override;
+
+  void SimulateCompletion(bool ok);
+
+  bool empty() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_.empty();
+  }
+
+  std::size_t size() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_.size();
+  }
+
+ private:
+  grpc::CompletionQueue cq_;
+  mutable std::mutex mu_;
+  std::condition_variable cv_;
+  bool shutdown_ = false;
+  std::vector<std::shared_ptr<internal::AsyncGrpcOperation>> pending_ops_;
 };
 
 }  // namespace testing_util

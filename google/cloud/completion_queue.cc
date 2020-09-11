@@ -13,19 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/internal/default_completion_queue_impl.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-CompletionQueue::CompletionQueue() : impl_(new internal::CompletionQueueImpl) {}
-
-void CompletionQueue::Run() { impl_->Run(); }
-
-void CompletionQueue::Shutdown() { impl_->Shutdown(); }
-
-void CompletionQueue::CancelAll() { impl_->CancelAll(); }
+CompletionQueue::CompletionQueue()
+    : impl_(new internal::DefaultCompletionQueueImpl) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
