@@ -2,7 +2,7 @@
 
 @mainpage Cloud Pub/Sub C++ Client Library
 
-The Cloud Pusb/Sub C++ Client library offers types and functions to use Cloud
+The Cloud Pub/Sub C++ Client library offers types and functions to use Cloud
 Pub/Sub from C++11 applications.
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
