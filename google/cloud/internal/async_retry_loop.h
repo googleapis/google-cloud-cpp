@@ -80,61 +80,133 @@ class AsyncRetryLoopImpl : public std::enable_shared_from_this<
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
+    auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
+    result_ = promise<T>([weak] {
+      if (auto self = weak.lock()) self->Cancel();
+    });
+
     StartAttempt();
     return result_.get_future();
   }
 
  private:
+  enum State {
+    kIdle,
+    kWaiting,
+    kDone,
+  };
+
   void StartAttempt() {
     if (retry_policy_->IsExhausted()) {
-      result_.set_value(
+      SetDone(
           RetryLoopError("Retry policy exhausted in", location_, last_status_));
       return;
     }
     auto self = this->shared_from_this();
-    functor_(cq_, absl::make_unique<grpc::ClientContext>(), request_)
-        .then([self](future<T> f) { self->OnAttempt(f.get()); });
+    auto op = functor_(cq_, absl::make_unique<grpc::ClientContext>(), request_)
+                  .then([self](future<T> f) { self->OnAttempt(f.get()); });
+    SetWaiting(std::move(op));
   }
 
   void OnAttempt(T result) {
+    SetIdle();
     // A successful attempt, set the value and finish the loop.
     if (result.ok()) {
-      result_.set_value(std::move(result));
+      SetDone(std::move(result));
       return;
     }
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
     if (idempotency_ == Idempotency::kNonIdempotent) {
-      result_.set_value(RetryLoopError("Error in non-idempotent operation",
-                                       location_, last_status_));
+      SetDone(RetryLoopError("Error in non-idempotent operation", location_,
+                             last_status_));
       return;
     }
     if (!retry_policy_->OnFailure(last_status_)) {
       if (retry_policy_->IsPermanentFailure(last_status_)) {
-        result_.set_value(
-            RetryLoopError("Permanent error in", location_, last_status_));
+        SetDone(RetryLoopError("Permanent error in", location_, last_status_));
       } else {
-        result_.set_value(RetryLoopError("Retry policy exhausted in", location_,
-                                         last_status_));
+        SetDone(RetryLoopError("Retry policy exhausted in", location_,
+                               last_status_));
       }
       return;
     }
+    if (Cancelled()) return;
     auto self = this->shared_from_this();
-    cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
-        .then(
-            [self](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-              self->OnBackoffTimer(f.get());
-            });
+    auto op =
+        cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+            .then(
+                [self](
+                    future<StatusOr<std::chrono::system_clock::time_point>> f) {
+                  self->OnBackoffTimer(f.get());
+                });
+    SetWaiting(std::move(op));
   }
 
   void OnBackoffTimer(StatusOr<std::chrono::system_clock::time_point> tp) {
+    SetIdle();
     if (!tp) {
-      // some kind of error in the CompletionQueue, probably shutting down.
-      result_.set_value(RetryLoopError("Timer failure in", location_,
-                                       std::move(tp).status()));
+      if (Cancelled()) {
+        // The retry loop has been canceled and that cancelled the timer.
+        SetDone(
+            RetryLoopError("Retry loop cancelled", location_, last_status_));
+
+      } else {
+        // Some kind of error in the CompletionQueue, probably shutting down.
+        SetDone(RetryLoopError("Timer failure in", location_,
+                               std::move(tp).status()));
+      }
       return;
     }
+    if (Cancelled()) return;
     StartAttempt();
+  }
+
+  void SetIdle() {
+    std::unique_lock<std::mutex> lk(mu_);
+    switch (state_) {
+      case kIdle:
+      case kDone:
+        break;
+      case kWaiting:
+        state_ = kIdle;
+        break;
+    }
+  }
+
+  void SetWaiting(future<void> op) {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (state_ != kIdle) return;
+    state_ = kWaiting;
+    pending_operation_ = std::move(op);
+  }
+
+  void SetDone(T value) {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (state_ == kDone) return;
+    state_ = kDone;
+    lk.unlock();
+    result_.set_value(std::move(value));
+  }
+
+  void Cancel() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cancelled_ = true;
+    if (state_ != kWaiting) return;
+    future<void> f = std::move(pending_operation_);
+    state_ = kIdle;
+    lk.unlock();
+    f.cancel();
+  }
+
+  bool Cancelled() {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (!cancelled_) return false;
+    state_ = kDone;
+    lk.unlock();
+    result_.set_value(
+        RetryLoopError("Retry loop cancelled", location_, last_status_));
+    return true;
   }
 
   std::unique_ptr<RetryPolicy> retry_policy_;
@@ -146,6 +218,10 @@ class AsyncRetryLoopImpl : public std::enable_shared_from_this<
   char const* location_ = "unknown";
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
+  std::mutex mu_;
+  State state_ = kIdle;
+  bool cancelled_ = false;
+  future<void> pending_operation_;
 };
 
 /**
