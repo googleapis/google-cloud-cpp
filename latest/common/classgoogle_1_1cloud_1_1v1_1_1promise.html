@@ -82,9 +82,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeb14be3957e510ac5582a03e4fdc048b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#aeb14be3957e510ac5582a03e4fdc048b">promise</a> (std::function&lt; void()&gt; cancellation_callback=[] {})</td></tr>
-<tr class="memdesc:aeb14be3957e510ac5582a03e4fdc048b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a promise with an unsatisfied shared state.  <a href="#aeb14be3957e510ac5582a03e4fdc048b">More...</a><br /></td></tr>
-<tr class="separator:aeb14be3957e510ac5582a03e4fdc048b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4e7cd2a4ec450f2a4a931c6927c314"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#aab4e7cd2a4ec450f2a4a931c6927c314">promise</a> ()</td></tr>
+<tr class="memdesc:aab4e7cd2a4ec450f2a4a931c6927c314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a promise with an unsatisfied shared state.  <a href="#aab4e7cd2a4ec450f2a4a931c6927c314">More...</a><br /></td></tr>
+<tr class="separator:aab4e7cd2a4ec450f2a4a931c6927c314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f2301190f21f7692b02300263aa42b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a51f2301190f21f7692b02300263aa42b">promise</a> (std::function&lt; void()&gt; cancellation_callback)</td></tr>
+<tr class="memdesc:a51f2301190f21f7692b02300263aa42b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a promise with an unsatisfied shared state.  <a href="#a51f2301190f21f7692b02300263aa42b">More...</a><br /></td></tr>
+<tr class="separator:a51f2301190f21f7692b02300263aa42b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a979022eb2c24414c5b8fbc1710489817"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a979022eb2c24414c5b8fbc1710489817">promise</a> (null_promise_t x)</td></tr>
+<tr class="memdesc:a979022eb2c24414c5b8fbc1710489817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a promise <em>without</em> a shared state.  <a href="#a979022eb2c24414c5b8fbc1710489817">More...</a><br /></td></tr>
+<tr class="separator:a979022eb2c24414c5b8fbc1710489817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3979c6f3cc2d1a58aee0bd28c0a0bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a9e3979c6f3cc2d1a58aee0bd28c0a0bc">promise</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">promise</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="memdesc:a9e3979c6f3cc2d1a58aee0bd28c0a0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new promise and transfer any shared state from <code>rhs</code>.  <a href="#a9e3979c6f3cc2d1a58aee0bd28c0a0bc">More...</a><br /></td></tr>
 <tr class="separator:a9e3979c6f3cc2d1a58aee0bd28c0a0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,8 +125,39 @@ class google::cloud::v1::promise&lt; T &gt;</h3>
 
 <p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00135">135</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aeb14be3957e510ac5582a03e4fdc048b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb14be3957e510ac5582a03e4fdc048b">&#9670;&nbsp;</a></span>promise() <span class="overload">[1/3]</span></h2>
+<a id="aab4e7cd2a4ec450f2a4a931c6927c314"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab4e7cd2a4ec450f2a4a931c6927c314">&#9670;&nbsp;</a></span>promise() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">google::cloud::v1::promise</a>&lt; T &gt;::<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">promise</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a promise with an unsatisfied shared state. </p>
+
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00138">138</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+
+</div>
+</div>
+<a id="a51f2301190f21f7692b02300263aa42b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f2301190f21f7692b02300263aa42b">&#9670;&nbsp;</a></span>promise() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,25 +171,57 @@ template&lt;typename T&gt; </div>
           <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">google::cloud::v1::promise</a>&lt; T &gt;::<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">promise</a> </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; void()&gt;&#160;</td>
-          <td class="paramname"><em>cancellation_callback</em> = <code>[]&#160;{}</code></td><td>)</td>
+          <td class="paramname"><em>cancellation_callback</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Creates a promise with an unsatisfied shared state. </p>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00139">139</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00141">141</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+
+</div>
+</div>
+<a id="a979022eb2c24414c5b8fbc1710489817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a979022eb2c24414c5b8fbc1710489817">&#9670;&nbsp;</a></span>promise() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">google::cloud::v1::promise</a>&lt; T &gt;::<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">promise</a> </td>
+          <td>(</td>
+          <td class="paramtype">null_promise_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a promise <em>without</em> a shared state. </p>
+
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00147">147</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
 <a id="a9e3979c6f3cc2d1a58aee0bd28c0a0bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e3979c6f3cc2d1a58aee0bd28c0a0bc">&#9670;&nbsp;</a></span>promise() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3979c6f3cc2d1a58aee0bd28c0a0bc">&#9670;&nbsp;</a></span>promise() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,7 +281,7 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <a id="acb3fa6dccd380ea7022ccc1ed5fd5054"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb3fa6dccd380ea7022ccc1ed5fd5054">&#9670;&nbsp;</a></span>promise() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acb3fa6dccd380ea7022ccc1ed5fd5054">&#9670;&nbsp;</a></span>promise() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,7 +336,7 @@ template&lt;typename T&gt; </div>
 
 <p>Creates the <code>future&lt;T&gt;</code> using the same shared state as <code>*this</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00175">175</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00181">181</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
@@ -299,7 +368,7 @@ template&lt;typename T&gt; </div>
 
 <p>Abandons the shared state in <code>*this</code>, if any, and transfers the shared state from <code>rhs</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00149">149</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00155">155</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +435,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00188">188</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00194">194</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
@@ -405,7 +474,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00203">203</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00209">209</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +506,7 @@ template&lt;typename T&gt; </div>
 
 <p>Swaps the shared state in <code>*this</code> with <code>rhs</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00168">168</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00174">174</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
