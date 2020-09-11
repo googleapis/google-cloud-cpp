@@ -59,6 +59,10 @@ class CompletionQueueImpl {
   virtual future<StatusOr<std::chrono::system_clock::time_point>>
   MakeDeadlineTimer(std::chrono::system_clock::time_point deadline) = 0;
 
+  /// Create a new timer.
+  virtual future<StatusOr<std::chrono::system_clock::time_point>>
+  MakeRelativeTimer(std::chrono::nanoseconds duration) = 0;
+
   /// Enqueue a new asynchronous function.
   virtual void RunAsync(std::unique_ptr<RunAsyncBase> function) = 0;
 

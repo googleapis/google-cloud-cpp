@@ -165,6 +165,14 @@ DefaultCompletionQueueImpl::MakeDeadlineTimer(
   return op->GetFuture();
 }
 
+future<StatusOr<std::chrono::system_clock::time_point>>
+DefaultCompletionQueueImpl::MakeRelativeTimer(
+    std::chrono::nanoseconds duration) {
+  using std::chrono::system_clock;
+  auto const d = std::chrono::duration_cast<system_clock::duration>(duration);
+  return MakeDeadlineTimer(system_clock::now() + d);
+}
+
 void DefaultCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   auto op = std::make_shared<AsyncFunction>(std::move(function));

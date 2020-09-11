@@ -43,6 +43,8 @@ class FakeCompletionQueueImpl
 
   future<StatusOr<std::chrono::system_clock::time_point>> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline) override;
+  future<StatusOr<std::chrono::system_clock::time_point>> MakeRelativeTimer(
+      std::chrono::nanoseconds duration) override;
   void RunAsync(std::unique_ptr<internal::RunAsyncBase> function) override;
 
   void StartOperation(std::shared_ptr<internal::AsyncGrpcOperation> op,
