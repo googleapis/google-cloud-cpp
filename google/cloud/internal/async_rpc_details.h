@@ -56,16 +56,17 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   /// Prepare the operation to receive the response and start the RPC.
   template <typename AsyncFunctionType>
   void Start(AsyncFunctionType async_call,
-             std::unique_ptr<grpc::ClientContext> context,
-             Request const& request, grpc::CompletionQueue* cq, void* tag) {
-    context_ = std::move(context);
-    auto rpc = async_call(context_.get(), request, cq);
+             std::unique_ptr<grpc::ClientContext> ctx, Request const& request,
+             grpc::CompletionQueue* cq, void* tag) {
+    // Need a copyable holder to use in the `std::function<>` callback:
+    auto context = std::shared_ptr<grpc::ClientContext>(std::move(ctx));
+    promise_ = promise<StatusOr<Response>>([context] { context->TryCancel(); });
+    auto rpc = async_call(context.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
   }
 
-  void Cancel() override { context_->TryCancel(); }
+  void Cancel() override {}
 
- private:
   bool Notify(bool ok) override {
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we
@@ -83,12 +84,13 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     return true;
   }
 
+ private:
   // These are the parameters for the RPC, most of them have obvious semantics.
-  // `context_` is stored as a `unique_ptr` because (a) we need to receive it
-  // as a parameter, otherwise the caller could not set timeouts, metadata, or
-  // any other attributes, and (b) there is no move or assignment operator for
+  // The promise will hold the grpc::ClientContext (in its cancel callback), it
+  // uses a `unique_ptr` because (a) we need to receive it as a parameter,
+  // otherwise the caller could not set timeouts, metadata, or any other
+  // attributes, and (b) there is no move or assignment operator for
   // `grpc::ClientContext`.
-  std::unique_ptr<grpc::ClientContext> context_;
   grpc::Status status_;
   Response response_;
 
