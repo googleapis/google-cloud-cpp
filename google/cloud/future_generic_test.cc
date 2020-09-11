@@ -717,6 +717,13 @@ TEST(FutureTestInt, CancellationAfterSatisfaction) {
   ASSERT_EQ(1, f0.get());
 }
 
+/// @test Verify we can create promises without a shared state.
+TEST(FutureTestInt, CreateInvalid) {
+  promise<int> p0(null_promise_t{});
+
+  ExpectFutureError([&] { p0.set_value(42); }, std::future_errc::no_state);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

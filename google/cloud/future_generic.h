@@ -135,11 +135,17 @@ template <typename T>
 class promise final : private internal::promise_base<T> {
  public:
   /// Creates a promise with an unsatisfied shared state.
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  promise(
+  promise() : internal::promise_base<T>([] {}) {}
+
+  /// Creates a promise with an unsatisfied shared state.
+  explicit promise(
       // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::function<void()> cancellation_callback = [] {})
+      std::function<void()> cancellation_callback)
       : internal::promise_base<T>(std::move(cancellation_callback)) {}
+
+  /// Creates a promise *without* a shared state.
+  explicit promise(null_promise_t x)
+      : internal::promise_base<T>(std::move(x)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
   promise(promise&&) noexcept = default;
