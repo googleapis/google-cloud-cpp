@@ -86,7 +86,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
 
  private:
   // These are the parameters for the RPC, most of them have obvious semantics.
-  // The promise will hold the grpc::ClientContext (in its cancel callback), it
+  // The promise will hold the grpc::ClientContext (in its cancel callback). It
   // uses a `unique_ptr` because (a) we need to receive it as a parameter,
   // otherwise the caller could not set timeouts, metadata, or any other
   // attributes, and (b) there is no move or assignment operator for
