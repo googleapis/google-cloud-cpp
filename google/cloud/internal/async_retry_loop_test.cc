@@ -267,11 +267,12 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
 
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  AutomaticallyCreatedBackgroundThreads background;
+  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  google::cloud::CompletionQueue cq(fake);
   future<StatusOr<int>> actual = AsyncRetryLoop(
-      LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
       ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone(),
-      Idempotency::kIdempotent, background.cq(),
+      Idempotency::kIdempotent, cq,
       [this](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int x) { return SimulateRequest(x); },
@@ -280,6 +281,9 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
   // First simulate a regular request.
   auto p = WaitForRequest();
   p.set_value(transient);
+  // Then simulate the backoff timer expiring.
+  fake->SimulateCompletion(/*ok=*/true);
+  // Then another request that gets cancelled.
   p = WaitForRequest();
   EXPECT_EQ(0, CancelCount());
   actual.cancel();
@@ -295,11 +299,12 @@ TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
 
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  AutomaticallyCreatedBackgroundThreads background;
+  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  google::cloud::CompletionQueue cq(fake);
   future<StatusOr<int>> actual = AsyncRetryLoop(
-      LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
       ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone(),
-      Idempotency::kIdempotent, background.cq(),
+      Idempotency::kIdempotent, cq,
       [this](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int x) { return SimulateRequest(x); },
@@ -308,6 +313,8 @@ TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
   // First simulate a regular request.
   auto p = WaitForRequest();
   p.set_value(transient);
+  // Then simulate the backoff timer expiring.
+  fake->SimulateCompletion(/*ok=*/true);
   p = WaitForRequest();
   EXPECT_EQ(0, CancelCount());
   actual.cancel();
