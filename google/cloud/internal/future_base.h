@@ -26,7 +26,12 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+/// A helper class to initialize promises to a null state.
+struct null_promise_t {  // NOLINT(readability-identifier-naming)
+};
+
 namespace internal {
+
 /**
  * Refactor common functions to `future<T>`, `future<R&>` and `future<void>`.
  * @tparam T
@@ -150,6 +155,10 @@ class future_base {  // NOLINT(readability-identifier-naming)
 template <typename T>
 class promise_base {  // NOLINT(readability-identifier-naming)
  public:
+  /// Initialize the common components to a null state.
+  explicit promise_base(null_promise_t) {}
+
+  /// Initialize the common components of a promise
   explicit promise_base(std::function<void()> cancellation_callback)
       : shared_state_(
             std::make_shared<shared_state_type>(cancellation_callback)) {}
