@@ -106,7 +106,9 @@ FakeCompletionQueueImpl::MakeDeadlineTimer(
 
 future<StatusOr<std::chrono::system_clock::time_point>>
 FakeCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
-  return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
+  using std::chrono::system_clock;
+  auto const d = std::chrono::duration_cast<system_clock::duration>(duration);
+  return MakeDeadlineTimer(system_clock::now() + d);
 }
 
 void FakeCompletionQueueImpl::RunAsync(
