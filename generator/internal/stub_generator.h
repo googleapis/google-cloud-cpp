@@ -16,6 +16,7 @@
 
 #include "google/cloud/status.h"
 #include "generator/internal/class_generator_interface.h"
+#include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
@@ -34,6 +35,8 @@ class StubGenerator : public ClassGeneratorInterface {
  public:
   StubGenerator(google::protobuf::ServiceDescriptor const* service_descriptor,
                 std::map<std::string, std::string> service_vars,
+                std::map<std::string, std::map<std::string, std::string>>
+                    service_method_vars,
                 google::protobuf::compiler::GeneratorContext* context);
 
   ~StubGenerator() override = default;
@@ -48,9 +51,12 @@ class StubGenerator : public ClassGeneratorInterface {
  private:
   void SetVars();
   Status GenerateHeader();
+  Status GenerateCc();
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
-  std::map<std::string, std::string> vars_;
+  std::map<std::string, std::string> service_vars_;
+  std::map<std::string, std::map<std::string, std::string>>
+      service_method_vars_;
   Printer header_;
   Printer cc_;
 };

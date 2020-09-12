@@ -229,7 +229,8 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
   class_generators.push_back(absl::make_unique<StubGenerator>(
-      service, CreateServiceVars(*service, vars), context));
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   return class_generators;
 }
 
