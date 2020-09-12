@@ -228,6 +228,7 @@ target_link_libraries(
            absl::strings
            absl::str_format
            absl::time
+           absl::variant
            google_cloud_cpp_common
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
@@ -554,9 +555,9 @@ set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Storage.")
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
+google_cloud_cpp_absl_pkg_config(absl_pkg_config storage_client)
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client" " -lcrc32c"
-              " -labsl_strings" " -labsl_strings_internal"
-              " -labsl_str_format_internal")
+              ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"

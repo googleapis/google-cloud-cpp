@@ -384,7 +384,8 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_bigtable_protos"
 )
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client")
+google_cloud_cpp_absl_pkg_config(absl_pkg_config bigtable_client)
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client" ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
