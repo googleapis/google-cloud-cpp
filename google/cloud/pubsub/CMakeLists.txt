@@ -306,7 +306,8 @@ set(GOOGLE_CLOUD_PC_DESCRIPTION
 set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_pubsub_protos"
 )
-set(GOOGLE_CLOUD_PC_LIBS "-lpubsub_client")
+google_cloud_cpp_absl_pkg_config(absl_pkg_config pubsub_client)
+string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lpubsub_client" ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"
