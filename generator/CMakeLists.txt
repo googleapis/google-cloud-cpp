@@ -41,9 +41,12 @@ target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
     google_cloud_cpp_generator
-    PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+    PUBLIC google_cloud_cpp_grpc_utils
+           google_cloud_cpp_common
            googleapis-c++::api_client_protos
-           googleapis-c++::longrunning_operations_protos absl::str_format)
+           googleapis-c++::longrunning_operations_protos
+           absl::str_format
+           protobuf::libprotoc)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
 target_compile_options(google_cloud_cpp_generator
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
