@@ -38,6 +38,14 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+std::map<std::string, std::string> StubGenerator::MergeServiceAndMethodVars(
+    google::protobuf::MethodDescriptor const& method) const {
+  auto vars = service_vars_;
+  vars.insert(service_method_vars_.at(method.full_name()).begin(),
+              service_method_vars_.at(method.full_name()).end());
+  return vars;
+}
+
 StubGenerator::StubGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     std::map<std::string, std::string> service_vars,
@@ -92,14 +100,9 @@ Status StubGenerator::GenerateHeader() {
     "\n");
   // clang-format on
 
-  for (int i = 0; i < service_descriptor_->method_count(); i++) {
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     auto method = service_descriptor_->method(i);
-    std::map<std::string, std::string> vars(service_vars_.begin(),
-                                            service_vars_.end());
-    vars.insert(service_method_vars_[method->full_name()].begin(),
-                service_method_vars_[method->full_name()].end());
-
-    PrintMethod(*method, header_, vars,
+    PrintMethod(*method, header_, MergeServiceAndMethodVars(*method),
                 {MethodPattern(
                     {{IsResponseTypeEmpty,
                       // clang-format off
@@ -146,15 +149,11 @@ Status StubGenerator::GenerateHeader() {
     "        operations_(std::move(operations)) {}\n\n");
                       // clang-format on
 
-  for (int i = 0; i < service_descriptor_->method_count(); i++) {
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     auto method = service_descriptor_->method(i);
-    std::map<std::string, std::string> vars(service_vars_.begin(),
-                                            service_vars_.end());
-    vars.insert(service_method_vars_[method->full_name()].begin(),
-                service_method_vars_[method->full_name()].end());
     // emit methods
     PrintMethod(
-        *method, header_, vars,
+        *method, header_, MergeServiceAndMethodVars(*method),
         {MethodPattern({{IsResponseTypeEmpty,
                          // clang-format off
     "  Status\n",
@@ -228,11 +227,8 @@ Status StubGenerator::GenerateCc() {
   auto namespaces =
       BuildNamespaces(service_vars_, NamespaceType::kInternal).value();
   for (auto const& nspace : namespaces) {
-    if (absl::EndsWith(nspace, "_CLIENT_NS")) {
-      cc_.Print("inline namespace $namespace$ {\n", "namespace", nspace);
-    } else {
-      cc_.Print("namespace $namespace$ {\n", "namespace", nspace);
-    }
+    if (absl::EndsWith(nspace, "_CLIENT_NS")) cc_.Print("inline ");
+    cc_.Print("namespace $namespace$ {\n", "namespace", nspace);
   }
   cc_.Print("\n");
 
@@ -241,14 +237,10 @@ Status StubGenerator::GenerateCc() {
   // clang-format on
 
   // default stub class member methods
-  for (int i = 0; i < service_descriptor_->method_count(); i++) {
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     auto method = service_descriptor_->method(i);
-    std::map<std::string, std::string> vars(service_vars_.begin(),
-                                            service_vars_.end());
-    vars.insert(service_method_vars_[method->full_name()].begin(),
-                service_method_vars_[method->full_name()].end());
     PrintMethod(
-        *method, cc_, vars,
+        *method, cc_, MergeServiceAndMethodVars(*method),
         {MethodPattern(
             {{IsResponseTypeEmpty,
               // clang-format off
@@ -304,9 +296,8 @@ Status StubGenerator::GenerateCc() {
   // clang-format on
 
   // namespace closers
-  std::reverse(namespaces.begin(), namespaces.end());
-  for (auto const& nspace : namespaces) {
-    cc_.Print("}  // namespace $namespace$\n", "namespace", nspace);
+  for (auto iter = namespaces.rbegin(); iter != namespaces.rend(); ++iter) {
+    cc_.Print("}  // namespace $namespace$\n", "namespace", *iter);
   }
   cc_.Print("\n");
 

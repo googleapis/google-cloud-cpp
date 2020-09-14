@@ -50,6 +50,8 @@ class StubGenerator : public ClassGeneratorInterface {
 
  private:
   void SetVars();
+  std::map<std::string, std::string> MergeServiceAndMethodVars(
+      google::protobuf::MethodDescriptor const& method) const;
   Status GenerateHeader();
   Status GenerateCc();
 
