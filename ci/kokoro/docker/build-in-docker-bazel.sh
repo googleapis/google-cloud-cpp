@@ -40,7 +40,17 @@ readonly BAZEL_BIN="/usr/local/bin/bazel"
 io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 
-bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
+# Use an absolute path so it doesn't depend on the test's CWD.
+SPONGE_LOG="$(realpath "${BINARY_DIR}")/sponge_log.xml"
+readonly SPONGE_LOG
+
+bazel_args=(
+  "--test_output=errors"
+  "--verbose_failures=true"
+  "--keep_going"
+  "--test_env=GTEST_OUTPUT=xml:${SPONGE_LOG}"
+)
+
 if [[ -n "${RUNS_PER_TEST}" ]]; then
   bazel_args+=("--runs_per_test=${RUNS_PER_TEST}")
 fi

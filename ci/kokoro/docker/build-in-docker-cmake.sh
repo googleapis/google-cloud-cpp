@@ -169,6 +169,11 @@ if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
 fi
 readonly TEST_JOB_COUNT
 
+# Use an absolute path so it doesn't depend on the test's CWD.
+SPONGE_LOG="$(realpath "${BINARY_DIR}")/sponge_log.xml"
+readonly SPONGE_LOG
+export GTEST_OUTPUT="xml:${SPONGE_LOG}"
+
 ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
   ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
