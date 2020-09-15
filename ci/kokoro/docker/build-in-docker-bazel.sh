@@ -71,6 +71,12 @@ if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360
   bazel_args+=("--experimental_guard_against_concurrent_changes")
+
+  # XXX BES config
+  bazel_args+=("--bes_backend=grpcs://buildeventservice.googleapis.com")
+  bazel_args+=("--bes_timeout=600s")
+  bazel_args+=("--bes_results_url=https://source.cloud.google.com/results/invocations/")
+  bazel_args+=("--project_id=cloud-cpp-testing-resources")
 fi
 
 echo "================================================================"
