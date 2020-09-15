@@ -16,6 +16,7 @@
 
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include "generator/internal/printer.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -72,8 +73,7 @@ enum class NamespaceType { kNormal, kInternal };
  * Builds namespace hierarchy.
  */
 StatusOr<std::vector<std::string>> BuildNamespaces(
-    std::map<std::string, std::string> const& vars,
-    NamespaceType ns_type = NamespaceType::kNormal);
+    VarsDictionary const& vars, NamespaceType ns_type = NamespaceType::kNormal);
 
 /**
  * Validates command line arguments passed to the microgenerator.

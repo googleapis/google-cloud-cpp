@@ -33,14 +33,14 @@ namespace generator_internal {
  * Extracts service wide substitution data required by all class generators from
  * the provided descriptor.
  */
-std::map<std::string, std::string> CreateServiceVars(
+VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values);
 
 /**
  * Extracts method specific substitution data for each method in the service.
  */
-std::map<std::string, std::map<std::string, std::string>> CreateMethodVars(
+std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service);
 
 /**
@@ -65,8 +65,7 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
  *
  */
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,
-                   Printer& printer,
-                   std::map<std::string, std::string> const& vars,
+                   Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
 

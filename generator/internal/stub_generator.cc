@@ -38,7 +38,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-std::map<std::string, std::string> StubGenerator::MergeServiceAndMethodVars(
+VarsDictionary StubGenerator::MergeServiceAndMethodVars(
     google::protobuf::MethodDescriptor const& method) const {
   auto vars = service_vars_;
   vars.insert(service_method_vars_.at(method.full_name()).begin(),
@@ -48,9 +48,8 @@ std::map<std::string, std::string> StubGenerator::MergeServiceAndMethodVars(
 
 StubGenerator::StubGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
-    std::map<std::string, std::string> service_vars,
-    std::map<std::string, std::map<std::string, std::string>>
-        service_method_vars,
+    VarsDictionary service_vars,
+    std::map<std::string, VarsDictionary> service_method_vars,
     google::protobuf::compiler::GeneratorContext* context)
     : service_descriptor_(service_descriptor),
       service_vars_(std::move(service_vars)),

@@ -67,7 +67,7 @@ std::string CppTypeToString(FieldDescriptor const* field) {
 
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -93,7 +93,7 @@ void SetLongrunningOperationMethodVars(
 
 void SetMethodSignatureMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
   for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -121,7 +121,7 @@ void SetMethodSignatureMethodVars(
 
 void SetResourceRoutingMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   if (!method.options().HasExtension(google::api::http)) return;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
@@ -172,11 +172,10 @@ void SetResourceRoutingMethodVars(
 }
 }  // namespace
 
-std::map<std::string, std::string> CreateServiceVars(
+VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
-  std::map<std::string, std::string> vars(initial_values.begin(),
-                                          initial_values.end());
+  VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
@@ -196,13 +195,12 @@ std::map<std::string, std::string> CreateServiceVars(
   return vars;
 }
 
-std::map<std::string, std::map<std::string, std::string>> CreateMethodVars(
+std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service) {
-  std::map<std::string, std::map<std::string, std::string>>
-      service_methods_vars;
+  std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto method = service.method(i);
-    std::map<std::string, std::string> method_vars;
+    VarsDictionary method_vars;
     method_vars["method_name"] = method->name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
     method_vars["request_type"] =
@@ -235,8 +233,7 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
 }
 
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,
-                   Printer& printer,
-                   std::map<std::string, std::string> const& vars,
+                   Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line) {
   std::vector<MethodPattern> matching_patterns;

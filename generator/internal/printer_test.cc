@@ -51,8 +51,7 @@ TEST(PrinterTest, PrintWithMap) {
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
-  std::map<std::string, std::string> vars;
-  vars["name"] = "Inigo Montoya";
+  VarsDictionary vars{{"name", "Inigo Montoya"}};
   printer.Print(42, "some_file", vars, "Hello! My name is $name$.\n");
 }
 

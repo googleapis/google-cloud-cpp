@@ -53,10 +53,11 @@ class CreateServiceVarsTest
         {std::make_pair("product_path", "google/cloud/frobber/")});
   }
 
-  static std::map<std::string, std::string> vars_;
+  static VarsDictionary vars_;
 };
 
-std::map<std::string, std::string> CreateServiceVarsTest::vars_;
+VarsDictionary CreateServiceVarsTest::vars_;
+
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
   auto iter = vars_.find(GetParam().first);
   EXPECT_TRUE(iter != vars_.end());
@@ -230,11 +231,10 @@ class CreateMethodVarsTest
     vars_ = CreateMethodVars(*service_file_descriptor->service(0));
   }
 
-  static std::map<std::string, std::map<std::string, std::string>> vars_;
+  static std::map<std::string, VarsDictionary> vars_;
 };
 
-std::map<std::string, std::map<std::string, std::string>>
-    CreateMethodVarsTest::vars_;
+std::map<std::string, VarsDictionary> CreateMethodVarsTest::vars_;
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
   auto method_iter = vars_.find(GetParam().method);

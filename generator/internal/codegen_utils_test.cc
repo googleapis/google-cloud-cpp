@@ -73,14 +73,14 @@ TEST(ProtoNameToCppName, Success) {
 }
 
 TEST(BuildNamespace, EmptyVars) {
-  std::map<std::string, std::string> vars;
+  VarsDictionary vars;
   auto result = BuildNamespaces(vars, NamespaceType::kInternal);
   EXPECT_EQ(result.status().code(), StatusCode::kNotFound);
   EXPECT_EQ(result.status().message(), "product_path must be present in vars.");
 }
 
 TEST(BuildNamespace, NoTrailingSlash) {
-  std::map<std::string, std::string> vars;
+  VarsDictionary vars;
   vars["product_path"] = "google/cloud/spanner";
   auto result = BuildNamespaces(vars, NamespaceType::kInternal);
   EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
@@ -88,7 +88,7 @@ TEST(BuildNamespace, NoTrailingSlash) {
 }
 
 TEST(BuildNamespace, ProductPathTooShort) {
-  std::map<std::string, std::string> vars;
+  VarsDictionary vars;
   vars["product_path"] = std::string("/");
   auto result = BuildNamespaces(vars, NamespaceType::kInternal);
   EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
@@ -97,7 +97,7 @@ TEST(BuildNamespace, ProductPathTooShort) {
 }
 
 TEST(BuildNamespaces, Internal) {
-  std::map<std::string, std::string> vars;
+  VarsDictionary vars;
   vars["product_path"] = "google/cloud/spanner/";
   auto result = BuildNamespaces(vars, NamespaceType::kInternal);
   ASSERT_TRUE(result.ok());
@@ -109,7 +109,7 @@ TEST(BuildNamespaces, Internal) {
 }
 
 TEST(BuildNamespaces, NotInternal) {
-  std::map<std::string, std::string> vars;
+  VarsDictionary vars;
   vars["product_path"] = "google/cloud/translation/";
   auto result = BuildNamespaces(vars);
   ASSERT_TRUE(result.ok());

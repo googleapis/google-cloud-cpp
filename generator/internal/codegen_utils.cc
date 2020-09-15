@@ -84,8 +84,8 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-StatusOr<std::vector<std::string>> BuildNamespaces(
-    std::map<std::string, std::string> const& vars, NamespaceType ns_type) {
+StatusOr<std::vector<std::string>> BuildNamespaces(VarsDictionary const& vars,
+                                                   NamespaceType ns_type) {
   auto iter = vars.find("product_path");
   if (iter == vars.end()) {
     return Status(StatusCode::kNotFound,

@@ -26,6 +26,8 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+using VarsDictionary = std::map<std::string, std::string>;
+
 /**
  * Wrapper around a google::protobuf::io::ZeroCopyOutputStream and a
  * google::protobuf::io::Printer object so that they can be used for
@@ -52,8 +54,7 @@ class Printer {
    * delimiter characters (as given to the constructor).  The variable bindings
    * are defined by the given map.
    */
-  void Print(const std::map<std::string, std::string>& variables,
-             std::string const& text) {
+  void Print(VarsDictionary const& variables, std::string const& text) {
     printer_->Print(variables, text.c_str());
   }
 
@@ -71,8 +72,7 @@ class Printer {
    * meaningful diagnostic.
    */
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  void Print(int line, char const* file,
-             const std::map<std::string, std::string>& variables,
+  void Print(int line, char const* file, VarsDictionary const& variables,
              std::string const& text) {
     try {
       Print(variables, text);
@@ -82,8 +82,7 @@ class Printer {
     }
   }
 #else
-  void Print(int, char const*,
-             const std::map<std::string, std::string>& variables,
+  void Print(int, char const*, VarsDictionary const& variables,
              std::string const& text) {
     Print(variables, text);
   }

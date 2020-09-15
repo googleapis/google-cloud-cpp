@@ -34,9 +34,8 @@ namespace generator_internal {
 class StubGenerator : public ClassGeneratorInterface {
  public:
   StubGenerator(google::protobuf::ServiceDescriptor const* service_descriptor,
-                std::map<std::string, std::string> service_vars,
-                std::map<std::string, std::map<std::string, std::string>>
-                    service_method_vars,
+                VarsDictionary service_vars,
+                std::map<std::string, VarsDictionary> service_method_vars,
                 google::protobuf::compiler::GeneratorContext* context);
 
   ~StubGenerator() override = default;
@@ -50,15 +49,14 @@ class StubGenerator : public ClassGeneratorInterface {
 
  private:
   void SetVars();
-  std::map<std::string, std::string> MergeServiceAndMethodVars(
+  VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
   Status GenerateHeader();
   Status GenerateCc();
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
-  std::map<std::string, std::string> service_vars_;
-  std::map<std::string, std::map<std::string, std::string>>
-      service_method_vars_;
+  VarsDictionary service_vars_;
+  std::map<std::string, VarsDictionary> service_method_vars_;
   Printer header_;
   Printer cc_;
 };
