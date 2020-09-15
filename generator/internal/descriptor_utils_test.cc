@@ -57,6 +57,7 @@ class CreateServiceVarsTest
 };
 
 VarsDictionary CreateServiceVarsTest::vars_;
+
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
   auto iter = vars_.find(GetParam().first);
   EXPECT_TRUE(iter != vars_.end());
