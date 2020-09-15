@@ -170,7 +170,7 @@ fi
 readonly TEST_JOB_COUNT
 
 # Use an absolute path so it doesn't depend on the test's CWD.
-xml_output="$(realpath "${TEST_XML_DIR}")/"  # with trailing slash
+xml_output="$(realpath "${TEST_XML_DIR}")/" # with trailing slash
 mkdir -p "${xml_output}"
 export GTEST_OUTPUT="xml:${xml_output}"
 

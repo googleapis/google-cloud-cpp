@@ -41,7 +41,7 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 
 # Use an absolute path so it doesn't depend on the test's CWD.
-xml_output="$(realpath "${TEST_XML_DIR}")/"  # with trailing slash
+xml_output="$(realpath "${TEST_XML_DIR}")/" # with trailing slash
 mkdir -p "${xml_output}"
 
 bazel_args=(
