@@ -409,6 +409,9 @@ docker_flags=(
   # Additional flags to enable CMake features.
   "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
 
+  # Send along the invocation ID for this build (if any).
+  "--env" "KOKORO_BUILD_ID=${KOKORO_BUILD_ID:-}"
+
   # When running the integration tests this directory contains the
   # configuration files needed to run said tests. Make it available inside
   # the Docker container.
