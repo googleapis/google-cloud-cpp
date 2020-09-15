@@ -77,6 +77,7 @@ if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   bazel_args+=("--bes_timeout=600s")
   bazel_args+=("--bes_results_url=https://source.cloud.google.com/results/invocations/")
   bazel_args+=("--project_id=$GOOGLE_CLOUD_PROJECT")
+  bazel_args+=("--invocation_id=${KOKORO_BUILD_ID:-$(uuidgen)}")
 fi
 
 echo "================================================================"
