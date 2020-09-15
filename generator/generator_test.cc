@@ -119,30 +119,6 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   EXPECT_TRUE(actual_error.empty());
 }
 
-TEST_F(GeneratorTest, GenerateServicesFailure) {
-  DescriptorPool pool;
-  FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("FailureService");
-  service_file.mutable_options()->set_cc_generic_services(false);
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
-
-  EXPECT_CALL(*header_output_, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*cc_output_, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*context_, Open(_))
-      .WillOnce(Return(header_output_.release()))
-      .WillOnce(Return(cc_output_.release()));
-
-  std::string actual_error;
-  std::string expected_error = "Failed for testing.";
-  Generator generator;
-  auto result = generator.Generate(service_file_descriptor,
-                                   {"product_path=google/cloud/foo"},
-                                   context_.get(), &actual_error);
-  EXPECT_FALSE(result);
-  EXPECT_EQ(actual_error, expected_error);
-}
-
 }  // namespace
 }  // namespace generator
 }  // namespace cloud

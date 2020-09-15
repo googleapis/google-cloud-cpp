@@ -450,6 +450,9 @@ docker_flags=(
   # quota (as in calls per day) is too restrictive to run more often.
   "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
+  # If set, executes the generator integration tests.
+  "--env" "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS:-no}"
+
   # These tests are quite slow, so we only enable them in certain builds.
   "--env" "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
 
