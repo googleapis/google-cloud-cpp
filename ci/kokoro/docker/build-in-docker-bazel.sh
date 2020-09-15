@@ -76,7 +76,7 @@ if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   bazel_args+=("--bes_backend=grpcs://buildeventservice.googleapis.com")
   bazel_args+=("--bes_timeout=600s")
   bazel_args+=("--bes_results_url=https://source.cloud.google.com/results/invocations/")
-  bazel_args+=("--project_id=cloud-cpp-testing-resources")
+  bazel_args+=("--project_id=$GOOGLE_CLOUD_PROJECT")
 fi
 
 echo "================================================================"
