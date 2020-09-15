@@ -552,8 +552,8 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
       std::string ordering_key;
       std::string data;
     } data[] = {
-        {"k0", "data0"}, {"k1", "data1"}, {"k0", "data2"},
-        {"k0", "data3"}, {"k0", "data4"},
+        {"key1", "message1"}, {"key2", "message2"}, {"key1", "message3"},
+        {"key1", "message4"}, {"key1", "message5"},
     };
     std::vector<future<void>> done;
     for (auto const& datum : data) {
@@ -1202,9 +1202,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
-          topic,
-          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
-              1)));
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_message_count(1)
+                     .enable_message_ordering()));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
