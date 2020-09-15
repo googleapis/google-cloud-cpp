@@ -381,6 +381,8 @@ fi
 
 mkdir -p "${BUILD_HOME}"
 
+test_xml_dir="${BUILD_OUTPUT}/test_xml"
+
 # We use an array for the flags so they are easier to document.
 docker_flags=(
   # Enable ptrace as it is needed by s
@@ -480,6 +482,9 @@ docker_flags=(
 
   # Tells scripts whether they are running as part of a CI or not.
   "--env" "RUNNING_CI=${RUNNING_CI:-no}"
+
+  # The directory where GoogleTest should write its XML output for each test.
+  "--env" "TEST_XML_DIR=${test_xml_dir}"
 
   # Run the docker script and this user id. Because the docker image gets to
   # write in ${PWD} you typically want this to be your user id.
@@ -612,7 +617,17 @@ echo "================================================================"
 if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   # Our CI system (kokoro) syncs the data in this directory to somewhere after
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
-  # process. This is safe as long as we don't wish to save any build artifacts.
+  # process. Before we remove cmake-out, we must move any artifacts that we
+  # want to save to another location.
+
+  io::log_yellow "Renaming XML test output in ${test_xml_dir} for sponge artifacts."
+  mkdir sponge_logs
+  find "${test_xml_dir}" -name '*.xml' | while read -r f; do
+    echo -n "."
+    mv "${f}" "sponge_logs/$(basename "$f" .xml)_sponge_log.xml"
+  done
+  echo
+
   io::log_yellow "cleaning up artifacts."
   find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 |
     xargs -0 -t rm -rf

@@ -170,9 +170,9 @@ fi
 readonly TEST_JOB_COUNT
 
 # Use an absolute path so it doesn't depend on the test's CWD.
-SPONGE_LOG="$(realpath "${BINARY_DIR}")/sponge_log.xml"
-readonly SPONGE_LOG
-export GTEST_OUTPUT="xml:${SPONGE_LOG}"
+xml_output="$(realpath "${TEST_XML_DIR}")/"  # with trailing slash
+mkdir -p "${xml_output}"
+export GTEST_OUTPUT="xml:${xml_output}"
 
 ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then

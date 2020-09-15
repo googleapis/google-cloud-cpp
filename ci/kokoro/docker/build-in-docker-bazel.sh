@@ -41,14 +41,14 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 
 # Use an absolute path so it doesn't depend on the test's CWD.
-SPONGE_LOG="$(realpath "${BINARY_DIR}")/sponge_log.xml"
-readonly SPONGE_LOG
+xml_output="$(realpath "${TEST_XML_DIR}")/"  # with trailing slash
+mkdir -p "${xml_output}"
 
 bazel_args=(
   "--test_output=errors"
   "--verbose_failures=true"
   "--keep_going"
-  "--test_env=GTEST_OUTPUT=xml:${SPONGE_LOG}"
+  "--test_env=GTEST_OUTPUT=xml:${xml_output}"
 )
 
 if [[ -n "${RUNS_PER_TEST}" ]]; then
