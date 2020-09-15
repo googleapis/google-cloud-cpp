@@ -23,11 +23,9 @@ cache_download_enabled() {
     return 1
   fi
 
-  if [[ "${RUNNING_CI:-}" != "yes" || (\
-    "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" && \
-    "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB") ]]; then
+  if [[ "${RUNNING_CI:-}" != "yes" ]]; then
     echo "================================================================"
-    io::log "Cache not downloaded as this is not a PR build."
+    io::log "Cache not downloaded as this is not a CI build."
     return 1
   fi
   return 0
