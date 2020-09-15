@@ -4,10 +4,6 @@
 
 ## v1.18.0 - 2020-09-15
 
-### Bigtable
-
-* fix: correct C++ version under MSVC (#5038)
-
 ### Storage
 
 * fix: add missing object ACLs in gRPC client (#5029)
@@ -15,22 +11,24 @@
 
 ### Spanner
 
+* This release includes support for the `NUMERIC` data type in Cloud Spanner.
 * doc: adapt to new specification for NUMERIC samples (#5049)
-* doc: add "spanner_query_with_*_parameter" samples (#5016)
+* doc: add `spanner_query_with_*_parameter` samples (#5016)
 * feat: start using NUMERIC types in database schema (#5025)
+
+### Pub/Sub
+
+* The current release is a preview of the upcoming GA release. While we think the APIs are unlikely to change before GA, we reserve the right to change these APIs for now. This release may need optimization before it is ready for production workloads.
 
 ### Common Libraries
 
-* feat(common): cancel for internal::AsyncRetryLoop (#5045)
-* feat(common): create promises without shared state (#5046)
-* feat(common): make CompletionQueueImpl mockable [1] (#5036)
-* feat(common): make CompletionQueueImpl mockable [2] (#5039)
-* feat(common): make CompletionQueueImpl mockable [3] (#5043)
-* feat(common): support cancels for asynchronous unary RPCs (#5047)
-* fix(common): correct C++ version under MSVC (#5038)
+* feat: create promises without shared state (#5046)
+* feat: make CompletionQueueImpl mockable [1] (#5036) (#5039) (#5043)
+* feat: support cancels for asynchronous unary RPCs (#5047)
+* fix: correct C++ version under MSVC (#5038)
 * fix: CompletionQueue shutdown disables RunAsync (#5008)
 * fix: remove 'Bigtable' from generic error message (#5034)
-* fix: remove unneeded dep (#5054)
+* fix: remove unneeded dep on absl::variant (#5054)
 
 ## v1.17.0 - 2020-09
 
