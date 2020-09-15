@@ -1,4 +1,4 @@
-# Copyright 2020 Google Inc.
+# Copyright 2020 Google LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 """Utils related to access control"""
 
 import hashlib
@@ -19,12 +20,16 @@ import os
 import utils
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 
-PROJECT_NUMBER = os.getenv("GCS_EMULATOR_PROJECT_NUMBER", "123456789")
+PROJECT_NUMBER = os.getenv(
+    "GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_PROJECT_NUMBER", "123456789"
+)
 OBJECT_OWNER_ENTITY = os.getenv(
-    "GCS_EMULATOR_OBJECT_OWNER_ENTITY", "user-object.owners@gmail.com"
+    "GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_OBJECT_OWNER_ENTITY",
+    "user-object.owners@example.com",
 )
 OBJECT_READER_ENTITY = os.getenv(
-    "GCS_EMULATOR_OBJECT_READER_ENTITY", "user-object.viewers@gmail.com"
+    "GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_OBJECT_READER_ENTITY",
+    "user-object.viewers@example.com",
 )
 
 
