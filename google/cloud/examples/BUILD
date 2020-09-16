@@ -16,11 +16,27 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-cc_binary(
-    name = "gcs2cbt",
+# This library defines main(). It's declared as a library so it can be part of
+# a cc_test and cc_binary target.
+cc_library(
+    name = "gcs2cbt_lib",
     srcs = ["gcs2cbt.cc"],
     deps = [
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/storage:storage_client",
+    ],
+)
+
+cc_binary(
+    name = "gcs2cbt",
+    deps = [":gcs2cbt_lib"],
+)
+
+cc_test(
+    name = "gcs2cbt_test",
+    deps = [":gcs2cbt_lib"],
+    tags = [
+        "integration-test",
+        "integration-test-production"
     ],
 )

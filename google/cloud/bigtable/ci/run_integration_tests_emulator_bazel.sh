@@ -68,10 +68,10 @@ done
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
-  --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TEST=yes" \
+  --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=yes" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
   --test_tag_filters="integration-test" -- \
-  "//google/cloud/bigtable/...:all" \
+  "//google/cloud/bigtable/..." \
   "${excluded_targets[@]}"
 exit_status=$?
 
