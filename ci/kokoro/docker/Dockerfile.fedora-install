@@ -131,8 +131,9 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.0.tar.gz | \
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
-# The Cloud Pub/Sub emulator needs Java :shrug:
-RUN dnf makecache && dnf install -y java-latest-openjdk
+# The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
+# Bazel needs the '-devel' version with javac.
+RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh
