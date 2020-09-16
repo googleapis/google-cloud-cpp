@@ -26,7 +26,7 @@ fi
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN="$1"
 shift
-BAZEL_TEST_CMD="$1"
+BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
@@ -43,7 +43,7 @@ production_only_targets=(
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
 )
-"${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "${production_only_targets[@]}"
 
@@ -84,7 +84,7 @@ testbench_args=(
 # We need to forward some environment variables suitable for running against
 # the testbench. Note that the HMAC service account is completely invalid and
 # it is not unique to each test, neither is a problem when using the emulator.
-"${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_test_args[@]}" "${testbench_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${testbench_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/storage/...:all" \
   "${excluded_targets[@]}"

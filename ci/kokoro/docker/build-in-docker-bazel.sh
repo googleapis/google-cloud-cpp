@@ -75,13 +75,13 @@ fi
 
 # When running the bazel tests, this will be set to either "test" or
 # "coverage". Both cases run the tests.
-BAZEL_TEST_CMD="test"
+BAZEL_VERB="test"
 if [[ "${BUILD_NAME}" == "coverage" ]]; then
-  BAZEL_TEST_CMD="coverage"
+  BAZEL_VERB="coverage"
   bazel_args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
   bazel_args+=("--instrument_test_targets")
 fi
-readonly BAZEL_TEST_CMD
+readonly BAZEL_VERB
 
 echo "================================================================"
 io::log "Fetching dependencies"
@@ -91,8 +91,8 @@ io::log "Fetching dependencies"
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
-echo "bazel ${BAZEL_TEST_CMD}" "${bazel_args[@]}"
-"${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
+echo "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
+"${BAZEL_BIN}" ${BAZEL_VERB} \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 should_run_integration_tests() {
@@ -161,17 +161,17 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running storage integration tests via Bazel+Emulator"
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
 
   echo "================================================================"
   io::log_yellow "running pubsub integration tests via Bazel+Emulator"
   "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
 
   echo "================================================================"
   io::log_yellow "running generator integration tests via Bazel"
   "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
 
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
@@ -186,7 +186,7 @@ if should_run_integration_tests; then
     # TODO(#441) - when the emulator crashes the tests can take a long time.
     # The slowest test normally finishes in about 10 seconds, 100 seems safe.
     if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-      "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=100; then
+      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=100; then
       success=yes
       break
     fi
@@ -235,7 +235,7 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running integration tests against production:" \
     "spanner=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-default}"
-  "${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
+  "${BAZEL_BIN}" ${BAZEL_VERB} \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
     -- ... "${excluded_targets[@]}"
@@ -262,7 +262,7 @@ if should_run_integration_tests; then
 
   # Run the integration tests that need an access token.
   for target in "${access_token_targets[@]}"; do
-    "${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
+    "${BAZEL_BIN}" ${BAZEL_VERB} \
       "${bazel_args[@]}" \
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
       -- "${target}"
