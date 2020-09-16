@@ -36,21 +36,18 @@ readonly BUILD_IMAGE
 shift
 docker_flags=("${@}")
 
-# XXX
-# if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
-#   echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
-#   exit 0
-# fi
+if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
+  echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
+  exit 0
+fi
 
-# if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
-#   echo "Will not upload code coverage as the upload token is not available."
-#   exit 0
-# fi
+if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
+  echo "Will not upload code coverage as the upload token is not available."
+  exit 0
+fi
 
-# XXX
-# CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
-# readonly CODECOV_TOKEN
-export CODECOV_TOKEN="54d1f537-37ef-4fa5-b0bc-389b606f62f4"
+CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
+readonly CODECOV_TOKEN
 
 # Because Kokoro checks out the code in `detached HEAD` mode there is no easy
 # way to discover what is the current branch (and Kokoro does not expose the
@@ -105,7 +102,7 @@ time {
   exit_status=$?
 }
 
-# if [[ ${exit_status} != 0 ]]; then
+if [[ ${exit_status} != 0 ]]; then
   # Only print the log if there is an error.
   dump_log "${BUILD_OUTPUT}/codecov.log"
-# fi
+fi
