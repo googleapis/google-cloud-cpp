@@ -24,7 +24,7 @@ fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
-if [[ "${BUILD_TYPE:-}" != "Coverage" ]]; then
+if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
   # Not a code coverage build, exit silently.
   exit 0
 fi
@@ -94,15 +94,8 @@ docker_flags+=(
 echo -n "Uploading code coverage to codecov.io..."
 # This controls the output format from bash's `time` command.
 readonly TIMEFORMAT="DONE in %R seconds"
-# Run the upload script from codecov.io within a Docker container. Save the log
-# to a file because it can be very large (multiple MiB in size).
+# Run the upload script from codecov.io within a Docker container.
 time {
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
-  exit_status=$?
+    "/bin/bash <(curl -s https://codecov.io/bash) -s /h -f '!*/baseline_coverage.dat' -Xgcov"
 }
-
-if [[ ${exit_status} != 0 ]]; then
-  # Only print the log if there is an error.
-  dump_log "${BUILD_OUTPUT}/codecov.log"
-fi

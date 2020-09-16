@@ -26,6 +26,8 @@ fi
 
 BAZEL_BIN="$1"
 shift
+BAZEL_VERB="$1"
+shift
 bazel_test_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
@@ -49,7 +51,7 @@ for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")
 done
 
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
   --test_tag_filters="integration-test" -- \

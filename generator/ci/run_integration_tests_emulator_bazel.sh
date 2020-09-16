@@ -25,12 +25,14 @@ fi
 
 BAZEL_BIN="$1"
 shift
+BAZEL_VERB="$1"
+shift
 bazel_test_args=("$@")
 
 readonly GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH=$(bazel info output_base)"/external/com_google_googleapis/"
 readonly GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=$(bazel info output_base)"/external/com_google_protobuf/src/"
 
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH=${GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH}" \
   --test_env="GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=${GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH}" \
   --test_tag_filters="integration-test" -- \
