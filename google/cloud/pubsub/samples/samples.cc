@@ -1086,6 +1086,7 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
+  using ::google::cloud::pubsub::examples::UsingEmulator;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -1253,7 +1254,8 @@ void AutoRun(std::vector<std::string> const& argv) {
                      .set_maximum_message_count(1)
                      .enable_message_ordering()));
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
-  PublishOrderingKey(publisher_with_ordering_key, {});
+
+  if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});
 
   std::cout << "\nRunning Publish() sample [3]" << std::endl;
   Publish(publisher, {});
