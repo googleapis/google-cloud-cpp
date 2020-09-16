@@ -100,9 +100,8 @@ readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container. Save the log
 # to a file because it can be very large (multiple MiB in size).
 time {
-  # Don't actually upload; just see if it looks like it'll work with bazel's 'coverage.dat' files.
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -Xgcov -s ~ >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
+    "/bin/bash <(curl -s https://codecov.io/bash) -s /h >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
   exit_status=$?
 }
 
