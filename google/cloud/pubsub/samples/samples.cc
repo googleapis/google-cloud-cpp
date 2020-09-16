@@ -1202,9 +1202,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
-          topic, google::cloud::pubsub::PublisherOptions{}
-                     .set_maximum_message_count(1)
-                     .enable_message_ordering()));
+          topic,
+          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
+              1)));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
@@ -1247,8 +1247,13 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
   SubscribeCustomAttributes(subscriber, subscription, {});
 
+  auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_message_count(1)
+                     .enable_message_ordering()));
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
-  PublishOrderingKey(publisher, {});
+  PublishOrderingKey(publisher_with_ordering_key, {});
 
   std::cout << "\nRunning Publish() sample [3]" << std::endl;
   Publish(publisher, {});
