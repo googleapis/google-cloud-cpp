@@ -249,14 +249,8 @@ function (google_cloud_cpp_absl_pkg_config_basename var target)
         set(location_properties)
         list(APPEND location_properties IMPORTED_LOCATION_NOCONFIG)
         list(APPEND location_properties IMPORTED_LOCATION)
-        foreach (
-            c
-            "${CMAKE_BUILD_TYPE}"
-            Debug
-            Release
-            RelWithDebInfo
-            MinSizeRel
-            ${CMAKE_CONFIGURATION_TYPES})
+        foreach (c "${CMAKE_BUILD_TYPE}" Debug Release RelWithDebInfo
+                   MinSizeRel ${CMAKE_CONFIGURATION_TYPES})
             string(TOUPPER "${c}" CONFIG)
             list(APPEND location_properties IMPORTED_LOCATION_${CONFIG})
         endforeach ()
