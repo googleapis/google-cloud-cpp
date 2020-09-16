@@ -85,12 +85,6 @@ echo "bazel test" "${bazel_args[@]}"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
-echo "================================================================"
-io::log "Compiling all the code, including integration tests"
-# Then build everything else (integration tests, examples, etc). So we can run
-# them next.
-"${BAZEL_BIN}" build "${bazel_args[@]}" ...
-
 should_run_integration_tests() {
   if [[ "${SOURCE_DIR:-}" == "super" ]]; then
     # super builds cannot run the integration tests
