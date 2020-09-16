@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
+#include "google/cloud/internal/getenv.h"
 #include <sstream>
 
 namespace google {
@@ -109,6 +110,10 @@ CreateSubscriptionAdminCommand(std::string const& name,
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
+}
+
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
 }
 
 }  // namespace examples

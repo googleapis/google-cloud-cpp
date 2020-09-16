@@ -541,6 +541,43 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
   (std::move(publisher));
 }
 
+void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
+                        std::vector<std::string> const&) {
+  //! [START pubsub_publish_with_ordering_keys] [publish-with-ordering-keys]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    struct SampleData {
+      std::string ordering_key;
+      std::string data;
+    } data[] = {
+        {"key1", "message1"}, {"key2", "message2"}, {"key1", "message3"},
+        {"key1", "message4"}, {"key1", "message5"},
+    };
+    std::vector<future<void>> done;
+    for (auto const& datum : data) {
+      auto message_id =
+          publisher.Publish(pubsub::MessageBuilder{}
+                                .SetData("Hello World! [" + datum.data + "]")
+                                .SetOrderingKey(datum.ordering_key)
+                                .Build());
+      std::string ack_id = datum.ordering_key + "#" + datum.data;
+      done.push_back(message_id.then([ack_id](future<StatusOr<std::string>> f) {
+        auto id = f.get();
+        if (!id) throw std::runtime_error(id.status().message());
+        std::cout << "Message " << ack_id << " published with id=" << *id
+                  << "\n";
+      }));
+    }
+    publisher.Flush();
+    // Block until all the messages are published (optional)
+    for (auto& f : done) f.get();
+  }
+  //! [END pubsub_publish_with_ordering_keys] [publish-with-ordering-keys]
+  (std::move(publisher));
+}
+
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                google::cloud::pubsub::Subscription const& subscription,
                std::vector<std::string> const&) {
@@ -1049,6 +1086,7 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
+  using ::google::cloud::pubsub::examples::UsingEmulator;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -1210,6 +1248,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
   SubscribeCustomAttributes(subscriber, subscription, {});
 
+  auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_message_count(1)
+                     .enable_message_ordering()));
+  std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
+
+  if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});
+
   std::cout << "\nRunning Publish() sample [3]" << std::endl;
   Publish(publisher, {});
 
@@ -1312,6 +1359,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),
+      CreatePublisherCommand("publish-ordering-key", {}, PublishOrderingKey),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
