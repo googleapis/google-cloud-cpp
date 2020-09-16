@@ -159,17 +159,17 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running storage integration tests via Bazel+Emulator"
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
 
   echo "================================================================"
   io::log_yellow "running pubsub integration tests via Bazel+Emulator"
   "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
 
   echo "================================================================"
   io::log_yellow "running generator integration tests via Bazel"
   "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=600
+    "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=600
 
   # TODO(#441) - remove the for loops below.
   # Sometimes the integration tests manage to crash the Bigtable emulator.
@@ -184,7 +184,7 @@ if should_run_integration_tests; then
     # TODO(#441) - when the emulator crashes the tests can take a long time.
     # The slowest test normally finishes in about 10 seconds, 100 seems safe.
     if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-      "${BAZEL_BIN}" "${bazel_args[@]}" --test_timeout=100; then
+      "${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_args[@]}" --test_timeout=100; then
       success=yes
       break
     fi

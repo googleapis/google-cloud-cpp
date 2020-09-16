@@ -25,6 +25,8 @@ fi
 
 BAZEL_BIN="$1"
 shift
+BAZEL_TEST_CMD="$1"
+shift
 bazel_test_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
@@ -43,7 +45,7 @@ production_only_targets=(
   "//google/cloud/bigtable/examples:bigtable_table_admin_backup_snippets"
   "//google/cloud/bigtable/examples:bigtable_table_admin_backup_async_snippets"
 )
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "${production_only_targets[@]}"
 
@@ -63,7 +65,7 @@ for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")
 done
 
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_TEST_CMD}" "${bazel_test_args[@]}" \
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
   --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TEST=yes" \
