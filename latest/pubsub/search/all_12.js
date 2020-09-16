@@ -11,5 +11,6 @@ var searchData=
   ['user_5fagent_5fprefix',['user_agent_prefix',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#aca5362e3eacab6433de0157e2a29db33',1,'google::cloud::v1::ConnectionOptions::user_agent_prefix()'],['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html#a6d4da43a8f09eb5612c6d83df7278317',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits::user_agent_prefix()']]],
   ['user_5fagent_5fprefix_2ecc',['user_agent_prefix.cc',['../user__agent__prefix_8cc.html',1,'']]],
   ['user_5fagent_5fprefix_2eh',['user_agent_prefix.h',['../user__agent__prefix_8h.html',1,'']]],
-  ['user_5fagent_5fprefix_5ftest_2ecc',['user_agent_prefix_test.cc',['../user__agent__prefix__test_8cc.html',1,'']]]
+  ['user_5fagent_5fprefix_5ftest_2ecc',['user_agent_prefix_test.cc',['../user__agent__prefix__test_8cc.html',1,'']]],
+  ['usingemulator',['UsingEmulator',['../namespacegoogle_1_1cloud_1_1pubsub_1_1examples.html#ac0f3c47a33cfaa76b2c718d72cb39311',1,'google::cloud::pubsub::examples']]]
 ];
