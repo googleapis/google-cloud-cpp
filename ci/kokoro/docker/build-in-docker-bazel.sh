@@ -73,6 +73,14 @@ if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi
 
+# When running the bazel tests, this will be set to either "test" or
+# "coverage". Both cases run the tests.
+BAZEL_TEST_CMD="test"
+if [[ "${BUILD_NAME}" == "coverage" ]]; then
+  BAZEL_TEST_CMD="coverage"
+fi
+readonly BAZEL_TEST_CMD
+
 echo "================================================================"
 io::log "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
@@ -81,8 +89,8 @@ io::log "Fetching dependencies"
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
-echo "bazel test" "${bazel_args[@]}"
-"${BAZEL_BIN}" test \
+echo "bazel ${BAZEL_TEST_CMD}" "${bazel_args[@]}"
+"${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 should_run_integration_tests() {
@@ -225,7 +233,7 @@ if should_run_integration_tests; then
   echo "================================================================"
   io::log_yellow "running integration tests against production:" \
     "spanner=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-default}"
-  "${BAZEL_BIN}" test \
+  "${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
     -- ... "${excluded_targets[@]}"
@@ -252,7 +260,7 @@ if should_run_integration_tests; then
 
   # Run the integration tests that need an access token.
   for target in "${access_token_targets[@]}"; do
-    "${BAZEL_BIN}" test \
+    "${BAZEL_BIN}" ${BAZEL_TEST_CMD} \
       "${bazel_args[@]}" \
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
       -- "${target}"
