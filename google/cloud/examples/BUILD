@@ -34,9 +34,9 @@ cc_binary(
 
 cc_test(
     name = "gcs2cbt_test",
-    deps = [":gcs2cbt_lib"],
     tags = [
         "integration-test",
-        "integration-test-production"
+        "integration-test-production",
     ],
+    deps = [":gcs2cbt_lib"],
 )
