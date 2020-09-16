@@ -78,6 +78,7 @@ fi
 BAZEL_TEST_CMD="test"
 if [[ "${BUILD_NAME}" == "coverage" ]]; then
   BAZEL_TEST_CMD="coverage"
+  bazel_args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
 fi
 readonly BAZEL_TEST_CMD
 
