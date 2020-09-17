@@ -102,7 +102,5 @@ time {
   exit_status=$?
 }
 
-if [[ ${exit_status} != 0 ]]; then
-  # Only print the log if there is an error.
-  dump_log "${BUILD_OUTPUT}/codecov.log"
-fi
+# Dump the log to help us debug codecov.io issues.
+dump_log "${BUILD_OUTPUT}/codecov.log"
