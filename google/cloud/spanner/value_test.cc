@@ -263,7 +263,7 @@ TEST(Value, RvalueGetString) {
 // spanner::Value::get<T>() correctly handles moves. If this test ever breaks
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
-TEST(Value, RvalueGetOptoinalString) {
+TEST(Value, RvalueGetOptionalString) {
   using Type = absl::optional<std::string>;
   Type const data = std::string(128, 'x');
   Value v(data);
