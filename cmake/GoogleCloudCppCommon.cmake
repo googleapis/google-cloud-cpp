@@ -18,9 +18,6 @@
 get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
                        "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 
-# If possible, enable a code coverage build type.
-include(EnableCoverage)
-
 # C++ Exceptions are enabled by default, but allow the user to turn them off.
 include(EnableCxxExceptions)
 
@@ -252,15 +249,8 @@ function (google_cloud_cpp_absl_pkg_config_basename var target)
         set(location_properties)
         list(APPEND location_properties IMPORTED_LOCATION_NOCONFIG)
         list(APPEND location_properties IMPORTED_LOCATION)
-        foreach (
-            c
-            "${CMAKE_BUILD_TYPE}"
-            Debug
-            Release
-            RelWithDebInfo
-            MinSizeRel
-            Coverage
-            ${CMAKE_CONFIGURATION_TYPES})
+        foreach (c "${CMAKE_BUILD_TYPE}" Debug Release RelWithDebInfo
+                   MinSizeRel ${CMAKE_CONFIGURATION_TYPES})
             string(TOUPPER "${c}" CONFIG)
             list(APPEND location_properties IMPORTED_LOCATION_${CONFIG})
         endforeach ()

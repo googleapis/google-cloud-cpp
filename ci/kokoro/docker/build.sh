@@ -92,7 +92,9 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=31
-  export BUILD_TYPE=Coverage
+  # TODO(4306): Enable the backup tests once they don't timeout too often.
+  GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04

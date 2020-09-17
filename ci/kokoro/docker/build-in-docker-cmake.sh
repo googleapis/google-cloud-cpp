@@ -106,11 +106,7 @@ if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
   fi
 fi
 
-# Use Ninja for all builds, except the Coverage build. See
-# https://github.com/googleapis/google-cloud-cpp/issues/4837
-if [[ "${BUILD_NAME}" != "coverage" ]]; then
-  cmake_extra_flags+=("-GNinja")
-fi
+cmake_extra_flags+=("-GNinja")
 
 # We use parameter expansion for ${cmake_extra_flags} because set -u doesn't
 # like empty arrays on older versions of Bash (which some of our builds use).
@@ -160,14 +156,7 @@ io::log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
 io::log_yellow "finished build"
 
-TEST_JOB_COUNT="${NCPU}"
-if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
-  # The code coverage build cannot run the tests in parallel. Some of the files
-  # where the code coverage is recorded are shared and not protected by locks
-  # of any kind.
-  TEST_JOB_COUNT=1
-fi
-readonly TEST_JOB_COUNT
+readonly TEST_JOB_COUNT="${NCPU}"
 
 ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
@@ -317,11 +306,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # libraries will tag all their tests as "integration-test-production",
     # that is fine too. As long as we do not repeat all the tests we are
     # winning.
-    if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
-      # TODO(#4234) - the Bigtable tests are only enabled on the coverage
-      #   builds because they consume too much quota.
-      ctest_args+=(-E "^bigtable_")
-    fi
+    ctest_args+=(-E "^bigtable_")
     env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
       -L integration-test-production
 
