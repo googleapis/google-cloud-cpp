@@ -46,7 +46,7 @@ std::string JsonUploadEndpoint(ClientOptions const& options) {
 
 std::string XmlDownloadEndpoint(ClientOptions const& options) {
   auto testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (testbench) return *testbench + "/xmlapi";
+  if (testbench) return *testbench;
   auto const& endpoint = options.endpoint_;
   if (endpoint != kDefaultEndpoint) return endpoint;
   return "https://storage-download.googleapis.com";
@@ -54,7 +54,7 @@ std::string XmlDownloadEndpoint(ClientOptions const& options) {
 
 std::string XmlUploadEndpoint(ClientOptions const& options) {
   auto testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (testbench) return *testbench + "/xmlapi";
+  if (testbench) return *testbench;
   auto const& endpoint = options.endpoint_;
   if (endpoint != kDefaultEndpoint) return endpoint;
   return "https://storage-upload.googleapis.com";
