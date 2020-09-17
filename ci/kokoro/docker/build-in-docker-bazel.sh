@@ -224,6 +224,9 @@ if should_run_integration_tests; then
 
     # The Pub/Sub integration tests were already run above
     "-//google/cloud/pubsub/..."
+
+    # The Generator integration tests were already run above
+    "-//generator/..."
   )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
     excluded_targets+=("-${t}")
