@@ -97,5 +97,5 @@ readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container.
 time {
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -s /h -Xgcov"
+    "/bin/bash <(curl -s https://codecov.io/bash) -s /h"
 }
