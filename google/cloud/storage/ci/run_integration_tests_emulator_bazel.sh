@@ -70,6 +70,7 @@ done
 # are missing too.
 testbench_args=(
   "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
+  "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 )
