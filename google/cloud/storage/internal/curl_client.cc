@@ -90,6 +90,13 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   return ReturnType::FromHttpResponse(response->payload);
 }
 
+bool EnableXml(ClientOptions const& options) {
+  auto const using_testbench =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+          .has_value();
+  return using_testbench || options.endpoint() == internal::DefaultEndpoint();
+}
+
 }  // namespace
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
@@ -227,6 +234,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
+      xml_enabled_(EnableXml(options_)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
@@ -244,7 +252,7 @@ CurlClient::CurlClient(ClientOptions options)
     xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
     xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
     iam_endpoint_ = options_.endpoint() + "/iamapi";
-  } else {
+  } else if (xml_enabled()) {
     xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
     xml_download_endpoint_ = "https://storage-download.googleapis.com";
   }
@@ -502,7 +510,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   }
 
   // Unless the request uses a feature that disables it, prefer to use XML.
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
       !request.HasOption<Projection>() && request.HasOption<Fields>() &&
@@ -560,7 +568,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
     return ReadObjectXml(request);

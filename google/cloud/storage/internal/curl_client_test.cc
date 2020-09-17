@@ -33,9 +33,10 @@ namespace {
 
 using ::google::cloud::storage::oauth2::Credentials;
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
 StatusCode const kStatusErrorCode = StatusCode::kUnavailable;
-std::string const kStatusErrorMsg = "FailingCredentials doing its job, failing";
+auto constexpr kStatusErrorMsg = "FailingCredentials doing its job, failing";
 
 // We create a credential class that always fails to fetch an access token; this
 // allows us to check that CurlClient methods fail early when their setup steps
@@ -91,6 +92,43 @@ class CurlClientTest : public ::testing::Test,
   std::function<void(Status const& status)> check_status_;
   testing_util::ScopedEnvironment endpoint_;
 };
+
+TEST(CurlClientEndpointTest, DefaultEndpoints) {
+  testing_util::ScopedEnvironment env("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  auto const options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  auto client = CurlClient::Create(options);
+  EXPECT_TRUE(client->xml_enabled());
+  EXPECT_THAT(client->storage_endpoint(), StartsWith(options.endpoint()));
+  EXPECT_THAT(client->upload_endpoint(), StartsWith(options.endpoint()));
+  EXPECT_EQ("https://storage-upload.googleapis.com",
+            client->xml_upload_endpoint());
+  EXPECT_EQ("https://storage-download.googleapis.com",
+            client->xml_download_endpoint());
+}
+
+TEST(CurlClientEndpointTest, TestbenchEndpoints) {
+  auto constexpr kEndpoint = "http://localhost:1";
+  testing_util::ScopedEnvironment env("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                      kEndpoint);
+  auto const options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  auto client = CurlClient::Create(options);
+  EXPECT_TRUE(client->xml_enabled());
+  EXPECT_THAT(client->storage_endpoint(), StartsWith(kEndpoint));
+  EXPECT_THAT(client->upload_endpoint(), StartsWith(kEndpoint));
+  EXPECT_THAT(client->xml_upload_endpoint(), StartsWith(kEndpoint));
+  EXPECT_THAT(client->xml_download_endpoint(), StartsWith(kEndpoint));
+}
+
+TEST(CurlClientEndpointTest, NonDefaultEndpoints) {
+  auto constexpr kEndpoint = "http://localhost:1";
+  testing_util::ScopedEnvironment env("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  auto const options = ClientOptions(oauth2::CreateAnonymousCredentials())
+                           .set_endpoint(kEndpoint);
+  auto client = CurlClient::Create(options);
+  EXPECT_FALSE(client->xml_enabled());
+  EXPECT_THAT(client->storage_endpoint(), StartsWith(kEndpoint));
+  EXPECT_THAT(client->upload_endpoint(), StartsWith(kEndpoint));
+}
 
 TEST_P(CurlClientTest, UploadChunk) {
   // Use an invalid port (0) to force a libcurl failure

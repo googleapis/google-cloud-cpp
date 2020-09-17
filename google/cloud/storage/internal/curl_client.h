@@ -179,8 +179,11 @@ class CurlClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  void LockShared(curl_lock_data data);
-  void UnlockShared(curl_lock_data data);
+  bool xml_enabled() const { return xml_enabled_; }
+  std::string storage_endpoint() const { return storage_endpoint_; }
+  std::string upload_endpoint() const { return upload_endpoint_; }
+  std::string xml_upload_endpoint() const { return xml_upload_endpoint_; }
+  std::string xml_download_endpoint() const { return xml_download_endpoint_; }
 
  protected:
   // The constructor is private because the class must always be created
@@ -215,6 +218,7 @@ class CurlClient : public RawClient,
   CreateResumableSessionGeneric(RequestType const& request);
 
   ClientOptions options_;
+  bool const xml_enabled_;
   std::string const x_goog_api_client_header_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;

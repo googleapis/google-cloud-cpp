@@ -239,6 +239,10 @@ class ClientOptions {
   std::chrono::seconds download_stall_timeout_;
   ChannelOptions channel_options_;
 };
+
+namespace internal {
+std::string DefaultEndpoint();
+}  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

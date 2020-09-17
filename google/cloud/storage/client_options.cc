@@ -26,6 +26,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+std::string DefaultEndpoint() { return "https://storage.googleapis.com"; }
+}  // namespace internal
+
 namespace {
 StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials() {
   auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
@@ -81,7 +85,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
     : credentials_(std::move(credentials)),
-      endpoint_("https://storage.googleapis.com"),
+      endpoint_(internal::DefaultEndpoint()),
       iam_endpoint_("https://iamcredentials.googleapis.com/v1"),
       version_("v1"),
       enable_http_tracing_(false),
