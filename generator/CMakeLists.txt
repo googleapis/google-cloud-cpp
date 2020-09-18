@@ -32,6 +32,8 @@ add_library(
     internal/codegen_utils.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/logging_decorator_generator.cc
+    internal/logging_decorator_generator.h
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h

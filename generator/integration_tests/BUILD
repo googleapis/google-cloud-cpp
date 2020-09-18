@@ -23,6 +23,9 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     timeout = "long",
     srcs = [test],
     data = [
+        ":golden/database_admin_logging_decorator.gcpcxx.pb.cc.golden",
+        ":golden/database_admin_logging_decorator.gcpcxx.pb.h.golden",
+        ":golden/database_admin_stub.gcpcxx.pb.cc.golden",
         ":golden/database_admin_stub.gcpcxx.pb.h.golden",
     ],
     tags = [

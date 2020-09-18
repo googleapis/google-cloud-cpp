@@ -26,6 +26,7 @@
 #endif  // _MSC_VER
 // TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
@@ -179,19 +180,27 @@ VarsDictionary CreateServiceVars(
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
-  vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
-  vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
   vars["proto_file_name"] = descriptor.file()->name();
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
+  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                       ServiceNameToFilePath(descriptor.name()),
                                       "_stub", GeneratedFileSuffix(), ".cc");
-  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub",
                    GeneratedFileSuffix(), ".h");
+  vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
+  vars["logging_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_logging_decorator", GeneratedFileSuffix(), ".cc");
+  vars["logging_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_logging_decorator", GeneratedFileSuffix(), ".h");
+  vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
   return vars;
 }
 
@@ -227,6 +236,9 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
   class_generators.push_back(absl::make_unique<StubGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   return class_generators;
