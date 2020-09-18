@@ -49,12 +49,11 @@ TEST(CurlWrappersTest, ExtractUrlHostpart) {
       {"127.0.0.1", "http://127.0.0.1:8080/foo/bar"},
       {"storage-download.127.0.0.1.nip.io",
        "https://storage-download.127.0.0.1.nip.io/xmlapi/"},
+      {"gcs.127.0.0.1.nip.io", "https://gcs.127.0.0.1.nip.io/storage/v1/"},
       {"gcs.127.0.0.1.nip.io",
-          "https://gcs.127.0.0.1.nip.io/storage/v1/"},
+       "https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/"},
       {"gcs.127.0.0.1.nip.io",
-          "https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/"},
-      {"gcs.127.0.0.1.nip.io",
-          "https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/"},
+       "https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/"},
   };
 
   for (auto const& t : cases) {
