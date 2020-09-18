@@ -261,7 +261,10 @@ std::string ExtractUrlHostpart(std::string url) {
   // be as it is used a handful of times when the CurlClient is created.
   for (std::string scheme_prefix : {"https://", "http://"}) {
     auto p = url.rfind(scheme_prefix, 0);
-    if (p == 0) url.erase(0, scheme_prefix.size());
+    if (p == 0) {
+      url.erase(0, scheme_prefix.size());
+      break;
+    }
   }
   if (url.empty()) return url;
   if (url[0] == '[') {
