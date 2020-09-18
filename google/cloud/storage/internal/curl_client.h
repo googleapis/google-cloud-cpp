@@ -213,14 +213,14 @@ class CurlClient : public RawClient,
 
   ClientOptions options_;
   std::string const x_goog_api_client_header_;
-  std::string storage_endpoint_;
-  std::string storage_host_;
-  std::string upload_endpoint_;
-  std::string xml_upload_endpoint_;
-  std::string xml_upload_host_;
-  std::string xml_download_endpoint_;
-  std::string xml_download_host_;
-  std::string iam_endpoint_;
+  std::string const storage_endpoint_;
+  std::string const storage_host_;
+  std::string const upload_endpoint_;
+  std::string const xml_upload_endpoint_;
+  std::string const xml_upload_host_;
+  std::string const xml_download_endpoint_;
+  std::string const xml_download_host_;
+  std::string const iam_endpoint_;
 
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
