@@ -1373,7 +1373,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(txn));
 
   auto constexpr kTextResponse = R"pb(
-    metadata: { transaction: { id: "1234567890" } }
     stats: { row_count_lower_bound: 42 }
   )pb";
   spanner_proto::ResultSet response;
@@ -1429,14 +1428,14 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(Return(Status(StatusCode::kInternal,
-                              "this is not a retryable INTERNAL error")));
+                              "this is not a transient INTERNAL error")));
 
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
 
   EXPECT_EQ(StatusCode::kInternal, result.status().code());
   EXPECT_THAT(result.status().message(),
-              HasSubstr("this is not a retryable INTERNAL error"));
+              HasSubstr("this is not a transient INTERNAL error"));
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
@@ -1478,14 +1477,13 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
   auto constexpr kTextTxn = R"pb(
-    id: "1234567890"
+    id: "2345678901"
   )pb";
   spanner_proto::Transaction txn;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextTxn, &txn));
   EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(txn));
 
   auto constexpr kTextResponse = R"pb(
-    metadata: { transaction: { id: "2345678901" } }
     stats: { row_count_lower_bound: 99999 }
   )pb";
   spanner_proto::ResultSet response;

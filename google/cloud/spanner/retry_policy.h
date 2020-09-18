@@ -39,13 +39,13 @@ struct SafeGrpcRetry {
     }
     // Treat the unexpected termination of the gRPC connection as retryable.
     // There is no explicit indication of this, but it will result in an
-    // INTERNAL status with one of the `kRetryableMessages`.
+    // INTERNAL status with one of the `kTransientFailureMessages`.
     if (status.code() == StatusCode::kInternal) {
-      constexpr char const* kRetryableMessages[] = {
+      constexpr char const* kTransientFailureMessages[] = {
           "Received unexpected EOS on DATA frame from server",
           "Connection closed with unknown cause",
           "HTTP/2 error code: INTERNAL_ERROR", "RST_STREAM"};
-      for (auto const& message : kRetryableMessages) {
+      for (auto const& message : kTransientFailureMessages) {
         if (absl::StrContains(status.message(), message)) return true;
       }
     }
