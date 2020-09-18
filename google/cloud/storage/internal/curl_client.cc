@@ -125,6 +125,7 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   if (!status.ok()) {
     return status;
   }
+  builder.AddHeader("Host: " + storage_host_);
   request.AddOptionsToHttpRequest(builder);
   SetupBuilderUserIp(builder, request);
   return Status();
@@ -248,6 +249,9 @@ CurlClient::CurlClient(ClientOptions options)
     xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
     xml_download_endpoint_ = "https://storage-download.googleapis.com";
   }
+  storage_host_ = ExtractUrlHostpart(storage_endpoint_);
+  xml_upload_host_ = ExtractUrlHostpart(xml_upload_endpoint_);
+  xml_download_host_ = ExtractUrlHostpart(xml_download_endpoint_);
 
   CurlInitializeOnce(options);
 }
@@ -1178,7 +1182,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: storage.googleapis.com");
+  builder.AddHeader("Host: " + xml_upload_host_);
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1264,7 +1268,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: storage.googleapis.com");
+  builder.AddHeader("Host: " + xml_download_host_);
 
   //
   // Apply the options from ReadObjectMediaRequest that are set, translating
