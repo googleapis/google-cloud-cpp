@@ -102,6 +102,8 @@ docker_flags+=(
 # This controls the output format from bash's `time` command.
 readonly TIMEFORMAT="DONE in %R seconds\n"
 
+# We first merge all the coverage.dat files into a single file. This reduces
+# the overall file size from about 900MB to about 16MB.
 echo -n "Merging coverage data"
 readonly MERGED_COVERAGE="merged-coverage.lcov"
 time {
@@ -110,8 +112,8 @@ time {
     echo -n "."
     lcov_flags+=("--add-tracefile" "${file}")
   done < <(find "${BUILD_HOME}" -name "coverage.dat")
-  lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
   echo
+  lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
 }
 
 echo -n "Uploading code coverage to codecov.io..."
