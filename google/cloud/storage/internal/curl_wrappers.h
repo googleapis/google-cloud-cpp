@@ -41,6 +41,9 @@ using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
 /// Hold a CURLM* handle and automatically clean it up.
 using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
 
+/// Hold a CURU* handle and automatically clean it up.
+using CurlUrlPtr = std::unique_ptr<CURLU, decltype(&curl_url_cleanup)>;
+
 /// Hold a character string created by CURL use correct deleter.
 using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
 

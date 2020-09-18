@@ -214,9 +214,12 @@ class CurlClient : public RawClient,
   ClientOptions options_;
   std::string const x_goog_api_client_header_;
   std::string storage_endpoint_;
+  std::string storage_host_;
   std::string upload_endpoint_;
   std::string xml_upload_endpoint_;
+  std::string xml_upload_host_;
   std::string xml_download_endpoint_;
+  std::string xml_download_host_;
   std::string iam_endpoint_;
 
   std::mutex mu_;
