@@ -23,6 +23,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <limits>
 
 namespace google {
@@ -826,6 +827,54 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   }
 }
 
+namespace {
+
+// Wrap an existing `RetryPolicy` but give special treatment to an INTERNAL
+// status with a message that indicates the gRPC connection has been closed.
+// These should be treated as a retryable rather than permanent errors since
+// they can happen during long-lived (> 30 min) PDML operations.
+class PartitionedDmlRetryPolicy : public google::cloud::internal::RetryPolicy {
+ public:
+  explicit PartitionedDmlRetryPolicy(
+      std::unique_ptr<RetryPolicy> original_retry_policy)
+      : original_retry_policy_(std::move(original_retry_policy)) {}
+  ~PartitionedDmlRetryPolicy() override = default;
+
+  bool OnFailure(Status const& status) override {
+    if (IsPermanentFailure(status)) {
+      return false;
+    }
+    // TODO(salty) this is an ugly hack; we need to make sure the original
+    // policy does not treat a "retryable" internal error as permanent.
+    return original_retry_policy_->OnFailure(
+        status.code() == StatusCode::kInternal
+            ? Status(StatusCode::kUnavailable, status.message())
+            : status);
+  }
+  bool IsExhausted() const override {
+    return original_retry_policy_->IsExhausted();
+  }
+
+  bool IsPermanentFailure(Status const& status) const override {
+    if (status.code() == StatusCode::kInternal) {
+      constexpr char const* kRetryableMessages[] = {
+          "Received unexpected EOS on DATA frame from server",
+          "Connection closed with unknown cause",
+          "HTTP/2 error code: INTERNAL_ERROR", "RST_STREAM"};
+      for (auto const& message : kRetryableMessages) {
+        if (absl::StrContains(status.message(), message)) {
+          return false;
+        }
+      }
+    }
+    return original_retry_policy_->IsPermanentFailure(status);
+  }
+
+ private:
+  std::unique_ptr<RetryPolicy> original_retry_policy_;
+};
+}  // namespace
+
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, StatusOr<spanner_proto::TransactionSelector>& s,
     std::int64_t seqno, ExecutePartitionedDmlParams params) {
@@ -856,8 +905,9 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   request.set_seqno(seqno);
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      Idempotency::kIdempotent,
+      absl::make_unique<PartitionedDmlRetryPolicy>(
+          retry_policy_prototype_->clone()),
+      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::ExecuteSqlRequest const& request) {
         return stub->ExecuteSql(context, request);
