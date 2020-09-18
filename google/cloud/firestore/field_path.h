@@ -120,7 +120,7 @@ class FieldPath {
   static std::vector<std::string> Split(std::string string);
 
   /**
-   * Replace all occurences of @p find in @p string with @p replace.
+   * Replace all occurrences of @p find in @p string with @p replace.
    *
    * @param string A string to search and replace
    * @param find A const String to find and replace with @p replace

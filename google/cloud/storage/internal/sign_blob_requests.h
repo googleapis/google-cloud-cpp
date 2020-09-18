@@ -33,7 +33,7 @@ namespace internal {
  * Assuming the account used to access Google Cloud Platform has enough
  * privileges, this account might be different than the service account used to
  * sign the blob. And in cases where the service account keys are not known, for
- * example when using Google Compute Engine metadata server to acess GCP, the
+ * example when using Google Compute Engine metadata server to access GCP, the
  * blob can be signed without having to download the account keys.
  *
  * In Google Cloud Storage this is useful to create signed URLs and signed

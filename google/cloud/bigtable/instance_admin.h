@@ -324,7 +324,7 @@ class InstanceAdmin {
    * @param instance_update_config config with modified instance.
    *
    * @return a future satisfied when either (a) the instance is updated or (b)
-   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     an non-retryable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
    * @par Idempotency
@@ -591,7 +591,7 @@ class InstanceAdmin {
    * @param cluster_config cluster with updated values.
    *
    * @return a future satisfied when either (a) the cluster is updated or (b)
-   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     an non-retryable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
    * @par Idempotency
@@ -757,7 +757,7 @@ class InstanceAdmin {
    * @param instance_id the instance to look the profile in.
    * @param profile_id the id of the profile within that instance.
    * @return a future satisfied when either (a) the profile is fetched or (b)
-   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *     an non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -808,7 +808,7 @@ class InstanceAdmin {
    * @param config the configuration for the new application profile.
    *
    * @return a future satisfied when either (a) the profile is updated or (b)
-   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     an non-retryable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
    * @par Idempotency
@@ -889,7 +889,8 @@ class InstanceAdmin {
    *     pending.
    *
    * @return a future satisfied when either (a) the app profile is deleted or
-   *     (b) an unretriable error occurs or (c) retry policy has been exhausted.
+   *     (b) an non-retryable error occurs or (c) retry policy has been
+   * exhausted.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -949,7 +950,7 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param instance_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *     an non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
@@ -977,7 +978,7 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param instance_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *     an non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1056,7 +1057,7 @@ class InstanceAdmin {
    * @param iam_bindings IamBindings object containing role and members.
    * @param etag the expected ETag value for the current policy.
    * @return a future satisfied when either (a) the policy is created or (b)
-   *     an unretriable error occurs or (c) retry policy has been
+   *     an non-retryable error occurs or (c) retry policy has been
    *     exhausted.
    *
    * @deprecated this function is deprecated; it doesn't support conditional
@@ -1087,7 +1088,7 @@ class InstanceAdmin {
    * @param iam_policy google::iam::v1::Policy object containing role and
    * members.
    * @return a future satisfied when either (a) the policy is created or (b)
-   *     an unretriable error occurs or (c) retry policy has been
+   *     an non-retryable error occurs or (c) retry policy has been
    *     exhausted.
    *
    * @warning ETags are currently not used by Cloud Bigtable.

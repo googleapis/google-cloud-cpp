@@ -32,7 +32,7 @@ namespace testing {
  * Refactor code common to several mock objects.
  *
  * Mocking a grpc::ClientReaderInterface<> was getting tedious. This refactors
- * most (but unfortunately cannnot refactor all) the code for such objects.
+ * most (but unfortunately cannot refactor all) the code for such objects.
  *
  * @tparam Response the response type.
  */

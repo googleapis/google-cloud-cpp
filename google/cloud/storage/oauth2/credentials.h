@@ -44,7 +44,7 @@ class Credentials {
    *
    * If unable to obtain a value for the Authorization header, which could
    * happen for `Credentials` that need to be periodically refreshed, the
-   * underyling `Status` will indicate failure details from the refresh HTTP
+   * underlying `Status` will indicate failure details from the refresh HTTP
    * request. Otherwise, the returned value will contain the Authorization
    * header to be used in HTTP requests.
    */
