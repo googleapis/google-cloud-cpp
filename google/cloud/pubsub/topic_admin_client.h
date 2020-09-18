@@ -105,7 +105,7 @@ class TopicAdminClient {
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and thefeore it is always retried.
+   * or several calls, and therefore it is always retried.
    *
    * @par Example
    * @snippet samples.cc update-topic
