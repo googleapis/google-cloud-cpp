@@ -22,7 +22,7 @@ ARG NCPU=4
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker abi-dumper \
         clang clang-tools-extra cmake diffutils doxygen findutils gcc-c++ git \
-        grpc-devel grpc-plugins libcxx-devel libcxxabi-devel libcurl-devel \
+        grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel libcurl-devel \
         make ninja-build openssl-devel pkgconfig protobuf-compiler python3 python3-pip \
         ShellCheck tar unzip w3m wget which zlib-devel
 

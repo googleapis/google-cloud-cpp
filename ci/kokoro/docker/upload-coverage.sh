@@ -99,15 +99,29 @@ docker_flags+=(
   "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
 )
 
+# This controls the output format from bash's `time` command.
+readonly TIMEFORMAT="DONE in %R seconds\n"
+
+# We first merge all the coverage.dat files into a single file. This reduces
+# the overall file size from about 900MB to about 16MB.
+echo -n "Merging coverage data"
+readonly MERGED_COVERAGE="merged-coverage.lcov"
+time {
+  lcov_flags=()
+  while read -r file; do
+    echo -n "."
+    lcov_flags+=("--add-tracefile" "${file}")
+  done < <(find "${BUILD_HOME}" -name "coverage.dat")
+  echo
+  lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
+}
+
 echo -n "Uploading code coverage to codecov.io..."
 codecov_flags=(
-  "-s" "/h"
-  "-f" "'!*/baseline_coverage.dat'"
   "-X" "gcov"
+  "-f" "/h/${MERGED_COVERAGE}"
   "-q" "/v/${BUILD_OUTPUT}/coverage-report.txt"
 )
-# This controls the output format from bash's `time` command.
-readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container.
 time {
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
