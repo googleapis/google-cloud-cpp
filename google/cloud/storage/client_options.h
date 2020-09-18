@@ -31,7 +31,7 @@ inline namespace STORAGE_CLIENT_NS {
  * certificate authority certificates in a hard-coded location.
  *
  * This is a separate class, as it is used to configure both the normal
- * connections to GCS and the connections used to obtain Oauth2 access
+ * connections to GCS and the connections used to obtain OAuth2 access
  * tokens.
  */
 class ChannelOptions {

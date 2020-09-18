@@ -48,7 +48,7 @@ using index_sequence = integer_sequence<std::size_t, Ints...>;
  *
  * @tparam T the type of the index in `index_sequence`
  * @tparam N the counter bounding type recursion; `std::integral_constant` has
- *     to be used because spacializing a template with a value of type which is
+ *     to be used because specializing a template with a value of type which is
  *     dependent on a different template parameter is not allowed.
  * @tparam Enable ignored, formal parameter to allow for disabling some
  *     specializations

@@ -150,7 +150,7 @@ struct FormatDuration {
  *
  * The benchmarks need to report time in human readable terms.  This operator
  * streams a FormatDuration in hours, minutes, seconds and sub-seconds.  Any
- * component that is zero gets ommitted, e.g. 1 hour exactly is printed as 1h.
+ * component that is zero gets omitted, e.g. 1 hour exactly is printed as 1h.
  *
  * If the time is less than 1 second then the format uses millisecond or
  * microsecond resolution, as appropriate.

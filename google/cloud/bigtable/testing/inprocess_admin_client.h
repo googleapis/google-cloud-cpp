@@ -30,7 +30,7 @@ namespace testing {
  *
  * This class is mainly for testing purpose, it enable use of a single embedded
  * server
- * for multiple test cases. This adminlient uses a pre-defined channel.
+ * for multiple test cases. This admin client uses a pre-defined channel.
  */
 class InProcessAdminClient : public bigtable::AdminClient {
  public:

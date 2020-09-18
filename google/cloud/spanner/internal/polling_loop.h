@@ -99,7 +99,7 @@ struct PollingLoopMetadataExtractor {
  *     failure.
  * @param is_idempotent if false, the operation is not retried even on transient
  *     errors.
- * @param functor the operation to retry, typically a lambda that encasulates
+ * @param functor the operation to retry, typically a lambda that encapsulates
  *     both the Stub and the function to call.
  * @param context the gRPC context used for the request, previous Stubs in the
  *     stack can set timeouts and metadata through this context.

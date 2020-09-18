@@ -82,7 +82,7 @@ class SignUrlRequestCommon {
    * Splits the "object_name" by '/' delimiter
    *
    * "object_name" may contain '/' to represent the object path and these
-   * '/' must not be escaped in "V4SignUrlRequest". This funtion helps in
+   * '/' must not be escaped in "V4SignUrlRequest". This function helps in
    * splitting string of "object_name" in parts.
    */
   std::vector<std::string> ObjectNameParts() const;

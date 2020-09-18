@@ -3367,7 +3367,7 @@ class ScopedDeleter {
  * The implementation may need to perform multiple Client::ComposeObject calls
  * to create intermediate, temporary objects which are then further composed.
  * Due to the lack of atomicity of this series of operations, stray temporary
- * objects might be left over if there are transient failuers. In order to allow
+ * objects might be left over if there are transient failures. In order to allow
  * the user to easily control for such situations, the user is expected to
  * provide a unique @p prefix parameter, which will become the prefix of all the
  * temporary objects created by this function. Once this function finishes, the

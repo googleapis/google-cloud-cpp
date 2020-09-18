@@ -230,7 +230,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::CreateDefaultClient(...); // details ommitted
+   * auto client = bigtable::CreateDefaultClient(...); // details omitted
    * bigtable::Table table(client, "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),
@@ -293,7 +293,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::CreateDefaultClient(...); // details ommitted
+   * auto client = bigtable::CreateDefaultClient(...); // details omitted
    * bigtable::Table table(client, "app_id", "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),
@@ -747,7 +747,7 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
-   * @returns a future satisfied when the operation completes, failes
+   * @returns a future satisfied when the operation completes, fails
    *     permanently or keeps failing transiently, but the retry policy has been
    *     exhausted. The future will return a tuple. The first element is a
    *     boolean, with value `false` if the row does not exist.  If the first

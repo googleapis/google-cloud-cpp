@@ -44,7 +44,7 @@ struct ApplyRes<F, std::tuple<Args...>> {
 /**
  * Implementation of `apply`.
  *
- * Inspired by the exampe in section 20.5.1 of the standard.
+ * Inspired by the example in section 20.5.1 of the standard.
  *
  * @tparam F the functor to apply the tuple to
  * @tparam Tuple the tuple of arguments to apply to `F`

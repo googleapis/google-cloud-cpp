@@ -741,7 +741,7 @@ class TableAdmin {
      *
      * @param cluster_id the name of the cluster relative to the instance
      *     managed by the `TableAdmin` object. If no cluster_id is specified,
-     *     teh all backups in all clusters are listed. The full cluster name is
+     *     the all backups in all clusters are listed. The full cluster name is
      *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
      *     where PROJECT_ID is obtained from the associated AdminClient and
      *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
@@ -1222,7 +1222,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param table_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *     a non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1266,7 +1266,7 @@ class TableAdmin {
    * @param iam_policy google::iam::v1::Policy object containing role and
    * members.
    * @return a future satisfied when either (a) the policy is created or (b)
-   *     an unretriable error occurs or (c) retry policy has been
+   *     a non-retryable error occurs or (c) retry policy has been
    *     exhausted.
    *
    * @warning ETags are currently not used by Cloud Bigtable.

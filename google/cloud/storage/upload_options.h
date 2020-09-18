@@ -31,7 +31,7 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * If the value passed to this option is the empty string, then the library will
  * create a new resumable session. Otherwise the value should be the id of a
- * previous upload sesion, the client library will restore that session in
+ * previous upload session, the client library will restore that session in
  * this case.
  */
 struct UseResumableUploadSession
