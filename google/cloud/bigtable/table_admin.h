@@ -1222,7 +1222,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param table_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     an non-retryable error occurs or (c) retry policy has been exhausted.
+   *     a non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1266,7 +1266,7 @@ class TableAdmin {
    * @param iam_policy google::iam::v1::Policy object containing role and
    * members.
    * @return a future satisfied when either (a) the policy is created or (b)
-   *     an non-retryable error occurs or (c) retry policy has been
+   *     a non-retryable error occurs or (c) retry policy has been
    *     exhausted.
    *
    * @warning ETags are currently not used by Cloud Bigtable.

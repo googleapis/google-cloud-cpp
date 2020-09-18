@@ -212,8 +212,9 @@ struct SigningAccountDelegates
 /**
  * Indicate that the bucket should be a part of hostname in the URL.
  *
- * If this option is set, the resultin
- * 'https://mybucket.storage.googleapis.com'
+ * If this option is set, the resulting URL is in the format:
+ * 'https://mybucket.storage.googleapis.com'. Otherwise, it is in the format:
+ * 'https://storage.googleapis.com/mybucket'
  */
 struct VirtualHostname : public internal::ComplexOption<VirtualHostname, bool> {
   using ComplexOption<VirtualHostname, bool>::ComplexOption;
