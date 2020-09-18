@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
+#include "absl/strings/match.h"
 
 namespace google {
 namespace cloud {
@@ -32,8 +33,23 @@ struct SafeGrpcRetry {
     return status.ok();
   }
   static inline bool IsTransientFailure(google::cloud::Status const& status) {
-    return status.code() == StatusCode::kUnavailable ||
-           status.code() == StatusCode::kResourceExhausted;
+    if (status.code() == StatusCode::kUnavailable ||
+        status.code() == StatusCode::kResourceExhausted) {
+      return true;
+    }
+    // Treat the unexpected termination of the gRPC connection as retryable.
+    // There is no explicit indication of this, but it will result in an
+    // INTERNAL status with one of the `kRetryableMessages`.
+    if (status.code() == StatusCode::kInternal) {
+      constexpr char const* kRetryableMessages[] = {
+          "Received unexpected EOS on DATA frame from server",
+          "Connection closed with unknown cause",
+          "HTTP/2 error code: INTERNAL_ERROR", "RST_STREAM"};
+      for (auto const& message : kRetryableMessages) {
+        if (absl::StrContains(status.message(), message)) return true;
+      }
+    }
+    return false;
   }
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
