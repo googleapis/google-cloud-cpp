@@ -99,15 +99,20 @@ docker_flags+=(
   "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
 )
 
+# This controls the output format from bash's `time` command.
+readonly TIMEFORMAT="DONE in %R seconds\n"
+
 echo -n "Merging coverage data"
 readonly MERGED_COVERAGE="merged-coverage.lcov"
-lcov_flags=()
-while read -r file; do
-  echo -n "."
-  lcov_flags+=("--add-tracefile" "${file}")
-done < <(find "${BUILD_HOME}" -name "coverage.dat")
-lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
-echo
+time {
+  lcov_flags=()
+  while read -r file; do
+    echo -n "."
+    lcov_flags+=("--add-tracefile" "${file}")
+  done < <(find "${BUILD_HOME}" -name "coverage.dat")
+  lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
+  echo
+}
 
 echo -n "Uploading code coverage to codecov.io..."
 codecov_flags=(
@@ -115,8 +120,6 @@ codecov_flags=(
   "-f" "/h/${MERGED_COVERAGE}"
   "-q" "/v/${BUILD_OUTPUT}/coverage-report.txt"
 )
-# This controls the output format from bash's `time` command.
-readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container.
 time {
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
