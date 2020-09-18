@@ -52,7 +52,7 @@ class SubscriptionMessageSource {
   virtual void Read(std::size_t max_callbacks) = 0;
 
   /**
-   * Positive acknowledgement the message associated with @p ack_id.
+   * Positive acknowledgment the message associated with @p ack_id.
    *
    * The application has successfully handled this message and no new deliveries
    * are necessary. The @p size parameter should be the original message size
@@ -63,7 +63,7 @@ class SubscriptionMessageSource {
                                     std::size_t size) = 0;
 
   /**
-   * Negative acknowledgement for message associated with @p ack_id.
+   * Negative acknowledgment for message associated with @p ack_id.
    *
    * The application was not able to handle this message. Nacking a message
    * allows the service to re-deliver it, subject to the topic and subscription
