@@ -42,7 +42,12 @@ readonly BAZEL_BIN="/usr/local/bin/bazel"
 io::log "Using Bazel in ${BAZEL_BIN}"
 
 run_vars=()
-bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
+bazel_args=(
+  "--test_output=errors"
+  "--verbose_failures=true"
+  "--keep_going"
+  "--experimental_convenience_symlinks=ignore"
+)
 if [[ -n "${BAZEL_CONFIG}" ]]; then
   bazel_args+=(--config "${BAZEL_CONFIG}")
 fi
