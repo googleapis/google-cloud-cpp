@@ -36,18 +36,26 @@ readonly BUILD_IMAGE
 shift
 docker_flags=("${@}")
 
-if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
-  echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
-  exit 0
-fi
+# To debug code coverage reports on your local machine, create your own
+# codecov.io account, look in the settings for your upload token, then run the
+# build with your own token set in the environment as follows:
+# `CODECOV_TOKEN=<your-token> build.sh coverage`
+#
+# A copy of the uploaded coverage report should be saved to your BUILD_OUTPUT
+# directory named "coverage-report.txt".
+if [[ -z "${CODECOV_TOKEN:-}" ]]; then
+  if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
+    echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
+    exit 0
+  fi
 
-if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
-  echo "Will not upload code coverage as the upload token is not available."
-  exit 0
+  if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
+    echo "Will not upload code coverage as the upload token is not available."
+    exit 0
+  fi
+  CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
+  readonly CODECOV_TOKEN
 fi
-
-CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
-readonly CODECOV_TOKEN
 
 # Because Kokoro checks out the code in `detached HEAD` mode there is no easy
 # way to discover what is the current branch (and Kokoro does not expose the
@@ -92,10 +100,16 @@ docker_flags+=(
 )
 
 echo -n "Uploading code coverage to codecov.io..."
+codecov_flags=(
+  "-s" "/h"
+  "-f" "'!*/baseline_coverage.dat'"
+  "-X" "gcov"
+  "-q" "/v/${BUILD_OUTPUT}/coverage-report.txt"
+)
 # This controls the output format from bash's `time` command.
 readonly TIMEFORMAT="DONE in %R seconds"
 # Run the upload script from codecov.io within a Docker container.
 time {
   sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -s /h -f '!*/baseline_coverage.dat' -Xgcov"
+    "/bin/bash <(curl -s https://codecov.io/bash) ${codecov_flags[*]}"
 }
