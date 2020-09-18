@@ -179,9 +179,6 @@ class CurlClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  void LockShared(curl_lock_data data);
-  void UnlockShared(curl_lock_data data);
-
  protected:
   // The constructor is private because the class must always be created
   // as a shared_ptr<>.
