@@ -99,11 +99,20 @@ docker_flags+=(
   "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
 )
 
+echo -n "Merging coverage data"
+readonly MERGED_COVERAGE="merged-coverage.lcov"
+lcov_flags=()
+while read -r file; do
+  echo -n "."
+  lcov_flags+=("--add-tracefile" "${file}")
+done < <(find "${BUILD_HOME}" -name "coverage.dat")
+lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
+echo
+
 echo -n "Uploading code coverage to codecov.io..."
 codecov_flags=(
-  "-s" "/h"
-  "-f" "'!*/baseline_coverage.dat'"
   "-X" "gcov"
+  "-f" "/h/${MERGED_COVERAGE}"
   "-q" "/v/${BUILD_OUTPUT}/coverage-report.txt"
 )
 # This controls the output format from bash's `time` command.
