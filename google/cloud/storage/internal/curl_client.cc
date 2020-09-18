@@ -46,16 +46,6 @@ std::string UrlEscapeString(std::string const& value) {
   return std::string(handle.MakeEscapedString(value).get());
 }
 
-std::string UrlHost(std::string url) {
-  CurlUrlPtr handle(curl_url(), &curl_url_cleanup);
-  auto* data = &url[0];
-  auto const code = curl_url_get(handle.get(), CURLUPART_HOST, &data, 0);
-  if (code != CURLUE_OK) return "storage.googleapis.com";  // a (good) guess
-  std::string result = data;
-  curl_free(data);
-  return result;
-}
-
 template <typename ReturnType>
 StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
@@ -259,9 +249,9 @@ CurlClient::CurlClient(ClientOptions options)
     xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
     xml_download_endpoint_ = "https://storage-download.googleapis.com";
   }
-  storage_host_ = UrlHost(storage_endpoint_);
-  xml_upload_host_ = UrlHost(xml_upload_endpoint_);
-  xml_download_host_ = UrlHost(xml_download_endpoint_);
+  storage_host_ = ExtractUrlHostpart(storage_endpoint_);
+  xml_upload_host_ = ExtractUrlHostpart(xml_upload_endpoint_);
+  xml_download_host_ = ExtractUrlHostpart(xml_download_endpoint_);
 
   CurlInitializeOnce(options);
 }
