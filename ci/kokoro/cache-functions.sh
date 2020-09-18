@@ -16,11 +16,6 @@
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {
-  if [[ "${BUILD_NAME:-}" = "asan"  ]]; then
-    io::log "EXPERIMENTAL: Skipping build cache for asan builds"
-    return 1
-  fi
-
   if [[ ! -f "${CACHE_KEYFILE}" ]]; then
     echo "================================================================"
     io::log "Service account for cache access is not configured."
