@@ -79,6 +79,12 @@ INSTANTIATE_TEST_SUITE_P(
                        "google/cloud/frobber/internal/"
                        "frobber_logging_decorator.gcpcxx.pb.h"),
         std::make_pair("metadata_class_name", "FrobberServiceMetadata"),
+        std::make_pair("metadata_cc_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_metadata_decorator.gcpcxx.pb.cc"),
+        std::make_pair("metadata_header_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_metadata_decorator.gcpcxx.pb.h"),
         std::make_pair("proto_file_name",
                        "google/cloud/frobber/v1/frobber.proto"),
         std::make_pair("service_endpoint", ""),

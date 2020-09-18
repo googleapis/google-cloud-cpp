@@ -27,6 +27,7 @@
 // TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/logging_decorator_generator.h"
+#include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
@@ -201,6 +202,15 @@ VarsDictionary CreateServiceVars(
                    ServiceNameToFilePath(descriptor.name()),
                    "_logging_decorator", GeneratedFileSuffix(), ".h");
   vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
+  vars["metadata_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_metadata_decorator", GeneratedFileSuffix(), ".cc");
+  vars["metadata_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_metadata_decorator", GeneratedFileSuffix(), ".h");
+
   return vars;
 }
 
@@ -239,6 +249,9 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   class_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   return class_generators;
