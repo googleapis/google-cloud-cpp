@@ -68,10 +68,10 @@ which should give you a taste of the Cloud Storage C++ client library API.
   the application developer may want to test using an emulator that does not
   support XML, while the library defaults to XML for some media operations.
 
-- `GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG...` used with
+- `GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...` used with
   `google::cloud::storage_experimental::DefaultGrpcClient()` to configure
   configure the gRPC protocol. Setting this to `media` enables gRPC for just
-  media operations (reading and writing data), setting this to `metadata`
+  media operations (reading and writing data), while setting this to `metadata`
   enables gRPC for all operations. Note that gRPC support is an early access
   program, contact Google Cloud support for details.
 
