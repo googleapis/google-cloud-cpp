@@ -170,7 +170,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  *
  * 2) Define a generic function to set a parameter:
  * @code
- * class FooRequest // some things ommitted
+ * class FooRequest // some things omitted
  * {
  *   template <typename Parameter>
  *   FooRequest& set_parameter(Parameter&& p) {
@@ -184,7 +184,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  *
  * 3) Define a generic function to set multiple parameters:
  * @code
- * class FooRequest // some things ommitted
+ * class FooRequest // some things omitted
  * {
  *   template <typename... Options>
  *   FooRequest& set_multiple_options(Options&&... p) {

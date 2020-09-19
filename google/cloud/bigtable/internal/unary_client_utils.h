@@ -184,7 +184,7 @@ struct UnaryClientUtils {
    * @throw std::exception with a description of the last RPC error.
    */
   template <typename MemberFunction>
-  static typename Signature<MemberFunction>::ResponseType MakeNonIdemponentCall(
+  static typename Signature<MemberFunction>::ResponseType MakeNonIdempotentCall(
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,

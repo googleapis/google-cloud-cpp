@@ -628,8 +628,9 @@ StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
   auto resumable_args =
       StaticTupleFilter<Among<UseResumableUploadSession>::TPred>(
           std::tie(options...));
-  static_assert(std::tuple_size<decltype(resumable_args)>::value == 1,
-                "The should be exacly one UseResumableUploadSession argument");
+  static_assert(
+      std::tuple_size<decltype(resumable_args)>::value == 1,
+      "There should be exactly one UseResumableUploadSession argument");
   std::string resumable_session_id = std::get<0>(resumable_args).value();
   auto extra_state_arg =
       ExtractFirstOccurenceOfType<ParallelUploadExtraPersistentState>(

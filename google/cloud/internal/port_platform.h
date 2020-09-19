@@ -49,7 +49,7 @@
 // Abort compilation if the compiler does not support C++11.
 #if GOOGLE_CLOUD_CPP_CPP_VERSION < 201103L
 #  error "C++11 or newer is required"
-#endif  // GOOGLE_CLOUD_CPP_CPP_VBERSION < 201103L
+#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION < 201103L
 
 // Abort the build if the version of the compiler is too old. With CMake we
 // never start the build, but with Bazel we may start the build only to find

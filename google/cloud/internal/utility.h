@@ -23,7 +23,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-// This header reimplements some of C++14's <utlity> header.
+// This header reimplements some of C++14's <utility> header.
 
 // Reimplementation of C++14 `std::integer_sequence`.
 template <class T, T... I>

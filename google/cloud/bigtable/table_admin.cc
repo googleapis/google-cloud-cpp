@@ -60,7 +60,7 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
 
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
-  auto result = ClientUtils::MakeNonIdemponentCall(
+  auto result = ClientUtils::MakeNonIdempotentCall(
       *client_, clone_rpc_retry_policy(), clone_metadata_update_policy(),
       &AdminClient::CreateTable, request, "CreateTable", status);
 
@@ -205,7 +205,7 @@ Status TableAdmin::DeleteTable(std::string const& table_id) {
 
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DeleteTable, request, "DeleteTable", status);
 
@@ -597,7 +597,7 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
     *request.add_modifications() = std::move(m).as_proto();
   }
   MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
-  auto result = ClientUtils::MakeNonIdemponentCall(
+  auto result = ClientUtils::MakeNonIdempotentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::ModifyColumnFamilies, request, "ModifyColumnFamilies",
       status);
@@ -639,7 +639,7 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
   request.set_name(name);
   request.set_row_key_prefix(std::move(row_key_prefix));
   MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropRowByPrefix", status);
 
@@ -763,7 +763,7 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
   request.set_name(name);
   request.set_delete_all_data_from_table(true);
   MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropAllRows", status);
 
