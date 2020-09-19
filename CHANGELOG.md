@@ -1,6 +1,22 @@
+
 # Changelog
 
 ## v1.19.0 - TBD
+
+### Storage
+
+* fix: consistent computation of XML vs. JSON endpoints
+
+The interaction of `ClientOptions::set_endpoint()` and the
+`CLOUD_STORAGE_TESTBENCH_ENDPOINT` environment variable was inconsistent
+across endpoints. For JSON endpoints `set_endpoint()` overrode the
+`CLOUD_STORAGE_TESTBENCH_ENDPOINT` value, while for XML endpoints it
+was the opposite.
+
+In other libraries the environment variable always wins, so we are changing the
+behavior here. This behavior was never documented, and it was buggy, therefore
+it is not a breaking change. Nonetheless, we think the bug (and the fix) is
+surprising enough to highlight in the CHANGELOG.
 
 ## v1.18.0 - 2020-09
 

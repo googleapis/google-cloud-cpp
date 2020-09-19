@@ -23,6 +23,15 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+class ClientOptions;
+namespace internal {
+std::string JsonEndpoint(ClientOptions const&);
+std::string JsonUploadEndpoint(ClientOptions const&);
+std::string XmlDownloadEndpoint(ClientOptions const&);
+std::string XmlUploadEndpoint(ClientOptions const&);
+std::string IamEndpoint(ClientOptions const&);
+}  // namespace internal
+
 /**
  * Describes the configuration for low-level connection features.
  *
@@ -218,6 +227,12 @@ class ClientOptions {
   //@}
 
  private:
+  friend std::string internal::JsonEndpoint(ClientOptions const&);
+  friend std::string internal::JsonUploadEndpoint(ClientOptions const&);
+  friend std::string internal::XmlDownloadEndpoint(ClientOptions const&);
+  friend std::string internal::XmlUploadEndpoint(ClientOptions const&);
+  friend std::string internal::IamEndpoint(ClientOptions const&);
+
   void SetupFromEnvironment();
 
   std::shared_ptr<oauth2::Credentials> credentials_;
@@ -239,6 +254,7 @@ class ClientOptions {
   std::chrono::seconds download_stall_timeout_;
   ChannelOptions channel_options_;
 };
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

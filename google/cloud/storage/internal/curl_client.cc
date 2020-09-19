@@ -229,30 +229,19 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
+      storage_endpoint_(JsonEndpoint(options_)),
+      storage_host_(ExtractUrlHostpart(storage_endpoint_)),
+      upload_endpoint_(JsonUploadEndpoint(options_)),
+      xml_upload_endpoint_(XmlUploadEndpoint(options_)),
+      xml_upload_host_(ExtractUrlHostpart(xml_upload_endpoint_)),
+      xml_download_endpoint_(XmlDownloadEndpoint(options_)),
+      xml_download_host_(ExtractUrlHostpart(xml_download_endpoint_)),
+      iam_endpoint_(IamEndpoint(options_)),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),
       xml_upload_factory_(CreateHandleFactory(options_)),
       xml_download_factory_(CreateHandleFactory(options_)) {
-  storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
-  upload_endpoint_ =
-      options_.endpoint() + "/upload/storage/" + options_.version();
-  iam_endpoint_ = options_.iam_endpoint();
-
-  auto endpoint =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (endpoint.has_value()) {
-    xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
-    xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
-    iam_endpoint_ = options_.endpoint() + "/iamapi";
-  } else {
-    xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
-    xml_download_endpoint_ = "https://storage-download.googleapis.com";
-  }
-  storage_host_ = ExtractUrlHostpart(storage_endpoint_);
-  xml_upload_host_ = ExtractUrlHostpart(xml_upload_endpoint_);
-  xml_download_host_ = ExtractUrlHostpart(xml_download_endpoint_);
-
   CurlInitializeOnce(options);
 }
 
