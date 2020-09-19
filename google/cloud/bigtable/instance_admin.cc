@@ -293,7 +293,7 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   request.set_name(name);
 
   // This API is not idempotent, lets call it without retry
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME),
       &InstanceAdminClient::DeleteInstance, request,
@@ -541,7 +541,7 @@ Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME);
 
   // This API is not idempotent, lets call it without retry
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(), metadata_update_policy,
       &InstanceAdminClient::DeleteCluster, request,
       "InstanceAdmin::DeleteCluster", status);
@@ -557,7 +557,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
 
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
-  auto result = ClientUtils::MakeNonIdemponentCall(
+  auto result = ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(),
       MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT),
       &InstanceAdminClient::CreateAppProfile, request,
@@ -741,7 +741,7 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
   request.set_name(name);
   request.set_ignore_warnings(ignore_warnings);
 
-  ClientUtils::MakeNonIdemponentCall(
+  ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME),
       &InstanceAdminClient::DeleteAppProfile, request,

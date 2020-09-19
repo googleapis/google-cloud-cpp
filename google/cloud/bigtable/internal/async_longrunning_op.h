@@ -58,7 +58,7 @@ class AsyncLongrunningOperation {
   //
   // One could argue it could be `future<StatusOr<absl::optional<Response>>>`
   // instead.  However, if the final error from the longrunning operation was a
-  // retriable error, `StartAsyncPollOp` would keep querying that operation.
+  // retryable error, `StartAsyncPollOp` would keep querying that operation.
   // That would be incorrect, hence the extra `StatusOr<>`.
   future<StatusOr<absl::optional<StatusOr<Response>>>> operator()(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context) {

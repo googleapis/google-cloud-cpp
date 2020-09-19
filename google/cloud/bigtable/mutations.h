@@ -489,13 +489,13 @@ class BulkMutation {
     emplace_back(std::move(mutation));
   }
 
-  /// Create a muti-row mutation from two SingleRowMutation
+  /// Create a multi-row mutation from two SingleRowMutation
   BulkMutation(SingleRowMutation m1, SingleRowMutation m2) : BulkMutation() {
     emplace_back(std::move(m1));
     emplace_back(std::move(m2));
   }
 
-  /// Create a muti-row mutation from a variadic list.
+  /// Create a multi-row mutation from a variadic list.
   template <typename... M,
             typename std::enable_if<absl::conjunction<std::is_convertible<
                                         M, SingleRowMutation>...>::value,
