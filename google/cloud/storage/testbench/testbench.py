@@ -879,33 +879,6 @@ def delete_resumable_upload(bucket_name):
     return testbench_utils.filtered_response(flask.request, {})
 
 
-# Define the WSGI application to handle (a few) requests in the XML API.
-XMLAPI_HANDLER_PATH = "/xmlapi"
-xmlapi = flask.Flask(__name__)
-xmlapi.debug = True
-
-
-@xmlapi.errorhandler(error_response.ErrorResponse)
-def xmlapi_error(error):
-    return error.as_response()
-
-
-@xmlapi.route("/<bucket_name>/<path:object_name>")
-def xmlapi_get_object(bucket_name, object_name):
-    """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
-    return xml_get_object(bucket_name, object_name)
-
-
-@xmlapi.route("/<bucket_name>/<path:object_name>", methods=["PUT"])
-def xmlapi_put_object(bucket_name, object_name):
-    """Inserts a new GCS Object.
-
-    Implement the PUT request in the XML API.
-    """
-    gcs_url = flask.request.host_url.replace("/xmlapi/", "/")
-    return xml_put_object(gcs_url, bucket_name, object_name)
-
-
 def xml_put_object(gcs_url, bucket_name, object_name):
     """Implement PUT for the XML API."""
     insert_magic_bucket(gcs_url)
@@ -957,7 +930,6 @@ application = DispatcherMiddleware(
         GCS_HANDLER_PATH: gcs,
         UPLOAD_HANDLER_PATH: upload,
         DOWNLOAD_HANDLER_PATH: download,
-        XMLAPI_HANDLER_PATH: xmlapi,
         PROJECTS_HANDLER_PATH: projects_app,
         IAM_HANDLER_PATH: iam_app,
     },
