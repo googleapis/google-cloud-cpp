@@ -90,6 +90,13 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   return ReturnType::FromHttpResponse(response->payload);
 }
 
+bool XmlEnabled() {
+  auto const config =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
+          .value_or("");
+  return config != "disable-xml";
+}
+
 }  // namespace
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
@@ -237,6 +244,7 @@ CurlClient::CurlClient(ClientOptions options)
       xml_download_endpoint_(XmlDownloadEndpoint(options_)),
       xml_download_host_(ExtractUrlHostpart(xml_download_endpoint_)),
       iam_endpoint_(IamEndpoint(options_)),
+      xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),
@@ -495,7 +503,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   }
 
   // Unless the request uses a feature that disables it, prefer to use XML.
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
       !request.HasOption<Projection>() && request.HasOption<Fields>() &&
@@ -553,7 +561,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
     return ReadObjectXml(request);

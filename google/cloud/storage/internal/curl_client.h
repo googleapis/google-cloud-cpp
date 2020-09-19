@@ -221,6 +221,7 @@ class CurlClient : public RawClient,
   std::string const xml_download_endpoint_;
   std::string const xml_download_host_;
   std::string const iam_endpoint_;
+  bool const xml_enabled_;
 
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
