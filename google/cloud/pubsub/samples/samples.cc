@@ -250,14 +250,14 @@ void CreateDeadLetterSubscription(
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id,
-     std::string const& dead_letter_topic_name,
+     std::string const& dead_letter_topic_id,
      int const& dead_letter_delivery_attempts) {
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
             pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
-                pubsub::Topic(project_id, std::move(dead_letter_topic_name)),
+                pubsub::Topic(project_id, std::move(dead_letter_topic_id)),
                 std::move(dead_letter_delivery_attempts))));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
@@ -1140,8 +1140,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto subscription_id = RandomSubscriptionId(generator);
   auto push_subscription_id = RandomSubscriptionId(generator);
   auto dead_letter_subscription_id = RandomSubscriptionId(generator);
-  auto dead_letter_topic_id = RandomTopicId(generator);
-  auto dead_letter_topic_name = "dead-letter-" + RandomTopicId(generator);
+  auto dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
 
   auto snapshot_id = RandomSnapshotId(generator);
 
@@ -1220,7 +1219,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateDeadLetterSubscription(
       subscription_admin_client,
       {project_id, dead_letter_topic_id, dead_letter_subscription_id,
-       dead_letter_topic_name, std::to_string(dead_letter_delivery_attempts)});
+       dead_letter_topic_id, std::to_string(dead_letter_delivery_attempts)});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
