@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_mutation_builder.h"
