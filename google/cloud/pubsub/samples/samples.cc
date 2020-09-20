@@ -251,14 +251,14 @@ void CreateDeadLetterSubscription(
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id,
      std::string const& dead_letter_topic_id,
-     int const& dead_letter_delivery_attempts) {
+     int dead_letter_delivery_attempts) {
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
             pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
-                pubsub::Topic(project_id, std::move(dead_letter_topic_id)),
-                std::move(dead_letter_delivery_attempts))));
+                pubsub::Topic(project_id, dead_letter_topic_id),
+                dead_letter_delivery_attempts)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -1213,13 +1213,13 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // Hardcode this number as it does not really matter. The other samples pick
   // something between 10 and 15.
-  auto dead_letter_delivery_attempts = 15;
+  auto constexpr kDeadLetterDeliveryAttempts = 15;
 
   std::cout << "\nRunning CreateDeadLetterSubscription() sample" << std::endl;
   CreateDeadLetterSubscription(
       subscription_admin_client,
-      {project_id, dead_letter_topic_id, dead_letter_subscription_id,
-       dead_letter_topic_id, std::to_string(dead_letter_delivery_attempts)});
+      {project_id, topic_id, dead_letter_subscription_id, dead_letter_topic_id,
+       std::to_string(kDeadLetterDeliveryAttempts)});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
@@ -1389,8 +1389,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CreatePushSubscription),
       CreateSubscriptionAdminCommand(
           "create-dead-letter-subscription",
-          {"project-id", "topic-id", "subscription-id",
-           "dead-letter-topic-name", "dead-letter-delivery-attempts"},
+          {"project-id", "topic-id", "subscription-id", "dead-letter-topic-id",
+           "dead-letter-delivery-attempts"},
           CreateDeadLetterSubscription),
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
