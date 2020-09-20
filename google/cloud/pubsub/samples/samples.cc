@@ -251,14 +251,15 @@ void CreateDeadLetterSubscription(
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id,
-     std::string const& dead_letter_topic_name) {
+     std::string const& dead_letter_topic_name,
+     int const& dead_letter_delivery_attempts) {
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
             pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, std::move(dead_letter_topic_name)),
-                15)));
+                std::move(dead_letter_delivery_attempts))));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -276,7 +277,8 @@ void CreateDeadLetterSubscription(
   }
   // [END pubsub_dead_letter_create_subscription]
   //! [dead-letter-create-subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   std::stoi(argv.at(4)));
 }
 
 void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
@@ -1139,6 +1141,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto subscription_id = RandomSubscriptionId(generator);
   auto push_subscription_id = RandomSubscriptionId(generator);
   auto dead_letter_subscription_id = RandomSubscriptionId(generator);
+  auto dead_letter_topic_id = RandomTopicId(generator);
   auto dead_letter_topic_name = "dead-letter-" + RandomTopicId(generator);
 
   auto snapshot_id = RandomSnapshotId(generator);
@@ -1207,11 +1210,21 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(push_subscription_id)});
 
+  std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
+  CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
+
+  // Hardcode this number as it does not really matter. The other samples pick
+  // something between 10 and 15.
+  auto dead_letter_delivery_attempts = 15;
+
   std::cout << "\nRunning CreateDeadLetterSubscription() sample" << std::endl;
   CreateDeadLetterSubscription(
       subscription_admin_client,
-      {project_id, topic_id, dead_letter_subscription_id,
-       dead_letter_topic_name});
+      {project_id, dead_letter_topic_id, dead_letter_subscription_id,
+       dead_letter_topic_name, std::to_string(dead_letter_delivery_attempts)});
+
+  std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
 
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
@@ -1335,10 +1348,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
-  std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
+  std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 
-  std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
+  std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 }
 
@@ -1379,7 +1392,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "create-dead-letter-subscription",
           {"project-id", "topic-id", "subscription-id",
-           "dead-letter-topic-name"},
+           "dead-letter-topic-name", "dead-letter-delivery-attempts"},
           CreateDeadLetterSubscription),
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
