@@ -1197,11 +1197,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreatePushSubscription() sample [2]" << std::endl;
   CreatePushSubscription(
       subscription_admin_client,
-      {project_id, topic_id, push_subscription_id, endpoint2});
+      {project_id, topic_id, push_subscription_id, endpoint1});
 
   std::cout << "\nRunning ModifyPushConfig() sample" << std::endl;
   ModifyPushConfig(subscription_admin_client,
-                   {project_id, push_subscription_id, endpoint1});
+                   {project_id, push_subscription_id, endpoint2});
 
   std::cout << "\nRunning DeleteSubscription() sample [1]" << std::endl;
   // Move push_subscription_id to prevent accidentally using it below.
