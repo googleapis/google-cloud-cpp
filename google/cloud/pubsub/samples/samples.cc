@@ -298,14 +298,11 @@ void UpdateDeadLetterSubscription(
                 dead_letter_delivery_attempts)));
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
 
+    auto policy = sub->dead_letter_policy();
     std::cout << "The subscription has been updated to: " << sub->DebugString()
-              << "\n";
-
-    std::cout << "It will forward dead letter messages to: "
-              << sub->dead_letter_policy().dead_letter_topic() << "\n";
-
-    std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
-              << " delivery attempts.\n";
+              << "\nIt will forward dead letter messages to: "
+              << policy.dead_letter_topic() << "\nAfter "
+              << policy.max_delivery_attempts() << " delivery attempts.\n";
   }
   // [END pubsub_dead_letter_update_subscription]
   //! [dead-letter-update-subscription]
