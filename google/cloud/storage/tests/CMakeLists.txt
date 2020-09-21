@@ -46,6 +46,7 @@ set(storage_client_integration_tests
     signed_url_integration_test.cc
     slow_reader_chunk_integration_test.cc
     slow_reader_stream_integration_test.cc
+    small_reads_integration_test.cc
     storage_include_test.cc
     thread_integration_test.cc)
 

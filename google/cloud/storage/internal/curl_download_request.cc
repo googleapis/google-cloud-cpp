@@ -94,8 +94,8 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   // callback, see the comments in the header file for more details.
   closing_ = true;
 
-  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
   paused_ = false;
+  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
   TRACE_STATE();
 
   // Block until that callback is made.
@@ -155,12 +155,12 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
 #else
   if (!curl_closed_) {
 #endif  // libcurl >= 7.69.0
+    paused_ = false;
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     if (!status.ok()) {
       TRACE_STATE() << ", status=" << status;
       return status;
     }
-    paused_ = false;
     TRACE_STATE();
   }
 
