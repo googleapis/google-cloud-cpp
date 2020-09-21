@@ -265,7 +265,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     promise<StatusOr<gcsa::Instance>> pr;
     auto f = pr.get_future();
 
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::InstanceAdminStub> stub,
            google::longrunning::Operation operation,

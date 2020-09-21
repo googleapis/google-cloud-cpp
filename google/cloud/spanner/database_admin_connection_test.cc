@@ -700,7 +700,7 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
 TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   // Suppress a false leak.
-  // TODO(#127): After we fix the issue #127, we won't need to use
+  // TODO(#4038): After we fix the issue #4038, we won't need to use
   // `AllowLeak()` any more.
   Mock::AllowLeak(mock.get());
   promise<void> p;
