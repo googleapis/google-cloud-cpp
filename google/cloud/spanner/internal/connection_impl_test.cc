@@ -1373,7 +1373,6 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(txn));
 
   auto constexpr kTextResponse = R"pb(
-    metadata: { transaction: { id: "1234567890" } }
     stats: { row_count_lower_bound: 42 }
   )pb";
   spanner_proto::ResultSet response;
@@ -1427,16 +1426,16 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
 
+  // A `kInternal` status can be treated as transient based on the message.
+  // This tests that other `kInternal` errors are treated as permanent.
   EXPECT_CALL(*mock, ExecuteSql(_, _))
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
-                              "uh-oh in ExecutePartitionedDml")));
+      .WillOnce(Return(Status(StatusCode::kInternal, "permanent failure")));
 
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
 
-  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
-  EXPECT_THAT(result.status().message(),
-              HasSubstr("uh-oh in ExecutePartitionedDml"));
+  EXPECT_EQ(StatusCode::kInternal, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("permanent failure"));
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
@@ -1467,6 +1466,45 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(),
               HasSubstr("try-again in ExecutePartitionedDml"));
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeLimitedRetryConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  auto constexpr kTextTxn = R"pb(
+    id: "2345678901"
+  )pb";
+  spanner_proto::Transaction txn;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextTxn, &txn));
+  EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(txn));
+
+  auto constexpr kTextResponse = R"pb(
+    stats: { row_count_lower_bound: 99999 }
+  )pb";
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextResponse, &response));
+
+  // `kInternal` is usually a permanent failure, but if the message indicates
+  // the gRPC connection has been closed (which these do), they are treated as
+  // transient failures.
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(
+          Return(Status(StatusCode::kInternal,
+                        "Received unexpected EOS on DATA frame from server")))
+      .WillOnce(Return(
+          Status(StatusCode::kInternal, "HTTP/2 error code: INTERNAL_ERROR")))
+      .WillOnce(Return(response));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result->row_count_lower_bound, 99999);
 }
 
 TEST(ConnectionImplTest,
