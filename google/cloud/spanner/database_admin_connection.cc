@@ -508,7 +508,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     promise<StatusOr<gcsa::Database>> pr;
     auto f = pr.get_future();
 
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
@@ -542,7 +542,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> pr;
     auto f = pr.get_future();
 
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
@@ -587,7 +587,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     });
     auto f = pr.get_future();
 
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
