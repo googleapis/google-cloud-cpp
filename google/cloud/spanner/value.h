@@ -337,7 +337,7 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
  private:
-  // Metafunction that returns true if `T` is an absl::optional<U>
+  // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
   template <typename T>

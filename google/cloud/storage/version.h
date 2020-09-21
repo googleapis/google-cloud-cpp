@@ -77,7 +77,7 @@ int constexpr version() {
 /// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-/// Returns the value for x-goog-api-client header.
+/// Returns the value for `x-goog-api-client` header.
 std::string x_goog_api_client();
 
 }  // namespace STORAGE_CLIENT_NS

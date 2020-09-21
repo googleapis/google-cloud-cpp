@@ -33,7 +33,7 @@ struct FakeClock : public std::chrono::system_clock {
  public:
   static std::time_t now_value_;
 
-  // gmock doesn't easily allow copying mock objects, but we require this
+  // gMock doesn't easily allow copying mock objects, but we require this
   // struct to be copyable. So while the usual approach would be mocking this
   // method and defining its return value in each test, we instead override
   // this method and hard-code the return value for all instances.
