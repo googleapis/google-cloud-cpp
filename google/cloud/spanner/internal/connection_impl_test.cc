@@ -1426,16 +1426,16 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
 
+  // A `kInternal` status can be treated as transient based on the message.
+  // This tests that other `kInternal` errors are treated as permanent.
   EXPECT_CALL(*mock, ExecuteSql(_, _))
-      .WillOnce(Return(Status(StatusCode::kInternal,
-                              "this is not a transient INTERNAL error")));
+      .WillOnce(Return(Status(StatusCode::kInternal, "permanent failure")));
 
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
 
   EXPECT_EQ(StatusCode::kInternal, result.status().code());
-  EXPECT_THAT(result.status().message(),
-              HasSubstr("this is not a transient INTERNAL error"));
+  EXPECT_THAT(result.status().message(), HasSubstr("permanent failure"));
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
@@ -1489,6 +1489,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
   spanner_proto::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextResponse, &response));
 
+  // `kInternal` is usually a permanent failure, but if the message indicates
+  // the gRPC connection has been closed (which these do), they are treated as
+  // transient failures.
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(
           Return(Status(StatusCode::kInternal,
