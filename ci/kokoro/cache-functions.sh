@@ -16,7 +16,7 @@
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {
-  if [[ "${BUILD_NAME:-}" = "msan"  ]]; then
+  if [[ "${BUILD_NAME:-}" = "msan" ]]; then
     io::log "Skipping build cache for msan builds"
     return 1
   fi
