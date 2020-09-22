@@ -64,7 +64,7 @@ readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # If we have the right credentials, tell bazel to cache build results in a GCS
 # bucket. Note: this will not cache external deps, so the "fetch" below will
 # not hit this cache.
-if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && "${BUILD_NAME:-}" != "msan" ]]; then
+if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}"
   bazel_args+=("--remote_cache=${BAZEL_CACHE}")
   bazel_args+=("--google_credentials=${GOOGLE_APPLICATION_CREDENTIALS}")
