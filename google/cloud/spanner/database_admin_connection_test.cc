@@ -44,7 +44,8 @@ std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   return internal::MakeDatabaseAdminConnection(
-      std::move(mock), retry.clone(), backoff.clone(), polling.clone());
+      std::move(mock), ConnectionOptions{}, retry.clone(), backoff.clone(),
+      polling.clone());
 }
 
 /// @test Verify that successful case works.
@@ -210,8 +211,6 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
       .WillOnce(
           [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
-            gcsa::UpdateDatabaseDdlMetadata metadata;
-            metadata.set_database("test-db");
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
             op.set_done(false);
@@ -699,10 +698,6 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
 /// @test Verify cancellation.
 TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  // Suppress a false leak.
-  // TODO(#4038): After we fix the issue #4038, we won't need to use
-  // `AllowLeak()` any more.
-  Mock::AllowLeak(mock.get());
   promise<void> p;
 
   EXPECT_CALL(*mock, CreateBackup(_, _))

@@ -50,20 +50,47 @@ std::unique_ptr<PollingPolicy> DefaultInstanceAdminPollingPolicy() {
       .clone();
 }
 
+template <typename ValueExtractor>
+struct PollingLoop {
+  std::shared_ptr<internal::InstanceAdminStub> polling_stub;
+  google::longrunning::Operation operation;
+  std::unique_ptr<PollingPolicy> polling_policy;
+  google::cloud::promise<typename ValueExtractor::ReturnType> promise;
+  char const* location;
+
+  void operator()() {
+    auto stub = std::move(polling_stub);
+    auto result = internal::PollingLoop<ValueExtractor>(
+        std::move(polling_policy),
+        [stub](grpc::ClientContext& context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->GetOperation(context, request);
+        },
+        std::move(operation), location);
+    // Drop our reference to stub. Ideally we'd have std::moved into the
+    // internal::PollingLoop() lambda.
+    stub.reset();
+    promise.set_value(std::move(result));
+  }
+};
+
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
   InstanceAdminConnectionImpl(std::shared_ptr<internal::InstanceAdminStub> stub,
+                              ConnectionOptions const& options,
                               std::unique_ptr<RetryPolicy> retry_policy,
                               std::unique_ptr<BackoffPolicy> backoff_policy,
                               std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        polling_policy_prototype_(std::move(polling_policy)) {}
+        polling_policy_prototype_(std::move(polling_policy)),
+        background_threads_(options.background_threads_factory()()) {}
 
   explicit InstanceAdminConnectionImpl(
-      std::shared_ptr<internal::InstanceAdminStub> stub)
-      : InstanceAdminConnectionImpl(std::move(stub),
+      std::shared_ptr<internal::InstanceAdminStub> stub,
+      ConnectionOptions const& options)
+      : InstanceAdminConnectionImpl(std::move(stub), options,
                                     DefaultInstanceAdminRetryPolicy(),
                                     DefaultInstanceAdminBackoffPolicy(),
                                     DefaultInstanceAdminPollingPolicy()) {}
@@ -264,39 +291,18 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       google::longrunning::Operation operation) {
     promise<StatusOr<gcsa::Instance>> pr;
     auto f = pr.get_future();
-
-    // TODO(#4038) - use the (implicit) completion queue to run this loop.
-    std::thread t(
-        [](std::shared_ptr<internal::InstanceAdminStub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           google::cloud::promise<StatusOr<gcsa::Instance>> promise,
-           char const* location) mutable {
-          auto result = internal::PollingLoop<
-              internal::PollingLoopResponseExtractor<gcsa::Instance>>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
-
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-
+    background_threads_->cq().RunAsync(
+        PollingLoop<internal::PollingLoopResponseExtractor<gcsa::Instance>>{
+            stub_, std::move(operation), polling_policy_prototype_->clone(),
+            std::move(pr), __func__});
     return f;
   }
+
   std::shared_ptr<internal::InstanceAdminStub> stub_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<BackgroundThreads> background_threads_;
 };
 }  // namespace
 
@@ -313,7 +319,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return internal::MakeInstanceAdminConnection(
-      internal::CreateDefaultInstanceAdminStub(options),
+      internal::CreateDefaultInstanceAdminStub(options), options,
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }
@@ -322,18 +328,19 @@ namespace internal {
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const&) {
-  return std::make_shared<InstanceAdminConnectionImpl>(std::move(base_stub));
+    ConnectionOptions const& options) {
+  return std::make_shared<InstanceAdminConnectionImpl>(std::move(base_stub),
+                                                       options);
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return std::make_shared<InstanceAdminConnectionImpl>(
-      std::move(base_stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy));
+      std::move(base_stub), options, std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
 }
 
 }  // namespace internal
