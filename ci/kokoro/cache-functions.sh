@@ -16,6 +16,7 @@
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {
+  # TODO(#5113) - we should do this for all Bazel builds, and only on full CIs
   if [[ "${BUILD_NAME:-}" = "msan" ]]; then
     io::log "Skipping build cache for msan builds"
     return 1
