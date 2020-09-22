@@ -50,13 +50,6 @@ io::log_yellow "Verify markdown"
   ./ci/check-markdown.sh
 )
 
-echo "================================================================"
-io::log_yellow "Verify spelling"
-(
-  cd "${PROJECT_ROOT}"
-  ./ci/check-spelling.sh
-)
-
 if command -v ccache; then
   echo "================================================================"
   io::log_yellow "ccache stats"
