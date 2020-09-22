@@ -66,7 +66,7 @@ readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # not hit this cache.
 if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}"
-  bazel_args+=("--remote_cache=${BAZEL_CACHE}")
+  bazel_args+=("--remote_cache=${BAZEL_CACHE}/docker/${BUILD_NAME}")
   bazel_args+=("--google_credentials=${GOOGLE_APPLICATION_CREDENTIALS}")
   # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360
