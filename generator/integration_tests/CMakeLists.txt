@@ -14,6 +14,33 @@
 # limitations under the License.
 # ~~~
 
+find_package(gRPC REQUIRED)
+
+include(CompileProtos)
+
+# Do not run attempt to clang-tidy generated proto code.
+set(CMAKE_CXX_CLANG_TIDY "")
+
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_generator_testing_grpc_lib
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/common.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/backup.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
+    PROTO_PATH_DIRECTORIES
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download)
+target_link_libraries(
+    google_cloud_cpp_generator_testing_grpc_lib
+    PUBLIC googleapis-c++::api_annotations_protos
+           googleapis-c++::api_client_protos
+           googleapis-c++::api_field_behavior_protos
+           googleapis-c++::api_resource_protos
+           googleapis-c++::iam_v1_iam_policy_protos
+           googleapis-c++::iam_v1_policy_protos
+           googleapis-c++::longrunning_operations_protos
+           googleapis-c++::rpc_status_protos
+    PRIVATE googleapis_cpp_common_flags)
+
 function (google_cloud_cpp_generator_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
     # config file for googletest (that is, the CMake file installed by
@@ -65,6 +92,8 @@ function (google_cloud_cpp_generator_define_integration_tests)
         return()
     endif ()
 endfunction ()
+
+add_subdirectory(golden)
 
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
