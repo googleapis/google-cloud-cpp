@@ -24,14 +24,14 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Determines if the given method meets the criteria for pagintation.
+ * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233
  */
 bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 
 /**
- * Detemines if the given method has neither client-side streaming, server-side
+ * Determines if the given method has neither client-side streaming, server-side
  * streaming, nor bidirectional streaming.
  */
 bool IsNonStreaming(google::protobuf::MethodDescriptor const& method);

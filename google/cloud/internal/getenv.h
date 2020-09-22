@@ -25,7 +25,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
- * Return the value of an environment variable, or an unset absl::optional.
+ * Return the value of an environment variable, or an unset `absl::optional`.
  *
  * On Windows `std::getenv()` is not thread safe. We must write a wrapper to
  * portably get the value of the environment variables.

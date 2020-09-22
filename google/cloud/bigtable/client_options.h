@@ -158,7 +158,7 @@ class ClientOptions {
   }
 
   /**
-   * Set the grpclb fallback timeout with the timestamp @p fallback_timeout
+   * Set the `grpclb` fallback timeout with the timestamp @p fallback_timeout
    * for the channel.
    *
    * For example:
@@ -185,9 +185,10 @@ class ClientOptions {
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
    *
-   * Please see the docs for grpc::ChannelArguments::SetGrpclbFallbackTimeout()
-   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
-   * for more details.
+   * Please see the docs for
+   * `grpc::ChannelArguments::SetGrpclbFallbackTimeout()` on
+   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html for more
+   * details.
    *
    */
   template <typename Rep, typename Period>
@@ -209,7 +210,7 @@ class ClientOptions {
   /**
    * Set the string to prepend to the user agent.
    *
-   * Please see the docs for grpc::ChannelArguments::SetUserAgentPrefix()
+   * Please see the docs for `grpc::ChannelArguments::SetUserAgentPrefix()`
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
@@ -221,7 +222,7 @@ class ClientOptions {
   /**
    * Set the buffer pool to be attached to the constructed channel.
    *
-   * Please see the docs for grpc::ChannelArguments::SetResourceQuota()
+   * Please see the docs for `grpc::ChannelArguments::SetResourceQuota()`
    * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
    * for more details.
    *
@@ -233,9 +234,10 @@ class ClientOptions {
   /**
    * Set the max receive message size in bytes. -1 means unlimited.
    *
-   * Please see the docs for grpc::ChannelArguments::SetMaxReceiveMessageSize()
-   * on https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
-   * for more details.
+   * Please see the docs for
+   * `grpc::ChannelArguments::SetMaxReceiveMessageSize()` on
+   * https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html for more
+   * details.
    *
    */
   void SetMaxReceiveMessageSize(int size) {

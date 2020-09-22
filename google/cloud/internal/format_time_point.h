@@ -32,7 +32,7 @@ namespace internal {
  * class used to represent timestamps, to the RFC-3339 format.
  *
  * There are many possible formats for RFC-3339 timestamps, this function always
- * uses YYYY-MM-DDTHH:MM:SS.FFFZ.  The fractional seconds always represent the
+ * uses `YYYY-MM-DDTHH:MM:SS.FFFZ`.  The fractional seconds always represent the
  * full precision of `std::chrono::system_clock::time_point`. Note, however,
  * that C++ does not specify the minimum precision of these time points. In
  * most platforms time points have sub-second precision, and microseconds are

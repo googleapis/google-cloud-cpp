@@ -25,7 +25,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Alias template for google::cloud::optional.
  *
- * @deprecated this alias is deprecated; use absl::optional<T> directly.
+ * @deprecated this alias is deprecated; use `absl::optional<T>` directly.
  */
 template <typename T>
 using optional = absl::optional<T>;

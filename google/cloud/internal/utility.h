@@ -23,16 +23,16 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-// This header reimplements some of C++14's <utility> header.
+// This header re-implements some of C++14's <utility> header.
 
-// Reimplementation of C++14 `std::integer_sequence`.
+// Re-implementation of C++14 `std::integer_sequence`.
 template <class T, T... I>
 struct integer_sequence {  // NOLINT(readability-identifier-naming)
   using value_type = T;
   static std::size_t constexpr size() noexcept { return sizeof...(I); }
 };
 
-// Reimplementation of C++14 `std::index_sequence`.
+// Re-implementation of C++14 `std::index_sequence`.
 template <std::size_t... Ints>
 using index_sequence = integer_sequence<std::size_t, Ints...>;
 

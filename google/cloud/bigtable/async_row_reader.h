@@ -406,10 +406,10 @@ class AsyncRowReader : public std::enable_shared_from_this<
   /**
    * The promise to the underlying stream to either continue reading or cancel.
    *
-   * If the absl::optional is empty, it means that either the whole scan is
+   * If the `absl::optional` is empty, it means that either the whole scan is
    * finished or the underlying layers are already trying to fetch more data.
    *
-   * If the absl::optional is not empty, the lower layers are waiting for this
+   * If the `absl::optional` is not empty, the lower layers are waiting for this
    * to be satisfied before they start fetching more data.
    */
   absl::optional<promise<bool>> continue_reading_;

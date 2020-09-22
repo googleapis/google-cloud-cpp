@@ -440,15 +440,15 @@ class PermanentMutationFailure : public std::runtime_error {
    * discarded.
    *
    * Any mutations that fail with an unknown state are included with a
-   * grpc::StatusCode::OK.
+   * `grpc::StatusCode::OK`.
    */
   std::vector<FailedMutation> const& failures() const { return failures_; }
 
   /**
-   * The grpc::Status of the request.
+   * The `grpc::Status` of the request.
    *
-   * Notice that it can return grpc::Status::OK when there are partial failures
-   * in a BulkApply() operation.
+   * Notice that it can return `grpc::Status::OK` when there are partial
+   * failures in a `BulkApply()` operation.
    */
   grpc::Status const& status() const { return status_; }
 

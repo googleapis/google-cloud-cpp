@@ -109,6 +109,15 @@ time {
   fi
 }
 
+printf "%-30s" "Running cspell:"
+time {
+  if ! git ls-files -z | grep -zE '\.(h)$' |
+    xargs -P "${NCPU}" -n 50 -0 cspell -c ci/cspell.json; then
+    io::log_red "Detected spelling problems"
+    problems="${problems} cspell"
+  fi
+}
+
 # Apply several transformations that cannot be enforced by clang-format:
 #     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
 #       are obsoleted by the gRPC team, so we should not use them in our code.

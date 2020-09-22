@@ -30,7 +30,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 /**
- * Wrap grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>.
+ * Wrap `grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>`.
  *
  * This defines an interface to handle a streaming RPC returning a sequence of
  * `google::spanner::v1::PartialResultSet`. Its main purpose is to simplify

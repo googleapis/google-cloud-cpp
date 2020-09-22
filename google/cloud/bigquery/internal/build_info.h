@@ -26,7 +26,7 @@ namespace internal {
 /**
  * Returns the build flags.
  *
- * Examples include "-c fastbuild" or "-O2 -DNDEBUG".
+ * Examples include `-c fastbuild` or `-O2 -DNDEBUG`.
  */
 std::string BuildFlags();
 

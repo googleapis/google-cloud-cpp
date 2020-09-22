@@ -139,7 +139,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   }
 
   // Do not copy the PRNG, we get two benefits:
-  //  - This works around a bug triggered by MSVC + absl::optional (we do not
+  //  - This works around a bug triggered by MSVC + `absl::optional` (we do not
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept

@@ -79,7 +79,7 @@ struct UnaryClientUtils {
   /**
    * Call a simple unary RPC with retries.
    *
-   * Given a pointer to member function in the grpc StubInterface class this
+   * Given a pointer to member function in the gRPC StubInterface class this
    * generic function calls it with retries until success or until the RPC
    * policies determine that this is an error.
    *

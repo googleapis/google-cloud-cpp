@@ -92,7 +92,7 @@ class GcRule {
   static GcRule Intersection(GcRuleTypes&&... gc_rules) {
     // This ugly thing provides a better compile-time error message than just
     // letting the compiler figure things out N levels deep as it recurses on
-    // add_intersection().
+    // `add_intersection()`.
     static_assert(
         absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
         "The arguments to Intersection must be convertible to GcRule");
@@ -117,7 +117,7 @@ class GcRule {
   static GcRule Union(GcRuleTypes&&... gc_rules) {
     // This ugly thing provides a better compile-time error message than just
     // letting the compiler figure things out N levels deep as it recurses on
-    // add_intersection().
+    // `add_intersection()`.
     static_assert(
         absl::conjunction<std::is_convertible<GcRuleTypes, GcRule>...>::value,
         "The arguments to Union must be convertible to GcRule");

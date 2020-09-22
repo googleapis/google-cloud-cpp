@@ -766,9 +766,11 @@ class TableAdmin {
      *       * `name`
      *       * `table`
      *       * `state`
-     *       * `start_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
-     *       * `end_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
-     *       * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
+     *       * `start_time` (and values are of the format
+     *              `YYYY-MM-DDTHH:MM:SSZ`)
+     *       * `end_time` (and values are of the format `YYYY-MM-DDTHH:MM:SSZ`)
+     *       * `expire_time` (and values are of the format
+     *              `YYYY-MM-DDTHH:MM:SSZ`)
      *       * `size_bytes`
      *
      *     To filter on multiple expressions, provide each separate expression
@@ -783,7 +785,7 @@ class TableAdmin {
      *       * `state:READY` --> The backup is fully created and ready for use.
      *       * `(name:howl) AND (start_time < \"2018-03-28T14:50:00Z\")`
      *          --> The backup name contains the string "howl" and start_time
-     *              of the backup is before 2018-03-28T14:50:00Z.
+     *              of the backup is before `2018-03-28T14:50:00Z`.
      *       * `size_bytes > 10000000000` --> The backup's size is greater than
      *          10GB
      */

@@ -122,7 +122,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs);
  *
  * Policy documents allow HTML forms to restrict uploads based on certain
  * conditions. If the policy document is expired or the conditions are not
- * satisfied, POST'ing the form will not succeed.
+ * satisfied, submitting the form will not succeed.
  *
  * @see https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
  * for general information on policy documents in Google Cloud Storage.
@@ -139,7 +139,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs);
  *
  * Policy documents allow HTML forms to restrict uploads based on certain
  * conditions. If the policy document is expired or the conditions are not
- * satisfied, POST'ing the form will not succeed.
+ * satisfied, submitting the form will not succeed.
  *
  * @see https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
  * for general information on policy documents in Google Cloud Storage.
