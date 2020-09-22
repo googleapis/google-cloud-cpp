@@ -282,7 +282,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
   // test_args now has 3 default arguments. Added max send/receive message size
-  // SetGrpclbFallbackTimeout() inserts new argument to args_ hence comparing
+  // `SetGrpclbFallbackTimeout()` inserts new argument to args_ hence comparing
   // 4th element of test_args.
   EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
             grpc::string(test_args.args[3].key));

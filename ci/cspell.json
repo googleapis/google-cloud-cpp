@@ -6,25 +6,40 @@
   // words - list of words to be always considered correct
   "words": [
     "ADCs",
+    "AFAICT",
+    "ASAN",
     "Bazel",
+    "blegh",
     "CMEK",
     "coryan",
     "CRTP",
     "CSEK",
     "deserializes",
+    "gbps",
     "gcloud",
     "goog",
     "grpc",
+    "gtest",
     "INPROCESS",
     "i'th",
     "LCOV",
+    "MSAN",
+    "Nacked",
     "Nacking",
+    "Nacks",
     "noex",
+    "quantile",
+    "quantums",
+    "QUIC",
+    "RDRAND",
     "recurses",
     "rerunnable",
     "symbolizer",
+    "TSAN",
+    "UBLA",
+    "uncommitting",
     "unsets",
-    "VM's"
+    "wifi"
   ],
   "languageSettings": [
     {
@@ -40,7 +55,8 @@
         "/@snippet.*/",
         "NOLINT*",
         "/`.*`/",
-        "/@code[\\s\\S]*@endcode/g"
+        "/@code[\\s\\S]*@endcode/g",
+        "/'s\\b/"
       ]
     }
   ]

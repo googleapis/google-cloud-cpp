@@ -391,7 +391,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
 
 /**
  * @Test Verify reassembling chunked values works correctly, including a mixture
- * of chunked and unchunked values.
+ * of chunked and reassembled chunked values.
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();

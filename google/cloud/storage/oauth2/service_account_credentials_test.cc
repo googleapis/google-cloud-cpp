@@ -218,12 +218,12 @@ TEST_F(ServiceAccountCredentialsTest,
             credentials.AuthorizationHeader().value());
 }
 
-/// @test Verify that nlohmann::json::parse() failures are reported as
+/// @test Verify that `nlohmann::json::parse()` failures are reported as
 /// is_discarded.
 TEST_F(ServiceAccountCredentialsTest, JsonParsingFailure) {
   std::string config = R"""( not-a-valid-json-string )""";
-  // The documentation for nlohmann::json::parse() is a bit ambiguous, so wrote
-  // a little test to verify it works as I expected.
+  // The documentation for `nlohmann::json::parse()` is a bit ambiguous, so
+  // wrote a little test to verify it works as I expected.
   auto parsed = nlohmann::json::parse(config, nullptr, false);
   EXPECT_TRUE(parsed.is_discarded());
   EXPECT_FALSE(parsed.is_null());
@@ -470,7 +470,7 @@ x-goog-meta-foo:bar,baz
   ASSERT_STATUS_OK(actual);
 
   // To generate the expected output I used:
-  //   openssl dgst -sha256 -sign private.pem blob.txt | openssl base64 -A
+  //   `openssl dgst -sha256 -sign private.pem blob.txt | openssl base64 -A`
   // where `blob.txt` contains the `blob` string, and `private.pem` contains
   // the private key embedded in `kJsonKeyfileContents`.
   std::string expected_signed =

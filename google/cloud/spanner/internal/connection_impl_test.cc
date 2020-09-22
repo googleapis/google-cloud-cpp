@@ -39,7 +39,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
-// We compile with -Wextra which enables -Wmissing-field-initializers. This
+// We compile with `-Wextra` which enables `-Wmissing-field-initializers`. This
 // warning triggers when aggregate initialization is used with too few
 // arguments. For example
 //
@@ -426,7 +426,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   auto reader1 = make_reader();
   auto reader2 = make_reader();
   // n.b. these calls are explicitly sequenced because using the scoped
-  // `InSequence` object causes gmock to get confused by the reader calls.
+  // `InSequence` object causes gMock to get confused by the reader calls.
   Sequence s;
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .InSequence(s)
@@ -626,7 +626,7 @@ TEST(ConnectionImplTest, QueryOptions) {
 
     // We wrap MockGrpcReader in NiceMock, because we don't really care how
     // it's called in this test (aside from needing to return a transaction in
-    // the first call), and we want to minimize GMock's "uninteresting mock
+    // the first call), and we want to minimize gMock's "uninteresting mock
     // function call" warnings.
     using ::testing::NiceMock;
     auto grpc_reader = absl::make_unique<NiceMock<MockGrpcReader>>();
@@ -2441,7 +2441,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
 /**
  * @test Verify if a `Transaction` outlives the `ConnectionImpl` it was used
  * with, it does not call back into the deleted `ConnectionImpl` to release
- * the associated `Session` (which would be detected in asan/msan builds.)
+ * the associated `Session` (which would be detected in ASAN/MSAN builds.)
  */
 TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -2699,7 +2699,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSessionNotFound) {
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlSessionNotFound) {
-  // NOTE: There's no test here becuase this method does not accept a
+  // NOTE: There's no test here because this method does not accept a
   // Transaction and so there's no way to extract the Session to check if it's
   // bad. We could modify the API to inject/extract this, but this is a
   // user-facing API that we don't want to mess up.

@@ -456,7 +456,7 @@ TEST(SessionPool, SessionRefresh) {
 
   // Simulate completion again, making another RefreshExpiringSessions()
   // call, which should do nothing.  If anything goes wrong with this
-  // process, we'll get unsatisfied/uninteresting gmock errors.
+  // process, we'll get unsatisfied/uninteresting gMock errors.
   impl->SimulateCompletion(true);
 }
 

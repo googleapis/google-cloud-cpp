@@ -38,7 +38,7 @@ namespace {
 template <char Delimiter>
 class DelimitedBy : public std::string {};
 
-// TODO(aryann): Replace this with absl::StrSplit once it is
+// TODO(aryann): Replace this with `absl::StrSplit` once it is
 // available.
 template <char Delimiter>
 std::vector<std::string> StrSplit(std::string const& input) {

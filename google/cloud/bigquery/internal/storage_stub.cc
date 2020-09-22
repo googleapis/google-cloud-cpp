@@ -94,7 +94,7 @@ DefaultStorageStub::CreateReadSession(
   // routing into a header.
   //
   // TODO(aryann): Replace the below string concatenations with
-  // absl::Substitute.
+  // `absl::Substitute`.
   //
   // TODO(aryann): URL escape the project ID and dataset ID before
   // placing them into the routing header.
@@ -120,7 +120,7 @@ DefaultStorageStub::ReadRows(
       std::unique_ptr<grpc::ClientContext>(new grpc::ClientContext);
 
   // TODO(aryann): Replace the below string concatenations with
-  // absl::Substitute.
+  // `absl::Substitute`.
   //
   // TODO(aryann): URL escape the project ID and dataset ID before
   // placing them into the routing header.

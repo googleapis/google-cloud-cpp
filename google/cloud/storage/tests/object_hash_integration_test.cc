@@ -347,7 +347,7 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
   EXPECT_FALSE(os.metadata().status().ok());
 }
 
-/// @test Verify MD5 hashe before upload.
+/// @test Verify MD5 hashes before upload.
 TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

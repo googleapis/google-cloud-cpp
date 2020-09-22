@@ -43,8 +43,8 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
 }
 
 // Note that TRACE-level messages are disabled by default, even in
-// CMAKE_BUILD_TYPE=Debug builds. The level of detail created by the
-// TRACE_STATE() macro is only needed by the library developers when
+// `CMAKE_BUILD_TYPE=Debug` builds. The level of detail created by the
+// `TRACE_STATE()` macro is only needed by the library developers when
 // troubleshooting this class.
 #define TRACE_STATE()                                                       \
   GCP_LOG(TRACE) << __func__ << "(), buffer_size_=" << buffer_size_         \

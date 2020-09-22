@@ -63,13 +63,13 @@ TEST(WellKnownHeader, EncryptionKeyFromBinary) {
             header.value().sha256);
 }
 
-/// @test Verify that EncryptionKey::FromBase64Key works as expected.
+/// @test Verify that `EncryptionKey::FromBase64Key()` works as expected.
 TEST(WellKnownHeader, EncryptionKeyFromBase64) {
   std::string key("0123456789-ABCDEFGHIJ-0123456789");
   auto expected = EncryptionKey::FromBinaryKey(key);
   ASSERT_TRUE(expected.has_value());
   // Generated with:
-  //     /bin/echo -n 0123456789-ABCDEFGHIJ-0123456789 | openssl base64
+  //     `/bin/echo -n 0123456789-ABCDEFGHIJ-0123456789 | openssl base64`
   EXPECT_EQ("MDEyMzQ1Njc4OS1BQkNERUZHSElKLTAxMjM0NTY3ODk=",
             expected.value().key);
   auto actual = EncryptionKey::FromBase64Key(expected.value().key);

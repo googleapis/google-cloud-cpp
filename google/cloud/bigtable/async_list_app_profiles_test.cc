@@ -206,7 +206,7 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-/// @test Test 2 pages, with a filure between them.
+/// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
       .WillOnce([this](grpc::ClientContext* context,

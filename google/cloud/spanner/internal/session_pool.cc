@@ -300,7 +300,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     //
     // TODO(#307) Currently we only allow one thread to do this at a time; a
     // possible enhancement is tracking the number of waiters and issuing more
-    // simulaneous calls if additional sessions are needed. We can also use the
+    // simultaneous calls if additional sessions are needed. We can also use the
     // number of waiters in the `sessions_to_create` calculation below.
     if (create_calls_in_progress_ > 0) {
       Wait(lk, [this] {

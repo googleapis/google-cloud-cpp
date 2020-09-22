@@ -221,7 +221,7 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-/// @test Test 2 pages, with a filure between them.
+/// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
       .WillOnce([this](grpc::ClientContext* context,

@@ -578,7 +578,7 @@ TEST(Timestamp, ToChronoOverflow) {
   EXPECT_THAT(tp6.status().message(), HasSubstr("negative overflow"));
 }
 
-TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
+TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., `MakeTimestamp(absl::Time)`
   // Some constants and lambdas to make the test cases below more succinct.
   auto const s = [](std::int64_t n) { return absl::Seconds(n); };
   auto const ns = [](std::int64_t n) { return absl::Nanoseconds(n); };
@@ -612,7 +612,7 @@ TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., MakeTimestamp(absl::Time)
   }
 }
 
-TEST(Timestamp, FromAbslTimeOverflow) {  // i.e., MakeTimestamp(absl::Time)
+TEST(Timestamp, FromAbslTimeOverflow) {  // i.e., `MakeTimestamp(absl::Time)`
   auto const min_timestamp =
       internal::TimestampFromRFC3339("0001-01-01T00:00:00Z").value();
   auto const max_timestamp =
@@ -621,7 +621,7 @@ TEST(Timestamp, FromAbslTimeOverflow) {  // i.e., MakeTimestamp(absl::Time)
   auto const min_time = min_timestamp.get<absl::Time>().value();
   auto const max_time = max_timestamp.get<absl::Time>().value();
 
-  // First show that the min and max absl::Time values are within range.
+  // First show that the min and max `absl::Time` values are within range.
   EXPECT_TRUE(MakeTimestamp(min_time));
   EXPECT_TRUE(MakeTimestamp(max_time));
 
