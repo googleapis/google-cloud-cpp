@@ -28,6 +28,10 @@ export CMAKE_SOURCE_DIR="."
 
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
 
+# Define the build tool so other scripts (e.g. cache download),
+# currently the possible values are `CMake` or `Bazel`.
+export BUILD_TOOL="CMake"
+
 in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
 if [[ $# -ge 1 ]]; then
@@ -94,6 +98,7 @@ elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO_VERSION=31
   # TODO(4306): Enable the backup tests once they don't timeout too often.
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
@@ -101,12 +106,14 @@ elif [[ "${BUILD_NAME}" = "integration" ]]; then
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   # TODO(4306): Enable the backup tests once they don't timeout too often.
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export BUILD_TYPE=Debug
@@ -122,6 +129,7 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="asan"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "msan" ]]; then
   # Compile with the MemorySanitizer enabled.
@@ -130,6 +138,7 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   export DISTRO=fedora-libcxx-msan
   export DISTRO_VERSION=32
   export BAZEL_CONFIG="msan"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
@@ -138,6 +147,7 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="tsan"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
@@ -146,6 +156,7 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="ubsan"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
@@ -209,6 +220,7 @@ elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=31
   export BAZEL_CONFIG="libcxx"
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "shared" ]]; then
   # Compile with shared libraries. Needs to have the dependencies pre-installed.
@@ -238,6 +250,7 @@ elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="no" # quickstart does not support integration tests.
+  export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-quickstart-bazel.sh"
 elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
   export DISTRO=ubuntu

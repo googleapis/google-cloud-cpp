@@ -16,12 +16,6 @@
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {
-  # TODO(#5113) - we should do this for all Bazel builds, and only on full CIs
-  if [[ "${BUILD_NAME:-}" = "msan" ]]; then
-    io::log "Skipping build cache for msan builds"
-    return 1
-  fi
-
   if [[ ! -f "${CACHE_KEYFILE}" ]]; then
     echo "================================================================"
     io::log "Service account for cache access is not configured."
@@ -32,6 +26,12 @@ cache_download_enabled() {
   if [[ "${RUNNING_CI:-}" != "yes" ]]; then
     echo "================================================================"
     io::log "Cache not downloaded as this is not a CI build."
+    return 1
+  fi
+
+  if [[ "${KOKORO_JOB_TYPE:-}" = "CONTINUOUS_INTEGRATION" && "${BUILD_TOOL:-}" = "Bazel" ]]; then
+    echo "================================================================"
+    io::log "Cache not downloaded as this is a full CI build for Bazel."
     return 1
   fi
   return 0
