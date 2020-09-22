@@ -90,7 +90,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7dd43a10e5f3145c67370e8690dd6b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The details of each mutation failure.  <a href="#a7dd43a10e5f3145c67370e8690dd6b91">More...</a><br /></td></tr>
 <tr class="separator:a7dd43a10e5f3145c67370e8690dd6b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcf9e26471e1a8e51a562de60c1af624"><td class="memItemLeft" align="right" valign="top">grpc::Status const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1PermanentMutationFailure.html#abcf9e26471e1a8e51a562de60c1af624">status</a> () const</td></tr>
-<tr class="memdesc:abcf9e26471e1a8e51a562de60c1af624"><td class="mdescLeft">&#160;</td><td class="mdescRight">The grpc::Status of the request.  <a href="#abcf9e26471e1a8e51a562de60c1af624">More...</a><br /></td></tr>
+<tr class="memdesc:abcf9e26471e1a8e51a562de60c1af624"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>grpc::Status</code> of the request.  <a href="#abcf9e26471e1a8e51a562de60c1af624">More...</a><br /></td></tr>
 <tr class="separator:abcf9e26471e1a8e51a562de60c1af624"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The details of each mutation failure. </p>
 <p>Because BulkApply() and Apply() take ownership of the data in the mutations the failures are returned with their full contents, in case the application wants to take further action with them. Any successful mutations are discarded.</p>
-<p>Any mutations that fail with an unknown state are included with a grpc::StatusCode::OK. </p>
+<p>Any mutations that fail with an unknown state are included with a <code>grpc::StatusCode::OK</code>. </p>
 
 <p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00445">445</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
@@ -235,8 +235,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The grpc::Status of the request. </p>
-<p>Notice that it can return grpc::Status::OK when there are partial failures in a BulkApply() operation. </p>
+<p>The <code>grpc::Status</code> of the request. </p>
+<p>Notice that it can return <code>grpc::Status::OK</code> when there are partial failures in a <code>BulkApply()</code> operation. </p>
 
 <p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00453">453</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 

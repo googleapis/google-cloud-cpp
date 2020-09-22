@@ -228,9 +228,9 @@ Public Attributes</h2></td></tr>
 <li><code>name</code></li>
 <li><code>table</code></li>
 <li><code>state</code></li>
-<li><code>start_time</code> (and values are of the format YYYY-MM-DDTHH:MM:SSZ)</li>
-<li><code>end_time</code> (and values are of the format YYYY-MM-DDTHH:MM:SSZ)</li>
-<li><code>expire_time</code> (and values are of the format YYYY-MM-DDTHH:MM:SSZ)</li>
+<li><code>start_time</code> (and values are of the format <code>YYYY-MM-DDTHH:MM:SSZ</code>)</li>
+<li><code>end_time</code> (and values are of the format <code>YYYY-MM-DDTHH:MM:SSZ</code>)</li>
+<li><code>expire_time</code> (and values are of the format <code>YYYY-MM-DDTHH:MM:SSZ</code>)</li>
 <li><code>size_bytes</code></li>
 </ul>
 <p>To filter on multiple expressions, provide each separate expression within parentheses. By default, each expression is an AND expression. However, you can include AND, OR, and NOT expressions explicitly.</p>
@@ -240,11 +240,11 @@ Public Attributes</h2></td></tr>
 <li><code>table:prod</code> --&gt; The table's name contains the string "prod".</li>
 <li><code>state:CREATING</code> --&gt; The backup is pending creation.</li>
 <li><code>state:READY</code> --&gt; The backup is fully created and ready for use.</li>
-<li><code>(name:howl) AND (start_time &lt; \"2018-03-28T14:50:00Z\\")</code> --&gt; The backup name contains the string "howl" and start_time of the backup is before 2018-03-28T14:50:00Z.</li>
+<li><code>(name:howl) AND (start_time &lt; \"2018-03-28T14:50:00Z\\")</code> --&gt; The backup name contains the string "howl" and start_time of the backup is before <code>2018-03-28T14:50:00Z</code>.</li>
 <li><code>size_bytes &gt; 10000000000</code> --&gt; The backup's size is greater than 10GB </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00790">790</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00792">792</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -291,7 +291,7 @@ Public Attributes</h2></td></tr>
 <p>For example, "start_time". The default sorting order is ascending. Append the " desc" suffix to the field name to sort descending, e.g. "start_time desc". Redundant space characters in the syntax are insignificant.</p>
 <p>If order_by is empty, results will be sorted by <code>start_time</code> in descending order starting from the most recently created backup. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00818">818</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00820">820</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -308,7 +308,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00826">826</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00828">828</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -324,7 +324,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00827">827</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00829">829</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -340,7 +340,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00828">828</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00830">830</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
