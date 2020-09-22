@@ -158,7 +158,7 @@ class ClientOptions {
   }
 
   /**
-   * Set the `Grpclb` fallback timeout with the timestamp @p fallback_timeout
+   * Set the `grpclb` fallback timeout with the timestamp @p fallback_timeout
    * for the channel.
    *
    * For example:

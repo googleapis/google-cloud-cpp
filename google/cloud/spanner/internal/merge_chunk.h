@@ -28,7 +28,7 @@ namespace internal {
 /**
  * Merges @p chunk into @p value, or returns an error.
  *
- * The official documentation about how to reassemble chunk Spanner values is
+ * The official documentation about how to reassemble chunked Spanner values is
  * at:
  * https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/result_set.proto
  *
@@ -40,7 +40,7 @@ namespace internal {
  *
  * The above rules should be applied recursively.
  *
- * @note The above linked documentation explains how to reassemble chunk
+ * @note The above linked documentation explains how to reassemble chunked
  *     objects, which are `google::protobuf::Value` objects with the
  *     `struct_value` field set. However, Spanner never returns these
  *     struct_values, so it is therefore an error to try to merge them.
