@@ -1124,8 +1124,7 @@ struct CreateParallelUploadShards {
 /// @copydoc CreateParallelUploadShards::Create()
 template <typename... Options>
 StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-    Client client,
-    std::string file_name, std::string const& bucket_name,
+    Client client, std::string file_name, std::string const& bucket_name,
     std::string const& object_name, std::string const& prefix,
     Options&&... options) {
   return CreateParallelUploadShards::Create(

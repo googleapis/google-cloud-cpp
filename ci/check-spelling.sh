@@ -34,9 +34,9 @@ exit_status=0
 printf "%-30s" "Running cspell:"
 time {
   if ! git ls-files -z | grep -zE '\.(h)$' |
-        xargs -P "${NCPU}" -n 50 -0 cspell -c ci/cspell.json; then
-      io::log_red "Detected spelling problems"
-      exit_status=1
+    xargs -P "${NCPU}" -n 50 -0 cspell -c ci/cspell.json; then
+    io::log_red "Detected spelling problems"
+    exit_status=1
   fi
 }
 
