@@ -76,6 +76,12 @@ class MockInstanceAdminStub
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&,
                    google::longrunning::GetOperationRequest const&));
+  MOCK_METHOD3(AsyncGetOperation,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::longrunning::Operation>>(
+                   grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const&,
+                   grpc::CompletionQueue*));
 };
 
 }  // namespace SPANNER_CLIENT_NS

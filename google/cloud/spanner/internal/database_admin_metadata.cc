@@ -155,6 +155,16 @@ StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::GetOperation(
   return child_->GetOperation(context, request);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+DatabaseAdminMetadata::AsyncGetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->AsyncGetOperation(context, request, cq);
+}
+
 Status DatabaseAdminMetadata::CancelOperation(
     grpc::ClientContext& context,
     google::longrunning::CancelOperationRequest const& request) {

@@ -102,6 +102,16 @@ StatusOr<google::longrunning::Operation> InstanceAdminMetadata::GetOperation(
   return child_->GetOperation(context, request);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncGetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->AsyncGetOperation(context, request, cq);
+}
+
 void InstanceAdminMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

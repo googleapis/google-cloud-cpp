@@ -20,12 +20,14 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
 /**
  * Defines the low-level interface for database administration RPCs.
  */
@@ -135,6 +137,13 @@ class DatabaseAdminStub {
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) = 0;
+
+  /// Asynchronously poll a long-running operation.
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext& client_context,
+                    google::longrunning::GetOperationRequest const& request,
+                    grpc::CompletionQueue* cq) = 0;
 
   /// Cancel a long-running operation.
   virtual Status CancelOperation(

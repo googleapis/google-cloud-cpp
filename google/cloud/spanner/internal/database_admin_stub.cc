@@ -257,6 +257,16 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext& client_context,
+                    google::longrunning::GetOperationRequest const& request,
+                    grpc::CompletionQueue* cq) override {
+    return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        google::longrunning::Operation>>(
+        operations_->AsyncGetOperation(&client_context, request, cq).release());
+  }
+
   Status CancelOperation(
       grpc::ClientContext& client_context,
       google::longrunning::CancelOperationRequest const& request) override {

@@ -410,6 +410,25 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_EQ(TransientError(), status.status());
 }
 
+TEST_F(DatabaseAdminMetadataTest, AsyncGetOperation) {
+  EXPECT_CALL(*mock_, AsyncGetOperation(_, _, _))
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::longrunning::GetOperationRequest const&,
+                       grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.longrunning.Operations.GetOperation",
+            expected_api_client_header_));
+        return nullptr;
+      });
+
+  DatabaseAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::longrunning::GetOperationRequest request;
+  request.set_name("operations/fake-operation-name");
+  auto reader = stub.AsyncGetOperation(context, request, nullptr);
+  EXPECT_EQ(nullptr, reader);
+}
+
 TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
   EXPECT_CALL(*mock_, CancelOperation(_, _))
       .WillOnce([this](grpc::ClientContext& context,

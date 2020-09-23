@@ -223,6 +223,21 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
       context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncGetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncGetOperation(context, request, cq);
+      },
+      context, request, cq, __func__, tracing_options_);
+}
+
 Status DatabaseAdminLogging::CancelOperation(
     grpc::ClientContext& context,
     google::longrunning::CancelOperationRequest const& request) {

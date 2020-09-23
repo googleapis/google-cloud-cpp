@@ -128,6 +128,13 @@ class MockDatabaseAdminStub
                    grpc::ClientContext&,
                    google::longrunning::GetOperationRequest const&));
 
+  MOCK_METHOD3(AsyncGetOperation,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::longrunning::Operation>>(
+                   grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const&,
+                   grpc::CompletionQueue*));
+
   MOCK_METHOD2(CancelOperation,
                Status(grpc::ClientContext&,
                       google::longrunning::CancelOperationRequest const&));

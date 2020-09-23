@@ -142,6 +142,21 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
       context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncGetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncGetOperation(context, request, cq);
+      },
+      context, request, cq, __func__, tracing_options_);
+}
+
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

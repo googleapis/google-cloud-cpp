@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -75,9 +76,15 @@ class InstanceAdminStub {
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(grpc::ClientContext&,
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;
+
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext& client_context,
+                    google::longrunning::GetOperationRequest const& request,
+                    grpc::CompletionQueue* cq) = 0;
 };
 
 /**

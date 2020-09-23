@@ -321,6 +321,28 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
+TEST_F(DatabaseAdminLoggingTest, AsyncGetOperation) {
+  EXPECT_CALL(*mock_, AsyncGetOperation(_, _, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& request,
+                   grpc::CompletionQueue*) {
+        EXPECT_EQ("operations/fake-operation-name", request.name());
+        return nullptr;
+      });
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  google::longrunning::GetOperationRequest request;
+  request.set_name("operations/fake-operation-name");
+  auto reader = stub.AsyncGetOperation(context, request, nullptr);
+  EXPECT_EQ(nullptr, reader);
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncGetOperation")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("async response reader")));
+}
+
 TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
   EXPECT_CALL(*mock_, CancelOperation(_, _)).WillOnce(Return(TransientError()));
 

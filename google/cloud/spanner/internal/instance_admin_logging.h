@@ -97,6 +97,12 @@ class InstanceAdminLogging : public InstanceAdminStub {
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;
+
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext& context,
+                    google::longrunning::GetOperationRequest const& request,
+                    grpc::CompletionQueue* cq) override;
   //@}
 
  private:

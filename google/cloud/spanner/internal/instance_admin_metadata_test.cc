@@ -255,6 +255,43 @@ TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
   EXPECT_EQ(TransientError(), response.status());
 }
 
+TEST_F(InstanceAdminMetadataTest, GetOperation) {
+  EXPECT_CALL(*mock_, GetOperation(_, _))
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::longrunning::GetOperationRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.longrunning.Operations.GetOperation",
+            expected_api_client_header_));
+        return TransientError();
+      });
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::longrunning::GetOperationRequest request;
+  request.set_name("operations/fake-operation-name");
+  auto status = stub.GetOperation(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
+TEST_F(InstanceAdminMetadataTest, AsyncGetOperation) {
+  EXPECT_CALL(*mock_, AsyncGetOperation(_, _, _))
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::longrunning::GetOperationRequest const&,
+                       grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.longrunning.Operations.GetOperation",
+            expected_api_client_header_));
+        return nullptr;
+      });
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::longrunning::GetOperationRequest request;
+  request.set_name("operations/fake-operation-name");
+  auto reader = stub.AsyncGetOperation(context, request, nullptr);
+  EXPECT_EQ(nullptr, reader);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

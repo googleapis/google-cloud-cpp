@@ -208,6 +208,43 @@ TEST_F(InstanceAdminLoggingTest, TestIamPermissions) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
+TEST_F(InstanceAdminLoggingTest, GetOperation) {
+  EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
+
+  InstanceAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status =
+      stub.GetOperation(context, google::longrunning::GetOperationRequest{});
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetOperation")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(InstanceAdminLoggingTest, AsyncGetOperation) {
+  EXPECT_CALL(*mock_, AsyncGetOperation(_, _, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& request,
+                   grpc::CompletionQueue*) {
+        EXPECT_EQ("operations/fake-operation-name", request.name());
+        return nullptr;
+      });
+
+  InstanceAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  google::longrunning::GetOperationRequest request;
+  request.set_name("operations/fake-operation-name");
+  auto reader = stub.AsyncGetOperation(context, request, nullptr);
+  EXPECT_EQ(nullptr, reader);
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncGetOperation")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("async response reader")));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
