@@ -442,13 +442,12 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                  back_inserter(name), [](char c) {
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
-#if !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     if (name == "POSTPolicyCharacterEscaping") {
-      // Escaping is not supported if codecvt header or exceptions are
-      // unavailable.
+      // Escaping is not supported if exceptions are unavailable.
       continue;
     }
-#endif  // !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#endif  // !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     bool inserted =
         google::cloud::storage::post_policy_tests->emplace(name, j_obj.value())
             .second;
