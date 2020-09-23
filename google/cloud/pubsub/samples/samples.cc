@@ -1489,7 +1489,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "subscription-id", "dead-letter-topic-id",
            "dead-letter-delivery-attempts"},
           UpdateDeadLetterSubscription),
-
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
                                      GetSubscription),
