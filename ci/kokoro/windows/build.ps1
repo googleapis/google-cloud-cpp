@@ -80,11 +80,9 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
 } elseif (($BuildName -eq "bazel-debug") -or ($BuildName -eq "bazel")) {
-    $env:BUILD_NAME = "bazel-debug"
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
 } elseif ($BuildName -eq "bazel-release") {
-    $env:BUILD_NAME = "bazel-release"
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
@@ -131,7 +129,7 @@ Get-CimInstance -Class CIM_LogicalDisk -ErrorAction SilentlyContinue | `
         @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running build script for $BuildName build"
-powershell -exec bypass "${ScriptLocation}/${BuildScript}"
+powershell -exec bypass "${ScriptLocation}/${BuildScript}" "${BuildName}"
 # Save the build exit code, we want to delete the artifacts
 # even if the build fails.
 $BuildExitCode = $LastExitCode
