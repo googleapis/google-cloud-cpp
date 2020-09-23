@@ -32,7 +32,8 @@ RUN echo 'root:' | chpasswd
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
-    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
+    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0 greenlet==0.4.16 \
+    brotlipy==0.7.0
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
