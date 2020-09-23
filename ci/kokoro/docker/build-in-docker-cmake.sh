@@ -32,9 +32,6 @@ echo
 io::log_yellow "Starting docker build with ${NCPU} cores"
 echo
 
-echo "clang-format version"
-clang-format --version
-
 # Run the configure / compile / test cycle inside a docker image.
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.

@@ -113,9 +113,6 @@ should_run_integration_tests() {
   return 1
 }
 
-echo "clang-format version"
-clang-format --version
-
 if should_run_integration_tests; then
   echo "================================================================"
   io::log "Running the integration tests"

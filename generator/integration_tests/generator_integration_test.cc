@@ -137,10 +137,10 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   //  std::flush(std::cout);
   //  EXPECT_EQ(0, std::system(cmd.c_str()));
 
-  auto golden_file = ReadFile(golden_path_ + std::string(GetParam()));
+  auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
   EXPECT_TRUE(golden_file.ok());
   auto generated_file =
-      ReadFile(output_path_ + product_path_ + std::string(GetParam()));
+      ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
 
   EXPECT_TRUE(generated_file.ok());
   EXPECT_EQ(golden_file->size(), generated_file->size());
@@ -150,7 +150,7 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    Code, GeneratorIntegrationTest,
+    Generator, GeneratorIntegrationTest,
     testing::Values("internal/database_admin_logging_decorator.gcpcxx.pb.h",
                     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
                     "internal/database_admin_metadata_decorator.gcpcxx.pb.h",

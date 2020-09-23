@@ -163,8 +163,8 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   cc_.Print(LocalInclude(service_vars_["metadata_header_path"]));
-  cc_.Print(LocalInclude("google/cloud/internal/compiler_info.h"));
   cc_.Print(LocalInclude("google/cloud/grpc_error_delegate.h"));
+  cc_.Print(LocalInclude("google/cloud/internal/compiler_info.h"));
   cc_.Print(LocalInclude("google/cloud/status_or.h"));
   cc_.Print(SystemInclude(absl::StrCat(
       absl::StripSuffix(service_descriptor_->file()->name(), ".proto"),
