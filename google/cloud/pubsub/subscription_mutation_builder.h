@@ -236,6 +236,15 @@ class SubscriptionMutationBuilder {
     return std::move(set_dead_letter_policy(std::move(v)));
   }
 
+  SubscriptionMutationBuilder& clear_dead_letter_policy() & {
+    proto_.clear_dead_letter_policy();
+    paths_.insert("dead_letter_policy");
+    return *this;
+  }
+  SubscriptionMutationBuilder&& clear_dead_letter_policy() && {
+    return std::move(clear_dead_letter_policy());
+  }
+
   template <typename Rep, typename Period>
   static google::pubsub::v1::ExpirationPolicy MakeExpirationPolicy(
       std::chrono::duration<Rep, Period> d) {
