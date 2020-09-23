@@ -317,8 +317,8 @@ void ReceiveDeadLetterDeliveryAttempt(
     google::cloud::pubsub::Subscriber subscriber,
     google::cloud::pubsub::Subscription const& subscription,
     std::vector<std::string> const&) {
-  //! [dead-letter-update-subscription]
-  // [START pubsub_dead_letter_update_subscription]
+  //! [dead-letter-delivery-attempt]
+  // [START pubsub_dead_letter_delivery_attempt]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
@@ -348,8 +348,8 @@ void ReceiveDeadLetterDeliveryAttempt(
     std::cout << "Message count: " << message_count << ", status: " << status
               << "\n";
   }(std::move(subscriber), std::move(subscription));
-  // [END pubsub_dead_letter_update_subscription]
-  //! [dead-letter-update-subscription]
+  // [END pubsub_dead_letter_delivery_attempt]
+  //! [dead-letter-delivery-attempt]
 }
 
 void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
