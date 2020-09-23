@@ -111,7 +111,7 @@ time {
 
 printf "%-30s" "Running cspell:"
 time {
-  if ! git ls-files -z | grep -zE '\.(h)$' |
+  if ! git ls-files -z | grep -zE '\.(cc|h)$' |
     xargs -P "${NCPU}" -n 50 -0 cspell --no-summary -c ci/cspell.json; then
     problems="${problems} cspell"
   fi
