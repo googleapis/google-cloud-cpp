@@ -22,6 +22,8 @@
 # database_admin_stub.gcpcxx.pb.cc.golden database_admin_stub.gcpcxx.pb.h.golden
 # version.cc.golden version.h.golden version_info.h.golden)
 
+set(CMAKE_CXX_CLANG_TIDY "")
+
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
