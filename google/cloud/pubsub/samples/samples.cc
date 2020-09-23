@@ -352,6 +352,25 @@ void ReceiveDeadLetterDeliveryAttempt(
   //! [dead-letter-delivery-attempt]
 }
 
+void RemoveDeadLetterPolicy(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_dead_letter_remove] [dead-letter-remove]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& subscription_id) {
+    auto sub = client.UpdateSubscription(
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionMutationBuilder{}.clear_dead_letter_policy());
+    if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
+
+    std::cout << "The subscription has been updated to: " << sub->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_dead_letter_remove] [dead-letter-remove]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [get-subscription]
@@ -1373,6 +1392,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber,
                                    dead_letter_subscription, {});
 
+  std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
+  RemoveDeadLetterPolicy(subscription_admin_client,
+                         {project_id, dead_letter_subscription_id});
+
   std::cout << "\nRunning the CustomThreadPoolPublisher() sample" << std::endl;
   CustomThreadPoolPublisher({project_id, topic_id});
 
@@ -1489,6 +1512,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "subscription-id", "dead-letter-topic-id",
            "dead-letter-delivery-attempts"},
           UpdateDeadLetterSubscription),
+      CreateSubscriptionAdminCommand("remove-dead-letter-policy",
+                                     {"project-id", "subscription-id"},
+                                     RemoveDeadLetterPolicy),
       CreateSubscriptionAdminCommand("get-subscription",
                                      {"project-id", "subscription-id"},
                                      GetSubscription),
