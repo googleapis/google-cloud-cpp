@@ -82,7 +82,7 @@ $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # not hit this cache.
 if ((Test-Path env:KOKORO_GFILE_DIR) -and
     (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}"
+    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
     $build_flags += @("--remote_cache=${BAZEL_CACHE}/windows/${BuildName}")
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
     # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
