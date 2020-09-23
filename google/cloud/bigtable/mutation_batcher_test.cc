@@ -139,7 +139,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
-    // gmock expectation matching starts form the latest added, so we need to
+    // gMock expectation matching starts form the latest added, so we need to
     // add them in the reverse order.
     for (auto exchange_it = interactions.crbegin();
          exchange_it != interactions.crend(); ++exchange_it) {
@@ -151,7 +151,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       EXPECT_CALL(*reader, Read(_, _))
           .WillOnce([](btproto::MutateRowsResponse*, void*) {});
       // Just like in the outer loop, we need to reverse the order to counter
-      // the gmocks expectation matching order (from latest added to first).
+      // gMock's expectation matching order (from latest added to first).
       for (auto result_piece_it = exchange.res.rbegin();
            result_piece_it != exchange.res.rend(); ++result_piece_it) {
         EXPECT_CALL(*reader, Read(_, _))

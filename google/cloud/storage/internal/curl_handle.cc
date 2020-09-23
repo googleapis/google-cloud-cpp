@@ -319,6 +319,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       code = StatusCode::kUnknown;
       break;
 
+    // cSpell:disable
     // missing in some older libcurl versions:   CURLE_HTTP_RETURNED_ERROR
     // missing in some older libcurl versions:   CURLE_NO_CONNECTION_AVAILABLE
     // missing in some older libcurl versions:   CURLE_SSL_PINNEDPUBKEYNOTMATCH
@@ -328,6 +329,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     // missing in some older libcurl versions:   CURLE_AUTH_ERROR
     // missing in some older libcurl versions:   CURLE_HTTP3
     // missing in some older libcurl versions:   CURLE_QUIC_CONNECT_ERROR
+    // cSpell:enable
     default:
       // As described above, there are about 100 error codes, some are
       // explicitly marked as obsolete, some are not available in all libcurl

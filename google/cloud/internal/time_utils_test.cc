@@ -35,7 +35,7 @@ google::protobuf::Timestamp MakeProto(std::int64_t sec, std::int32_t nsec) {
   return proto;
 }
 
-// A helper to create an absl::Time from an RFC-3339 string.
+// A helper to create an `absl::Time` from an RFC-3339 string.
 StatusOr<absl::Time> TimeFromString(std::string const& s) {
   absl::Time t;
   std::string err;

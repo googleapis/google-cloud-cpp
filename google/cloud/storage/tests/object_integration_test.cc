@@ -376,7 +376,7 @@ TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
 
   auto object_name = MakeRandomObjectName();
 
-  // Create the object, but only if it does not exist already. Expect its lenght
+  // Create the object, but only if it does not exist already. Expect its length
   // to be 3 bytes.
   auto os =
       client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),

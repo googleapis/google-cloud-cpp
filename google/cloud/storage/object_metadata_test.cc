@@ -292,14 +292,14 @@ TEST(ObjectMetadataTest, JsonForInsert) {
       << "diff=" << nlohmann::json::diff(expected, actual);
 }
 
-/// @test Verify that ObjectMetadataJsonForRewrite works as expected.
+/// @test Verify that `ObjectMetadataJsonForRewrite()` works as expected.
 TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
   nlohmann::json actual = ObjectMetadataJsonForRewrite(ObjectMetadata());
   nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
-/// @test Verify thhat ObjectMetadataJsonForRewrite() works as expected.
+/// @test Verify that `ObjectMetadataJsonForRewrite()` works as expected.
 TEST(ObjectMetadataTest, JsonForRewrite) {
   auto actual = ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
 
@@ -518,7 +518,7 @@ TEST(ObjectMetadataPatchBuilder, SetAcl) {
   auto actual_as_json = nlohmann::json::parse(actual);
 
   // This is easier to express as a string than as a brace-initialized
-  // nlohmann::json object.
+  // `nlohmann::json` object.
   auto expected = nlohmann::json::parse(R"""({
     "acl":[{ "entity": "user-test-user", "role": "OWNER" }]
   })""");

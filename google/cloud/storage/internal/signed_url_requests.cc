@@ -124,7 +124,7 @@ std::string QueryStringFromParameters(
 
 std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
-  // Heasder values need to be normalized for spaces, whitespaces and tabs
+  // Header values need to be normalized for spaces, whitespaces and tabs
   std::replace_if(
       tmp.begin(), tmp.end(), [](char c) { return std::isspace(c); }, ' ');
   tmp.erase(0, tmp.find_first_not_of(' '));
@@ -285,7 +285,7 @@ std::multimap<std::string, std::string> V4SignUrlRequest::AllQueryParameters(
   // Query parameters.
   auto parameters = common_request_.query_parameters();
   auto canonical_parameters = CanonicalQueryParameters(client_id);
-  // No .merge() until C++17, blegh.
+  // No `.merge()` until C++17, blegh.
   parameters.insert(canonical_parameters.begin(), canonical_parameters.end());
   return parameters;
 }

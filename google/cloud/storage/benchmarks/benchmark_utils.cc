@@ -102,7 +102,7 @@ absl::optional<bool> ParseBoolean(std::string const& val) {
 }
 
 std::string Basename(std::string const& path) {
-  // With C++17 we would use std::filesytem::path, until then do the poor's
+  // With C++17 we would use `std::filesystem::path`, until then do the poor's
   // person version.
 #if _WIN32
   return path.substr(path.find_last_of("\\/") + 1);

@@ -154,8 +154,8 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   EXPECT_THAT(output, HasSubstr("100 ops/s"));
 
   // And the percentiles are easy to estimate for the generated data. Note that
-  // this test depends on the duration formatting as specified by the absl::time
-  // library.
+  // this test depends on the duration formatting as specified by the
+  // `absl::time` library.
   EXPECT_THAT(output, HasSubstr("p0=100.000us"));
   EXPECT_THAT(output, HasSubstr("p95=9.500ms"));
   EXPECT_THAT(output, HasSubstr("p100=10.000ms"));

@@ -138,7 +138,7 @@ TEST(DatabaseAdminClientTest, GetDatabasePermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetDatabaseTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -189,7 +189,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdlPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetDatabaseDdlTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -505,7 +505,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicyPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -648,7 +648,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissionsPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -812,7 +812,7 @@ TEST(DatabaseAdminClientTest, GetBackupPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -859,7 +859,7 @@ TEST(DatabaseAdminClientTest, DeleteBackupPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, DeleteBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -994,7 +994,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, UpdateBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 

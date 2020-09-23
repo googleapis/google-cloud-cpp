@@ -27,7 +27,7 @@ namespace {
 using ::testing::HasSubstr;
 
 // Given a `vector<StatusOr<Row>>` creates a 'Row::Source' object. This is
-// helpeful for unit testing and letting the test inject a non-OK Status.
+// helpful for unit testing and letting the test inject a non-OK Status.
 RowStreamIterator::Source MakeRowStreamIteratorSource(
     std::vector<StatusOr<Row>> const& rows) {
   std::size_t index = 0;

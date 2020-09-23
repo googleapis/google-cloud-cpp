@@ -157,7 +157,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   std::queue<future<bool>> futures_from_user_cb_;
 };
 
-/// @test Verify that successfully reading a sinle row works.
+/// @test Verify that successfully reading a single row works.
 TEST_F(TableAsyncReadRowsTest, SingleRow) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 

@@ -119,8 +119,8 @@ ParallelUploadPersistentState::FromString(std::string const& json_rep) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state is not a JSON object.");
   }
-  // nlohmann::json doesn't allow for multiple keys with the same name, so there
-  // are either 0 or 1 elements with the same key.
+  // `nlohmann::json` doesn't allow for multiple keys with the same name, so
+  // there are either 0 or 1 elements with the same key.
   if (json.count("destination") != 1) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state doesn't contain a 'destination'.");

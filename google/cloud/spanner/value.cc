@@ -371,7 +371,7 @@ google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
 
 google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   google::protobuf::Value v;
-  // absl::FormatCivilTime doesn't pad the year to 4-digits, which Spanner
+  // `absl::FormatCivilTime` doesn't pad the year to 4-digits, which Spanner
   // needs as part of its RFC-3339 requirement.
   std::ostringstream ss;
   ss << std::internal << std::setfill('0') << std::setw(4) << d.year() << '-';

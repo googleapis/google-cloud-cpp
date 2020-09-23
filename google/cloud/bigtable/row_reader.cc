@@ -170,7 +170,7 @@ StatusOr<RowReader::OptionalRow> RowReader::Advance() {
       row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
     }
 
-    // If we receive an error, but the retriable set is empty, stop.
+    // If we receive an error, but the retryable set is empty, stop.
     if (row_set_.IsEmpty()) {
       return row;
     }
