@@ -606,6 +606,10 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ListObjectsAndPrefixes() example" << std::endl;
   ListObjectsAndPrefixes(client, {bucket_name, bucket_prefix});
 
+  // Cleanup the objects so the bucket can be deleted
+  client.DeleteObject(bucket_name, bucket_prefix + "/foo/bar");
+  client.DeleteObject(bucket_name, bucket_prefix + "/qux/bar");
+
   std::cout << "\nRunning GetObjectMetadata() example" << std::endl;
   GetObjectMetadata(client, {bucket_name, object_name});
 
