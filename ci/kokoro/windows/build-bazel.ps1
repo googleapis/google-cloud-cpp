@@ -16,16 +16,12 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-# First check the required environment variables.
-$missing=@()
-ForEach($var in ("BUILD_NAME")) {
-    if (-not (Test-Path env:${var})) {
-        $missing+=(${var})
-    }
-}
-if ($missing.count -ge 1) {
+$BuildName = ""
+if ($args.count -eq 1) {
+    $BuildName = $args[0]
+} else {
     Write-Host -ForegroundColor Red `
-        "Aborting build because the ${missing} environment variables are not set."
+        "Aborting build, expected the build name as the first (and only) argument"
     Exit 1
 }
 
@@ -44,26 +40,6 @@ $common_flags = @("--output_user_root=${bazel_root}")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
 bazel $common_flags version
-bazel $common_flags shutdown
-
-$GOOGLE_CLOUD_CPP_REPOSITORY="google-cloud-cpp"
-$CACHE_BUCKET=if(Test-Path env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS) `
-    {$env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS} else {"cloud-cpp-kokoro-results"}
-$BRANCH_NAME="master"
-$CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH_NAME}"
-# Bazel creates many links (aka NTFS JUNCTIONS) and only .tgz files seem to
-# support those well.
-$CACHE_BASENAME="cache-windows-${env:BUILD_NAME}"
-
-$RunningCI = (Test-Path env:RUNNING_CI) -and `
-    ($env:RUNNING_CI -eq "yes")
-$IsCI = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE -eq "CONTINUOUS_INTEGRATION")
-$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
-$CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
-    (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
-$Has7z = Get-Command "7z" -ErrorAction SilentlyContinue
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
@@ -106,15 +82,15 @@ $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # not hit this cache.
 if ((Test-Path env:KOKORO_GFILE_DIR) -and
     (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}"
-    $build_flags += @("--remote_cache=${BAZEL_CACHE}")
+    Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
+    $build_flags += @("--remote_cache=${BAZEL_CACHE}/windows/${BuildName}")
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
     # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }
 
-if (${env:BUILD_NAME} -eq "bazel-release") {
+if ($BuildName -eq "bazel-release") {
     $build_flags += ("-c", "opt")
 }
 
