@@ -845,34 +845,21 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   }
   s->set_id(begin->id());
 
-  spanner_proto::ExecuteSqlRequest request;
-  request.set_session(session->session_name());
-  *request.mutable_transaction() = *s;
-  auto sql_statement = internal::ToProto(std::move(params.statement));
-  request.set_sql(std::move(*sql_statement.mutable_sql()));
-  *request.mutable_params() = std::move(*sql_statement.mutable_params());
-  *request.mutable_param_types() =
-      std::move(*sql_statement.mutable_param_types());
-  request.set_seqno(seqno);
-  auto stub = session_pool_->GetStub(*session);
-  auto response = RetryLoop(
-      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context,
-              spanner_proto::ExecuteSqlRequest const& request) {
-        return stub->ExecuteSql(context, request);
-      },
-      request, __func__);
-  if (!response) {
-    auto status = std::move(response).status();
+  SqlParams sql_params(
+      {internal::MakeTransactionFromIds(session->session_name(), begin->id()),
+       std::move(params.statement), /*query_options=*/{},
+       /*partition_token=*/{}});
+  auto dml_result = CommonQueryImpl<StreamingDmlResult>(
+      session, s, seqno, std::move(sql_params),
+      spanner_proto::ExecuteSqlRequest::NORMAL);
+  auto rows_modified = dml_result.RowsModified();
+  if (!rows_modified.ok()) {
+    auto status = std::move(rows_modified).status();
     if (internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
   PartitionedDmlResult result{0};
-  if (response->has_stats()) {
-    result.row_count_lower_bound = response->stats().row_count_lower_bound();
-  }
-
+  result.row_count_lower_bound = *rows_modified;
   return result;
 }
 

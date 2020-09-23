@@ -79,6 +79,17 @@ std::int64_t DmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }
 
+StatusOr<std::int64_t> StreamingDmlResult::RowsModified() const {
+  while (auto row = source_->NextRow()) {
+    if (!row.ok()) {
+      return std::move(row).status();
+    }
+    // We don't expect to get any data; if we do just drop it.
+    if (row->size() == 0) break;
+  }
+  return GetRowsModified(source_);
+}
+
 std::int64_t ProfileDmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }

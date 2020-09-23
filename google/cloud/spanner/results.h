@@ -131,6 +131,29 @@ class DmlResult {
   std::unique_ptr<internal::ResultSourceInterface> source_;
 };
 
+class StreamingDmlResult {
+ public:
+  StreamingDmlResult() = default;
+  explicit StreamingDmlResult(
+      std::unique_ptr<internal::ResultSourceInterface> source)
+      : source_(std::move(source)) {}
+
+  // This class is movable but not copyable.
+  StreamingDmlResult(StreamingDmlResult&&) = default;
+  StreamingDmlResult& operator=(StreamingDmlResult&&) = default;
+
+  /**
+   * Returns the number of rows modified by the DML statement.
+   *
+   * @note Partitioned DML only provides a lower bound of the rows modified, all
+   *     other DML statements provide an exact count.
+   */
+  StatusOr<std::int64_t> RowsModified() const;
+
+ private:
+  std::unique_ptr<internal::ResultSourceInterface> source_;
+};
+
 /**
  * Represents the stream of `Rows` and profile stats returned from
  * `spanner::Client::ProfileQuery()`.
