@@ -65,11 +65,11 @@ RUN pip3 install cmake_format==0.6.8
 
 # Install Python packages used in the integration tests.
 RUN pip3 install setuptools wheel
-RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.0 \
-    blinker==1.4 brotlipy==0.7.0 cffi==1.14.0 click==7.1.2 crc32c==2.0 \
-    decorator==4.4.2 flask==1.1.1 gevent==1.4.0 greenlet==0.4.16 \
-    gunicorn==19.10.0 httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 \
-    raven==6.10.0
+RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
+    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
+    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
+    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
+    zope.event==4.5.0 zope.interface==5.1.0
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.

@@ -31,9 +31,11 @@ RUN echo 'root:' | chpasswd
 # Install the Python modules needed to run the storage testbench
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools
-RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
-    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0 greenlet==0.4.16 \
-    brotlipy==0.7.0
+RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
+    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
+    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
+    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
+    zope.event==4.5.0 zope.interface==5.1.0
 
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxx-10.0.0.src.tar.xz
