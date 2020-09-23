@@ -46,6 +46,10 @@ Commands::value_type CreateCommandEntry(
     std::string const& name, std::vector<std::string> const& arg_names,
     ClientCommand const& command);
 
+/// Remove a bucket, including any objects in it
+Status RemoveBucketAndContents(google::cloud::storage::Client client,
+                               std::string const& bucket_name);
+
 }  // namespace examples
 }  // namespace storage
 }  // namespace cloud

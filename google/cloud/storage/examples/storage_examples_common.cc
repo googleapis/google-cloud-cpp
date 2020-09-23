@@ -81,6 +81,18 @@ Commands::value_type CreateCommandEntry(
   return {name, std::move(adapter)};
 }
 
+Status RemoveBucketAndContents(google::cloud::storage::Client client,
+                               std::string const& bucket_name) {
+  // List all the objects and versions, and then delete each.
+  for (auto o : client.ListObjects(bucket_name, Versions(true))) {
+    if (!o) return std::move(o).status();
+    auto status = client.DeleteObject(bucket_name, o->name(),
+                                      Generation(o->generation()));
+    if (!status.ok()) return status;
+  }
+  return client.DeleteBucket(bucket_name);
+}
+
 }  // namespace examples
 }  // namespace storage
 }  // namespace cloud

@@ -70,7 +70,7 @@ void RunAll(std::vector<std::string> const& argv) {
   StorageQuickstartCommand({bucket_name});
 
   auto client = gcs::Client::CreateDefaultClient().value();
-  (void)client.DeleteBucket(bucket_name);
+  (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
 }  // namespace
