@@ -12,24 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Common utils"""
+import argparse
+import logging
 
-import re
-import types
+import database
+import rest_server
 
-# === STR === #
-
-
-re_snake_case = re.compile(r"(?<!^)(?=[A-Z])")
-
-
-def to_snake_case(string):
-    return re_snake_case.sub("_", string).lower()
-
-
-# === FAKE REQUEST === #
-
-
-class FakeRequest(types.SimpleNamespace):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+if __name__ == "__main__":
+    logging.basicConfig()
+    parser = argparse.ArgumentParser(
+        description="A testbench for the Google Cloud C++ Client Library"
+    )
+    parser.add_argument(
+        "--port_grpc", default="8000", help="The listening port for GRPC"
+    )
+    parser.add_argument(
+        "--port_rest", default="9000", help="The listening port for REST"
+    )
+    arguments = parser.parse_args()
+    db = database.Database.init()
+    rest_server.run(arguments.port_rest, db)
