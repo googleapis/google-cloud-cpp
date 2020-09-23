@@ -190,7 +190,6 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
       "SignBlob");
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_CODECVT
 PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   PolicyDocumentV4 result;
   result.bucket = "test-bucket";
@@ -296,7 +295,6 @@ TEST_F(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
 
   EXPECT_EQ("https://test-bucket.storage.googleapis.com/", actual->url);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT
 
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
