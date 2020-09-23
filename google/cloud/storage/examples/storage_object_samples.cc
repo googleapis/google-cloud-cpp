@@ -685,7 +685,7 @@ void RunAll(std::vector<std::string> const& argv) {
   DeleteObject(client, {bucket_name, object_name_retry});
 
   if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
-  (void)client.DeleteBucket(bucket_name);
+  (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
 }  // anonymous namespace

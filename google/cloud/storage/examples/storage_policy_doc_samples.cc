@@ -151,7 +151,7 @@ void RunAll(std::vector<std::string> const& argv) {
   CreatePolicyDocumentFormV4(client, {bucket_name, object_name});
 
   if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
-  (void)client.DeleteBucket(bucket_name);
+  (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
 }  // namespace

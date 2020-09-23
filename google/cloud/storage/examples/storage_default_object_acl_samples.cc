@@ -236,7 +236,7 @@ void RunAll(std::vector<std::string> const& argv) {
   DeleteDefaultObjectAcl(client, {bucket_name, entity});
 
   if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
-  (void)client.DeleteBucket(bucket_name);
+  (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
 }  // anonymous namespace
