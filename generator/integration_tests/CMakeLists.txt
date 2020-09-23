@@ -14,7 +14,16 @@
 # limitations under the License.
 # ~~~
 
+find_package(ProtobufWithTargets REQUIRED)
 find_package(gRPC REQUIRED)
+
+# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
+# standard directory. We need to find out where, and then add that directory to
+# the search path for protos.
+find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
+if (PROTO_INCLUDE_DIR)
+    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+endif ()
 
 include(CompileProtos)
 
@@ -27,6 +36,7 @@ google_cloud_cpp_grpcpp_library(
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/backup.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
     PROTO_PATH_DIRECTORIES
+    ${PROTO_INCLUDE_DIR}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download)
 target_link_libraries(
