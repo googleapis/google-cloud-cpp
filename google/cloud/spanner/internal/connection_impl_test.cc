@@ -122,9 +122,7 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
 
 // Ideally this would be a matcher, but matcher args are `const` and `RowStream`
 // only has non-const methods.
-bool ContainsNoRows(RowStream& rows) {
-  return rows.begin() == rows.end();
-}
+bool ContainsNoRows(RowStream& rows) { return rows.begin() == rows.end(); }
 
 // Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(Transaction& txn, std::string tid) {
