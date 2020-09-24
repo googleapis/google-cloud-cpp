@@ -63,8 +63,8 @@ readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # bucket. Note: this will not cache external deps, so the "fetch" below will
 # not hit this cache.
 if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
-  io::log "Using bazel remote cache: ${BAZEL_CACHE}"
-  bazel_args+=("--remote_cache=${BAZEL_CACHE}")
+  io::log "Using bazel remote cache: ${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
+  bazel_args+=("--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}")
   bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
   # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360
