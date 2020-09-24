@@ -81,19 +81,23 @@ namespace spanner_proto = ::google::spanner::v1;
 MATCHER_P(HasSession, session, "request has expected session name") {
   return arg.session() == session;
 }
+
 MATCHER_P(HasTransactionId, transaction_id,
           "request has expected transaction id") {
   return arg.transaction().id() == transaction_id;
 }
+
 // As above, but for Commit and Rollback requests, which don't have a
 // `TransactionSelector` but just store the "naked" ID directly in the proto.
 MATCHER_P(HasNakedTransactionId, transaction_id,
           "commit or rollback request has expected transaction id") {
   return arg.transaction_id() == transaction_id;
 }
+
 MATCHER(HasBeginTransaction, "request has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
+
 MATCHER_P(HasDatabase, database, "Request has expected database") {
   return arg.database() == database.FullName();
 }
@@ -114,6 +118,12 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
         }
         return true;
       });
+}
+
+// Ideally this would be a matcher, but matcher args are `const` and `RowStream`
+// only has non-const methods.
+bool ContainsNoRows(RowStream& rows) {
+  return rows.begin() == rows.end();
 }
 
 // Helper to set the Transaction's ID. Requires selector.ok().
@@ -384,9 +394,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read({txn, "table", KeySet::All(), {"UserId", "UserName"}});
-  for (auto& row : rows) {
-    EXPECT_STATUS_OK(row);
-  }
+  EXPECT_TRUE(ContainsNoRows(rows));
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 }
 
@@ -525,9 +533,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->ExecuteQuery({txn, SqlStatement("select * from table")});
-  for (auto& row : rows) {
-    EXPECT_STATUS_OK(row);
-  }
+  EXPECT_TRUE(ContainsNoRows(rows));
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "00FEDCBA"));
 }
 
@@ -2126,9 +2132,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read({txn, "table", KeySet::All(), {"UserId", "UserName"}});
-  for (auto& row : rows) {
-    EXPECT_STATUS_OK(row);
-  }
+  EXPECT_TRUE(ContainsNoRows(rows));
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 
   // `conn` is the only reference to the `ConnectionImpl`, so dropping it will
