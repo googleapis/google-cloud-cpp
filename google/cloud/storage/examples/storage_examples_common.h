@@ -50,6 +50,25 @@ Commands::value_type CreateCommandEntry(
 Status RemoveBucketAndContents(google::cloud::storage::Client client,
                                std::string const& bucket_name);
 
+/**
+ * Remove stale buckets created for examples.
+ *
+ * The examples and integration tests create buckets in the production
+ * environment. While these programs are supposed to clean after themselves,
+ * they might crash or otherwise fail to delete any buckets they create. These
+ * buckets can accumulate and cause future tests to fail (see #4905). To prevent
+ * these problems we delete any bucket that match the pattern of these randomly
+ * created buckets, as long as the bucket was created more than 48 hours ago.
+ *
+ * @param client used to make calls to GCS.
+ * @param prefix only delete buckets that start with this string followed by a
+ *   date (in `YYYY-mm-dd` format), and then an underscore character (`_`).
+ * @param created_time_limit only delete buckets created before this timestamp.
+ */
+Status RemoveStaleBuckets(
+    google::cloud::storage::Client client, std::string const& prefix,
+    std::chrono::system_clock::time_point created_time_limit);
+
 }  // namespace examples
 }  // namespace storage
 }  // namespace cloud

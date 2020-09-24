@@ -184,9 +184,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   os << ", project_number=" << rhs.project_number()
      << ", self_link=" << rhs.self_link()
-     << ", storage_class=" << rhs.storage_class()
-     << ", time_created=" << rhs.time_created().time_since_epoch().count()
-     << ", updated=" << rhs.updated().time_since_epoch().count();
+     << ", storage_class=" << rhs.storage_class() << ", time_created="
+     << google::cloud::internal::FormatRfc3339(rhs.time_created())
+     << ", updated=" << google::cloud::internal::FormatRfc3339(rhs.updated());
 
   if (rhs.has_retention_policy()) {
     os << ", retention_policy.retention_period="

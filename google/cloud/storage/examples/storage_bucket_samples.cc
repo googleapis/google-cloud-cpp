@@ -535,6 +535,15 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
   auto client = gcs::Client::CreateDefaultClient().value();
 
+  // This is the only example that cleans up stale buckets. The examples run in
+  // parallel (within a build and across the builds), having multiple examples
+  // doing the same cleanup is probably more trouble than it is worth.
+  auto const create_time_limit =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  std::cout << "\nRemoving stale buckets for examples" << std::endl;
+  examples::RemoveStaleBuckets(client, "cloud-cpp-test-examples-",
+                               create_time_limit);
+
   std::cout << "\nRunning ListBucketsForProject() example" << std::endl;
   ListBucketsForProject(client, {project_id});
 

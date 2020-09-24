@@ -30,7 +30,11 @@ class GcsBucket(object):
     def __init__(self, gcs_url, name):
         self.name = name
         self.gcs_url = gcs_url
+        now = time.gmtime(time.time())
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", now)
         self.metadata = {
+            "timeCreated": timestamp,
+            "updated": timestamp,
             "metageneration": "0",
             "name": self.name,
             "location": "US",
@@ -160,14 +164,15 @@ class GcsBucket(object):
         metadata = GcsBucket._remove_non_writable_keys(metadata)
         tmp.update(metadata)
         tmp["name"] = tmp.get("name", self.name)
+        now = time.gmtime(time.time())
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", now)
         tmp.update(
             {
                 "id": self.name,
                 "kind": "storage#bucket",
                 "selfLink": self.gcs_url + self.name,
                 "projectNumber": "123456789",
-                "timeCreated": "2018-05-19T19:31:14Z",
-                "updated": "2018-05-19T19:31:24Z",
+                "updated": timestamp,
             }
         )
         self.metadata = tmp

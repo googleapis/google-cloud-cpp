@@ -17,6 +17,7 @@
 #include "absl/time/civil_time.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
+#include <regex>
 #include <sstream>
 
 namespace google {
@@ -91,6 +92,19 @@ Status RemoveBucketAndContents(google::cloud::storage::Client client,
     if (!status.ok()) return status;
   }
   return client.DeleteBucket(bucket_name);
+}
+
+Status RemoveStaleBuckets(
+    google::cloud::storage::Client client, std::string const& prefix,
+    std::chrono::system_clock::time_point created_time_limit) {
+  std::regex re("^" + prefix + R"re(\d{4}-\d{2}-\d{2}_.*$)re");
+  for (auto& bucket : client.ListBuckets()) {
+    if (!bucket) return std::move(bucket).status();
+    if (!std::regex_match(bucket->name(), re)) continue;
+    if (bucket->time_created() > created_time_limit) continue;
+    (void)RemoveBucketAndContents(client, bucket->name());
+  }
+  return {};
 }
 
 }  // namespace examples
