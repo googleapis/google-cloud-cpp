@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_examples_unit_tests = [
-    "cleanup_stale_buckets_test.cc",
     "storage_client_mock_samples.cc",
     "storage_examples_common_test.cc",
 ]

@@ -334,6 +334,8 @@ if (BUILD_TESTING)
         testing/object_integration_test.h
         testing/random_names.cc
         testing/random_names.h
+        testing/remove_stale_buckets.cc
+        testing/remove_stale_buckets.h
         testing/retry_tests.h
         testing/storage_integration_test.cc
         testing/storage_integration_test.h
@@ -445,6 +447,7 @@ if (BUILD_TESTING)
         storage_class_test.cc
         storage_iam_policy_test.cc
         storage_version_test.cc
+        testing/remove_stale_buckets_test.cc
         well_known_headers_test.cc
         well_known_parameters_test.cc)
 

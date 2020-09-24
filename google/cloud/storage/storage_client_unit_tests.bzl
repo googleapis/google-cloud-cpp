@@ -101,6 +101,7 @@ storage_client_unit_tests = [
     "storage_class_test.cc",
     "storage_iam_policy_test.cc",
     "storage_version_test.cc",
+    "testing/remove_stale_buckets_test.cc",
     "well_known_headers_test.cc",
     "well_known_parameters_test.cc",
 ]

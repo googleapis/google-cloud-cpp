@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
 
@@ -24,6 +25,8 @@ namespace cloud {
 namespace storage {
 namespace examples {
 
+using ::google::cloud::storage::testing::RemoveBucketAndContents;
+using ::google::cloud::storage::testing::RemoveStaleBuckets;
 using ::google::cloud::testing_util::CheckEnvironmentVariablesAreSet;
 using ::google::cloud::testing_util::Commands;
 using ::google::cloud::testing_util::CommandType;
@@ -44,29 +47,6 @@ using ClientCommand = std::function<void(google::cloud::storage::Client,
 Commands::value_type CreateCommandEntry(
     std::string const& name, std::vector<std::string> const& arg_names,
     ClientCommand const& command);
-
-/// Remove a bucket, including any objects in it
-Status RemoveBucketAndContents(google::cloud::storage::Client client,
-                               std::string const& bucket_name);
-
-/**
- * Remove stale buckets created for examples.
- *
- * The examples and integration tests create buckets in the production
- * environment. While these programs are supposed to clean after themselves,
- * they might crash or otherwise fail to delete any buckets they create. These
- * buckets can accumulate and cause future tests to fail (see #4905). To prevent
- * these problems we delete any bucket that match the pattern of these randomly
- * created buckets, as long as the bucket was created more than 48 hours ago.
- *
- * @param client used to make calls to GCS.
- * @param prefix only delete buckets that start with this string followed by a
- *   date (in `YYYY-mm-dd` format), and then an underscore character (`_`).
- * @param created_time_limit only delete buckets created before this timestamp.
- */
-Status RemoveStaleBuckets(
-    google::cloud::storage::Client client, std::string const& prefix,
-    std::chrono::system_clock::time_point created_time_limit);
 
 }  // namespace examples
 }  // namespace storage

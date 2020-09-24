@@ -54,8 +54,7 @@ if (BUILD_TESTING)
 
     set(storage_examples_unit_tests
         # cmake-format: sort
-        cleanup_stale_buckets_test.cc storage_client_mock_samples.cc
-        storage_examples_common_test.cc)
+        storage_client_mock_samples.cc storage_examples_common_test.cc)
 
     include(CreateBazelConfig)
     export_list_to_bazel("storage_examples.bzl" "storage_examples")
