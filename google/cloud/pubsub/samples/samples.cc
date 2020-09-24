@@ -696,6 +696,27 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
   (std::move(publisher));
 }
 
+// This is a helper function to publish N messages later consumed by another
+// example.
+void PublishHelper(google::cloud::pubsub::Publisher publisher,
+                   std::string const& prefix, int message_count) {
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  std::vector<future<void>> done;
+  done.reserve(message_count);
+  for (int i = 0; i != message_count; ++i) {
+    auto message_id =
+        publisher.Publish(pubsub::MessageBuilder{}
+                              .SetData(prefix + " [" + std::to_string(i) + "]")
+                              .Build());
+    done.push_back(message_id.then(
+        [](future<StatusOr<std::string>> f) { f.get().value(); }));
+  }
+  publisher.Flush();
+  for (auto& f : done) f.get();
+}
+
 void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_with_ordering_keys] [publish-with-ordering-keys]
@@ -1151,11 +1172,11 @@ void SubscriberFlowControlSettings(
     int count = 0;
     auto constexpr kExpectedMessageCount = 4;
     auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-      std::cout << "Received message " << m << "\n";
       std::move(h).ack();
       {
         std::lock_guard<std::mutex> lk(mu);
         if (++count < kExpectedMessageCount) return;
+        std::cout << "Received message [" << count << "] " << m.data() << "\n";
       }
       cv.notify_one();
     };
@@ -1465,18 +1486,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   Publish(publisher, {});
 
   std::cout << "\nRunning SubscriberConcurrencyControl() sample" << std::endl;
+  PublishHelper(publisher, "SubscriberConcurrentControl", 4);
   SubscriberConcurrencyControl({project_id, subscription_id});
 
-  std::cout << "\nRunning Publish() sample [5]" << std::endl;
-  Publish(publisher, {});
-
   std::cout << "\nRunning SubscriberFlowControlSettings() sample" << std::endl;
+  PublishHelper(publisher, "SubscriberFlowControlSettings", 4);
   SubscriberFlowControlSettings(subscriber, subscription, {});
 
-  std::cout << "\nRunning Publish() sample [6]" << std::endl;
-  Publish(publisher, {});
-
   std::cout << "\nRunning SubscriberRetrySettings() sample" << std::endl;
+  PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
 
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
@@ -1507,6 +1525,8 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nAutoRun done" << std::endl;
 }
 
 }  // namespace

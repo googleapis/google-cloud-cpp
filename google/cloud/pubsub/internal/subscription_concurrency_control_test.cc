@@ -305,7 +305,7 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacksRespectHwmLimit) {
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
 
-/// @test Verify SubscriptionConcurrencyControl shutdown cleanly.
+/// @test Verify SubscriptionConcurrencyControl shutdown.
 TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   auto constexpr kNackThreshold = 10;
   auto constexpr kTestDoneThreshold = 2 * kNackThreshold;
@@ -344,6 +344,68 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     }
     if (message_counter >= kNackThreshold) return;
     std::move(h).ack();
+  };
+
+  // Transfer ownership to a future, like we would do for a fully configured
+  auto session = [&] {
+    auto shutdown = std::make_shared<SessionShutdownManager>();
+
+    auto uut = SubscriptionConcurrencyControl::Create(
+        background.cq(), shutdown, source,
+        /*message_count_lwm=*/0, /*message_count_hwm=*/4);
+    promise<Status> p([shutdown, uut] {
+      shutdown->MarkAsShutdown("test-function-", {});
+      uut->Shutdown();
+    });
+
+    auto f = shutdown->Start(std::move(p));
+    uut->Start(std::move(handler));
+    return f;
+  }();
+
+  {
+    std::unique_lock<std::mutex> lk(handler_mu);
+    handler_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
+  }
+  session.cancel();
+  EXPECT_THAT(session.get(), StatusIs(StatusCode::kOk));
+}
+
+/// @test Verify SubscriptionConcurrencyControl shutdown with early acks.
+TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
+  auto constexpr kNackThreshold = 16;
+  auto constexpr kTestDoneThreshold = 2 * kNackThreshold;
+
+  auto source =
+      std::make_shared<pubsub_testing::MockSubscriptionMessageSource>();
+  MessageCallback message_callback;
+  PrepareMessages("ack-0-", kTestDoneThreshold + 1);
+  PrepareMessages("ack-1-", kTestDoneThreshold);
+  auto push_messages = [&](std::size_t n) {
+    PushMessages(message_callback, n);
+  };
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*source, Start)
+        .WillOnce([&message_callback](MessageCallback cb) {
+          message_callback = std::move(cb);
+        });
+    EXPECT_CALL(*source, Read).WillRepeatedly(push_messages);
+  }
+
+  EXPECT_CALL(*source, Shutdown).Times(1);
+  EXPECT_CALL(*source, AckMessage).Times(AtLeast(1));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
+
+  std::mutex handler_mu;
+  std::condition_variable handler_cv;
+  int message_counter = 0;
+  auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+    std::move(h).ack();
+    std::this_thread::sleep_for(std::chrono::microseconds(500));
+    std::unique_lock<std::mutex> lk(handler_mu);
+    if (++message_counter >= kTestDoneThreshold) handler_cv.notify_one();
   };
 
   // Transfer ownership to a future, like we would do for a fully configured

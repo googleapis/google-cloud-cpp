@@ -86,7 +86,7 @@ void SubscriptionConcurrencyControl::NackMessage(std::string const& ack_id,
 }
 
 void SubscriptionConcurrencyControl::MessageHandled() {
-  if (shutdown_manager_->FinishedOperation("callback")) return;
+  if (shutdown_manager_->FinishedOperation("handler")) return;
   std::unique_lock<std::mutex> lk(mu_);
   --message_count_;
   if (total_messages() <= message_count_lwm_) {
@@ -106,12 +106,15 @@ void SubscriptionConcurrencyControl::OnMessage(
   lk.unlock();
 
   struct MoveCapture {
+    std::shared_ptr<SessionShutdownManager> shutdown_manager;
     pubsub::ApplicationCallback callback;
     pubsub::Message m;
     std::unique_ptr<AckHandlerImpl> h;
     void operator()() {
-      GCP_LOG(DEBUG) << "calling callback(" << h->ack_id() << ")";
-      callback(std::move(m), pubsub::AckHandler(std::move(h)));
+      shutdown_manager->StartOperation("OnMessage/callback", "handler", [&] {
+        callback(std::move(m), pubsub::AckHandler(std::move(h)));
+      });
+      shutdown_manager->FinishedOperation("callback");
     }
   };
   auto handler = absl::make_unique<AckHandlerImpl>(
@@ -120,7 +123,8 @@ void SubscriptionConcurrencyControl::OnMessage(
   auto message = FromProto(std::move(*m.mutable_message()));
   shutdown_manager_->StartAsyncOperation(
       __func__, "callback", cq_,
-      MoveCapture{callback_, std::move(message), std::move(handler)});
+      MoveCapture{shutdown_manager_, callback_, std::move(message),
+                  std::move(handler)});
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
