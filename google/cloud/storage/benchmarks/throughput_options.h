@@ -26,7 +26,7 @@ namespace storage_benchmarks {
 struct ThroughputOptions {
   std::string project_id;
   std::string region;
-  std::string bucket_prefix = "cloud-cpp-testing-bm-";
+  std::string bucket_prefix = "cloud-cpp-testing-bm";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
