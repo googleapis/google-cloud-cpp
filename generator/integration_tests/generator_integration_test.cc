@@ -15,6 +15,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/string_view.h"
 #include "generator/generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
@@ -40,7 +42,8 @@ StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   return file_contents;
 }
 
-class GeneratorIntegrationTest : public testing::Test {
+class GeneratorIntegrationTest
+    : public testing::TestWithParam<absl::string_view> {
  protected:
   void SetUp() override {
     auto run_integration_tests =
@@ -74,15 +77,22 @@ class GeneratorIntegrationTest : public testing::Test {
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH")
             .value_or("/v");
 
+    golden_path_ = google::cloud::internal::GetEnv(
+                       "GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
+                       .value_or("") +
+                   "generator/integration_tests/golden/";
+
     // Path to location where generated code is written.
-    auto output_path = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-                           .value_or(::testing::TempDir());
+    output_path_ = google::cloud::internal::GetEnv(
+                       "GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
+                       .value_or(::testing::TempDir());
 
     google::cloud::generator::Generator generator;
     google::protobuf::compiler::CommandLineInterface cli;
     cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
                           "Codegen C++ Generator");
+
+    product_path_ = "generator/integration_tests/golden/";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -90,8 +100,8 @@ class GeneratorIntegrationTest : public testing::Test {
     args.emplace_back("--proto_path=" + proto_path);
     args.emplace_back("--proto_path=" + googleapis_path);
     args.emplace_back("--proto_path=" + code_path);
-    args.emplace_back("--cpp_codegen_out=" + output_path);
-    args.emplace_back("--cpp_codegen_opt=product_path=google/cloud/test/");
+    args.emplace_back("--cpp_codegen_out=" + output_path_);
+    args.emplace_back("--cpp_codegen_opt=product_path=" + product_path_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -106,24 +116,18 @@ class GeneratorIntegrationTest : public testing::Test {
 
     EXPECT_EQ(0, kResult);
   }
+
+  std::string product_path_;
+  std::string output_path_;
+  std::string golden_path_;
 };
 
-TEST_F(GeneratorIntegrationTest, StubHeader) {
-  auto golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  auto golden_file = ReadFile(golden_path +
-                              "generator/integration_tests/golden/"
-                              "database_admin_stub.gcpcxx.pb.h.golden");
+TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
+  auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
   EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-
   auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/database_admin_stub.gcpcxx.pb.h");
+      ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
+
   EXPECT_TRUE(generated_file.ok());
   EXPECT_EQ(golden_file->size(), generated_file->size());
   for (unsigned int i = 0; i < golden_file->size(); ++i) {
@@ -131,124 +135,19 @@ TEST_F(GeneratorIntegrationTest, StubHeader) {
   }
 }
 
-TEST_F(GeneratorIntegrationTest, StubCc) {
-  std::string golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  golden_path +=
-      "generator/integration_tests/golden/"
-      "database_admin_stub.gcpcxx.pb.cc.golden";
-  auto golden_file = ReadFile(golden_path);
-  EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-  auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/database_admin_stub.gcpcxx.pb.cc");
-  EXPECT_TRUE(generated_file.ok());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
-}
-
-TEST_F(GeneratorIntegrationTest, LoggingDecoratorHeader) {
-  std::string golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  golden_path +=
-      "generator/integration_tests/golden/"
-      "database_admin_logging_decorator.gcpcxx.pb.h.golden";
-  auto golden_file = ReadFile(golden_path);
-  EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-  auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/"
-               "database_admin_logging_decorator.gcpcxx.pb.h");
-  EXPECT_TRUE(generated_file.ok());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
-}
-
-TEST_F(GeneratorIntegrationTest, LoggingDecoratorCc) {
-  std::string golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  golden_path +=
-      "generator/integration_tests/golden/"
-      "database_admin_logging_decorator.gcpcxx.pb.cc.golden";
-  auto golden_file = ReadFile(golden_path);
-  EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-  auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/"
-               "database_admin_logging_decorator.gcpcxx.pb.cc");
-  EXPECT_TRUE(generated_file.ok());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
-}
-
-TEST_F(GeneratorIntegrationTest, MetadataDecoratorHeader) {
-  std::string golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  golden_path +=
-      "generator/integration_tests/golden/"
-      "database_admin_metadata_decorator.gcpcxx.pb.h.golden";
-  auto golden_file = ReadFile(golden_path);
-  EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-  auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/"
-               "database_admin_metadata_decorator.gcpcxx.pb.h");
-  EXPECT_TRUE(generated_file.ok());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
-}
-
-TEST_F(GeneratorIntegrationTest, MetadataDecoratorCc) {
-  std::string golden_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
-          .value_or("");
-  golden_path +=
-      "generator/integration_tests/golden/"
-      "database_admin_metadata_decorator.gcpcxx.pb.cc.golden";
-  auto golden_file = ReadFile(golden_path);
-  EXPECT_TRUE(golden_file.ok());
-
-  auto output_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
-          .value_or(::testing::TempDir());
-  auto generated_file =
-      ReadFile(output_path +
-               "/google/cloud/test/internal/"
-               "database_admin_metadata_decorator.gcpcxx.pb.cc");
-  EXPECT_TRUE(generated_file.ok());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
-}
+INSTANTIATE_TEST_SUITE_P(
+    Generator, GeneratorIntegrationTest,
+    testing::Values("internal/database_admin_logging_decorator.gcpcxx.pb.h",
+                    "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
+                    "internal/database_admin_metadata_decorator.gcpcxx.pb.h",
+                    "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",
+                    "internal/database_admin_stub.gcpcxx.pb.h",
+                    "internal/database_admin_stub.gcpcxx.pb.cc"),
+    [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
+           info) {
+      return absl::StrReplaceAll(std::string(info.param),
+                                 {{".", "_"}, {"/", "_"}});
+    });
 
 }  // namespace
 }  // namespace generator_internal

@@ -72,6 +72,8 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
 
   // includes
   header_.Print(LocalInclude(service_vars_["stub_header_path"]));
+  header_.Print(
+      LocalInclude(absl::StrCat(service_vars_["product_path"], "version.h")));
   header_.Print(LocalInclude("google/cloud/tracing_options.h"));
   header_.Print(SystemInclude("memory"));
   header_.Print(SystemInclude("string"));

@@ -72,6 +72,8 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 
   // includes
   header_.Print(LocalInclude(service_vars_["stub_header_path"]));
+  header_.Print(
+      LocalInclude(absl::StrCat(service_vars_["product_path"], "version.h")));
   header_.Print(LocalInclude("google/cloud/tracing_options.h"));
   header_.Print(SystemInclude("memory"));
   header_.Print(SystemInclude("string"));
@@ -93,7 +95,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     "class $metadata_class_name$ : public $stub_class_name$ {\n"
     " public:\n"
     "  ~$metadata_class_name$() override = default;\n"
-    "  $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n"
+    "  explicit $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n"
     "\n");
   // clang-format on
 
@@ -163,8 +165,8 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   cc_.Print(LocalInclude(service_vars_["metadata_header_path"]));
-  cc_.Print(LocalInclude("google/cloud/internal/compiler_info.h"));
   cc_.Print(LocalInclude("google/cloud/grpc_error_delegate.h"));
+  cc_.Print(LocalInclude("google/cloud/internal/compiler_info.h"));
   cc_.Print(LocalInclude("google/cloud/status_or.h"));
   cc_.Print(SystemInclude(absl::StrCat(
       absl::StripSuffix(service_descriptor_->file()->name(), ".proto"),

@@ -20,26 +20,27 @@ load(":google_cloud_cpp_generator_golden_files.bzl", "google_cloud_cpp_generator
 
 filegroup(
     name = "golden_filegroup",
-    srcs = glob(["*.golden"]),
+    srcs = [
+        "version.cc",
+        "version.h",
+        "version_info.h",
+    ],
 )
 
-[genrule(
-    name = "ungolden_" + f,
-    srcs = [f],
-    outs = ["google/cloud/test/internal/" + f.replace(".golden", "")],
-    cmd = "cp $< $@",
-) for f in glob(["*.golden"])]
-
 filegroup(
-    name = "ungolden_filegroup",
-    srcs = ["google/cloud/test/internal/" + f.replace(".golden", "") for f in google_cloud_cpp_generator_golden_files],
+    name = "golden_internal_filegroup",
+    srcs = glob(["internal/*gcpcxx*"]),
 )
 
 cc_library(
     name = "google_cloud_cpp_generator_golden",
-    srcs = [":ungolden_filegroup"],
+    srcs = [
+        ":golden_filegroup",
+        ":golden_internal_filegroup",
+    ],
     copts = [
         "-I$(BINDIR)/generator/integration_tests/golden",
+        "-I$(BINDIR)/generator/integration_tests/golden/internal",
         "-I$(BINDIR)",
     ],
     deps = [
@@ -60,6 +61,7 @@ load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator
     srcs = [test],
     copts = [
         "-I$(BINDIR)/generator/integration_tests/golden",
+        "-I$(BINDIR)/generator/integration_tests/golden/internal",
         "-I$(BINDIR)",
     ],
     deps = [

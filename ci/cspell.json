@@ -17,6 +17,7 @@
     "deserializes",
     "gbps",
     "gcloud",
+    "GCPCXX",
     "goog",
     "grpc",
     "gtest",

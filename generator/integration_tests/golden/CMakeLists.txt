@@ -16,48 +16,38 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
-    database_admin_logging_decorator.gcpcxx.pb.cc.golden
-    database_admin_logging_decorator.gcpcxx.pb.h.golden
-    database_admin_metadata_decorator.gcpcxx.pb.cc.golden
-    database_admin_metadata_decorator.gcpcxx.pb.h.golden
-    database_admin_stub.gcpcxx.pb.cc.golden
-    database_admin_stub.gcpcxx.pb.h.golden)
+    internal/database_admin_logging_decorator.gcpcxx.pb.cc
+    internal/database_admin_logging_decorator.gcpcxx.pb.h
+    internal/database_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/database_admin_metadata_decorator.gcpcxx.pb.h
+    internal/database_admin_stub.gcpcxx.pb.cc
+    internal/database_admin_stub.gcpcxx.pb.h
+    version.cc
+    version.h
+    version_info.h)
 
 # Export the list of golden files to a .bzl file so we do not need to maintain
 # the list in multiple places.
 export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
                      "google_cloud_cpp_generator_golden_files" YEAR "2020")
 
-add_custom_target(
-    ungolden-directory ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-            ${PROJECT_BINARY_DIR}/google/cloud/test/internal)
-
-# Copy each .golden file to its correct place in the internal subdirectory of
-# the target directory structure and remove the .golden suffix.
-foreach (golden_file ${google_cloud_cpp_generator_golden_files})
-    string(REPLACE ".golden" "" ungolden_file ${golden_file})
-    add_custom_command(
-        OUTPUT ${PROJECT_BINARY_DIR}/google/cloud/test/internal/${ungolden_file}
-        COMMAND
-            cp
-            ${PROJECT_SOURCE_DIR}/generator/integration_tests/golden/${golden_file}
-            ${PROJECT_BINARY_DIR}/google/cloud/test/internal/${ungolden_file}
-        DEPENDS ungolden-directory ${golden_file})
-endforeach ()
-
 # Create a library from the where the golden code was copied to.
 add_library(
     google_cloud_cpp_generator_ungolden_lib # cmake-format: sort
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_logging_decorator.gcpcxx.pb.cc
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_logging_decorator.gcpcxx.pb.h
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_metadata_decorator.gcpcxx.pb.cc
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_metadata_decorator.gcpcxx.pb.h
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_stub.gcpcxx.pb.cc
-    ${PROJECT_BINARY_DIR}/google/cloud/test/internal/database_admin_stub.gcpcxx.pb.h
-)
-target_include_directories(google_cloud_cpp_generator_ungolden_lib
-                           PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
+    internal/database_admin_logging_decorator.gcpcxx.pb.cc
+    internal/database_admin_logging_decorator.gcpcxx.pb.h
+    internal/database_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/database_admin_metadata_decorator.gcpcxx.pb.h
+    internal/database_admin_stub.gcpcxx.pb.cc
+    internal/database_admin_stub.gcpcxx.pb.h
+    version.cc
+    version.h
+    version_info.h)
+
+target_include_directories(
+    google_cloud_cpp_generator_ungolden_lib
+    PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
+           ${PROJECT_BINARY_DIR}/generator/integration_tests)
 target_link_libraries(
     google_cloud_cpp_generator_ungolden_lib
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
