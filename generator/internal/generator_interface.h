@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_GENERATOR_INTERFACE_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_GENERATOR_INTERFACE_H
 
 #include "google/cloud/status.h"
 
@@ -21,12 +21,12 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Interface class such that ServiceGenerator can invoke its collection of
- * class generators polymorphically.
+ * Interface class such that the generator can invoke its collection of
+ * code generators polymorphically.
  */
-class ClassGeneratorInterface {
+class GeneratorInterface {
  public:
-  virtual ~ClassGeneratorInterface() = default;
+  virtual ~GeneratorInterface() = default;
   virtual Status Generate() = 0;
 };
 
@@ -34,4 +34,4 @@ class ClassGeneratorInterface {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLASS_GENERATOR_INTERFACE_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_GENERATOR_INTERFACE_H
