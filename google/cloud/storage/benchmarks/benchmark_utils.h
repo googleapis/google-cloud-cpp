@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
-using ::google::cloud::storage::testing::MakeRandomBucketName;
+
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::storage::testing::MakeRandomFileName;
 using ::google::cloud::storage::testing::MakeRandomObjectName;
@@ -130,6 +130,10 @@ enum class ApiName {
   kApiRawGrpc,
 };
 char const* ToString(ApiName api);
+
+std::string RandomBucketPrefix();
+
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

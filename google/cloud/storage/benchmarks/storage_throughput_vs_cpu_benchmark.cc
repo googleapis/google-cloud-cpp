@@ -138,8 +138,7 @@ int main(int argc, char* argv[]) {
   gcs::Client client(*std::move(client_options));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
+  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -367,7 +366,6 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
           "--region=" +
               GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
-          "--bucket-prefix=cloud-cpp-testing-ci-",
           "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",

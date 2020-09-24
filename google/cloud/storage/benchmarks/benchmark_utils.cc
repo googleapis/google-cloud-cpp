@@ -328,6 +328,12 @@ char const* ToString(ApiName api) {
   return "";
 }
 
+std::string RandomBucketPrefix() { return "cloud-cpp-testing-bm"; }
+
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
+  return storage::testing::MakeRandomBucketName(gen, RandomBucketPrefix());
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

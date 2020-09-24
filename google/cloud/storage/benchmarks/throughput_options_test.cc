@@ -30,7 +30,6 @@ TEST(ThroughputOptions, Basic) {
       "self-test",
       "--project-id=test-project",
       "--region=test-region",
-      "--bucket-prefix=test-prefix",
       "--thread-count=42",
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
@@ -50,7 +49,6 @@ TEST(ThroughputOptions, Basic) {
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
   EXPECT_EQ("test-region", options->region);
-  EXPECT_EQ("test-prefix", options->bucket_prefix);
   EXPECT_EQ(42, options->thread_count);
   EXPECT_EQ(16 * kKiB, options->minimum_object_size);
   EXPECT_EQ(32 * kKiB, options->maximum_object_size);

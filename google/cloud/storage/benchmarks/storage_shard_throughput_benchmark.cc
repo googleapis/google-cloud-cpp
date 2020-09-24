@@ -121,8 +121,7 @@ int main(int argc, char* argv[]) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
+  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
   std::cout << "# Creating bucket " << bucket_name << " in region "
             << options->region << "\n";
   auto meta =
@@ -317,8 +316,6 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&wants_description](std::string const&) { wants_description = true; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
-      {"--bucket-prefix", "configure the bucket's prefix",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
       {"--object-count", "set the number of objects created by the benchmark",
@@ -413,7 +410,6 @@ google::cloud::StatusOr<Options> SelfTest() {
   return ParseArgsDefault({
       "self-test",
       "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
-      "--bucket-prefix=cloud-cpp-testing-",
       "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
       "--object-count=4",
       "--thread-count=2",
