@@ -91,9 +91,9 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
 
   auto const now =
       google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z");
-  auto const deadline = now - std::chrono::hours(48);
-  auto const affected_tp = deadline - std::chrono::hours(1);
-  auto const unaffected_tp = deadline + std::chrono::hours(1);
+  auto const create_time_limit = now - std::chrono::hours(48);
+  auto const affected_tp = create_time_limit - std::chrono::hours(1);
+  auto const unaffected_tp = create_time_limit + std::chrono::hours(1);
 
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce([&](internal::ListBucketsRequest const& r) {
@@ -110,7 +110,8 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
       });
 
   Client client(mock, Client::NoDecorations{});
-  auto const actual = RemoveStaleBuckets(client, "matching-", deadline);
+  auto const actual =
+      RemoveStaleBuckets(client, "matching-", create_time_limit);
   EXPECT_THAT(actual, StatusIs(StatusCode::kOk));
 }
 
