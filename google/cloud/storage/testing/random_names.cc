@@ -28,7 +28,7 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
   static std::size_t const kMaxBucketNameLength = 63;
   auto const date =
       absl::FormatCivilTime(absl::ToCivilDay(absl::Now(), absl::UTCTimeZone()));
-  auto const full = prefix + '_' + date + '_';
+  auto const full = prefix + '-' + date + '_';
   std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
   return full + google::cloud::internal::Sample(
                     gen, static_cast<int>(max_random_characters),

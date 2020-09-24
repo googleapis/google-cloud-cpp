@@ -80,7 +80,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
   EXPECT_CALL(*mock, ListObjects)
       .Times(2)
       .WillRepeatedly([](internal::ListObjectsRequest const& r) {
-        EXPECT_THAT(r.bucket_name(), StartsWith("matching_2020-09-21_"));
+        EXPECT_THAT(r.bucket_name(), StartsWith("matching-2020-09-21_"));
         EXPECT_TRUE(r.HasOption<Versions>());
         return internal::ListObjectsResponse{};
       });
@@ -101,11 +101,11 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
         internal::ListBucketsResponse response;
         response.items.push_back(CreateBucket("not-matching", affected_tp));
         response.items.push_back(
-            CreateBucket("matching_2020-09-21_0", affected_tp));
+            CreateBucket("matching-2020-09-21_0", affected_tp));
         response.items.push_back(
-            CreateBucket("matching_2020-09-21_1", affected_tp));
+            CreateBucket("matching-2020-09-21_1", affected_tp));
         response.items.push_back(
-            CreateBucket("matching_2020-09-21_2", unaffected_tp));
+            CreateBucket("matching-2020-09-21_2", unaffected_tp));
         return response;
       });
 
