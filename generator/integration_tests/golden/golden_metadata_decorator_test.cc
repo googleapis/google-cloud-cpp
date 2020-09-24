@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#include "google/cloud/test/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace test_internal {
-inline namespace TEST_CLIENT_NS {
+namespace golden_internal {
+inline namespace GOLDEN_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -30,7 +30,8 @@ using ::testing::_;
 // using ::testing::HasSubstr;
 // using ::testing::Return;
 
-class MockGoldenStub : public google::cloud::test_internal::DatabaseAdminStub {
+class MockGoldenStub
+    : public google::cloud::golden_internal::DatabaseAdminStub {
  public:
   ~MockGoldenStub() override = default;
   MOCK_METHOD(
@@ -564,7 +565,7 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
 }
 
 }  // namespace
-}  // namespace TEST_CLIENT_NS
-}  // namespace test_internal
+}  // namespace GOLDEN_CLIENT_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

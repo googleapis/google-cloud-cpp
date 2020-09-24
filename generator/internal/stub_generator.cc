@@ -71,6 +71,8 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
+  header_.Print(
+      LocalInclude(absl::StrCat(service_vars_["product_path"], "version.h")));
   header_.Print(LocalInclude("google/cloud/status_or.h"));
   header_.Print(SystemInclude(absl::StrCat(
       absl::StripSuffix(service_descriptor_->file()->name(), ".proto"),

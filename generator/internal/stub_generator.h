@@ -16,11 +16,11 @@
 
 #include "google/cloud/status.h"
 #include "generator/internal/class_generator_interface.h"
-#include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>
+#include <memory>
 #include <string>
 
 namespace google {

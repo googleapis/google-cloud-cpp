@@ -147,6 +147,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   git diff --diff-filter=d --name-only "${TARGET_BRANCH}" |
     grep -E "(${HEADER_FILTER_REGEX})|(${SOURCE_FILTER_REGEX})" |
     grep -v google/cloud/bigtable/examples/opencensus |
+    grep -v generator/integration_tests/golden |
     xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
       -checks="-misc-unused-using-decls,-readability-redundant-declaration"
 fi

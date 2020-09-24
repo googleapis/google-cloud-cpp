@@ -16,9 +16,9 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "google/cloud/test/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
-#include "google/cloud/internal/compiler_info.h"
+#include "generator/integration_tests/golden/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace test_internal {
-inline namespace TEST_CLIENT_NS {
+namespace golden_internal {
+inline namespace GOLDEN_CLIENT_NS {
 
 namespace {
 std::string ApiClientHeader() {
@@ -199,8 +199,8 @@ void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
-}  // namespace TEST_CLIENT_NS
-}  // namespace test_internal
+}  // namespace GOLDEN_CLIENT_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/test/internal/database_admin_stub.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -21,8 +21,8 @@ using ::testing::Return;
 
 namespace google {
 namespace cloud {
-namespace test_internal {
-inline namespace TEST_CLIENT_NS {
+namespace golden_internal {
+inline namespace GOLDEN_CLIENT_NS {
 namespace {
 
 class MockGrpcDatabaseAdminStub
@@ -817,7 +817,7 @@ TEST_F(GoldenStubTest, CancelOperation) {
 }
 
 }  // namespace
-}  // namespace TEST_CLIENT_NS
-}  // namespace test_internal
+}  // namespace GOLDEN_CLIENT_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

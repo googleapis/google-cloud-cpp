@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "google/cloud/test/internal/database_admin_logging_decorator.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/database_admin_logging_decorator.gcpcxx.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace test_internal {
-inline namespace TEST_CLIENT_NS {
+namespace golden_internal {
+inline namespace GOLDEN_CLIENT_NS {
 
 DatabaseAdminLogging::DatabaseAdminLogging(
     std::shared_ptr<DatabaseAdminStub> child,
@@ -259,8 +259,8 @@ Status DatabaseAdminLogging::CancelOperation(
       },
       context, request, __func__, tracing_options_);
 }
-}  // namespace TEST_CLIENT_NS
-}  // namespace test_internal
+}  // namespace GOLDEN_CLIENT_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 
