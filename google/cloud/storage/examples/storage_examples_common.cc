@@ -31,13 +31,13 @@ bool UsingTestbench() {
               .empty();
 }
 
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix) {
+// TODO(#4905) - I am planning to refactor this to `storage::testing::`
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
   // The total length of a bucket name must be <= 63 characters,
   static std::size_t const kMaxBucketNameLength = 63;
   auto const date =
       absl::FormatCivilTime(absl::ToCivilDay(absl::Now(), absl::UTCTimeZone()));
-  auto const full = prefix + date + "_";
+  auto const full = std::string("cloud-cpp-testing-examples-") + date + '_';
   std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
   // bucket names might also contain `-` and `_` characters, but we do not
   // *need* to use them.
@@ -97,7 +97,7 @@ Status RemoveBucketAndContents(google::cloud::storage::Client client,
 Status RemoveStaleBuckets(
     google::cloud::storage::Client client, std::string const& prefix,
     std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re("^" + prefix + R"re(\d{4}-\d{2}-\d{2}_.*$)re");
+  std::regex re("^" + prefix + R"re(-\d{4}-\d{2}-\d{2}_.*$)re");
   for (auto& bucket : client.ListBuckets()) {
     if (!bucket) return std::move(bucket).status();
     if (!std::regex_match(bucket->name(), re)) continue;

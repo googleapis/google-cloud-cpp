@@ -110,8 +110,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
       });
 
   Client client(mock, Client::NoDecorations{});
-  auto const actual =
-      RemoveStaleBuckets(client, "matching-", create_time_limit);
+  auto const actual = RemoveStaleBuckets(client, "matching", create_time_limit);
   EXPECT_THAT(actual, StatusIs(StatusCode::kOk));
 }
 

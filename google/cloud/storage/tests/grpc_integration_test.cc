@@ -62,7 +62,7 @@ TEST_F(GrpcIntegrationTest, BucketCRUD) {
   auto client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto bucket_metadata = client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
@@ -97,7 +97,7 @@ TEST_F(GrpcIntegrationTest, ObjectCRUD) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
@@ -127,7 +127,7 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
   auto bucket_metadata = client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
@@ -178,7 +178,7 @@ TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
   auto client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
@@ -216,7 +216,7 @@ TEST_F(GrpcIntegrationTest, InsertLarge) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
@@ -250,7 +250,7 @@ TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = MakeRandomBucketName("cloud-cpp-testing-");
+  auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
