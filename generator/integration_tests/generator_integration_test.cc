@@ -54,7 +54,7 @@ StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
 class GeneratorIntegrationTest
     : public testing::TestWithParam<absl::string_view> {
  protected:
-  void SetUp() override {
+  static void SetUpTestSuite() {
     auto run_integration_tests =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS")
@@ -126,10 +126,14 @@ class GeneratorIntegrationTest
     EXPECT_EQ(0, kResult);
   }
 
-  std::string product_path_;
-  std::string output_path_;
-  std::string golden_path_;
+  static std::string product_path_;
+  static std::string output_path_;
+  static std::string golden_path_;
 };
+
+std::string GeneratorIntegrationTest::product_path_;
+std::string GeneratorIntegrationTest::output_path_;
+std::string GeneratorIntegrationTest::golden_path_;
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
