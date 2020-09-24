@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
       google::cloud::internal::MakeDefaultPRNG();
 
   auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, "gcs-file-transfer-");
+      gcs_bm::MakeRandomBucketName(generator, "gcs-file-transfer");
   auto meta =
       client
           .CreateBucket(bucket_name,

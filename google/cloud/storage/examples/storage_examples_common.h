@@ -32,8 +32,7 @@ using ::google::cloud::testing_util::Usage;
 
 bool UsingTestbench();
 
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix);
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
 

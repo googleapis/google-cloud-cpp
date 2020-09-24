@@ -531,8 +531,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const bucket_name =
-      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto client = gcs::Client::CreateDefaultClient().value();
 
   // This is the only example that cleans up stale buckets. The examples run in
@@ -541,7 +540,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   std::cout << "\nRemoving stale buckets for examples" << std::endl;
-  examples::RemoveStaleBuckets(client, "cloud-cpp-test-examples-",
+  examples::RemoveStaleBuckets(client, "cloud-cpp-test-examples",
                                create_time_limit);
 
   std::cout << "\nRunning ListBucketsForProject() example" << std::endl;

@@ -122,7 +122,7 @@ std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
 }
 
 std::string StorageIntegrationTest::MakeRandomBucketName() {
-  return testing::MakeRandomBucketName(generator_, "cloud-cpp-testing-");
+  return testing::MakeRandomBucketName(generator_, "cloud-cpp-testing");
 }
 
 std::string StorageIntegrationTest::MakeRandomObjectName() {
