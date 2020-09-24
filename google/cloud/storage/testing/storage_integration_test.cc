@@ -122,12 +122,7 @@ std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
 }
 
 std::string StorageIntegrationTest::MakeRandomBucketName() {
-  // The total length of this bucket name must be <= 63 characters,
-  char constexpr kPrefix[] = "cloud-cpp-testing-";  // NOLINT
-  auto constexpr kMaxBucketNameLength = 63;
-  static_assert(kMaxBucketNameLength > sizeof(kPrefix),
-                "The bucket prefix is too long");
-  return testing::MakeRandomBucketName(generator_, kPrefix);
+  return testing::MakeRandomBucketName(generator_, "cloud-cpp-testing-");
 }
 
 std::string StorageIntegrationTest::MakeRandomObjectName() {
