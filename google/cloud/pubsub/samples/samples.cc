@@ -1543,9 +1543,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
           CreatePushSubscription),
-      CreateSubscriptionAdminCommand("create-ordering-subscription",
-                                     {"project-id", "subscription-id"},
-                                     CreateOrderingSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-ordering-subscription",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateOrderingSubscription),
       CreateSubscriptionAdminCommand(
           "create-dead-letter-subscription",
           {"project-id", "topic-id", "subscription-id", "dead-letter-topic-id",
