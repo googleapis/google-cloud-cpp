@@ -113,6 +113,10 @@ should_run_integration_tests() {
   return 1
 }
 
+test_against_production() {
+  echo "${FORCE_TEST_IN_PRODUCTION:-}" | grep -qw "$1"
+}
+
 if should_run_integration_tests; then
   echo "================================================================"
   io::log "Running the integration tests"
@@ -138,6 +142,7 @@ if should_run_integration_tests; then
     "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
     # Storage
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
@@ -158,44 +163,55 @@ if should_run_integration_tests; then
 
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
 
-  echo "================================================================"
-  io::log_yellow "running storage integration tests via Bazel+Emulator"
-  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
+  excluded_from_production_targets=()
 
-  echo "================================================================"
-  io::log_yellow "running pubsub integration tests via Bazel+Emulator"
-  "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
+  if ! test_against_production "storage"; then
+    echo "================================================================"
+    excluded_from_production_targets+=("-//google/cloud/storage/...")
+    io::log_yellow "running storage integration tests via Bazel+Emulator"
+    "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
+  fi
+
+  if ! force_on_prod "pubsub"; then
+    echo "================================================================"
+    excluded_from_production_targets+=("-//google/cloud/pubsub/...")
+    io::log_yellow "running pubsub integration tests via Bazel+Emulator"
+    "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
+  fi
 
   echo "================================================================"
   io::log_yellow "running generator integration tests via Bazel"
   "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
     "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
 
-  # TODO(#441) - remove the for loops below.
-  # Sometimes the integration tests manage to crash the Bigtable emulator.
-  # Manually restarting the build clears up the problem, but that is just a
-  # waste of everybody's time. Use a (short) timeout to run the test and try
-  # 3 times.
-  set +e
-  success=no
-  for attempt in 1 2 3; do
-    echo "================================================================"
-    io::log_yellow "running bigtable integration tests via Bazel+Emulator [${attempt}]"
-    # TODO(#441) - when the emulator crashes the tests can take a long time.
-    # The slowest test normally finishes in about 10 seconds, 100 seems safe.
-    if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=100; then
-      success=yes
-      break
+  if ! force_on_prod "bigtable"; then
+    excluded_from_production_targets+=("-//google/cloud/bigtable/...")
+    # TODO(#441) - remove the for loops below.
+    # Sometimes the integration tests manage to crash the Bigtable emulator.
+    # Manually restarting the build clears up the problem, but that is just a
+    # waste of everybody's time. Use a (short) timeout to run the test and try
+    # 3 times.
+    set +e
+    success=no
+    for attempt in 1 2 3; do
+      echo "================================================================"
+      io::log_yellow "running bigtable integration tests via Bazel+Emulator [${attempt}]"
+      # TODO(#441) - when the emulator crashes the tests can take a long time.
+      # The slowest test normally finishes in about 10 seconds, 100 seems safe.
+      if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+        "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=100; then
+        success=yes
+        break
+      fi
+    done
+    if [[ "${success}" != "yes" ]]; then
+      io::log_red "integration tests failed multiple times, aborting tests."
+      exit 1
     fi
-  done
-  if [[ "${success}" != "yes" ]]; then
-    io::log_red "integration tests failed multiple times, aborting tests."
-    exit 1
+    set -e
   fi
-  set -e
 
   # These targets depend on the value of
   # GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT which changes on each
@@ -212,24 +228,12 @@ if should_run_integration_tests; then
   access_token_targets=(
     "//google/cloud/bigtable/examples:bigtable_grpc_credentials"
   )
-  excluded_targets=(
-    # The Bigtable integrations that use the emulator *and* production were
-    # already run by the "run_integration_tests_emulator_bazel.sh" script that
-    # was called above. The one exception is the bigtable_grpc_credentials
-    # test, which requires an access token and will be run separately.
-    "-//google/cloud/bigtable/..."
-
-    # The Storage integration tests were already run above
-    "-//google/cloud/storage/..."
-
-    # The Pub/Sub integration tests were already run above
-    "-//google/cloud/pubsub/..."
-
+  excluded_from_production_targets+=(
     # The Generator integration tests were already run above
     "-//generator/..."
   )
   for t in "${hmac_service_account_targets[@]}" "${access_token_targets[@]}"; do
-    excluded_targets+=("-${t}")
+    excluded_from_production_targets+=("-${t}")
   done
 
   # Run the integration tests using Bazel to drive them. Some of the tests and
@@ -241,7 +245,7 @@ if should_run_integration_tests; then
   "${BAZEL_BIN}" ${BAZEL_VERB} \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
-    -- ... "${excluded_targets[@]}"
+    -- ... "${excluded_from_production_targets[@]}"
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
