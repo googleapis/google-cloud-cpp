@@ -17,8 +17,8 @@
 if (BUILD_TESTING)
     add_library(storage_examples_common # cmake-format: sort
                 storage_examples_common.cc storage_examples_common.h)
-    target_link_libraries(storage_examples_common storage_client
-                          google_cloud_cpp_common)
+    target_link_libraries(storage_examples_common storage_client_testing
+                          storage_client google_cloud_cpp_common)
     google_cloud_cpp_add_common_options(storage_examples_common)
 
     set(storage_examples

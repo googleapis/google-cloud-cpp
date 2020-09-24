@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
-#include "absl/time/civil_time.h"
-#include "absl/time/clock.h"
-#include "absl/time/time.h"
 #include <regex>
 #include <sstream>
 
@@ -31,33 +29,14 @@ bool UsingTestbench() {
               .empty();
 }
 
-// TODO(#4905) - I am planning to refactor this to `storage::testing::`
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
-  // The total length of a bucket name must be <= 63 characters,
-  static std::size_t const kMaxBucketNameLength = 63;
-  auto const date =
-      absl::FormatCivilTime(absl::ToCivilDay(absl::Now(), absl::UTCTimeZone()));
-  auto const full = std::string("cloud-cpp-testing-examples-") + date + '_';
-  std::size_t const max_random_characters = kMaxBucketNameLength - full.size();
-  // bucket names might also contain `-` and `_` characters, but we do not
-  // *need* to use them.
-  return full + google::cloud::internal::Sample(
-                    gen, static_cast<int>(max_random_characters),
-                    "abcdefghijklmnopqrstuvwxyz0123456789");
+  return google::cloud::storage::testing::MakeRandomBucketName(
+      gen, "cloud-cpp-testing-examples");
 }
 
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix) {
-  // The total length of an object name is something like 1024 characters (UTF-8
-  // encoded), but we do not need that many.
-  static std::size_t const kMaxObjectNameLength = 128;
-  std::size_t const max_random_characters =
-      kMaxObjectNameLength - prefix.size();
-  // object names might contain all kinds of characters, but we can use just
-  // a subset for these purposes.
-  return prefix + google::cloud::internal::Sample(
-                      gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz0123456789");
+  return prefix + testing::MakeRandomObjectName(gen);
 }
 
 Commands::value_type CreateCommandEntry(
