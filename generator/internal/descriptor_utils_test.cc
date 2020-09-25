@@ -69,6 +69,10 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
         std::make_pair("class_comment_block", "// TODO: pull in comments"),
         std::make_pair("client_class_name", "FrobberServiceClient"),
+        std::make_pair("connection_options_header_path",
+                       "google/cloud/frobber/connection_options.h"),
+        std::make_pair("connection_options_cc_path",
+                       "google/cloud/frobber/connection_options.cc"),
         std::make_pair("grpc_stub_fqn",
                        "::google::cloud::frobber::v1::FrobberService"),
         std::make_pair("logging_class_name", "FrobberServiceLogging"),
@@ -88,13 +92,23 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("proto_file_name",
                        "google/cloud/frobber/v1/frobber.proto"),
         std::make_pair("service_endpoint", ""),
+        std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair(
             "stub_cc_path",
             "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.cc"),
-        std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair(
             "stub_header_path",
-            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.h")),
+            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.h"),
+        std::make_pair(
+            "stub_factory_cc_path",
+            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.cc"),
+        std::make_pair(
+            "stub_factory_header_path",
+            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.h"),
+        std::make_pair("version_header_path", "google/cloud/frobber/version.h"),
+        std::make_pair("version_cc_path", "google/cloud/frobber/version.cc"),
+        std::make_pair("version_info_header_path",
+                       "google/cloud/frobber/version_info.h")),
     [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
       return std::get<0>(info.param);
     });

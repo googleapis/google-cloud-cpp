@@ -19,5 +19,6 @@
 google_cloud_cpp_generator_golden_tests = [
     "golden_logging_decorator_test.cc",
     "golden_metadata_decorator_test.cc",
+    "golden_stub_factory_test.cc",
     "golden_stub_test.cc",
 ]

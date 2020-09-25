@@ -49,8 +49,10 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
+  enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
-                                    std::vector<std::string> local_includes);
+                                    std::vector<std::string> local_includes,
+                                    FileType file_type = FileType::kHeaderFile);
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
   Status OpenNamespaces(Printer& p, NamespaceType ns_type);

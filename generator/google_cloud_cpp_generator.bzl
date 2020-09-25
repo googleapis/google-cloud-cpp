@@ -26,6 +26,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/predicate_utils.h",
     "internal/printer.h",
     "internal/service_code_generator.h",
+    "internal/stub_factory_generator.h",
     "internal/stub_generator.h",
 ]
 
@@ -37,5 +38,6 @@ google_cloud_cpp_generator_srcs = [
     "internal/metadata_decorator_generator.cc",
     "internal/predicate_utils.cc",
     "internal/service_code_generator.cc",
+    "internal/stub_factory_generator.cc",
     "internal/stub_generator.cc",
 ]

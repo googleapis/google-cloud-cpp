@@ -150,6 +150,8 @@ INSTANTIATE_TEST_SUITE_P(
                     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
                     "internal/database_admin_metadata_decorator.gcpcxx.pb.h",
                     "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",
+                    "internal/database_admin_stub_factory.gcpcxx.pb.h",
+                    "internal/database_admin_stub_factory.gcpcxx.pb.cc",
                     "internal/database_admin_stub.gcpcxx.pb.h",
                     "internal/database_admin_stub.gcpcxx.pb.cc"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&

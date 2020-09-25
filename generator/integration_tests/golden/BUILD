@@ -21,6 +21,8 @@ load(":google_cloud_cpp_generator_golden_files.bzl", "google_cloud_cpp_generator
 filegroup(
     name = "golden_filegroup",
     srcs = [
+        "connection_options.cc",
+        "connection_options.h",
         "version.cc",
         "version.h",
         "version_info.h",
