@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/notification_metadata.h"
 #include "google/cloud/storage/internal/notification_requests.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {
@@ -55,21 +56,17 @@ std::ostream& operator<<(std::ostream& os, NotificationMetadata const& rhs) {
   os << "NotificationMetadata={id=" << rhs.id();
 
   // custom_attributes()
-  char const* sep = "custom_attributes.";
-  for (auto const& kv : rhs.custom_attributes()) {
-    os << sep << kv.first << "=" << kv.second;
-    sep = ", custom_attributes.";
+  if (!rhs.custom_attributes().empty()) {
+    os << "custom_attributes."
+       << absl::StrJoin(rhs.custom_attributes(), ", custom_attributes.",
+                        absl::PairFormatter("="));
   }
 
   os << ", etag=" << rhs.etag();
 
   // event_types()
   os << ", event_types=[";
-  sep = "";
-  for (auto const& v : rhs.event_types()) {
-    os << sep << v;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.event_types(), ", ");
   os << "]";
 
   return os << ", kind=" << rhs.kind()

@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
 #include "absl/time/civil_time.h"
 #include <nlohmann/json.hpp>
 #include <sstream>
@@ -767,11 +768,7 @@ std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsRequest const& r) {
   os << "TestBucketIamPermissionsRequest={bucket_name=" << r.bucket_name()
      << ", permissions=[";
-  char const* sep = "";
-  for (auto const& p : r.permissions()) {
-    os << sep << p;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.permissions(), ", ");
   os << "]";
   r.DumpOptions(os, ", ");
   return os << "}";
@@ -793,11 +790,7 @@ TestBucketIamPermissionsResponse::FromHttpResponse(std::string const& payload) {
 std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsResponse const& r) {
   os << "TestBucketIamPermissionsResponse={permissions=[";
-  char const* sep = "";
-  for (auto const& p : r.permissions) {
-    os << sep << p;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.permissions, ", ");
   return os << "]}";
 }
 

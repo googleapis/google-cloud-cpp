@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <openssl/err.h>
 #include <openssl/pem.h>
@@ -196,11 +197,7 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
   if (!info.scopes) {
     scope_str = GoogleOAuthScopeCloudPlatform();
   } else {
-    char const* sep = "";
-    for (const auto& scope : *(info.scopes)) {
-      scope_str += sep + scope;
-      sep = ",";
-    }
+    absl::StrAppend(&scope_str, absl::StrJoin(*(info.scopes), ","));
   }
 
   auto expiration = now + GoogleOAuthAccessTokenLifetime();

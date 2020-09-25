@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
+#include "absl/strings/str_join.h"
 #include <google/protobuf/util/time_util.h>
 #include <sstream>
 
@@ -171,10 +172,7 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
         argv.size() != 3 + args.size()) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id> <table-id>";
-      char const* sep = " ";
-      for (auto const& a : args) {
-        os << sep << a;
-      }
+      if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
@@ -196,10 +194,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
         argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id>";
-      char const* sep = " ";
-      for (auto const& a : args) {
-        os << sep << a;
-      }
+      if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::TableAdmin table(
@@ -221,10 +216,7 @@ Commands::value_type MakeCommandEntry(
         argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id>";
-      char const* sep = " ";
-      for (auto const& a : args) {
-        os << sep << a;
-      }
+      if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::InstanceAdmin instance(
