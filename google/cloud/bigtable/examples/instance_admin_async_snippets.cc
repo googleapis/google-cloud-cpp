@@ -18,6 +18,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
+#include "absl/strings/str_join.h"
 #include <sstream>
 
 namespace {
@@ -680,11 +681,7 @@ void AsyncTestIamPermissions(
     auto result = permissions_future.get();
     if (!result) throw std::runtime_error(result.status().message());
     std::cout << "DONE, the current user has the following permissions [";
-    char const* sep = "";
-    for (auto const& p : *result) {
-      std::cout << sep << p;
-      sep = ", ";
-    }
+    std::cout << absl::StrJoin(*result, ", ");
     std::cout << "]\n";
   }
   //! [async test iam permissions]

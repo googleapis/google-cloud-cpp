@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/http_response.h"
+#include "absl/strings/str_join.h"
 #include <iostream>
 
 namespace google {
@@ -127,11 +128,7 @@ Status AsStatus(HttpResponse const& http_response) {
 
 std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
   os << "status_code=" << rhs.status_code << ", headers={";
-  char const* sep = "";
-  for (auto const& kv : rhs.headers) {
-    os << sep << kv.first << ": " << kv.second;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.headers, ", ", absl::PairFormatter(": "));
   return os << "}, payload=<" << rhs.payload << ">";
 }
 

@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
+#include "absl/strings/str_join.h"
 
 namespace {
 
@@ -600,11 +601,7 @@ void GetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "The IAM Policy for " << instance_id << " is\n";
     for (auto const& kv : policy->bindings) {
       std::cout << "role " << kv.first << " includes [";
-      char const* sep = "";
-      for (auto const& member : kv.second) {
-        std::cout << sep << member;
-        sep = ", ";
-      }
+      std::cout << absl::StrJoin(kv.second, ", ");
       std::cout << "]\n";
     }
   }
@@ -630,11 +627,7 @@ void SetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "The IAM Policy for " << instance_id << " is\n";
     for (auto const& kv : policy->bindings) {
       std::cout << "role " << kv.first << " includes [";
-      char const* sep = "";
-      for (auto const& m : kv.second) {
-        std::cout << sep << m;
-        sep = ", ";
-      }
+      std::cout << absl::StrJoin(kv.second, ", ");
       std::cout << "]\n";
     }
   }
@@ -715,11 +708,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
         instance_admin.TestIamPermissions(resource, permissions);
     if (!result) throw std::runtime_error(result.status().message());
     std::cout << "The current user has the following permissions [";
-    char const* sep = "";
-    for (auto const& p : *result) {
-      std::cout << sep << p;
-      sep = ", ";
-    }
+    std::cout << absl::StrJoin(*result, ", ");
     std::cout << "]\n";
   }
   //! [test iam permissions]
