@@ -90,12 +90,6 @@ Functions</h2></td></tr>
 <tr class="separator:a34618094f6e57758fb58285e9423eb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa854e03511aedd0090b0f013f3351cd"><td class="memItemLeft" align="right" valign="top">Commands::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#aaa854e03511aedd0090b0f013f3351cd">CreateCommandEntry</a> (std::string const &amp;name, std::vector&lt; std::string &gt; const &amp;arg_names, <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a5dcf1bf7861aa4e1732d54a568664da1">ClientCommand</a> const &amp;command)</td></tr>
 <tr class="separator:aaa854e03511aedd0090b0f013f3351cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67c762c031e50adcce467e80bec3e47e"><td class="memItemLeft" align="right" valign="top">Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a67c762c031e50adcce467e80bec3e47e">RemoveBucketAndContents</a> (google::cloud::storage::Client client, std::string const  &amp;bucket_name)</td></tr>
-<tr class="memdesc:a67c762c031e50adcce467e80bec3e47e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a bucket, including any objects in it.  <a href="#a67c762c031e50adcce467e80bec3e47e">More...</a><br /></td></tr>
-<tr class="separator:a67c762c031e50adcce467e80bec3e47e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cad5a6d4630997be900cece460381be"><td class="memItemLeft" align="right" valign="top">Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a5cad5a6d4630997be900cece460381be">RemoveStaleBuckets</a> (google::cloud::storage::Client client, std::string const  &amp;prefix, std::chrono::system_clock::time_point created_time_limit)</td></tr>
-<tr class="memdesc:a5cad5a6d4630997be900cece460381be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove stale buckets created for examples.  <a href="#a5cad5a6d4630997be900cece460381be">More...</a><br /></td></tr>
-<tr class="separator:a5cad5a6d4630997be900cece460381be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a5dcf1bf7861aa4e1732d54a568664da1"></a>
@@ -110,7 +104,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storage__examples__common_8h_source.html#l00040">40</a> of file <a class="el" href="storage__examples__common_8h_source.html">storage_examples_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storage__examples__common_8h_source.html#l00043">43</a> of file <a class="el" href="storage__examples__common_8h_source.html">storage_examples_common.h</a>.</p>
 
 </div>
 </div>
@@ -198,85 +192,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="storage__examples__common_8cc_source.html#l00037">37</a> of file <a class="el" href="storage__examples__common_8cc_source.html">storage_examples_common.cc</a>.</p>
-
-</div>
-</div>
-<a id="a67c762c031e50adcce467e80bec3e47e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67c762c031e50adcce467e80bec3e47e">&#9670;&nbsp;</a></span>RemoveBucketAndContents()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Status google::cloud::storage::examples::RemoveBucketAndContents </td>
-          <td>(</td>
-          <td class="paramtype">google::cloud::storage::Client&#160;</td>
-          <td class="paramname"><em>client</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>bucket_name</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove a bucket, including any objects in it. </p>
-
-<p class="definition">Definition at line <a class="el" href="storage__examples__common_8cc_source.html#l00064">64</a> of file <a class="el" href="storage__examples__common_8cc_source.html">storage_examples_common.cc</a>.</p>
-
-</div>
-</div>
-<a id="a5cad5a6d4630997be900cece460381be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cad5a6d4630997be900cece460381be">&#9670;&nbsp;</a></span>RemoveStaleBuckets()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Status google::cloud::storage::examples::RemoveStaleBuckets </td>
-          <td>(</td>
-          <td class="paramtype">google::cloud::storage::Client&#160;</td>
-          <td class="paramname"><em>client</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>prefix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
-          <td class="paramname"><em>created_time_limit</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove stale buckets created for examples. </p>
-<p>The examples and integration tests create buckets in the production environment. While these programs are supposed to clean after themselves, they might crash or otherwise fail to delete any buckets they create. These buckets can accumulate and cause future tests to fail (see #4905). To prevent these problems we delete any bucket that match the pattern of these randomly created buckets, as long as the bucket was created more than 48 hours ago.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">client</td><td>used to make calls to GCS. </td></tr>
-    <tr><td class="paramname">prefix</td><td>only delete buckets that start with this string followed by a date (in <code>YYYY-mm-dd</code> format), and then an underscore character (<code>_</code>). </td></tr>
-    <tr><td class="paramname">created_time_limit</td><td>only delete buckets created before this timestamp. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="storage__examples__common_8cc_source.html#l00076">76</a> of file <a class="el" href="storage__examples__common_8cc_source.html">storage_examples_common.cc</a>.</p>
 
 </div>
 </div>
