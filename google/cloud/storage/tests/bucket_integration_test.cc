@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -71,6 +72,12 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
+
+  // We use this test to remove any buckets created by the integration tests
+  // more than 48 hours ago.
+  testing::RemoveStaleBuckets(
+      *client, RandomBucketNamePrefix(),
+      std::chrono::system_clock::now() - std::chrono::hours(48));
 
   auto list_bucket_names = [&client, this] {
     std::vector<std::string> names;
