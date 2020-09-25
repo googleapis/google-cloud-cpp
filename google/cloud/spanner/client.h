@@ -656,6 +656,9 @@ std::shared_ptr<Connection> MakeConnection(
  *     failures.
  * @param backoff_policy override the default `BackoffPolicy`, controls how
  *     long the `Connection` object waits before retrying a failed request.
+ *
+ * @par Example
+ * @snippet samples.cc custom-retry-policy
  */
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
