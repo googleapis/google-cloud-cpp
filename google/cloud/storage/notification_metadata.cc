@@ -56,9 +56,11 @@ std::ostream& operator<<(std::ostream& os, NotificationMetadata const& rhs) {
   os << "NotificationMetadata={id=" << rhs.id();
 
   // custom_attributes()
-  if (!rhs.custom_attributes().empty()) os << "custom_attributes.";
-  os << absl::StrJoin(rhs.custom_attributes(), ", custom_attributes.",
-                      absl::PairFormatter("="));
+  if (!rhs.custom_attributes().empty()) {
+    os << "custom_attributes."
+       << absl::StrJoin(rhs.custom_attributes(), ", custom_attributes.",
+                        absl::PairFormatter("="));
+  }
 
   os << ", etag=" << rhs.etag();
 
