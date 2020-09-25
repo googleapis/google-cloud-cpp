@@ -703,15 +703,13 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  std::vector<future<void>> done;
+  std::vector<future<StatusOr<std::string>>> done;
   done.reserve(message_count);
   for (int i = 0; i != message_count; ++i) {
-    auto message_id =
+    done.push_back(
         publisher.Publish(pubsub::MessageBuilder{}
                               .SetData(prefix + " [" + std::to_string(i) + "]")
-                              .Build());
-    done.push_back(message_id.then(
-        [](future<StatusOr<std::string>> f) { f.get().value(); }));
+                              .Build()));
   }
   publisher.Flush();
   for (auto& f : done) f.get();
@@ -1175,8 +1173,8 @@ void SubscriberFlowControlSettings(
       std::move(h).ack();
       {
         std::lock_guard<std::mutex> lk(mu);
-        if (++count < kExpectedMessageCount) return;
         std::cout << "Received message [" << count << "] " << m.data() << "\n";
+        if (++count < kExpectedMessageCount) return;
       }
       cv.notify_one();
     };

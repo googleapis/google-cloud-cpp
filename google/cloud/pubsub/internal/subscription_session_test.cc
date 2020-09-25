@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <gmock/gmock.h>
 #include <atomic>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -617,7 +618,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
   std::mutex generate_mu;
   int generate_count = 0;
 
-  // This lambdas are used to implement the mocks. They become satisfied using
+  // These lambdas are used to implement the mocks. They become satisfied using
   // a timer, which better simulates the behavior in production.
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto generate = [&](google::cloud::CompletionQueue& cq,
@@ -665,16 +666,19 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
   internal::AutomaticallyCreatedBackgroundThreads background(kMessageCount);
   std::atomic<int> handler_counter{0};
 
-  // Create a scope for the handler and its variables, makes the errors more
-  // obvious under TSAN/ASAN.
+  // Create a scope for the handler and its variables, which makes the errors
+  // more obvious under TSAN/ASAN.
   {
-    // Now unto the handler, basically it counts messages and nacks starting at
-    // kMaximumAcks.
+    // Now unto the handler. It counts messages, and uses objects after the
+    // AckHandler has been returned. If the session shutdown is not working
+    // correctly using these variables is a problem under TSAN and ASAN. We also
+    // have a more direct detection of problems later in this test.
     std::mutex mu;
     std::condition_variable cv;
     int ack_count = 0;
     auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
       std::move(h).ack();
+      // Sleep after the `ack()` call to more easily reproduce #5148
       std::this_thread::sleep_for(std::chrono::microseconds(500));
       ++handler_counter;
       {
@@ -702,7 +706,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
   // buggy, we will see TSAN/ASAN errors because the `handler` defined above
   // is still called.
   auto const initial_value = handler_counter.load();
-  for (int i = 0; i != 10; ++i) {
+  for (std::size_t i = 0; i != 10 * background.pool_size(); ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
     promise<void> done;
     background.cq().RunAsync([&done] { done.set_value(); });

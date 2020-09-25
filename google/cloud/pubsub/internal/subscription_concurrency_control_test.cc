@@ -22,6 +22,7 @@
 #include <condition_variable>
 #include <deque>
 #include <mutex>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -403,12 +404,14 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
   int message_counter = 0;
   auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
     std::move(h).ack();
+    // Sleep after the `ack()` call to more easily reproduce #5148
     std::this_thread::sleep_for(std::chrono::microseconds(500));
     std::unique_lock<std::mutex> lk(handler_mu);
     if (++message_counter >= kTestDoneThreshold) handler_cv.notify_one();
   };
 
-  // Transfer ownership to a future, like we would do for a fully configured
+  // Transfer ownership to a future. The library also does this for a fully
+  // configured session in `Subscriber::Subscribe()`.
   auto session = [&] {
     auto shutdown = std::make_shared<SessionShutdownManager>();
 
