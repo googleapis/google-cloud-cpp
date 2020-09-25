@@ -172,7 +172,7 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
         argv.size() != 3 + args.size()) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id> <table-id>";
-      os << absl::StrJoin(args, " ");
+      os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
@@ -194,7 +194,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
         argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id> <instance-id>";
-      os << absl::StrJoin(args, " ");
+      os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::TableAdmin table(
@@ -216,7 +216,7 @@ Commands::value_type MakeCommandEntry(
         argv.size() != args.size() + kFixedArguments) {
       std::ostringstream os;
       os << name << " <project-id>";
-      os << absl::StrJoin(args, " ");
+      os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::InstanceAdmin instance(
