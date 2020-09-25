@@ -16,6 +16,7 @@
 #include "google/cloud/status_or.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
+#include "generator/internal/generator_interface.h"
 #include <google/api/client.pb.h>
 #include <string>
 #include <vector>
@@ -29,7 +30,7 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
                          google::protobuf::compiler::GeneratorContext* context,
                          std::string* error) const {
   using ServiceGenerator =
-      std::vector<std::unique_ptr<generator_internal::ClassGeneratorInterface>>;
+      std::vector<std::unique_ptr<generator_internal::GeneratorInterface>>;
 
   if (file->options().cc_generic_services()) {
     *error =

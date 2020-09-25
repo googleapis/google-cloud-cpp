@@ -240,11 +240,11 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   return service_methods_vars;
 }
 
-std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
+std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
+  std::vector<std::unique_ptr<GeneratorInterface>> class_generators;
   class_generators.push_back(absl::make_unique<StubGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));

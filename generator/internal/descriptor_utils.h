@@ -14,7 +14,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DESCRIPTOR_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DESCRIPTOR_UTILS_H
 
-#include "generator/internal/class_generator_interface.h"
+#include "generator/internal/generator_interface.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -47,7 +47,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
  * Creates and initializes the collection of ClassGenerators necessary to
  * generate all code for the given service.
  */
-std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
+std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars);
