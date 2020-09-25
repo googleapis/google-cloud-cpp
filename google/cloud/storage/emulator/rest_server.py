@@ -12,24 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Common utils"""
+import flask
+import httpbin
+from werkzeug import serving
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
-import re
-import types
+db = None
 
-# === STR === #
-
-
-re_snake_case = re.compile(r"(?<!^)(?=[A-Z])")
-
-
-def to_snake_case(string):
-    return re_snake_case.sub("_", string).lower()
+# === DEFAULT ENTRY FOR REST SERVER === #
+root = flask.Flask(__name__)
+root.debug = True
 
 
-# === FAKE REQUEST === #
+@root.route("/")
+def index():
+    return "OK"
 
 
-class FakeRequest(types.SimpleNamespace):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+# === SERVER === #
+
+
+server = DispatcherMiddleware(root, {"/httpbin": httpbin.app})
+
+
+def run(port, database):
+    global db
+    db = database
+    serving.run_simple(
+        "localhost", int(port), server, use_reloader=False, threaded=True
+    )

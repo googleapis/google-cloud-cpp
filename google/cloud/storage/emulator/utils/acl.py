@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC.
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ def get_canonical_entity(entity):
 
 def get_project_entity(team, context):
     if team not in ["editors", "owners", "viewers"]:
-        utils.error.invaild("Team %s for project" % team)
+        utils.error.invaild("Team %s for project" % team, context)
     return "project-%s-%s" % (team, PROJECT_NUMBER)
 
 
@@ -134,7 +134,9 @@ def create_object_acl_from_default_object_acl(
     acl = resources_pb2.ObjectAccessControl()
     acl.CopyFrom(default_object_acl)
     acl.id = hashlib.md5(
-        (acl.bucket + object_name + generation + acl.entity + acl.role).encode("utf-8")
+        (acl.bucket + object_name + str(generation) + acl.entity + acl.role).encode(
+            "utf-8"
+        )
     ).hexdigest()
     acl.etag = acl.id
     acl.object = object_name

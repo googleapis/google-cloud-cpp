@@ -12,24 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Common utils"""
 
-import re
-import types
+class Database:
+    def __init__(self, buckets):
+        self.buckets = buckets
 
-# === STR === #
-
-
-re_snake_case = re.compile(r"(?<!^)(?=[A-Z])")
-
-
-def to_snake_case(string):
-    return re_snake_case.sub("_", string).lower()
-
-
-# === FAKE REQUEST === #
-
-
-class FakeRequest(types.SimpleNamespace):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    @classmethod
+    def init(cls):
+        return cls({})
