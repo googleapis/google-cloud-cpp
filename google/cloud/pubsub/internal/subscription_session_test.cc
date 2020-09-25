@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <gmock/gmock.h>
 #include <atomic>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -599,6 +600,113 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
   // is still called.
   auto const initial_value = handler_counter.load();
   for (int i = 0; i != 10; ++i) {
+    SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
+    promise<void> done;
+    background.cq().RunAsync([&done] { done.set_value(); });
+    done.get_future().get();
+  }
+  auto const final_value = handler_counter.load();
+  EXPECT_EQ(initial_value, final_value);
+}
+
+/// @test Verify shutting down a session waits for pending tasks.
+TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  auto constexpr kMessageCount = 16;
+  std::mutex generate_mu;
+  int generate_count = 0;
+
+  // These lambdas are used to implement the mocks. They become satisfied using
+  // a timer, which better simulates the behavior in production.
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto generate = [&](google::cloud::CompletionQueue& cq,
+                      std::unique_ptr<grpc::ClientContext>,
+                      google::pubsub::v1::PullRequest const& r) {
+    auto const count = (std::max)(r.max_messages(), 2 * kMessageCount);
+    return cq.MakeRelativeTimer(std::chrono::microseconds(10))
+        .then([&generate_mu, &generate_count, count](TimerFuture) {
+          std::unique_lock<std::mutex> lk(generate_mu);
+          google::pubsub::v1::PullResponse response;
+          for (int i = 0; i != count; ++i) {
+            auto& m = *response.add_received_messages();
+            m.set_ack_id("test-ack-id-" + std::to_string(generate_count));
+            m.mutable_message()->set_message_id("test-message-id-" +
+                                                std::to_string(generate_count));
+            ++generate_count;
+          }
+          lk.unlock();
+          return make_status_or(response);
+        });
+  };
+  auto generate_ack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::AcknowledgeRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
+            .then([](TimerFuture) { return Status{}; });
+      };
+  auto generate_nack_response =
+      [](google::cloud::CompletionQueue& cq,
+         std::unique_ptr<grpc::ClientContext>,
+         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return cq.MakeRelativeTimer(std::chrono::microseconds(2))
+            .then([](TimerFuture) { return Status{}; });
+      };
+
+  EXPECT_CALL(*mock, AsyncPull).Times(AtLeast(1)).WillRepeatedly(generate);
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .Times(AtLeast(kMessageCount))
+      .WillRepeatedly(generate_ack_response);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .Times(AtLeast(1))
+      .WillRepeatedly(generate_nack_response);
+
+  internal::AutomaticallyCreatedBackgroundThreads background(kMessageCount);
+  std::atomic<int> handler_counter{0};
+
+  // Create a scope for the handler and its variables, which makes the errors
+  // more obvious under TSAN/ASAN.
+  {
+    // Now unto the handler. It counts messages, and uses objects after the
+    // AckHandler has been returned. If the session shutdown is not working
+    // correctly using these variables is a problem under TSAN and ASAN. We also
+    // have a more direct detection of problems later in this test.
+    std::mutex mu;
+    std::condition_variable cv;
+    int ack_count = 0;
+    auto handler = [&](pubsub::Message const&, pubsub::AckHandler h) {
+      std::move(h).ack();
+      // Sleep after the `ack()` call to more easily reproduce #5148
+      std::this_thread::sleep_for(std::chrono::microseconds(500));
+      ++handler_counter;
+      {
+        std::unique_lock<std::mutex> lk(mu);
+        ++ack_count;
+      }
+      cv.notify_one();
+    };
+
+    auto session = CreateSubscriptionSession(
+        mock, background.cq(),
+        {subscription.FullName(), handler,
+         pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
+             kMessageCount / 2, 2 * kMessageCount)},
+        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+    {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return ack_count >= kMessageCount; });
+    }
+    session.cancel();
+    auto status = session.get();
+    EXPECT_STATUS_OK(status);
+  }
+  // Schedule at least a few more iterations of the CQ loop. If the shutdown is
+  // buggy, we will see TSAN/ASAN errors because the `handler` defined above
+  // is still called.
+  auto const initial_value = handler_counter.load();
+  for (std::size_t i = 0; i != 10 * background.pool_size(); ++i) {
     SCOPED_TRACE("Wait loop iteration " + std::to_string(i));
     promise<void> done;
     background.cq().RunAsync([&done] { done.set_value(); });
