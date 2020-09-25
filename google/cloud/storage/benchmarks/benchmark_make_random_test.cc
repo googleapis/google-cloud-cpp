@@ -44,11 +44,11 @@ TEST(StorageBenchmarksUtilsTest, MakeRandomBucket) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  auto d1 = MakeRandomBucketName(generator, "prefix");
-  auto d2 = MakeRandomBucketName(generator, "prefix");
+  auto d1 = MakeRandomBucketName(generator);
+  auto d2 = MakeRandomBucketName(generator);
   EXPECT_NE(d1, d2);
 
-  EXPECT_EQ(0, d1.rfind("prefix", 0));
+  EXPECT_EQ(0, d1.rfind(RandomBucketPrefix(), 0));
   EXPECT_GE(63U, d1.size());
   EXPECT_EQ(std::string::npos,
             d1.find_first_not_of("-_abcdefghijklmnopqrstuvwxyz0123456789"))
