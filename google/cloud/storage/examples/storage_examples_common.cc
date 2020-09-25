@@ -61,31 +61,6 @@ Commands::value_type CreateCommandEntry(
   return {name, std::move(adapter)};
 }
 
-Status RemoveBucketAndContents(google::cloud::storage::Client client,
-                               std::string const& bucket_name) {
-  // List all the objects and versions, and then delete each.
-  for (auto o : client.ListObjects(bucket_name, Versions(true))) {
-    if (!o) return std::move(o).status();
-    auto status = client.DeleteObject(bucket_name, o->name(),
-                                      Generation(o->generation()));
-    if (!status.ok()) return status;
-  }
-  return client.DeleteBucket(bucket_name);
-}
-
-Status RemoveStaleBuckets(
-    google::cloud::storage::Client client, std::string const& prefix,
-    std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re("^" + prefix + R"re(-\d{4}-\d{2}-\d{2}_.*$)re");
-  for (auto& bucket : client.ListBuckets()) {
-    if (!bucket) return std::move(bucket).status();
-    if (!std::regex_match(bucket->name(), re)) continue;
-    if (bucket->time_created() > created_time_limit) continue;
-    (void)RemoveBucketAndContents(client, bucket->name());
-  }
-  return {};
-}
-
 }  // namespace examples
 }  // namespace storage
 }  // namespace cloud
