@@ -15,9 +15,9 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "absl/strings/str_format.h"
-#include "absl/strings/str_join.h"
 #include "absl/time/civil_time.h"
 #include <nlohmann/json.hpp>
 #include <sstream>

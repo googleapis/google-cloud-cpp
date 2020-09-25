@@ -19,17 +19,9 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#include "google/cloud/internal/diagnostics_push.inc"
-#if _MSC_VER
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
-#include "absl/algorithm/container.h"
-#include "absl/strings/str_join.h"
-// TODO(#4501) - end
-#include "google/cloud/internal/diagnostics_pop.inc"
 #include <future>
 #include <set>
 #include <sstream>

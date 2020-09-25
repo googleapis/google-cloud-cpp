@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "absl/strings/str_join.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
 #include <openssl/err.h>
 #include <openssl/pem.h>

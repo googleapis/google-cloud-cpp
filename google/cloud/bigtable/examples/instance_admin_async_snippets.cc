@@ -15,10 +15,10 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
-#include "absl/strings/str_join.h"
 #include <sstream>
 
 namespace {
