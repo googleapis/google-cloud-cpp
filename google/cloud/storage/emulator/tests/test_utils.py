@@ -118,6 +118,47 @@ class TestCommonUtils:
             == "all_authenticated_users"
         )
 
+    def test_parse_fields(self):
+        fields = "kind, items ( acl( entity, role), name, id)"
+        fields = fields.replace(" ", "")
+        assert utils.common.parse_fields(fields) == [
+            "kind",
+            "items.acl.entity",
+            "items.acl.role",
+            "items.name",
+            "items.id",
+        ]
+
+    def test_nested_key(self):
+        doc = {
+            "name": "bucket",
+            "acl": [{"id": 1}, {"id": 2}],
+            "labels": {"first": 1, "second": [1, 2]},
+        }
+        assert utils.common.nested_key(doc) == [
+            "name",
+            "acl[0].id",
+            "acl[1].id",
+            "labels.first",
+            "labels.second[0]",
+            "labels.second[1]",
+        ]
+
+    def test_extract_projection(self):
+        request = storage_pb2.CopyObjectRequest()
+        projection = utils.common.extract_projection(request, 1, "")
+        assert projection == 1
+        request.projection = 2
+        projection = utils.common.extract_projection(request, 1, "")
+        assert projection == 2
+
+        request = utils.common.FakeRequest(args={})
+        projection = utils.common.extract_projection(request, 1, None)
+        assert projection == "noAcl"
+        request.args["projection"] = "full"
+        projection = utils.common.extract_projection(request, 1, None)
+        assert projection == "full"
+
 
 class TestGeneration:
     def test_extract_precondition(self):
