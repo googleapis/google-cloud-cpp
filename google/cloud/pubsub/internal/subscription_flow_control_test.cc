@@ -34,9 +34,9 @@ auto constexpr kDefaultSizeHwm = 20 * 1024 * 1024L;
 
 class SubscriptionFlowControlTest : public ::testing::Test {
  protected:
-  static google::pubsub::v1::PullResponse GenerateMessages(
+  static google::pubsub::v1::StreamingPullResponse GenerateMessages(
       std::string const& prefix, int count) {
-    google::pubsub::v1::PullResponse response;
+    google::pubsub::v1::StreamingPullResponse response;
     for (int i = 0; i != count; ++i) {
       auto const id = prefix + std::to_string(i);
       auto& m = *response.add_received_messages();
@@ -46,13 +46,13 @@ class SubscriptionFlowControlTest : public ::testing::Test {
     return response;
   }
 
-  google::pubsub::v1::PullResponse GenerateSizedMessages(
+  google::pubsub::v1::StreamingPullResponse GenerateSizedMessages(
       std::string const& prefix, int count, int size) {
     // see https://cloud.google.com/pubsub/pricing
     auto constexpr kMessageOverhead = 20;
     auto const payload = google::cloud::internal::Sample(
         generator_, size - kMessageOverhead, "0123456789");
-    google::pubsub::v1::PullResponse response;
+    google::pubsub::v1::StreamingPullResponse response;
     for (int i = 0; i != count; ++i) {
       auto const id = prefix + std::to_string(i);
       auto& m = *response.add_received_messages();
@@ -60,20 +60,6 @@ class SubscriptionFlowControlTest : public ::testing::Test {
       m.mutable_message()->set_message_id(payload);
     }
     return response;
-  }
-
-  future<void> AddAsyncPull() {
-    std::unique_lock<std::mutex> lk(async_pulls_mu_);
-    promise<void> p;
-    auto f = p.get_future();
-    async_pulls_.push_back(std::move(p));
-    async_pulls_cv_.notify_one();
-    return f;
-  }
-
-  void WaitAsyncPullCount(std::size_t n) {
-    std::unique_lock<std::mutex> lk(async_pulls_mu_);
-    async_pulls_cv_.wait(lk, [&] { return async_pulls_.size() >= n; });
   }
 
   std::vector<std::string> CurrentAcks() {
@@ -97,10 +83,6 @@ class SubscriptionFlowControlTest : public ::testing::Test {
     acks_cv_.wait(lk, [&] { return acks_.size() >= n; });
   }
 
-  std::mutex async_pulls_mu_;
-  std::condition_variable async_pulls_cv_;
-  std::vector<promise<void>> async_pulls_;
-
   std::mutex acks_mu_;
   std::condition_variable acks_cv_;
   std::vector<std::string> acks_;
@@ -112,26 +94,11 @@ class SubscriptionFlowControlTest : public ::testing::Test {
 TEST_F(SubscriptionFlowControlTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
 
-  EXPECT_CALL(*mock, Pull)
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(1, max_messages);
-        return AddAsyncPull().then([](future<void>) {
-          return make_status_or(GenerateMessages("0-", 1));
-        });
-      })
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(1, max_messages);
-        return AddAsyncPull().then([](future<void>) {
-          return make_status_or(GenerateMessages("1-", 1));
-        });
-      })
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(1, max_messages);
-        return AddAsyncPull().then([](future<void>) {
-          return make_status_or(GenerateMessages("2-", 1));
-        });
-      });
   EXPECT_CALL(*mock, AckMessage)
       .WillOnce([&](std::string const& ack_id, std::size_t) {
         EXPECT_THAT(ack_id, "ack-0-0");
@@ -165,26 +132,22 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
 
   uut->Start(callback);
   uut->Read(kUnlimitedCallbacks);
-  WaitAsyncPullCount(1);
   EXPECT_TRUE(CurrentAcks().empty());
-  async_pulls_[0].set_value();
+  batch_callback(GenerateMessages("0-", 1));
   WaitAcks();
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-0-0"));
   uut->AckMessage("ack-0-0", 0);
 
-  WaitAsyncPullCount(2);
-  async_pulls_[1].set_value();
+  batch_callback(GenerateMessages("1-", 1));
   WaitAcks();
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-1-0"));
   uut->NackMessage("ack-1-0", 0);
-
-  WaitAsyncPullCount(3);
 
   // Shut down things to prevent more calls, only then complete the last
   // asynchronous call.
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
-  async_pulls_[2].set_value();
+  batch_callback(GenerateMessages("2-", 1));
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
@@ -193,21 +156,16 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
 TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
 
-  {
-    ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, Pull).WillOnce([&](std::int32_t max_messages) {
-      EXPECT_EQ(1, max_messages);
-      return AddAsyncPull().then([](future<void>) {
-        return make_status_or(GenerateMessages("0-", 3));
+  EXPECT_CALL(*mock, BulkNack)
+      .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
+        EXPECT_THAT(ack_ids, ElementsAre("ack-0-0", "ack-0-1", "ack-0-2"));
+        return make_ready_future(Status{});
       });
-    });
-    EXPECT_CALL(*mock, BulkNack)
-        .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
-          EXPECT_THAT(ack_ids, ElementsAre("ack-0-0", "ack-0-1", "ack-0-2"));
-          return make_ready_future(Status{});
-        });
-  }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
@@ -219,11 +177,10 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(kUnlimitedCallbacks);
-  WaitAsyncPullCount(1);
 
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
-  async_pulls_[0].set_value();
+  batch_callback(GenerateMessages("0-", 3));
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
@@ -232,29 +189,15 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
 TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
-
-  {
-    ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, Pull)
-        .WillOnce([&](std::int32_t max_messages) {
-          EXPECT_EQ(10, max_messages);
-          return AddAsyncPull().then([](future<void>) {
-            return make_status_or(GenerateMessages("0-", 3));
-          });
-        })
-        .WillOnce([&](std::int32_t max_messages) {
-          EXPECT_EQ(7, max_messages);
-          return AddAsyncPull().then([](future<void>) {
-            return StatusOr<google::pubsub::v1::PullResponse>(
-                Status(StatusCode::kUnknown, "uh?"));
-          });
-        });
-    EXPECT_CALL(*mock, BulkNack)
-        .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
-          EXPECT_THAT(ack_ids, ElementsAre("ack-0-1", "ack-0-2"));
-          return make_ready_future(Status{});
-        });
-  }
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+  EXPECT_CALL(*mock, BulkNack)
+      .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
+        EXPECT_THAT(ack_ids, ElementsAre("ack-0-1", "ack-0-2"));
+        return make_ready_future(Status{});
+      });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
@@ -268,14 +211,13 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
   uut->Read(1);
-  WaitAsyncPullCount(1);
-  async_pulls_[0].set_value();
-  WaitAsyncPullCount(2);
+  batch_callback(GenerateMessages("0-", 3));
   // Errors are reported to the ShutdownManager by the LeaseManagement layer,
   // so let's do that here.
   shutdown->MarkAsShutdown("test-code", Status(StatusCode::kUnknown, "uh?"));
   // And then simulate the bulk cancel.
-  async_pulls_[1].set_value();
+  batch_callback(StatusOr<google::pubsub::v1::StreamingPullResponse>(
+      Status(StatusCode::kUnknown, "uh?")));
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kUnknown, "uh?"));
 }
@@ -283,34 +225,15 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
 TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
   EXPECT_CALL(*mock, BulkNack)
       .WillRepeatedly([](std::vector<std::string> const&, std::size_t) {
         return make_ready_future(Status{});
       });
 
-  auto generate_messages = [](std::string const& prefix, int count) {
-    return [prefix, count](future<void>) {
-      return make_status_or(GenerateMessages(prefix, count));
-    };
-  };
-
-  EXPECT_CALL(*mock, Pull)
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(10, max_messages);
-        return AddAsyncPull().then(generate_messages("0-", 5));
-      })
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(5, max_messages);
-        return AddAsyncPull().then(generate_messages("1-", 5));
-      })
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(8, max_messages);
-        return AddAsyncPull().then(generate_messages("2-", 3));
-      })
-      .WillOnce([&](std::int32_t max_messages) {
-        EXPECT_EQ(5, max_messages);
-        return AddAsyncPull().then(generate_messages("3-", 5));
-      });
   EXPECT_CALL(*mock, NackMessage)
       .WillOnce([&](std::string const& ack_id, std::size_t) {
         EXPECT_EQ("ack-0-1", ack_id);
@@ -362,14 +285,13 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
   auto done = shutdown->Start({});
   uut->Start(callback);
   uut->Read(kUnlimitedCallbacks);
-  WaitAsyncPullCount(1);
   EXPECT_TRUE(acks_.empty());
-  async_pulls_[0].set_value();
+  batch_callback(GenerateMessages("0-", 5));
+
   WaitAcksCount(5);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-0-0", "ack-0-1", "ack-0-2",
                                          "ack-0-3", "ack-0-4"));
-  WaitAsyncPullCount(2);
-  async_pulls_[1].set_value();
+  batch_callback(GenerateMessages("1-", 5));
   WaitAcksCount(5);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-1-0", "ack-1-1", "ack-1-2",
                                          "ack-1-3", "ack-1-4"));
@@ -381,23 +303,19 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
   for (auto const* id : {"ack-0-1", "ack-0-3", "ack-1-1"}) {
     uut->NackMessage(id, 0);
   }
-  EXPECT_EQ(2, async_pulls_.size());
 
   // Acking message number 8 should bring the count of messages below the LWM
   // and trigger a new AsyncPull(), the third expectation from above.
   uut->AckMessage("ack-1-2", 0);
-  WaitAsyncPullCount(3);
-  async_pulls_[2].set_value();
+  batch_callback(GenerateMessages("2-", 3));
   WaitAcksCount(3);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-2-0", "ack-2-1", "ack-2-2"));
-
-  WaitAsyncPullCount(4);
 
   // Shutting things down should prevent any further calls.
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
   // Only after shutdown complete the last AsyncPull().
-  async_pulls_[3].set_value();
+  batch_callback(GenerateMessages("3-", 5));
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
@@ -405,16 +323,12 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
 TEST_F(SubscriptionFlowControlTest, ReachMessageSizeHwm) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
 
   auto constexpr kMessageSize = 1024;
-  auto generate_messages = [&](std::string const& prefix, int count) {
-    // Workaround GCC/Clang warnings for capturing constexpr vs. MSVC behavior
-    // around not capturing without defaults.
-    auto const size = kMessageSize;
-    return [=](future<void>) {
-      return make_status_or(GenerateSizedMessages(prefix, count, size));
-    };
-  };
 
   auto ack_success = [&](std::string const&, std::size_t) {
     return make_ready_future(Status{});
@@ -422,17 +336,8 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageSizeHwm) {
 
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, Pull(20)).WillOnce([&](std::int32_t) {
-      return AddAsyncPull().then(generate_messages("0-", 5));
-    });
-    EXPECT_CALL(*mock, Pull(15)).WillOnce([&](std::int32_t) {
-      return AddAsyncPull().then(generate_messages("1-", 5));
-    });
     EXPECT_CALL(*mock, AckMessage("ack-0-0", 1024)).WillOnce(ack_success);
     EXPECT_CALL(*mock, AckMessage("ack-0-2", 1024)).WillOnce(ack_success);
-    EXPECT_CALL(*mock, Pull(12)).WillOnce([&](std::int32_t) {
-      return AddAsyncPull().then(generate_messages("2-", 3));
-    });
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
@@ -451,24 +356,21 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageSizeHwm) {
   auto done = shutdown->Start({});
   uut->Start(callback);
   uut->Read(kUnlimitedCallbacks);
-  WaitAsyncPullCount(1);
   EXPECT_TRUE(acks_.empty());
-  async_pulls_[0].set_value();
+  batch_callback(GenerateSizedMessages("0-", 5, kMessageSize));
   WaitAcksCount(5);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-0-0", "ack-0-1", "ack-0-2",
                                          "ack-0-3", "ack-0-4"));
-  WaitAsyncPullCount(2);
-  async_pulls_[1].set_value();
+  batch_callback(GenerateSizedMessages("1-", 5, kMessageSize));
   WaitAcksCount(5);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-1-0", "ack-1-1", "ack-1-2",
                                          "ack-1-3", "ack-1-4"));
 
   // We are below the HWM for message count, and above the HWM for message size.
-  // That means no more calls until we go below the HWM for mesages.
+  // That means no more calls until we go below the HWM for messages.
   uut->AckMessage("ack-0-0", 1024);
   uut->AckMessage("ack-0-2", 1024);
-  WaitAsyncPullCount(3);
-  async_pulls_[2].set_value();
+  batch_callback(GenerateSizedMessages("2-", 3, kMessageSize));
   WaitAcksCount(3);
   EXPECT_THAT(CurrentAcks(), ElementsAre("ack-2-0", "ack-2-1", "ack-2-2"));
 

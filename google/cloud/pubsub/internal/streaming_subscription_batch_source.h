@@ -61,7 +61,7 @@ class StreamingSubscriptionBatchSource
 
   ~StreamingSubscriptionBatchSource() override = default;
 
-  void Start(BatchCallback callback);
+  void Start(BatchCallback callback) override;
 
   void Shutdown() override;
   // TODO(#5191) - cleanup return types
@@ -73,9 +73,6 @@ class StreamingSubscriptionBatchSource
                           std::size_t total_size) override;
   future<Status> ExtendLeases(std::vector<std::string> ack_ids,
                               std::chrono::seconds extension) override;
-  // TODO(#5192) - remove this function from the base class
-  future<StatusOr<google::pubsub::v1::PullResponse>> Pull(
-      std::int32_t max_count) override;
 
   using AsyncPullStream = SubscriberStub::AsyncPullStream;
   using StreamShptr = std::shared_ptr<AsyncPullStream>;

@@ -33,8 +33,8 @@ using MessageCallback =
  * Defines the interface for one-message-at-a-time sources.
  *
  * A message source generates messages via `MessageCallback` callbacks.
- * Typically the source is some sort of queue that receives `AsyncPull()`
- * responses and breaks them into smaller messages.
+ * Typically the source is some sort of queue that receives
+ * `AsyncStreamingPull()` responses and breaks them into smaller messages.
  */
 class SubscriptionMessageSource {
  public:

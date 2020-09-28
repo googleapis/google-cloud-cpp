@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <memory>
@@ -55,14 +56,21 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
       : stub_(std::move(stub)),
         background_(options.background_threads_factory()()),
         retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        backoff_policy_(std::move(backoff_policy)),
+        generator_(google::cloud::internal::MakeDefaultPRNG()) {}
 
   ~SubscriberConnectionImpl() override = default;
 
   future<Status> Subscribe(SubscribeParams p) override {
-    return CreateSubscriptionSession(stub_, background_->cq(), std::move(p),
-                                     retry_policy_->clone(),
-                                     backoff_policy_->clone());
+    auto client_id = [this] {
+      std::lock_guard<std::mutex> lk(mu_);
+      auto constexpr kLength = 32;
+      auto constexpr kChars = "abcdefghijlkmnopqrstuvwxyz0123456789";
+      return google::cloud::internal::Sample(generator_, kLength, kChars);
+    }();
+    return CreateSubscriptionSession(
+        stub_, background_->cq(), std::move(client_id), std::move(p),
+        retry_policy_->clone(), backoff_policy_->clone());
   }
 
  private:
@@ -70,6 +78,8 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
   std::shared_ptr<BackgroundThreads> background_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
+  std::mutex mu_;
+  google::cloud::internal::DefaultPRNG generator_;
 };
 }  // namespace
 

@@ -30,14 +30,14 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * The `SubscriptionSession` class needs to implement an orderly shutdown when
  * the application requests it (via a `future<>::cancel()` call) or when the
- * session fails, i.e., the `AsyncPull()` fails and we have exhausted the retry
- * policies.
+ * session fails, i.e., the `AsyncStreamingPull()` fails and we have exhausted
+ * the retry policies.
  *
  * Once the shutdown is initiated we need to stop any operation that would
  * create more work, including:
  * - New callbacks to the application
- * - Making new calls to `AsyncPull()`
- * - Handling any responses from `AsyncPull()`
+ * - Making new calls to `AsyncStreamingPull()`
+ * - Handling any responses from `AsyncStreamingPull()`
  * - Creating any new timers to update message leases.
  * - Creating any new `AsyncModifyAckDeadline()` requests to update message
  *   leases.

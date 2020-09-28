@@ -17,6 +17,7 @@
 """Automatically generated source lists for pubsub_client_testing - DO NOT EDIT."""
 
 pubsub_client_testing_hdrs = [
+    "testing/fake_streaming_pull.h",
     "testing/mock_publisher_stub.h",
     "testing/mock_subscriber_stub.h",
     "testing/mock_subscription_batch_source.h",
@@ -26,6 +27,7 @@ pubsub_client_testing_hdrs = [
 ]
 
 pubsub_client_testing_srcs = [
+    "testing/fake_streaming_pull.cc",
     "testing/random_names.cc",
     "testing/test_retry_policies.cc",
 ]
