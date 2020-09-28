@@ -46,7 +46,7 @@ if [[ -d "${vcpkg_dir}" ]]; then
   git -C "${vcpkg_dir}" pull --quiet
 else
   git clone --quiet \
-      https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+    https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
   git -C "${vcpkg_dir}" checkout 8776756e08dddfc47b209eebfec5c927f14c7c74
 fi
 
