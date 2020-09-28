@@ -12,10 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tests entry"""
-
-from tests import test_utils, test_gcs
-
-if __name__ == "__main__":
-    test_utils.run()
-    test_gcs.run()
+from gcs import bucket
