@@ -64,12 +64,6 @@ class Bucket:
             )
             valid &= not bucket_name.startswith("goog")
             valid &= re.search("g[0o][0o]g[1l][e3]", bucket_name) is None
-            valid &= (
-                re.match(
-                    "^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$", bucket_name
-                )
-                is None
-            )
         if not valid:
             utils.error.invalid("Bucket name %s" % bucket_name, context)
 
@@ -178,7 +172,6 @@ class Bucket:
 
     @classmethod
     def init_iam_policy(cls, metadata, context):
-        # TODO(vnvo2409): Check for iamConfiguration.uniformBucketLevelAccess.enabled
         role_mapping = {
             "READER": "roles/storage.legacyBucketReader",
             "WRITER": "roles/storage.legacyBucketWriter",
