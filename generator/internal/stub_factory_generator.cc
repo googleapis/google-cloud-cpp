@@ -14,12 +14,8 @@
 
 #include "generator/internal/stub_factory_generator.h"
 #include "absl/memory/memory.h"
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/strip.h"
 #include "generator/internal/codegen_utils.h"
-#include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
 #include <google/protobuf/descriptor.h>
