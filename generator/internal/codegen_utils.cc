@@ -75,24 +75,16 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-StatusOr<std::vector<std::string>> BuildNamespaces(VarsDictionary const& vars,
-                                                   NamespaceType ns_type) {
-  auto iter = vars.find("product_path");
-  if (iter == vars.end()) {
-    return Status(StatusCode::kNotFound,
-                  "product_path must be present in vars.");
+std::vector<std::string> BuildNamespaces(std::string const& product_path,
+                                         NamespaceType ns_type) {
+  std::string name;
+  std::vector<std::string> v =
+      absl::StrSplit(product_path, '/', absl::SkipEmpty());
+  if (v.size() > 2) {
+    name = absl::StrJoin(v.begin() + 2, v.end(), "_");
+  } else {
+    name = absl::StrJoin(v.begin(), v.end(), "_");
   }
-  std::string product_path = iter->second;
-  if (product_path.back() != '/') {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] must end with '/'.");
-  }
-  if (product_path.size() < 2) {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] contain at least 2 characters.");
-  }
-  std::vector<std::string> v = absl::StrSplit(product_path, '/');
-  auto name = v[v.size() - 2];
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::kInternal) {
     name = absl::StrCat(name, "_internal");

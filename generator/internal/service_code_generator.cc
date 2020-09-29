@@ -70,11 +70,12 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
 }
 
 Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
-  auto result = BuildNamespaces(service_vars_, ns_type);
-  if (!result.ok()) {
-    return result.status();
+  auto result = service_vars_.find("product_path");
+  if (result == service_vars_.end()) {
+    return Status(StatusCode::kInternal,
+                  "product_path not found in service_vars_");
   }
-  namespaces_ = result.value();
+  namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
   for (auto const& nspace : namespaces_) {
     if (absl::EndsWith(nspace, "_CLIENT_NS")) {
       p.Print("inline namespace $namespace$ {\n", "namespace", nspace);

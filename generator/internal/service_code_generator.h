@@ -55,7 +55,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
                                     FileType file_type = FileType::kHeaderFile);
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
-  Status OpenNamespaces(Printer& p, NamespaceType ns_type);
+  Status OpenNamespaces(Printer& p,
+                        NamespaceType ns_type = NamespaceType::kNormal);
   void CloseNamespaces(Printer& p);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
