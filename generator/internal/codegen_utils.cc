@@ -13,19 +13,10 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#if _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_join.h"
-#include "absl/strings/str_replace.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "absl/strings/str_split.h"
-#if _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-// TODO(#4501) - end
 #include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>

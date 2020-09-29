@@ -13,20 +13,11 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#if _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "absl/memory/memory.h"
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
-#if _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-// TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
