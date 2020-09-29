@@ -112,7 +112,9 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
+    internal/absl_str_replace_quiet.h
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/backoff_policy.cc
