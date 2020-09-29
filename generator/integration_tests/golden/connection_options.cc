@@ -17,7 +17,17 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/connection_options.h"
+// TODO(#4501) - fix by doing #include <absl/...>
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/strings/str_cat.h"
+#if _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+// TODO(#4501) - end
+
 #include "google/cloud/internal/compiler_info.h"
 
 namespace google {
