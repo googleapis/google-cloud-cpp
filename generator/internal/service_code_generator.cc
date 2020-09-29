@@ -59,8 +59,12 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(
-    Printer& p, std::vector<std::string> local_includes) {
-  std::sort(local_includes.begin(), local_includes.end());
+    Printer& p, std::vector<std::string> local_includes, FileType file_type) {
+  if (file_type == FileType::kCcFile) {
+    std::sort(local_includes.begin() + 1, local_includes.end());
+  } else {
+    std::sort(local_includes.begin(), local_includes.end());
+  }
   for (auto const& include : local_includes) {
     p.Print(LocalInclude(include));
   }

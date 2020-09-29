@@ -16,12 +16,16 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
+    connection_options.cc
+    connection_options.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
     internal/database_admin_metadata_decorator.gcpcxx.pb.h
     internal/database_admin_stub.gcpcxx.pb.cc
     internal/database_admin_stub.gcpcxx.pb.h
+    internal/database_admin_stub_factory.gcpcxx.pb.cc
+    internal/database_admin_stub_factory.gcpcxx.pb.h
     version.cc
     version.h
     version_info.h)
@@ -33,23 +37,27 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 
 # Create a library from the where the golden code was copied to.
 add_library(
-    google_cloud_cpp_generator_ungolden_lib # cmake-format: sort
+    google_cloud_cpp_generator_golden_lib # cmake-format: sort
+    connection_options.cc
+    connection_options.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
     internal/database_admin_metadata_decorator.gcpcxx.pb.h
     internal/database_admin_stub.gcpcxx.pb.cc
     internal/database_admin_stub.gcpcxx.pb.h
+    internal/database_admin_stub_factory.gcpcxx.pb.cc
+    internal/database_admin_stub_factory.gcpcxx.pb.h
     version.cc
     version.h
     version_info.h)
 
 target_include_directories(
-    google_cloud_cpp_generator_ungolden_lib
+    google_cloud_cpp_generator_golden_lib
     PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
            ${PROJECT_BINARY_DIR}/generator/integration_tests)
 target_link_libraries(
-    google_cloud_cpp_generator_ungolden_lib
+    google_cloud_cpp_generator_golden_lib
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
            google_cloud_cpp_grpc_utils
            google_cloud_cpp_common
@@ -57,8 +65,8 @@ target_link_libraries(
            googleapis-c++::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc)
-google_cloud_cpp_add_common_options(google_cloud_cpp_generator_ungolden_lib)
-target_compile_options(google_cloud_cpp_generator_ungolden_lib
+google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden_lib)
+target_compile_options(google_cloud_cpp_generator_golden_lib
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 function (google_cloud_cpp_generator_define_golden_tests)
@@ -71,7 +79,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
         golden_logging_decorator_test.cc golden_metadata_decorator_test.cc
-        golden_stub_test.cc)
+        golden_stub_factory_test.cc golden_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -86,7 +94,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
             target "google_cloud_cpp_generator_golden" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_generator_ungolden_lib
+            PRIVATE google_cloud_cpp_generator_golden_lib
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     GTest::gmock_main

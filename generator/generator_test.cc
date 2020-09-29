@@ -88,6 +88,10 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
       absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   auto metadata_cc_output =
       absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_factory_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_factory_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
 
   DescriptorPool pool;
   FileDescriptorProto service_file;
@@ -103,6 +107,10 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   EXPECT_CALL(*metadata_header_output, Next(_, _))
       .WillRepeatedly(Return(false));
   EXPECT_CALL(*metadata_cc_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_factory_header_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_factory_cc_output, Next(_, _))
+      .WillRepeatedly(Return(false));
 
   EXPECT_CALL(*context_, Open(_))
       .WillOnce(Return(stub_header_output.release()))
@@ -110,7 +118,9 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
       .WillOnce(Return(logging_header_output.release()))
       .WillOnce(Return(logging_cc_output.release()))
       .WillOnce(Return(metadata_header_output.release()))
-      .WillOnce(Return(metadata_cc_output.release()));
+      .WillOnce(Return(metadata_cc_output.release()))
+      .WillOnce(Return(stub_factory_header_output.release()))
+      .WillOnce(Return(stub_factory_cc_output.release()));
 
   std::string actual_error;
   Generator generator;

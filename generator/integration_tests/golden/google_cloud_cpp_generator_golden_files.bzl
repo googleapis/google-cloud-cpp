@@ -17,12 +17,16 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_generator_golden_files = [
+    "connection_options.cc",
+    "connection_options.h",
     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
     "internal/database_admin_logging_decorator.gcpcxx.pb.h",
     "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",
     "internal/database_admin_metadata_decorator.gcpcxx.pb.h",
     "internal/database_admin_stub.gcpcxx.pb.cc",
     "internal/database_admin_stub.gcpcxx.pb.h",
+    "internal/database_admin_stub_factory.gcpcxx.pb.cc",
+    "internal/database_admin_stub_factory.gcpcxx.pb.h",
     "version.cc",
     "version.h",
     "version_info.h",

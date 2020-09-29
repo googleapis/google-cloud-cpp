@@ -29,6 +29,7 @@
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
@@ -184,6 +185,10 @@ VarsDictionary CreateServiceVars(
   vars["proto_file_name"] = descriptor.file()->name();
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
+  vars["connection_options_header_path"] =
+      absl::StrCat(vars["product_path"], "connection_options.h");
+  vars["connection_options_cc_path"] =
+      absl::StrCat(vars["product_path"], "connection_options.cc");
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                       ServiceNameToFilePath(descriptor.name()),
@@ -191,6 +196,14 @@ VarsDictionary CreateServiceVars(
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub",
+                   GeneratedFileSuffix(), ".h");
+  vars["stub_factory_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".cc");
+  vars["stub_factory_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
                    GeneratedFileSuffix(), ".h");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] =
@@ -210,7 +223,10 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()),
                    "_metadata_decorator", GeneratedFileSuffix(), ".h");
-
+  vars["version_header_path"] = absl::StrCat(vars["product_path"], "version.h");
+  vars["version_cc_path"] = absl::StrCat(vars["product_path"], "version.cc");
+  vars["version_info_header_path"] =
+      absl::StrCat(vars["product_path"], "version_info.h");
   return vars;
 }
 
@@ -252,6 +268,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   class_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<StubFactoryGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   return class_generators;
