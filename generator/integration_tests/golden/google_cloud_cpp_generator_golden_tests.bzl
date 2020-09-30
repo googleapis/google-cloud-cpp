@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_generator_golden_tests = [
+    "golden_connection_options_test.cc",
     "golden_logging_decorator_test.cc",
     "golden_metadata_decorator_test.cc",
     "golden_stub_factory_test.cc",

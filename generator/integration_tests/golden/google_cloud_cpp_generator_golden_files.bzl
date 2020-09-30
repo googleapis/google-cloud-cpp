@@ -17,8 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_generator_golden_files = [
-    "connection_options.cc",
-    "connection_options.h",
+    "connection_options.gcpcxx.pb.cc",
+    "connection_options.gcpcxx.pb.h",
     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
     "internal/database_admin_logging_decorator.gcpcxx.pb.h",
     "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",

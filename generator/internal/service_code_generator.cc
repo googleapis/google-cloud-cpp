@@ -72,8 +72,7 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
 Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
   auto result = service_vars_.find("product_path");
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal,
-                  "product_path not found in service_vars_");
+    return Status(StatusCode::kInternal, "product_path not found in vars");
   }
   namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
   for (auto const& nspace : namespaces_) {

@@ -17,6 +17,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/connection_options_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
@@ -173,13 +174,14 @@ VarsDictionary CreateServiceVars(
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
+  vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["proto_file_name"] = descriptor.file()->name();
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
-  vars["connection_options_header_path"] =
-      absl::StrCat(vars["product_path"], "connection_options.h");
-  vars["connection_options_cc_path"] =
-      absl::StrCat(vars["product_path"], "connection_options.cc");
+  vars["connection_options_header_path"] = absl::StrCat(
+      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".h");
+  vars["connection_options_cc_path"] = absl::StrCat(
+      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".cc");
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                       ServiceNameToFilePath(descriptor.name()),
@@ -252,6 +254,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> class_generators;
+  class_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   class_generators.push_back(absl::make_unique<StubGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));

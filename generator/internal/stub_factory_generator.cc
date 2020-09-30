@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/stub_factory_generator.h"
-#include "absl/memory/memory.h"
-#include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
@@ -55,10 +53,9 @@ Status StubFactoryGenerator::GenerateHeader() {
   auto result = OpenNamespaces(header_, NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  header_.Print(
-      service_vars_,  // clang-format off
+  header_.Print(service_vars_,  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(ConnectionOptions const& options);\n\n");
+    "CreateDefault$stub_class_name$($product_namespace$::ConnectionOptions const& options);\n\n");
   // clang-format on
 
   CloseNamespaces(header_);
@@ -95,7 +92,7 @@ Status StubFactoryGenerator::GenerateCc() {
   cc_.Print(
       service_vars_,  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(ConnectionOptions const& options) {\n"
+    "CreateDefault$stub_class_name$($product_namespace$::ConnectionOptions const& options) {\n"
       "  auto channel =\n"
       "      grpc::CreateCustomChannel(options.endpoint(), "
       "options.credentials(),\n"

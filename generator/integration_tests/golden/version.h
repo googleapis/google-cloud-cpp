@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden {
 inline namespace GOLDEN_CLIENT_NS {
 /**
  * The Cloud Test C++ Client major version.
@@ -60,7 +60,7 @@ int constexpr Version() {
 std::string VersionString();
 
 }  // namespace GOLDEN_CLIENT_NS
-}  // namespace golden_internal
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google
 

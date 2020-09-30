@@ -28,6 +28,7 @@ endif ()
 include(CompileProtos)
 
 # Do not run attempt to clang-tidy generated proto code.
+set(ORIGINAL_CMAKE_CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY})
 set(CMAKE_CXX_CLANG_TIDY "")
 
 google_cloud_cpp_grpcpp_library(
@@ -103,6 +104,8 @@ function (google_cloud_cpp_generator_define_integration_tests)
     endif ()
 endfunction ()
 
+# Enable clang-tidy for golden subdirectory
+set(CMAKE_CXX_CLANG_TIDY ${ORIGINAL_CMAKE_CXX_CLANG_TIDY})
 add_subdirectory(golden)
 
 # Only define the tests if testing is enabled. Package maintainers may not want
