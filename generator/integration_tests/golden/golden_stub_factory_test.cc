@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::testing::HasSubstr;
@@ -64,7 +64,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
 }
 
 }  // namespace
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -153,6 +153,8 @@ add_library(
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h
+    internal/user_agent_prefix.cc
+    internal/user_agent_prefix.h
     internal/utility.h
     internal/version_info.h
     kms_key_name.cc
@@ -243,6 +245,7 @@ if (BUILD_TESTING)
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
+        internal/user_agent_prefix_test.cc
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc

@@ -12,35 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/connection_options.gcpcxx.pb.h"
+#include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/version.h"
 #include <gmock/gmock.h>
-#include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
-TEST(GoldenConnectionOptionsTest, DefaultEndpoint) {
-  ConnectionOptions options;
-  EXPECT_EQ("test.googleapis.com", options.endpoint());
-}
-
-TEST(GoldenConnectionOptionsTest, UserAgentPrefix) {
-  ConnectionOptions options;
-  EXPECT_THAT(options.user_agent_prefix(), HasSubstr("gcloud-cpp/v1.19.0"));
-}
-
-TEST(GoldenConnectionOptionsTest, DefaultNumChannels) {
-  ConnectionOptions options;
-  EXPECT_EQ(4, options.num_channels());
+TEST(UserAgentPrefix, Format) {
+  auto const actual = UserAgentPrefix();
+  EXPECT_THAT(actual, StartsWith("gcloud-cpp/"));
+  EXPECT_THAT(actual, HasSubstr(::google::cloud::version_string()));
+  EXPECT_THAT(actual, HasSubstr(::google::cloud::internal::CompilerId()));
 }
 
 }  // namespace
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace golden
 }  // namespace cloud
 }  // namespace google

@@ -18,14 +18,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_CONNECTION_OPTIONS_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_CONNECTION_OPTIONS_GCPCXX_PB_H
 
-#include "generator/integration_tests/golden/version.h"
 #include "google/cloud/connection_options.h"
+#include "google/cloud/version.h"
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct ConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -36,7 +36,7 @@ struct ConnectionOptionsTraits {
 using ConnectionOptions =
   google::cloud::ConnectionOptions<ConnectionOptionsTraits>;
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,4 @@ google_cloud_cpp_generator_golden_files = [
     "internal/database_admin_stub.gcpcxx.pb.h",
     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
     "internal/database_admin_stub_factory.gcpcxx.pb.h",
-    "version.cc",
-    "version.h",
-    "version_info.h",
 ]

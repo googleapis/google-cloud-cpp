@@ -81,12 +81,13 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
       absl::StrSplit(product_path, '/', absl::SkipEmpty());
   std::string name =
       absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
-  std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
+  //  std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::kInternal) {
     absl::StrAppend(&name, "_internal");
   }
 
-  return std::vector<std::string>{"google", "cloud", name, inline_ns};
+  return std::vector<std::string>{"google", "cloud", name,
+                                  "GOOGLE_CLOUD_CPP_NS"};
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
