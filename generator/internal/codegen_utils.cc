@@ -77,17 +77,13 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
 
 std::vector<std::string> BuildNamespaces(std::string const& product_path,
                                          NamespaceType ns_type) {
-  std::string name;
   std::vector<std::string> v =
       absl::StrSplit(product_path, '/', absl::SkipEmpty());
-  if (v.size() > 2) {
-    name = absl::StrJoin(v.begin() + 2, v.end(), "_");
-  } else {
-    name = absl::StrJoin(v.begin(), v.end(), "_");
-  }
+  std::string name =
+      absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::kInternal) {
-    name = absl::StrCat(name, "_internal");
+    absl::StrAppend(&name, "_internal");
   }
 
   return std::vector<std::string>{"google", "cloud", name, inline_ns};
