@@ -136,7 +136,9 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
 
 INSTANTIATE_TEST_SUITE_P(
     Generator, GeneratorIntegrationTest,
-    testing::Values("internal/database_admin_logging_decorator.gcpcxx.pb.h",
+    testing::Values("connection_options.gcpcxx.pb.h",
+                    "connection_options.gcpcxx.pb.cc",
+                    "internal/database_admin_logging_decorator.gcpcxx.pb.h",
                     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
                     "internal/database_admin_metadata_decorator.gcpcxx.pb.h",
                     "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",

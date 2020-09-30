@@ -29,7 +29,7 @@ namespace golden_internal {
 inline namespace GOLDEN_CLIENT_NS {
 
 std::shared_ptr<DatabaseAdminStub>
-CreateDefaultDatabaseAdminStub(ConnectionOptions const& options) {
+CreateDefaultDatabaseAdminStub(golden::ConnectionOptions const& options) {
   auto channel =
       grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
                                 options.CreateChannelArguments());

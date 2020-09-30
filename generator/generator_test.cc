@@ -76,6 +76,10 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
+  auto connection_options_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto connection_options_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   auto stub_header_output =
       absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   auto stub_cc_output =
@@ -100,6 +104,10 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   service_file.mutable_options()->set_cc_generic_services(false);
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
 
+  EXPECT_CALL(*connection_options_header_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*connection_options_cc_output, Next(_, _))
+      .WillRepeatedly(Return(false));
   EXPECT_CALL(*stub_header_output, Next(_, _)).WillRepeatedly(Return(false));
   EXPECT_CALL(*stub_cc_output, Next(_, _)).WillRepeatedly(Return(false));
   EXPECT_CALL(*logging_header_output, Next(_, _)).WillRepeatedly(Return(false));
@@ -113,6 +121,8 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
       .WillRepeatedly(Return(false));
 
   EXPECT_CALL(*context_, Open(_))
+      .WillOnce(Return(connection_options_header_output.release()))
+      .WillOnce(Return(connection_options_cc_output.release()))
       .WillOnce(Return(stub_header_output.release()))
       .WillOnce(Return(stub_cc_output.release()))
       .WillOnce(Return(logging_header_output.release()))

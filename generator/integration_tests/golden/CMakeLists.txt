@@ -16,8 +16,8 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
-    connection_options.cc
-    connection_options.h
+    connection_options.gcpcxx.pb.cc
+    connection_options.gcpcxx.pb.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
@@ -38,8 +38,8 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 # Create a library from the where the golden code was copied to.
 add_library(
     google_cloud_cpp_generator_golden_lib # cmake-format: sort
-    connection_options.cc
-    connection_options.h
+    connection_options.gcpcxx.pb.cc
+    connection_options.gcpcxx.pb.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
@@ -78,8 +78,11 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
-        golden_logging_decorator_test.cc golden_metadata_decorator_test.cc
-        golden_stub_factory_test.cc golden_stub_test.cc)
+        golden_connection_options_test.cc
+        golden_logging_decorator_test.cc
+        golden_metadata_decorator_test.cc
+        golden_stub_factory_test.cc
+        golden_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
