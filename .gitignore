@@ -27,3 +27,13 @@ ci/kokoro/install/ccache-contents/
 
 google/cloud/storage/testbench/__pycache__/
 google/cloud/storage/testbench/*.pyc
+
+
+google/cloud/bigtable/internal/async_longrunning_op_test.cc.old
+google/cloud/bigtable/internal/async_poll_op.h.old
+google/cloud/bigtable/internal/async_poll_op_test.cc.bkp
+google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll_test.cc.old
+google/cloud/bigtable/internal/tags
+google/cloud/bigtable/tags
+google/cloud/tags
+tags
