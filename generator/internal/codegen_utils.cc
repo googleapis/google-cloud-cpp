@@ -75,27 +75,15 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-StatusOr<std::vector<std::string>> BuildNamespaces(VarsDictionary const& vars,
-                                                   NamespaceType ns_type) {
-  auto iter = vars.find("product_path");
-  if (iter == vars.end()) {
-    return Status(StatusCode::kNotFound,
-                  "product_path must be present in vars.");
-  }
-  std::string product_path = iter->second;
-  if (product_path.back() != '/') {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] must end with '/'.");
-  }
-  if (product_path.size() < 2) {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] contain at least 2 characters.");
-  }
-  std::vector<std::string> v = absl::StrSplit(product_path, '/');
-  auto name = v[v.size() - 2];
+std::vector<std::string> BuildNamespaces(std::string const& product_path,
+                                         NamespaceType ns_type) {
+  std::vector<std::string> v =
+      absl::StrSplit(product_path, '/', absl::SkipEmpty());
+  std::string name =
+      absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
   std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::kInternal) {
-    name = absl::StrCat(name, "_internal");
+    absl::StrAppend(&name, "_internal");
   }
 
   return std::vector<std::string>{"google", "cloud", name, inline_ns};
