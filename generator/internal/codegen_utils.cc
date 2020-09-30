@@ -81,7 +81,6 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
       absl::StrSplit(product_path, '/', absl::SkipEmpty());
   std::string name =
       absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
-  //  std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
   if (ns_type == NamespaceType::kInternal) {
     absl::StrAppend(&name, "_internal");
   }
