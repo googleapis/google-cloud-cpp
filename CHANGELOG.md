@@ -1,22 +1,41 @@
 
 # Changelog
 
-## v1.19.0 - TBD
+## v1.20.0 - TBD
+
+## v1.19.0 - 2020-10
 
 ### Storage
 
-* fix: consistent computation of XML vs. JSON endpoints
+* fix(storage): consistent computation of XML vs. JSON (#5095)
+  The interaction of `ClientOptions::set_endpoint()` and the
+  `CLOUD_STORAGE_TESTBENCH_ENDPOINT` environment variable was inconsistent
+  across endpoints. For JSON endpoints `set_endpoint()` overrode the
+  `CLOUD_STORAGE_TESTBENCH_ENDPOINT` value, while for XML endpoints it
+  was the opposite.
 
-The interaction of `ClientOptions::set_endpoint()` and the
-`CLOUD_STORAGE_TESTBENCH_ENDPOINT` environment variable was inconsistent
-across endpoints. For JSON endpoints `set_endpoint()` overrode the
-`CLOUD_STORAGE_TESTBENCH_ENDPOINT` value, while for XML endpoints it
-was the opposite.
+  In other libraries the environment variable always wins, so we are changing
+  the behavior here. This behavior was never documented, and it was buggy,
+  therefore it is not a breaking change. Nonetheless, we think the bug (and
+  the fix) is surprising enough to highlight in the CHANGELOG.
 
-In other libraries the environment variable always wins, so we are changing the
-behavior here. This behavior was never documented, and it was buggy, therefore
-it is not a breaking change. Nonetheless, we think the bug (and the fix) is
-surprising enough to highlight in the CHANGELOG.
+* fix: enable `codecvt` (UTF-8 support for signed URLs) in MSVC (#5126)
+* fix(storage): avoid stalls with small reads (#5104)
+* feat(storage): disable XML via environment variable (#5100)
+* fix(storage): use correct host header (#5085)
+
+### Spanner
+
+* fix: retry gRPC operations if the connection is unexpectedly terminated (#5087)
+* doc(spanner): use custom retry example in the Doxygen docs (#5164)
+
+### Pub/Sub
+
+> :warning: This library is under development and subject to breaking
+> changes without notice.
+
+* feat(pubsub): wait for callback return *and* handler (#5161)
+* In addition, @remyabel contributed a number of examples.
 
 ## v1.18.0 - 2020-09
 
