@@ -23,6 +23,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::testing::HasSubstr;
+using ::google::cloud::version_string;
 
 TEST(GoldenConnectionOptionsTest, DefaultEndpoint) {
   ConnectionOptions options;
@@ -31,7 +32,7 @@ TEST(GoldenConnectionOptionsTest, DefaultEndpoint) {
 
 TEST(GoldenConnectionOptionsTest, UserAgentPrefix) {
   ConnectionOptions options;
-  EXPECT_THAT(options.user_agent_prefix(), HasSubstr("gcloud-cpp/v1.19.0"));
+  EXPECT_THAT(options.user_agent_prefix(), HasSubstr("gcloud-cpp/" + version_string()));
 }
 
 TEST(GoldenConnectionOptionsTest, DefaultNumChannels) {
