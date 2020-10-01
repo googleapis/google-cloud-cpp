@@ -78,7 +78,7 @@ TEST(BuildNamespaces, NoDirectoryPathInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("_internal", result[2]);
-  EXPECT_EQ("_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, OneDirectoryPathInternal) {
@@ -87,7 +87,7 @@ TEST(BuildNamespaces, OneDirectoryPathInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("one_internal", result[2]);
-  EXPECT_EQ("ONE_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathInternal) {
@@ -96,7 +96,7 @@ TEST(BuildNamespaces, TwoDirectoryPathInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("unusual_product_internal", result[2]);
-  EXPECT_EQ("UNUSUAL_PRODUCT_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathNotInternal) {
@@ -105,7 +105,7 @@ TEST(BuildNamespaces, TwoDirectoryPathNotInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("unusual_product", result[2]);
-  EXPECT_EQ("UNUSUAL_PRODUCT_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
@@ -115,7 +115,7 @@ TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("spanner_internal", result[2]);
-  EXPECT_EQ("SPANNER_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathNotInternal) {
@@ -124,7 +124,7 @@ TEST(BuildNamespaces, ThreeDirectoryPathNotInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("translation", result[2]);
-  EXPECT_EQ("TRANSLATION_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, FourDirectoryPathInternal) {
@@ -134,7 +134,7 @@ TEST(BuildNamespaces, FourDirectoryPathInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("foo_bar_baz_internal", result[2]);
-  EXPECT_EQ("FOO_BAR_BAZ_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
@@ -143,7 +143,7 @@ TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
   EXPECT_EQ("google", result[0]);
   EXPECT_EQ("cloud", result[1]);
   EXPECT_EQ("foo_bar_baz", result[2]);
-  EXPECT_EQ("FOO_BAR_BAZ_CLIENT_NS", result[3]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(ProcessCommandLineArgs, NoProductPath) {

@@ -20,18 +20,18 @@
 
 #include "generator/integration_tests/golden/connection_options.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/version.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<DatabaseAdminStub>
 CreateDefaultDatabaseAdminStub(golden::ConnectionOptions const& options);
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 std::string ApiClientHeader() {
@@ -199,7 +199,7 @@ void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -43,8 +43,8 @@ Status ConnectionOptionsGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  GenerateLocalIncludes(header_, {service_vars_["version_header_path"],
-                                  "google/cloud/connection_options.h"});
+  GenerateLocalIncludes(
+      header_, {"google/cloud/connection_options.h", "google/cloud/version.h"});
   GenerateSystemIncludes(header_, {"string"});
   header_.Print("\n");
 
@@ -82,11 +82,10 @@ Status ConnectionOptionsGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  GenerateLocalIncludes(
-      cc_,
-      {service_vars_["connection_options_header_path"],
-       "absl/strings/str_cat.h", "google/cloud/internal/compiler_info.h"},
-      FileType::kCcFile);
+  GenerateLocalIncludes(cc_,
+                        {service_vars_["connection_options_header_path"],
+                         "google/cloud/internal/user_agent_prefix.h"},
+                        FileType::kCcFile);
   GenerateSystemIncludes(cc_, {"string"});
   cc_.Print("\n");
 
@@ -101,11 +100,7 @@ Status ConnectionOptionsGenerator::GenerateCc() {
 
   cc_.Print(  // clang-format off
     "std::string ConnectionOptionsTraits::user_agent_prefix() {\n"
-    "  return absl::StrCat(\"gcloud-cpp/\",\n"
-    "         VersionString(), \" (\",\n"
-    "         google::cloud::internal::CompilerId(),  \"-\",\n"
-    "         google::cloud::internal::CompilerVersion(), \"; \",\n"
-    "         google::cloud::internal::CompilerFeatures(), \")\");\n"
+    "  return google::cloud::internal::UserAgentPrefix();\n"
     "}\n\n"
     "int ConnectionOptionsTraits::default_num_channels() { return 4; }\n\n");
   // clang-format on

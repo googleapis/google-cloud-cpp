@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<DatabaseAdminStub>
 CreateDefaultDatabaseAdminStub(golden::ConnectionOptions const& options) {
@@ -52,7 +52,7 @@ CreateDefaultDatabaseAdminStub(golden::ConnectionOptions const& options) {
   return stub;
 }
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -43,10 +43,9 @@ Status StubFactoryGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  GenerateLocalIncludes(header_,
-                        {service_vars_["connection_options_header_path"],
-                         service_vars_["stub_header_path"],
-                         service_vars_["version_header_path"]});
+  GenerateLocalIncludes(
+      header_, {service_vars_["connection_options_header_path"],
+                service_vars_["stub_header_path"], "google/cloud/version.h"});
   GenerateSystemIncludes(header_, {"memory"});
   header_.Print("\n");
 

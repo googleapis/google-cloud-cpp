@@ -22,7 +22,7 @@ using ::testing::Return;
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 class MockGrpcDatabaseAdminStub
@@ -817,7 +817,7 @@ TEST_F(GoldenStubTest, CancelOperation) {
 }
 
 }  // namespace
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

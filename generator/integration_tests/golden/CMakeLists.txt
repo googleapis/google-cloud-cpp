@@ -25,10 +25,7 @@ set(google_cloud_cpp_generator_golden_files
     internal/database_admin_stub.gcpcxx.pb.cc
     internal/database_admin_stub.gcpcxx.pb.h
     internal/database_admin_stub_factory.gcpcxx.pb.cc
-    internal/database_admin_stub_factory.gcpcxx.pb.h
-    version.cc
-    version.h
-    version_info.h)
+    internal/database_admin_stub_factory.gcpcxx.pb.h)
 
 # Export the list of golden files to a .bzl file so we do not need to maintain
 # the list in multiple places.
@@ -47,10 +44,7 @@ add_library(
     internal/database_admin_stub.gcpcxx.pb.cc
     internal/database_admin_stub.gcpcxx.pb.h
     internal/database_admin_stub_factory.gcpcxx.pb.cc
-    internal/database_admin_stub_factory.gcpcxx.pb.h
-    version.cc
-    version.h
-    version_info.h)
+    internal/database_admin_stub_factory.gcpcxx.pb.h)
 
 target_include_directories(
     google_cloud_cpp_generator_golden_lib

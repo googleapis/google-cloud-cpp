@@ -19,14 +19,14 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_METADATA_DECORATOR_GCPCXX_PB_H
 
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/version.h"
 #include "google/cloud/tracing_options.h"
+#include "google/cloud/version.h"
 #include <memory>
 #include <string>
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
@@ -118,7 +118,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   std::string api_client_header_;
 };  // DatabaseAdminMetadata
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

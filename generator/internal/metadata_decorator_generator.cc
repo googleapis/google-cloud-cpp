@@ -51,8 +51,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   // includes
   GenerateLocalIncludes(
       header_, {service_vars_["stub_header_path"],
-                absl::StrCat(service_vars_["product_path"], "version.h"),
-                "google/cloud/tracing_options.h"});
+                "google/cloud/tracing_options.h", "google/cloud/version.h"});
   GenerateSystemIncludes(header_, {"memory", "string"});
 
   auto result = OpenNamespaces(header_, NamespaceType::kInternal);

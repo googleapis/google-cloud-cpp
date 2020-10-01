@@ -18,8 +18,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_GCPCXX_PB_H
 
-#include "generator/integration_tests/golden/version.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DatabaseAdminStub {
  public:
@@ -221,7 +221,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

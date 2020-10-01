@@ -17,30 +17,25 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/connection_options.gcpcxx.pb.h"
-#include "absl/strings/str_cat.h"
-#include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOLDEN_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
   return "test.googleapis.com";
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return absl::StrCat("gcloud-cpp/",
-         VersionString(), " (",
-         google::cloud::internal::CompilerId(),  "-",
-         google::cloud::internal::CompilerVersion(), "; ",
-         google::cloud::internal::CompilerFeatures(), ")");
+  return google::cloud::internal::UserAgentPrefix();
 }
 
 int ConnectionOptionsTraits::default_num_channels() { return 4; }
 
-}  // namespace GOLDEN_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

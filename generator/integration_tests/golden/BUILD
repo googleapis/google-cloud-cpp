@@ -23,9 +23,6 @@ filegroup(
     srcs = [
         "connection_options.gcpcxx.pb.cc",
         "connection_options.gcpcxx.pb.h",
-        "version.cc",
-        "version.h",
-        "version_info.h",
     ],
 )
 
