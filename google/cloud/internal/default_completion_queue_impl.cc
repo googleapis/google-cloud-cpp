@@ -62,8 +62,6 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
     return {self, self->promise_.get_future()};
   }
 
-  void SetPromise(promise<ValueType> p) { promise_ = std::move(p); }
-
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     deadline_ = deadline;

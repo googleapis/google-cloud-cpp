@@ -77,8 +77,8 @@ class MockOperation : public internal::AsyncGrpcOperation {
 
 /// @test A regression test for #5141
 TEST(CompletionQueueTest, TimerCancel) {
-  // There are a lot of magical numbers in this test, on my workstation I was
-  // able to reproduce #5141 99 out of 100 times on my workstation.
+  // There are a lot of magical numbers in this test, there were tuned to #5141
+  // 99 out of 100 times on my workstation.
   CompletionQueue cq;
   std::vector<std::thread> runners;
   std::generate_n(std::back_inserter(runners), 4, [&cq] {
