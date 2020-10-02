@@ -75,6 +75,36 @@ class MockOperation : public internal::AsyncGrpcOperation {
   MOCK_METHOD1(Notify, bool(bool));
 };
 
+/// @test A regression test for #5141
+TEST(CompletionQueueTest, TimerCancel) {
+  // There are a lot of magical numbers in this test, on my workstation I was
+  // able to reproduce #5141 99 out of 100 times on my workstation.
+  CompletionQueue cq;
+  std::vector<std::thread> runners;
+  std::generate_n(std::back_inserter(runners), 4, [&cq] {
+    return std::thread([](CompletionQueue c) { c.Run(); }, cq);
+  });
+
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto worker = [&](CompletionQueue cq) {
+    for (int i = 0; i != 10000; ++i) {
+      std::vector<TimerFuture> timers;
+      for (int j = 0; j != 10; ++j) {
+        timers.push_back(cq.MakeRelativeTimer(std::chrono::microseconds(10)));
+      }
+      cq.CancelAll();
+      for (auto& t : timers) t.cancel();
+    }
+  };
+  std::vector<std::thread> workers;
+  std::generate_n(std::back_inserter(runners), 8,
+                  [&] { return std::thread(worker, cq); });
+
+  for (auto& t : workers) t.join();
+  cq.Shutdown();
+  for (auto& t : runners) t.join();
+}
+
 /// @test Verify that the basic functionality in a CompletionQueue works.
 TEST(CompletionQueueTest, TimerSmokeTest) {
   CompletionQueue cq;

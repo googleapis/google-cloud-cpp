@@ -48,42 +48,45 @@ namespace {
  */
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
-  explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
-      : promise_(/*cancellation_callback=*/[this] { Cancel(); }),
-        alarm_(std::move(alarm)) {}
+  using ValueType = StatusOr<std::chrono::system_clock::time_point>;
 
-  future<StatusOr<std::chrono::system_clock::time_point>> GetFuture() {
-    return promise_.get_future();
+  // We need to create the shared_ptr before completing the initialization, so
+  // use a factory member function.
+  static std::pair<std::shared_ptr<AsyncTimerFuture>, future<ValueType>>
+  Create() {
+    auto self = std::shared_ptr<AsyncTimerFuture>(new AsyncTimerFuture);
+    auto weak = std::weak_ptr<AsyncTimerFuture>(self);
+    self->promise_ = promise<AsyncTimerFuture::ValueType>([weak] {
+      if (auto self = weak.lock()) self->Cancel();
+    });
+    return {self, self->promise_.get_future()};
   }
+
+  void SetPromise(promise<ValueType> p) { promise_ = std::move(p); }
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     deadline_ = deadline;
-
-    if (alarm_) {
-      alarm_->Set(&cq, deadline, tag);
-    }
+    alarm_.Set(&cq, deadline, tag);
   }
 
-  void Cancel() override {
-    auto a = std::move(alarm_);
-    if (a) a->Cancel();
-  }
+  void Cancel() override { alarm_.Cancel(); }
 
  private:
+  explicit AsyncTimerFuture() : promise_(null_promise_t{}) {}
+
   bool Notify(bool ok) override {
-    if (!ok) {
-      promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
-    } else {
-      promise_.set_value(deadline_);
-    }
+    promise_.set_value(ok ? ValueType(deadline_) : Canceled());
     return true;
   }
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
+  static ValueType Canceled() {
+    return Status{StatusCode::kCancelled, "timer canceled"};
+  }
+
+  promise<ValueType> promise_;
   std::chrono::system_clock::time_point deadline_;
-  /// Holds the underlying handle. It might be a nullptr in tests.
-  std::unique_ptr<grpc::Alarm> alarm_;
+  grpc::Alarm alarm_;
 };
 
 class AsyncFunction : public internal::AsyncGrpcOperation {
@@ -159,10 +162,10 @@ void DefaultCompletionQueueImpl::CancelAll() {
 future<StatusOr<std::chrono::system_clock::time_point>>
 DefaultCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
-  auto op =
-      std::make_shared<AsyncTimerFuture>(absl::make_unique<grpc::Alarm>());
+  auto p = AsyncTimerFuture::Create();
+  auto op = std::move(p.first);
   StartOperation(op, [&](void* tag) { op->Set(cq(), deadline, tag); });
-  return op->GetFuture();
+  return std::move(p.second);
 }
 
 future<StatusOr<std::chrono::system_clock::time_point>>
