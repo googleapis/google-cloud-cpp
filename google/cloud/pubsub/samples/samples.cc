@@ -1071,22 +1071,29 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     auto subscription =
         pubsub::Subscription(std::move(project_id), std::move(subscription_id));
 
+    // Because this is an example we want to exit eventually, use a mutex and
+    // condition variable to notify the current thread and stop the example.
     std::mutex mu;
+    std::condition_variable cv;
     int count = 0;
-    google::cloud::promise<void> received_message;
+    auto wait = [&] {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return count >= 4; });
+    };
+    auto increase_count = [&] {
+      std::unique_lock<std::mutex> lk(mu);
+      if (++count >= 4) cv.notify_one();
+    };
+
+    // Receive messages in the previously allocated thread pool.
     auto result = subscriber.Subscribe(
         subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
-          {
-            std::lock_guard<std::mutex> lk(mu);
-            if (++count == 4) received_message.set_value();
-          }
+          increase_count();
           std::move(h).ack();
         });
-    // Cancel the subscription as soon as the first message is received.
-    received_message.get_future()
-        .then([&result](google::cloud::future<void>) { result.cancel(); })
-        .get();
+    wait();
+    result.cancel();
     // Report any final status, blocking until the subscription loop completes,
     // either with a failure or because it was canceled.
     auto status = result.get();
