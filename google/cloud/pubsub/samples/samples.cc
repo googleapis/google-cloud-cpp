@@ -21,6 +21,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <condition_variable>
+#include <mutex>
 #include <tuple>
 #include <utility>
 
@@ -1076,7 +1078,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     std::mutex mu;
     std::condition_variable cv;
     int count = 0;
-    auto wait = [&] {
+    auto await_count = [&] {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return count >= 4; });
     };
@@ -1092,7 +1094,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
           increase_count();
           std::move(h).ack();
         });
-    wait();
+    await_count();
     result.cancel();
     // Report any final status, blocking until the subscription loop completes,
     // either with a failure or because it was canceled.
