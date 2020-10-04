@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "absl/time/time.h"
 #include <array>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -62,8 +63,10 @@ std::ostream& operator<<(std::ostream& os, Severity x) {
 }
 
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
-  return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "] "
-            << rhs.message << " (" << rhs.filename << ':' << rhs.lineno << ')';
+  return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "]"
+            << " <" << std::this_thread::get_id() << ">"
+            << " " << rhs.message << " (" << rhs.filename << ':' << rhs.lineno
+            << ')';
 }
 
 LogSink::LogSink()
@@ -137,12 +140,16 @@ class StdClogBackend : public LogBackend {
   StdClogBackend() = default;
 
   void Process(LogRecord const& lr) override {
+    std::lock_guard<std::mutex> lk(mu_);
     std::clog << lr << "\n";
     if (lr.severity >= Severity::GCP_LS_WARNING) {
       std::clog << std::flush;
     }
   }
   void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
+
+ private:
+  std::mutex mu_;
 };
 }  // namespace
 
