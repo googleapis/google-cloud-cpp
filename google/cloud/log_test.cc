@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,6 @@ TEST(LogSeverityTest, Streaming) {
 }
 
 TEST(LogRecordTest, Streaming) {
-  std::ostringstream os;
   LogRecord lr;
   lr.severity = Severity::GCP_LS_INFO;
   lr.function = "Func";
@@ -42,9 +42,21 @@ TEST(LogRecordTest, Streaming) {
   lr.timestamp = std::chrono::system_clock::from_time_t(1585112316) +
                  std::chrono::microseconds(123456);
   lr.message = "message";
-  os << lr;
-  EXPECT_EQ("2020-03-25T04:58:36.123456000Z [INFO] message (filename.cc:123)",
-            os.str());
+  auto const actual = [&] {
+    std::ostringstream os;
+    os << lr;
+    return std::move(os).str();
+  }();
+  auto tid = [] {
+    std::ostringstream os;
+    os << std::this_thread::get_id();
+    return std::move(os).str();
+  }();
+  EXPECT_THAT(actual, HasSubstr("2020-03-25T04:58:36.123456000Z"));
+  EXPECT_THAT(actual, HasSubstr("[INFO]"));
+  EXPECT_THAT(actual, HasSubstr("<" + tid + ">"));
+  EXPECT_THAT(actual, HasSubstr("message"));
+  EXPECT_THAT(actual, HasSubstr("(filename.cc:123)"));
 }
 
 TEST(LogSinkTest, CompileTimeEnabled) {
