@@ -29,6 +29,19 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+template <typename Request, typename Response>
+class AsyncStreamingReadWriteRpc {
+ public:
+  virtual ~AsyncStreamingReadWriteRpc() = default;
+
+  virtual void Cancel() = 0;
+  virtual future<bool> Start() = 0;
+  virtual future<absl::optional<Response>> Read() = 0;
+  virtual future<bool> Write(Request const&, grpc::WriteOptions) = 0;
+  virtual future<bool> WritesDone() = 0;
+  virtual future<Status> Finish() = 0;
+};
+
 /**
  * Wrapper for Asynchronous Streaming Read/Write RPCs.
  *
@@ -37,9 +50,10 @@ namespace internal {
  * to provide easier-to-use abstractions.
  */
 template <typename Request, typename Response>
-class AsyncStreamingReadWriteRpc {
+class AsyncStreamingReadWriteRpcImpl
+    : public AsyncStreamingReadWriteRpc<Request, Response> {
  public:
-  AsyncStreamingReadWriteRpc(
+  AsyncStreamingReadWriteRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
       std::unique_ptr<grpc::ClientContext> context,
       std::unique_ptr<grpc::ClientAsyncReaderWriterInterface<Request, Response>>
@@ -48,9 +62,9 @@ class AsyncStreamingReadWriteRpc {
         context_(std::move(context)),
         stream_(std::move(stream)) {}
 
-  void Cancel() { context_->TryCancel(); }
+  void Cancel() override { context_->TryCancel(); }
 
-  future<bool> Start() {
+  future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
       promise<bool> p;
       bool Notify(bool ok) override {
@@ -64,7 +78,7 @@ class AsyncStreamingReadWriteRpc {
     return op->p.get_future();
   }
 
-  future<absl::optional<Response>> Read() {
+  future<absl::optional<Response>> Read() override {
     struct OnRead : public AsyncGrpcOperation {
       promise<absl::optional<Response>> p;
       Response response;
@@ -84,7 +98,8 @@ class AsyncStreamingReadWriteRpc {
     return op->p.get_future();
   }
 
-  future<bool> Write(Request const& request, grpc::WriteOptions options) {
+  future<bool> Write(Request const& request,
+                     grpc::WriteOptions options) override {
     struct OnWrite : public AsyncGrpcOperation {
       promise<bool> p;
       bool Notify(bool ok) override {
@@ -100,7 +115,7 @@ class AsyncStreamingReadWriteRpc {
     return op->p.get_future();
   }
 
-  future<bool> WritesDone() {
+  future<bool> WritesDone() override {
     struct OnWritesDone : public AsyncGrpcOperation {
       promise<bool> p;
       bool Notify(bool ok) override {
@@ -114,7 +129,7 @@ class AsyncStreamingReadWriteRpc {
     return op->p.get_future();
   }
 
-  future<Status> Finish() {
+  future<Status> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
       promise<Status> p;
       grpc::Status status;
@@ -159,7 +174,7 @@ MakeStreamingReadWriteRpc(
     PrepareAsyncReadWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), &cq_impl->cq());
-  return absl::make_unique<AsyncStreamingReadWriteRpc<Request, Response>>(
+  return absl::make_unique<AsyncStreamingReadWriteRpcImpl<Request, Response>>(
       std::move(cq_impl), std::move(context), std::move(stream));
 }
 
