@@ -83,6 +83,19 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::StreamingPullRequest const&) override {
+    return google::cloud::internal::MakeStreamingReadWriteRpc<
+        google::pubsub::v1::StreamingPullRequest,
+        google::pubsub::v1::StreamingPullResponse>(
+        cq, std::move(context),
+        [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return grpc_stub_->PrepareAsyncStreamingPull(context, cq);
+        });
+  }
+
   future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

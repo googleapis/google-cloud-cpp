@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 
@@ -69,6 +70,15 @@ class SubscriberStub {
   virtual Status ModifyPushConfig(
       grpc::ClientContext& client_context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
+
+  using AsyncPullStream = google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>;
+
+  /// Start a bi-directional stream to read messages and send ack/nacks.
+  virtual std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
+      google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::pubsub::v1::StreamingPullRequest const& request) = 0;
 
   /// Pull a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
