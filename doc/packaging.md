@@ -3,7 +3,7 @@
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
-This document is intended for package maintainers or anyone else who might like
+This document is intended for package maintainers or for people who might like
 to "install" the `google-cloud-cpp` libraries.
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
