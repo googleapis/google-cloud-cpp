@@ -53,6 +53,11 @@ class SubscriberMetadata : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::StreamingPullRequest const& request) override;
+
   future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

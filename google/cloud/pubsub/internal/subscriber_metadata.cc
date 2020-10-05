@@ -70,6 +70,15 @@ Status SubscriberMetadata::ModifyPushConfig(
   return child_->ModifyPushConfig(context, request);
 }
 
+std::unique_ptr<SubscriberStub::AsyncPullStream>
+SubscriberMetadata::AsyncStreamingPull(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::StreamingPullRequest const& request) {
+  SetMetadata(*context, "subscription=" + request.subscription());
+  return child_->AsyncStreamingPull(cq, std::move(context), request);
+}
+
 future<StatusOr<google::pubsub::v1::PullResponse>>
 SubscriberMetadata::AsyncPull(google::cloud::CompletionQueue& cq,
                               std::unique_ptr<grpc::ClientContext> context,

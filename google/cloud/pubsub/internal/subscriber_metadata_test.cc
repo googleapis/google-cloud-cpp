@@ -143,6 +143,27 @@ TEST(SubscriberMetadataTest, ModifyPushConfig) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST(SubscriberMetadataTest, AsyncStreamingPull) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext> context,
+                   google::pubsub::v1::StreamingPullRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context, "google.pubsub.v1.Subscriber.StreamingPull",
+            google::cloud::internal::ApiClientHeader()));
+        return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+      });
+  SubscriberMetadata stub(mock);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::StreamingPullRequest request;
+  request.set_subscription(
+      pubsub::Subscription("test-project", "test-subscription").FullName());
+  auto stream = stub.AsyncStreamingPull(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_TRUE(stream);
+}
+
 TEST(SubscriberMetadataTest, AsyncPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncPull)
