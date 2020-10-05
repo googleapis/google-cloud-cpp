@@ -110,12 +110,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afdca3ac1c6e5e268c66bc3b9da002f27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1future.html">future</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#afdca3ac1c6e5e268c66bc3b9da002f27">get_future</a> ()</td></tr>
 <tr class="memdesc:afdca3ac1c6e5e268c66bc3b9da002f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the <code>future&lt;T&gt;</code> using the same shared state as <code>*this</code>.  <a href="#afdca3ac1c6e5e268c66bc3b9da002f27">More...</a><br /></td></tr>
 <tr class="separator:afdca3ac1c6e5e268c66bc3b9da002f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3034b18b4661eb20e3a6796ecd15d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#ae3034b18b4661eb20e3a6796ecd15d54">set_value</a> (T &amp;&amp;value)</td></tr>
-<tr class="memdesc:ae3034b18b4661eb20e3a6796ecd15d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Satisfies the shared state.  <a href="#ae3034b18b4661eb20e3a6796ecd15d54">More...</a><br /></td></tr>
-<tr class="separator:ae3034b18b4661eb20e3a6796ecd15d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e6377b8b536973242b465bc8700dab0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a5e6377b8b536973242b465bc8700dab0">set_value</a> (T const &amp;value)</td></tr>
-<tr class="memdesc:a5e6377b8b536973242b465bc8700dab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Satisfies the shared state.  <a href="#a5e6377b8b536973242b465bc8700dab0">More...</a><br /></td></tr>
-<tr class="separator:a5e6377b8b536973242b465bc8700dab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71cc5da623c0d7959a1700845f7c2c6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a71cc5da623c0d7959a1700845f7c2c6d">set_value</a> (T value)</td></tr>
+<tr class="memdesc:a71cc5da623c0d7959a1700845f7c2c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Satisfies the shared state.  <a href="#a71cc5da623c0d7959a1700845f7c2c6d">More...</a><br /></td></tr>
+<tr class="separator:a71cc5da623c0d7959a1700845f7c2c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
@@ -400,8 +397,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="ae3034b18b4661eb20e3a6796ecd15d54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3034b18b4661eb20e3a6796ecd15d54">&#9670;&nbsp;</a></span>set_value() <span class="overload">[1/2]</span></h2>
+<a id="a71cc5da623c0d7959a1700845f7c2c6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71cc5da623c0d7959a1700845f7c2c6d">&#9670;&nbsp;</a></span>set_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +411,7 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">google::cloud::v1::promise</a>&lt; T &gt;::set_value </td>
           <td>(</td>
-          <td class="paramtype">T &amp;&amp;&#160;</td>
+          <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -436,45 +433,6 @@ template&lt;typename T&gt; </div>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00194">194</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
-
-</div>
-</div>
-<a id="a5e6377b8b536973242b465bc8700dab0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e6377b8b536973242b465bc8700dab0">&#9670;&nbsp;</a></span>set_value() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html">google::cloud::v1::promise</a>&lt; T &gt;::set_value </td>
-          <td>(</td>
-          <td class="paramtype">T const &amp;&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Satisfies the shared state. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::future_error</td><td>with std::future_errc::promise_already_satisfied if the shared state is already satisfied. </td></tr>
-    <tr><td class="paramname">std::future_error</td><td>with std::no_state if the promise does not have a shared state. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00209">209</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
