@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
-#include "google/cloud/spanner/internal/polling_loop.h"
+#include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/time_utils.h"
 #include <chrono>
@@ -25,6 +25,9 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 using google::cloud::internal::Idempotency;
+using google::cloud::internal::PollingLoop;
+using google::cloud::internal::PollingLoopMetadataExtractor;
+using google::cloud::internal::PollingLoopResponseExtractor;
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -515,14 +518,15 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
            std::unique_ptr<PollingPolicy> polling_policy,
            google::cloud::promise<StatusOr<gcsa::Database>> promise,
            char const* location) mutable {
-          auto result = internal::PollingLoop<
-              internal::PollingLoopResponseExtractor<gcsa::Database>>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
+          auto result =
+              PollingLoop<PollingLoopResponseExtractor<gcsa::Database>>(
+                  std::move(polling_policy),
+                  [stub](
+                      grpc::ClientContext& context,
+                      google::longrunning::GetOperationRequest const& request) {
+                    return stub->GetOperation(context, request);
+                  },
+                  std::move(operation), location);
 
           // Drop our reference to stub; ideally we'd have std::moved into the
           // lambda. Doing this also prevents a false leak from being reported
@@ -549,16 +553,14 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
            std::unique_ptr<PollingPolicy> polling_policy,
            promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> promise,
            char const* location) mutable {
-          auto result =
-              internal::PollingLoop<internal::PollingLoopMetadataExtractor<
-                  gcsa::UpdateDatabaseDdlMetadata>>(
-                  std::move(polling_policy),
-                  [stub](
-                      grpc::ClientContext& context,
-                      google::longrunning::GetOperationRequest const& request) {
-                    return stub->GetOperation(context, request);
-                  },
-                  std::move(operation), location);
+          auto result = PollingLoop<
+              PollingLoopMetadataExtractor<gcsa::UpdateDatabaseDdlMetadata>>(
+              std::move(polling_policy),
+              [stub](grpc::ClientContext& context,
+                     google::longrunning::GetOperationRequest const& request) {
+                return stub->GetOperation(context, request);
+              },
+              std::move(operation), location);
 
           // Drop our reference to stub; ideally we'd have std::moved into the
           // lambda. Doing this also prevents a false leak from being reported
@@ -594,8 +596,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
            std::unique_ptr<PollingPolicy> polling_policy,
            google::cloud::promise<StatusOr<gcsa::Backup>> promise,
            char const* location) mutable {
-          auto result = internal::PollingLoop<
-              internal::PollingLoopResponseExtractor<gcsa::Backup>>(
+          auto result = PollingLoop<PollingLoopResponseExtractor<gcsa::Backup>>(
               std::move(polling_policy),
               [stub](grpc::ClientContext& context,
                      google::longrunning::GetOperationRequest const& request) {

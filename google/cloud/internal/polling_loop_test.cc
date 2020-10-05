@@ -12,19 +12,55 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/polling_loop.h"
+#include "google/cloud/internal/polling_loop.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/strings/match.h"
 #include <google/protobuf/struct.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+
+/// Define the gRPC status code semantics for retrying requests.
+struct TestGrpcRetry {
+  static inline bool IsOk(google::cloud::Status const& status) {
+    return status.ok();
+  }
+
+  static inline bool IsTransientFailure(google::cloud::Status const& status) {
+    if (status.code() == StatusCode::kUnavailable ||
+        status.code() == StatusCode::kResourceExhausted) {
+      return true;
+    }
+    // Treat the unexpected termination of the gRPC connection as retryable.
+    // There is no explicit indication of this, but it will result in an
+    // INTERNAL status with one of the `kTransientFailureMessages`.
+    if (status.code() == StatusCode::kInternal) {
+      constexpr char const* kTransientFailureMessages[] = {
+          "Received unexpected EOS on DATA frame from server",
+          "Connection closed with unknown cause",
+          "HTTP/2 error code: INTERNAL_ERROR", "RST_STREAM"};
+      for (auto const& message : kTransientFailureMessages) {
+        if (absl::StrContains(status.message(), message)) return true;
+      }
+    }
+    return false;
+  }
+
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+};
+
+using LimitedErrorCountRetryPolicy =
+    google::cloud::internal::LimitedErrorCountRetryPolicy<TestGrpcRetry>;
 
 std::unique_ptr<PollingPolicy> TestPollingPolicy() {
   using Policy = GenericPollingPolicy<LimitedErrorCountRetryPolicy,
@@ -351,7 +387,6 @@ TEST(PollingLoopTest, FailureInvalidContentsMetadata) {
 
 }  // namespace
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

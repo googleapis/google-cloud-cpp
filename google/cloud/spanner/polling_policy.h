@@ -28,35 +28,10 @@ inline namespace SPANNER_CLIENT_NS {
 
 using PollingPolicy = ::google::cloud::PollingPolicy;
 
-/**
- * Combine a RetryPolicy and a BackoffPolicy to create simple polling policies.
- */
 template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
-class GenericPollingPolicy : public PollingPolicy {
- public:
-  GenericPollingPolicy(Retry retry_policy, Backoff backoff_policy)
-      : retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
-
-  //@{
-  std::unique_ptr<PollingPolicy> clone() const override {
-    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
-  }
-
-  bool OnFailure(google::cloud::Status const& status) override {
-    return retry_policy_.OnFailure(status);
-  }
-
-  std::chrono::milliseconds WaitPeriod() override {
-    return backoff_policy_.OnCompletion();
-  }
-  //@}
-
- private:
-  Retry retry_policy_;
-  Backoff backoff_policy_;
-};
+using GenericPollingPolicy =
+    ::google::cloud::GenericPollingPolicy<Retry, Backoff>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
