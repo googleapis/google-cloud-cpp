@@ -385,7 +385,7 @@ class future_shared_state final : private future_shared_state_base {
    * @throws `std::future_error` if the shared state was already satisfied. The
    *     error code is `std::future_errc::promise_already_satisfied`.
    */
-  void set_value(T&& value) {
+  void set_value(T value) {
     std::unique_lock<std::mutex> lk(mu_);
     if (is_ready_unlocked()) {
       ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);

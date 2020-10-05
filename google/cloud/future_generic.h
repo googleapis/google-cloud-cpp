@@ -191,22 +191,12 @@ class promise final : private internal::promise_base<T> {
    * @throws std::future_error with std::no_state if the promise does not have
    *   a shared state.
    */
-  void set_value(T&& value) {
+  void set_value(T value) {
     if (!this->shared_state_) {
       internal::ThrowFutureError(std::future_errc::no_state, __func__);
     }
-    this->shared_state_->set_value(std::forward<T>(value));
+    this->shared_state_->set_value(std::move(value));
   }
-
-  /**
-   * Satisfies the shared state.
-   *
-   * @throws std::future_error with std::future_errc::promise_already_satisfied
-   *   if the shared state is already satisfied.
-   * @throws std::future_error with std::no_state if the promise does not have
-   *   a shared state.
-   */
-  void set_value(T const& value) { set_value(T(value)); }
 
   using internal::promise_base<T>::set_exception;
 };
