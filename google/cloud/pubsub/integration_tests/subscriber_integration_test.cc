@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -140,6 +141,86 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
 
   EXPECT_THAT(stream->Finish().get(), AnyOf(StatusIs(StatusCode::kOk),
                                             StatusIs(StatusCode::kCancelled)));
+}
+
+TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
+  auto publisher = Publisher(MakePublisherConnection(
+      topic_, {},
+      pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
+
+  internal::AutomaticallyCreatedBackgroundThreads background(4);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
+
+  auto shutdown = std::make_shared<pubsub_internal::SessionShutdownManager>();
+  auto source =
+      std::make_shared<pubsub_internal::StreamingSubscriptionBatchSource>(
+          background.cq(), shutdown, stub, subscription_.FullName(),
+          "test-client-0001", pubsub::SubscriptionOptions{},
+          pubsub_testing::TestRetryPolicy(),
+          pubsub_testing::TestBackoffPolicy());
+
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
+  std::vector<std::string> received_ids;
+  int ack_count = 0;
+  int callback_count = 0;
+  auto wait_ack_count = [&](int count) {
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return ack_count >= count; });
+  };
+  auto callback =
+      [&](StatusOr<google::pubsub::v1::StreamingPullResponse> const& response) {
+        ASSERT_STATUS_OK(response);
+        std::cout << "callback(" << response->received_messages_size() << ")"
+                  << std::endl;
+        {
+          std::lock_guard<std::mutex> lk(callback_mu);
+          for (auto const& m : response->received_messages()) {
+            received_ids.push_back(m.message().message_id());
+          }
+          ++callback_count;
+        }
+        for (auto const& m : response->received_messages()) {
+          source->AckMessage(m.ack_id(), 0).then([&](future<Status>) {
+            std::lock_guard<std::mutex> lk(callback_mu);
+            ++ack_count;
+            callback_cv.notify_one();
+          });
+        }
+        callback_cv.notify_one();
+      };
+
+  auto done = shutdown->Start({});
+  source->Start(std::move(callback));
+
+  auto constexpr kPublishCount = 1000;
+  std::set<std::string> expected_ids = [&] {
+    std::set<std::string> ids;
+    std::vector<future<StatusOr<std::string>>> message_ids;
+    for (int i = 0; i != kPublishCount; ++i) {
+      message_ids.push_back(publisher.Publish(
+          MessageBuilder{}.SetData("message-" + std::to_string(i)).Build()));
+    }
+    for (auto& id : message_ids) {
+      auto r = id.get();
+      EXPECT_STATUS_OK(r);
+      ids.insert(*std::move(r));
+    }
+    return ids;
+  }();
+
+  wait_ack_count(kPublishCount);
+  {
+    std::lock_guard<std::mutex> lk(callback_mu);
+    for (auto const& id : received_ids) {
+      expected_ids.erase(id);
+    }
+    EXPECT_TRUE(expected_ids.empty());
+  }
+
+  shutdown->MarkAsShutdown("test", {});
+  source->Shutdown();
+  EXPECT_STATUS_OK(done.get());
 }
 
 }  // namespace

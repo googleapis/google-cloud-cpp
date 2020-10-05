@@ -29,6 +29,9 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+using BatchCallback =
+    std::function<void(StatusOr<google::pubsub::v1::StreamingPullResponse>)>;
+
 /**
  * Defines the interface for message batch sources.
  *
