@@ -124,7 +124,8 @@ $(function() {
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81">google::cloud::v1::LogSink</a>
 </li>
 <li>clone()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421">google::cloud::v1::PollingPolicy</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a436bc52392088c7051d3d9e1a243120c">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421">google::cloud::v1::PollingPolicy</a>
 </li>
 <li>code()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Status.html#a8df5a85749c7653de743f2228d25026b">google::cloud::v1::Status</a>
@@ -136,7 +137,7 @@ $(function() {
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a046fcd2a14f38d366b10133ad87b6910">google::cloud::v1::CompletionQueue</a>
 </li>
 <li>ConnectionOptions()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#abd8e6ccf71187282f613957fe98f39f1">google::cloud::v1::ConnectionOptions&lt; ConnectionTraits &gt;</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ac03711083aa777bc008bd9000acf19aa">google::cloud::v1::ConnectionOptions&lt; ConnectionTraits &gt;</a>
 </li>
 <li>cq()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html#a150043ae94e4de0ec7ff2b8c316cd46d">google::cloud::v1::BackgroundThreads</a>
@@ -217,6 +218,9 @@ $(function() {
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
+<li>GenericPollingPolicy()
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a9d68a06bd6f5a867eacffd345104f0f0">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>
+</li>
 <li>get()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1future.html#af6fc9219316b5b54fc52859a9c577ef3">google::cloud::v1::future&lt; T &gt;</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1future_3_01void_01_4.html#afd09f6483a734569d40e833d5728ab24">google::cloud::v1::future&lt; void &gt;</a>
@@ -317,7 +321,8 @@ $(function() {
 , <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a0b27f8f717c7dc2bfef1649a158dd9d7">google::cloud::v1::StatusOr&lt; T &gt;</a>
 </li>
 <li>OnFailure()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a7e3326108c65413053f21c5396e7f9d7">google::cloud::v1::PollingPolicy</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#afdc9b5796faa5a7ef0b4aac0a795ada1">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a7e3326108c65413053f21c5396e7f9d7">google::cloud::v1::PollingPolicy</a>
 </li>
 <li>operator bool()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#aa489e9f6fa909143ea203b1879fd2a0c">google::cloud::v1::StatusOr&lt; T &gt;</a>
@@ -326,7 +331,7 @@ $(function() {
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#aaecbf0eb4031f62c4ca93de7a233ef40">google::cloud::v1::KmsKeyName</a>
 </li>
 <li>operator*()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a266106795418b6a8c4a0716711fff840">google::cloud::v1::StatusOr&lt; T &gt;</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a3f64a0c8a8cb939ffbdc9d5a225eea64">google::cloud::v1::StatusOr&lt; T &gt;</a>
 </li>
 <li>operator-&gt;()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a5cb0a1c5ff445789dc133342f6df8121">google::cloud::v1::StatusOr&lt; T &gt;</a>
@@ -338,8 +343,8 @@ $(function() {
 <li>operator=()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a0898cf6abee979c58a6a4caa8d90c00f">google::cloud::v1::KmsKeyName</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a079b12981f692586699f0afb6be35a2c">google::cloud::v1::promise&lt; T &gt;</a>
-, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#ab8862d6bdc53959b2b2e14b34fd5f961">google::cloud::v1::promise&lt; void &gt;</a>
-, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#af1bd62b5fe6b66bd1c2e0596ec877313">google::cloud::v1::StatusOr&lt; T &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#afbd8b818c2200551606e597410f26c20">google::cloud::v1::promise&lt; void &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a433e815640cc50982b4f996ae124f096">google::cloud::v1::StatusOr&lt; T &gt;</a>
 </li>
 <li>operator==
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a1773459c03b69cbf5dc498f7457b618a">google::cloud::v1::KmsKeyName</a>
@@ -496,7 +501,8 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>WaitPeriod()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a77efe54d1c505ea2ad81b32ce160f3ec">google::cloud::v1::PollingPolicy</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#ae8c7ed634b750cc5a63151126823887e">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a77efe54d1c505ea2ad81b32ce160f3ec">google::cloud::v1::PollingPolicy</a>
 </li>
 </ul>
 

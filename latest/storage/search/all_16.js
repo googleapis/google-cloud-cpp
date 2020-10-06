@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['waitperiod',['WaitPeriod',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a77efe54d1c505ea2ad81b32ce160f3ec',1,'google::cloud::v1::PollingPolicy']]],
+  ['waitperiod',['WaitPeriod',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#ae8c7ed634b750cc5a63151126823887e',1,'google::cloud::v1::GenericPollingPolicy::WaitPeriod() override'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#ae8c7ed634b750cc5a63151126823887e',1,'google::cloud::v1::GenericPollingPolicy::WaitPeriod() override'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#a77efe54d1c505ea2ad81b32ce160f3ec',1,'google::cloud::v1::PollingPolicy::WaitPeriod()']]],
   ['website',['website',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#ab51dc4763d4ff62dede398374aeab76e',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['website_5fas_5foptional',['website_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a148ea5d05de818b7776eeafd7bdbf21b',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['well_5fknown_5fheaders_2ecc',['well_known_headers.cc',['../well__known__headers_8cc.html',1,'']]],

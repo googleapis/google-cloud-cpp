@@ -155,6 +155,8 @@ Public Member Functions</h2></td></tr>
 <p>Return a copy of the current policy. </p>
 <p>This function is called at the beginning of the polling loop. Policies that are based on relative time should restart their timers when this function is called. </p>
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a436bc52392088c7051d3d9e1a243120c">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>.</p>
+
 </div>
 </div>
 <a id="a7e3326108c65413053f21c5396e7f9d7"></a>
@@ -185,6 +187,8 @@ Public Member Functions</h2></td></tr>
 <p>This is called when a polling request fails. Note that this callback is not invoked when the polling request succeeds with "operation not done".</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the failure should be treated as transient and the polling loop should continue. </dd></dl>
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#afdc9b5796faa5a7ef0b4aac0a795ada1">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>.</p>
+
 </div>
 </div>
 <a id="a77efe54d1c505ea2ad81b32ce160f3ec"></a>
@@ -211,6 +215,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>How long should the polling loop wait before trying again. </p>
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#ae8c7ed634b750cc5a63151126823887e">google::cloud::v1::GenericPollingPolicy&lt; Retry, Backoff &gt;</a>.</p>
 
 </div>
 </div>

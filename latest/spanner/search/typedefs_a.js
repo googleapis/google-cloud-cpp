@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['reference',['reference',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator.html#a7968f37929c923d527bf054800153bf9',1,'google::cloud::spanner::v1::Bytes::Decoder::Iterator::reference()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStreamIterator.html#a4066d684d1d561273380c39a8c8d0c2d',1,'google::cloud::spanner::v1::RowStreamIterator::reference()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1TupleStreamIterator.html#a6e2cea89f696305656c99122c58e3778',1,'google::cloud::spanner::v1::TupleStreamIterator::reference()']]],
-  ['replacemutationbuilder',['ReplaceMutationBuilder',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a56a097f42f92c1d739e64c72867840e4',1,'google::cloud::spanner::v1']]],
-  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2',1,'google::cloud::spanner::v1']]]
+  ['paramtype',['ParamType',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html#ac4383e0e95138674b02cf7d36eb35c9b',1,'google::cloud::spanner::v1::SqlStatement']]],
+  ['pointer',['pointer',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator.html#a869afdb56619c7d68d831a1788cbff16',1,'google::cloud::spanner::v1::Bytes::Decoder::Iterator::pointer()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStreamIterator.html#a5a1e4a846bf8358bd2555884bc8ac50e',1,'google::cloud::spanner::v1::RowStreamIterator::pointer()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1TupleStreamIterator.html#ae03098e5d40680a329ad45864fa6e4bc',1,'google::cloud::spanner::v1::TupleStreamIterator::pointer()']]],
+  ['pollingpolicy',['PollingPolicy',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991',1,'google::cloud::spanner::v1']]]
 ];

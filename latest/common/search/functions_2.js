@@ -4,7 +4,7 @@ var searchData=
   ['cancelall',['CancelAll',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a178d873b760bb87ba26960aff4b84164',1,'google::cloud::v1::CompletionQueue']]],
   ['channel_5fpool_5fdomain',['channel_pool_domain',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac',1,'google::cloud::v1::ConnectionOptions']]],
   ['clearbackends',['ClearBackends',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81',1,'google::cloud::v1::LogSink']]],
-  ['clone',['clone',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421',1,'google::cloud::v1::PollingPolicy']]],
+  ['clone',['clone',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421',1,'google::cloud::v1::PollingPolicy::clone()'],['../classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a436bc52392088c7051d3d9e1a243120c',1,'google::cloud::v1::GenericPollingPolicy::clone()']]],
   ['code',['code',['../classgoogle_1_1cloud_1_1v1_1_1Status.html#a8df5a85749c7653de743f2228d25026b',1,'google::cloud::v1::Status']]],
   ['compiletimeenabled',['CompileTimeEnabled',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a0519575ea9d74fddbca548863297b39a',1,'google::cloud::v1::LogSink']]],
   ['completionqueue',['CompletionQueue',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a046fcd2a14f38d366b10133ad87b6910',1,'google::cloud::v1::CompletionQueue::CompletionQueue()'],['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a30da4327185cd5ee2d5b254a4d9ffec6',1,'google::cloud::v1::CompletionQueue::CompletionQueue(std::shared_ptr&lt; internal::CompletionQueueImpl &gt; impl)']]],
