@@ -141,12 +141,13 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  *     intend to use this feature.
  *
  * @see Before enabling Uniform Bucket Level Access please
- *     review the [feature documentation][bpo-link], as well as
- *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+ *     review the [feature documentation][ubla-link], as well as
+ *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
- * [bpo-should-link]:
- * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use 
+ * [ubla-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+ * [ubla-should-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct UniformBucketLevelAccess {
   bool enabled;
@@ -201,11 +202,12 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  *     to the deprecation policy and subject to change without notice.
  *
  * @see Before enabling Uniform Bucket Level Access please review the
- *     [feature documentation][bpo-link], as well as
- *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+ *     [feature documentation][ubla-link], as well as
+ *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
- * [bpo-should-link]:
+ * [ubla-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+ * [ubla-should-link]:
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
@@ -651,11 +653,12 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    *     subject to the deprecation policy and subject to change without notice.
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
-   * [bpo-should-link]:
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   bool has_iam_configuration() const { return iam_configuration_.has_value(); }
