@@ -125,8 +125,9 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_CALL(*mock_cq, StartOperation)
       .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
                                     absl::FunctionRef<void(void*)> call) {
+        void* tag = op.get();
         operations.push_back(std::move(op));
-        call(op.get());
+        call(tag);
       });
 
   google::cloud::CompletionQueue cq(mock_cq);
