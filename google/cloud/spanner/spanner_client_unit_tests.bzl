@@ -41,7 +41,6 @@ spanner_client_unit_tests = [
     "internal/metadata_spanner_stub_test.cc",
     "internal/partial_result_set_resume_test.cc",
     "internal/partial_result_set_source_test.cc",
-    "internal/polling_loop_test.cc",
     "internal/session_pool_test.cc",
     "internal/spanner_stub_test.cc",
     "internal/status_utils_test.cc",
