@@ -126,9 +126,8 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
       acks.add_ack_ids(m.ack_id());
       expected_ids.erase(m.message().message_id());
     }
-    stream->Write(acks, grpc::WriteOptions{}).then([&](future<bool> f) {
-      if (f.get()) ++ack_count;
-    });
+    auto write_ok = stream->Write(acks, grpc::WriteOptions{}).get();
+    if (write_ok) ++ack_count;
     if (expected_ids.empty()) break;
   }
   EXPECT_TRUE(expected_ids.empty());
