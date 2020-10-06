@@ -334,12 +334,13 @@ class Client {
    * @snippet storage_bucket_samples.cc create bucket
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
-   * [bpo-should-link]:
-   * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use 
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> CreateBucket(std::string bucket_name,
@@ -369,11 +370,12 @@ class Client {
    * @snippet storage_bucket_samples.cc create bucket for project
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
-   * [bpo-should-link]:
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   template <typename... Options>
@@ -457,11 +459,12 @@ class Client {
    * @snippet storage_bucket_samples.cc update bucket
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access 
-   * [bpo-should-link]:
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   template <typename... Options>
@@ -503,11 +506,12 @@ class Client {
    * @snippet storage_bucket_samples.cc patch bucket storage class
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
-   * [bpo-should-link]:
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   template <typename... Options>
@@ -545,11 +549,12 @@ class Client {
    * @snippet storage_bucket_samples.cc patch bucket storage class with builder
    *
    * @see Before enabling Uniform Bucket Level Access please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
-   * [bpo-should-link]:
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   template <typename... Options>
