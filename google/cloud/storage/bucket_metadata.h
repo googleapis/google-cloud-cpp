@@ -142,11 +142,11 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  *
  * @see Before enabling Uniform Bucket Level Access please
  *     review the [feature documentation][bpo-link], as well as
- *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+ * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
  * [bpo-should-link]:
- * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use 
  */
 struct UniformBucketLevelAccess {
   bool enabled;
@@ -200,13 +200,13 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  *
- * @see Before enabling Bucket Policy Only please review the
+ * @see Before enabling Uniform Bucket Level Access please review the
  *     [feature documentation][bpo-link], as well as
- *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+ * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
  * [bpo-should-link]:
- * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
   absl::optional<BucketPolicyOnly> bucket_policy_only;
@@ -650,13 +650,13 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * @warning this is a Beta feature of Google Cloud Storage, it is not
    *     subject to the deprecation policy and subject to change without notice.
    *
-   * @see Before enabling Bucket Policy Only please review the
+   * @see Before enabling Uniform Bucket Level Access please review the
    *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *     ["Should you use Uniform bucket-level access ?"][bpo-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-link]: https://cloud.google.com/storage/docs/uniform-bucket-level-access
    * [bpo-should-link]:
-   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   bool has_iam_configuration() const { return iam_configuration_.has_value(); }
   BucketIamConfiguration const& iam_configuration() const {
