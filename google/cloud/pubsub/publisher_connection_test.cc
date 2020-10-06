@@ -157,7 +157,7 @@ TEST(PublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
                                      .SetData("test-data-0")
                                      .Build()})
                       .get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code());
   EXPECT_THAT(response.status().message(),
               HasSubstr("does not have message ordering enabled"));
 }

@@ -50,6 +50,8 @@ add_library(
     internal/publisher_metadata.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
+    internal/rejects_with_ordering_key.cc
+    internal/rejects_with_ordering_key.h
     internal/session_shutdown_manager.cc
     internal/session_shutdown_manager.h
     internal/subscriber_logging.cc

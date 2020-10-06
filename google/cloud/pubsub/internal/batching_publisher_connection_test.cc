@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -402,13 +403,24 @@ TEST(BatchingPublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
   pubsub::Topic const topic("test-project", "test-topic");
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
-  auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
-      bg.cq(), pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  // We need to copy these values because we will call `clone()` on them
+  // multiple times.
+  std::shared_ptr<pubsub::RetryPolicy const> retry =
+      pubsub_testing::TestRetryPolicy();
+  std::shared_ptr<pubsub::BackoffPolicy const> backoff =
+      pubsub_testing::TestBackoffPolicy();
+  auto options = pubsub::PublisherOptions{}.set_maximum_message_count(2);
+  auto cq = bg.cq();
+  auto factory = [topic, options, &mock, cq, retry,
+                  backoff](std::string const&) {
+    return BatchingPublisherConnection::Create(
+        topic, options, mock, cq, retry->clone(), backoff->clone());
+  };
+
+  auto publisher = RejectsWithOrderingKey::Create(std::move(factory));
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
-    EXPECT_EQ(StatusCode::kPermissionDenied, r.status().code());
+    EXPECT_EQ(StatusCode::kInvalidArgument, r.status().code());
     EXPECT_THAT(r.status().message(),
                 HasSubstr("does not have message ordering enabled"));
   };

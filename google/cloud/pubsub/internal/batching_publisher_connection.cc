@@ -66,13 +66,6 @@ struct Batch {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
-  if (!p.message.ordering_key().empty()) {
-    return google::cloud::make_ready_future(StatusOr<std::string>(
-        Status(StatusCode::kPermissionDenied,
-               "Attempted to publish a message with an ordering"
-               " key with a publisher that does not have message"
-               " ordering enabled.")));
-  }
   promise<StatusOr<std::string>> promise;
   auto f = promise.get_future();
   std::unique_lock<std::mutex> lk(mu_);
