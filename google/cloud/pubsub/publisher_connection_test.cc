@@ -144,6 +144,24 @@ TEST(PublisherConnectionTest, OrderingKey) {
   EXPECT_EQ("test-message-id-0", *response);
 }
 
+TEST(PublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  auto response = publisher
+                      ->Publish({MessageBuilder{}
+                                     .SetOrderingKey("test-ordering-key-0")
+                                     .SetData("test-data-0")
+                                     .Build()})
+                      .get();
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response.status().message(),
+              HasSubstr("does not have message ordering enabled"));
+}
+
 TEST(PublisherConnectionTest, HandleInvalidResponse) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");

@@ -397,6 +397,38 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   r1.get();
 }
 
+TEST(BatchingPublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
+  auto publisher = BatchingPublisherConnection::Create(
+      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
+      bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  auto check_status = [&](future<StatusOr<std::string>> f) {
+    auto r = f.get();
+    EXPECT_EQ(StatusCode::kPermissionDenied, r.status().code());
+    EXPECT_THAT(r.status().message(),
+                HasSubstr("does not have message ordering enabled"));
+  };
+  auto r0 = publisher
+                ->Publish({pubsub::MessageBuilder{}
+                               .SetOrderingKey("test-ordering-key-0")
+                               .SetData("test-data-0")
+                               .Build()})
+                .then(check_status);
+  auto r1 = publisher
+                ->Publish({pubsub::MessageBuilder{}
+                               .SetOrderingKey("test-ordering-key-1")
+                               .SetData("test-data-1")
+                               .Build()})
+                .then(check_status);
+
+  r0.get();
+  r1.get();
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

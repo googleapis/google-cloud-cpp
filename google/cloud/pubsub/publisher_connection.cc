@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/future_void.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -36,6 +37,13 @@ class ContainingPublisherConnection : public PublisherConnection {
   ~ContainingPublisherConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
+    if (!p.message.ordering_key().empty()) {
+      return google::cloud::make_ready_future(StatusOr<std::string>(
+          Status(StatusCode::kPermissionDenied,
+                 "Attempted to publish a message with an ordering"
+                 " key with a publisher that does not have message"
+                 " ordering enabled.")));
+    }
     return child_->Publish(std::move(p));
   }
   void Flush(FlushParams p) override { child_->Flush(std::move(p)); }
