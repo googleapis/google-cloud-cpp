@@ -56,6 +56,11 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::StreamingPullRequest const& request) override;
+
   future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -98,6 +103,27 @@ class SubscriberLogging : public SubscriberStub {
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;
+};
+
+class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {
+ public:
+  LoggingAsyncPullStream(std::unique_ptr<SubscriberStub::AsyncPullStream> child,
+                         TracingOptions tracing_options,
+                         std::string request_id);
+
+  void Cancel() override;
+  future<bool> Start() override;
+  future<absl::optional<google::pubsub::v1::StreamingPullResponse>> Read()
+      override;
+  future<bool> Write(google::pubsub::v1::StreamingPullRequest const&,
+                     grpc::WriteOptions) override;
+  future<bool> WritesDone() override;
+  future<Status> Finish() override;
+
+ private:
+  std::unique_ptr<SubscriberStub::AsyncPullStream> child_;
+  TracingOptions tracing_options_;
+  std::string request_id_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

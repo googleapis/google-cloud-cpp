@@ -1,0 +1,146 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/pubsub/publisher.h"
+#include "google/cloud/pubsub/subscriber.h"
+#include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/testing/random_names.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
+#include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
+
+namespace google {
+namespace cloud {
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+namespace {
+
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
+
+class SubscriberIntegrationTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    auto project_id =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id.empty());
+    generator_ = google::cloud::internal::DefaultPRNG(std::random_device{}());
+    topic_ = Topic(project_id, pubsub_testing::RandomTopicId(generator_));
+    subscription_ = Subscription(
+        project_id, pubsub_testing::RandomSubscriptionId(generator_));
+
+    auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
+    auto subscription_admin =
+        SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+
+    auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic_));
+    ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
+                                      StatusIs(StatusCode::kAlreadyExists)));
+    auto subscription_metadata = subscription_admin.CreateSubscription(
+        topic_, subscription_,
+        SubscriptionMutationBuilder{}.set_ack_deadline(
+            std::chrono::seconds(10)));
+    ASSERT_THAT(
+        subscription_metadata,
+        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
+  }
+
+  void TearDown() override {
+    auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
+    auto subscription_admin =
+        SubscriptionAdminClient(MakeSubscriptionAdminConnection());
+
+    auto delete_subscription =
+        subscription_admin.DeleteSubscription(subscription_);
+    EXPECT_THAT(delete_subscription, AnyOf(StatusIs(StatusCode::kOk),
+                                           StatusIs(StatusCode::kNotFound)));
+    auto delete_topic = topic_admin.DeleteTopic(topic_);
+    EXPECT_THAT(delete_topic, AnyOf(StatusIs(StatusCode::kOk),
+                                    StatusIs(StatusCode::kNotFound)));
+  }
+
+  google::cloud::internal::DefaultPRNG generator_;
+  Topic topic_ = Topic("unused", "unused");
+  Subscription subscription_ = Subscription("unused", "unused");
+};
+
+TEST_F(SubscriberIntegrationTest, RawStub) {
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+
+  internal::AutomaticallyCreatedBackgroundThreads background(4);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
+  google::pubsub::v1::StreamingPullRequest request;
+  request.set_client_id("test-client-0001");
+  request.set_subscription(subscription_.FullName());
+  request.set_max_outstanding_messages(1000);
+  request.set_stream_ack_deadline_seconds(600);
+
+  auto stream = [&stub, &request](CompletionQueue cq) {
+    return stub->AsyncStreamingPull(
+        cq, absl::make_unique<grpc::ClientContext>(), request);
+  }(background.cq());
+
+  ASSERT_TRUE(stream->Start().get());
+  ASSERT_TRUE(
+      stream->Write(request, grpc::WriteOptions{}.set_write_through()).get());
+
+  auto constexpr kPublishCount = 1000;
+  std::set<std::string> expected_ids = [&] {
+    std::set<std::string> ids;
+    std::vector<future<StatusOr<std::string>>> message_ids;
+    for (int i = 0; i != kPublishCount; ++i) {
+      message_ids.push_back(publisher.Publish(
+          MessageBuilder{}.SetData("message-" + std::to_string(i)).Build()));
+    }
+    for (auto& id : message_ids) {
+      auto r = id.get();
+      EXPECT_STATUS_OK(r);
+      ids.insert(*std::move(r));
+    }
+    return ids;
+  }();
+
+  for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
+    google::pubsub::v1::StreamingPullRequest acks;
+    for (auto const& m : r->received_messages()) {
+      acks.add_ack_ids(m.ack_id());
+      expected_ids.erase(m.message().message_id());
+    }
+    auto write_ok = stream->Write(acks, grpc::WriteOptions{}).get();
+    if (!write_ok) break;
+    if (expected_ids.empty()) break;
+  }
+  EXPECT_TRUE(expected_ids.empty());
+
+  stream->Cancel();
+  // Before closing the stream we need to wait for:
+  //     Read().get().has_value() == false
+  for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
+  }
+
+  EXPECT_THAT(stream->Finish().get(), AnyOf(StatusIs(StatusCode::kOk),
+                                            StatusIs(StatusCode::kCancelled)));
+}
+
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+}  // namespace cloud
+}  // namespace google
