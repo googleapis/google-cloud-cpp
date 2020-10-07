@@ -95,7 +95,6 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
   auto background = connection_options.background_threads_factory()();
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
-
     if (options.message_ordering()) {
       // We need to copy these values because we will call `clone()` on them
       // multiple times.

@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
-#include <functional>
 
 namespace google {
 namespace cloud {
