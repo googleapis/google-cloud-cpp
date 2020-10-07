@@ -21,6 +21,7 @@ storage_client_grpc_hdrs = [
     "internal/grpc_client.h",
     "internal/grpc_object_read_source.h",
     "internal/grpc_resumable_upload_session.h",
+    "internal/grpc_resumable_upload_session_url.h",
     "internal/hybrid_client.h",
 ]
 
@@ -29,5 +30,6 @@ storage_client_grpc_srcs = [
     "internal/grpc_client.cc",
     "internal/grpc_object_read_source.cc",
     "internal/grpc_resumable_upload_session.cc",
+    "internal/grpc_resumable_upload_session_url.cc",
     "internal/hybrid_client.cc",
 ]

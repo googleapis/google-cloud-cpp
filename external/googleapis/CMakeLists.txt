@@ -161,10 +161,7 @@ function (googleapis_cpp_add_library proto)
     endif ()
 endfunction ()
 
-add_custom_target(google-cloud-cpp-protos)
-
 function (googleapis_cpp_set_version_and_alias short_name)
-    add_dependencies(google-cloud-cpp-protos "googleapis_cpp_${short_name}")
     add_dependencies("googleapis_cpp_${short_name}" googleapis_download)
     set_target_properties(
         "googleapis_cpp_${short_name}"

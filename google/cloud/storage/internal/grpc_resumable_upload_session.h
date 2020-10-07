@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_RESUMABLE_UPLOAD_SESSION_H
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/version.h"
 
@@ -27,9 +28,9 @@ namespace internal {
 /// Implements the ResumableUploadSession interface for a gRPC client.
 class GrpcResumableUploadSession : public ResumableUploadSession {
  public:
-  explicit GrpcResumableUploadSession(std::shared_ptr<GrpcClient> client,
-                                      std::string session_id)
-      : client_(std::move(client)), session_id_(std::move(session_id)) {}
+  explicit GrpcResumableUploadSession(
+      std::shared_ptr<GrpcClient> client,
+      ResumableUploadSessionGrpcParams session_id_params);
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& payload) override;
@@ -61,7 +62,8 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> HandleWriteError();
 
   std::shared_ptr<GrpcClient> client_;
-  std::string session_id_;
+  ResumableUploadSessionGrpcParams session_id_params_;
+  std::string session_url_;
   using UploadWriter =
       grpc::ClientWriterInterface<google::storage::v1::InsertObjectRequest>;
   std::unique_ptr<grpc::ClientContext> upload_context_;

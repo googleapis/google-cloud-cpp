@@ -32,6 +32,13 @@ static_assert(google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
               "Expected maximum insert request size to be greater than twice "
               "the chunk quantum");
 
+GrpcResumableUploadSession::GrpcResumableUploadSession(
+    std::shared_ptr<GrpcClient> client,
+    ResumableUploadSessionGrpcParams session_id_params)
+    : client_(std::move(client)),
+      session_id_params_(std::move(session_id_params)),
+      session_url_(EncodeGrpcResumableUploadSessionUrl(session_id_params_)) {}
+
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
     ConstBufferSequence const& payload) {
   return UploadGeneric(payload, false);
@@ -56,7 +63,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
-  QueryResumableUploadRequest request(session_id_);
+  QueryResumableUploadRequest request(session_id_params_.upload_id);
   auto result = client_->QueryResumableUpload(request);
   last_response_ = std::move(result);
   if (!last_response_) return last_response_;
@@ -75,7 +82,7 @@ std::uint64_t GrpcResumableUploadSession::next_expected_byte() const {
 }
 
 std::string const& GrpcResumableUploadSession::session_id() const {
-  return session_id_;
+  return session_url_;
 }
 
 bool GrpcResumableUploadSession::done() const { return done_; }
@@ -98,7 +105,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     if (chunk.empty() && !final_chunk) return true;
 
     google::storage::v1::InsertObjectRequest request;
-    request.set_upload_id(session_id_);
+    request.set_upload_id(session_id_params_.upload_id);
     request.set_write_offset(next_expected_);
     request.set_finish_write(false);
 
@@ -155,7 +162,7 @@ void GrpcResumableUploadSession::CreateUploadWriter() {
   // TODO(#4216) - set the timeout
   upload_context_ = absl::make_unique<grpc::ClientContext>();
   google::storage::v1::InsertObjectRequest request;
-  request.set_upload_id(session_id_);
+  request.set_upload_id(session_id_params_.upload_id);
   upload_writer_ =
       client_->CreateUploadWriter(*upload_context_, upload_object_);
 }

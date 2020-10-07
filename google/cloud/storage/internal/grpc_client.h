@@ -101,7 +101,7 @@ class GrpcClient : public RawClient,
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
-      std::string const& upload_id) override;
+      std::string const& upload_url) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
 
