@@ -117,23 +117,20 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
     return ids;
   }();
 
-  int read_count = 0;
-  std::atomic<int> ack_count{0};
   for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
-    ++read_count;
     google::pubsub::v1::StreamingPullRequest acks;
     for (auto const& m : r->received_messages()) {
       acks.add_ack_ids(m.ack_id());
       expected_ids.erase(m.message().message_id());
     }
     auto write_ok = stream->Write(acks, grpc::WriteOptions{}).get();
-    if (write_ok) ++ack_count;
+    if (!write_ok) break;
     if (expected_ids.empty()) break;
   }
   EXPECT_TRUE(expected_ids.empty());
 
   stream->Cancel();
-  // After cancel one needs to discard any read results.
+  // Before closing the stream we need to wait Read().get() == false.
   for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
   }
 
