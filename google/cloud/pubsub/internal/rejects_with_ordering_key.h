@@ -26,13 +26,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class RejectsWithOrderingKey : public pubsub::PublisherConnection {
  public:
-  using ConnectionFactory =
-      std::function<std::shared_ptr<PublisherConnection>(std::string const&)>;
-
   static std::shared_ptr<RejectsWithOrderingKey> Create(
-      ConnectionFactory factory) {
+      std::shared_ptr<pubsub::PublisherConnection> connection) {
     return std::shared_ptr<RejectsWithOrderingKey>(
-        new RejectsWithOrderingKey(std::move(factory)));
+        new RejectsWithOrderingKey(std::move(connection)));
   }
 
   ~RejectsWithOrderingKey() override = default;
@@ -41,10 +38,10 @@ class RejectsWithOrderingKey : public pubsub::PublisherConnection {
   void Flush(FlushParams) override;
 
  private:
-  explicit RejectsWithOrderingKey(ConnectionFactory factory)
-      : factory_(std::move(factory)) {}
+  explicit RejectsWithOrderingKey(
+      std::shared_ptr<PublisherConnection> connection)
+      : connection_(std::move(connection)) {}
 
-  ConnectionFactory factory_;
   std::shared_ptr<PublisherConnection> connection_;
 };
 

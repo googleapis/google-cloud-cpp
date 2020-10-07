@@ -398,49 +398,6 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
   r1.get();
 }
 
-TEST(BatchingPublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
-  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
-  pubsub::Topic const topic("test-project", "test-topic");
-
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
-  // We need to copy these values because we will call `clone()` on them
-  // multiple times.
-  std::shared_ptr<pubsub::RetryPolicy const> retry =
-      pubsub_testing::TestRetryPolicy();
-  std::shared_ptr<pubsub::BackoffPolicy const> backoff =
-      pubsub_testing::TestBackoffPolicy();
-  auto options = pubsub::PublisherOptions{}.set_maximum_message_count(2);
-  auto cq = bg.cq();
-  auto factory = [topic, options, &mock, cq, retry,
-                  backoff](std::string const&) {
-    return BatchingPublisherConnection::Create(
-        topic, options, mock, cq, retry->clone(), backoff->clone());
-  };
-
-  auto publisher = RejectsWithOrderingKey::Create(std::move(factory));
-  auto check_status = [&](future<StatusOr<std::string>> f) {
-    auto r = f.get();
-    EXPECT_EQ(StatusCode::kInvalidArgument, r.status().code());
-    EXPECT_THAT(r.status().message(),
-                HasSubstr("does not have message ordering enabled"));
-  };
-  auto r0 = publisher
-                ->Publish({pubsub::MessageBuilder{}
-                               .SetOrderingKey("test-ordering-key-0")
-                               .SetData("test-data-0")
-                               .Build()})
-                .then(check_status);
-  auto r1 = publisher
-                ->Publish({pubsub::MessageBuilder{}
-                               .SetOrderingKey("test-ordering-key-1")
-                               .SetData("test-data-1")
-                               .Build()})
-                .then(check_status);
-
-  r0.get();
-  r1.get();
-}
-
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

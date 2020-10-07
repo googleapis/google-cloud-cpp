@@ -95,20 +95,24 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
   auto background = connection_options.background_threads_factory()();
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
-    // We need to copy these values because we will call `clone()` on them
-    // multiple times.
-    std::shared_ptr<pubsub::RetryPolicy const> retry = std::move(retry_policy);
-    std::shared_ptr<pubsub::BackoffPolicy const> backoff =
-        std::move(backoff_policy);
-    auto factory = [topic, options, stub, cq, retry,
-                    backoff](std::string const&) {
-      return BatchingPublisherConnection::Create(
-          topic, options, stub, cq, retry->clone(), backoff->clone());
-    };
+
     if (options.message_ordering()) {
+      // We need to copy these values because we will call `clone()` on them
+      // multiple times.
+      std::shared_ptr<pubsub::RetryPolicy const> retry =
+          std::move(retry_policy);
+      std::shared_ptr<pubsub::BackoffPolicy const> backoff =
+          std::move(backoff_policy);
+      auto factory = [topic, options, stub, cq, retry,
+                      backoff](std::string const&) {
+        return BatchingPublisherConnection::Create(
+            topic, options, stub, cq, retry->clone(), backoff->clone());
+      };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
-    return RejectsWithOrderingKey::Create(std::move(factory));
+    return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
+        std::move(topic), std::move(options), std::move(stub), std::move(cq),
+        std::move(retry_policy), std::move(backoff_policy)));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());
