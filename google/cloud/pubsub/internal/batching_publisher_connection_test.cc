@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
-#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/assert_ok.h"
