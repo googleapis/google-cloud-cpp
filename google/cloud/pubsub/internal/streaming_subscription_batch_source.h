@@ -64,7 +64,7 @@ class StreamingSubscriptionBatchSource
   void Start(BatchCallback callback);
 
   void Shutdown() override;
-  // TODO(#...) - cleanup return types
+  // TODO(#5191) - cleanup return types
   future<Status> AckMessage(std::string const& ack_id,
                             std::size_t size) override;
   future<Status> NackMessage(std::string const& ack_id,
@@ -73,7 +73,7 @@ class StreamingSubscriptionBatchSource
                           std::size_t total_size) override;
   future<Status> ExtendLeases(std::vector<std::string> ack_ids,
                               std::chrono::seconds extension) override;
-  // TODO(#...) - remove this function from the base class
+  // TODO(#5192) - remove this function from the base class
   future<StatusOr<google::pubsub::v1::PullResponse>> Pull(
       std::int32_t max_count) override;
 
