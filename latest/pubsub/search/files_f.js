@@ -18,6 +18,7 @@ var searchData=
   ['subscriber_5fconnection_2ecc',['subscriber_connection.cc',['../subscriber__connection_8cc.html',1,'']]],
   ['subscriber_5fconnection_2eh',['subscriber_connection.h',['../subscriber__connection_8h.html',1,'']]],
   ['subscriber_5fconnection_5ftest_2ecc',['subscriber_connection_test.cc',['../subscriber__connection__test_8cc.html',1,'']]],
+  ['subscriber_5fintegration_5ftest_2ecc',['subscriber_integration_test.cc',['../subscriber__integration__test_8cc.html',1,'']]],
   ['subscriber_5flogging_2ecc',['subscriber_logging.cc',['../subscriber__logging_8cc.html',1,'']]],
   ['subscriber_5flogging_2eh',['subscriber_logging.h',['../subscriber__logging_8h.html',1,'']]],
   ['subscriber_5flogging_5ftest_2ecc',['subscriber_logging_test.cc',['../subscriber__logging__test_8cc.html',1,'']]],
