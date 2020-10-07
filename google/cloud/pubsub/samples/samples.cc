@@ -829,8 +829,6 @@ void ListenOrderedMessages(
     // Report any final status, blocking.
     std::cout << "Message count: " << message_count << ", status: " << status
               << "\n";
-
-    // auto constexpr kExpectedMessageCount = 10;
     for (auto const& m : outstanding_messages) {
       std::cout << "Received message " << m.first << "\n";
     }
