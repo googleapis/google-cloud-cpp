@@ -130,7 +130,8 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   EXPECT_TRUE(expected_ids.empty());
 
   stream->Cancel();
-  // Before closing the stream we need to wait Read().get() == false.
+  // Before closing the stream we need to wait for:
+  //     Read().get().has_value() == false
   for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
   }
 
