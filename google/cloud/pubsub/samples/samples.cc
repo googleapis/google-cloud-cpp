@@ -754,6 +754,91 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
   (std::move(publisher));
 }
 
+void PublishOrderedMessage(google::cloud::pubsub::Publisher publisher,
+                           std::vector<std::string> const&) {
+  //! [START pubsub_publish_ordered_message] [publish-ordered-message]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    std::vector<future<void>> done;
+    for (int i = 0; i != 10; ++i) {
+      auto message_id = publisher.Publish(
+          pubsub::MessageBuilder{}
+              .SetData("Hello World! [" + std::to_string(i) + "]")
+              // Have the counter-id start from 1
+              .SetAttributes({{"counter-id", std::to_string(i + 1)}})
+              .Build());
+      done.push_back(message_id.then([i](future<StatusOr<std::string>> f) {
+        auto id = f.get();
+        if (!id) throw std::runtime_error(id.status().message());
+        std::cout << "Message " << i << " published with id=" << *id << "\n"
+                  << " and counter-id=" << (i + 1) << "\n";
+      }));
+    }
+    publisher.Flush();
+    // Block until all the messages are published (optional)
+    for (auto& f : done) f.get();
+  }
+  //! [END pubsub_publish_ordered_message] [publish-ordered-message]
+  (std::move(publisher));
+}
+
+void ListenOrderedMessages(
+    google::cloud::pubsub::Subscriber subscriber,
+    google::cloud::pubsub::Subscription const& subscription,
+    std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 1) {
+    throw examples::Usage{"listen-ordered-messages <timeout>"};
+  }
+  //! [START pubsub_listen_ordered_messages] [listen-ordered-messages]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  using ordered_message = std::pair<pubsub::Message, int>;
+  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription,
+     int timeout) {
+    std::mutex mu;
+    std::condition_variable cv;
+    int message_count = 0;
+    std::vector<ordered_message> outstanding_messages;
+    auto session = subscriber.Subscribe(
+        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::unique_lock<std::mutex> lk(mu);
+          auto id = m.attributes()["counter-id"];
+          outstanding_messages.emplace_back(m, std::stoi(id));
+          ++message_count;
+          lk.unlock();
+          cv.notify_one();
+          std::move(h).ack();
+        });
+    std::sort(outstanding_messages.begin(), outstanding_messages.end(),
+              [](ordered_message const& lhs, ordered_message const& rhs) {
+                return lhs.second < rhs.second;
+              });
+    // Wait until the timeout has been reached.
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait_for(lk, std::chrono::milliseconds(timeout));
+    lk.unlock();
+    // Cancel the subscription session.
+    session.cancel();
+    // Wait for the session to complete, no more callbacks can happen after this
+    // point.
+    auto status = session.get();
+    // Report any final status, blocking.
+    std::cout << "Message count: " << message_count << ", status: " << status
+              << "\n";
+
+    // auto constexpr kExpectedMessageCount = 10;
+    for (auto const& m : outstanding_messages) {
+      std::cout << "Received message " << m.first << "\n";
+    }
+  }
+  //! [END pubsub_listen_ordered_messages] [listen-ordered-messages]
+  (std::move(subscriber), std::move(subscription), std::stoi(argv.at(0)));
+}
+
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                google::cloud::pubsub::Subscription const& subscription,
                std::vector<std::string> const&) {
@@ -1286,6 +1371,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto ordering_topic_id = "ordering-" + RandomTopicId(generator);
   auto dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
+  auto ordered_subscription_id = RandomSubscriptionId(generator);
+  auto ordered_topic_id = "ordered-" + RandomTopicId(generator);
 
   auto snapshot_id = RandomSnapshotId(generator);
 
@@ -1364,6 +1451,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [4]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
 
+  std::cout << "\nRunning CreateTopic() sample [5]" << std::endl;
+  CreateTopic(topic_admin_client, {project_id, ordered_topic_id});
+
   // Hardcode this number as it does not really matter. The other samples pick
   // something between 10 and 15.
   auto constexpr kDeadLetterDeliveryAttempts = 15;
@@ -1381,6 +1471,10 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client,
       {project_id, dead_letter_subscription_id, dead_letter_topic_id,
        std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
+
+  std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, ordered_topic_id, ordered_subscription_id});
 
   std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
   CreateSnapshot(subscription_admin_client,
@@ -1430,6 +1524,10 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriberConnection());
   auto dead_letter_subscription = google::cloud::pubsub::Subscription(
       project_id, dead_letter_subscription_id);
+  auto ordered_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection());
+  auto ordered_subscription =
+      google::cloud::pubsub::Subscription(project_id, ordered_subscription_id);
 
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
@@ -1489,6 +1587,22 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});
 
+  auto publisher_with_ordered_messages = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          google::cloud::pubsub::Topic(project_id, ordered_topic_id),
+          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
+              10)));
+
+  std::cout << "\nRunning PublishedOrderedMessage() sample" << std::endl;
+  PublishOrderedMessage(publisher_with_ordered_messages, {});
+
+  // Use a long enough timeout to receive all messages.
+  auto constexpr kListenOrderedMessagesTimeout = 10000;
+
+  std::cout << "\nRunning ListenOrderedMessages() sample" << std::endl;
+  ListenOrderedMessages(ordered_subscriber, ordered_subscription,
+                        {std::to_string(kListenOrderedMessagesTimeout)});
+
   std::cout << "\nRunning Publish() sample [4]" << std::endl;
   Publish(publisher, {});
 
@@ -1515,10 +1629,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, ordering_subscription_id});
 
-  std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+  std::cout << "\nRunning DeleteSubscription() sample [4] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, ordered_subscription_id});
 
   std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
+  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() sample [6]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
@@ -1528,9 +1646,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteTopic(topic_admin_client, {project_id, ordering_topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
+  DeleteTopic(topic_admin_client, {project_id, ordered_topic_id});
 
   std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, topic_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [5]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nAutoRun done" << std::endl;
@@ -1622,6 +1743,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),
       CreatePublisherCommand("publish-ordering-key", {}, PublishOrderingKey),
+      CreatePublisherCommand("publish-ordered-message", {},
+                             PublishOrderedMessage),
+      CreateSubscriberCommand("listen-ordered-messages", {"timeout"},
+                              ListenOrderedMessages),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
