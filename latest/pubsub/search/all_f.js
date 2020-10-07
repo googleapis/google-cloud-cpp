@@ -2,6 +2,9 @@ var searchData=
 [
   ['random_5fnames_2ecc',['random_names.cc',['../random__names_8cc.html',1,'']]],
   ['random_5fnames_2eh',['random_names.h',['../random__names_8h.html',1,'']]],
+  ['rejects_5fwith_5fordering_5fkey_2ecc',['rejects_with_ordering_key.cc',['../rejects__with__ordering__key_8cc.html',1,'']]],
+  ['rejects_5fwith_5fordering_5fkey_2eh',['rejects_with_ordering_key.h',['../rejects__with__ordering__key_8h.html',1,'']]],
+  ['rejects_5fwith_5fordering_5fkey_5ftest_2ecc',['rejects_with_ordering_key_test.cc',['../rejects__with__ordering__key__test_8cc.html',1,'']]],
   ['removebackend',['RemoveBackend',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a715301591f0514604df49811751c7e7a',1,'google::cloud::v1::LogSink']]],
   ['removemember',['RemoveMember',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa284d4bba56800387d416d82faceeb63',1,'google::cloud::v1::IamBindings']]],
   ['removemembers',['RemoveMembers',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af47fc13f7e3944ead0df2440b38a3d8d',1,'google::cloud::v1::IamBindings::RemoveMembers(google::cloud::IamBinding const &amp;iam_binding)'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a972cff96749fa8cd484c9df836ce5d3d',1,'google::cloud::v1::IamBindings::RemoveMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
