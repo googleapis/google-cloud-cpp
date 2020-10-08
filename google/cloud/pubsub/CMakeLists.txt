@@ -54,6 +54,8 @@ add_library(
     internal/rejects_with_ordering_key.h
     internal/session_shutdown_manager.cc
     internal/session_shutdown_manager.h
+    internal/streaming_subscription_batch_source.cc
+    internal/streaming_subscription_batch_source.h
     internal/subscriber_logging.cc
     internal/subscriber_logging.h
     internal/subscriber_metadata.cc
@@ -195,6 +197,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/publisher_metadata_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/session_shutdown_manager_test.cc
+        internal/streaming_subscription_batch_source_test.cc
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscription_concurrency_control_test.cc

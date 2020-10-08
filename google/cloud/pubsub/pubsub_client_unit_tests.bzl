@@ -26,6 +26,7 @@ pubsub_client_unit_tests = [
     "internal/publisher_metadata_test.cc",
     "internal/rejects_with_ordering_key_test.cc",
     "internal/session_shutdown_manager_test.cc",
+    "internal/streaming_subscription_batch_source_test.cc",
     "internal/subscriber_logging_test.cc",
     "internal/subscriber_metadata_test.cc",
     "internal/subscription_concurrency_control_test.cc",
