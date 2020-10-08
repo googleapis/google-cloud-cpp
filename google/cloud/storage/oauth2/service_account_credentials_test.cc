@@ -847,7 +847,6 @@ TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   auto status = ParseServiceAccountRefreshResponse(HttpResponse{200, r1, {}},
                                                    FakeClock::now());
   EXPECT_STATUS_OK(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kOk);
   auto token = *status;
   EXPECT_EQ(
       std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
