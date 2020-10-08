@@ -64,6 +64,22 @@ TEST(ThroughtputResult, HeaderMatches) {
   EXPECT_THAT(line, HasSubstr("OOR-status-message"));
 }
 
+TEST(ThroughtputResult, QuoteCsv) {
+  std::ostringstream line_stream;
+  PrintAsCsv(
+      line_stream,
+      ThroughputResult{
+          kOpInsert, 0, 0, 0, false, false, ApiName::kApiGrpc,
+          std::chrono::microseconds(0), std::chrono::microseconds(0),
+          Status{StatusCode::kInternal, R"(message, "with quotes", commas,)"
+                                        "\nand newlines"}});
+
+  EXPECT_TRUE(line_stream);
+  auto const line = std::move(line_stream).str();
+  EXPECT_THAT(line, HasSubstr(R"("message, ""with quotes"", commas,)"
+                              "\nand newlines"));
+}
+
 }  // namespace
 }  // namespace storage_benchmarks
 }  // namespace cloud
