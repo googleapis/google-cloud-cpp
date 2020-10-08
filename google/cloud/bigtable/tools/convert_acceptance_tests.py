@@ -24,10 +24,10 @@ in googletest style to run as unit tests for the ReadRows response
 parser.
 
 Usage:
-
-    curl -L 'https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-bigtable-client/master/bigtable-client-core-parent/bigtable-client-core/src/test/resources/com/google/cloud/bigtable/grpc/scanner/read-rows-acceptance-test.json' \
+    curl -L 'https://raw.githubusercontent.com/googleapis/conformance-tests/master/bigtable/v2/readrows.json' \
       | python ../tools/convert_acceptance_tests.py \
       | clang-format >readrowsparser_acceptance_tests.inc
+
 """
 from __future__ import print_function
 
@@ -61,18 +61,28 @@ def camel_case(s):
 
 
 def print_test(t):
-    o = '// Test name: "' + t["name"] + '"\n'
-    o += "TEST_F(AcceptanceTest, " + camel_case(t["name"]) + ") {\n"
+    o = '// Test name: "' + t["description"] + '"\n'
+    o += "TEST_F(AcceptanceTest, " + camel_case(t["description"]) + ") {\n"
 
     o += "  std::vector<std::string> chunk_strings = {\n"
-    for c in t["chunks"]:
-        s = c.rstrip()
-        s = s.replace("<\n ", "<")
-        s = s.replace("\n>", ">")
-        s = s.replace("\n", "\n          ")
-        o += '      R"chunk(\n'
-        o += "          " + s + "\n"
-        o += '        )chunk",\n'
+    if ('chunks' in t):
+        for c in t["chunks"]:
+            o += '      R"chunk(\n'
+	    if ('rowKey' in c):
+                o += '      rowKey: "' + c['rowKey'] + '"\n'
+	    if ('familyName' in c):
+	        o += '      familyName: "' + c['familyName'] + '"\n'
+	    if ('qualifier' in c):
+                o += '      qualifier: "' + c["qualifier"] + '"\n'
+	    if ('timestampMicros' in c):
+                o += '      timestampMicros: "' + str(c["timestampMicros"]) + '"\n'
+	    if ('value' in c):
+                o += '      value: "' + c["value"] + '"\n'
+	    if ('commitRow' in c):
+                o += '      commitRow: "' + unicode(c["commitRow"]) + '"\n' 
+            o += '        )chunk",\n'
+    if o[-1] == "\n":
+        o += "  "	
     o += "  };\n"
     o += "\n"
 
@@ -82,8 +92,12 @@ def print_test(t):
     o += "\n"
 
     ok = True
-    if t["results"]:
-        ok = not any([r["error"] for r in t["results"]])
+    if ('results' in t):
+       	try:
+	    if ('error' in t["results"]):
+                ok = not any([r["error"] for r in t["results"]])
+	except KeyError:
+	    raise ValueError('No "error" key in "%s"' % (r, ))
 
     if ok:
         o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
@@ -92,16 +106,21 @@ def print_test(t):
 
     o += "\n"
     o += "  std::vector<std::string> expected_cells = {"
-    if t["results"]:
+    if ('results' in t):
         for r in t["results"]:
-            if not r["error"]:
-                o += "\n"
-                o += '      "rk: ' + r["rk"] + '\\n"\n'
-                o += '      "fm: ' + r["fm"] + '\\n"\n'
-                o += '      "qual: ' + r["qual"] + '\\n"\n'
-                o += '      "ts: ' + str(r["ts"]) + '\\n"\n'
-                o += '      "value: ' + r["value"] + '\\n"\n'
-                o += '      "label: ' + r["label"] + '\\n",\n'
+           o += "\n"
+	   if ('rowKey' in r):
+	       o += '      "rowKey: ' + r["rowKey"] + '\\n"\n'
+	   if ('familyName' in r):
+               o += '      "familyName: ' + r["familyName"] + '\\n"\n'
+	   if ('qualifier' in r):
+               o += '      "qualifier: ' + r["qualifier"] + '\\n"\n'
+	   if ('timestampMicros' in r):
+               o += '      "timestampMicros: ' + str(r["timestampMicros"]) + '\\n"\n'
+	   if ('value' in r):
+               o += '      "value: ' + r["value"] + '\\n"\n'
+	   if ('label' in r):
+               o += '      "label: ' + r["label"] + ',\\n"\n'
 
     if o[-1] == "\n":
         o += "  "
@@ -116,7 +135,7 @@ def main():
     t = json.loads(sys.stdin.read())
 
     print(FILE_HEADER.lstrip())
-    for tt in t["tests"]:
+    for tt in t["readRowsTests"]:
         print(print_test(tt))
 
 

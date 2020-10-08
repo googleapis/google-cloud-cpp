@@ -19,19 +19,19 @@
 TEST_F(AcceptanceTest, InvalidNoCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -41,14 +41,14 @@ TEST_F(AcceptanceTest, InvalidNoCommit) {
 TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          commit_row: true
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -58,16 +58,16 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeCommit) {
 TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeValue) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -77,25 +77,25 @@ TEST_F(AcceptanceTest, InvalidNoCellKeyBeforeValue) {
 TEST_F(AcceptanceTest, InvalidNewColFamilyMustSpecifyQualifier) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          family_name: < value: "B">
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      familyName: "B"
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -105,15 +105,15 @@ TEST_F(AcceptanceTest, InvalidNewColFamilyMustSpecifyQualifier) {
 TEST_F(AcceptanceTest, BareCommitImpliesTs) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          commit_row: true
+      commitRow: "True"
         )chunk",
   };
 
@@ -123,20 +123,15 @@ TEST_F(AcceptanceTest, BareCommitImpliesTs) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -144,12 +139,12 @@ TEST_F(AcceptanceTest, BareCommitImpliesTs) {
 TEST_F(AcceptanceTest, SimpleRowWithTimestamp) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -159,13 +154,11 @@ TEST_F(AcceptanceTest, SimpleRowWithTimestamp) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -173,11 +166,11 @@ TEST_F(AcceptanceTest, SimpleRowWithTimestamp) {
 TEST_F(AcceptanceTest, MissingTimestampImpliedTs) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -187,13 +180,10 @@ TEST_F(AcceptanceTest, MissingTimestampImpliedTs) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -201,10 +191,10 @@ TEST_F(AcceptanceTest, MissingTimestampImpliedTs) {
 TEST_F(AcceptanceTest, EmptyCellValue) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      commitRow: "True"
         )chunk",
   };
 
@@ -214,13 +204,9 @@ TEST_F(AcceptanceTest, EmptyCellValue) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -228,17 +214,17 @@ TEST_F(AcceptanceTest, EmptyCellValue) {
 TEST_F(AcceptanceTest, TwoUnsplitCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -248,20 +234,17 @@ TEST_F(AcceptanceTest, TwoUnsplitCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -269,18 +252,18 @@ TEST_F(AcceptanceTest, TwoUnsplitCells) {
 TEST_F(AcceptanceTest, TwoQualifiers) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "D">
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      qualifier: "RA=="
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -290,20 +273,17 @@ TEST_F(AcceptanceTest, TwoQualifiers) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: D\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: D\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -311,19 +291,19 @@ TEST_F(AcceptanceTest, TwoQualifiers) {
 TEST_F(AcceptanceTest, TwoFamilies) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          family_name: < value: "B">
-          qualifier: < value: "E">
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      familyName: "B"
+      qualifier: "RQ=="
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -333,20 +313,17 @@ TEST_F(AcceptanceTest, TwoFamilies) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: B\n"
-      "qual: E\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: B\n"
+      "qualifier: E\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -354,19 +331,17 @@ TEST_F(AcceptanceTest, TwoFamilies) {
 TEST_F(AcceptanceTest, WithLabels) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          labels: "L_1"
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          labels: "L_2"
-          value: "value-VAL_2"
-          commit_row: true
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -376,20 +351,19 @@ TEST_F(AcceptanceTest, WithLabels) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: L_1\n",
+      "label: L_1,\n"
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 98\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 98\n"
       "value: value-VAL_2\n"
-      "label: L_2\n",
-  };
+      "label: L_2,\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -397,20 +371,19 @@ TEST_F(AcceptanceTest, WithLabels) {
 TEST_F(AcceptanceTest, SplitCellBareCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "v"
-          value_size: 9
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL"
-          commit_row: false
+      value: "YWx1ZS1WQUw="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          commit_row: true
+      commitRow: "True"
         )chunk",
   };
 
@@ -420,20 +393,15 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -441,17 +409,16 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
 TEST_F(AcceptanceTest, SplitCell) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "v"
-          value_size: 9
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL"
-          commit_row: true
+      value: "YWx1ZS1WQUw="
+      commitRow: "True"
         )chunk",
   };
 
@@ -461,13 +428,11 @@ TEST_F(AcceptanceTest, SplitCell) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -475,28 +440,24 @@ TEST_F(AcceptanceTest, SplitCell) {
 TEST_F(AcceptanceTest, SplitFourWays) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          labels: "L"
-          value: "v"
-          value_size: 9
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 9
-          commit_row: false
+      value: "YQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "l"
-          value_size: 9
-          commit_row: false
+      value: "bA=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "ue-VAL"
-          commit_row: true
+      value: "dWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -506,13 +467,12 @@ TEST_F(AcceptanceTest, SplitFourWays) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: L\n",
-  };
+      "label: L,\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -520,27 +480,25 @@ TEST_F(AcceptanceTest, SplitFourWays) {
 TEST_F(AcceptanceTest, TwoSplitCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_1"
-          commit_row: false
+      value: "YWx1ZS1WQUxfMQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          value: "v"
-          value_size: 11
-          commit_row: false
+      timestampMicros: "98"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_2"
-          commit_row: true
+      value: "YWx1ZS1WQUxfMg=="
+      commitRow: "True"
         )chunk",
   };
 
@@ -550,20 +508,17 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -571,28 +526,26 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
 TEST_F(AcceptanceTest, MultiqualifierSplits) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_1"
-          commit_row: false
+      value: "YWx1ZS1WQUxfMQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "D">
-          timestamp_micros: 98
-          value: "v"
-          value_size: 11
-          commit_row: false
+      qualifier: "RA=="
+      timestampMicros: "98"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_2"
-          commit_row: true
+      value: "YWx1ZS1WQUxfMg=="
+      commitRow: "True"
         )chunk",
   };
 
@@ -602,20 +555,17 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: D\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: D\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -623,38 +573,34 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
 TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 11
-          commit_row: false
+      value: "YQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "lue-VAL_1"
-          commit_row: false
+      value: "bHVlLVZBTF8x"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "D">
-          timestamp_micros: 98
-          value: "v"
-          value_size: 11
-          commit_row: false
+      qualifier: "RA=="
+      timestampMicros: "98"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 11
-          commit_row: false
+      value: "YQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "lue-VAL_2"
-          commit_row: true
+      value: "bHVlLVZBTF8y"
+      commitRow: "True"
         )chunk",
   };
 
@@ -664,20 +610,17 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: D\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: D\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -685,29 +628,27 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
 TEST_F(AcceptanceTest, MultifamilySplit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_1"
-          commit_row: false
+      value: "YWx1ZS1WQUxfMQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          family_name: < value: "B">
-          qualifier: < value: "E">
-          timestamp_micros: 98
-          value: "v"
-          value_size: 11
-          commit_row: false
+      familyName: "B"
+      qualifier: "RQ=="
+      timestampMicros: "98"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_2"
-          commit_row: true
+      value: "YWx1ZS1WQUxfMg=="
+      commitRow: "True"
         )chunk",
   };
 
@@ -717,20 +658,17 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: B\n"
-      "qual: E\n"
-      "ts: 98\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: B\n"
+      "qualifier: E\n"
+      "timestampMicros: 98\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -738,27 +676,27 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
 TEST_F(AcceptanceTest, InvalidNoCommitBetweenRows) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -768,27 +706,27 @@ TEST_F(AcceptanceTest, InvalidNoCommitBetweenRows) {
 TEST_F(AcceptanceTest, InvalidNoCommitAfterFirstRow) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -798,35 +736,35 @@ TEST_F(AcceptanceTest, InvalidNoCommitAfterFirstRow) {
 TEST_F(AcceptanceTest, InvalidLastRowMissingCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
+
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -835,35 +773,35 @@ TEST_F(AcceptanceTest, InvalidLastRowMissingCommit) {
 TEST_F(AcceptanceTest, InvalidDuplicateRowKey) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "B">
-          qualifier: < value: "D">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "B"
+      qualifier: "RA=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
+
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -872,32 +810,32 @@ TEST_F(AcceptanceTest, InvalidDuplicateRowKey) {
 TEST_F(AcceptanceTest, InvalidNewRowMissingRowKey) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
       R"chunk(
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
+
   };
   EXPECT_EQ(expected_cells, ExtractCells());
 }
@@ -906,20 +844,20 @@ TEST_F(AcceptanceTest, InvalidNewRowMissingRowKey) {
 TEST_F(AcceptanceTest, TwoRows) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -929,20 +867,17 @@ TEST_F(AcceptanceTest, TwoRows) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -950,19 +885,19 @@ TEST_F(AcceptanceTest, TwoRows) {
 TEST_F(AcceptanceTest, TwoRowsImplicitTimestamp) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -972,20 +907,16 @@ TEST_F(AcceptanceTest, TwoRowsImplicitTimestamp) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
       "value: value-VAL\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -993,18 +924,18 @@ TEST_F(AcceptanceTest, TwoRowsImplicitTimestamp) {
 TEST_F(AcceptanceTest, TwoRowsEmptyValue) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -1014,20 +945,15 @@ TEST_F(AcceptanceTest, TwoRowsEmptyValue) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
 
-      "rk: RK_2\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1035,25 +961,25 @@ TEST_F(AcceptanceTest, TwoRowsEmptyValue) {
 TEST_F(AcceptanceTest, TwoRowsOneWithMultipleCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "B">
-          qualifier: < value: "D">
-          timestamp_micros: 97
-          value: "value-VAL_3"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "B"
+      qualifier: "RA=="
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1063,27 +989,23 @@ TEST_F(AcceptanceTest, TwoRowsOneWithMultipleCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 98\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 98\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: B\n"
-      "qual: D\n"
-      "ts: 97\n"
-      "value: value-VAL_3\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: B\n"
+      "qualifier: D\n"
+      "timestampMicros: 97\n"
+      "value: value-VAL_3\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1091,32 +1013,32 @@ TEST_F(AcceptanceTest, TwoRowsOneWithMultipleCells) {
 TEST_F(AcceptanceTest, TwoRowsMultipleCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "D">
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      qualifier: "RA=="
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "B">
-          qualifier: < value: "E">
-          timestamp_micros: 97
-          value: "value-VAL_3"
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "B"
+      qualifier: "RQ=="
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "F">
-          timestamp_micros: 96
-          value: "value-VAL_4"
-          commit_row: true
+      qualifier: "Rg=="
+      timestampMicros: "96"
+      value: "dmFsdWUtVkFMXzQ="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1126,34 +1048,29 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: D\n"
-      "ts: 98\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: D\n"
+      "timestampMicros: 98\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: B\n"
-      "qual: E\n"
-      "ts: 97\n"
+      "rowKey: RK_2\n"
+      "familyName: B\n"
+      "qualifier: E\n"
+      "timestampMicros: 97\n"
       "value: value-VAL_3\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: B\n"
-      "qual: F\n"
-      "ts: 96\n"
-      "value: value-VAL_4\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: B\n"
+      "qualifier: F\n"
+      "timestampMicros: 96\n"
+      "value: value-VAL_4\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1161,34 +1078,34 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCells) {
 TEST_F(AcceptanceTest, TwoRowsMultipleCellsMultipleFamilies) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          family_name: < value: "B">
-          qualifier: < value: "E">
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      familyName: "B"
+      qualifier: "RQ=="
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "M">
-          qualifier: < value: "O">
-          timestamp_micros: 97
-          value: "value-VAL_3"
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "M"
+      qualifier: "Tw=="
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          family_name: < value: "N">
-          qualifier: < value: "P">
-          timestamp_micros: 96
-          value: "value-VAL_4"
-          commit_row: true
+      familyName: "N"
+      qualifier: "UA=="
+      timestampMicros: "96"
+      value: "dmFsdWUtVkFMXzQ="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1198,34 +1115,29 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCellsMultipleFamilies) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK_1\n"
-      "fm: B\n"
-      "qual: E\n"
-      "ts: 98\n"
+      "rowKey: RK_1\n"
+      "familyName: B\n"
+      "qualifier: E\n"
+      "timestampMicros: 98\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: M\n"
-      "qual: O\n"
-      "ts: 97\n"
+      "rowKey: RK_2\n"
+      "familyName: M\n"
+      "qualifier: O\n"
+      "timestampMicros: 97\n"
       "value: value-VAL_3\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: N\n"
-      "qual: P\n"
-      "ts: 96\n"
-      "value: value-VAL_4\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: N\n"
+      "qualifier: P\n"
+      "timestampMicros: 96\n"
+      "value: value-VAL_4\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1233,32 +1145,30 @@ TEST_F(AcceptanceTest, TwoRowsMultipleCellsMultipleFamilies) {
 TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 99
-          labels: "L_1"
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "99"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: true
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "B">
-          qualifier: < value: "D">
-          timestamp_micros: 97
-          labels: "L_3"
-          value: "value-VAL_3"
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "B"
+      qualifier: "RA=="
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 96
-          value: "value-VAL_4"
-          commit_row: true
+      timestampMicros: "96"
+      value: "dmFsdWUtVkFMXzQ="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1268,34 +1178,31 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 99\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 99\n"
       "value: value-VAL_1\n"
-      "label: L_1\n",
+      "label: L_1,\n"
 
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 98\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 98\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: B\n"
-      "qual: D\n"
-      "ts: 97\n"
+      "rowKey: RK_2\n"
+      "familyName: B\n"
+      "qualifier: D\n"
+      "timestampMicros: 97\n"
       "value: value-VAL_3\n"
-      "label: L_3\n",
+      "label: L_3,\n"
 
-      "rk: RK_2\n"
-      "fm: B\n"
-      "qual: D\n"
-      "ts: 96\n"
-      "value: value-VAL_4\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: B\n"
+      "qualifier: D\n"
+      "timestampMicros: 96\n"
+      "value: value-VAL_4\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1303,30 +1210,28 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
 TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_1"
-          commit_row: true
+      value: "YWx1ZS1WQUxfMQ=="
+      commitRow: "True"
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "v"
-          value_size: 11
-          commit_row: false
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "alue-VAL_2"
-          commit_row: true
+      value: "YWx1ZS1WQUxfMg=="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1336,20 +1241,17 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL_1\n"
-      "label: \n",
 
-      "rk: RK_2\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1357,14 +1259,13 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
 TEST_F(AcceptanceTest, InvalidBareReset) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          reset_row: true
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1374,22 +1275,21 @@ TEST_F(AcceptanceTest, InvalidBareReset) {
 TEST_F(AcceptanceTest, InvalidBadResetNoCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1399,27 +1299,26 @@ TEST_F(AcceptanceTest, InvalidBadResetNoCommit) {
 TEST_F(AcceptanceTest, InvalidMissingKeyAfterReset) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1429,15 +1328,14 @@ TEST_F(AcceptanceTest, InvalidMissingKeyAfterReset) {
 TEST_F(AcceptanceTest, NoDataAfterReset) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
   };
 
@@ -1454,23 +1352,22 @@ TEST_F(AcceptanceTest, NoDataAfterReset) {
 TEST_F(AcceptanceTest, SimpleReset) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "True"
         )chunk",
   };
 
@@ -1480,13 +1377,11 @@ TEST_F(AcceptanceTest, SimpleReset) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1494,23 +1389,22 @@ TEST_F(AcceptanceTest, SimpleReset) {
 TEST_F(AcceptanceTest, ResetToNewVal) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1520,13 +1414,11 @@ TEST_F(AcceptanceTest, ResetToNewVal) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1534,23 +1426,22 @@ TEST_F(AcceptanceTest, ResetToNewVal) {
 TEST_F(AcceptanceTest, ResetToNewQual) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "D">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "RA=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1560,13 +1451,11 @@ TEST_F(AcceptanceTest, ResetToNewQual) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: D\n"
-      "ts: 100\n"
-      "value: value-VAL_1\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: D\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_1\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1574,28 +1463,27 @@ TEST_F(AcceptanceTest, ResetToNewQual) {
 TEST_F(AcceptanceTest, ResetWithSplits) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 98
-          value: "value-VAL_2"
-          commit_row: false
+      timestampMicros: "98"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1605,13 +1493,11 @@ TEST_F(AcceptanceTest, ResetWithSplits) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1619,28 +1505,27 @@ TEST_F(AcceptanceTest, ResetWithSplits) {
 TEST_F(AcceptanceTest, ResetTwoCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          timestamp_micros: 97
-          value: "value-VAL_3"
-          commit_row: true
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1650,20 +1535,17 @@ TEST_F(AcceptanceTest, ResetTwoCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 97\n"
-      "value: value-VAL_3\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 97\n"
+      "value: value-VAL_3\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1671,34 +1553,32 @@ TEST_F(AcceptanceTest, ResetTwoCells) {
 TEST_F(AcceptanceTest, TwoResets) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_3"
-          commit_row: true
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1708,13 +1588,11 @@ TEST_F(AcceptanceTest, TwoResets) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_3\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_3\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1722,29 +1600,28 @@ TEST_F(AcceptanceTest, TwoResets) {
 TEST_F(AcceptanceTest, ResetThenTwoCells) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "B">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "B"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          qualifier: < value: "D">
-          timestamp_micros: 97
-          value: "value-VAL_3"
-          commit_row: true
+      qualifier: "RA=="
+      timestampMicros: "97"
+      value: "dmFsdWUtVkFMXzM="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1754,20 +1631,17 @@ TEST_F(AcceptanceTest, ResetThenTwoCells) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: B\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: B\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL_2\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: B\n"
-      "qual: D\n"
-      "ts: 97\n"
-      "value: value-VAL_3\n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: B\n"
+      "qualifier: D\n"
+      "timestampMicros: 97\n"
+      "value: value-VAL_3\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1775,23 +1649,22 @@ TEST_F(AcceptanceTest, ResetThenTwoCells) {
 TEST_F(AcceptanceTest, ResetToNewRow) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: false
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK_2"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_2"
-          commit_row: true
+      rowKey: "UktfMg=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzI="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1801,13 +1674,11 @@ TEST_F(AcceptanceTest, ResetToNewRow) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_2\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_2\n"
-      "label: \n",
-  };
+      "rowKey: RK_2\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_2\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1815,30 +1686,26 @@ TEST_F(AcceptanceTest, ResetToNewRow) {
 TEST_F(AcceptanceTest, ResetInBetweenChunks) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          labels: "L"
-          value: "v"
-          value_size: 10
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 10
-          commit_row: false
+      value: "YQ=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          reset_row: true
         )chunk",
       R"chunk(
-          row_key: "RK_1"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL_1"
-          commit_row: true
+      rowKey: "UktfMQ=="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFMXzE="
+      commitRow: "True"
         )chunk",
   };
 
@@ -1848,13 +1715,11 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK_1\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
-      "value: value-VAL_1\n"
-      "label: \n",
-  };
+      "rowKey: RK_1\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
+      "value: value-VAL_1\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
 
@@ -1862,26 +1727,22 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
 TEST_F(AcceptanceTest, InvalidResetWithChunk) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          labels: "L"
-          value: "v"
-          value_size: 10
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 10
-          reset_row: true
+      value: "YQ=="
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1891,26 +1752,23 @@ TEST_F(AcceptanceTest, InvalidResetWithChunk) {
 TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          labels: "L"
-          value: "v"
-          value_size: 10
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dg=="
+      commitRow: "False"
         )chunk",
       R"chunk(
-          value: "a"
-          value_size: 10
-          commit_row: true
+      value: "YQ=="
+      commitRow: "True"
         )chunk",
   };
 
   auto chunks = ConvertChunks(std::move(chunk_strings));
   ASSERT_FALSE(chunks.empty());
 
-  EXPECT_FALSE(FeedChunks(chunks).ok());
+  EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {};
   EXPECT_EQ(expected_cells, ExtractCells());
@@ -1920,18 +1778,18 @@ TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
 TEST_F(AcceptanceTest, EmptyCellChunk) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
-          row_key: "RK"
-          family_name: < value: "A">
-          qualifier: < value: "C">
-          timestamp_micros: 100
-          value: "value-VAL"
-          commit_row: false
+      rowKey: "Uks="
+      familyName: "A"
+      qualifier: "Qw=="
+      timestampMicros: "100"
+      value: "dmFsdWUtVkFM"
+      commitRow: "False"
         )chunk",
       R"chunk(
-          commit_row: false
+      commitRow: "False"
         )chunk",
       R"chunk(
-          commit_row: true
+      commitRow: "True"
         )chunk",
   };
 
@@ -1941,26 +1799,18 @@ TEST_F(AcceptanceTest, EmptyCellChunk) {
   EXPECT_STATUS_OK(FeedChunks(chunks));
 
   std::vector<std::string> expected_cells = {
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 100\n"
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
+      "timestampMicros: 100\n"
       "value: value-VAL\n"
-      "label: \n",
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"
 
-      "rk: RK\n"
-      "fm: A\n"
-      "qual: C\n"
-      "ts: 0\n"
-      "value: \n"
-      "label: \n",
-  };
+      "rowKey: RK\n"
+      "familyName: A\n"
+      "qualifier: C\n"};
   EXPECT_EQ(expected_cells, ExtractCells());
 }
