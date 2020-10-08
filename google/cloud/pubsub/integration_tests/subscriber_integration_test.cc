@@ -113,7 +113,7 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
     for (auto& id : message_ids) {
       auto r = id.get();
       EXPECT_STATUS_OK(r);
-      ids.insert(*std::move(r));
+      if (r) ids.insert(*std::move(r));
     }
     return ids;
   }();
@@ -201,7 +201,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
     for (auto& id : message_ids) {
       auto r = id.get();
       EXPECT_STATUS_OK(r);
-      ids.insert(*std::move(r));
+      if (r) ids.insert(*std::move(r));
     }
     return ids;
   }();

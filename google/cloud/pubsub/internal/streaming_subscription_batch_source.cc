@@ -300,7 +300,8 @@ void StreamingSubscriptionBatchSource::ChangeState(
     char const* reason) {
   GCP_LOG(DEBUG) << where << " (" << reason << ") " << stream_state_ << ":" << s
                  << " read=" << pending_read_ << " write=" << pending_write_
-                 << " shutdown=" << shutdown_ << " stream=" << stream_.get()
+                 << " shutdown=" << shutdown_
+                 << " stream=" << (stream_ ? "not-null" : "null")
                  << " status=" << status_;
   stream_state_ = s;
 }
