@@ -36,7 +36,7 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
 
 void StreamingSubscriptionBatchSource::Shutdown() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (shutdown_) return;
+  if (shutdown_ || !stream_) return;
   shutdown_ = true;
   if (stream_state_ != StreamState::kActive) return;
   stream_->Cancel();
@@ -83,6 +83,18 @@ StreamingSubscriptionBatchSource::Pull(std::int32_t) {
   return {};
 }
 
+namespace {
+StatusOr<StreamingSubscriptionBatchSource::StreamShptr> Unknown(std::string m) {
+  return Status(StatusCode::kUnknown, std::move(m));
+}
+
+future<StatusOr<StreamingSubscriptionBatchSource::StreamShptr>> Unexpected(
+    std::string m) {
+  return make_ready_future(Unknown(std::move(m)));
+}
+
+}  // namespace
+
 void StreamingSubscriptionBatchSource::StartStream() {
   // Starting a stream is a 3 step process.
   // 1. Create a new SubscriberStub::AsyncPullStream object.
@@ -96,23 +108,18 @@ void StreamingSubscriptionBatchSource::StartStream() {
                       std::unique_ptr<grpc::ClientContext> context,
                       google::pubsub::v1::StreamingPullRequest const& request)
       -> future<StatusOr<StreamShptr>> {
-    auto unexpected = [](std::string m) {
-      return make_ready_future(
-          StatusOr<StreamShptr>(Status(StatusCode::kUnknown, std::move(m))));
-    };
-
     auto self = weak.lock();
-    if (!self) return unexpected("unbound weak_ptr in StartStream()");
+    if (!self) return Unexpected("unbound weak_ptr in StartStream()");
 
     StreamShptr stream =
         self->stub_->AsyncStreamingPull(cq, std::move(context), request);
-    if (!stream) return unexpected("null stream in StartStream()");
+    if (!stream) return Unexpected("null stream in StartStream()");
     return stream->Start().then([stream, request](future<bool> f) {
       auto finish_broken_stream = [](StreamShptr const& stream) {
         return stream->Finish().then(
             [](future<Status> g) -> StatusOr<StreamShptr> {
               auto status = g.get();
-              if (status.ok()) return StreamShptr{};
+              if (status.ok()) return Unknown("write error but OK");
               return status;
             });
       };
@@ -146,14 +153,15 @@ void StreamingSubscriptionBatchSource::StartStream() {
 void StreamingSubscriptionBatchSource::OnStreamStart(
     StatusOr<StreamShptr> stream) {
   std::unique_lock<std::mutex> lk(mu_);
-  if (!stream) {
+  if (!stream || !(*stream)) {
     status_ = std::move(stream).status();
     ChangeState(lk, StreamState::kNull, __func__, "status");
     shutdown_manager_->FinishedOperation("stream");
     shutdown_manager_->MarkAsShutdown(__func__, status_);
     if (callback_) {
+      auto status = status_;
       lk.unlock();
-      callback_(status_);
+      callback_(std::move(status));
     }
     return;
   }
@@ -186,15 +194,15 @@ void StreamingSubscriptionBatchSource::OnRead(
   auto weak = WeakFromThis();
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;
-  if (!response) {
-    ShutdownStream(std::move(lk), "read error");
+  if (response && stream_state_ == StreamState::kActive && !shutdown_) {
+    lk.unlock();
+    callback_(*std::move(response));
+    cq_.RunAsync([weak] {
+      if (auto self = weak.lock()) self->ReadLoop();
+    });
     return;
   }
-  lk.unlock();
-  callback_(*std::move(response));
-  cq_.RunAsync([weak] {
-    if (auto self = weak.lock()) self->ReadLoop();
-  });
+  ShutdownStream(std::move(lk), response ? "state" : "read error");
 }
 
 void StreamingSubscriptionBatchSource::ShutdownStream(
@@ -268,7 +276,7 @@ void StreamingSubscriptionBatchSource::DrainQueues(
 void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   pending_write_ = false;
-  if (ok && stream_state_ == StreamState::kActive) {
+  if (ok && stream_state_ == StreamState::kActive && !shutdown_) {
     DrainQueues(std::move(lk));
     return;
   }
