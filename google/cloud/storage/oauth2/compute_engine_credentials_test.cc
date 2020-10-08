@@ -160,7 +160,6 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
   auto status = ParseComputeEngineRefreshResponse(
       HttpResponse{200, token_info_resp, {}}, FakeClock::now());
   EXPECT_STATUS_OK(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kOk);
   auto token = *status;
   EXPECT_EQ(
       std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
@@ -203,7 +202,6 @@ TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
   auto status =
       ParseMetadataServerResponse(HttpResponse{200, svc_acct_info_resp, {}});
   EXPECT_STATUS_OK(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kOk);
   auto metadata = *status;
   EXPECT_EQ(metadata.email, email);
   EXPECT_TRUE(metadata.scopes.count("scope1"));
