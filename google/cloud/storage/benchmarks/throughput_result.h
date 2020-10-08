@@ -80,7 +80,7 @@ struct ThroughputResult {
   std::chrono::microseconds cpu_time;
   /// The result of the operation. The analysis may need to discard failed
   /// uploads or downloads.
-  google::cloud::StatusCode status;
+  google::cloud::Status status;
 };
 
 /// Print @p r as a CSV line.

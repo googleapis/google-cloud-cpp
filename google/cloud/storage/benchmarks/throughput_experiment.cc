@@ -78,7 +78,7 @@ class UploadObject : public ThroughputExperiment {
                               api_,
                               timer.elapsed_time(),
                               timer.cpu_time(),
-                              object_metadata.status().code()};
+                              object_metadata.status()};
     }
     SimpleTimer timer;
     timer.Start();
@@ -106,7 +106,7 @@ class UploadObject : public ThroughputExperiment {
                             api_,
                             timer.elapsed_time(),
                             timer.cpu_time(),
-                            writer.metadata().status().code()};
+                            writer.metadata().status()};
   }
 
  private:
@@ -156,7 +156,7 @@ class DownloadObject : public ThroughputExperiment {
                             api_,
                             timer.elapsed_time(),
                             timer.cpu_time(),
-                            reader.status().code()};
+                            reader.status()};
   }
 
  private:
@@ -222,8 +222,9 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
     curl_easy_setopt(hnd, CURLOPT_STDERR, stderr);
     CURLcode ret = curl_easy_perform(hnd);
-    auto status_code = ret == CURLE_OK ? google::cloud::StatusCode::kOk
-                                       : google::cloud::StatusCode::kUnknown;
+    Status status = ret == CURLE_OK
+                        ? Status{}
+                        : Status{StatusCode::kUnknown, "curl failed"};
 
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
@@ -237,7 +238,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             api_,
                             timer.elapsed_time(),
                             timer.cpu_time(),
-                            status_code};
+                            status};
   }
 
  private:
@@ -292,7 +293,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             ApiName::kApiRawGrpc,
                             timer.elapsed_time(),
                             timer.cpu_time(),
-                            status.code()};
+                            status};
   }
 
  private:

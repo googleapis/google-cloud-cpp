@@ -29,13 +29,14 @@ TEST(ThroughtputResult, HeaderMatches) {
   auto const header = std::move(header_stream).str();
 
   std::ostringstream line_stream;
-  PrintAsCsv(line_stream,
-             ThroughputResult{
-                 kOpInsert, /*object_size=*/3 * kMiB,
-                 /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
-                 /*crc_enabled=*/true, /*md5_enabled=*/false, ApiName::kApiGrpc,
-                 std::chrono::microseconds(234000),
-                 std::chrono::microseconds(345000), StatusCode::kOutOfRange});
+  PrintAsCsv(
+      line_stream,
+      ThroughputResult{
+          kOpInsert, /*object_size=*/3 * kMiB,
+          /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
+          /*crc_enabled=*/true, /*md5_enabled=*/false, ApiName::kApiGrpc,
+          std::chrono::microseconds(234000), std::chrono::microseconds(345000),
+          Status{StatusCode::kOutOfRange, "OOR-status-message"}});
   EXPECT_TRUE(line_stream);
   auto const line = std::move(line_stream).str();
 
@@ -60,6 +61,7 @@ TEST(ThroughtputResult, HeaderMatches) {
   EXPECT_THAT(line, HasSubstr(",234000,"));
   EXPECT_THAT(line, HasSubstr(",345000,"));
   EXPECT_THAT(line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
+  EXPECT_THAT(line, HasSubstr("OOR-status-message"));
 }
 
 }  // namespace

@@ -312,7 +312,7 @@ TestResults RunThread(ThroughputOptions const& options,
     auto status = upload_result.status;
     results.emplace_back(std::move(upload_result));
 
-    if (status != google::cloud::StatusCode::kOk) {
+    if (!status.ok()) {
       if (options.thread_count == 1) {
         std::cout << "# status=" << status << ", api=" << gcs_bm::ToString(api)
                   << "\n";
