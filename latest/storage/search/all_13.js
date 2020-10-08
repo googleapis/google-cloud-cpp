@@ -9,8 +9,6 @@ var searchData=
   ['terminatehandler',['TerminateHandler',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#abea35a16d2e590ca98d93cc872dab256',1,'google::cloud::v1']]],
   ['testbucketiampermissions',['TestBucketIamPermissions',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a86ef0364e3450f5dcae1019e6d201267',1,'google::cloud::storage::v1::Client']]],
   ['then',['then',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1future.html#af41f534a5e31bbbee8f4492fa3789266',1,'google::cloud::v1::future::then()'],['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1future_3_01void_01_4.html#a14182446e5bc8b2ed2b36872cf6c5b6f',1,'google::cloud::v1::future&lt; void &gt;::then()']]],
-  ['throughput_5fdownload_5ftask_2ecc',['throughput_download_task.cc',['../throughput__download__task_8cc.html',1,'']]],
-  ['throughput_5fdownload_5ftask_2eh',['throughput_download_task.h',['../throughput__download__task_8h.html',1,'']]],
   ['throughput_5fexperiment_2ecc',['throughput_experiment.cc',['../throughput__experiment_8cc.html',1,'']]],
   ['throughput_5fexperiment_2eh',['throughput_experiment.h',['../throughput__experiment_8h.html',1,'']]],
   ['throughput_5foptions_2ecc',['throughput_options.cc',['../throughput__options_8cc.html',1,'']]],
