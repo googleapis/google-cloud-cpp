@@ -324,9 +324,7 @@ class StreamingPartitionedDmlResult {
     StatusOr<Row> row;
     do {
       row = source_->NextRow();
-      if (!row.ok()) {
-        return std::move(row).status();
-      }
+      if (!row) return std::move(row).status();
       // We don't expect to get any data; if we do just drop it.
       // Exit the loop when we get an empty row.
     } while (row->size() != 0);
@@ -889,7 +887,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
       spanner_proto::ExecuteSqlRequest::NORMAL);
   auto rows_modified = dml_result.RowsModifiedLowerBound();
   if (!rows_modified.ok()) {
-    auto status = rows_modified.status();
+    auto status = std::move(rows_modified).status();
     if (internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
