@@ -65,7 +65,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
     auto client_id = [this] {
       std::lock_guard<std::mutex> lk(mu_);
       auto constexpr kLength = 32;
-      auto constexpr kChars = "abcdefghijlkmnopqrstuvwxyz0123456789";
+      auto constexpr kChars = "abcdefghijklmnopqrstuvwxyz0123456789";
       return google::cloud::internal::Sample(generator_, kLength, kChars);
     }();
     return CreateSubscriptionSession(

@@ -356,9 +356,6 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
 
   auto constexpr kMessageCount = 16;
 
-  // These lambdas are used to implement the mocks. They become satisfied using
-  // a timer, which better simulates the behavior in production.
-
   internal::AutomaticallyCreatedBackgroundThreads background(kMessageCount);
   std::atomic<int> handler_counter{0};
 
