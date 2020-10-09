@@ -28,7 +28,7 @@ std::string QuoteCsv(T const& element) {
   std::ostringstream os;
   os << element;
   std::string result = os.str();
-  if (result.find_first_of(",\r\n") == std::string::npos) {
+  if (result.find_first_of("\",\r\n") == std::string::npos) {
     return result;
   }
 

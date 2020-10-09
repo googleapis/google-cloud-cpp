@@ -29,5 +29,4 @@ storage_benchmarks_srcs = [
     "throughput_experiment.cc",
     "throughput_options.cc",
     "throughput_result.cc",
-    "throughput_result_test.cc",
 ]
