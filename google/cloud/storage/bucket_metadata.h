@@ -141,12 +141,13 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  *     intend to use this feature.
  *
  * @see Before enabling Uniform Bucket Level Access please
- *     review the [feature documentation][bpo-link], as well as
- *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ *     review the [feature documentation][ubla-link], as well as
+ *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
- * [bpo-should-link]:
- * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+ * [ubla-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+ * [ubla-should-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct UniformBucketLevelAccess {
   bool enabled;
@@ -200,13 +201,14 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  *
- * @see Before enabling Bucket Policy Only please review the
- *     [feature documentation][bpo-link], as well as
- *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ * @see Before enabling Uniform Bucket Level Access please review the
+ *     [feature documentation][ubla-link], as well as
+ *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
  *
- * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
- * [bpo-should-link]:
- * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+ * [ubla-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+ * [ubla-should-link]:
+ * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
   absl::optional<BucketPolicyOnly> bucket_policy_only;
@@ -650,13 +652,14 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * @warning this is a Beta feature of Google Cloud Storage, it is not
    *     subject to the deprecation policy and subject to change without notice.
    *
-   * @see Before enabling Bucket Policy Only please review the
-   *     [feature documentation][bpo-link], as well as
-   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   * @see Before enabling Uniform Bucket Level Access please review the
+   *     [feature documentation][ubla-link], as well as
+   *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
    *
-   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
-   * [bpo-should-link]:
-   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
+   * [ubla-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access
+   * [ubla-should-link]:
+   * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
   bool has_iam_configuration() const { return iam_configuration_.has_value(); }
   BucketIamConfiguration const& iam_configuration() const {
