@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/numeric.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/numeric/int128.h"
 #include <gmock/gmock.h>
 #include <cstdint>
@@ -26,19 +27,13 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
-using ::testing::Matches;
 
 auto constexpr kNumericIntMin =  // 1 - 10^Numeric::kIntPrec
     absl::MakeInt128(-5421010863, 10560352017195204609U);
 auto constexpr kNumericIntMax =  // 10^Numeric::kIntPrec - 1
     absl::MakeInt128(5421010862, 7886392056514347007U);
-
-// NOLINTNEXTLINE(readability-redundant-string-init)
-MATCHER_P2(HasStatus, code, message, "") {
-  return Matches(code)(arg.code()) &&
-         Matches(HasSubstr(message))(arg.message());
-}
 
 TEST(Numeric, DefaultCtor) {
   Numeric n;
@@ -230,38 +225,38 @@ TEST(Numeric, MakeNumericString) {
 
 TEST(Numeric, MakeNumericStringFail) {
   // Valid chars, but incomplete.
-  EXPECT_THAT(MakeNumeric("").status(),
-              HasStatus(StatusCode::kInvalidArgument, ""));
-  EXPECT_THAT(MakeNumeric("+").status(),
-              HasStatus(StatusCode::kInvalidArgument, "+"));
-  EXPECT_THAT(MakeNumeric("-").status(),
-              HasStatus(StatusCode::kInvalidArgument, "-"));
-  EXPECT_THAT(MakeNumeric(".").status(),
-              HasStatus(StatusCode::kInvalidArgument, "."));
+  EXPECT_THAT(MakeNumeric(""), StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(MakeNumeric("+"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("+")));
+  EXPECT_THAT(MakeNumeric("-"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("-")));
+  EXPECT_THAT(MakeNumeric("."),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr(".")));
 
   // Invalid char in input.
-  EXPECT_THAT(MakeNumeric("X").status(),
-              HasStatus(StatusCode::kInvalidArgument, "X"));
-  EXPECT_THAT(MakeNumeric("12345.6789X").status(),
-              HasStatus(StatusCode::kInvalidArgument, "12345.6789X"));
-  EXPECT_THAT(MakeNumeric("1.2e3X").status(),
-              HasStatus(StatusCode::kInvalidArgument, "1.2e3X"));
+  EXPECT_THAT(MakeNumeric("X"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("X")));
+  EXPECT_THAT(MakeNumeric("12345.6789X"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("12345.6789X")));
+  EXPECT_THAT(MakeNumeric("1.2e3X"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("1.2e3X")));
 
   // Values beyond the allowed range.
-  EXPECT_THAT(MakeNumeric("-1e30").status(),
-              HasStatus(StatusCode::kOutOfRange, "-1e30"));
-  EXPECT_THAT(MakeNumeric("1e30").status(),
-              HasStatus(StatusCode::kOutOfRange, "1e30"));
-  EXPECT_THAT(MakeNumeric("1e9223372036854775808").status(),
-              HasStatus(StatusCode::kOutOfRange, "1e9223372036854775808"));
+  EXPECT_THAT(MakeNumeric("-1e30"),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("-1e30")));
+  EXPECT_THAT(MakeNumeric("1e30"),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("1e30")));
+  EXPECT_THAT(
+      MakeNumeric("1e9223372036854775808"),
+      StatusIs(StatusCode::kOutOfRange, HasSubstr("1e9223372036854775808")));
 
   // Values beyond the allowed range after rounding.
-  EXPECT_THAT(MakeNumeric("-99999999999999999999999999999.9999999995").status(),
-              HasStatus(StatusCode::kOutOfRange,
-                        "-99999999999999999999999999999.9999999995"));
-  EXPECT_THAT(MakeNumeric("99999999999999999999999999999.9999999995").status(),
-              HasStatus(StatusCode::kOutOfRange,
-                        "99999999999999999999999999999.9999999995"));
+  EXPECT_THAT(MakeNumeric("-99999999999999999999999999999.9999999995"),
+              StatusIs(StatusCode::kOutOfRange,
+                       HasSubstr("-99999999999999999999999999999.9999999995")));
+  EXPECT_THAT(MakeNumeric("99999999999999999999999999999.9999999995"),
+              StatusIs(StatusCode::kOutOfRange,
+                       HasSubstr("99999999999999999999999999999.9999999995")));
 }
 
 TEST(Numeric, MakeNumericStringRounding) {
@@ -299,13 +294,11 @@ TEST(Numeric, MakeNumericStringRounding) {
 
 TEST(Numeric, MakeNumericStringRoundingFail) {
   EXPECT_THAT(
-      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775808.5").value())
-          .status(),
-      HasStatus(StatusCode::kDataLoss, "-9223372036854775808.5"));
+      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775808.5").value()),
+      StatusIs(StatusCode::kDataLoss, HasSubstr("-9223372036854775808.5")));
   EXPECT_THAT(
-      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551615.5").value())
-          .status(),
-      HasStatus(StatusCode::kDataLoss, "18446744073709551615.5"));
+      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551615.5").value()),
+      StatusIs(StatusCode::kDataLoss, HasSubstr("18446744073709551615.5")));
 }
 
 TEST(Numeric, MakeNumericDouble) {
@@ -352,24 +345,24 @@ TEST(Numeric, MakeNumericDouble) {
 }
 
 TEST(Numeric, MakeNumericDoubleFail) {
-  EXPECT_THAT(MakeNumeric(1e30).status(),
-              HasStatus(StatusCode::kOutOfRange, "1e+30"));
-  EXPECT_THAT(MakeNumeric(-1e30).status(),
-              HasStatus(StatusCode::kOutOfRange, "-1e+30"));
+  EXPECT_THAT(MakeNumeric(1e30),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("1e+30")));
+  EXPECT_THAT(MakeNumeric(-1e30),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("-1e+30")));
 
   // Assumes that `double` can hold at least 1e+30.
-  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::max()).status(),
-              HasStatus(StatusCode::kOutOfRange, "e+"));
-  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::lowest()).status(),
-              HasStatus(StatusCode::kOutOfRange, "e+"));
+  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::max()),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("e+")));
+  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::lowest()),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("e+")));
 
   // NaN and infinities count as outside the allowable range.
-  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::quiet_NaN()).status(),
-              HasStatus(StatusCode::kOutOfRange, "nan"));
-  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::infinity()).status(),
-              HasStatus(StatusCode::kOutOfRange, "inf"));
-  EXPECT_THAT(MakeNumeric(-std::numeric_limits<double>::infinity()).status(),
-              HasStatus(StatusCode::kOutOfRange, "-inf"));
+  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::quiet_NaN()),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("nan")));
+  EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::infinity()),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("inf")));
+  EXPECT_THAT(MakeNumeric(-std::numeric_limits<double>::infinity()),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("-inf")));
 }
 
 TEST(Numeric, MakeNumericInteger) {
@@ -430,53 +423,47 @@ TEST(Numeric, MakeNumericInteger) {
 
 TEST(Numeric, MakeNumericIntegerFail) {
   // Negative to unsigned.
-  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(-1).value()).status(),
-              HasStatus(StatusCode::kDataLoss, "-1"));
+  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(-1).value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("-1")));
 
   // Beyond the 8-bit limits.
-  EXPECT_THAT(ToInteger<std::int8_t>(MakeNumeric(-129).value()).status(),
-              HasStatus(StatusCode::kDataLoss, "-129"));
-  EXPECT_THAT(ToInteger<std::int8_t>(MakeNumeric(128).value()).status(),
-              HasStatus(StatusCode::kDataLoss, "128"));
-  EXPECT_THAT(ToInteger<std::uint8_t>(MakeNumeric(256).value()).status(),
-              HasStatus(StatusCode::kDataLoss, "256"));
+  EXPECT_THAT(ToInteger<std::int8_t>(MakeNumeric(-129).value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("-129")));
+  EXPECT_THAT(ToInteger<std::int8_t>(MakeNumeric(128).value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("128")));
+  EXPECT_THAT(ToInteger<std::uint8_t>(MakeNumeric(256).value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("256")));
 
   // Beyond the 32-bit limits.
   // Beyond the 32-bit limits (requires string input on 32-bit platforms).
-  EXPECT_THAT(
-      ToInteger<std::int32_t>(MakeNumeric("-2147483649").value()).status(),
-      HasStatus(StatusCode::kDataLoss, "-2147483649"));
-  EXPECT_THAT(
-      ToInteger<std::int32_t>(MakeNumeric("2147483648").value()).status(),
-      HasStatus(StatusCode::kDataLoss, "2147483648"));
-  EXPECT_THAT(
-      ToInteger<std::uint32_t>(MakeNumeric("4294967296").value()).status(),
-      HasStatus(StatusCode::kDataLoss, "4294967296"));
+  EXPECT_THAT(ToInteger<std::int32_t>(MakeNumeric("-2147483649").value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("-2147483649")));
+  EXPECT_THAT(ToInteger<std::int32_t>(MakeNumeric("2147483648").value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("2147483648")));
+  EXPECT_THAT(ToInteger<std::uint32_t>(MakeNumeric("4294967296").value()),
+              StatusIs(StatusCode::kDataLoss, HasSubstr("4294967296")));
 
   // Beyond the 64-bit limits (requires string input on 64-bit platforms).
   EXPECT_THAT(
-      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775809").value())
-          .status(),
-      HasStatus(StatusCode::kDataLoss, "-9223372036854775809"));
+      ToInteger<std::int64_t>(MakeNumeric("-9223372036854775809").value()),
+      StatusIs(StatusCode::kDataLoss, HasSubstr("-9223372036854775809")));
   EXPECT_THAT(
-      ToInteger<std::int64_t>(MakeNumeric("9223372036854775808").value())
-          .status(),
-      HasStatus(StatusCode::kDataLoss, "9223372036854775808"));
+      ToInteger<std::int64_t>(MakeNumeric("9223372036854775808").value()),
+      StatusIs(StatusCode::kDataLoss, HasSubstr("9223372036854775808")));
   EXPECT_THAT(
-      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551616").value())
-          .status(),
-      HasStatus(StatusCode::kDataLoss, "18446744073709551616"));
+      ToInteger<std::uint64_t>(MakeNumeric("18446744073709551616").value()),
+      StatusIs(StatusCode::kDataLoss, HasSubstr("18446744073709551616")));
 
   // Beyond the NUMERIC limits using 128-bit integers.
-  EXPECT_THAT(
-      MakeNumeric(kNumericIntMin - 1).status(),
-      HasStatus(StatusCode::kOutOfRange, "-100000000000000000000000000000"));
-  EXPECT_THAT(
-      MakeNumeric(kNumericIntMax + 2).status(),
-      HasStatus(StatusCode::kOutOfRange, "100000000000000000000000000001"));
-  EXPECT_THAT(
-      MakeNumeric(absl::uint128(kNumericIntMax) + 3).status(),
-      HasStatus(StatusCode::kOutOfRange, "100000000000000000000000000002"));
+  EXPECT_THAT(MakeNumeric(kNumericIntMin - 1),
+              StatusIs(StatusCode::kOutOfRange,
+                       HasSubstr("-100000000000000000000000000000")));
+  EXPECT_THAT(MakeNumeric(kNumericIntMax + 2),
+              StatusIs(StatusCode::kOutOfRange,
+                       HasSubstr("100000000000000000000000000001")));
+  EXPECT_THAT(MakeNumeric(absl::uint128(kNumericIntMax) + 3),
+              StatusIs(StatusCode::kOutOfRange,
+                       HasSubstr("100000000000000000000000000002")));
 }
 
 TEST(Numeric, MakeNumericIntegerScaled) {
@@ -541,14 +528,14 @@ TEST(Numeric, MakeNumericIntegerScaled) {
 
 TEST(Numeric, MakeNumericIntegerScaledFail) {
   // Beyond the integer-scaling limit (message is rendered with exponent).
-  EXPECT_THAT(MakeNumeric(1, 29).status(),
-              HasStatus(StatusCode::kOutOfRange, "1e29"));
+  EXPECT_THAT(MakeNumeric(1, 29),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("1e29")));
 
   // Beyond the integer-scaling limit on output.
-  EXPECT_THAT(ToInteger<int>(MakeNumeric(1, 1).value(), 28).status(),
-              HasStatus(StatusCode::kOutOfRange, "10e28"));
-  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(1U, 1).value(), 28).status(),
-              HasStatus(StatusCode::kOutOfRange, "10e28"));
+  EXPECT_THAT(ToInteger<int>(MakeNumeric(1, 1).value(), 28),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("10e28")));
+  EXPECT_THAT(ToInteger<unsigned>(MakeNumeric(1U, 1).value(), 28),
+              StatusIs(StatusCode::kOutOfRange, HasSubstr("10e28")));
 
   // Beyond the fractional-scaling limit (value is truncated).
   EXPECT_EQ(0.0, ToDouble(MakeNumeric(1, -10).value()));

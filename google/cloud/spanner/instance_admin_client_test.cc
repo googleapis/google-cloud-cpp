@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/mocks/mock_instance_admin_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -67,7 +69,7 @@ TEST(InstanceAdminClientTest, GetInstance) {
 
   InstanceAdminClient client(mock);
   auto actual = client.GetInstance(Instance("test-project", "test-instance"));
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, GetInstanceConfig) {
@@ -82,7 +84,7 @@ TEST(InstanceAdminClientTest, GetInstanceConfig) {
   InstanceAdminClient client(mock);
   auto actual = client.GetInstanceConfig(
       "projects/test-project/instanceConfigs/test-config");
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, ListInstanceConfigs) {
@@ -106,7 +108,7 @@ TEST(InstanceAdminClientTest, ListInstanceConfigs) {
   auto range = client.ListInstanceConfigs("test-project");
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, ListInstances) {
@@ -133,7 +135,7 @@ TEST(InstanceAdminClientTest, ListInstances) {
       client.ListInstances("test-project", "labels.test-key:test-value");
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, GetIamPolicy) {
@@ -147,7 +149,7 @@ TEST(InstanceAdminClientTest, GetIamPolicy) {
 
   InstanceAdminClient client(mock);
   auto actual = client.GetIamPolicy(Instance("test-project", "test-instance"));
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, SetIamPolicy) {
@@ -162,7 +164,7 @@ TEST(InstanceAdminClientTest, SetIamPolicy) {
   InstanceAdminClient client(mock);
   auto actual = client.SetIamPolicy(Instance("test-project", "test-instance"),
                                     google::iam::v1::Policy{});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
@@ -180,7 +182,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
                           [](google::iam::v1::Policy const&) {
                             return absl::optional<google::iam::v1::Policy>{};
                           });
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccNoUpdates) {
@@ -288,8 +290,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
       Instance("test-project", "test-instance"),
       [](google::iam::v1::Policy p) { return p; }, RerunPolicyForTesting(),
       BackoffPolicyForTesting());
-  EXPECT_EQ(StatusCode::kAborted, actual.status().code());
-  EXPECT_THAT(actual.status().message(), HasSubstr("test-msg"));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kAborted, HasSubstr("test-msg")));
 }
 
 TEST(InstanceAdminClientTest, TestIamPermissions) {
@@ -307,7 +308,7 @@ TEST(InstanceAdminClientTest, TestIamPermissions) {
   auto actual =
       client.TestIamPermissions(Instance("test-project", "test-instance"),
                                 {"test.permission1", "test.permission2"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

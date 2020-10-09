@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/bytes.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <deque>
@@ -29,7 +30,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::ContainsRegex;
+using ::testing::Not;
 
 TEST(Bytes, RoundTrip) {
   char c = std::numeric_limits<char>::min();
@@ -167,39 +170,34 @@ TEST(Bytes, FromBase64Failures) {
   // Bad lengths.
   for (std::string const base64 : {"x", "xx", "xxx"}) {
     auto decoded = internal::BytesFromBase64(base64);
-    EXPECT_FALSE(decoded.ok());
-    if (!decoded) {
-      EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
-      EXPECT_THAT(decoded.status().message(), HasSubstr("at offset 0"));
-    }
+    EXPECT_THAT(decoded,
+                StatusIs(Not(StatusCode::kOk),
+                         ContainsRegex("Invalid base64.*at offset 0")));
   }
+
   for (std::string const base64 : {"xxxxx", "xxxxxx", "xxxxxxx"}) {
     auto decoded = internal::BytesFromBase64(base64);
-    EXPECT_FALSE(decoded.ok());
-    if (!decoded) {
-      EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
-      EXPECT_THAT(decoded.status().message(), HasSubstr("at offset 4"));
-    }
+    EXPECT_THAT(decoded,
+                StatusIs(Not(StatusCode::kOk),
+                         ContainsRegex("Invalid base64.*at offset 4")));
   }
 
   // Chars outside base64 alphabet.
   for (std::string const base64 : {".xxx", "x.xx", "xx.x", "xxx.", "xx.="}) {
     auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
-    if (!decoded) {
-      EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
-      EXPECT_THAT(decoded.status().message(), HasSubstr("at offset 0"));
-    }
+    EXPECT_THAT(decoded,
+                StatusIs(Not(StatusCode::kOk),
+                         ContainsRegex("Invalid base64.*at offset 0")));
   }
 
   // Non-zero padding bits.
   for (std::string const base64 : {"xx==", "xxx="}) {
     auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
-    if (!decoded) {
-      EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
-      EXPECT_THAT(decoded.status().message(), HasSubstr("at offset 0"));
-    }
+    EXPECT_THAT(decoded,
+                StatusIs(Not(StatusCode::kOk),
+                         ContainsRegex("Invalid base64.*at offset 0")));
   }
 }
 
