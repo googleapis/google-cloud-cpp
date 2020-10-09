@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,6 +25,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -52,9 +54,9 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
                        std::chrono::milliseconds(5));
   auto session =
       stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
-  EXPECT_THAT(session.status().code(),
-              AnyOf(StatusCode::kUnavailable, StatusCode::kInvalidArgument,
-                    StatusCode::kDeadlineExceeded));
+  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                      StatusCode::kInvalidArgument,
+                                      StatusCode::kDeadlineExceeded)));
 
   EXPECT_THAT(backend->ClearLogLines(),
               Contains(HasSubstr(session.status().message())));

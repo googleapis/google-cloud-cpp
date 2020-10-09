@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 #include <cstdint>
@@ -25,7 +26,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 // Note: You can validate the std::time_t/string conversions using date(1).
 //   $ date --utc +%Y-%m-%dT%H:%M:%SZ --date=@1561135942
@@ -465,13 +468,13 @@ TEST(Timestamp, FromChronoOverflow) {
 
   auto const tp1 = kUnixEpoch + big_minutes(153722867280912931);
   auto const ts1 = MakeTimestamp(tp1);
-  EXPECT_FALSE(ts1.ok());
-  EXPECT_THAT(ts1.status().message(), HasSubstr("positive overflow"));
+  EXPECT_THAT(ts1,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
   auto const tp2 = kUnixEpoch - big_minutes(153722867280912931);
   auto const ts2 = MakeTimestamp(tp2);
-  EXPECT_FALSE(ts2.ok());
-  EXPECT_THAT(ts2.status().message(), HasSubstr("negative overflow"));
+  EXPECT_THAT(ts2,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("negative overflow")));
 }
 
 TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
@@ -536,14 +539,14 @@ TEST(Timestamp, ToChronoOverflow) {
   auto const ts1 =
       internal::TimestampFromProto(MakeProtoTimestamp(20000000000, 0)).value();
   auto const tp1 = ts1.get<sys_time<std::chrono::nanoseconds>>();
-  EXPECT_FALSE(tp1.ok());
-  EXPECT_THAT(tp1.status().message(), HasSubstr("positive overflow"));
+  EXPECT_THAT(tp1,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
   auto const ts2 =
       internal::TimestampFromProto(MakeProtoTimestamp(-20000000000, 0)).value();
   auto const tp2 = ts2.get<sys_time<std::chrono::nanoseconds>>();
-  EXPECT_FALSE(tp2.ok());
-  EXPECT_THAT(tp2.status().message(), HasSubstr("negative overflow"));
+  EXPECT_THAT(tp2,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("negative overflow")));
 
   // One beyond the limit of a 64-bit count of nanoseconds (assuming the
   // system_clock epoch is the Unix epoch). This overflow is detected in a
@@ -552,8 +555,8 @@ TEST(Timestamp, ToChronoOverflow) {
       internal::TimestampFromProto(MakeProtoTimestamp(9223372036, 854775808))
           .value();
   auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
-  EXPECT_FALSE(tp3.ok());
-  EXPECT_THAT(tp3.status().message(), HasSubstr("positive overflow"));
+  EXPECT_THAT(tp3,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
   // Uses a small duration (8-bits of seconds) to clearly demonstrate that we
   // detect potential overflow into the Duration's rep.
@@ -567,15 +570,15 @@ TEST(Timestamp, ToChronoOverflow) {
   auto const ts5 =
       internal::TimestampFromProto(MakeProtoTimestamp(128, 0)).value();
   auto const tp5 = ts5.get<sys_time<Sec8Bit>>();
-  EXPECT_FALSE(tp5);
-  EXPECT_THAT(tp5.status().message(), HasSubstr("positive overflow"));
+  EXPECT_THAT(tp5,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
   // One less than the capacity for (signed) 8-bits of seconds would overflow.
   auto const ts6 =
       internal::TimestampFromProto(MakeProtoTimestamp(-129, 0)).value();
   auto const tp6 = ts6.get<sys_time<Sec8Bit>>();
-  EXPECT_FALSE(tp6);
-  EXPECT_THAT(tp6.status().message(), HasSubstr("negative overflow"));
+  EXPECT_THAT(tp6,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("negative overflow")));
 }
 
 TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., `MakeTimestamp(absl::Time)`

@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -27,6 +28,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -92,7 +94,7 @@ TEST(InstanceAdminConnectionTest, GetInstancePermanentFailure) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({"test-name"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, GetInstanceTooManyTransients) {
@@ -102,7 +104,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceTooManyTransients) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({"test-name"});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
@@ -175,7 +177,7 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
            .Build()});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
+  EXPECT_THAT(instance, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
@@ -230,7 +232,7 @@ TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
+  EXPECT_THAT(instance, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
@@ -247,7 +249,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
-  EXPECT_EQ(StatusCode::kUnavailable, instance.status().code());
+  EXPECT_THAT(instance, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
@@ -279,7 +281,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstancePermanentFailure) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({"test-name"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
@@ -289,7 +291,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({"test-name"});
-  EXPECT_EQ(StatusCode::kUnavailable, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
@@ -330,7 +332,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigPermanentFailure) {
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
@@ -341,7 +343,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
@@ -396,7 +398,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsPermanentFailure) {
   auto range = conn->ListInstanceConfigs({"test-project"});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsTooManyTransients) {
@@ -409,7 +411,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsTooManyTransients) {
   auto range = conn->ListInstanceConfigs({"test-project"});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
@@ -467,7 +469,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesPermanentFailure) {
   auto range = conn->ListInstances({"test-project", ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstancesTooManyTransients) {
@@ -479,7 +481,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesTooManyTransients) {
   auto range = conn->ListInstances({"test-project", ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, GetIamPolicySuccess) {
@@ -519,7 +521,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicyPermanentFailure) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({"test-instance-name"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, GetIamPolicyTooManyTransients) {
@@ -529,7 +531,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicyTooManyTransients) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({"test-instance-name"});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
@@ -578,7 +580,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicyPermanentFailure) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->SetIamPolicy({"test-instance-name", {}});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, SetIamPolicyNonIdempotent) {
@@ -591,7 +593,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicyNonIdempotent) {
   auto conn = MakeLimitedRetryConnection(mock);
   google::iam::v1::Policy policy;
   auto actual = conn->SetIamPolicy({"test-instance-name", policy});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, SetIamPolicyIdempotent) {
@@ -604,7 +606,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicyIdempotent) {
   google::iam::v1::Policy policy;
   policy.set_etag("test-etag-value");
   auto actual = conn->SetIamPolicy({"test-instance-name", policy});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(InstanceAdminConnectionTest, TestIamPermissionsSuccess) {
@@ -644,7 +646,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsPermanentFailure) {
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(InstanceAdminConnectionTest, TestIamPermissionsTooManyTransients) {
@@ -656,7 +658,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
-  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace

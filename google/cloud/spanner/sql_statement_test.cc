@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -25,6 +26,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AnyOf;
 using ::testing::Eq;
@@ -68,9 +70,8 @@ TEST(SqlStatementTest, GetParameterNotExist) {
                                     {"first", Value("Elwood")}};
   SqlStatement stmt("select * from foo", params);
   auto results = stmt.GetParameter("middle");
-  ASSERT_FALSE(results.ok());
-  EXPECT_EQ(StatusCode::kNotFound, results.status().code());
-  EXPECT_EQ("No such parameter: middle", results.status().message());
+  EXPECT_THAT(results,
+              StatusIs(StatusCode::kNotFound, "No such parameter: middle"));
 }
 
 TEST(SqlStatementTest, OStreamOperatorNoParams) {

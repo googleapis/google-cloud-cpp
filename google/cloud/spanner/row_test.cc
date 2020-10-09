@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <tuple>
 #include <utility>
@@ -24,6 +25,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
 // Given a `vector<StatusOr<Row>>` creates a 'Row::Source' object. This is
@@ -274,8 +276,7 @@ TEST(RowStreamIterator, IterationError) {
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
   EXPECT_FALSE(*it);
-  EXPECT_EQ(StatusCode::kUnknown, it->status().code());
-  EXPECT_EQ("some error", it->status().message());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "some error"));
 
   ++it;
   EXPECT_EQ(it, it);
@@ -474,8 +475,7 @@ TEST(TupleStream, IterationError) {
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
   EXPECT_FALSE(*it);
-  EXPECT_EQ(StatusCode::kUnknown, it->status().code());
-  EXPECT_EQ("some error", it->status().message());
+  EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "some error"));
 
   ++it;
   EXPECT_EQ(it, it);
@@ -487,8 +487,8 @@ TEST(GetSingularRow, BasicEmpty) {
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
   EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(row.status().message(), HasSubstr("no rows"));
+  EXPECT_THAT(row,
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
 }
 
 TEST(GetSingularRow, TupleStreamEmpty) {
@@ -496,8 +496,8 @@ TEST(GetSingularRow, TupleStreamEmpty) {
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
   EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(row.status().message(), HasSubstr("no rows"));
+  EXPECT_THAT(row,
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
 }
 
 TEST(GetSingularRow, BasicSingleRow) {
@@ -530,8 +530,8 @@ TEST(GetSingularRow, BasicTooManyRows) {
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
   EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(row.status().message(), HasSubstr("too many rows"));
+  EXPECT_THAT(
+      row, StatusIs(StatusCode::kInvalidArgument, HasSubstr("too many rows")));
 }
 
 TEST(GetSingularRow, TupleStreamTooManyRows) {
@@ -541,9 +541,8 @@ TEST(GetSingularRow, TupleStreamTooManyRows) {
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
-  EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(row.status().message(), HasSubstr("too many rows"));
+  EXPECT_THAT(
+      row, StatusIs(StatusCode::kInvalidArgument, HasSubstr("too many rows")));
 }
 
 }  // namespace

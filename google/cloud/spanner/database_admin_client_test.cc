@@ -17,6 +17,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -28,6 +29,7 @@ namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
@@ -152,7 +154,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
   auto range = client.ListDatabases(expected_instance);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify DatabaseAdminClient uses GetIamPolicy() correctly.
@@ -209,7 +211,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccGetFailure) {
   auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const&) {
     return absl::optional<google::iam::v1::Policy>{};
   });
-  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, SetIamPolicyOccNoUpdates) {
@@ -312,8 +314,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
   auto actual = client.SetIamPolicy(
       db, [](google::iam::v1::Policy p) { return p; }, RerunPolicyForTesting(),
       BackoffPolicyForTesting());
-  EXPECT_EQ(StatusCode::kAborted, actual.status().code());
-  EXPECT_THAT(actual.status().message(), HasSubstr("test-msg"));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kAborted, HasSubstr("test-msg")));
 }
 
 /// @test Verify DatabaseAdminClient uses TestIamPermissions() correctly.
@@ -508,7 +509,7 @@ TEST(DatabaseAdminClientTest, ListBackups) {
   auto range = client.ListBackups(expected_instance, expected_filter);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify DatabaseAdminClient uses GetBackup() correctly.
@@ -599,7 +600,7 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
   auto range = client.ListBackupOperations(expected_instance, expected_filter);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
@@ -629,7 +630,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
       client.ListDatabaseOperations(expected_instance, expected_filter);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

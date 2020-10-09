@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -36,6 +37,7 @@ namespace spanner_proto = ::google::spanner::v1;
 using ::google::cloud::internal::Idempotency;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -223,8 +225,8 @@ TEST(PartialResultSetResume, PermanentError) {
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("uh-oh-1"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh-1")));
 }
 
 TEST(PartialResultSetResume, TransientNonIdempotent) {
@@ -267,8 +269,8 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
-  EXPECT_EQ(StatusCode::kUnavailable, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("try-again-0"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again-0")));
 }
 
 TEST(PartialResultSetResume, TooManyTransients) {
@@ -291,8 +293,8 @@ TEST(PartialResultSetResume, TooManyTransients) {
   auto v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
-  EXPECT_EQ(StatusCode::kUnavailable, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("try-again-N"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again-N")));
 }
 
 }  // namespace

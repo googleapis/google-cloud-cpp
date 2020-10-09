@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -34,6 +35,7 @@ namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::Eq;
 using ::testing::Return;
@@ -105,9 +107,7 @@ TEST(RowStream, IterateError) {
         break;
 
       case 1:
-        EXPECT_FALSE(row.ok());
-        EXPECT_EQ(row.status().code(), StatusCode::kUnknown);
-        EXPECT_EQ(row.status().message(), "oops");
+        EXPECT_THAT(row, StatusIs(StatusCode::kUnknown, "oops"));
         break;
 
       default:

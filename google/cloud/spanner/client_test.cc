@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
@@ -43,6 +44,7 @@ namespace spanner_proto = ::google::spanner::v1;
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AnyNumber;
@@ -164,8 +166,7 @@ TEST(ClientTest, ReadFailure) {
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
-  EXPECT_FALSE((*iter).ok());
-  EXPECT_EQ((*iter).status().code(), StatusCode::kDeadlineExceeded);
+  EXPECT_THAT(*iter, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 TEST(ClientTest, ExecuteQuerySuccess) {
@@ -252,8 +253,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
-  EXPECT_FALSE((*iter).ok());
-  EXPECT_EQ((*iter).status().code(), StatusCode::kDeadlineExceeded);
+  EXPECT_THAT(*iter, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 TEST(ClientTest, ExecuteBatchDmlSuccess) {
@@ -304,8 +304,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
   auto actual = client.ExecuteBatchDml(txn, request);
 
   EXPECT_STATUS_OK(actual);
-  EXPECT_FALSE(actual->status.ok());
-  EXPECT_EQ(actual->status.message(), "some error");
+  EXPECT_THAT(actual->status, StatusIs(StatusCode::kUnknown, "some error"));
   EXPECT_NE(actual->stats.size(), request.size());
   EXPECT_EQ(actual->stats.size(), 1);
 }
@@ -355,9 +354,8 @@ TEST(ClientTest, CommitError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "blah")));
 
   auto txn = MakeReadWriteTransaction();
-  auto commit = client.Commit(txn, {});
-  EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
-  EXPECT_THAT(commit.status().message(), HasSubstr("blah"));
+  EXPECT_THAT(client.Commit(txn, {}),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("blah")));
 }
 
 TEST(ClientTest, RollbackSuccess) {
@@ -379,9 +377,8 @@ TEST(ClientTest, RollbackError) {
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "oops")));
 
   auto txn = MakeReadWriteTransaction();
-  auto rollback = client.Rollback(txn);
-  EXPECT_EQ(StatusCode::kInvalidArgument, rollback.code());
-  EXPECT_THAT(rollback.message(), HasSubstr("oops"));
+  EXPECT_THAT(client.Rollback(txn),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("oops")));
 }
 
 TEST(ClientTest, MakeConnectionOptionalArguments) {
@@ -483,11 +480,8 @@ TEST(ClientTest, CommitMutatorRollback) {
     return Mutations{mutation};
   };
 
-  auto result = client.Commit(mutator);
-  EXPECT_FALSE(result.ok());
-  EXPECT_EQ(StatusCode::kInvalidArgument, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("blah"));
-
+  EXPECT_THAT(client.Commit(mutator),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("blah")));
   EXPECT_EQ("T", actual_read_params.table);
   EXPECT_EQ(KeySet::All(), actual_read_params.keys);
   EXPECT_THAT(actual_read_params.columns, ElementsAre("C"));
@@ -529,11 +523,8 @@ TEST(ClientTest, CommitMutatorRollbackError) {
     return Mutations{mutation};
   };
 
-  auto result = client.Commit(mutator);
-  EXPECT_FALSE(result.ok());
-  EXPECT_EQ(StatusCode::kInvalidArgument, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("blah"));
-
+  EXPECT_THAT(client.Commit(mutator),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("blah")));
   EXPECT_EQ("T", actual_read_params.table);
   EXPECT_EQ(KeySet::All(), actual_read_params.keys);
   EXPECT_THAT(actual_read_params.columns, ElementsAre("C"));
@@ -590,8 +581,8 @@ TEST(ClientTest, CommitMutatorRuntimeStatusException) {
     auto result = client.Commit([](Transaction const&) -> StatusOr<Mutations> {
       throw RuntimeStatusError(Status());  // OK
     });
-    EXPECT_EQ(StatusCode::kUnknown, result.status().code());
-    EXPECT_THAT(result.status().message(), HasSubstr("OK Status thrown"));
+    EXPECT_THAT(result,
+                StatusIs(StatusCode::kUnknown, HasSubstr("OK Status thrown")));
   } catch (...) {
     FAIL();  // exception consumed
   }
@@ -599,8 +590,7 @@ TEST(ClientTest, CommitMutatorRuntimeStatusException) {
     auto result = client.Commit([](Transaction const&) -> StatusOr<Mutations> {
       throw RuntimeStatusError(Status(StatusCode::kCancelled, "uh oh"));
     });
-    EXPECT_EQ(StatusCode::kCancelled, result.status().code());
-    EXPECT_EQ(result.status().message(), "uh oh");
+    EXPECT_THAT(result, StatusIs(StatusCode::kCancelled, HasSubstr("uh oh")));
   } catch (...) {
     FAIL();  // exception consumed
   }
@@ -655,8 +645,8 @@ TEST(ClientTest, CommitMutatorTooManyFailures) {
       ExponentialBackoffPolicy(std::chrono::microseconds(10),
                                std::chrono::microseconds(10), 2.0)
           .clone());
-  EXPECT_EQ(StatusCode::kAborted, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("Aborted transaction"));
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kAborted, HasSubstr("Aborted transaction")));
   EXPECT_EQ(maximum_failures + 1, commit_attempts);  // one too many
 }
 
@@ -675,9 +665,8 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
   };
 
   Client client(conn);
-  auto result = client.Commit(mutator);
-  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(client.Commit(mutator),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
   EXPECT_EQ(1, commit_attempts);  // no reruns
 }
 
