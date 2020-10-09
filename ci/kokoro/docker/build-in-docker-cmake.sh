@@ -430,6 +430,14 @@ if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
+# Report any differences created by the build, some steps may modify the code
+# *after* the style-checking tools run (e.g. the `*.bzl` file generators do).
+if [[ "${CHECK_STYLE:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
+  echo "================================================================"
+  io::log_yellow "checking for post-build changes in the code"
+  git diff --ignore-submodules=all --color --exit-code .
+fi
+
 if command -v ccache; then
   echo "================================================================"
   io::log_yellow "ccache stats"
