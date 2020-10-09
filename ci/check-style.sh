@@ -64,6 +64,24 @@ time {
     xargs -P "${NCPU}" -n 1 -0 cmake-format -i
 }
 
+# TODO(#4501) - this fixup can be removed if #include <absl/...> works
+# Apply transformations to fix errors on MSVC+x86. See the bug for a detailed
+# explanation as to why this is needed:
+#   https://github.com/googleapis/google-cloud-cpp/issues/4501
+# This should run before clang-format because it might alter the order of any
+# includes.
+printf "%-30s" "Running Abseil header fixes:"
+time {
+  git ls-files -z |
+    grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
+    grep -zE '\.(h|cc)$' |
+    while IFS= read -r -d $'\0' file; do
+      sed -e 's;#include "absl/strings/str_\(cat\|replace\|join\).h";#include "google/cloud/internal/absl_str_\1_quiet.h";' \
+        "${file}" >"${file}.tmp"
+      replace_original_if_changed "${file}" "${file}.tmp"
+    done
+}
+
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
