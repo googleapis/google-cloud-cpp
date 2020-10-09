@@ -38,24 +38,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @see https://cloud.google.com/pubsub for an overview of the Cloud Pub/Sub
  *   service.
  *
- * @par Example
- *
- * @code
- * namespace pubsub = ::google::cloud::pubsub;
- *
- * auto subscription = pubsub::Subscription("my-project", "my-subscription");
- * auto subscriber = pubsub::Subscriber(MakeSubscriberConnection());
- * subscriber->Subscribe(
- *     subscription, [](Message m, AckHandler h) {
- *         std::cout << "received " << m.message_id() << "\n";
- *         std::move(h).ack();
- *     }).then(
- *     [](future<Status> f) {
- *         auto s = f.get();
- *         if (s) return;
- *         std::cout << "unrecoverable error in subscription: " << s << "\n";
- *     });
- * @endcode
+ * @par Example: subscriber quickstart
+ * @snippet samples.cc subscribe
  *
  * @par Performance
  *
