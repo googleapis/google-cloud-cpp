@@ -434,7 +434,7 @@ fi
 # *after* the style-checking tools run (e.g. the `*.bzl` file generators do).
 if [[ "${CHECK_STYLE:-}" == "yes" ]]; then
   echo "================================================================"
-  io::log_yellow "checking for post-build changes is the code"
+  io::log_yellow "checking for post-build changes in the code"
   git diff --ignore-submodules=all --color --exit-code .
 fi
 
