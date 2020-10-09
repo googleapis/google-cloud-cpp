@@ -142,7 +142,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  *
  * @see Before enabling Uniform Bucket Level Access please
  *     review the [feature documentation][ubla-link], as well as
- *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
+ *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
  *
  * [ubla-link]:
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access
@@ -203,7 +203,7 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  *
  * @see Before enabling Uniform Bucket Level Access please review the
  *     [feature documentation][ubla-link], as well as
- *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
+ *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
  *
  * [ubla-link]:
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access
@@ -654,7 +654,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    *
    * @see Before enabling Uniform Bucket Level Access please review the
    *     [feature documentation][ubla-link], as well as
-   *     ["Should you use Uniform bucket-level access ?"][ubla-should-link].
+   *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
    *
    * [ubla-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access
