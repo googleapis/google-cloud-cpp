@@ -100,6 +100,11 @@ intended to help you get up and running in a matter of minutes. This
 how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
 
+* [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
+* [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
+* [Google Cloud Pub/Sub Quickstart](google/cloud/pubsub/quickstart/README.md)
+* [Google Cloud Storage Quickstart](google/cloud/storage/quickstart/README.md)
+
 As an example, the following code snippet, taken from [Google Cloud
 Storage](google/cloud/storage/README.md), should give you a taste of what it's
 like to use one of these C++ libraries.
