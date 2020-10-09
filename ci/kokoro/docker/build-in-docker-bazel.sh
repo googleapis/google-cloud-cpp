@@ -173,7 +173,7 @@ if should_run_integration_tests; then
       "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
   fi
 
-  if ! force_on_prod "pubsub"; then
+  if ! test_against_production "pubsub"; then
     echo "================================================================"
     excluded_from_production_targets+=("-//google/cloud/pubsub/...")
     io::log_yellow "running pubsub integration tests via Bazel+Emulator"
@@ -186,7 +186,7 @@ if should_run_integration_tests; then
   "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
     "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
 
-  if ! force_on_prod "bigtable"; then
+  if ! test_against_production "bigtable"; then
     excluded_from_production_targets+=("-//google/cloud/bigtable/...")
     # TODO(#441) - remove the for loops below.
     # Sometimes the integration tests manage to crash the Bigtable emulator.
