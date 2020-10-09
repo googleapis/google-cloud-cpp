@@ -531,7 +531,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
-  auto const expected_status = Status{StatusCode::kOk, "fine"};
+  auto const expected_status = Status{};
   FakeStream fake_stream(true, true, expected_status);
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
