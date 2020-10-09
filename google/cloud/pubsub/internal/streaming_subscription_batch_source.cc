@@ -78,11 +78,6 @@ future<Status> StreamingSubscriptionBatchSource::ExtendLeases(
   return make_ready_future(Status{});
 }
 
-future<StatusOr<google::pubsub::v1::PullResponse>>
-StreamingSubscriptionBatchSource::Pull(std::int32_t) {
-  return {};
-}
-
 namespace {
 StatusOr<StreamingSubscriptionBatchSource::StreamShptr> Unknown(std::string m) {
   return Status(StatusCode::kUnknown, std::move(m));

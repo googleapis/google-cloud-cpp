@@ -73,6 +73,7 @@ class SubscriptionLeaseManagement
             std::move(timer_factory), std::move(child), max_deadline_time));
   }
 
+  void Start(BatchCallback cb) override;
   void Shutdown() override;
   future<Status> AckMessage(std::string const& ack_id,
                             std::size_t size) override;
@@ -82,8 +83,6 @@ class SubscriptionLeaseManagement
                           std::size_t total_size) override;
   future<Status> ExtendLeases(std::vector<std::string> ack_ids,
                               std::chrono::seconds extension) override;
-  future<StatusOr<google::pubsub::v1::PullResponse>> Pull(
-      std::int32_t max_count) override;
 
  private:
   SubscriptionLeaseManagement(
@@ -98,7 +97,8 @@ class SubscriptionLeaseManagement
         shutdown_manager_(std::move(shutdown_manager)),
         max_deadline_time_(max_deadline_time) {}
 
-  void OnPull(StatusOr<google::pubsub::v1::PullResponse> const& response);
+  void OnRead(
+      StatusOr<google::pubsub::v1::StreamingPullResponse> const& response);
 
   /// If needed asynchronous update the message leases in the server.
   void RefreshMessageLeases(std::unique_lock<std::mutex> lk);

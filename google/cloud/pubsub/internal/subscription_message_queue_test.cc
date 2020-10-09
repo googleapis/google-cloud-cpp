@@ -94,14 +94,14 @@ TEST(SubscriptionMessageQueueTest, Basic) {
     os << "received_messages { " << kTextM2 << "}";
     return std::move(os).str();
   }();
-  google::pubsub::v1::PullResponse response;
+  google::pubsub::v1::StreamingPullResponse response;
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(text_response, &response));
 
   uut.Read(1);
   EXPECT_THAT(received, ElementsAre());
 
-  uut.OnPull(response);
+  uut.OnRead(response);
   uut.Read(1);
 
   EXPECT_THAT(received, ElementsAre(IsProtoEqual(m0), IsProtoEqual(m1)));

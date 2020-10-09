@@ -38,8 +38,6 @@ add_library(
     internal/batching_publisher_connection.h
     internal/default_retry_policies.cc
     internal/default_retry_policies.h
-    internal/default_subscription_batch_source.cc
-    internal/default_subscription_batch_source.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
     internal/ordering_key_publisher_connection.cc
@@ -169,6 +167,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     add_library(
         pubsub_client_testing # cmake-format: sort
+        testing/fake_streaming_pull.cc
+        testing/fake_streaming_pull.h
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
@@ -180,7 +180,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils
-               google_cloud_cpp_common googleapis-c++::pubsub_protos)
+               google_cloud_cpp_common googleapis-c++::pubsub_protos
+               GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsub_client_testing)
     target_compile_options(pubsub_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
@@ -190,7 +191,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
-        internal/default_subscription_batch_source_test.cc
         internal/emulator_overrides_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc

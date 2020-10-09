@@ -36,13 +36,16 @@ using BatchCallback =
  * Defines the interface for message batch sources.
  *
  * A message source generates messages via `BatchCallback` callbacks. Typically
- * messages are obtained by calling `AsyncPull()` on a `SubscriberStub`, but we
- * also need to mock this class in our tests and we implement message lease
- * management as a decorator.
+ * messages are obtained by calling `AsyncStreamingPull()` on a
+ * `SubscriberStub`, but we also need to mock this class in our tests and we
+ * implement message lease management as a decorator.
  */
 class SubscriptionBatchSource {
  public:
   virtual ~SubscriptionBatchSource() = default;
+
+  /// Start the source.
+  virtual void Start(BatchCallback cb) = 0;
 
   /// Shutdown the source, cancel any outstanding requests and or timers. No
   /// callbacks should be generated after this call.
@@ -84,12 +87,6 @@ class SubscriptionBatchSource {
    */
   virtual future<Status> ExtendLeases(std::vector<std::string> ack_ids,
                                       std::chrono::seconds extension) = 0;
-
-  /**
-   * Request more messages from the source.
-   */
-  virtual future<StatusOr<google::pubsub::v1::PullResponse>> Pull(
-      std::int32_t max_count) = 0;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

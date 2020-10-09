@@ -43,7 +43,7 @@ class SubscriptionMessageQueue : public SubscriptionMessageSource {
   future<Status> NackMessage(std::string const& ack_id,
                              std::size_t size) override;
 
-  void OnPull(google::pubsub::v1::PullResponse r);
+  void OnRead(google::pubsub::v1::StreamingPullResponse r);
 
  private:
   void DrainQueue(std::unique_lock<std::mutex> lk);

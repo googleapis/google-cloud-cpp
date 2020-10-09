@@ -68,10 +68,7 @@ class SubscriptionFlowControl
         queue_(child_) {}
 
   void MessageHandled(std::size_t size);
-  void PullMore();
-  void PullIfNeeded(std::unique_lock<std::mutex> lk);
-  void OnPull(StatusOr<google::pubsub::v1::PullResponse> response,
-              std::int32_t pull_message_count);
+  void OnRead(StatusOr<google::pubsub::v1::StreamingPullResponse> r);
 
   std::size_t total_messages() const {
     return message_count_ + outstanding_pull_count_;

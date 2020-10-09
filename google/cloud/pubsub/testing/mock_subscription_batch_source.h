@@ -27,6 +27,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class MockSubscriptionBatchSource
     : public pubsub_internal::SubscriptionBatchSource {
  public:
+  MOCK_METHOD1(Start, void(pubsub_internal::BatchCallback));
   MOCK_METHOD0(Shutdown, void());
   MOCK_METHOD2(AckMessage,
                future<Status>(std::string const& ack_id, std::size_t size));
@@ -36,8 +37,6 @@ class MockSubscriptionBatchSource
                                         std::size_t total_size));
   MOCK_METHOD2(ExtendLeases, future<Status>(std::vector<std::string> ack_ids,
                                             std::chrono::seconds extension));
-  MOCK_METHOD1(
-      Pull, future<StatusOr<google::pubsub::v1::PullResponse>>(std::int32_t));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
