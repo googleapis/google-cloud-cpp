@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -1232,6 +1233,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
+  google::cloud::LogSink::EnableStdClog();
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto conn = MakeConnection(
@@ -1244,15 +1246,14 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(MakeTestTransaction()));
 
-  auto constexpr kTextResponse = R"pb(
-    stats: { row_count_lower_bound: 42 }
-  )pb";
-  spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(kTextResponse, &response));
+  auto constexpr kTextResponse = R"pb(metadata: {}
+                                      stats: { row_count_lower_bound: 42 })pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(
+          ByMove(MakeFailingReader({grpc::StatusCode::UNAVAILABLE,
+                                    "try-again in ExecutePartitionedDml"}))))
+      .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
-  EXPECT_CALL(*mock, ExecuteSql(_, _))
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(Return(response));
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
 
@@ -1290,9 +1291,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
 
   // A `kInternal` status can be treated as transient based on the message.
   // This tests that other `kInternal` errors are treated as permanent.
-  EXPECT_CALL(*mock, ExecuteSql(_, _))
-      .WillOnce(Return(Status(StatusCode::kInternal, "permanent failure")));
-
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          {grpc::StatusCode::INTERNAL, "permanent failure"}))));
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
   EXPECT_THAT(result,
@@ -1311,10 +1312,13 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(MakeTestTransaction()));
 
-  EXPECT_CALL(*mock, ExecuteSql(_, _))
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
-                                    "try-again in ExecutePartitionedDml")));
+      // This won't compile without `Unused` despite what the gMock docs say.
+      .WillRepeatedly([](Unused, Unused) {
+        return MakeFailingReader({grpc::StatusCode::UNAVAILABLE,
+                                  "try-again in ExecutePartitionedDml"});
+      });
 
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
@@ -1334,22 +1338,20 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .WillOnce(Return(MakeTestTransaction("2345678901")));
 
-  auto constexpr kTextResponse = R"pb(
-    stats: { row_count_lower_bound: 99999 }
-  )pb";
-  spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(kTextResponse, &response));
+  auto constexpr kTextResponse =
+      R"pb(metadata: {}
+           stats: { row_count_lower_bound: 99999 })pb";
 
   // `kInternal` is usually a permanent failure, but if the message indicates
   // the gRPC connection has been closed (which these do), they are treated as
   // transient failures.
-  EXPECT_CALL(*mock, ExecuteSql(_, _))
-      .WillOnce(
-          Return(Status(StatusCode::kInternal,
-                        "Received unexpected EOS on DATA frame from server")))
-      .WillOnce(Return(
-          Status(StatusCode::kInternal, "HTTP/2 error code: INTERNAL_ERROR")))
-      .WillOnce(Return(response));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          {grpc::StatusCode::INTERNAL,
+           "Received unexpected EOS on DATA frame from server"}))))
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          {grpc::StatusCode::INTERNAL, "HTTP/2 error code: INTERNAL_ERROR"}))))
+      .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result =
       conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
