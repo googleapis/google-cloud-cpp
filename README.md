@@ -29,10 +29,10 @@ This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
 * [Google Cloud BigQuery](google/cloud/bigquery/README.md) (experimental)
-* [Google Cloud Bigtable](google/cloud/bigtable/README.md)
-* [Google Cloud Spanner](google/cloud/spanner/README.md)
-* [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) (experimental)
-* [Google Cloud Storage](google/cloud/storage/README.md)
+* [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
+* [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
+* [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md) (experimental)
+* [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
 
 See each library's `README.md` file for more information about:
 
@@ -42,8 +42,23 @@ See each library's `README.md` file for more information about:
 * The library's support status if not Generally Available (GA); unless noted in
   a library's `README.md`, these libraries are all GA and supported by Google.
 
-**NOTE:** This repo and these libraries do **not** follow [Semantic
-Versioning](http://semver.org/).
+## Install
+
+On most platforms, with all dependencies installed, the following commands will
+compile and install all the libraries:
+
+```sh
+cmake -H. -Bcmake-out
+cmake --build cmake-out
+sudo cmake --build cmake-out --target install
+```
+
+You can find detailed instructions on how to install and/or compile all the
+dependencies for several platforms in the [packaging guide](doc/packaging.md).
+
+For application developers who prefer to build from source, the quickstart
+guides for each library (see above) include instructions on how to incorporate
+the library into their CMake-based or Bazel-based builds.
 
 ## Supported Platforms
 
@@ -59,6 +74,11 @@ intended to help you get up and running in a matter of minutes. This
 `quickstart/` directory contains a minimal "Hello World" program demonstrating
 how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
+
+* [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
+* [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
+* [Google Cloud Pub/Sub Quickstart](google/cloud/pubsub/quickstart/README.md)
+* [Google Cloud Storage Quickstart](google/cloud/storage/quickstart/README.md)
 
 As an example, the following code snippet, taken from [Google Cloud
 Storage](google/cloud/storage/README.md), should give you a taste of what it's
