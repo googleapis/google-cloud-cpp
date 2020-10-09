@@ -81,9 +81,9 @@ sudo cmake --build cmake-out --target install
 You can find detailed instructions on how to install and/or compile all the
 dependencies for several platforms in the [packaging guide](doc/packaging.md).
 
-For application developers that prefer to build from source, the quickstart
+For application developers who prefer to build from source, the quickstart
 guides for each library (see above) include instructions on how to incorporate
-the library into your CMake-based or Bazel-based builds.
+the library into their CMake-based or Bazel-based builds.
 
 ## Supported Platforms
 
