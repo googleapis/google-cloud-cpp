@@ -100,7 +100,6 @@ TEST(ThroughputResult, HeaderMatches) {
 }
 
 TEST(ThroughputResult, QuoteCsv) {
-  std::ostringstream os;
   ThroughputResult result{};
 
   result.status = Status{StatusCode::kInternal, R"(message "with quotes")"};
