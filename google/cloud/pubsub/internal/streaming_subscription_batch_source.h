@@ -78,6 +78,7 @@ class StreamingSubscriptionBatchSource
       std::int32_t max_count) override;
 
   using AsyncPullStream = SubscriberStub::AsyncPullStream;
+  using StreamShptr = std::shared_ptr<AsyncPullStream>;
 
   enum class StreamState {
     kNull,
@@ -96,7 +97,6 @@ class StreamingSubscriptionBatchSource
 
   void StartStream();
 
-  using StreamShptr = std::shared_ptr<AsyncPullStream>;
   void OnStreamStart(StatusOr<StreamShptr> stream);
   void ReadLoop();
 
