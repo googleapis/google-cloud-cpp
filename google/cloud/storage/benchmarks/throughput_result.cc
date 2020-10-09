@@ -13,16 +13,36 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
+#include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
+namespace {
+template <typename T>
+std::string QuoteCsv(T const& element) {
+  std::ostringstream os;
+  os << element;
+  std::string result = os.str();
+  if (result.find_first_of("\",\r\n") == std::string::npos) {
+    return result;
+  }
+
+  // Enclose the string in double quotes, and escape other double quotes.
+  return absl::StrCat(R"(")", absl::StrReplaceAll(result, {{R"(")", R"("")"}}),
+                      R"(")");
+}
+}  // namespace
+
 void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
   os << ToString(r.op) << ',' << r.object_size << ',' << r.app_buffer_size
      << ',' << r.lib_buffer_size << ',' << r.crc_enabled << ',' << r.md5_enabled
      << ',' << ToString(r.api) << ',' << r.elapsed_time.count() << ','
-     << r.cpu_time.count() << ',' << r.status << '\n';
+     << r.cpu_time.count() << ',' << QuoteCsv(r.status) << '\n';
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {

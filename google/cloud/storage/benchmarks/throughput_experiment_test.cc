@@ -62,8 +62,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
                                       /*enable_crc32c=*/false,
                                       /*enable_md5=*/false};
     auto result = e->Run(bucket_name_, object_name, config);
-    EXPECT_EQ(result.status, StatusCode::kOk);
-    if (result.status == StatusCode::kOk) {
+    EXPECT_STATUS_OK(result.status);
+    if (result.status.ok()) {
       auto status = client->DeleteObject(bucket_name_, object_name);
       EXPECT_STATUS_OK(status);
     }
