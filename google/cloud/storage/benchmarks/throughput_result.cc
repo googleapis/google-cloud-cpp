@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_replace.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include <sstream>
 #include <string>
 
