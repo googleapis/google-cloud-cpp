@@ -886,7 +886,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00155">155</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00156">156</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -1261,7 +1261,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is not idempotent. While each request performed by this function is retried based on the client policies, the operation itself stops on the first request that fails.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string <span class="keyword">const</span>&amp; bucket_name,</div><div class="line">     std::string <span class="keyword">const</span>&amp; destination_object_name,</div><div class="line">     std::vector&lt;gcs::ComposeSourceObject&gt; <span class="keyword">const</span>&amp; compose_objects) {</div><div class="line">    std::string prefix = <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#af6c301b7d4aa23e8f9bfa7cddb882882">gcs::CreateRandomPrefixName</a>(<span class="stringliteral">&quot;.tmpfiles&quot;</span>);</div><div class="line">    StatusOr&lt;gcs::ObjectMetadata&gt; composed_object =</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a848d7fcfc556c5e45fc552ea81e68054">ComposeMany</a>(client, bucket_name, compose_objects, prefix,</div><div class="line">                    destination_object_name, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!composed_object) {</div><div class="line">      <span class="comment">// If this is an effect of some transient unavailability, stray temporary</span></div><div class="line">      <span class="comment">// might be left over. You can use `DeleteByPrefix()` with `prefix` as</span></div><div class="line">      <span class="comment">// argument to delete them.</span></div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(composed_object.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Composed new object &quot;</span> &lt;&lt; composed_object-&gt;name()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; composed_object-&gt;bucket()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\nFull metadata: &quot;</span> &lt;&lt; *composed_object &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l03405">3405</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l03410">3410</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1432,7 +1432,7 @@ template&lt;typename... Options&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l03280">3280</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l03285">3285</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1911,7 +1911,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00171">171</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00172">172</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -1987,7 +1987,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00228">228</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00230">230</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2025,7 +2025,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00271">271</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00273">273</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2063,7 +2063,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00309">309</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00311">311</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2139,7 +2139,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00353">353</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00355">355</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2177,7 +2177,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00403">403</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00405">405</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2215,7 +2215,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00448">448</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00450">450</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2253,7 +2253,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00489">489</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00491">491</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2557,7 +2557,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00165">165</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00166">166</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2633,7 +2633,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00223">223</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00225">225</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2671,7 +2671,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00267">267</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00269">269</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2709,7 +2709,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00304">304</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00306">306</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2785,7 +2785,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00348">348</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00350">350</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2823,7 +2823,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00397">397</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00399">399</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2861,7 +2861,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00443">443</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00445">445</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -2899,7 +2899,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00484">484</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00486">486</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4049,7 +4049,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00181">181</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00182">182</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4125,7 +4125,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00238">238</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00240">240</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4163,7 +4163,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00279">279</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00281">281</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4201,7 +4201,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00317">317</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00319">319</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4277,7 +4277,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00363">363</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00365">365</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4315,7 +4315,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00413">413</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00415">415</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4353,7 +4353,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00458">458</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00460">460</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4391,7 +4391,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00497">497</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00499">499</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4891,7 +4891,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00159">159</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00160">160</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4929,7 +4929,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00218">218</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00220">220</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -4967,7 +4967,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00263">263</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00265">265</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5005,7 +5005,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00299">299</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00301">301</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5081,7 +5081,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00343">343</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00345">345</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5119,7 +5119,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00391">391</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00393">393</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5157,7 +5157,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00438">438</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00440">440</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5195,7 +5195,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00479">479</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00481">481</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5499,7 +5499,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00176">176</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00177">177</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5575,7 +5575,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00233">233</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00235">235</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5613,7 +5613,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00275">275</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00277">277</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5651,7 +5651,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00313">313</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00315">315</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5727,7 +5727,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00358">358</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00360">360</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5765,7 +5765,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00408">408</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00410">410</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5803,7 +5803,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00453">453</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00455">455</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -5841,7 +5841,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00493">493</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00495">495</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6145,7 +6145,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00186">186</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00187">187</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6221,7 +6221,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00243">243</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00245">245</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6259,7 +6259,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00283">283</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00285">285</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6297,7 +6297,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00321">321</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00323">323</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6373,7 +6373,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00368">368</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00370">370</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6411,7 +6411,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00418">418</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00420">420</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6449,7 +6449,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00463">463</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00465">465</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
@@ -6487,7 +6487,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00501">501</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00503">503</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
