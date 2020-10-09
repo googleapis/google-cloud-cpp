@@ -41,7 +41,7 @@ MATCHER_P(
   }
   std::string status = arg.substr(pos);
   if (!status.empty() && status.back() == '\n') status.pop_back();
-  if (status.size() < 2 || status.front() != '"' ||  status.back() != '"') {
+  if (status.size() < 2 || status.front() != '"' || status.back() != '"') {
     *result_listener << "Missing opening or closing quote: " << status;
     return false;
   }
@@ -60,7 +60,6 @@ StatusOr<std::string> ToString(ThroughputResult const& result) {
   };
   return os.str();
 }
-
 
 TEST(ThroughputResult, HeaderMatches) {
   std::ostringstream header_stream;
