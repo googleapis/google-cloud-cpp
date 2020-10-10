@@ -112,6 +112,9 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    internal/absl_str_cat_quiet.h
+    internal/absl_str_join_quiet.h
+    internal/absl_str_replace_quiet.h
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/backoff_policy.cc
@@ -150,6 +153,8 @@ add_library(
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h
+    internal/user_agent_prefix.cc
+    internal/user_agent_prefix.h
     internal/utility.h
     internal/version_info.h
     kms_key_name.cc
@@ -240,6 +245,7 @@ if (BUILD_TESTING)
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
+        internal/user_agent_prefix_test.cc
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
@@ -342,6 +348,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
         internal/async_read_stream_impl.h
+        internal/async_read_write_stream_impl.h
         internal/async_retry_loop.h
         internal/async_retry_unary_rpc.h
         internal/async_rpc_details.h
@@ -353,6 +360,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/pagination_range.h
+        internal/polling_loop.h
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
         internal/retry_loop_helpers.h
@@ -390,11 +398,13 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
+            internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/log_wrapper_test.cc
             internal/pagination_range_test.cc
+            internal/polling_loop_test.cc
             internal/retry_loop_test.cc
             internal/time_utils_test.cc)
 

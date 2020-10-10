@@ -64,7 +64,8 @@ future<Status> SubscriptionMessageQueue::NackMessage(std::string const& ack_id,
   return source_->NackMessage(ack_id, size);
 }
 
-void SubscriptionMessageQueue::OnPull(google::pubsub::v1::PullResponse r) {
+void SubscriptionMessageQueue::OnRead(
+    google::pubsub::v1::StreamingPullResponse r) {
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_) return;
   std::move(r.mutable_received_messages()->begin(),

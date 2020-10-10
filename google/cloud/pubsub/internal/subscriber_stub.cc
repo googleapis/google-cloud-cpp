@@ -83,54 +83,16 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
-  future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::PullRequest const& request) override {
-    return cq.MakeUnaryRpc(
-        [this](grpc::ClientContext* context,
-               google::pubsub::v1::PullRequest const& request,
-               grpc::CompletionQueue* cq) {
-          return grpc_stub_->AsyncPull(context, request, cq);
-        },
-        request, std::move(context));
-  }
-
-  future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::AcknowledgeRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
-                   google::pubsub::v1::AcknowledgeRequest const& request,
-                   grpc::CompletionQueue* cq) {
-              return grpc_stub_->AsyncAcknowledge(context, request, cq);
-            },
-            request, std::move(context))
-        .then([](future<StatusOr<google::protobuf::Empty>> f) {
-          auto r = f.get();
-          if (!r) return std::move(r).status();
-          return Status{};
-        });
-  }
-
-  future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
-                   google::pubsub::v1::ModifyAckDeadlineRequest const& request,
-                   grpc::CompletionQueue* cq) {
-              return grpc_stub_->AsyncModifyAckDeadline(context, request, cq);
-            },
-            request, std::move(context))
-        .then([](future<StatusOr<google::protobuf::Empty>> f) {
-          auto r = f.get();
-          if (!r) return std::move(r).status();
-          return Status{};
+      google::pubsub::v1::StreamingPullRequest const&) override {
+    return google::cloud::internal::MakeStreamingReadWriteRpc<
+        google::pubsub::v1::StreamingPullRequest,
+        google::pubsub::v1::StreamingPullResponse>(
+        cq, std::move(context),
+        [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return grpc_stub_->PrepareAsyncStreamingPull(context, cq);
         });
   }
 

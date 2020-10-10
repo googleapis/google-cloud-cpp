@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
-#include "google/cloud/pubsub/internal/default_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 
@@ -158,14 +158,15 @@ class SubscriptionSessionImpl
 
 future<Status> CreateSubscriptionSession(
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
-    google::cloud::CompletionQueue const& executor,
+    google::cloud::CompletionQueue const& executor, std::string client_id,
     pubsub::SubscriberConnection::SubscribeParams p,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
-      executor, stub, std::move(p.full_subscription_name),
-      std::move(retry_policy), std::move(backoff_policy));
+  auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
+      executor, shutdown_manager, stub, std::move(p.full_subscription_name),
+      std::move(client_id), p.options, std::move(retry_policy),
+      std::move(backoff_policy));
   auto lease_management = SubscriptionLeaseManagement::Create(
       executor, shutdown_manager, std::move(batch),
       p.options.max_deadline_time());
@@ -192,9 +193,10 @@ future<Status> CreateTestingSubscriptionSession(
             .clone();
   }
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto batch = std::make_shared<DefaultSubscriptionBatchSource>(
-      executor, stub, std::move(p.full_subscription_name),
-      std::move(retry_policy), std::move(backoff_policy));
+  auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
+      executor, shutdown_manager, stub, std::move(p.full_subscription_name),
+      "test-client-id", p.options, std::move(retry_policy),
+      std::move(backoff_policy));
 
   auto cq = executor;  // need a copy to make it mutable
   auto timer = [cq](std::chrono::system_clock::time_point) mutable {

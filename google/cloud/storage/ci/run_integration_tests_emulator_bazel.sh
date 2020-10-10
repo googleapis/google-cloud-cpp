@@ -26,6 +26,8 @@ fi
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN="$1"
 shift
+BAZEL_VERB="$1"
+shift
 bazel_test_args=("$@")
 
 # Configure run_testbench_utils.sh to run the GCS testbench.
@@ -41,7 +43,7 @@ production_only_targets=(
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
 )
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "${production_only_targets[@]}"
 
@@ -70,6 +72,7 @@ done
 # are missing too.
 testbench_args=(
   "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
+  "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 )
@@ -82,7 +85,7 @@ testbench_args=(
 # We need to forward some environment variables suitable for running against
 # the testbench. Note that the HMAC service account is completely invalid and
 # it is not unique to each test, neither is a problem when using the emulator.
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" "${testbench_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${testbench_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/storage/...:all" \
   "${excluded_targets[@]}"

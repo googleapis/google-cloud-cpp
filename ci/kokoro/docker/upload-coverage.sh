@@ -24,7 +24,7 @@ fi
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
-if [[ "${BUILD_TYPE:-}" != "Coverage" ]]; then
+if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
   # Not a code coverage build, exit silently.
   exit 0
 fi
@@ -36,18 +36,26 @@ readonly BUILD_IMAGE
 shift
 docker_flags=("${@}")
 
-if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
-  echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
-  exit 0
-fi
+# To debug code coverage reports on your local machine, create your own
+# codecov.io account, look in the settings for your upload token, then run the
+# build with your own token set in the environment as follows:
+# `CODECOV_TOKEN=<your-token> build.sh coverage`
+#
+# A copy of the uploaded coverage report should be saved to your BUILD_OUTPUT
+# directory named "coverage-report.txt".
+if [[ -z "${CODECOV_TOKEN:-}" ]]; then
+  if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
+    echo "Will not upload code coverage as KOKORO_GFILE_DIR not set."
+    exit 0
+  fi
 
-if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
-  echo "Will not upload code coverage as the upload token is not available."
-  exit 0
+  if [[ ! -r "${KOKORO_GFILE_DIR}/codecov-io-upload-token" ]]; then
+    echo "Will not upload code coverage as the upload token is not available."
+    exit 0
+  fi
+  CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
+  readonly CODECOV_TOKEN
 fi
-
-CODECOV_TOKEN="$(cat "${KOKORO_GFILE_DIR}/codecov-io-upload-token")"
-readonly CODECOV_TOKEN
 
 # Because Kokoro checks out the code in `detached HEAD` mode there is no easy
 # way to discover what is the current branch (and Kokoro does not expose the
@@ -91,18 +99,31 @@ docker_flags+=(
   "--env" "CI_JOB_ID=${KOKORO_BUILD_NUMBER:-}"
 )
 
-echo -n "Uploading code coverage to codecov.io..."
 # This controls the output format from bash's `time` command.
-readonly TIMEFORMAT="DONE in %R seconds"
-# Run the upload script from codecov.io within a Docker container. Save the log
-# to a file because it can be very large (multiple MiB in size).
+readonly TIMEFORMAT="DONE in %R seconds\n"
+
+# We first merge all the coverage.dat files into a single file. This reduces
+# the overall file size from about 900MB to about 16MB.
+echo -n "Merging coverage data"
+readonly MERGED_COVERAGE="merged-coverage.lcov"
 time {
-  sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -y /v/.codecov.yml >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
-  exit_status=$?
+  lcov_flags=()
+  while read -r file; do
+    echo -n "."
+    lcov_flags+=("--add-tracefile" "${file}")
+  done < <(find "${BUILD_HOME}" -name "coverage.dat")
+  echo
+  lcov --quiet "${lcov_flags[@]}" --output-file "${BUILD_HOME}/${MERGED_COVERAGE}"
 }
 
-if [[ ${exit_status} != 0 ]]; then
-  # Only print the log if there is an error.
-  dump_log "${BUILD_OUTPUT}/codecov.log"
-fi
+echo -n "Uploading code coverage to codecov.io..."
+codecov_flags=(
+  "-X" "gcov"
+  "-f" "/h/${MERGED_COVERAGE}"
+  "-q" "/v/${BUILD_OUTPUT}/coverage-report.txt"
+)
+# Run the upload script from codecov.io within a Docker container.
+time {
+  sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
+    "/bin/bash <(curl -s https://codecov.io/bash) ${codecov_flags[*]}"
+}

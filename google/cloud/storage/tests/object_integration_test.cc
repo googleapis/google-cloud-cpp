@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
 #include <algorithm>
@@ -376,7 +377,7 @@ TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
 
   auto object_name = MakeRandomObjectName();
 
-  // Create the object, but only if it does not exist already. Expect its lenght
+  // Create the object, but only if it does not exist already. Expect its length
   // to be 3 bytes.
   auto os =
       client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
@@ -388,7 +389,11 @@ TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
 
   os.Close();
   auto meta = os.metadata();
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  if (!UsingGrpc()) {
+    EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+    EXPECT_THAT(meta.status(),
+                testing_util::StatusIs(StatusCode::kInvalidArgument));
+  }
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
@@ -443,7 +448,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
 
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   // This test makes no sense when using the gRPC API.
-  if (UsingGrpc()) return;
+  if (UsingGrpc()) GTEST_SKIP();
 
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -800,7 +805,12 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  if (UsingGrpc()) {
+    // TODO(5030): DeleteResumableUpload doesn't work with gRPC yet.
+    GTEST_SKIP();
+  }
+  StatusOr<Client> client = MakeIntegrationTestClient(
+      absl::make_unique<LimitedErrorCountRetryPolicy>(1));
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();

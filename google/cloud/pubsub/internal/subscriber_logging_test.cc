@@ -136,68 +136,72 @@ TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
                              HasSubstr("test-subscription-name"))));
 }
 
-TEST_F(SubscriberLoggingTest, AsyncPull) {
+TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncPull)
+  EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([](google::cloud::CompletionQueue&,
                    std::unique_ptr<grpc::ClientContext>,
-                   google::pubsub::v1::PullRequest const&) {
-        return make_ready_future(
-            make_status_or(google::pubsub::v1::PullResponse{}));
+                   google::pubsub::v1::StreamingPullRequest const&) {
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        EXPECT_CALL(*stream, Cancel).Times(1);
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([&] {
+              return make_ready_future(absl::make_optional(
+                  google::pubsub::v1::StreamingPullResponse{}));
+            })
+            .WillOnce([&] {
+              return make_ready_future(
+                  absl::optional<google::pubsub::v1::StreamingPullResponse>{});
+            });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&](google::pubsub::v1::StreamingPullRequest const&,
+                          grpc::WriteOptions const&) {
+              return make_ready_future(true);
+            });
+        EXPECT_CALL(*stream, WritesDone).WillOnce([&] {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return make_ready_future(Status{});
+        });
+        return stream;
       });
   SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
   google::cloud::CompletionQueue cq;
-  google::pubsub::v1::PullRequest request;
-  request.set_subscription("test-subscription-name");
-  auto status =
-      stub.AsyncPull(cq, absl::make_unique<grpc::ClientContext>(), request)
-          .get();
-  EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(AllOf(HasSubstr("AsyncPull"),
-                             HasSubstr("test-subscription-name"))));
-}
 
-TEST_F(SubscriberLoggingTest, AsyncAcknowledge) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext>,
-                   google::pubsub::v1::AcknowledgeRequest const&) {
-        return make_ready_future(Status{});
-      });
-  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
-  google::cloud::CompletionQueue cq;
-  google::pubsub::v1::AcknowledgeRequest request;
+  google::pubsub::v1::StreamingPullRequest request;
   request.set_subscription("test-subscription-name");
-  auto status = stub.AsyncAcknowledge(
-                        cq, absl::make_unique<grpc::ClientContext>(), request)
-                    .get();
-  EXPECT_STATUS_OK(status);
+  auto stream = stub.AsyncStreamingPull(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(AllOf(HasSubstr("AsyncAcknowledge"),
-                             HasSubstr("test-subscription-name"))));
-}
+              Contains(HasSubstr("AsyncStreamingPull")));
 
-TEST_F(SubscriberLoggingTest, AsyncModifyAckDeadline) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext>,
-                   google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        return make_ready_future(Status{});
-      });
-  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"));
-  google::cloud::CompletionQueue cq;
-  google::pubsub::v1::ModifyAckDeadlineRequest request;
-  request.set_subscription("test-subscription-name");
-  auto status = stub.AsyncModifyAckDeadline(
-                        cq, absl::make_unique<grpc::ClientContext>(), request)
-                    .get();
-  EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(AllOf(HasSubstr("AsyncModifyAckDeadline"),
-                             HasSubstr("test-subscription-name"))));
+  EXPECT_TRUE(stream->Start().get());
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Start")));
+
+  EXPECT_TRUE(
+      stream->Write(request, grpc::WriteOptions{}.set_write_through()).get());
+  EXPECT_THAT(
+      backend_->ClearLogLines(),
+      Contains(AllOf(HasSubstr("Write"), HasSubstr("test-subscription-name"))));
+
+  EXPECT_TRUE(stream->Read().get().has_value());
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Read")));
+
+  EXPECT_FALSE(stream->Read().get().has_value());
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Read")));
+
+  EXPECT_TRUE(stream->WritesDone().get());
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("WritesDone")));
+
+  EXPECT_STATUS_OK(stream->Finish().get());
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Finish")));
+
+  stream->Cancel();
+  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Cancel")));
 }
 
 TEST_F(SubscriberLoggingTest, CreateSnapshot) {

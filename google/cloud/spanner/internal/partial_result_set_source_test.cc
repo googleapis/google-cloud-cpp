@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -36,6 +37,7 @@ namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -54,8 +56,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
 
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
-  EXPECT_FALSE(reader.status().ok());
-  EXPECT_EQ(reader.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument));
 }
 
 /**
@@ -89,7 +90,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   EXPECT_THAT((*reader)->NextRow(),
               IsValidAndEquals(MakeTestRow({{"AnInt", Value(80)}})));
   auto row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kCancelled);
+  EXPECT_THAT(row, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify the behavior when the first response does not contain metadata.
@@ -103,9 +104,8 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
 
   auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
-  EXPECT_FALSE(reader.status().ok());
-  EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
-  EXPECT_EQ(reader.status().message(), "response contained no metadata");
+  EXPECT_THAT(reader, StatusIs(StatusCode::kInternal,
+                               "response contained no metadata"));
 }
 
 /**
@@ -148,9 +148,8 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<Row> row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kInternal);
-  EXPECT_THAT(row.status().message(),
-              HasSubstr("missing row type information"));
+  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
+                            HasSubstr("missing row type information")));
 }
 
 /**
@@ -391,7 +390,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
 
 /**
  * @Test Verify reassembling chunked values works correctly, including a mixture
- * of chunked and unchunked values.
+ * of chunked and reassembled chunked values.
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
@@ -495,10 +494,9 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
 
   // Trying to read the next row should fail.
   auto row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kInternal);
-  EXPECT_EQ(
-      row.status().message(),
-      "PartialResultSet had chunked_value set true but contained no values");
+  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
+                            "PartialResultSet had chunked_value set true but "
+                            "contained no values"));
 }
 
 /**
@@ -540,10 +538,9 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
 
   // Trying to read the next row should fail.
   auto row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kInternal);
-  EXPECT_EQ(row.status().message(),
-            "PartialResultSet contained no values to merge with prior "
-            "chunked_value");
+  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
+                            "PartialResultSet contained no values to merge "
+                            "with prior chunked_value"));
 }
 
 /**
@@ -584,9 +581,8 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
 
   // Trying to read the next row should fail.
   auto row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kInternal);
-  EXPECT_EQ(row.status().message(),
-            "incomplete chunked_value at end of stream");
+  EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
+                            "incomplete chunked_value at end of stream"));
 }
 
 /**
@@ -633,8 +629,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
 
   // Trying to read the next row should fail.
   auto row = (*reader)->NextRow();
-  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(row.status().message(), "invalid type");
+  EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument, "invalid type"));
 }
 
 /**
@@ -717,8 +712,8 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
 
   auto row = (*reader)->NextRow();
   EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kInternal);
-  EXPECT_THAT(row.status().message(), HasSubstr("incomplete row"));
+  EXPECT_THAT(row,
+              StatusIs(StatusCode::kInternal, HasSubstr("incomplete row")));
 }
 
 }  // namespace

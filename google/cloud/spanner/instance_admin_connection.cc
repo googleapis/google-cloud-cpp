@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
-#include "google/cloud/spanner/internal/polling_loop.h"
+#include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <chrono>
 
@@ -265,15 +265,16 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     promise<StatusOr<gcsa::Instance>> pr;
     auto f = pr.get_future();
 
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::InstanceAdminStub> stub,
            google::longrunning::Operation operation,
            std::unique_ptr<PollingPolicy> polling_policy,
            google::cloud::promise<StatusOr<gcsa::Instance>> promise,
            char const* location) mutable {
-          auto result = internal::PollingLoop<
-              internal::PollingLoopResponseExtractor<gcsa::Instance>>(
+          auto result = google::cloud::internal::PollingLoop<
+              google::cloud::internal::PollingLoopResponseExtractor<
+                  gcsa::Instance>>(
               std::move(polling_policy),
               [stub](grpc::ClientContext& context,
                      google::longrunning::GetOperationRequest const& request) {

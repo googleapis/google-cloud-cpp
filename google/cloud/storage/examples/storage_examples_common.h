@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
 
@@ -24,6 +25,8 @@ namespace cloud {
 namespace storage {
 namespace examples {
 
+using ::google::cloud::storage::testing::RemoveBucketAndContents;
+using ::google::cloud::storage::testing::RemoveStaleBuckets;
 using ::google::cloud::testing_util::CheckEnvironmentVariablesAreSet;
 using ::google::cloud::testing_util::Commands;
 using ::google::cloud::testing_util::CommandType;
@@ -32,8 +35,7 @@ using ::google::cloud::testing_util::Usage;
 
 bool UsingTestbench();
 
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix);
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
 

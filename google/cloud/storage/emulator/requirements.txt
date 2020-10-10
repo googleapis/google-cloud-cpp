@@ -1,0 +1,7 @@
+git+git://github.com/googleapis/python-storage@gapic-generation
+grpcio==1.32.0
+flask==1.1.2
+pysimdjson==3.0.0
+pytest==6.0.2
+httpbin==0.7.0
+scalpl==0.4.0

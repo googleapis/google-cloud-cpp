@@ -90,6 +90,13 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   return ReturnType::FromHttpResponse(response->payload);
 }
 
+bool XmlEnabled() {
+  auto const config =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
+          .value_or("");
+  return config != "disable-xml";
+}
+
 }  // namespace
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
@@ -125,6 +132,7 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   if (!status.ok()) {
     return status;
   }
+  builder.AddHeader("Host: " + storage_host_);
   request.AddOptionsToHttpRequest(builder);
   SetupBuilderUserIp(builder, request);
   return Status();
@@ -228,27 +236,20 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
+      storage_endpoint_(JsonEndpoint(options_)),
+      storage_host_(ExtractUrlHostpart(storage_endpoint_)),
+      upload_endpoint_(JsonUploadEndpoint(options_)),
+      xml_upload_endpoint_(XmlUploadEndpoint(options_)),
+      xml_upload_host_(ExtractUrlHostpart(xml_upload_endpoint_)),
+      xml_download_endpoint_(XmlDownloadEndpoint(options_)),
+      xml_download_host_(ExtractUrlHostpart(xml_download_endpoint_)),
+      iam_endpoint_(IamEndpoint(options_)),
+      xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),
       xml_upload_factory_(CreateHandleFactory(options_)),
       xml_download_factory_(CreateHandleFactory(options_)) {
-  storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
-  upload_endpoint_ =
-      options_.endpoint() + "/upload/storage/" + options_.version();
-  iam_endpoint_ = options_.iam_endpoint();
-
-  auto endpoint =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (endpoint.has_value()) {
-    xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
-    xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
-    iam_endpoint_ = options_.endpoint() + "/iamapi";
-  } else {
-    xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
-    xml_download_endpoint_ = "https://storage-download.googleapis.com";
-  }
-
   CurlInitializeOnce(options);
 }
 
@@ -502,7 +503,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   }
 
   // Unless the request uses a feature that disables it, prefer to use XML.
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
       !request.HasOption<Projection>() && request.HasOption<Fields>() &&
@@ -560,7 +561,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
+  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
     return ReadObjectXml(request);
@@ -1178,7 +1179,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: storage.googleapis.com");
+  builder.AddHeader("Host: " + xml_upload_host_);
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1264,7 +1265,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: storage.googleapis.com");
+  builder.AddHeader("Host: " + xml_download_host_);
 
   //
   // Apply the options from ReadObjectMediaRequest that are set, translating

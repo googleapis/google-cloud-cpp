@@ -51,7 +51,6 @@ spanner_client_hdrs = [
     "internal/partial_result_set_reader.h",
     "internal/partial_result_set_resume.h",
     "internal/partial_result_set_source.h",
-    "internal/polling_loop.h",
     "internal/session.h",
     "internal/session_pool.h",
     "internal/spanner_stub.h",

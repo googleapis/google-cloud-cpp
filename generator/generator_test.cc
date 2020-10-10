@@ -14,6 +14,7 @@
 
 #include "generator/generator.h"
 #include "absl/memory/memory.h"
+#include "generator/testing/printer_mocks.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -24,42 +25,19 @@ namespace cloud {
 namespace generator {
 namespace {
 
-using google::protobuf::DescriptorPool;
-using google::protobuf::FileDescriptor;
-using google::protobuf::FileDescriptorProto;
+using ::google::protobuf::DescriptorPool;
+using ::google::protobuf::FileDescriptor;
+using ::google::protobuf::FileDescriptorProto;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-class MockGeneratorContext
-    : public google::protobuf::compiler::GeneratorContext {
- public:
-  ~MockGeneratorContext() override = default;
-  MOCK_METHOD(google::protobuf::io::ZeroCopyOutputStream*, Open,
-              (std::string const&), (override));
-};
-
-class MockZeroCopyOutputStream
-    : public google::protobuf::io::ZeroCopyOutputStream {
- public:
-  ~MockZeroCopyOutputStream() override = default;
-  MOCK_METHOD(bool, Next, (void**, int*), (override));
-  MOCK_METHOD(void, BackUp, (int), (override));
-  MOCK_METHOD(int64_t, ByteCount, (), (const, override));
-  MOCK_METHOD(bool, WriteAliasedRaw, (void const*, int), (override));
-  MOCK_METHOD(bool, AllowsAliasing, (), (const, override));
-};
-
 class GeneratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    context_ = absl::make_unique<MockGeneratorContext>();
-    header_output_ = absl::make_unique<MockZeroCopyOutputStream>();
-    cc_output_ = absl::make_unique<MockZeroCopyOutputStream>();
+    context_ = absl::make_unique<generator_testing::MockGeneratorContext>();
   }
-  std::unique_ptr<MockGeneratorContext> context_;
-  std::unique_ptr<MockZeroCopyOutputStream> header_output_;
-  std::unique_ptr<MockZeroCopyOutputStream> cc_output_;
+  std::unique_ptr<generator_testing::MockGeneratorContext> context_;
 };
 
 TEST_F(GeneratorTest, GenericService) {
@@ -98,6 +76,27 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
+  auto connection_options_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto connection_options_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto logging_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto logging_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto metadata_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto metadata_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_factory_header_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  auto stub_factory_cc_output =
+      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+
   DescriptorPool pool;
   FileDescriptorProto service_file;
   service_file.set_name("google/foo/v1/service.proto");
@@ -105,11 +104,34 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   service_file.mutable_options()->set_cc_generic_services(false);
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
 
-  EXPECT_CALL(*header_output_, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*cc_output_, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*connection_options_header_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*connection_options_cc_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_header_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_cc_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*logging_header_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*logging_cc_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*metadata_header_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*metadata_cc_output, Next(_, _)).WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_factory_header_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*stub_factory_cc_output, Next(_, _))
+      .WillRepeatedly(Return(false));
+
   EXPECT_CALL(*context_, Open(_))
-      .WillOnce(Return(header_output_.release()))
-      .WillOnce(Return(cc_output_.release()));
+      .WillOnce(Return(connection_options_header_output.release()))
+      .WillOnce(Return(connection_options_cc_output.release()))
+      .WillOnce(Return(stub_header_output.release()))
+      .WillOnce(Return(stub_cc_output.release()))
+      .WillOnce(Return(logging_header_output.release()))
+      .WillOnce(Return(logging_cc_output.release()))
+      .WillOnce(Return(metadata_header_output.release()))
+      .WillOnce(Return(metadata_cc_output.release()))
+      .WillOnce(Return(stub_factory_header_output.release()))
+      .WillOnce(Return(stub_factory_cc_output.release()));
+
   std::string actual_error;
   Generator generator;
   auto result = generator.Generate(service_file_descriptor,

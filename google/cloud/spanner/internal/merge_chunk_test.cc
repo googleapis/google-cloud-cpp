@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/struct.pb.h>
 #include <gmock/gmock.h>
 #include <string>
@@ -28,6 +29,9 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 //
 // MakeProtoValue() is an overloaded helper function for creating
@@ -161,8 +165,8 @@ TEST(MergeChunk, ErrorMismatchedTypes) {
   auto value = MakeProtoValue(std::vector<std::string>{"hello"});
   auto status = MergeChunk(value, MakeProtoValue("world"));
 
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), testing::HasSubstr("mismatched types"));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
+                               testing::HasSubstr("mismatched types")));
 }
 
 //
@@ -177,8 +181,8 @@ TEST(MergeChunk, CannotMergeBools) {
   bool2.set_bool_value(true);
 
   auto status = MergeChunk(bool1, std::move(bool2));
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), testing::HasSubstr("invalid type"));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
+                               testing::HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeNumbers) {
@@ -189,8 +193,8 @@ TEST(MergeChunk, CannotMergeNumbers) {
   number2.set_number_value(2.0);
 
   auto status = MergeChunk(number1, std::move(number2));
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), testing::HasSubstr("invalid type"));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
+                               testing::HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeNull) {
@@ -201,8 +205,8 @@ TEST(MergeChunk, CannotMergeNull) {
   null2.set_null_value(google::protobuf::NullValue::NULL_VALUE);
 
   auto status = MergeChunk(null1, std::move(null2));
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), testing::HasSubstr("invalid type"));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
+                               testing::HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeStruct) {
@@ -213,8 +217,8 @@ TEST(MergeChunk, CannotMergeStruct) {
   struct2.mutable_struct_value();
 
   auto status = MergeChunk(struct1, std::move(struct2));
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), testing::HasSubstr("invalid type"));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
+                               testing::HasSubstr("invalid type")));
 }
 
 }  // namespace

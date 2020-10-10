@@ -25,7 +25,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-/// Create a pool of grpc::Channel objects based on the client options.
+/// Create a pool of `grpc::Channel` objects based on the client options.
 std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
     std::string const& endpoint, bigtable::ClientOptions const& options);
 

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -81,11 +82,15 @@ int main(int argc, char* argv[]) {
 
   gcs::Client client(*std::move(client_options));
 
+  std::cout << "# Cleaning up stale benchmark buckets\n";
+  google::cloud::storage::testing::RemoveStaleBuckets(
+      client, gcs_bm::RandomBucketPrefix(),
+      std::chrono::system_clock::now() - std::chrono::hours(48));
+
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, "gcs-file-transfer-");
+  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
   auto meta =
       client
           .CreateBucket(bucket_name,

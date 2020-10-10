@@ -47,8 +47,6 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) { options.project_id = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
-      {"--bucket-prefix", "use the given prefix to create a bucket name",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);

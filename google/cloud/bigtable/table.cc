@@ -156,10 +156,10 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   // we need fresh instances.
   auto backoff_policy = clone_rpc_backoff_policy();
   auto retry_policy = clone_rpc_retry_policy();
-  auto idemponent_policy = clone_idempotent_mutation_policy();
+  auto idempotent_policy = clone_idempotent_mutation_policy();
 
   bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
-                                          *idemponent_policy, std::move(mut));
+                                          *idempotent_policy, std::move(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);
@@ -349,7 +349,7 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
       request, app_profile_id_, table_name_);
 
   grpc::Status status;
-  auto response = ClientUtils::MakeNonIdemponentCall(
+  auto response = ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(), clone_metadata_update_policy(),
       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
       status);

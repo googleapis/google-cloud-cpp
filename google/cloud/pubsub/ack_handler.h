@@ -40,7 +40,7 @@ class AckHandler {
   AckHandler(AckHandler&&) noexcept = default;
   AckHandler& operator=(AckHandler&&) noexcept = default;
 
-  /// Acknowledge the message and return any (unrecoverablee) RPC errors
+  /// Acknowledge the message and return any (unrecoverable) RPC errors
   void ack() && {
     auto impl = std::move(impl_);
     impl->ack();

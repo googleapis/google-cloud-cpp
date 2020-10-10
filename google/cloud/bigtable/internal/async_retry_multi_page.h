@@ -96,7 +96,7 @@ class AsyncRetryMultiPageFuture {
   static void OnCompletion(std::shared_ptr<AsyncRetryMultiPageFuture> self,
                            StatusOr<Response> result) {
     if (result) {
-      // Somethig is working, so let's reset backoff policy, so that if a
+      // Something is working, so let's reset backoff policy, so that if a
       // failure happens, we start from small wait periods.
       self->rpc_backoff_policy_ = self->rpc_backoff_policy_prototype_->clone();
       self->next_page_token_ = result->next_page_token();

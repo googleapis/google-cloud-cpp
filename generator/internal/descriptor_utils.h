@@ -14,7 +14,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DESCRIPTOR_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DESCRIPTOR_UTILS_H
 
-#include "generator/internal/class_generator_interface.h"
+#include "generator/internal/generator_interface.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -33,21 +33,21 @@ namespace generator_internal {
  * Extracts service wide substitution data required by all class generators from
  * the provided descriptor.
  */
-std::map<std::string, std::string> CreateServiceVars(
+VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values);
 
 /**
  * Extracts method specific substitution data for each method in the service.
  */
-std::map<std::string, std::map<std::string, std::string>> CreateMethodVars(
+std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service);
 
 /**
  * Creates and initializes the collection of ClassGenerators necessary to
  * generate all code for the given service.
  */
-std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
+std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars);
@@ -65,8 +65,7 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
  *
  */
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,
-                   Printer& printer,
-                   std::map<std::string, std::string> const& vars,
+                   Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
 

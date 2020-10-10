@@ -382,8 +382,7 @@ void RunAll(std::vector<std::string> const& argv) {
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
           .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const bucket_name =
-      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto client = gcs::Client::CreateDefaultClient().value();
   std::cout << "\nCreating bucket to run the examples (" << bucket_name << ")"
             << std::endl;
@@ -462,7 +461,7 @@ void RunAll(std::vector<std::string> const& argv) {
   SetBucketPublicIam(client, {bucket_name});
 
   if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
-  (void)client.DeleteBucket(bucket_name);
+  (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
 }  // anonymous namespace

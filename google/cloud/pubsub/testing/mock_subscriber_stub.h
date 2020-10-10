@@ -61,22 +61,11 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::pubsub::v1::PullResponse>>, AsyncPull,
+  MOCK_METHOD(std::unique_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
+              AsyncStreamingPull,
               (google::cloud::CompletionQueue&,
                std::unique_ptr<grpc::ClientContext>,
-               google::pubsub::v1::PullRequest const&),
-              (override));
-
-  MOCK_METHOD(future<Status>, AsyncAcknowledge,
-              (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
-               google::pubsub::v1::AcknowledgeRequest const&),
-              (override));
-
-  MOCK_METHOD(future<Status>, AsyncModifyAckDeadline,
-              (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
-               google::pubsub::v1::ModifyAckDeadlineRequest const&),
+               google::pubsub::v1::StreamingPullRequest const&),
               (override));
 
   MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, CreateSnapshot,
@@ -108,6 +97,21 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
   MOCK_METHOD(StatusOr<google::pubsub::v1::SeekResponse>, Seek,
               (grpc::ClientContext&, google::pubsub::v1::SeekRequest const&),
               (override));
+};
+
+class MockAsyncPullStream
+    : public pubsub_internal::SubscriberStub::AsyncPullStream {
+ public:
+  MOCK_METHOD0(Cancel, void());
+  MOCK_METHOD0(Start, future<bool>());
+  MOCK_METHOD0(
+      Read,
+      future<absl::optional<google::pubsub::v1::StreamingPullResponse>>());
+  MOCK_METHOD2(Write,
+               future<bool>(google::pubsub::v1::StreamingPullRequest const&,
+                            grpc::WriteOptions));
+  MOCK_METHOD0(WritesDone, future<bool>());
+  MOCK_METHOD0(Finish, future<Status>());
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -83,7 +83,6 @@ using google::cloud::StatusOr;
 struct Options {
   std::string project_id;
   std::string region;
-  std::string bucket_prefix = "parallel-upload-bm-";
   std::string object_prefix = "parallel-upload-bm-";
   std::string directory = "/tmp/";
   std::chrono::seconds duration =
@@ -194,8 +193,7 @@ int main(int argc, char* argv[]) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
+  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
   auto meta =
       client
           .CreateBucket(bucket_name,
@@ -316,8 +314,6 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
        [&wants_description](std::string const&) { wants_description = true; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
-      {"--bucket-prefix", "use the given prefix for created temporary bucket",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--object-prefix", "use the given prefix for created objects",
        [&options](std::string const& val) { options.object_prefix = val; }},
       {"--directory", "use the given directory for files to be uploaded",
@@ -479,7 +475,6 @@ google::cloud::StatusOr<Options> SelfTest() {
   return ParseArgsDefault({
       "self-test",
       "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
-      "--bucket-prefix=cloud-cpp-testing-",
       "--object-prefix=parallel-upload/",
       "--directory=.",
       "--region=" + GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),

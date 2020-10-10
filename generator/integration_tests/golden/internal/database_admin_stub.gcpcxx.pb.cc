@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "google/cloud/test/internal/database_admin_stub.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace test_internal {
-inline namespace TEST_CLIENT_NS {
+namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
@@ -276,8 +276,8 @@ Status DefaultDatabaseAdminStub::CancelOperation(
   }
   return google::cloud::Status();
 }
-}  // namespace TEST_CLIENT_NS
-}  // namespace test_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

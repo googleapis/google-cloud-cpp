@@ -741,7 +741,7 @@ class TableAdmin {
      *
      * @param cluster_id the name of the cluster relative to the instance
      *     managed by the `TableAdmin` object. If no cluster_id is specified,
-     *     teh all backups in all clusters are listed. The full cluster name is
+     *     the all backups in all clusters are listed. The full cluster name is
      *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
      *     where PROJECT_ID is obtained from the associated AdminClient and
      *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
@@ -766,9 +766,11 @@ class TableAdmin {
      *       * `name`
      *       * `table`
      *       * `state`
-     *       * `start_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
-     *       * `end_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
-     *       * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)
+     *       * `start_time` (and values are of the format
+     *              `YYYY-MM-DDTHH:MM:SSZ`)
+     *       * `end_time` (and values are of the format `YYYY-MM-DDTHH:MM:SSZ`)
+     *       * `expire_time` (and values are of the format
+     *              `YYYY-MM-DDTHH:MM:SSZ`)
      *       * `size_bytes`
      *
      *     To filter on multiple expressions, provide each separate expression
@@ -783,7 +785,7 @@ class TableAdmin {
      *       * `state:READY` --> The backup is fully created and ready for use.
      *       * `(name:howl) AND (start_time < \"2018-03-28T14:50:00Z\")`
      *          --> The backup name contains the string "howl" and start_time
-     *              of the backup is before 2018-03-28T14:50:00Z.
+     *              of the backup is before `2018-03-28T14:50:00Z`.
      *       * `size_bytes > 10000000000` --> The backup's size is greater than
      *          10GB
      */
@@ -1222,7 +1224,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param table_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *     a non-retryable error occurs or (c) retry policy has been exhausted.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1266,7 +1268,7 @@ class TableAdmin {
    * @param iam_policy google::iam::v1::Policy object containing role and
    * members.
    * @return a future satisfied when either (a) the policy is created or (b)
-   *     an unretriable error occurs or (c) retry policy has been
+   *     a non-retryable error occurs or (c) retry policy has been
    *     exhausted.
    *
    * @warning ETags are currently not used by Cloud Bigtable.

@@ -225,7 +225,7 @@ TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-/// @test Test 2 pages, with a filure between them.
+/// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListClustersTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
       .WillOnce([this](grpc::ClientContext* context,

@@ -168,7 +168,7 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   EXPECT_EQ(PermanentError().code(), res.status().code());
 }
 
-/// @test Test if backoff policy is reset on succes
+/// @test Test if backoff policy is reset on success
 TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto raw_source1 = new MockObjectReadSource;

@@ -47,6 +47,10 @@ class ObjectInsertIntegrationTest
       // this test are (1) it is relatively short (less than 60 seconds), (2) it
       // actually performs multiple operations against production.
       std::string const key_file_envvar = GetParam();
+      if (UsingGrpc() && key_file_envvar.find("P12") != std::string::npos) {
+        // TODO(5116): gRPC doesn't support PKCS #12 keys.
+        GTEST_SKIP();
+      }
       auto value =
           google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
       ASSERT_FALSE(value.empty()) << " expected ${" << key_file_envvar

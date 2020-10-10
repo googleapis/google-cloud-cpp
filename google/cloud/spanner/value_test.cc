@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -34,6 +35,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 using ::testing::Not;
 
 std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
@@ -263,7 +266,7 @@ TEST(Value, RvalueGetString) {
 // spanner::Value::get<T>() correctly handles moves. If this test ever breaks
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
-TEST(Value, RvalueGetOptoinalString) {
+TEST(Value, RvalueGetOptionalString) {
   using Type = absl::optional<std::string>;
   Type const data = std::string(128, 'x');
   Value v(data);
@@ -357,8 +360,8 @@ TEST(Value, BytesDecodingError) {
   // We know the type is Bytes, but we cannot get a value out of it because the
   // base64 decoding will fail.
   StatusOr<Bytes> bytes = bad.get<Bytes>();
-  EXPECT_FALSE(bytes.ok());
-  EXPECT_THAT(bytes.status().message(), testing::HasSubstr("Invalid base64"));
+  EXPECT_THAT(bytes,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("Invalid base64")));
 }
 
 TEST(Value, BytesRelationalOperators) {

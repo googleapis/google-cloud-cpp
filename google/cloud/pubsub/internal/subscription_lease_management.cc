@@ -23,6 +23,15 @@ std::chrono::seconds constexpr SubscriptionLeaseManagement::kMinimumAckDeadline;
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kMaximumAckDeadline;
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kAckDeadlineSlack;
 
+void SubscriptionLeaseManagement::Start(BatchCallback cb) {
+  auto weak = std::weak_ptr<SubscriptionLeaseManagement>(shared_from_this());
+  child_->Start(
+      [weak, cb](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
+        if (auto self = weak.lock()) self->OnRead(r);
+        cb(std::move(r));
+      });
+}
+
 void SubscriptionLeaseManagement::Shutdown() {
   std::unique_lock<std::mutex> lk(mu_);
   // Cancel any existing timers.
@@ -64,19 +73,8 @@ future<Status> SubscriptionLeaseManagement::ExtendLeases(
   return make_ready_future(Status(StatusCode::kUnimplemented, __func__));
 }
 
-future<StatusOr<google::pubsub::v1::PullResponse>>
-SubscriptionLeaseManagement::Pull(std::int32_t max_count) {
-  auto weak = std::weak_ptr<SubscriptionLeaseManagement>(shared_from_this());
-  return child_->Pull(max_count).then(
-      [weak](future<StatusOr<google::pubsub::v1::PullResponse>> f) {
-        auto response = f.get();
-        if (auto self = weak.lock()) self->OnPull(response);
-        return response;
-      });
-}
-
-void SubscriptionLeaseManagement::OnPull(
-    StatusOr<google::pubsub::v1::PullResponse> const& response) {
+void SubscriptionLeaseManagement::OnRead(
+    StatusOr<google::pubsub::v1::StreamingPullResponse> const& response) {
   if (!response) {
     shutdown_manager_->MarkAsShutdown(__func__, response.status());
     std::unique_lock<std::mutex> lk(mu_);

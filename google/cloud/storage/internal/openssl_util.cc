@@ -229,9 +229,9 @@ std::vector<std::uint8_t> SignStringWithPem(
   int const digest_sign_success_code = 1;
   if (digest_sign_success_code !=
       EVP_DigestSignInit(digest_ctx.get(),
-                         nullptr,  // EVP_PKEY_CTX **pctx
+                         nullptr,  // `EVP_PKEY_CTX **pctx`
                          digest_type,
-                         nullptr,  // ENGINE *e
+                         nullptr,  // `ENGINE *e`
                          private_key.get())) {
     handle_openssl_failure("Could not initialize PEM digest.");
   }

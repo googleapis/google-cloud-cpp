@@ -35,7 +35,7 @@ TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
   // in this case.
   GTEST_SKIP();
 #endif  // __has_feature(memory_sanitizer)
-#endif  // __has_fature
+#endif  // __has_feature
 
 #if !defined(SIGPIPE)
   GTEST_SKIP();  // nothing to do

@@ -14,6 +14,6 @@
 
 #include "google/cloud/bigquery/testing/mock_storage_stub.h"
 
-// This file exists because cmake needs at least 1 source file in order to be
-// able to create a dynamic library. If/when this cmake build target grows more
+// This file exists because CMake needs at least 1 source file in order to be
+// able to create a dynamic library. If/when this CMake build target grows more
 // source files, this one can be removed.

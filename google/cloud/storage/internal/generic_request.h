@@ -30,7 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
  * Sets the user IP on an operation for quota enforcement purposes.
  *
  * This parameter lets you enforce per-user quotas when calling the API from a
- * server-side application. This parameter is overriden by `UserQuota` if both
+ * server-side application. This parameter is overridden by `UserQuota` if both
  * are set.
  *
  * If you set this parameter to an empty string, the client library will
@@ -170,7 +170,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  *
  * 2) Define a generic function to set a parameter:
  * @code
- * class FooRequest // some things ommitted
+ * class FooRequest // some things omitted
  * {
  *   template <typename Parameter>
  *   FooRequest& set_parameter(Parameter&& p) {
@@ -184,7 +184,7 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  *
  * 3) Define a generic function to set multiple parameters:
  * @code
- * class FooRequest // some things ommitted
+ * class FooRequest // some things omitted
  * {
  *   template <typename... Options>
  *   FooRequest& set_multiple_options(Options&&... p) {

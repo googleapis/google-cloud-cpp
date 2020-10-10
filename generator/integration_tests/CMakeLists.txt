@@ -14,6 +14,43 @@
 # limitations under the License.
 # ~~~
 
+find_package(ProtobufWithTargets REQUIRED)
+find_package(gRPC REQUIRED)
+
+# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
+# standard directory. We need to find out where, and then add that directory to
+# the search path for protos.
+find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
+if (PROTO_INCLUDE_DIR)
+    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+endif ()
+
+include(CompileProtos)
+
+# Do not run attempt to clang-tidy generated proto code.
+set(CMAKE_CXX_CLANG_TIDY "")
+
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_generator_testing_grpc_lib
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/backup.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/common.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
+    PROTO_PATH_DIRECTORIES
+    ${PROTO_INCLUDE_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download)
+target_link_libraries(
+    google_cloud_cpp_generator_testing_grpc_lib
+    PUBLIC googleapis-c++::api_annotations_protos
+           googleapis-c++::api_client_protos
+           googleapis-c++::api_field_behavior_protos
+           googleapis-c++::api_resource_protos
+           googleapis-c++::iam_v1_iam_policy_protos
+           googleapis-c++::iam_v1_policy_protos
+           googleapis-c++::longrunning_operations_protos
+           googleapis-c++::rpc_status_protos
+    PRIVATE googleapis_cpp_common_flags)
+
 function (google_cloud_cpp_generator_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
     # config file for googletest (that is, the CMake file installed by
@@ -65,6 +102,8 @@ function (google_cloud_cpp_generator_define_integration_tests)
         return()
     endif ()
 endfunction ()
+
+add_subdirectory(golden)
 
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package

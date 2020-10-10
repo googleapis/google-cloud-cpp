@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H
 
-#include "google/cloud/spanner/polling_policy.h"
-#include "google/cloud/spanner/version.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <google/longrunning/operations.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <thread>
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Extract the result of a long-running operation from the `response` field.
@@ -99,7 +98,7 @@ struct PollingLoopMetadataExtractor {
  *     failure.
  * @param is_idempotent if false, the operation is not retried even on transient
  *     errors.
- * @param functor the operation to retry, typically a lambda that encasulates
+ * @param functor the operation to retry, typically a lambda that encapsulates
  *     both the Stub and the function to call.
  * @param context the gRPC context used for the request, previous Stubs in the
  *     stack can set timeouts and metadata through this context.
@@ -177,9 +176,8 @@ typename ValueExtractor::ReturnType PollingLoop(
 }
 
 }  // namespace internal
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H

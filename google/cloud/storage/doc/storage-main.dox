@@ -61,6 +61,20 @@ which should give you a taste of the Cloud Storage C++ client library API.
 - `CLOUD_STORAGE_TESTBENCH_ENDPOINT=...` override the default endpoint used by
   the library, intended for testing only.
 
+### Experimental
+
+- `GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG=...` configuration for the REST
+  protocol, currently only the `disable-xml` value has any effect. Sometimes
+  the application developer may want to test using an emulator that does not
+  support XML, while the library defaults to XML for some media operations.
+
+- `GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...` used with
+  `google::cloud::storage_experimental::DefaultGrpcClient()` to configure
+  configure the gRPC protocol. Setting this to `media` enables gRPC for just
+  media operations (reading and writing data), while setting this to `metadata`
+  enables gRPC for all operations. Note that gRPC support is an early access
+  program, contact Google Cloud support for details.
+
 ### Using GOOGLE_CLOUD_PROJECT to set the default project
 
 Some of the GCS APIs need a [project][project-definition-link] as a parameter.

@@ -81,7 +81,7 @@ class PublisherOptions {
    *
    * @note Application developers should keep in mind that Cloud Pub/Sub
    *    sets [limits][pubsub-quota-link] on the size of a batch (1,000 messages)
-   *    The library makes no ttempt to validate the value provided in this
+   *    The library makes no attempt to validate the value provided in this
    *    function.
    *
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits

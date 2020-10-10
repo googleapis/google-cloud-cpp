@@ -35,9 +35,9 @@ class StreamReader {
 
   // Reads the next value from the stream.
   //
-  // If a value exists, an absl::optional containing the value is returned.
+  // If a value exists, an `absl::optional` containing the value is returned.
   //
-  // If the end of the stream is reached, an empty absl::optional is
+  // If the end of the stream is reached, an empty `absl::optional` is
   // returned.
   //
   // Any non-OK status signals that something went wrong reading from

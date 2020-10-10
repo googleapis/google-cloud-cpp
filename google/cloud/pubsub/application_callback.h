@@ -30,7 +30,7 @@ class AckHandler;
  *
  * Applications provide a callable compatible with this type to receive
  * messages.  They acknowledge (or reject) messages using `AckHandler`. This is
- * a move-only type to support asynchronously acknowledgements.
+ * a move-only type to support asynchronously acknowledgments.
  */
 using ApplicationCallback = std::function<void(Message, AckHandler)>;
 

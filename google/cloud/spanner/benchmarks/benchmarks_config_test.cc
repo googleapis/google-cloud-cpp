@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,6 +23,7 @@ namespace cloud {
 namespace spanner_benchmarks {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(BenchmarkConfigTest, ParseAll) {
   auto config = ParseArgs(
@@ -61,59 +63,59 @@ TEST(BenchmarkConfigTest, ParseThreads) {
 
 TEST(BenchmarkConfigTest, InvalidFlag) {
   auto config = ParseArgs({"placeholder", "--not-a-flag=1"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, EmptyExperiment) {
   auto config = ParseArgs({"placeholder", "--experiment="});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, EmptyProject) {
   auto config = ParseArgs({"placeholder", "--project="});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidMinimumThreads) {
   auto config = ParseArgs(
       {"placeholder", "--project=test-project", "--minimum-threads=-7"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidMaximumThreads) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
                            "--minimum-threads=100", "--maximum-threads=5"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidMinimumClients) {
   auto config = ParseArgs(
       {"placeholder", "--project=test-project", "--minimum-clients=-7"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidMaximumClients) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
                            "--minimum-clients=100", "--maximum-clients=5"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidQuerySize) {
   auto config =
       ParseArgs({"placeholder", "--project=test-project", "--query-size=0"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidTableSize) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
                            "--query-size=100", "--table-size=10"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, OnlyStubsAndOnlyClients) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
                            "--use-only-stubs", "--use-only-clients"});
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, OnlyStubs) {

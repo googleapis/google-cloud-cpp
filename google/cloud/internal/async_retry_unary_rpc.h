@@ -45,7 +45,6 @@ namespace internal {
  *     and the member function to invoke.
  * @tparam RequestType the type of the request object.
  * @tparam IdempotencyPolicy the type of the idempotency policy.
- * @tparam Sig discover the signature and return type of `AsyncCallType`.
  * @tparam ResponseType the discovered response type for `AsyncCallType`.
  * @tparam validate_parameters validate the other template parameters.
  */

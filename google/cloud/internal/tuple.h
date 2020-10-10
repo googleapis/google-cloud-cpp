@@ -25,7 +25,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-// This header reimplements some of C++14's <tuple> header.
+// This header re-implements some of C++14's <tuple> header.
 
 /**
  * Extract the return type of `std::apply` for given argument types.
@@ -44,7 +44,7 @@ struct ApplyRes<F, std::tuple<Args...>> {
 /**
  * Implementation of `apply`.
  *
- * Inspired by the exampe in section 20.5.1 of the standard.
+ * Inspired by the example in section 20.5.1 of the standard.
  *
  * @tparam F the functor to apply the tuple to
  * @tparam Tuple the tuple of arguments to apply to `F`
@@ -56,7 +56,7 @@ typename ApplyRes<F, typename std::decay<Tuple>::type>::type ApplyImpl(
   return std::forward<F>(f)(std::get<I>(std::forward<Tuple>(t))...);
 }
 
-// Reimplementation of `std::apply` from C++14
+// Re-implementation of `std::apply` from C++14
 template <class F, class Tuple>
 typename ApplyRes<F, typename std::decay<Tuple>::type>::type apply(F&& f,
                                                                    Tuple&& t) {

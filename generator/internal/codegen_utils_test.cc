@@ -72,52 +72,78 @@ TEST(ProtoNameToCppName, Success) {
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
 }
 
-TEST(BuildNamespace, EmptyVars) {
-  std::map<std::string, std::string> vars;
-  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
-  EXPECT_EQ(result.status().code(), StatusCode::kNotFound);
-  EXPECT_EQ(result.status().message(), "product_path must be present in vars.");
+TEST(BuildNamespaces, NoDirectoryPathInternal) {
+  auto result = BuildNamespaces("/", NamespaceType::kInternal);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("_internal", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
-TEST(BuildNamespace, NoTrailingSlash) {
-  std::map<std::string, std::string> vars;
-  vars["product_path"] = "google/cloud/spanner";
-  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(result.status().message(), "vars[product_path] must end with '/'.");
+TEST(BuildNamespaces, OneDirectoryPathInternal) {
+  auto result = BuildNamespaces("one/", NamespaceType::kInternal);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("one_internal", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
-TEST(BuildNamespace, ProductPathTooShort) {
-  std::map<std::string, std::string> vars;
-  vars["product_path"] = std::string("/");
-  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(result.status().message(),
-            "vars[product_path] contain at least 2 characters.");
+TEST(BuildNamespaces, TwoDirectoryPathInternal) {
+  auto result = BuildNamespaces("unusual/product/", NamespaceType::kInternal);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("unusual_product_internal", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
-TEST(BuildNamespaces, Internal) {
-  std::map<std::string, std::string> vars;
-  vars["product_path"] = "google/cloud/spanner/";
-  auto result = BuildNamespaces(vars, NamespaceType::kInternal);
-  ASSERT_TRUE(result.ok());
-  ASSERT_EQ(result->size(), 4);
-  EXPECT_EQ("google", (*result)[0]);
-  EXPECT_EQ("cloud", (*result)[1]);
-  EXPECT_EQ("spanner_internal", (*result)[2]);
-  EXPECT_EQ("SPANNER_CLIENT_NS", (*result)[3]);
+TEST(BuildNamespaces, TwoDirectoryPathNotInternal) {
+  auto result = BuildNamespaces("unusual/product/");
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("unusual_product", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
-TEST(BuildNamespaces, NotInternal) {
-  std::map<std::string, std::string> vars;
-  vars["product_path"] = "google/cloud/translation/";
-  auto result = BuildNamespaces(vars);
-  ASSERT_TRUE(result.ok());
-  ASSERT_EQ(result->size(), 4);
-  EXPECT_EQ("google", (*result)[0]);
-  EXPECT_EQ("cloud", (*result)[1]);
-  EXPECT_EQ("translation", (*result)[2]);
-  EXPECT_EQ("TRANSLATION_CLIENT_NS", (*result)[3]);
+TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
+  auto result =
+      BuildNamespaces("google/cloud/spanner/", NamespaceType::kInternal);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("spanner_internal", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+}
+
+TEST(BuildNamespaces, ThreeDirectoryPathNotInternal) {
+  auto result = BuildNamespaces("google/cloud/translation/");
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("translation", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+}
+
+TEST(BuildNamespaces, FourDirectoryPathInternal) {
+  auto result =
+      BuildNamespaces("google/cloud/foo/bar/baz/", NamespaceType::kInternal);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("foo_bar_baz_internal", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+}
+
+TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
+  auto result = BuildNamespaces("google/cloud/foo/bar/baz/");
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_EQ("google", result[0]);
+  EXPECT_EQ("cloud", result[1]);
+  EXPECT_EQ("foo_bar_baz", result[2]);
+  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
 }
 
 TEST(ProcessCommandLineArgs, NoProductPath) {

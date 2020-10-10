@@ -65,7 +65,7 @@ using Commands = std::map<std::string, CommandType>;
  * examples in a specific sequence for the CI builds.
  *
  * This class refactors this common code. In general, we write the examples as
- * (anmed) short functions, which may receive arguments (such as project ids)
+ * (named) short functions, which may receive arguments (such as project ids)
  * from the command line (as a `std::vector<std::string>`).
  *
  * The `auto` function name is special, it is invoked automatically if no

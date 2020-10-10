@@ -13,20 +13,15 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#if _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
-#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
-#if _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-// TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/connection_options_generator.h"
+#include "generator/internal/logging_decorator_generator.h"
+#include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
@@ -67,7 +62,7 @@ std::string CppTypeToString(FieldDescriptor const* field) {
 
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -93,7 +88,7 @@ void SetLongrunningOperationMethodVars(
 
 void SetMethodSignatureMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
   for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -121,7 +116,7 @@ void SetMethodSignatureMethodVars(
 
 void SetResourceRoutingMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    std::map<std::string, std::string>& method_vars) {
+    VarsDictionary& method_vars) {
   if (!method.options().HasExtension(google::api::http)) return;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
@@ -172,37 +167,68 @@ void SetResourceRoutingMethodVars(
 }
 }  // namespace
 
-std::map<std::string, std::string> CreateServiceVars(
+VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
-  std::map<std::string, std::string> vars(initial_values.begin(),
-                                          initial_values.end());
+  VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
-  vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
-  vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
+  vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["proto_file_name"] = descriptor.file()->name();
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
+  vars["connection_options_header_path"] = absl::StrCat(
+      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".h");
+  vars["connection_options_cc_path"] = absl::StrCat(
+      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".cc");
+  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                       ServiceNameToFilePath(descriptor.name()),
                                       "_stub", GeneratedFileSuffix(), ".cc");
-  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub",
                    GeneratedFileSuffix(), ".h");
+  vars["stub_factory_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".cc");
+  vars["stub_factory_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".h");
+  vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
+  vars["logging_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_logging_decorator", GeneratedFileSuffix(), ".cc");
+  vars["logging_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_logging_decorator", GeneratedFileSuffix(), ".h");
+  vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
+  vars["metadata_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_metadata_decorator", GeneratedFileSuffix(), ".cc");
+  vars["metadata_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()),
+                   "_metadata_decorator", GeneratedFileSuffix(), ".h");
+  vars["version_header_path"] = absl::StrCat(vars["product_path"], "version.h");
+  vars["version_cc_path"] = absl::StrCat(vars["product_path"], "version.cc");
+  vars["version_info_header_path"] =
+      absl::StrCat(vars["product_path"], "version_info.h");
   return vars;
 }
 
-std::map<std::string, std::map<std::string, std::string>> CreateMethodVars(
+std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service) {
-  std::map<std::string, std::map<std::string, std::string>>
-      service_methods_vars;
+  std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto method = service.method(i);
-    std::map<std::string, std::string> method_vars;
+    VarsDictionary method_vars;
     method_vars["method_name"] = method->name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
     method_vars["request_type"] =
@@ -223,20 +249,31 @@ std::map<std::string, std::map<std::string, std::string>> CreateMethodVars(
   return service_methods_vars;
 }
 
-std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
+std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
+  std::vector<std::unique_ptr<GeneratorInterface>> class_generators;
+  class_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   class_generators.push_back(absl::make_unique<StubGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<StubFactoryGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   return class_generators;
 }
 
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,
-                   Printer& printer,
-                   std::map<std::string, std::string> const& vars,
+                   Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line) {
   std::vector<MethodPattern> matching_patterns;

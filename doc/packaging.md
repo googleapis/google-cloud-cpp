@@ -3,7 +3,7 @@
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
-This document is intended for package maintainers or anyone else who might like
+This document is intended for package maintainers or for people who might like
 to "install" the `google-cloud-cpp` libraries.
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
@@ -113,9 +113,9 @@ commands to your `WORKSPACE` file:
 # Update the version and SHA256 digest as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.10.0.tar.gz",
-    strip_prefix = "google-cloud-cpp-0.10.0",
-    sha256 = "fd0c3e3b50f32af332b53857f8cd1bfa009e33d1eeecabc5c79a4825d906a90c",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v1.19.0.tar.gz",
+    strip_prefix = "google-cloud-cpp-1.19.0",
+    sha256 = "33eb349cf5f033704a4299b0ac57e3a8b4973ca92f4491aef822bfeb41e69d27",
 )
 
 load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")

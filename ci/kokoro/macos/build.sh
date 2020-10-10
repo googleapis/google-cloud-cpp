@@ -22,6 +22,7 @@ source module lib/io.sh
 
 export BAZEL_CONFIG=""
 export RUN_INTEGRATION_TESTS="no"
+export BUILD_TOOL="CMake"
 driver_script="ci/kokoro/macos/build-bazel.sh"
 
 # TODO(#4896): Enable generator integration tests for macos.
@@ -71,6 +72,7 @@ io::log_yellow "building with ${NCPU} cores on ${PWD}."
 script_flags=()
 
 if [[ "${BUILD_NAME}" = "bazel" ]]; then
+  export BUILD_TOOL="Bazel"
   driver_script="ci/kokoro/macos/build-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   driver_script="ci/kokoro/macos/build-cmake.sh"
@@ -78,6 +80,7 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
 elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
   driver_script="ci/kokoro/macos/build-quickstart-cmake.sh"
 elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
+  export BUILD_TOOL="Bazel"
   driver_script="ci/kokoro/macos/build-quickstart-bazel.sh"
 else
   io::log_red "unknown BUILD_NAME (${BUILD_NAME})."

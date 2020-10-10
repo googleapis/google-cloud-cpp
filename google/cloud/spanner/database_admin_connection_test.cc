@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -27,6 +28,7 @@ namespace {
 
 using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -97,7 +99,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
   auto fut = conn->CreateDatabase({dbase, {}});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that the successful case works.
@@ -135,10 +137,10 @@ TEST(DatabaseAdminClientTest, GetDatabasePermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabase(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetDatabaseTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -149,7 +151,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabase(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that the successful case works.
@@ -186,10 +188,10 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdlPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabaseDdl(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetDatabaseDdlTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -200,7 +202,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdlTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabaseDdl(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that successful case works.
@@ -259,7 +261,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseErrorInPoll) {
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that errors in the polling loop are reported.
@@ -288,7 +290,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseErrorInPoll) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto db = conn->CreateDatabase({dbase, {}}).get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that errors in the polling loop are reported.
@@ -321,7 +323,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseGetOperationError) {
       conn->UpdateDatabase(
               {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}})
           .get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that we can list databases in multiple pages.
@@ -388,7 +390,7 @@ TEST(DatabaseAdminClientTest, ListDatabasesPermanentFailure) {
   auto range = conn->ListDatabases({in});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
@@ -403,7 +405,7 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
   auto range = conn->ListDatabases({in});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that successful case works.
@@ -458,7 +460,7 @@ TEST(DatabaseAdminClientTest, HandleRestoreDatabaseError) {
   auto fut = conn->RestoreDatabase({dbase, backup.FullName()});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that the successful case works.
@@ -502,10 +504,10 @@ TEST(DatabaseAdminClientTest, GetIamPolicyPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetIamPolicy(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -516,7 +518,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicyTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetIamPolicy(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that the successful case works.
@@ -571,7 +573,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->SetIamPolicy(
       {Database("test-project", "test-instance", "test-database"), {}});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that request without the Etag field should fail with the first
@@ -586,7 +588,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyNonIdempotent) {
   google::iam::v1::Policy policy;
   auto response = conn->SetIamPolicy(
       {Database("test-project", "test-instance", "test-database"), policy});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that request with the Etag field is retried for transient
@@ -603,7 +605,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyIdempotent) {
   policy.set_etag("test-etag-value");
   auto response = conn->SetIamPolicy(
       {Database("test-project", "test-instance", "test-database"), policy});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that the successful case works.
@@ -645,10 +647,10 @@ TEST(DatabaseAdminClientTest, TestIamPermissionsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->TestIamPermissions(
       {Database("test-project", "test-instance", "test-database"), {}});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -659,7 +661,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissionsTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->TestIamPermissions(
       {Database("test-project", "test-instance", "test-database"), {}});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that successful case works.
@@ -700,7 +702,7 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
 TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   // Suppress a false leak.
-  // TODO(#127): After we fix the issue #127, we won't need to use
+  // TODO(#4038): After we fix the issue #4038, we won't need to use
   // `AllowLeak()` any more.
   Mock::AllowLeak(mock.get());
   promise<void> p;
@@ -769,7 +771,7 @@ TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
   auto fut = conn->CreateBackup({dbase, "test-backup", {}});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, backup.status().code());
+  EXPECT_THAT(backup, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that the successful case works.
@@ -809,10 +811,10 @@ TEST(DatabaseAdminClientTest, GetBackupPermanentError) {
   auto response = conn->GetBackup(
       {Backup(Instance("test-project", "test-instance"), "test-backup")
            .FullName()});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, GetBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -824,7 +826,7 @@ TEST(DatabaseAdminClientTest, GetBackupTooManyTransients) {
   auto response = conn->GetBackup(
       {Backup(Instance("test-project", "test-instance"), "test-backup")
            .FullName()});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that the successful case works.
@@ -856,10 +858,10 @@ TEST(DatabaseAdminClientTest, DeleteBackupPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto status = conn->DeleteBackup(
       {"projects/test-project/instances/test-instance/backups/test-backup"});
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, DeleteBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -870,7 +872,7 @@ TEST(DatabaseAdminClientTest, DeleteBackupTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto status = conn->DeleteBackup(
       {"projects/test-project/instances/test-instance/backups/test-backup"});
-  EXPECT_EQ(StatusCode::kUnavailable, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that we can list backups in multiple pages.
@@ -935,7 +937,7 @@ TEST(DatabaseAdminClientTest, ListBackupsPermanentFailure) {
   auto range = conn->ListBackups({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, ListBackupsTooManyFailures) {
@@ -950,7 +952,7 @@ TEST(DatabaseAdminClientTest, ListBackupsTooManyFailures) {
   auto range = conn->ListBackups({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that the successful case works.
@@ -991,10 +993,10 @@ TEST(DatabaseAdminClientTest, UpdateBackupPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   auto response = conn->UpdateBackup({request});
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
-/// @test Verify that too many transients errors are reported corrrectly.
+/// @test Verify that too many transients errors are reported correctly.
 TEST(DatabaseAdminClientTest, UpdateBackupTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
@@ -1005,7 +1007,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   auto response = conn->UpdateBackup({request});
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that we can list backup operations in multiple pages.
@@ -1072,7 +1074,7 @@ TEST(DatabaseAdminClientTest, ListBackupOperationsPermanentFailure) {
   auto range = conn->ListBackupOperations({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, ListBackupOperationsTooManyFailures) {
@@ -1087,7 +1089,7 @@ TEST(DatabaseAdminClientTest, ListBackupOperationsTooManyFailures) {
   auto range = conn->ListBackupOperations({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 /// @test Verify that we can list database operations in multiple pages.
@@ -1154,7 +1156,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperationsPermanentFailure) {
   auto range = conn->ListDatabaseOperations({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(DatabaseAdminClientTest, ListDatabaseOperationsTooManyFailures) {
@@ -1169,7 +1171,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperationsTooManyFailures) {
   auto range = conn->ListDatabaseOperations({in, ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace

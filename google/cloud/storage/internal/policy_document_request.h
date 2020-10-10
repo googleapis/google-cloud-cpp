@@ -44,7 +44,7 @@ class PolicyDocumentRequest {
   /**
    * Creates the string to be signed.
    *
-   * @note unlike signed URL's, policy documents are base64-encoded before
+   * @note unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;
@@ -89,7 +89,7 @@ class PolicyDocumentV4Request {
   /**
    * Creates the string to be signed.
    *
-   * @note unlike signed URL's, policy documents are base64-encoded before
+   * @note unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;
@@ -148,12 +148,6 @@ class PolicyDocumentV4Request {
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);
-
-#if defined(_MSC_VER)
-#define GOOGLE_CLOUD_CPP_HAVE_CODECVT 0
-#else
-#define GOOGLE_CLOUD_CPP_HAVE_CODECVT 1
-#endif
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

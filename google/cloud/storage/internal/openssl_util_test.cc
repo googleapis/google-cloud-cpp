@@ -51,6 +51,7 @@ TEST(OpensslUtilTest, Base64Decode) {
 
 TEST(OpensslUtilTest, Base64DecodePadding) {
   // Produced input using:
+  // cSpell:disable
   // $ echo -n 'A' | openssl base64 -e
   // QQ==
   // $ echo -n 'AB' | openssl base64 -e
@@ -59,6 +60,7 @@ TEST(OpensslUtilTest, Base64DecodePadding) {
   // QUJD
   // $ echo -n 'ABCD' | openssl base64 -e
   // QUJDRAo=
+  // cSpell:enable
 
   EXPECT_THAT(UrlsafeBase64Decode("QQ=="), ElementsAre('A'));
   EXPECT_THAT(UrlsafeBase64Decode("QUI="), ElementsAre('A', 'B'));

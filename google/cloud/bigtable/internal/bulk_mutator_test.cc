@@ -459,7 +459,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
       .WillOnce(Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
 
   // The BulkMutator should not issue a second request because the error is
-  // PERMISSION_DENIED (not retriable).
+  // PERMISSION_DENIED (not retryable).
 
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))

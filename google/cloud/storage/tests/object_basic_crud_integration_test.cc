@@ -14,19 +14,18 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/object_integration_test.h"
-#include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/log.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
-#include "google/cloud/testing_util/expect_exception.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
-#include <sys/types.h>
 #include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <memory>
+#include <regex>
 #include <string>
 
 namespace google {
@@ -72,7 +71,24 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       bucket_name_, object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
-  EXPECT_EQ(*get_meta, *insert_meta);
+
+  if (UsingGrpc()) {
+    // The metadata returned by gRPC (InsertObject) doesn't contain `media_link`
+    // and `self_link`. The easiest way to do the comparison is by replacing the
+    // relevant parts in the string representations.
+
+    std::stringstream get_meta_stream;
+    get_meta_stream << *get_meta;
+    std::string get_meta_rep =
+        std::regex_replace(get_meta_stream.str(),
+                           std::regex("(media|self)_link=[^,)}]*"), "$1_link=");
+    std::stringstream insert_meta_stream;
+    insert_meta_stream << *insert_meta;
+    std::string insert_meta_rep = insert_meta_stream.str();
+    EXPECT_EQ(get_meta_rep, insert_meta_rep);
+  } else {
+    EXPECT_EQ(*get_meta, *insert_meta);
+  }
 
   ObjectMetadata update = *get_meta;
   update.mutable_acl().emplace_back(
@@ -132,6 +148,102 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
+}
+
+StatusOr<Client> CreateNonDefaultClient() {
+  auto testbench =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  if (!testbench) {
+    // Use a different spelling of the default endpoint. This disables the
+    // allegedly "slightly faster" XML endpoints, but should continue to work.
+    options.set_endpoint("https://storage.googleapis.com:443");
+    auto creds = oauth2::GoogleDefaultCredentials();
+    if (!creds) return std::move(creds).status();
+    options.set_credentials(*std::move(creds));
+  } else {
+    // Use the testbench endpoint, but not through the environment variable
+    options.set_endpoint(*testbench);
+    options.set_credentials(oauth2::CreateAnonymousCredentials());
+  }
+  return Client(options);
+}
+
+/// @test Verify that the client works with non-default endpoints.
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertJSON) {
+  auto client = CreateNonDefaultClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto const expected = LoremIpsum();
+  auto insert = client->InsertObject(bucket_name_, object_name, expected);
+  ASSERT_STATUS_OK(insert);
+  auto stream =
+      client->ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
+  EXPECT_STATUS_OK(stream.status());
+  std::string const actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Verify that the client works with non-default endpoints.
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertXml) {
+  auto client = CreateNonDefaultClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto const expected = LoremIpsum();
+  auto insert =
+      client->InsertObject(bucket_name_, object_name, expected, Fields(""));
+  ASSERT_STATUS_OK(insert);
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(stream.status());
+  std::string const actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Verify that the client works with non-default endpoints.
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
+  auto client = CreateNonDefaultClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto const expected = LoremIpsum();
+  auto writer = client->WriteObject(bucket_name_, object_name);
+  writer << expected;
+  writer.Close();
+  ASSERT_STATUS_OK(writer.metadata());
+  auto stream =
+      client->ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
+  EXPECT_STATUS_OK(stream.status());
+  std::string const actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Verify that the client works with non-default endpoints.
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteXml) {
+  auto client = CreateNonDefaultClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto const expected = LoremIpsum();
+  auto writer = client->WriteObject(bucket_name_, object_name, Fields(""));
+  writer << expected;
+  writer.Close();
+  ASSERT_STATUS_OK(writer.metadata());
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(stream.status());
+  std::string const actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

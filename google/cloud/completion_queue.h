@@ -27,6 +27,12 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+class CompletionQueue;
+
+namespace internal {
+std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
+    CompletionQueue& cq);
+}  // namespace internal
 
 /**
  * Call the functor associated with asynchronous operations when they complete.
@@ -226,8 +232,19 @@ class CompletionQueue {
   }
 
  private:
+  friend std::shared_ptr<internal::CompletionQueueImpl>
+  internal::GetCompletionQueueImpl(CompletionQueue& cq);
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
+
+namespace internal {
+
+inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
+    CompletionQueue& cq) {
+  return cq.impl_;
+}
+
+}  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

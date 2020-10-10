@@ -17,17 +17,10 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
-#if GOOGLE_CLOUD_CPP_HAVE_CODECVT
 #include <codecvt>
-#include <locale>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT
 #include <iomanip>
+#include <locale>
 #include <sstream>
-
-// Some MSVC versions need this.
-#if (!_DLL) && (_MSC_VER >= 1900) && (_MSC_VER <= 1911)
-std::locale::id std::codecvt<char16_t, char, _Mbstatet>::id;
-#endif
 
 namespace google {
 namespace cloud {
@@ -97,12 +90,21 @@ bool EscapeAsciiChar(std::string& result, char32_t c) {
 }
 }  // namespace
 
-#if GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
   std::string result;
 
-  std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
-  std::basic_string<char32_t> utf32;
+#if (_MSC_VER >= 1900)
+  // Working around missing std::codecvt_utf8<char32_t> symbols in MSVC
+  // Microsoft bug number: VSO#143857
+  // Context:
+  // https://social.msdn.microsoft.com/Forums/en-US/8f40dcd8-c67f-4eba-9134-a19b9178e481/vs-2015-rc-linker-stdcodecvt-error?forum=vcgeneral
+  using WideChar = __int32;
+#else   // (_MSC_VER >= 1900)
+  using WideChar = char32_t;
+#endif  // (_MSC_VER >= 1900)
+  std::wstring_convert<std::codecvt_utf8<WideChar>, WideChar> conv;
+  std::basic_string<WideChar> utf32;
   try {
     utf32 = conv.from_bytes(utf8_bytes);
   } catch (std::exception const& ex) {
@@ -110,7 +112,7 @@ StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
                   std::string("string failed to parse as UTF-8: ") + ex.what());
   }
   utf32 = conv.from_bytes(utf8_bytes);
-  for (char32_t c : utf32) {
+  for (auto c : utf32) {
     bool is_ascii = EscapeAsciiChar(result, c);
     if (!is_ascii) {
       // All unicode characters should be encoded as \udead.
@@ -122,13 +124,13 @@ StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
   }
   return result;
 }
-#else   // GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const&) {
   return Status(StatusCode::kUnimplemented,
                 "Signing POST policies is unavailable with this compiler due "
-                "to the lack of `codecvt` header or exception support.");
+                "to the lack of exception support.");
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes) {
   std::string result;

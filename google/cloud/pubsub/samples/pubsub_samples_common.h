@@ -56,6 +56,8 @@ CreateSubscriptionAdminCommand(std::string const& name,
                                std::vector<std::string> const& arg_names,
                                SubscriptionAdminCommand const& command);
 
+bool UsingEmulator();
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

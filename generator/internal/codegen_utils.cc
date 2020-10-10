@@ -13,19 +13,10 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#if _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_join.h"
-#include "absl/strings/str_replace.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "absl/strings/str_split.h"
-#if _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-// TODO(#4501) - end
 #include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>
@@ -84,30 +75,18 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-StatusOr<std::vector<std::string>> BuildNamespaces(
-    std::map<std::string, std::string> const& vars, NamespaceType ns_type) {
-  auto iter = vars.find("product_path");
-  if (iter == vars.end()) {
-    return Status(StatusCode::kNotFound,
-                  "product_path must be present in vars.");
-  }
-  std::string product_path = iter->second;
-  if (product_path.back() != '/') {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] must end with '/'.");
-  }
-  if (product_path.size() < 2) {
-    return Status(StatusCode::kInvalidArgument,
-                  "vars[product_path] contain at least 2 characters.");
-  }
-  std::vector<std::string> v = absl::StrSplit(product_path, '/');
-  auto name = v[v.size() - 2];
-  std::string inline_ns = absl::AsciiStrToUpper(name) + "_CLIENT_NS";
+std::vector<std::string> BuildNamespaces(std::string const& product_path,
+                                         NamespaceType ns_type) {
+  std::vector<std::string> v =
+      absl::StrSplit(product_path, '/', absl::SkipEmpty());
+  std::string name =
+      absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
   if (ns_type == NamespaceType::kInternal) {
-    name = absl::StrCat(name, "_internal");
+    absl::StrAppend(&name, "_internal");
   }
 
-  return std::vector<std::string>{"google", "cloud", name, inline_ns};
+  return std::vector<std::string>{"google", "cloud", name,
+                                  "GOOGLE_CLOUD_CPP_NS"};
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>

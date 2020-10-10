@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -42,10 +43,9 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{-42, "weird", {}}).code());
   EXPECT_EQ(StatusCode::kUnknown,
             AsStatus(HttpResponse{99, "still weird", {}}).code());
-  EXPECT_EQ(StatusCode::kOk,
-            AsStatus(HttpResponse{100, "Continue", {}}).code());
-  EXPECT_EQ(StatusCode::kOk, AsStatus(HttpResponse{200, "success", {}}).code());
-  EXPECT_EQ(StatusCode::kOk, AsStatus(HttpResponse{299, "success", {}}).code());
+  EXPECT_STATUS_OK(AsStatus(HttpResponse{100, "Continue", {}}));
+  EXPECT_STATUS_OK(AsStatus(HttpResponse{200, "success", {}}));
+  EXPECT_STATUS_OK(AsStatus(HttpResponse{299, "success", {}}));
   EXPECT_EQ(
       StatusCode::kUnknown,
       AsStatus(HttpResponse{300, "libcurl should handle this", {}}).code());

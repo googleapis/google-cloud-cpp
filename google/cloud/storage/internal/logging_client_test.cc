@@ -144,6 +144,53 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
       InsertObjectMediaRequest("foo-bar", "baz", "the contents"));
 }
 
+TEST_F(LoggingClientTest, ListBuckets) {
+  std::vector<BucketMetadata> items = {
+      internal::BucketMetadataParser::FromString(
+          R"""({
+            "name": "response-bucket-b1",
+            "id": "response-bucket-b1",
+            "kind": "storage#bucket",
+            "location": "US"
+})""")
+          .value(),
+      internal::BucketMetadataParser::FromString(
+          R"""({
+            "name": "response-bucket-b2",
+            "id": "response-bucket-b2",
+            "kind": "storage#bucket",
+            "location": "CN"
+})""")
+          .value(),
+  };
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListBuckets(_))
+      .WillOnce(Return(make_status_or(ListBucketsResponse{"a-token", items})));
+
+  // We want to test that the key elements are logged, but do not want a
+  // "change detection test", so this is intentionally not exhaustive.
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" << "));
+        EXPECT_THAT(lr.message, HasSubstr("ListBucketsRequest={"));
+        EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" >> "));
+        EXPECT_THAT(lr.message, HasSubstr("payload={"));
+        EXPECT_THAT(lr.message, HasSubstr("ListBucketsResponse={"));
+        EXPECT_THAT(lr.message, HasSubstr("a-token"));
+        EXPECT_THAT(lr.message, HasSubstr("response-bucket-b1"));
+        EXPECT_THAT(lr.message, HasSubstr("US"));
+        EXPECT_THAT(lr.message, HasSubstr("response-bucket-b2"));
+        EXPECT_THAT(lr.message, HasSubstr("storage#bucket"));
+        EXPECT_THAT(lr.message, HasSubstr("CN"));
+      });
+
+  LoggingClient client(mock);
+  client.ListBuckets(ListBucketsRequest("my-bucket"));
+}
+
 TEST_F(LoggingClientTest, ListObjects) {
   std::vector<ObjectMetadata> items = {
       internal::ObjectMetadataParser::FromString(

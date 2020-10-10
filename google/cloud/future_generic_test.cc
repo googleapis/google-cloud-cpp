@@ -54,6 +54,60 @@ TEST(FutureTestInt, DestroyInSignalingThread) {
   }
 }
 
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestBool, SetValueBasic) {
+  promise<bool> p;
+  auto f = p.get_future();
+  p.set_value(true);
+  EXPECT_TRUE(f.get());
+}
+
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestBool, SetValueConstRef) {
+  promise<bool> p;
+  auto f = p.get_future();
+  auto const v = true;
+  auto const& r = v;
+  p.set_value(r);
+  EXPECT_TRUE(f.get());
+}
+
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestBool, SetValueRefRef) {
+  promise<bool> p;
+  auto f = p.get_future();
+  auto v = true;
+  p.set_value(std::move(v));
+  EXPECT_TRUE(f.get());
+}
+
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestString, SetValueBasic) {
+  promise<std::string> p;
+  auto f = p.get_future();
+  p.set_value("42");
+  EXPECT_EQ("42", f.get());
+}
+
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestString, SetValueConstRef) {
+  promise<std::string> p;
+  auto f = p.get_future();
+  auto const v = std::string("42");
+  auto const& r = v;
+  p.set_value(r);
+  EXPECT_EQ("42", f.get());
+}
+
+/// @test Verify promise<bool> works as expected
+TEST(FutureTestString, SetValueRefRef) {
+  promise<std::string> p;
+  auto f = p.get_future();
+  auto v = std::string("42");
+  p.set_value(std::move(v));
+  EXPECT_EQ("42", f.get());
+}
+
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_3) {

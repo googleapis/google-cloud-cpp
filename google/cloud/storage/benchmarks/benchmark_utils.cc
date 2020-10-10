@@ -102,7 +102,7 @@ absl::optional<bool> ParseBoolean(std::string const& val) {
 }
 
 std::string Basename(std::string const& path) {
-  // With C++17 we would use std::filesytem::path, until then do the poor's
+  // With C++17 we would use `std::filesystem::path`, until then do the poor's
   // person version.
 #if _WIN32
   return path.substr(path.find_last_of("\\/") + 1);
@@ -326,6 +326,12 @@ char const* ToString(ApiName api) {
       return "GRPC-RAW";
   }
   return "";
+}
+
+std::string RandomBucketPrefix() { return "cloud-cpp-testing-bm"; }
+
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
+  return storage::testing::MakeRandomBucketName(gen, RandomBucketPrefix());
 }
 
 }  // namespace storage_benchmarks

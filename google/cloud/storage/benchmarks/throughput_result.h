@@ -71,7 +71,7 @@ struct ThroughputResult {
   bool crc_enabled;
   /// True if the MD5 hashes are enabled in this experiment.
   bool md5_enabled;
-  /// The API, protocol, or library used in this expriment.
+  /// The API, protocol, or library used in this experiment.
   ApiName api;
   /// The total time used to complete the experiment.
   std::chrono::microseconds elapsed_time;
@@ -80,7 +80,7 @@ struct ThroughputResult {
   std::chrono::microseconds cpu_time;
   /// The result of the operation. The analysis may need to discard failed
   /// uploads or downloads.
-  google::cloud::StatusCode status;
+  google::cloud::Status status;
 };
 
 /// Print @p r as a CSV line.

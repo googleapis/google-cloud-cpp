@@ -43,8 +43,8 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
 }
 
 // Note that TRACE-level messages are disabled by default, even in
-// CMAKE_BUILD_TYPE=Debug builds. The level of detail created by the
-// TRACE_STATE() macro is only needed by the library developers when
+// `CMAKE_BUILD_TYPE=Debug` builds. The level of detail created by the
+// `TRACE_STATE()` macro is only needed by the library developers when
 // troubleshooting this class.
 #define TRACE_STATE()                                                       \
   GCP_LOG(TRACE) << __func__ << "(), buffer_size_=" << buffer_size_         \
@@ -94,8 +94,8 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   // callback, see the comments in the header file for more details.
   closing_ = true;
 
-  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
   paused_ = false;
+  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
   TRACE_STATE();
 
   // Block until that callback is made.
@@ -155,12 +155,12 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
 #else
   if (!curl_closed_) {
 #endif  // libcurl >= 7.69.0
+    paused_ = false;
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     if (!status.ok()) {
       TRACE_STATE() << ", status=" << status;
       return status;
     }
-    paused_ = false;
     TRACE_STATE();
   }
 

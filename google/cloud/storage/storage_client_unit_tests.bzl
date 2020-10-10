@@ -50,6 +50,7 @@ storage_client_unit_tests = [
     "internal/curl_wrappers_locking_already_present_test.cc",
     "internal/curl_wrappers_locking_disabled_test.cc",
     "internal/curl_wrappers_locking_enabled_test.cc",
+    "internal/curl_wrappers_test.cc",
     "internal/default_object_acl_requests_test.cc",
     "internal/generate_message_boundary_test.cc",
     "internal/generic_request_test.cc",
@@ -100,6 +101,7 @@ storage_client_unit_tests = [
     "storage_class_test.cc",
     "storage_iam_policy_test.cc",
     "storage_version_test.cc",
+    "testing/remove_stale_buckets_test.cc",
     "well_known_headers_test.cc",
     "well_known_parameters_test.cc",
 ]

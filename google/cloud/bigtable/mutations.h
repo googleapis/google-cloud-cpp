@@ -440,15 +440,15 @@ class PermanentMutationFailure : public std::runtime_error {
    * discarded.
    *
    * Any mutations that fail with an unknown state are included with a
-   * grpc::StatusCode::OK.
+   * `grpc::StatusCode::OK`.
    */
   std::vector<FailedMutation> const& failures() const { return failures_; }
 
   /**
-   * The grpc::Status of the request.
+   * The `grpc::Status` of the request.
    *
-   * Notice that it can return grpc::Status::OK when there are partial failures
-   * in a BulkApply() operation.
+   * Notice that it can return `grpc::Status::OK` when there are partial
+   * failures in a `BulkApply()` operation.
    */
   grpc::Status const& status() const { return status_; }
 
@@ -489,13 +489,13 @@ class BulkMutation {
     emplace_back(std::move(mutation));
   }
 
-  /// Create a muti-row mutation from two SingleRowMutation
+  /// Create a multi-row mutation from two SingleRowMutation
   BulkMutation(SingleRowMutation m1, SingleRowMutation m2) : BulkMutation() {
     emplace_back(std::move(m1));
     emplace_back(std::move(m2));
   }
 
-  /// Create a muti-row mutation from a variadic list.
+  /// Create a multi-row mutation from a variadic list.
   template <typename... M,
             typename std::enable_if<absl::conjunction<std::is_convertible<
                                         M, SingleRowMutation>...>::value,

@@ -119,7 +119,7 @@ class PollAsyncOpFuture {
     // delay depending on whether there was a success or a failure. This is
     // because PollingPolicy never gets to know about a successful attempt. In
     // order to work around it in this particular class we keep the invariant
-    // that a call to OnFailure() always preceeds a call to WaitPeriod(). That
+    // that a call to OnFailure() always precedes a call to WaitPeriod(). That
     // way the policy can react differently to successful requests.
     bool const allowed_to_retry =
         self->polling_policy_->OnFailure(result.status());

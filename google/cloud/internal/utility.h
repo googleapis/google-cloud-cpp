@@ -23,16 +23,16 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-// This header reimplements some of C++14's <utlity> header.
+// This header re-implements some of C++14's <utility> header.
 
-// Reimplementation of C++14 `std::integer_sequence`.
+// Re-implementation of C++14 `std::integer_sequence`.
 template <class T, T... I>
 struct integer_sequence {  // NOLINT(readability-identifier-naming)
   using value_type = T;
   static std::size_t constexpr size() noexcept { return sizeof...(I); }
 };
 
-// Reimplementation of C++14 `std::index_sequence`.
+// Re-implementation of C++14 `std::index_sequence`.
 template <std::size_t... Ints>
 using index_sequence = integer_sequence<std::size_t, Ints...>;
 
@@ -48,7 +48,7 @@ using index_sequence = integer_sequence<std::size_t, Ints...>;
  *
  * @tparam T the type of the index in `index_sequence`
  * @tparam N the counter bounding type recursion; `std::integral_constant` has
- *     to be used because spacializing a template with a value of type which is
+ *     to be used because specializing a template with a value of type which is
  *     dependent on a different template parameter is not allowed.
  * @tparam Enable ignored, formal parameter to allow for disabling some
  *     specializations

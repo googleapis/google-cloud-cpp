@@ -16,6 +16,7 @@
 
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include "generator/internal/printer.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -70,9 +71,25 @@ enum class NamespaceType { kNormal, kInternal };
 
 /**
  * Builds namespace hierarchy.
+ *
+ * Typically used with a product_path like to 'google/cloud/product/' and
+ * returns {"google", "cloud", "product", "PRODUCT_CLIENT_NS"}.
+ *
+ * If the path contains fewer than two directories, they will be concatenated
+ * to form the product value, e.g. 'unusual/product/' returns
+ * {"google", "cloud", "unusual_product", "UNUSUAL_PRODUCT_CLIENT_NS"}.
+ *
+ * If the path contains more than three directories the third and subsequent
+ * directories will be concatenated, e.g. 'google/cloud/foo/bar/baz/' returns
+ * {"google", "cloud", "foo_bar_baz", "FOO_BAR_BAZ_CLIENT_NS"}.
+ *
+ * If ns_type is `NamespaceType::kInternal`, "_internal" is appended to the
+ * product, e.g. 'google/cloud/product/' returns
+ * {"google", "cloud", "product_internal", "PRODUCT_CLIENT_NS"}.
+ *
  */
-StatusOr<std::vector<std::string>> BuildNamespaces(
-    std::map<std::string, std::string> const& vars,
+std::vector<std::string> BuildNamespaces(
+    std::string const& product_path,
     NamespaceType ns_type = NamespaceType::kNormal);
 
 /**

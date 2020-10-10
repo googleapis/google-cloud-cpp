@@ -143,71 +143,25 @@ TEST(SubscriberMetadataTest, ModifyPushConfig) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(SubscriberMetadataTest, AsyncPull) {
+TEST(SubscriberMetadataTest, AsyncStreamingPull) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncPull)
+  EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([](google::cloud::CompletionQueue&,
                    std::unique_ptr<grpc::ClientContext> context,
-                   google::pubsub::v1::PullRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.pubsub.v1.Subscriber.Pull",
-                             google::cloud::internal::ApiClientHeader()));
-        return make_ready_future(
-            make_status_or(google::pubsub::v1::PullResponse{}));
-      });
-  SubscriberMetadata stub(mock);
-  google::cloud::CompletionQueue cq;
-  google::pubsub::v1::PullRequest request;
-  request.set_subscription(
-      pubsub::Subscription("test-project", "test-subscription").FullName());
-  auto status =
-      stub.AsyncPull(cq, absl::make_unique<grpc::ClientContext>(), request)
-          .get();
-  EXPECT_STATUS_OK(status);
-}
-
-TEST(SubscriberMetadataTest, AsyncAcknowledge) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext> context,
-                   google::pubsub::v1::AcknowledgeRequest const&) {
+                   google::pubsub::v1::StreamingPullRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.pubsub.v1.Subscriber.Acknowledge",
+            *context, "google.pubsub.v1.Subscriber.StreamingPull",
             google::cloud::internal::ApiClientHeader()));
-        return make_ready_future(Status{});
+        return absl::make_unique<pubsub_testing::MockAsyncPullStream>();
       });
   SubscriberMetadata stub(mock);
   google::cloud::CompletionQueue cq;
-  google::pubsub::v1::AcknowledgeRequest request;
+  google::pubsub::v1::StreamingPullRequest request;
   request.set_subscription(
       pubsub::Subscription("test-project", "test-subscription").FullName());
-  auto status = stub.AsyncAcknowledge(
-                        cq, absl::make_unique<grpc::ClientContext>(), request)
-                    .get();
-  EXPECT_STATUS_OK(status);
-}
-
-TEST(SubscriberMetadataTest, AsyncModifyAckDeadline) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext> context,
-                   google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.pubsub.v1.Subscriber.ModifyAckDeadline",
-            google::cloud::internal::ApiClientHeader()));
-        return make_ready_future(Status{});
-      });
-  SubscriberMetadata stub(mock);
-  google::cloud::CompletionQueue cq;
-  google::pubsub::v1::ModifyAckDeadlineRequest request;
-  request.set_subscription(
-      pubsub::Subscription("test-project", "test-subscription").FullName());
-  auto status = stub.AsyncModifyAckDeadline(
-                        cq, absl::make_unique<grpc::ClientContext>(), request)
-                    .get();
-  EXPECT_STATUS_OK(status);
+  auto stream = stub.AsyncStreamingPull(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_TRUE(stream);
 }
 
 TEST(SubscriberMetadataTest, CreateSnapshot) {

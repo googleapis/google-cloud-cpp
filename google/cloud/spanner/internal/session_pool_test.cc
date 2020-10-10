@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -41,6 +42,7 @@ namespace {
 using ::google::cloud::spanner_testing::FakeSteadyClock;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
@@ -153,8 +155,8 @@ TEST(SessionPool, CreateError) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
   auto session = pool->Allocate();
-  EXPECT_EQ(session.status().code(), StatusCode::kInternal);
-  EXPECT_THAT(session.status().message(), HasSubstr("some failure"));
+  EXPECT_THAT(session,
+              StatusIs(StatusCode::kInternal, HasSubstr("some failure")));
 }
 
 TEST(SessionPool, ReuseSession) {
@@ -272,8 +274,8 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
   }
   EXPECT_THAT(session_names, UnorderedElementsAre("s1", "s2", "s3"));
   auto session = pool->Allocate();
-  EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
-  EXPECT_EQ(session.status().message(), "session pool exhausted");
+  EXPECT_THAT(session, StatusIs(StatusCode::kResourceExhausted,
+                                "session pool exhausted"));
 }
 
 TEST(SessionPool, MaxSessionsBlockUntilRelease) {
@@ -379,8 +381,8 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
               UnorderedElementsAre("c1s1", "c1s2", "c1s3", "c2s1", "c2s2",
                                    "c2s3", "c3s1", "c3s2", "c3s3"));
   auto session = pool->Allocate();
-  EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
-  EXPECT_EQ(session.status().message(), "session pool exhausted");
+  EXPECT_THAT(session, StatusIs(StatusCode::kResourceExhausted,
+                                "session pool exhausted"));
 }
 
 TEST(SessionPool, GetStubForStublessSession) {
@@ -456,7 +458,7 @@ TEST(SessionPool, SessionRefresh) {
 
   // Simulate completion again, making another RefreshExpiringSessions()
   // call, which should do nothing.  If anything goes wrong with this
-  // process, we'll get unsatisfied/uninteresting gmock errors.
+  // process, we'll get unsatisfied/uninteresting gMock errors.
   impl->SimulateCompletion(true);
 }
 

@@ -19,6 +19,8 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
+#include "google/cloud/future_void.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -107,9 +109,9 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
-    return BatchingPublisherConnection::Create(
+    return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
         std::move(topic), std::move(options), std::move(stub), std::move(cq),
-        std::move(retry_policy), std::move(backoff_policy));
+        std::move(retry_policy), std::move(backoff_policy)));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());

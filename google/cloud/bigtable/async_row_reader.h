@@ -259,7 +259,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     // either the user doesn't hold a `future<>` when we're fetching more rows.
     // Retries (successful or not) will do it. Improving this behavior makes
     // little sense because parser errors are very unexpected and probably not
-    // retriable anyway.
+    // retryable anyway.
 
     if (status_.ok()) {
       continue_reading_.emplace(promise<bool>());
@@ -298,7 +298,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
       row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
     }
 
-    // If we receive an error, but the retriable set is empty, consider it a
+    // If we receive an error, but the retryable set is empty, consider it a
     // success.
     if (row_set_.IsEmpty()) {
       status_ = Status();
@@ -406,10 +406,10 @@ class AsyncRowReader : public std::enable_shared_from_this<
   /**
    * The promise to the underlying stream to either continue reading or cancel.
    *
-   * If the absl::optional is empty, it means that either the whole scan is
+   * If the `absl::optional` is empty, it means that either the whole scan is
    * finished or the underlying layers are already trying to fetch more data.
    *
-   * If the absl::optional is not empty, the lower layers are waiting for this
+   * If the `absl::optional` is not empty, the lower layers are waiting for this
    * to be satisfied before they start fetching more data.
    */
   absl::optional<promise<bool>> continue_reading_;

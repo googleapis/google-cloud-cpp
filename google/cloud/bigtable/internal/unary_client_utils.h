@@ -79,7 +79,7 @@ struct UnaryClientUtils {
   /**
    * Call a simple unary RPC with retries.
    *
-   * Given a pointer to member function in the grpc StubInterface class this
+   * Given a pointer to member function in the gRPC StubInterface class this
    * generic function calls it with retries until success or until the RPC
    * policies determine that this is an error.
    *
@@ -184,7 +184,7 @@ struct UnaryClientUtils {
    * @throw std::exception with a description of the last RPC error.
    */
   template <typename MemberFunction>
-  static typename Signature<MemberFunction>::ResponseType MakeNonIdemponentCall(
+  static typename Signature<MemberFunction>::ResponseType MakeNonIdempotentCall(
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,

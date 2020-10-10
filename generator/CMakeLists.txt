@@ -27,14 +27,24 @@ add_library(
     google_cloud_cpp_generator # cmake-format: sort
     generator.cc
     generator.h
-    internal/class_generator_interface.h
     internal/codegen_utils.cc
     internal/codegen_utils.h
+    internal/connection_options_generator.cc
+    internal/connection_options_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/generator_interface.h
+    internal/logging_decorator_generator.cc
+    internal/logging_decorator_generator.h
+    internal/metadata_decorator_generator.cc
+    internal/metadata_decorator_generator.h
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/service_code_generator.cc
+    internal/service_code_generator.h
+    internal/stub_factory_generator.cc
+    internal/stub_factory_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h)
 target_include_directories(google_cloud_cpp_generator

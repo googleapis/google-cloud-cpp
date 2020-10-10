@@ -29,7 +29,7 @@ namespace testing_util {
  * Define the interface to mock the result of starting a unary async RPC.
  *
  * Note that using this mock often requires special memory management. The
- * google mock library requires all mocks to be destroyed. In contrast, grpc
+ * google mock library requires all mocks to be destroyed. In contrast, gRPC
  * specializes `std::unique_ptr<>` to *not* delete objects of type
  * `grpc::ClientAsyncResponseReaderInterface<T>`:
  *

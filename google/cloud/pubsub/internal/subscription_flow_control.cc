@@ -25,9 +25,10 @@ void SubscriptionFlowControl::Start(MessageCallback cb) {
   std::unique_lock<std::mutex> lk(mu_);
   queue_.Start(std::move(cb));
   lk.unlock();
-  auto self = shared_from_this();
-  shutdown_manager_->StartAsyncOperation(__func__, "PullMore", cq_,
-                                         [self] { self->PullMore(); });
+  auto weak = std::weak_ptr<SubscriptionFlowControl>(shared_from_this());
+  child_->Start([weak](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
+    if (auto self = weak.lock()) self->OnRead(std::move(r));
+  });
 }
 
 void SubscriptionFlowControl::Shutdown() {
@@ -61,64 +62,20 @@ void SubscriptionFlowControl::MessageHandled(std::size_t size) {
       message_size_ <= message_size_lwm_) {
     overflow_ = false;
   }
-  auto self = shared_from_this();
-  shutdown_manager_->StartAsyncOperation(__func__, "PullMore", cq_,
-                                         [self] { self->PullMore(); });
 }
 
-void SubscriptionFlowControl::PullMore() {
-  if (shutdown_manager_->FinishedOperation("PullMore")) return;
-  PullIfNeeded(std::unique_lock<std::mutex>(mu_));
-}
-
-void SubscriptionFlowControl::PullIfNeeded(std::unique_lock<std::mutex> lk) {
-  if (overflow_ || total_messages() >= message_count_hwm_) return;
-
-  auto const maximum_messages =
-      static_cast<std::int32_t>(message_count_hwm_ - total_messages());
-
-  shutdown_manager_->StartOperation(__func__, "OnPull", [&] {
-    auto weak = std::weak_ptr<SubscriptionFlowControl>(shared_from_this());
-    outstanding_pull_count_ += maximum_messages;
-    lk.unlock();
-    child_->Pull(maximum_messages)
-        .then([weak, maximum_messages](
-                  future<StatusOr<google::pubsub::v1::PullResponse>> f) {
-          if (auto self = weak.lock()) self->OnPull(f.get(), maximum_messages);
-        });
-  });
-}
-
-void SubscriptionFlowControl::OnPull(
-    StatusOr<google::pubsub::v1::PullResponse> response,
-    std::int32_t pull_message_count) {
+void SubscriptionFlowControl::OnRead(
+    StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
   std::unique_lock<std::mutex> lk(mu_);
-  outstanding_pull_count_ -=
-      std::min<std::size_t>(pull_message_count, outstanding_pull_count_);
-  if (!response) {
-    shutdown_manager_->FinishedOperation("OnPull");
-    shutdown_manager_->MarkAsShutdown(__func__, std::move(response).status());
+  if (!r) {
+    shutdown_manager_->MarkAsShutdown(__func__, std::move(r).status());
     Shutdown();
     return;
   }
-  if (shutdown_manager_->FinishedOperation("OnPull")) {
-    std::vector<std::string> ack_ids(
-        response->mutable_received_messages()->size());
-    std::size_t total_size = 0;
-    std::transform(response->mutable_received_messages()->begin(),
-                   response->mutable_received_messages()->end(),
-                   ack_ids.begin(),
-                   [&](google::pubsub::v1::ReceivedMessage& m) {
-                     total_size += MessageProtoSize(m.message());
-                     return std::move(*m.mutable_ack_id());
-                   });
-    (void)child_->BulkNack(std::move(ack_ids), total_size);
-    return;
-  }
-  message_count_ += response->received_messages_size();
+  message_count_ += r->received_messages_size();
   message_size_ += std::accumulate(
-      response->received_messages().begin(),
-      response->received_messages().end(), std::size_t{0},
+      r->received_messages().begin(), r->received_messages().end(),
+      std::size_t{0},
       [](std::size_t a, google::pubsub::v1::ReceivedMessage const& m) {
         return a + MessageProtoSize(m.message());
       });
@@ -127,10 +84,21 @@ void SubscriptionFlowControl::OnPull(
     overflow_ = true;
   }
   lk.unlock();
-  auto self = shared_from_this();
-  shutdown_manager_->StartAsyncOperation(__func__, "PullMore", cq_,
-                                         [self] { self->PullMore(); });
-  queue_.OnPull(*std::move(response));
+  bool scheduled = shutdown_manager_->StartOperation(
+      __func__, "OnRead", [&] { queue_.OnRead(*std::move(r)); });
+  if (scheduled) {
+    shutdown_manager_->FinishedOperation("OnRead");
+  } else {
+    std::vector<std::string> ack_ids(r->mutable_received_messages()->size());
+    std::size_t total_size = 0;
+    std::transform(r->mutable_received_messages()->begin(),
+                   r->mutable_received_messages()->end(), ack_ids.begin(),
+                   [&](google::pubsub::v1::ReceivedMessage& m) {
+                     total_size += MessageProtoSize(m.message());
+                     return std::move(*m.mutable_ack_id());
+                   });
+    (void)child_->BulkNack(std::move(ack_ids), total_size);
+  }
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

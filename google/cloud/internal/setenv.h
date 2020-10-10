@@ -42,7 +42,7 @@ void SetEnv(char const* variable, char const* value);
 /**
  * Set the @p variable environment variable to @p value.
  *
- * If @value is an unset absl::optional then the variable is unset.
+ * If @value is an unset `absl::optional` then the variable is unset.
  */
 void SetEnv(char const* variable, absl::optional<std::string> value);
 

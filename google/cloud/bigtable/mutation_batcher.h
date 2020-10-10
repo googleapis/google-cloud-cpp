@@ -286,7 +286,7 @@ class MutationBatcher {
   // Number of uncompleted SingleRowMutations (including not admitted).
   size_t num_requests_pending_;
 
-  /// Currently contructed batch of mutations.
+  /// Currently constructed batch of mutations.
   std::shared_ptr<Batch> cur_batch_;
 
   /**

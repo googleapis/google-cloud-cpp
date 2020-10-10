@@ -149,7 +149,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * Spanner STRUCT fields may optionally contain a string indicating the field's
  * name. Fields names may be empty, unique, or repeated. A named field may be
  * specified as a tuple element of type `std::pair<std::string, T>`, where the
- * pair's `.first` member indicate's the field's name, and the `.second` member
+ * pair's `.first` member indicates the field's name, and the `.second` member
  * is any valid Spanner type `T`.
  *
  * @code
@@ -337,7 +337,7 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
  private:
-  // Metafunction that returns true if `T` is an absl::optional<U>
+  // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
   template <typename T>

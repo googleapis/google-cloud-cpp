@@ -17,19 +17,11 @@
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-// TODO(#4501) - fix by doing #include <absl/...>
-#include "google/cloud/internal/diagnostics_push.inc"
-#if _MSC_VER
-#pragma warning(disable : 4244)
-#endif  // _MSC_VER
-#include "absl/algorithm/container.h"
-#include "absl/strings/str_join.h"
-// TODO(#4501) - end
-#include "google/cloud/internal/diagnostics_pop.inc"
 #include <future>
 #include <set>
 #include <sstream>
@@ -138,8 +130,7 @@ int main(int argc, char* argv[]) {
   gcs::Client client(*std::move(client_options));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
+  auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -321,7 +312,7 @@ TestResults RunThread(ThroughputOptions const& options,
     auto status = upload_result.status;
     results.emplace_back(std::move(upload_result));
 
-    if (status != google::cloud::StatusCode::kOk) {
+    if (!status.ok()) {
       if (options.thread_count == 1) {
         std::cout << "# status=" << status << ", api=" << gcs_bm::ToString(api)
                   << "\n";
@@ -367,7 +358,6 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
           "--region=" +
               GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
-          "--bucket-prefix=cloud-cpp-testing-ci-",
           "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",

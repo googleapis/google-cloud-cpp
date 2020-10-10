@@ -1,0 +1,65 @@
+{
+  // Version of the setting file.  Always 0.1
+  "version": "0.1",
+  // language - current active spelling language
+  "language": "en",
+  // words - list of words to be always considered correct
+  "words": [
+    "ABSL",
+    "ADCs",
+    "AFAICT",
+    "ASAN",
+    "Bazel",
+    "blegh",
+    "CMEK",
+    "coryan",
+    "CRTP",
+    "CSEK",
+    "deserializes",
+    "gbps",
+    "gcloud",
+    "GCPCXX",
+    "goog",
+    "grpc",
+    "gtest",
+    "INPROCESS",
+    "i'th",
+    "LCOV",
+    "MSAN",
+    "Nacked",
+    "Nacking",
+    "Nacks",
+    "noex",
+    "quantile",
+    "quantums",
+    "QUIC",
+    "RDRAND",
+    "recurses",
+    "rerunnable",
+    "symbolizer",
+    "TSAN",
+    "UBLA",
+    "uncommitting",
+    "unsets",
+    "wifi"
+  ],
+  "languageSettings": [
+    {
+      "languageId": "cpp",
+      // Only spellcheck comments for now to avoid false positives.
+      "includeRegExpList": [
+        "CStyleComment"
+      ],
+      // Ignore Doxygen parameters (variable names) and clang-tidy directives.
+      "ignoreRegExpList": [
+        "/@param.*/g",
+        "/@tparam.*/g",
+        "/@snippet.*/",
+        "NOLINT*",
+        "/`.*`/",
+        "/@code[\\s\\S]*@endcode/g",
+        "/'s\\b/"
+      ]
+    }
+  ]
+}

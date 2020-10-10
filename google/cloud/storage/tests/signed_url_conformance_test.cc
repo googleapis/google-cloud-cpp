@@ -58,7 +58,7 @@ std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
 
   // Check for the keys of the relevant field
   for (auto& x : j_obj[field].items()) {
-    // The keys are returned in alphabetical order by nlohmann::json, but
+    // The keys are returned in alphabetical order by `nlohmann::json`, but
     // the order does not matter when creating signed urls.
     res.emplace_back(x.key(), x.value());
   }
@@ -271,7 +271,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   for (auto const& field : fields.items()) {
     expected_form_fields[field.key()] = field.value().get<std::string>();
   }
-  // We need to escape it because nlohmann::json interprets the escaped
+  // We need to escape it because `nlohmann::json` interprets the escaped
   // characters.
   std::string const expected_decoded_policy =
       *internal::PostPolicyV4Escape(output["expectedDecodedPolicy"]);
@@ -442,13 +442,12 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                  back_inserter(name), [](char c) {
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
-#if !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     if (name == "POSTPolicyCharacterEscaping") {
-      // Escaping is not supported if codecvt header or exceptions are
-      // unavailable.
+      // Escaping is not supported if exceptions are unavailable.
       continue;
     }
-#endif  // !GOOGLE_CLOUD_CPP_HAVE_CODECVT || !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#endif  // !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     bool inserted =
         google::cloud::storage::post_policy_tests->emplace(name, j_obj.value())
             .second;

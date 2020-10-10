@@ -1,6 +1,69 @@
+
 # Changelog
 
-## v1.18.0 - TBD
+## v1.20.0 - TBD
+
+## v1.19.0 - 2020-10
+
+### Storage
+
+* fix(storage): consistent computation of XML vs. JSON (#5095)
+  The interaction of `ClientOptions::set_endpoint()` and the
+  `CLOUD_STORAGE_TESTBENCH_ENDPOINT` environment variable was inconsistent
+  across endpoints. For JSON endpoints `set_endpoint()` overrode the
+  `CLOUD_STORAGE_TESTBENCH_ENDPOINT` value, while for XML endpoints it
+  was the opposite.
+
+  In other libraries the environment variable always wins, so we are changing
+  the behavior here. This behavior was never documented, and it was buggy,
+  therefore it is not a breaking change. Nonetheless, we think the bug (and
+  the fix) is surprising enough to highlight in the CHANGELOG.
+
+* fix: enable `codecvt` (UTF-8 support for signed URLs) in MSVC (#5126)
+* fix(storage): avoid stalls with small reads (#5104)
+* feat(storage): disable XML via environment variable (#5100)
+* fix(storage): use correct host header (#5085)
+
+### Spanner
+
+* fix: retry gRPC operations if the connection is unexpectedly terminated (#5087)
+* doc(spanner): use custom retry example in the Doxygen docs (#5164)
+
+### Pub/Sub
+
+> :warning: This library is under development and subject to breaking
+> changes without notice.
+
+* feat(pubsub): wait for callback return *and* handler (#5161)
+* In addition, @remyabel contributed a number of examples.
+
+## v1.18.0 - 2020-09
+
+### Storage
+
+* fix: add missing object ACLs in gRPC client (#5029)
+* fix: work with unknown SSL version in curl (#5037)
+
+### Spanner
+
+* This release includes support for the `NUMERIC` data type in Cloud Spanner.
+* doc: adapt to new specification for NUMERIC samples (#5049)
+* doc: add `spanner_query_with_*_parameter` samples (#5016)
+* feat: start using NUMERIC types in database schema (#5025)
+
+### Pub/Sub
+
+* The current release is a preview of the upcoming GA release. While we think the APIs are unlikely to change before GA, we reserve the right to change these APIs for now. This release may need optimization before it is ready for production workloads.
+
+### Common Libraries
+
+* feat: create promises without shared state (#5046)
+* feat: make CompletionQueueImpl mockable [1] (#5036) (#5039) (#5043)
+* feat: support cancels for asynchronous unary RPCs (#5047)
+* fix: correct C++ version under MSVC (#5038)
+* fix: CompletionQueue shutdown disables RunAsync (#5008)
+* fix: remove 'Bigtable' from generic error message (#5034)
+* fix: remove unneeded dep on absl::variant (#5054)
 
 ## v1.17.0 - 2020-09
 

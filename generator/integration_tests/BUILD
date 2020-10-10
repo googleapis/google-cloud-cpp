@@ -16,6 +16,50 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "google_cloud_cpp_generator_testing_proto",
+    srcs = [
+        "backup.proto",
+        "common.proto",
+        "test.proto",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
+        "@com_google_googleapis//google/iam/v1:policy_proto",
+        "@com_google_googleapis//google/longrunning:operations_proto",
+        "@com_google_googleapis//google/rpc:status_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:field_mask_proto",
+        "@com_google_protobuf//:struct_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+load(
+    "@com_google_googleapis_imports//:imports.bzl",
+    "cc_grpc_library",
+    "cc_proto_library",
+)
+
+cc_proto_library(
+    name = "google_cloud_cpp_generator_testing_cc_proto",
+    deps = [":google_cloud_cpp_generator_testing_proto"],
+)
+
+cc_grpc_library(
+    name = "google_cloud_cpp_generator_testing_cc_grpc",
+    srcs = [":google_cloud_cpp_generator_testing_proto"],
+    grpc_only = True,
+    deps = [":google_cloud_cpp_generator_testing_cc_proto"],
+)
+
 load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_generator_integration_tests")
 
 [cc_test(
@@ -23,7 +67,8 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     timeout = "long",
     srcs = [test],
     data = [
-        ":golden/database_admin_stub.gcpcxx.pb.h.golden",
+        "//generator/integration_tests/golden:golden_filegroup",
+        "//generator/integration_tests/golden:golden_internal_filegroup",
     ],
     tags = [
         "integration-test",

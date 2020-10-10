@@ -37,7 +37,7 @@ def httpbin_error(error):
     return error.as_response()
 
 
-root = flask.Flask(__name__)
+root = flask.Flask(__name__, subdomain_matching=True)
 root.debug = True
 
 
@@ -45,6 +45,31 @@ root.debug = True
 def index():
     """Default handler for the test bench."""
     return "OK"
+
+
+@root.route("/<path:object_name>", subdomain="<bucket_name>")
+def root_get_object(bucket_name, object_name):
+    return xml_get_object(bucket_name, object_name)
+
+
+@root.route("/<bucket_name>/<path:object_name>", subdomain="")
+def root_get_object_with_bucket(bucket_name, object_name):
+    return xml_get_object(bucket_name, object_name)
+
+
+@root.route("/<path:object_name>", subdomain="<bucket_name>", methods=["PUT"])
+def root_put_object(bucket_name, object_name):
+    return xml_put_object(flask.request.host_url, bucket_name, object_name)
+
+
+@root.route("/<bucket_name>/<path:object_name>", subdomain="", methods=["PUT"])
+def root_put_object_with_bucket(bucket_name, object_name):
+    return xml_put_object(flask.request.host_url, bucket_name, object_name)
+
+
+@root.errorhandler(error_response.ErrorResponse)
+def root_error(error):
+    return error.as_response()
 
 
 # Define the WSGI application to handle bucket requests.
@@ -854,19 +879,25 @@ def delete_resumable_upload(bucket_name):
     return testbench_utils.filtered_response(flask.request, {})
 
 
-# Define the WSGI application to handle (a few) requests in the XML API.
-XMLAPI_HANDLER_PATH = "/xmlapi"
-xmlapi = flask.Flask(__name__)
-xmlapi.debug = True
+def xml_put_object(gcs_url, bucket_name, object_name):
+    """Implement PUT for the XML API."""
+    insert_magic_bucket(gcs_url)
+    object_path, blob = testbench_utils.get_object(
+        bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name)
+    )
+    generation_match = flask.request.headers.get("x-goog-if-generation-match")
+    metageneration_match = flask.request.headers.get("x-goog-if-metageneration-match")
+    blob.check_preconditions_by_value(
+        generation_match, None, metageneration_match, None
+    )
+    revision = blob.insert_xml(gcs_url, flask.request)
+    testbench_utils.insert_object(object_path, blob)
+    response = flask.make_response("")
+    response.headers["x-goog-hash"] = revision.x_goog_hash_header()
+    return response
 
 
-@xmlapi.errorhandler(error_response.ErrorResponse)
-def xmlapi_error(error):
-    return error.as_response()
-
-
-@xmlapi.route("/<bucket_name>/<object_name>")
-def xmlapi_get_object(bucket_name, object_name):
+def xml_get_object(bucket_name, object_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
     object_path, blob = testbench_utils.lookup_object(bucket_name, object_name)
     if flask.request.args.get("acl") is not None:
@@ -886,34 +917,6 @@ def xmlapi_get_object(bucket_name, object_name):
     return objects_get_common(bucket_name, object_name, revision)
 
 
-@xmlapi.route("/<bucket_name>/<object_name>", methods=["PUT"])
-def xmlapi_put_object(bucket_name, object_name):
-    """Inserts a new GCS Object.
-
-    Implement the PUT request in the XML API.
-    """
-    gcs_url = flask.url_for(
-        "xmlapi_put_object",
-        bucket_name=bucket_name,
-        object_name=object_name,
-        _external=True,
-    ).replace("/xmlapi/", "/")
-    insert_magic_bucket(gcs_url)
-    object_path, blob = testbench_utils.get_object(
-        bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name)
-    )
-    generation_match = flask.request.headers.get("x-goog-if-generation-match")
-    metageneration_match = flask.request.headers.get("x-goog-if-metageneration-match")
-    blob.check_preconditions_by_value(
-        generation_match, None, metageneration_match, None
-    )
-    revision = blob.insert_xml(gcs_url, flask.request)
-    testbench_utils.insert_object(object_path, blob)
-    response = flask.make_response("")
-    response.headers["x-goog-hash"] = revision.x_goog_hash_header()
-    return response
-
-
 # Define the WSGI application to handle HMAC key requests
 (PROJECTS_HANDLER_PATH, projects_app) = gcs_project.get_projects_app()
 
@@ -927,7 +930,6 @@ application = DispatcherMiddleware(
         GCS_HANDLER_PATH: gcs,
         UPLOAD_HANDLER_PATH: upload,
         DOWNLOAD_HANDLER_PATH: download,
-        XMLAPI_HANDLER_PATH: xmlapi,
         PROJECTS_HANDLER_PATH: projects_app,
         IAM_HANDLER_PATH: iam_app,
     },
@@ -939,7 +941,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="A testbench for the Google Cloud C++ Client Library"
     )
-    parser.add_argument("--host", default="localhost", help="The listening port")
+    parser.add_argument("--host", default="localhost", help="The listening address")
     parser.add_argument("--port", help="The listening port")
     # By default we do not turn on the debugging. This typically runs inside a
     # Docker image, with a uid that has not entry in /etc/passwd, and the
@@ -948,6 +950,8 @@ def main():
         "--debug", help="Use the WSGI debugger", default=False, action="store_true"
     )
     arguments = parser.parse_args()
+
+    root.config.update(SERVER_NAME=arguments.host)
 
     # Compose the different WSGI applications.
     serving.run_simple(

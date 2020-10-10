@@ -67,7 +67,8 @@ class StorageIntegrationTest : public ::testing::Test {
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
   static std::unique_ptr<RetryPolicy> TestRetryPolicy();
 
-  std::string MakeRandomBucketName(std::string prefix = {});
+  static std::string RandomBucketNamePrefix();
+  std::string MakeRandomBucketName();
   std::string MakeRandomObjectName();
   std::string MakeRandomFilename();
 

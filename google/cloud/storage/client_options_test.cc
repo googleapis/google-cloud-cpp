@@ -123,23 +123,63 @@ TEST_F(ClientOptionsTest, EnableHttp) {
   EXPECT_TRUE(options.enable_http_tracing());
 }
 
-TEST_F(ClientOptionsTest, EndpointFromEnvironment) {
+TEST_F(ClientOptionsTest, EndpointsDefault) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                           {});
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
+  EXPECT_EQ("https://storage.googleapis.com/storage/v1",
+            internal::JsonEndpoint(options));
+  EXPECT_EQ("https://storage.googleapis.com/upload/storage/v1",
+            internal::JsonUploadEndpoint(options));
+  EXPECT_EQ("https://storage-download.googleapis.com",
+            internal::XmlDownloadEndpoint(options));
+  EXPECT_EQ("https://storage-upload.googleapis.com",
+            internal::XmlUploadEndpoint(options));
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            internal::IamEndpoint(options));
+}
+
+TEST_F(ClientOptionsTest, EndpointsOverride) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                           {});
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  options.set_endpoint("http://127.0.0.1.nip.io:1234");
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234", options.endpoint());
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234/storage/v1",
+            internal::JsonEndpoint(options));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234/upload/storage/v1",
+            internal::JsonUploadEndpoint(options));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234",
+            internal::XmlDownloadEndpoint(options));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234",
+            internal::XmlUploadEndpoint(options));
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            internal::IamEndpoint(options));
+}
+
+TEST_F(ClientOptionsTest, EndpointsTestBench) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("http://localhost:1234", options.endpoint());
+  EXPECT_EQ("http://localhost:1234/storage/v1",
+            internal::JsonEndpoint(options));
+  EXPECT_EQ("http://localhost:1234/upload/storage/v1",
+            internal::JsonUploadEndpoint(options));
+  EXPECT_EQ("http://localhost:1234", internal::XmlDownloadEndpoint(options));
+  EXPECT_EQ("http://localhost:1234", internal::XmlUploadEndpoint(options));
+  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
 }
 
 TEST_F(ClientOptionsTest, SetVersion) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_version("vTest");
   EXPECT_EQ("vTest", options.version());
-}
-
-TEST_F(ClientOptionsTest, SetEndpoint) {
-  ClientOptions options(oauth2::CreateAnonymousCredentials());
-  options.set_endpoint("http://localhost:2345");
-  EXPECT_EQ("http://localhost:2345", options.endpoint());
+  EXPECT_EQ("https://storage.googleapis.com/storage/vTest",
+            internal::JsonEndpoint(options));
+  EXPECT_EQ("https://storage.googleapis.com/upload/storage/vTest",
+            internal::JsonUploadEndpoint(options));
 }
 
 TEST_F(ClientOptionsTest, SetIamEndpoint) {

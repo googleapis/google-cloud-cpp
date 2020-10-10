@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,6 +27,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::UnorderedElementsAreArray;
 namespace gcsa = ::google::spanner::admin::database::v1;
@@ -80,7 +82,7 @@ TEST(CleanupStaleDatabases, ListError) {
   spanner::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
                                       std::chrono::system_clock::now());
-  EXPECT_EQ(status, Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
 TEST(CleanupStaleDatabases, RemovesMatching) {

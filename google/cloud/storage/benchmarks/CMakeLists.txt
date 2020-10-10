@@ -31,8 +31,7 @@ if (BUILD_TESTING)
         throughput_options.cc
         throughput_options.h
         throughput_result.cc
-        throughput_result.h
-        throughput_result_test.cc)
+        throughput_result.h)
     target_link_libraries(
         storage_benchmarks
         PUBLIC storage_client storage_client_testing

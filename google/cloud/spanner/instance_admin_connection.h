@@ -221,7 +221,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted
  * @param backoff_policy controls the backoff behavior between retry attempts,
- *     typically some form of expotential backoff with jitter
+ *     typically some form of exponential backoff with jitter
  * @param polling_policy controls for how often, and how quickly, are long
  *     running checked for completion
  *
