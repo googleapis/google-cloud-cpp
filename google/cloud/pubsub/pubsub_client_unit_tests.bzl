@@ -29,7 +29,6 @@ pubsub_client_unit_tests = [
     "internal/subscriber_logging_test.cc",
     "internal/subscriber_metadata_test.cc",
     "internal/subscription_concurrency_control_test.cc",
-    "internal/subscription_flow_control_test.cc",
     "internal/subscription_lease_management_test.cc",
     "internal/subscription_message_queue_test.cc",
     "internal/subscription_session_test.cc",
