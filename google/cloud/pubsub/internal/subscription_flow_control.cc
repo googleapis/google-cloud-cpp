@@ -42,26 +42,12 @@ void SubscriptionFlowControl::Read(std::size_t max_callbacks) {
 
 future<Status> SubscriptionFlowControl::AckMessage(std::string const& ack_id,
                                                    std::size_t size) {
-  auto result = queue_.AckMessage(ack_id, size);
-  MessageHandled(size);
-  return result;
+  return queue_.AckMessage(ack_id, size);
 }
 
 future<Status> SubscriptionFlowControl::NackMessage(std::string const& ack_id,
                                                     std::size_t size) {
-  auto result = queue_.NackMessage(ack_id, size);
-  MessageHandled(size);
-  return result;
-}
-
-void SubscriptionFlowControl::MessageHandled(std::size_t size) {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (message_count_ != 0) --message_count_;
-  message_size_ -= (std::min)(message_size_, size);
-  if (message_count_ <= message_count_lwm_ &&
-      message_size_ <= message_size_lwm_) {
-    overflow_ = false;
-  }
+  return queue_.NackMessage(ack_id, size);
 }
 
 void SubscriptionFlowControl::OnRead(
@@ -71,17 +57,6 @@ void SubscriptionFlowControl::OnRead(
     shutdown_manager_->MarkAsShutdown(__func__, std::move(r).status());
     Shutdown();
     return;
-  }
-  message_count_ += r->received_messages_size();
-  message_size_ += std::accumulate(
-      r->received_messages().begin(), r->received_messages().end(),
-      std::size_t{0},
-      [](std::size_t a, google::pubsub::v1::ReceivedMessage const& m) {
-        return a + MessageProtoSize(m.message());
-      });
-  if (message_count_ >= message_count_hwm_ ||
-      message_size_ >= message_size_hwm_) {
-    overflow_ = true;
   }
   lk.unlock();
   bool scheduled = shutdown_manager_->StartOperation(

@@ -29,8 +29,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
 auto constexpr kUnlimitedCallbacks = 1000;
-auto constexpr kDefaultSizeLwm = 10 * 1024 * 1024L;
-auto constexpr kDefaultSizeHwm = 20 * 1024 * 1024L;
 
 class SubscriptionFlowControlTest : public ::testing::Test {
  protected:
@@ -118,11 +116,7 @@ TEST_F(SubscriptionFlowControlTest, Basic) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionFlowControl::Create(
-      background.cq(), shutdown, mock, /*message_count_lwm=*/0,
-      /*message_count_hwm=*/1,
-      /*message_size_lwm=*/kDefaultSizeLwm,
-      /*message_size_hwm=*/kDefaultSizeHwm);
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock);
 
   auto callback = [this](google::pubsub::v1::ReceivedMessage const& response) {
     SaveAcks(response);
@@ -169,10 +163,7 @@ TEST_F(SubscriptionFlowControlTest, NackOnShutdown) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock, 0, 1,
-                                      /*message_size_lwm=*/kDefaultSizeLwm,
-                                      /*message_size_hwm=*/kDefaultSizeHwm);
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock);
 
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
@@ -201,12 +192,7 @@ TEST_F(SubscriptionFlowControlTest, HandleOnPullError) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
-                                      /*message_count_lwm=*/0,
-                                      /*message_count_hwm=*/10,
-                                      /*message_size_lwm=*/kDefaultSizeLwm,
-                                      /*message_size_hwm=*/kDefaultSizeHwm);
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock);
 
   auto done = shutdown->Start({});
   uut->Start([](google::pubsub::v1::ReceivedMessage const&) {});
@@ -272,11 +258,7 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageCountHwm) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionFlowControl::Create(
-      background.cq(), shutdown, mock, /*message_count_lwm=*/2,
-      /*message_count_hwm=*/10,
-      /*message_size_lwm=*/kDefaultSizeLwm,
-      /*message_size_hwm=*/kDefaultSizeHwm);
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock);
 
   auto callback = [&](google::pubsub::v1::ReceivedMessage const& response) {
     this->SaveAcks(response);
@@ -342,12 +324,7 @@ TEST_F(SubscriptionFlowControlTest, ReachMessageSizeHwm) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut =
-      SubscriptionFlowControl::Create(background.cq(), shutdown, mock,
-                                      /*message_count_lwm=*/19,
-                                      /*message_count_hwm=*/20,
-                                      /*message_size_lwm=*/8 * kMessageSize,
-                                      /*message_size_hwm=*/10 * kMessageSize);
+  auto uut = SubscriptionFlowControl::Create(background.cq(), shutdown, mock);
 
   auto callback = [&](google::pubsub::v1::ReceivedMessage const& response) {
     this->SaveAcks(response);

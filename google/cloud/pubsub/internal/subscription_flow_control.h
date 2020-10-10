@@ -34,13 +34,9 @@ class SubscriptionFlowControl
   static std::shared_ptr<SubscriptionFlowControl> Create(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      std::shared_ptr<SubscriptionBatchSource> child,
-      std::size_t message_count_lwm, std::size_t message_count_hwm,
-      std::size_t message_size_lwm, std::size_t message_size_hwm) {
+      std::shared_ptr<SubscriptionBatchSource> child) {
     return std::shared_ptr<SubscriptionFlowControl>(new SubscriptionFlowControl(
-        std::move(cq), std::move(shutdown_manager), std::move(child),
-        message_count_lwm, message_count_hwm, message_size_lwm,
-        message_size_hwm));
+        std::move(cq), std::move(shutdown_manager), std::move(child)));
   }
 
   void Start(MessageCallback) override;
@@ -55,38 +51,19 @@ class SubscriptionFlowControl
   SubscriptionFlowControl(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      std::shared_ptr<SubscriptionBatchSource> child,
-      std::size_t message_count_lwm, std::size_t message_count_hwm,
-      std::size_t message_size_lwm, std::size_t message_size_hwm)
+      std::shared_ptr<SubscriptionBatchSource> child)
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         child_(std::move(child)),
-        message_count_lwm_(std::min(message_count_lwm, message_count_hwm)),
-        message_count_hwm_(message_count_hwm),
-        message_size_lwm_(std::min(message_size_lwm, message_size_hwm)),
-        message_size_hwm_(message_size_hwm),
         queue_(child_) {}
 
-  void MessageHandled(std::size_t size);
   void OnRead(StatusOr<google::pubsub::v1::StreamingPullResponse> r);
-
-  std::size_t total_messages() const {
-    return message_count_ + outstanding_pull_count_;
-  }
 
   google::cloud::CompletionQueue cq_;
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionBatchSource> const child_;
-  std::size_t const message_count_lwm_;
-  std::size_t const message_count_hwm_;
-  std::size_t const message_size_lwm_;
-  std::size_t const message_size_hwm_;
 
   std::mutex mu_;
-  std::size_t message_count_ = 0;
-  std::size_t message_size_ = 0;
-  bool overflow_ = false;
-  std::size_t outstanding_pull_count_ = 0;
   SubscriptionMessageQueue queue_;
 };
 
