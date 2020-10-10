@@ -96,57 +96,6 @@ class DefaultSubscriberStub : public SubscriberStub {
         });
   }
 
-  future<StatusOr<google::pubsub::v1::PullResponse>> AsyncPull(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::PullRequest const& request) override {
-    return cq.MakeUnaryRpc(
-        [this](grpc::ClientContext* context,
-               google::pubsub::v1::PullRequest const& request,
-               grpc::CompletionQueue* cq) {
-          return grpc_stub_->AsyncPull(context, request, cq);
-        },
-        request, std::move(context));
-  }
-
-  future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::AcknowledgeRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
-                   google::pubsub::v1::AcknowledgeRequest const& request,
-                   grpc::CompletionQueue* cq) {
-              return grpc_stub_->AsyncAcknowledge(context, request, cq);
-            },
-            request, std::move(context))
-        .then([](future<StatusOr<google::protobuf::Empty>> f) {
-          auto r = f.get();
-          if (!r) return std::move(r).status();
-          return Status{};
-        });
-  }
-
-  future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
-                   google::pubsub::v1::ModifyAckDeadlineRequest const& request,
-                   grpc::CompletionQueue* cq) {
-              return grpc_stub_->AsyncModifyAckDeadline(context, request, cq);
-            },
-            request, std::move(context))
-        .then([](future<StatusOr<google::protobuf::Empty>> f) {
-          auto r = f.get();
-          if (!r) return std::move(r).status();
-          return Status{};
-        });
-  }
-
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       grpc::ClientContext& context,
       google::pubsub::v1::CreateSnapshotRequest const& request) override {

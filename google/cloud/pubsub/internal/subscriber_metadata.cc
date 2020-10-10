@@ -79,30 +79,6 @@ SubscriberMetadata::AsyncStreamingPull(
   return child_->AsyncStreamingPull(cq, std::move(context), request);
 }
 
-future<StatusOr<google::pubsub::v1::PullResponse>>
-SubscriberMetadata::AsyncPull(google::cloud::CompletionQueue& cq,
-                              std::unique_ptr<grpc::ClientContext> context,
-                              google::pubsub::v1::PullRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncPull(cq, std::move(context), request);
-}
-
-future<Status> SubscriberMetadata::AsyncAcknowledge(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::AcknowledgeRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncAcknowledge(cq, std::move(context), request);
-}
-
-future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
-  return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
-}
-
 StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::CreateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
