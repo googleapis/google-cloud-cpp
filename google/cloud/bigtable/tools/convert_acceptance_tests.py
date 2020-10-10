@@ -93,11 +93,11 @@ def print_test(t):
 
     ok = True
     if ('results' in t):
-       	try:
+       	#try:
 	    if ('error' in t["results"]):
                 ok = not any([r["error"] for r in t["results"]])
-	except KeyError:
-	    raise ValueError('No "error" key in "%s"' % (r, ))
+	#except KeyError:
+	    #raise ValueError('No "error" key in "%s"' % (r, ))
 
     if ok:
         o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
