@@ -113,6 +113,117 @@ class TestBucket:
             "bucket", "authenticatedRead", None
         )
 
+    def test_patch(self):
+        # Updating requires a full metadata so we don't test it here.
+        request = storage_pb2.InsertBucketRequest(
+            bucket={
+                "name": "bucket",
+                "labels": {"init": "true", "patch": "false"},
+                "website": {"not_found_page": "notfound.html"},
+            }
+        )
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+        assert bucket.metadata.labels.get("init") == "true"
+        assert bucket.metadata.labels.get("patch") == "false"
+        assert bucket.metadata.labels.get("method") is None
+        assert bucket.metadata.website.main_page_suffix == ""
+        assert bucket.metadata.website.not_found_page == "notfound.html"
+
+        request = storage_pb2.PatchBucketRequest(
+            bucket="bucket",
+            metadata={
+                "labels": {"patch": "true", "method": "grpc"},
+                "website": {"main_page_suffix": "bucket", "not_found_page": "404"},
+            },
+            update_mask={"paths": ["labels", "website.main_page_suffix"]},
+        )
+        bucket.patch(request, "")
+        # GRPC can not update a part of map field.
+        assert bucket.metadata.labels.get("init") is None
+        assert bucket.metadata.labels.get("patch") == "true"
+        assert bucket.metadata.labels.get("method") == "grpc"
+        assert bucket.metadata.website.main_page_suffix == "bucket"
+        # `update_mask` does not update `website.not_found_page`
+        assert bucket.metadata.website.not_found_page == "notfound.html"
+
+        request = utils.common.FakeRequest(
+            args={},
+            data=simdjson.dumps(
+                {
+                    "name": "new_bucket",
+                    "labels": {"method": "rest"},
+                    "website": {"notFoundPage": "404.html"},
+                }
+            ),
+        )
+        bucket.patch(request, None)
+        # REST should only update modifiable field.
+        assert bucket.metadata.name == "bucket"
+        # REST can update a part of map field.
+        assert bucket.metadata.labels.get("init") is None
+        assert bucket.metadata.labels.get("patch") == "true"
+        assert bucket.metadata.labels.get("method") == "rest"
+        assert bucket.metadata.website.main_page_suffix == "bucket"
+        assert bucket.metadata.website.not_found_page == "404.html"
+
+    def test_acl(self):
+        # Both REST and GRPC share almost the same implementation so we only test GRPC here.
+        entity = "user-bucket.acl@example.com"
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+
+        request = storage_pb2.InsertBucketAccessControlRequest(
+            bucket="bucket", bucket_access_control={"entity": entity, "role": "READER"}
+        )
+        bucket.insert_acl(request, "")
+
+        acl = bucket.get_acl(entity, "")
+        assert acl.entity == entity
+        assert acl.email == "bucket.acl@example.com"
+        assert acl.role == "READER"
+
+        request = storage_pb2.PatchBucketAccessControlRequest(
+            bucket="bucket", entity=entity, bucket_access_control={"role": "OWNER"}
+        )
+        bucket.patch_acl(request, entity, "")
+        acl = bucket.get_acl(entity, "")
+        assert acl.entity == entity
+        assert acl.email == "bucket.acl@example.com"
+        assert acl.role == "OWNER"
+
+        bucket.delete_acl(entity, "")
+        for acl in bucket.metadata.acl:
+            assert acl.entity != entity
+
+    def test_default_object_acl(self):
+        # Both REST and GRPC share almost the same implementation so we only test GRPC here.
+        entity = "user-bucket.default_object_acl@example.com"
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+
+        request = storage_pb2.InsertDefaultObjectAccessControlRequest(
+            bucket="bucket", object_access_control={"entity": entity, "role": "READER"}
+        )
+        bucket.insert_default_object_acl(request, "")
+
+        acl = bucket.get_default_object_acl(entity, "")
+        assert acl.entity == entity
+        assert acl.email == "bucket.default_object_acl@example.com"
+        assert acl.role == "READER"
+
+        request = storage_pb2.PatchDefaultObjectAccessControlRequest(
+            bucket="bucket", entity=entity, object_access_control={"role": "OWNER"}
+        )
+        bucket.patch_default_object_acl(request, entity, "")
+        acl = bucket.get_default_object_acl(entity, "")
+        assert acl.entity == entity
+        assert acl.email == "bucket.default_object_acl@example.com"
+        assert acl.role == "OWNER"
+
+        bucket.delete_default_object_acl(entity, "")
+        for acl in bucket.metadata.default_object_acl:
+            assert acl.entity != entity
+
 
 def run():
     pytest.main(["-v"])

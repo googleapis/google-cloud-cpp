@@ -18,8 +18,7 @@ import re
 import scalpl
 import types
 
-re_remove_index = re.compile(r":[0-9]+|^[0-9]+")
-re_split_fields = re.compile(r"[a-zA-Z0-9]*\(.*\)|[^,]+")
+re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
 
 # === STR === #
 
@@ -78,41 +77,72 @@ def nested_key(data):
 
 def parse_fields(fields):
     # "kind,items(id,name)" -> ["kind", "items.id", "items.name"]
-    result = []
-    for field in re_split_fields.findall(fields):
-        if "(" not in field and ")" not in field:
-            result.append(field)
-        else:
-            prefix = field[0 : field.find("(")]
-            subfields = field[len(prefix) + 1 : -1]
-            items = parse_fields(subfields)
-            for item in items:
-                result.append(prefix + "." + item)
-    return result
+    res = []
+    for i, c in enumerate(fields):
+        if c != " " and c != ")":
+            if c == "/":
+                res.append(".")
+            else:
+                res.append(c)
+        elif c == ")":
+            childrens_fields = []
+            tmp_field = []
+            while res:
+                if res[-1] != "," and res[-1] != "(":
+                    tmp_field.append(res.pop())
+                else:
+                    childrens_fields.append(tmp_field)
+                    tmp_field = []
+                    if res.pop() == "(":
+                        break
+            parent_field = []
+            while res and res[-1] != "," and res[-1] != "(":
+                parent_field.append(res.pop())
+            for i, field in enumerate(childrens_fields):
+                res.extend(parent_field[::-1])
+                res.append(".")
+                while field:
+                    res.append(field.pop())
+                if i < len(childrens_fields) - 1:
+                    res.append(",")
+    return "".join(res).split(",")
 
 
 def filter_response_rest(response, projection, fields):
     if fields is not None:
-        fields.replace(" ", "")
-        fields.replace("/", ".")
         fields = parse_fields(fields)
     deleted_keys = set()
     for key in nested_key(response):
         simplfied_key = remove_index(key)
+        maybe_delete = True
         if projection == "noAcl":
-            if simplfied_key == "owner" or simplfied_key == "items.owner":
-                deleted_keys.add(key)
-            if simplfied_key == "acl" or simplfied_key == "items.acl":
-                deleted_keys.add(key)
-            if (
-                simplfied_key == "defaultObjectAcl"
-                or simplfied_key == "items.defaultObjectAcl"
-            ):
-                deleted_keys.add(key)
+            maybe_delete = False
+            if simplfied_key.startswith("owner"):
+                deleted_keys.add("owner")
+            elif simplfied_key.startswith("items.owner"):
+                deleted_keys.add("items.owner")
+            elif simplfied_key.startswith("acl"):
+                deleted_keys.add("acl")
+            elif simplfied_key.startswith("items.acl"):
+                deleted_keys.add(key[0 : key.find("acl") + len("acl")])
+            elif simplfied_key.startswith("defaultObjectAcl"):
+                deleted_keys.add("defaultObjectAcl")
+            elif simplfied_key.startswith("items.defaultObjectAcl"):
+                deleted_keys.add(
+                    key[0 : key.find("defaultObjectAcl") + len("defaultObjectAcl")]
+                )
+            else:
+                maybe_delete = True
         if fields is not None:
-            if simplfied_key not in fields:
-                deleted_keys.add(key)
+            if maybe_delete:
+                for field in fields:
+                    if simplfied_key.startswith(field):
+                        maybe_delete = False
+                        break
+                if maybe_delete:
+                    deleted_keys.add(key)
     proxy = scalpl.Cut(response)
+    print("delete: ", deleted_keys)
     for key in deleted_keys:
         del proxy[key]
     return proxy.data
