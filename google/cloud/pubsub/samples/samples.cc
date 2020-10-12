@@ -1194,11 +1194,11 @@ void SubscriberFlowControlSettings(
     // any of the high watermarks are reached, and the library resumes
     // requesting messages when *both* low watermarks are reached.
     auto constexpr kMiB = 1024 * 1024L;
-    auto session = subscriber.Subscribe(
-        subscription, std::move(handler),
-        pubsub::SubscriptionOptions{}
-            .set_message_count_watermarks(/*lwm=*/800, /*hwm=*/1000)
-            .set_message_size_watermarks(/*lwm=*/4 * kMiB, /*hwm=*/8 * kMiB));
+    auto session =
+        subscriber.Subscribe(subscription, std::move(handler),
+                             pubsub::SubscriptionOptions{}
+                                 .set_max_outstanding_messages(1000)
+                                 .set_max_outstanding_bytes(8 * kMiB));
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
