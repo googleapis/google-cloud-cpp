@@ -23,40 +23,26 @@ namespace {
 
 TEST(SubscriptionOptionsTest, Default) {
   SubscriptionOptions const options{};
-  EXPECT_LE(options.message_count_lwm(), options.message_count_hwm());
-  EXPECT_LT(0, options.message_count_hwm());
-  EXPECT_LE(options.message_size_lwm(), options.message_size_hwm());
-  EXPECT_LT(0, options.message_size_hwm());
+  EXPECT_LT(0, options.max_outstanding_messages());
+  EXPECT_LT(0, options.max_outstanding_bytes());
   EXPECT_LE(options.concurrency_lwm(), options.concurrency_hwm());
   EXPECT_LT(0, options.concurrency_hwm());
 }
 
 TEST(SubscriptionOptionsTest, SetMessageCount) {
-  auto options = SubscriptionOptions{}.set_message_count_watermarks(8, 16);
-  EXPECT_EQ(16, options.message_count_hwm());
-  EXPECT_EQ(8, options.message_count_lwm());
+  auto options = SubscriptionOptions{}.set_max_outstanding_messages(16);
+  EXPECT_EQ(16, options.max_outstanding_messages());
 
-  options.set_message_count_watermarks(0, 0);
-  EXPECT_EQ(1, options.message_count_hwm());
-  EXPECT_EQ(0, options.message_count_lwm());
-
-  options.set_message_count_watermarks(10, 5);
-  EXPECT_EQ(5, options.message_count_hwm());
-  EXPECT_EQ(5, options.message_count_lwm());
+  options.set_max_outstanding_messages(-7);
+  EXPECT_EQ(0, options.max_outstanding_messages());
 }
 
-TEST(SubscriptionOptionsTest, SetMessageSize) {
-  auto options = SubscriptionOptions{}.set_message_size_watermarks(8, 16);
-  EXPECT_EQ(16, options.message_size_hwm());
-  EXPECT_EQ(8, options.message_size_lwm());
+TEST(SubscriptionOptionsTest, SetBytes) {
+  auto options = SubscriptionOptions{}.set_max_outstanding_bytes(16 * 1024);
+  EXPECT_EQ(16 * 1024, options.max_outstanding_bytes());
 
-  options.set_message_size_watermarks(0, 0);
-  EXPECT_EQ(1, options.message_size_hwm());
-  EXPECT_EQ(0, options.message_size_lwm());
-
-  options.set_message_size_watermarks(10, 5);
-  EXPECT_EQ(5, options.message_size_hwm());
-  EXPECT_EQ(5, options.message_size_lwm());
+  options.set_max_outstanding_bytes(-7);
+  EXPECT_EQ(0, options.max_outstanding_bytes());
 }
 
 TEST(SubscriptionOptionsTest, SetConcurrency) {

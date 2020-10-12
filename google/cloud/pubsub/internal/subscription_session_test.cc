@@ -136,12 +136,10 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
     std::move(h).ack();
   };
 
-  auto response =
-      CreateTestingSubscriptionSession(mock, cq,
-                                       {subscription.FullName(), handler,
-                                        pubsub::SubscriptionOptions{}
-                                            .set_message_count_watermarks(0, 1)
-                                            .set_concurrency_watermarks(0, 1)});
+  auto response = CreateTestingSubscriptionSession(
+      mock, cq,
+      {subscription.FullName(), handler,
+       pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1)});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
     ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
@@ -179,12 +177,10 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
 
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-  auto response =
-      CreateTestingSubscriptionSession(mock, cq,
-                                       {subscription.FullName(), handler,
-                                        pubsub::SubscriptionOptions{}
-                                            .set_message_count_watermarks(0, 1)
-                                            .set_concurrency_watermarks(0, 1)});
+  auto response = CreateTestingSubscriptionSession(
+      mock, cq,
+      {subscription.FullName(), handler,
+       pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1)});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -219,8 +215,8 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
       mock, cq,
       {subscription.FullName(), handler,
        pubsub::SubscriptionOptions{}
-           .set_message_count_watermarks(0, 1)
-           .set_concurrency_watermarks(0, 1)
+           .set_max_outstanding_messages(1)
+           .set_max_outstanding_bytes(1)
            .set_max_deadline_time(std::chrono::seconds(60))});
   // Setup the system to cancel after the second message.
   auto done = enough_messages.get_future().then(
@@ -446,7 +442,7 @@ TEST(SubscriptionSessionTest, FireAndForget) {
           mock, background.cq(), "fake-client-id",
           {subscription.FullName(), handler,
            pubsub::SubscriptionOptions{}
-               .set_message_count_watermarks(0, kMessageCount / 2)
+               .set_max_outstanding_messages(kMessageCount / 2)
                .set_concurrency_watermarks(0, kMessageCount / 2)
                .set_shutdown_polling_period(std::chrono::milliseconds(20))},
           pubsub_testing::TestRetryPolicy(),

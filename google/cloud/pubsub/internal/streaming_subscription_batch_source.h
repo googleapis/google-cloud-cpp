@@ -53,8 +53,8 @@ class StreamingSubscriptionBatchSource
         stub_(std::move(stub)),
         subscription_full_name_(std::move(subscription_full_name)),
         client_id_(std::move(client_id)),
-        max_outstanding_messages_(options.message_count_hwm()),
-        max_outstanding_bytes_(options.message_size_hwm()),
+        max_outstanding_messages_(options.max_outstanding_messages()),
+        max_outstanding_bytes_(options.max_outstanding_bytes()),
         max_deadline_time_(options.max_deadline_time()),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}

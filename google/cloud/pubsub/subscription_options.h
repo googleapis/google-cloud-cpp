@@ -103,55 +103,40 @@ class SubscriptionOptions {
   }
 
   /**
-   * Set the parameters for message-count-based flow control.
+   * Set the maximum number of outstanding messages per streaming pull.
    *
-   * The Cloud Pub/Sub C++ client library will pull more messages from a
-   * subscription as long as the number of pending messages (that is received,
-   * but not fully processed is less than the high watermark (@p hwm). Once the
-   * @p hwm value is reached the client will not pull more messages until the
-   * number of pending messages is at or below the low watermark (@p lwm).
+   * The Cloud Pub/Sub C++ client library uses streaming pull requests to
+   * receive messages from the service. The service will stop delivering
+   * messages if more than @p message_count messages have not been acked nor
+   * nacked.
    *
    * @par Example
    * @snippet samples.cc subscriber-flow-control
    *
-   * @note applications that want to have a single pull request at a time, can
-   *     set these parameters to `lwm==0` and `hwm==1`.
-   *
-   * @param hwm the high watermark, if this parameter is `0` the high watermark
-   *     is set to `1`, to avoid starvation
-   * @param lwm the low watermark, if this parameter greater than @p hwm then
-   *    the low watermark is set to the same value as the high watermark
+   * @param message_count the maximum number of messages outstanding, use 0 or
+   *     negative numbers to make the message count unlimited.
    */
-  SubscriptionOptions& set_message_count_watermarks(std::size_t lwm,
-                                                    std::size_t hwm);
-  std::size_t message_count_lwm() const { return message_count_lwm_; }
-  std::size_t message_count_hwm() const { return message_count_hwm_; }
+  SubscriptionOptions& set_max_outstanding_messages(std::int64_t message_count);
+  std::int64_t max_outstanding_messages() const {
+    return max_outstanding_messages_;
+  }
 
   /**
-   * Set the parameters for message-size-based flow control.
+   * Set the maximum number of outstanding bytes per streaming pull.
    *
-   * The Cloud Pub/Sub C++ client library will pull more messages from a
-   * subscription as long as the total size of the pending messages (that is
-   * received, but not fully processed is less than the high watermark (@p hwm).
-   * Once the @p hwm value is reached the client will not pull more messages
-   * until the total size of the pending messages is at or below the low
-   * watermark (@p lwm).
+   * The Cloud Pub/Sub C++ client library uses streaming pull requests to
+   * receive messages from the service. The service will stop delivering
+   * messages if more than @p bytes or more worth of messages messages have
+   * not been acked nor nacked.
    *
    * @par Example
    * @snippet samples.cc subscriber-flow-control
    *
-   * @note applications that want to have a single pull request at a time, can
-   *     set these parameters to `lwm==0` and `hwm==1`.
-   *
-   * @param hwm the high watermark, if this parameter is `0` the high watermark
-   *     is set to `1`, to avoid starvation
-   * @param lwm the low watermark, if this parameter greater than @p hwm then
-   *    the low watermark is set to the same value as the high watermark
+   * @param bytes the maximum number of bytes outstanding, use 0 or negative
+   *     numbers to make the number of bytes unlimited.
    */
-  SubscriptionOptions& set_message_size_watermarks(std::size_t lwm,
-                                                   std::size_t hwm);
-  std::size_t message_size_lwm() const { return message_size_lwm_; }
-  std::size_t message_size_hwm() const { return message_size_hwm_; }
+  SubscriptionOptions& set_max_outstanding_bytes(std::int64_t bytes);
+  std::int64_t max_outstanding_bytes() const { return max_outstanding_bytes_; }
 
   /**
    * Set the high watermark and low watermarks for callback concurrency.
@@ -214,10 +199,8 @@ class SubscriptionOptions {
   }
 
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
-  std::size_t message_count_lwm_ = 0;
-  std::size_t message_count_hwm_ = 1000;
-  std::size_t message_size_lwm_ = 0;
-  std::size_t message_size_hwm_ = 100 * 1024 * 1024L;
+  std::int64_t max_outstanding_messages_ = 1000;
+  std::int64_t max_outstanding_bytes_ = 100 * 1024 * 1024L;
   std::size_t concurrency_lwm_ = 0;
   std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
   std::chrono::milliseconds shutdown_polling_period_ = std::chrono::seconds(5);

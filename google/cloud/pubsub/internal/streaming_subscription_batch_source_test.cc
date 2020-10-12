@@ -131,8 +131,8 @@ class FakeStream {
 
 pubsub::SubscriptionOptions TestSubscriptionOptions() {
   return pubsub::SubscriptionOptions()
-      .set_message_size_watermarks(0, 100)
-      .set_message_size_watermarks(0, 100 * 1024 * 1024L)
+      .set_max_outstanding_messages(100)
+      .set_max_outstanding_bytes(100 * 1024 * 1024L)
       .set_max_deadline_time(std::chrono::seconds(300));
 }
 
