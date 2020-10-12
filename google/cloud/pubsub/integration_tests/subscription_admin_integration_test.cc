@@ -85,7 +85,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
 
-  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                     StatusIs(StatusCode::kAlreadyExists)));
 
@@ -100,7 +100,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto endpoint = "https://" + project_id + ".appspot.com/push";
   auto create_response = subscription_admin.CreateSubscription(
       topic, subscription,
-      SubscriptionMutationBuilder{}.set_push_config(
+      SubscriptionBuilder{}.set_push_config(
           PushConfigBuilder{}.set_push_endpoint(endpoint)));
   ASSERT_THAT(create_response, AnyOf(StatusIs(StatusCode::kOk),
                                      StatusIs(StatusCode::kAlreadyExists)));
@@ -113,7 +113,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   auto constexpr kTestDeadlineSeconds = 20;
   auto update_response = subscription_admin.UpdateSubscription(
-      subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
+      subscription, SubscriptionBuilder{}.set_ack_deadline(
                         std::chrono::seconds(kTestDeadlineSeconds)));
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(kTestDeadlineSeconds, update_response->ack_deadline_seconds());
@@ -221,7 +221,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
       {}, TestRetryPolicy(), TestBackoffPolicy()));
   auto create_response = client.UpdateSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"),
-      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(20)));
+      SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(20)));
   ASSERT_FALSE(create_response.ok());
 }
 

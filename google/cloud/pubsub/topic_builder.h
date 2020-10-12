@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_MUTATION_BUILDER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_MUTATION_BUILDER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
 
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
@@ -26,63 +26,62 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Create a Cloud Pub/Sub topic configuration.
+ * Builds requests to create or update a Cloud Pub/Sub topic.
  */
-class TopicMutationBuilder {
+class TopicBuilder {
  public:
-  explicit TopicMutationBuilder(Topic const& topic) {
+  explicit TopicBuilder(Topic const& topic) {
     proto_.set_name(topic.FullName());
   }
 
-  google::pubsub::v1::Topic BuildCreateMutation() &&;
+  google::pubsub::v1::Topic BuildCreateRequest() &&;
 
-  google::pubsub::v1::UpdateTopicRequest BuildUpdateMutation() &&;
+  google::pubsub::v1::UpdateTopicRequest BuildUpdateRequest() &&;
 
-  TopicMutationBuilder& add_label(std::string const& key,
-                                  std::string const& value) & {
+  TopicBuilder& add_label(std::string const& key, std::string const& value) & {
     using value_type = protobuf::Map<std::string, std::string>::value_type;
     proto_.mutable_labels()->insert(value_type(key, value));
     paths_.insert("labels");
     return *this;
   }
-  TopicMutationBuilder&& add_label(std::string const& key,
-                                   std::string const& value) && {
+  TopicBuilder&& add_label(std::string const& key,
+                           std::string const& value) && {
     return std::move(add_label(key, value));
   }
 
-  TopicMutationBuilder& clear_labels() & {
+  TopicBuilder& clear_labels() & {
     proto_.clear_labels();
     paths_.insert("labels");
     return *this;
   }
-  TopicMutationBuilder&& clear_labels() && { return std::move(clear_labels()); }
+  TopicBuilder&& clear_labels() && { return std::move(clear_labels()); }
 
-  TopicMutationBuilder& add_allowed_persistence_region(std::string region) & {
+  TopicBuilder& add_allowed_persistence_region(std::string region) & {
     proto_.mutable_message_storage_policy()->add_allowed_persistence_regions(
         std::move(region));
     paths_.insert("message_storage_policy");
     return *this;
   }
-  TopicMutationBuilder&& add_allowed_persistence_region(std::string region) && {
+  TopicBuilder&& add_allowed_persistence_region(std::string region) && {
     return std::move(add_allowed_persistence_region(std::move(region)));
   }
 
-  TopicMutationBuilder& clear_allowed_persistence_regions() & {
+  TopicBuilder& clear_allowed_persistence_regions() & {
     proto_.mutable_message_storage_policy()
         ->clear_allowed_persistence_regions();
     paths_.insert("message_storage_policy");
     return *this;
   }
-  TopicMutationBuilder&& clear_allowed_persistence_regions() && {
+  TopicBuilder&& clear_allowed_persistence_regions() && {
     return std::move(clear_allowed_persistence_regions());
   }
 
-  TopicMutationBuilder& set_kms_key_name(std::string key_name) & {
+  TopicBuilder& set_kms_key_name(std::string key_name) & {
     proto_.set_kms_key_name(std::move(key_name));
     paths_.insert("kms_key_name");
     return *this;
   }
-  TopicMutationBuilder&& set_kms_key_name(std::string key_name) && {
+  TopicBuilder&& set_kms_key_name(std::string key_name) && {
     return std::move(set_kms_key_name(std::move(key_name)));
   }
 
@@ -96,4 +95,4 @@ class TopicMutationBuilder {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_MUTATION_BUILDER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H

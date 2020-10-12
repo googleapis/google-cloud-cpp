@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "subscription_mutation_builder.h"
-#include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "subscription_builder.h"
+#include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -28,7 +28,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 
-TEST(SubscriptionMutationBuilder, MakeOidcToken) {
+TEST(SubscriptionBuilder, MakeOidcToken) {
   auto const actual =
       PushConfigBuilder::MakeOidcToken("test-account@example.com");
   google::pubsub::v1::PushConfig::OidcToken expected;
@@ -39,7 +39,7 @@ TEST(SubscriptionMutationBuilder, MakeOidcToken) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, MakeOidcTokenWithAudience) {
+TEST(SubscriptionBuilder, MakeOidcTokenWithAudience) {
   auto const actual = PushConfigBuilder::MakeOidcToken(
       "test-account@example.com", "test-audience");
   google::pubsub::v1::PushConfig::OidcToken expected;
@@ -51,7 +51,7 @@ TEST(SubscriptionMutationBuilder, MakeOidcTokenWithAudience) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, Empty) {
+TEST(SubscriptionBuilder, Empty) {
   auto const actual = PushConfigBuilder().BuildModifyPushConfig(
       Subscription("test-project", "test-subscription"));
   google::pubsub::v1::ModifyPushConfigRequest expected;
@@ -62,7 +62,7 @@ TEST(SubscriptionMutationBuilder, Empty) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigEndpoint) {
+TEST(SubscriptionBuilder, PushConfigEndpoint) {
   auto const actual = PushConfigBuilder()
                           .set_push_endpoint("https://endpoint.example.com")
                           .BuildModifyPushConfig(Subscription(
@@ -75,7 +75,7 @@ TEST(SubscriptionMutationBuilder, PushConfigEndpoint) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
+TEST(SubscriptionBuilder, PushConfigAddAttribute) {
   auto const actual = PushConfigBuilder()
                           .set_push_endpoint("https://endpoint.example.com")
                           .add_attribute("key0", "label0")
@@ -94,7 +94,7 @@ TEST(SubscriptionMutationBuilder, PushConfigAddAttribute) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
+TEST(SubscriptionBuilder, PushConfigSetAttributes) {
   auto const actual = PushConfigBuilder()
                           .set_push_endpoint("https://endpoint.example.com")
                           .add_attribute("key0", "label0")
@@ -113,7 +113,7 @@ TEST(SubscriptionMutationBuilder, PushConfigSetAttributes) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigClearAttributes) {
+TEST(SubscriptionBuilder, PushConfigClearAttributes) {
   auto const actual = PushConfigBuilder()
                           .set_push_endpoint("https://endpoint.example.com")
                           .add_attribute("key0", "label0")
@@ -133,15 +133,15 @@ TEST(SubscriptionMutationBuilder, PushConfigClearAttributes) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, PushConfigSetAuthentication) {
+TEST(SubscriptionBuilder, PushConfigSetAuthentication) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(
               PushConfigBuilder()
                   .set_push_endpoint("https://endpoint.example.com")
                   .set_authentication(PushConfigBuilder::MakeOidcToken(
                       "fake-service-account@example.com", "test-audience")))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -163,8 +163,8 @@ TEST(SubscriptionMutationBuilder, PushConfigSetAuthentication) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, BuildUpdateSubscription) {
-  auto const actual = SubscriptionMutationBuilder{}.BuildUpdateSubscription(
+TEST(SubscriptionBuilder, BuildUpdateRequest) {
+  auto const actual = SubscriptionBuilder{}.BuildUpdateRequest(
       Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -175,8 +175,8 @@ TEST(SubscriptionMutationBuilder, BuildUpdateSubscription) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, BuildCreateSubscription) {
-  auto const actual = SubscriptionMutationBuilder{}.BuildCreateSubscription(
+TEST(SubscriptionBuilder, BuildCreateRequest) {
+  auto const actual = SubscriptionBuilder{}.BuildCreateRequest(
       Topic("test-project", "test-topic"),
       Subscription("test-project", "test-subscription"));
   google::pubsub::v1::Subscription expected;
@@ -188,10 +188,10 @@ TEST(SubscriptionMutationBuilder, BuildCreateSubscription) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfigEmpty) {
-  auto const actual = SubscriptionMutationBuilder{}
+TEST(SubscriptionBuilder, SetPushConfigEmpty) {
+  auto const actual = SubscriptionBuilder{}
                           .set_push_config(PushConfigBuilder())
-                          .BuildUpdateSubscription(Subscription(
+                          .BuildUpdateRequest(Subscription(
                               "test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -203,11 +203,11 @@ TEST(SubscriptionMutationBuilder, SetPushConfigEmpty) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfigEndpoint) {
+TEST(SubscriptionBuilder, SetPushConfigEndpoint) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com"))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -220,13 +220,13 @@ TEST(SubscriptionMutationBuilder, SetPushConfigEndpoint) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfigAddAttribute) {
+TEST(SubscriptionBuilder, SetPushConfigAddAttribute) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com")
                                .add_attribute("key0", "label0")
                                .add_attribute("key1", "label1"))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -246,14 +246,14 @@ TEST(SubscriptionMutationBuilder, SetPushConfigAddAttribute) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfigSetAttributes) {
+TEST(SubscriptionBuilder, SetPushConfigSetAttributes) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(PushConfigBuilder("https://endpoint.example.com")
                                .add_attribute("key0", "label0")
                                .add_attribute("key1", "label1")
                                .set_attributes({{"key2", "label2"}}))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -272,14 +272,14 @@ TEST(SubscriptionMutationBuilder, SetPushConfigSetAttributes) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfigSetAuthentication) {
+TEST(SubscriptionBuilder, SetPushConfigSetAuthentication) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(
               PushConfigBuilder("https://endpoint.example.com")
                   .set_authentication(PushConfigBuilder::MakeOidcToken(
                       "fake-service-account@example.com", "test-audience")))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -301,10 +301,10 @@ TEST(SubscriptionMutationBuilder, SetPushConfigSetAuthentication) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetAckDeadline) {
-  auto const actual = SubscriptionMutationBuilder{}
+TEST(SubscriptionBuilder, SetAckDeadline) {
+  auto const actual = SubscriptionBuilder{}
                           .set_ack_deadline(std::chrono::seconds(600))
-                          .BuildUpdateSubscription(Subscription(
+                          .BuildUpdateRequest(Subscription(
                               "test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -317,11 +317,10 @@ TEST(SubscriptionMutationBuilder, SetAckDeadline) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetRetainAckedMessages) {
-  auto const actual = SubscriptionMutationBuilder{}
-                          .set_retain_acked_messages(true)
-                          .BuildUpdateSubscription(Subscription(
-                              "test-project", "test-subscription"));
+TEST(SubscriptionBuilder, SetRetainAckedMessages) {
+  auto const actual =
+      SubscriptionBuilder{}.set_retain_acked_messages(true).BuildUpdateRequest(
+          Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
     subscription {
@@ -333,13 +332,13 @@ TEST(SubscriptionMutationBuilder, SetRetainAckedMessages) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetMessageRetentionDuration) {
+TEST(SubscriptionBuilder, SetMessageRetentionDuration) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_message_retention_duration(std::chrono::minutes(1) +
                                           std::chrono::seconds(2) +
                                           std::chrono::microseconds(3))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -352,12 +351,12 @@ TEST(SubscriptionMutationBuilder, SetMessageRetentionDuration) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetPushConfig) {
+TEST(SubscriptionBuilder, SetPushConfig) {
   auto const actual =
-      SubscriptionMutationBuilder{}
+      SubscriptionBuilder{}
           .set_push_config(
               PushConfigBuilder().set_push_endpoint("https://ep.example.com"))
-          .BuildUpdateSubscription(
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -370,11 +369,11 @@ TEST(SubscriptionMutationBuilder, SetPushConfig) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, AddLabels) {
-  auto const actual = SubscriptionMutationBuilder{}
+TEST(SubscriptionBuilder, AddLabels) {
+  auto const actual = SubscriptionBuilder{}
                           .add_label("key0", "label0")
                           .add_label("key1", "label1")
-                          .BuildUpdateSubscription(Subscription(
+                          .BuildUpdateRequest(Subscription(
                               "test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -388,12 +387,12 @@ TEST(SubscriptionMutationBuilder, AddLabels) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetLabels) {
-  auto const actual = SubscriptionMutationBuilder{}
+TEST(SubscriptionBuilder, SetLabels) {
+  auto const actual = SubscriptionBuilder{}
                           .add_label("key0", "label0")
                           .add_label("key1", "label1")
                           .set_labels({{"key2", "label2"}})
-                          .BuildUpdateSubscription(Subscription(
+                          .BuildUpdateRequest(Subscription(
                               "test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -406,12 +405,12 @@ TEST(SubscriptionMutationBuilder, SetLabels) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, ClearLabels) {
-  auto const actual = SubscriptionMutationBuilder{}
+TEST(SubscriptionBuilder, ClearLabels) {
+  auto const actual = SubscriptionBuilder{}
                           .add_label("key0", "label0")
                           .clear_labels()
                           .add_label("key1", "label1")
-                          .BuildUpdateSubscription(Subscription(
+                          .BuildUpdateRequest(Subscription(
                               "test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -424,11 +423,10 @@ TEST(SubscriptionMutationBuilder, ClearLabels) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, EnableMessageOrdering) {
-  auto const actual = SubscriptionMutationBuilder{}
-                          .enable_message_ordering(true)
-                          .BuildUpdateSubscription(Subscription(
-                              "test-project", "test-subscription"));
+TEST(SubscriptionBuilder, EnableMessageOrdering) {
+  auto const actual =
+      SubscriptionBuilder{}.enable_message_ordering(true).BuildUpdateRequest(
+          Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
     subscription {
@@ -440,13 +438,12 @@ TEST(SubscriptionMutationBuilder, EnableMessageOrdering) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetExpirationPolicy) {
+TEST(SubscriptionBuilder, SetExpirationPolicy) {
   auto const actual =
-      SubscriptionMutationBuilder{}
-          .set_expiration_policy(
-              SubscriptionMutationBuilder::MakeExpirationPolicy(
-                  std::chrono::hours(2) + std::chrono::nanoseconds(3)))
-          .BuildUpdateSubscription(
+      SubscriptionBuilder{}
+          .set_expiration_policy(SubscriptionBuilder::MakeExpirationPolicy(
+              std::chrono::hours(2) + std::chrono::nanoseconds(3)))
+          .BuildUpdateRequest(
               Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
@@ -459,13 +456,13 @@ TEST(SubscriptionMutationBuilder, SetExpirationPolicy) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, SetDeadLetterPolicy) {
-  auto const actual = SubscriptionMutationBuilder{}
-                          .set_dead_letter_policy(
-                              SubscriptionMutationBuilder::MakeDeadLetterPolicy(
-                                  Topic("test-project", "dead-letter"), 3))
-                          .BuildUpdateSubscription(Subscription(
-                              "test-project", "test-subscription"));
+TEST(SubscriptionBuilder, SetDeadLetterPolicy) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_dead_letter_policy(SubscriptionBuilder::MakeDeadLetterPolicy(
+              Topic("test-project", "dead-letter"), 3))
+          .BuildUpdateRequest(
+              Subscription("test-project", "test-subscription"));
   google::pubsub::v1::UpdateSubscriptionRequest expected;
   std::string const text = R"pb(
     subscription {
@@ -483,13 +480,13 @@ TEST(SubscriptionMutationBuilder, SetDeadLetterPolicy) {
 template <typename Duration>
 void CheckMakeExpirationPolicy(Duration d,
                                std::string const& expected_as_text) {
-  auto const actual = SubscriptionMutationBuilder::MakeExpirationPolicy(d);
+  auto const actual = SubscriptionBuilder::MakeExpirationPolicy(d);
   google::pubsub::v1::ExpirationPolicy expected;
   ASSERT_TRUE(TextFormat::ParseFromString(expected_as_text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(SubscriptionMutationBuilder, MakeExpirationPolicy) {
+TEST(SubscriptionBuilder, MakeExpirationPolicy) {
   using std::chrono::hours;
   using std::chrono::nanoseconds;
   using std::chrono::seconds;

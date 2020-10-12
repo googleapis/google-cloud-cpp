@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "google/cloud/pubsub/topic_builder.h"
 #include <google/protobuf/util/field_mask_util.h>
 
 namespace google {
@@ -20,12 +20,11 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-google::pubsub::v1::Topic TopicMutationBuilder::BuildCreateMutation() && {
+google::pubsub::v1::Topic TopicBuilder::BuildCreateRequest() && {
   return std::move(proto_);
 }
 
-google::pubsub::v1::UpdateTopicRequest
-TopicMutationBuilder::BuildUpdateMutation() && {
+google::pubsub::v1::UpdateTopicRequest TopicBuilder::BuildUpdateRequest() && {
   google::pubsub::v1::UpdateTopicRequest request;
   *request.mutable_topic() = std::move(proto_);
   for (auto const& p : paths_) {

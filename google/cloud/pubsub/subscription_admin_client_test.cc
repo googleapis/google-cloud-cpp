@@ -42,7 +42,7 @@ TEST(SubscriptionAdminClient, CreateSubscription) {
   SubscriptionAdminClient client(mock);
   auto const response =
       client.CreateSubscription(topic, subscription,
-                                SubscriptionMutationBuilder{}.set_ack_deadline(
+                                SubscriptionBuilder{}.set_ack_deadline(
                                     std::chrono::seconds(kDeadlineSeconds)));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
@@ -88,7 +88,7 @@ TEST(SubscriptionAdminClient, UpdateSubscription) {
           });
   SubscriptionAdminClient client(mock);
   auto const response = client.UpdateSubscription(
-      subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
+      subscription, SubscriptionBuilder{}.set_ack_deadline(
                         std::chrono::seconds(kDeadlineSeconds)));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());

@@ -55,7 +55,7 @@ TEST(MessageIntegrationTest, FireAndForget) {
   auto subscription_admin =
       SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                     StatusIs(StatusCode::kAlreadyExists)));
 
@@ -69,7 +69,7 @@ TEST(MessageIntegrationTest, FireAndForget) {
 
   auto subscription_metadata = subscription_admin.CreateSubscription(
       topic, subscription,
-      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::minutes(2)));
+      SubscriptionBuilder{}.set_ack_deadline(std::chrono::minutes(2)));
   ASSERT_THAT(
       subscription_metadata,
       AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));

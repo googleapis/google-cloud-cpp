@@ -49,7 +49,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
   auto subscription_admin =
       SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                     StatusIs(StatusCode::kAlreadyExists)));
 
@@ -63,7 +63,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
 
   auto subscription_metadata = subscription_admin.CreateSubscription(
       topic, subscription,
-      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
+      SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
   ASSERT_THAT(
       subscription_metadata,
       AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));

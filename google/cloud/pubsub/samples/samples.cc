@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
-#include "google/cloud/pubsub/subscription_mutation_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
@@ -50,7 +50,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
+    auto topic = client.CreateTopic(pubsub::TopicBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
     // Note that kAlreadyExists is a possible error when the library retries.
     if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -91,7 +91,7 @@ void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.UpdateTopic(
-        pubsub::TopicMutationBuilder(
+        pubsub::TopicBuilder(
             pubsub::Topic(std::move(project_id), std::move(topic_id)))
             .add_label("test-key", "test-value"));
     if (!topic) return;  // TODO(#4792) - emulator lacks UpdateTopic()
@@ -229,7 +229,7 @@ void CreatePushSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_push_config(
+        pubsub::SubscriptionBuilder{}.set_push_config(
             pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
@@ -254,7 +254,7 @@ void CreateOrderingSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.enable_message_ordering(true));
+        pubsub::SubscriptionBuilder{}.enable_message_ordering(true));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -281,8 +281,8 @@ void CreateDeadLetterSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
-            pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
+        pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
+            pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
                 dead_letter_delivery_attempts)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -318,8 +318,8 @@ void UpdateDeadLetterSubscription(
      int dead_letter_delivery_attempts) {
     auto sub = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
-            pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
+        pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
+            pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
                 dead_letter_delivery_attempts)));
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
@@ -387,7 +387,7 @@ void RemoveDeadLetterPolicy(
      std::string const& subscription_id) {
     auto sub = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.clear_dead_letter_policy());
+        pubsub::SubscriptionBuilder{}.clear_dead_letter_policy());
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
 
     std::cout << "The subscription has been updated to: " << sub->DebugString()
@@ -422,7 +422,7 @@ void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& subscription_id) {
     auto s = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_ack_deadline(
+        pubsub::SubscriptionBuilder{}.set_ack_deadline(
             std::chrono::seconds(60)));
     if (!s) throw std::runtime_error(s.status().message());
 
