@@ -15,10 +15,10 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
@@ -234,7 +234,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   os.Close();
   EXPECT_FALSE(os.metadata());
   EXPECT_THAT(os.metadata(), StatusIs(StatusCode::kUnavailable,
-              HasSubstr("Retry policy exhausted")));
+                                      HasSubstr("Retry policy exhausted")));
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {

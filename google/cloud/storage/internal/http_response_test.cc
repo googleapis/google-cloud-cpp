@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,8 +24,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
 TEST(HttpResponseTest, OStream) {
   HttpResponse response{

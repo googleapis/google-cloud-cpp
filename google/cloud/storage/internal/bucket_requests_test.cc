@@ -15,8 +15,8 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,9 +26,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::Not;
 
 /// @test Verify that we parse JSON objects into LifecycleRule objects.
@@ -828,9 +828,8 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("expected array for 'members'")));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("expected array for 'members'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
@@ -841,9 +840,8 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("expected array for 'bindings'")));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("expected array for 'bindings'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {

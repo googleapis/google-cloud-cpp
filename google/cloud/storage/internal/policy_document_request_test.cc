@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/policy_document_request.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 

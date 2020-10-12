@@ -40,8 +40,8 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::testing::_;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -1031,8 +1031,9 @@ TEST(ParallelUploadPersistentState, GenerationNotAString) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", "blah"}}.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("'expected_generation' is not a number")));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("'expected_generation' is not a number")));
 }
 
 TEST(ParallelUploadPersistentState, CustomDataNotAString) {
@@ -1041,14 +1042,14 @@ TEST(ParallelUploadPersistentState, CustomDataNotAString) {
       {"expected_generation", 1},
       {"custom_data", 123}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("'custom_data' is not a string")));
+                            HasSubstr("'custom_data' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"}, {"expected_generation", 1}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-   HasSubstr("doesn't contain 'streams'")));
+                            HasSubstr("doesn't contain 'streams'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
@@ -1066,7 +1067,7 @@ TEST(ParallelUploadPersistentState, StreamNotObject) {
       {"expected_generation", 1},
       {"streams", {5}}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-   HasSubstr("'stream' is not an object")));
+                            HasSubstr("'stream' is not an object")));
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoName) {
@@ -1075,7 +1076,7 @@ TEST(ParallelUploadPersistentState, StreamHasNoName) {
       {"expected_generation", 1},
       {"streams", {nlohmann::json::object()}}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("stream doesn't contain a 'name'")));
+                            HasSubstr("stream doesn't contain a 'name'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamNameNotString) {
@@ -1084,7 +1085,7 @@ TEST(ParallelUploadPersistentState, StreamNameNotString) {
       {"expected_generation", 1},
       {"streams", {{{"name", 1}}}}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("stream 'name' is not a string")));
+                            HasSubstr("stream 'name' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
@@ -1092,8 +1093,10 @@ TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {{{"name", "abc"}}}}}.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("stream doesn't contain a 'resumable_session_id'")));
+  EXPECT_THAT(
+      res,
+      StatusIs(StatusCode::kInternal,
+               HasSubstr("stream doesn't contain a 'resumable_session_id'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
@@ -1102,8 +1105,9 @@ TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
       {"expected_generation", 1},
       {"streams",
        {{{"name", "abc"}, {"resumable_session_id", 123}}}}}.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-              HasSubstr("'resumable_session_id' is not a string")));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("'resumable_session_id' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsEmpty) {
@@ -1112,12 +1116,12 @@ TEST(ParallelUploadPersistentState, StreamsEmpty) {
       {"expected_generation", 1},
       {"streams", nlohmann::json::array()}}.dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
-   HasSubstr("doesn't contain any streams")));
+                            HasSubstr("doesn't contain any streams")));
 }
 
 TEST(ParseResumableSessionId, InvalidPrefix) {
   EXPECT_THAT(ParseResumableSessionId("blahblah"),
-                  StatusIs(StatusCode::kInternal));
+              StatusIs(StatusCode::kInternal));
   EXPECT_THAT(ParseResumableSessionId("b"), StatusIs(StatusCode::kInternal));
 }
 
@@ -1149,15 +1153,13 @@ TEST(ParallelFileUploadSplitPointsFromStringTest, NotJson) {
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotArray) {
   auto res = ParallelFileUploadSplitPointsFromString(
       nlohmann::json{{"a", "b"}, {"b", "c"}}.dump());
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInternal, HasSubstr("not an array")));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal, HasSubstr("not an array")));
 }
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotNumber) {
   auto res =
       ParallelFileUploadSplitPointsFromString(nlohmann::json{1, "a", 2}.dump());
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInternal, HasSubstr("not a number")));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal, HasSubstr("not a number")));
 }
 
 TEST_F(ParallelUploadTest, ResumableSuccess) {

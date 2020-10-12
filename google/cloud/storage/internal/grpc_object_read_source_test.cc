@@ -28,9 +28,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::HasSubstr;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
