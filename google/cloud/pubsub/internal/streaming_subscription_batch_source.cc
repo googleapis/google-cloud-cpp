@@ -43,7 +43,7 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 }
 
 future<Status> StreamingSubscriptionBatchSource::AckMessage(
-    std::string const& ack_id, std::size_t) {
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   ack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
@@ -51,7 +51,7 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
 }
 
 future<Status> StreamingSubscriptionBatchSource::NackMessage(
-    std::string const& ack_id, std::size_t) {
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   nack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
@@ -59,7 +59,7 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
 }
 
 future<Status> StreamingSubscriptionBatchSource::BulkNack(
-    std::vector<std::string> ack_ids, std::size_t) {
+    std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     nack_queue_.push_back(std::move(a));

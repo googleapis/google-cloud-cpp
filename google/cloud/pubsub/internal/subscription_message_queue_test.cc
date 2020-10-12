@@ -85,18 +85,12 @@ TEST(SubscriptionMessageQueueTest, Basic) {
     batch_callback = std::move(cb);
   });
 
-  EXPECT_CALL(*mock, AckMessage)
-      .WillOnce([](std::string const& ack_id, std::size_t size) {
-        EXPECT_EQ("ack-m0", ack_id);
-        EXPECT_EQ(0, size);
-        return make_ready_future(Status{});
-      });
-  EXPECT_CALL(*mock, NackMessage)
-      .WillOnce([](std::string const& ack_id, std::size_t size) {
-        EXPECT_EQ("ack-m1", ack_id);
-        EXPECT_EQ(1, size);
-        return make_ready_future(Status{});
-      });
+  EXPECT_CALL(*mock, AckMessage("ack-m0")).WillOnce([](std::string const&) {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, NackMessage("ack-m1")).WillOnce([](std::string const&) {
+    return make_ready_future(Status{});
+  });
   EXPECT_CALL(*mock, BulkNack).Times(1);
 
   auto const messages = GenerateMessages();
@@ -138,7 +132,7 @@ TEST(SubscriptionMessageQueueTest, NackOnSessionShutdown) {
   });
 
   EXPECT_CALL(*mock, BulkNack)
-      .WillOnce([&](std::vector<std::string> const& ack_ids, std::size_t) {
+      .WillOnce([&](std::vector<std::string> const& ack_ids) {
         EXPECT_THAT(ack_ids, ElementsAre("ack-m0", "ack-m1", "ack-m2"));
         return make_ready_future(Status{});
       });

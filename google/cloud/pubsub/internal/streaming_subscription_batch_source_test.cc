@@ -396,15 +396,15 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   success_stream.WaitForAction().set_value(true);
   auto last_read = success_stream.WaitForAction();
 
-  uut->AckMessage("fake-001", 0);
-  uut->AckMessage("fake-002", 0);
-  uut->NackMessage("fake-003", 0);
+  uut->AckMessage("fake-001");
+  uut->AckMessage("fake-002");
+  uut->NackMessage("fake-003");
   // Flush the first AckMessage()
   success_stream.WaitForAction().set_value(true);
   // Flush the compiled AckMessage() + NackMessage()
   success_stream.WaitForAction().set_value(true);
 
-  uut->BulkNack({"fake-004", "fake-005"}, 0);
+  uut->BulkNack({"fake-004", "fake-005"});
   success_stream.WaitForAction().set_value(true);
 
   uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
@@ -459,7 +459,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   fake_stream.WaitForAction().set_value(true);
 
   auto pending_read = fake_stream.WaitForAction();
-  uut->AckMessage("fake-001", 0);
+  uut->AckMessage("fake-001");
   auto pending_write = fake_stream.WaitForAction();
 
   pending_read.set_value(false);
@@ -513,7 +513,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   fake_stream.WaitForAction().set_value(true);
 
   auto pending_read = fake_stream.WaitForAction();
-  uut->AckMessage("fake-001", 0);
+  uut->AckMessage("fake-001");
   auto pending_write = fake_stream.WaitForAction();
 
   shutdown->MarkAsShutdown("test", expected_status);

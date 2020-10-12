@@ -29,12 +29,9 @@ class MockSubscriptionBatchSource
  public:
   MOCK_METHOD1(Start, void(pubsub_internal::BatchCallback));
   MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD2(AckMessage,
-               future<Status>(std::string const& ack_id, std::size_t size));
-  MOCK_METHOD2(NackMessage,
-               future<Status>(std::string const& ack_id, std::size_t size));
-  MOCK_METHOD2(BulkNack, future<Status>(std::vector<std::string> ack_ids,
-                                        std::size_t total_size));
+  MOCK_METHOD1(AckMessage, future<Status>(std::string const& ack_id));
+  MOCK_METHOD1(NackMessage, future<Status>(std::string const& ack_id));
+  MOCK_METHOD1(BulkNack, future<Status>(std::vector<std::string> ack_ids));
   MOCK_METHOD2(ExtendLeases, future<Status>(std::vector<std::string> ack_ids,
                                             std::chrono::seconds extension));
 };
