@@ -144,6 +144,18 @@ bool ExperimentCompleted(Config const& config,
 void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
                    int task);
 
+class Cleanup {
+ public:
+  Cleanup() = default;
+  ~Cleanup() {
+    for (auto i = actions_.rbegin(); i != actions_.rend(); ++i) (*i)();
+  }
+  void Defer(std::function<void()> f) { actions_.push_back(std::move(f)); }
+
+ private:
+  std::vector<std::function<void()>> actions_;
+};
+
 }  // namespace
 
 int main(int argc, char* argv[]) {
@@ -159,19 +171,6 @@ int main(int argc, char* argv[]) {
   pubsub::SubscriptionAdminClient subscription_admin(
       pubsub::MakeSubscriptionAdminConnection());
 
-  class Cleanup {
-   public:
-    Cleanup() = default;
-    ~Cleanup() {
-      for (auto i = actions_.rbegin(); i != actions_.rend(); ++i) (*i)();
-    }
-    void Defer(std::function<void()> f) { actions_.push_back(std::move(f)); }
-
-   private:
-    std::vector<std::function<void()>> actions_;
-  };
-  Cleanup cleanup;
-
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   auto const configured_topic = config->topic_id;
@@ -186,9 +185,6 @@ int main(int argc, char* argv[]) {
       std::cout << "CreateTopic() failed: " << create.status() << "\n";
       return 1;
     }
-    cleanup.Defer([topic_admin, topic]() mutable {
-      (void)topic_admin.DeleteTopic(topic);
-    });
   }
 
   std::cout << "# Running Cloud Pub/Sub experiment"
@@ -217,9 +213,6 @@ int main(int argc, char* argv[]) {
           google::cloud::pubsub_testing::RandomSubscriptionId(generator));
       auto create = subscription_admin.CreateSubscription(topic, sub);
       if (!create) continue;
-      cleanup.Defer([subscription_admin, sub]() mutable {
-        (void)subscription_admin.DeleteSubscription(sub);
-      });
       subscriptions.push_back(std::move(sub));
     }
     return subscriptions;
@@ -229,7 +222,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection());
   ExperimentFlowControl flow_control(config->subscription_count,
                                      config->pending_lwm, config->pending_hwm);
 
@@ -238,6 +230,7 @@ int main(int argc, char* argv[]) {
     flow_control.Received(m);
   };
 
+  auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection());
   std::vector<future<google::cloud::Status>> sessions;
   for (auto i = 0; i != config->session_count; ++i) {
     auto const& subscription = subscriptions[i % subscriptions.size()];
@@ -248,7 +241,6 @@ int main(int argc, char* argv[]) {
     for (auto& s : sessions) s.wait_for(std::chrono::seconds(3));
     sessions.clear();
   };
-  cleanup.Defer(cleanup_sessions);
 
   auto tasks = [&] {
     std::vector<std::thread> tasks(config->publisher_count);
@@ -288,6 +280,17 @@ int main(int argc, char* argv[]) {
   std::uniform_int_distribution<std::size_t> session_selector(
       0, sessions.size() - 1);
   std::cout << "Timestamp,RunningCount,Count,Min,Max,Average(us)\n";
+
+  Cleanup cleanup;
+  cleanup.Defer([topic_admin, topic]() mutable {
+    (void)topic_admin.DeleteTopic(topic);
+  });
+  for (auto sub : subscriptions) {
+    cleanup.Defer([subscription_admin, sub]() mutable {
+      (void)subscription_admin.DeleteSubscription(sub);
+    });
+  }
+
   while (!ExperimentCompleted(*config, flow_control, start)) {
     std::this_thread::sleep_for(cycle);
     auto const idx = session_selector(generator);
