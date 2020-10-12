@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/policy_document_request.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -23,6 +24,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(PolicyDocumentRequest, SigningAccount) {
   PolicyDocumentRequest request;
@@ -64,8 +67,8 @@ TEST(PostPolicyV4EscapeTest, InvalidUtf) {
   // In UTF8 a byte larger than 0x7f indicates that there is a byte following
   // it. Here we truncate the string to cause the UTF parser to fail.
   std::string invalid_utf8(1, '\x80');
-  EXPECT_EQ(StatusCode::kInvalidArgument,
-            PostPolicyV4Escape(invalid_utf8).status().code());
+  EXPECT_THAT(PostPolicyV4Escape(invalid_utf8),
+              StatusIs(StatusCode::kInvalidArgument));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
@@ -75,8 +78,7 @@ TEST(PostPolicyV4EscapeTest, Simple) {
   EXPECT_EQ("\\\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
             *PostPolicyV4Escape(u8"\\\b\f\n\r\t\v\u0080\u0119"));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_EQ(StatusCode::kUnimplemented,
-            PostPolicyV4Escape("ąę").status().code());
+  EXPECT_THAT(PostPolicyV4Escape("ąę"), StatusIs(StatusCode::kUnimplemented));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

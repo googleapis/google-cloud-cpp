@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/temp_file.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -42,7 +43,9 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -130,9 +133,7 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
 
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
-  EXPECT_FALSE(stream.metadata().status().ok());
-  EXPECT_EQ(TransientError().code(), stream.metadata().status().code())
-      << ", status=" << stream.metadata().status();
+  EXPECT_THAT(stream.metadata(), StatusIs(TransientError().code()));
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
@@ -143,9 +144,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
   EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(returner);
   auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
-  EXPECT_FALSE(stream.metadata().status().ok());
-  EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
-      << ", status=" << stream.metadata().status();
+  EXPECT_THAT(stream.metadata(), StatusIs(PermanentError().code()));
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
@@ -167,9 +166,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   stream.write(data.data(), data.size());
   EXPECT_TRUE(stream.bad());
   stream.Close();
-  EXPECT_FALSE(stream.metadata());
-  EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
-      << ", status=" << stream.metadata().status();
+  EXPECT_THAT(stream.metadata(), StatusIs(PermanentError().code()));
 }
 
 // A std::filebuf which allows to learn about seekpos calls.
@@ -308,11 +305,11 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   auto res = testing::ClientTester::UploadStreamResumable(
       *client_, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              ::testing::HasSubstr(
-                  "This is most likely a bug in the GCS client library"));
+  EXPECT_THAT(
+      res,
+      StatusIs(
+          StatusCode::kInternal,
+          HasSubstr("This is most likely a bug in the GCS client library")));
 }
 
 TEST_F(WriteObjectTest, UploadFile) {

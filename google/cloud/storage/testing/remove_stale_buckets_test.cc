@@ -15,7 +15,7 @@
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/assert_ok.h"
 
 namespace google {
 namespace cloud {
@@ -23,7 +23,6 @@ namespace storage {
 namespace testing {
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StartsWith;
@@ -69,7 +68,7 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
       });
   Client client(mock, Client::NoDecorations{});
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(actual);
 }
 
 TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
@@ -111,7 +110,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
 
   Client client(mock, Client::NoDecorations{});
   auto const actual = RemoveStaleBuckets(client, "matching", create_time_limit);
-  EXPECT_THAT(actual, StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(actual);
 }
 
 }  // namespace

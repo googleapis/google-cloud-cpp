@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_resumable_upload_session.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -30,6 +31,7 @@ namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::google::cloud::testing_util::ContainsOnce;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -66,8 +68,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.UploadChunk({{payload}});
-  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
-  EXPECT_EQ("uh oh", result.status().message());
+  EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
   EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[UNAVAILABLE]")));
@@ -88,8 +89,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.UploadFinalChunk({{payload}}, 513 * 1024);
-  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
-  EXPECT_EQ("uh oh", result.status().message());
+  EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
   auto const log_lines = log_backend_->ClearLogLines();
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload_size=" +
@@ -108,8 +108,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.ResetSession();
-  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
-  EXPECT_EQ("uh oh", result.status().message());
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition, "uh oh"));
 
   EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
@@ -158,8 +157,8 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.last_response();
-  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
-  EXPECT_EQ("something bad", result.status().message());
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kFailedPrecondition, "something bad"));
 
   EXPECT_THAT(log_backend_->ClearLogLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));

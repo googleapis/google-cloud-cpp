@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +28,7 @@ namespace {
 
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Not;
 
 /// @test Verify that we parse JSON objects into LifecycleRule objects.
@@ -797,10 +799,8 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
        }},
   };
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("expected 'role' and 'members'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("expected 'role' and 'members'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
@@ -813,10 +813,8 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("expected 'role' and 'members'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("expected 'role' and 'members'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
@@ -830,10 +828,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("expected array for 'members'"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected array for 'members'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
@@ -844,10 +841,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("expected array for 'bindings'"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected array for 'bindings'")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
@@ -858,10 +854,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("expected objects for 'bindings' entries"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected objects for 'bindings' entries")));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidExtras) {
@@ -877,10 +872,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidExtras) {
   };
 
   auto res = ParseIamPolicyFromString(expected_payload.dump());
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("unexpected member 'condition' in element #0"));
+  EXPECT_THAT(
+      res, StatusIs(StatusCode::kInvalidArgument,
+                    HasSubstr("unexpected member 'condition' in element #0")));
 }
 
 TEST(BucketRequestsTest, SetIamPolicy) {

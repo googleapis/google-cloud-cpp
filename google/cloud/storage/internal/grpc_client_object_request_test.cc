@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <google/protobuf/text_format.h>
@@ -29,6 +30,7 @@ namespace {
 
 namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   storage_proto::InsertObjectRequest expected;
@@ -435,7 +437,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
       "GOOGLE_CLOUD_CPP_STORAGE_GRPC_ENDPOINT", "locahost:1"};
   GrpcClient client{ClientOptions{oauth2::CreateAnonymousCredentials()}};
   StatusOr<std::unique_ptr<ObjectReadSource>> reader = client.ReadObject(req);
-  EXPECT_EQ(reader.status().code(), StatusCode::kOutOfRange);
+  EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
 }
 
 }  // namespace

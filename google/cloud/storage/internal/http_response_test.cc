@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,7 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(HttpResponseTest, OStream) {
   HttpResponse response{
@@ -39,56 +41,55 @@ TEST(HttpResponseTest, OStream) {
 }
 
 TEST(HttpResponseTest, AsStatus) {
-  EXPECT_EQ(StatusCode::kUnknown,
-            AsStatus(HttpResponse{-42, "weird", {}}).code());
-  EXPECT_EQ(StatusCode::kUnknown,
-            AsStatus(HttpResponse{99, "still weird", {}}).code());
+  EXPECT_THAT(AsStatus(HttpResponse{-42, "weird", {}}),
+              StatusIs(StatusCode::kUnknown));
+  EXPECT_THAT(AsStatus(HttpResponse{99, "still weird", {}}),
+              StatusIs(StatusCode::kUnknown));
   EXPECT_STATUS_OK(AsStatus(HttpResponse{100, "Continue", {}}));
   EXPECT_STATUS_OK(AsStatus(HttpResponse{200, "success", {}}));
   EXPECT_STATUS_OK(AsStatus(HttpResponse{299, "success", {}}));
-  EXPECT_EQ(
-      StatusCode::kUnknown,
-      AsStatus(HttpResponse{300, "libcurl should handle this", {}}).code());
-  EXPECT_EQ(StatusCode::kFailedPrecondition,
-            AsStatus(HttpResponse{308, "pending", {}}).code());
-  EXPECT_EQ(StatusCode::kInvalidArgument,
-            AsStatus(HttpResponse{400, "invalid something", {}}).code());
-  EXPECT_EQ(StatusCode::kUnauthenticated,
-            AsStatus(HttpResponse{401, "unauthenticated", {}}).code());
-  EXPECT_EQ(StatusCode::kPermissionDenied,
-            AsStatus(HttpResponse{403, "forbidden", {}}).code());
-  EXPECT_EQ(StatusCode::kNotFound,
-            AsStatus(HttpResponse{404, "not found", {}}).code());
-  EXPECT_EQ(StatusCode::kPermissionDenied,
-            AsStatus(HttpResponse{405, "method not allowed", {}}).code());
-  EXPECT_EQ(StatusCode::kUnavailable,
-            AsStatus(HttpResponse{408, "request timeout", {}}).code());
-  EXPECT_EQ(StatusCode::kAborted,
-            AsStatus(HttpResponse{409, "conflict", {}}).code());
-  EXPECT_EQ(StatusCode::kNotFound,
-            AsStatus(HttpResponse{410, "gone", {}}).code());
-  EXPECT_EQ(StatusCode::kInvalidArgument,
-            AsStatus(HttpResponse{411, "length required", {}}).code());
-  EXPECT_EQ(StatusCode::kFailedPrecondition,
-            AsStatus(HttpResponse{412, "precondition failed", {}}).code());
-  EXPECT_EQ(StatusCode::kOutOfRange,
-            AsStatus(HttpResponse{413, "payload too large", {}}).code());
-  EXPECT_EQ(StatusCode::kOutOfRange,
-            AsStatus(HttpResponse{416, "request range", {}}).code());
-  EXPECT_EQ(StatusCode::kUnavailable,
-            AsStatus(HttpResponse{429, "too many requests", {}}).code());
-  EXPECT_EQ(StatusCode::kInvalidArgument,
-            AsStatus(HttpResponse{499, "some 4XX error", {}}).code());
-  EXPECT_EQ(StatusCode::kUnavailable,
-            AsStatus(HttpResponse{500, "internal server error", {}}).code());
-  EXPECT_EQ(StatusCode::kUnavailable,
-            AsStatus(HttpResponse{502, "bad gateway", {}}).code());
-  EXPECT_EQ(StatusCode::kUnavailable,
-            AsStatus(HttpResponse{503, "service unavailable", {}}).code());
-  EXPECT_EQ(StatusCode::kInternal,
-            AsStatus(HttpResponse{599, "some 5XX error", {}}).code());
-  EXPECT_EQ(StatusCode::kUnknown,
-            AsStatus(HttpResponse{600, "bad", {}}).code());
+  EXPECT_THAT(AsStatus(HttpResponse{300, "libcurl should handle this", {}}),
+              StatusIs(StatusCode::kUnknown));
+  EXPECT_THAT(AsStatus(HttpResponse{308, "pending", {}}),
+              StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(AsStatus(HttpResponse{400, "invalid something", {}}),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(AsStatus(HttpResponse{401, "unauthenticated", {}}),
+              StatusIs(StatusCode::kUnauthenticated));
+  EXPECT_THAT(AsStatus(HttpResponse{403, "forbidden", {}}),
+              StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_THAT(AsStatus(HttpResponse{404, "not found", {}}),
+              StatusIs(StatusCode::kNotFound));
+  EXPECT_THAT(AsStatus(HttpResponse{405, "method not allowed", {}}),
+              StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_THAT(AsStatus(HttpResponse{408, "request timeout", {}}),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(AsStatus(HttpResponse{409, "conflict", {}}),
+              StatusIs(StatusCode::kAborted));
+  EXPECT_THAT(AsStatus(HttpResponse{410, "gone", {}}),
+              StatusIs(StatusCode::kNotFound));
+  EXPECT_THAT(AsStatus(HttpResponse{411, "length required", {}}),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(AsStatus(HttpResponse{412, "precondition failed", {}}),
+              StatusIs(StatusCode::kFailedPrecondition));
+  EXPECT_THAT(AsStatus(HttpResponse{413, "payload too large", {}}),
+              StatusIs(StatusCode::kOutOfRange));
+  EXPECT_THAT(AsStatus(HttpResponse{416, "request range", {}}),
+              StatusIs(StatusCode::kOutOfRange));
+  EXPECT_THAT(AsStatus(HttpResponse{429, "too many requests", {}}),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(AsStatus(HttpResponse{499, "some 4XX error", {}}),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(AsStatus(HttpResponse{500, "internal server error", {}}),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(AsStatus(HttpResponse{502, "bad gateway", {}}),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(AsStatus(HttpResponse{503, "service unavailable", {}}),
+              StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(AsStatus(HttpResponse{599, "some 5XX error", {}}),
+              StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(AsStatus(HttpResponse{600, "bad", {}}),
+              StatusIs(StatusCode::kUnknown));
 }
 }  // namespace
 }  // namespace internal

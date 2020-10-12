@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -29,6 +30,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
@@ -116,13 +118,11 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
         mock.release());
   });
   std::vector<char> buffer(1024);
-  auto response = tested.Read(buffer.data(), buffer.size());
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
-  EXPECT_THAT(response.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 
-  auto status = tested.Close();
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.status().code());
-  EXPECT_THAT(status.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(tested.Close(),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
 TEST(GrpcObjectReadSource, DataWithError) {
@@ -149,13 +149,11 @@ TEST(GrpcObjectReadSource, DataWithError) {
   std::string actual(buffer.data(), response->bytes_received);
   EXPECT_EQ(expected, actual);
 
-  response = tested.Read(buffer.data(), buffer.size());
-  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
-  EXPECT_THAT(response.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 
-  auto status = tested.Close();
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.status().code());
-  EXPECT_THAT(status.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(tested.Close(),
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
 TEST(GrpcObjectReadSource, UseSpillBuffer) {

@@ -22,6 +22,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <fstream>
 
@@ -34,7 +35,10 @@ namespace {
 
 using ::google::cloud::storage::internal::GceCheckOverrideEnvVar;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class GoogleCredentialsTest : public ::testing::Test {
  public:
@@ -216,14 +220,14 @@ TEST_F(GoogleCredentialsTest,
   os << contents_str;
   os.close();
   auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
-  ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
 }
 
 TEST_F(GoogleCredentialsTest,
        LoadInvalidAuthorizedUserCredentialsFromJsonContents) {
   std::string contents_str = R"""( not-a-json-object-string )""";
   auto creds = CreateAuthorizedUserCredentialsFromJsonContents(contents_str);
-  ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
 }
 
 /**
@@ -335,7 +339,7 @@ TEST_F(GoogleCredentialsTest,
   auto creds = CreateServiceAccountCredentialsFromJsonFilePath(
       filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
-  ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
 }
 
 TEST_F(GoogleCredentialsTest,
@@ -395,9 +399,8 @@ TEST_F(
   // specified via the well known environment variable.
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("Unsupported credential type"));
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
+                              HasSubstr("Unsupported credential type")));
 }
 
 TEST_F(GoogleCredentialsTest,
@@ -409,9 +412,10 @@ TEST_F(GoogleCredentialsTest,
   // Test that when CreateServiceAccountCredentialsFromDefaultPaths cannot
   // find any credentials, it fails.
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("Could not create service account credentials"));
+  EXPECT_THAT(
+      creds,
+      StatusIs(Not(StatusCode::kOk),
+               HasSubstr("Could not create service account credentials")));
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
@@ -433,7 +437,7 @@ TEST_F(GoogleCredentialsTest,
       "not-a-valid-jason-object",
       {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
-  ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
 }
 
 TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
@@ -478,10 +482,9 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("Unsupported credential type"));
-  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
+                              AllOf(HasSubstr("Unsupported credential type"),
+                                    HasSubstr(filename))));
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
@@ -493,10 +496,8 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_EQ(StatusCode::kInvalidArgument, creds.status().code());
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("credentials file " + filename));
+  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("credentials file " + filename)));
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidAuthorizedUserCredentialsViaADC) {
@@ -508,8 +509,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidAuthorizedUserCredentialsViaADC) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_EQ(StatusCode::kInvalidArgument, creds.status().code());
+  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
@@ -521,8 +521,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_EQ(StatusCode::kInvalidArgument, creds.status().code());
+  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
@@ -530,10 +529,9 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
   ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename);
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("Cannot open credentials file"));
-  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
+                              AllOf(HasSubstr("Cannot open credentials file"),
+                                    HasSubstr(filename))));
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
@@ -547,9 +545,8 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
                                                  filename);
 
   auto creds = GoogleDefaultCredentials();
-  ASSERT_FALSE(creds) << "status=" << creds.status();
-  EXPECT_THAT(creds.status().message(),
-              HasSubstr("Could not automatically determine"));
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
+                              HasSubstr("Could not automatically determine")));
 }
 
 TEST_F(GoogleCredentialsTest, LoadP12Credentials) {

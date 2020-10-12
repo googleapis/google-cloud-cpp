@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -27,6 +28,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::MakeRandomData;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Return;
@@ -201,7 +203,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_STATUS_OK(upload);
   upload = session.UploadChunk({{payload}});
-  EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
+  EXPECT_THAT(upload, StatusIs(StatusCode::kUnavailable));
 
   session.ResetSession();
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -265,7 +267,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
       });
 
   auto upload = session.UploadFinalChunk({{payload}}, size);
-  EXPECT_EQ(StatusCode::kUnavailable, upload.status().code());
+  EXPECT_THAT(upload, StatusIs(StatusCode::kUnavailable));
 
   session.ResetSession();
   EXPECT_EQ(0, session.next_expected_byte());

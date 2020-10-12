@@ -22,6 +22,7 @@
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <stack>
@@ -40,6 +41,7 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::testing::_;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -418,9 +420,8 @@ TEST_F(ParallelUploadTest, Success) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = res_future.get();
@@ -448,8 +449,7 @@ TEST_F(ParallelUploadTest, OneStreamFailsUponCration) {
 
   auto state = PrepareParallelUpload(*client_, kBucketName, kDestObjectName,
                                      num_shards, kPrefix);
-  EXPECT_FALSE(state);
-  EXPECT_EQ(PermanentError().code(), state.status().code());
+  EXPECT_THAT(state, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, CleanupFailsEager) {
@@ -480,17 +480,15 @@ TEST_F(ParallelUploadTest, CleanupFailsEager) {
   EXPECT_STATUS_OK(state);
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = state->WaitForCompletion().get();
   EXPECT_STATUS_OK(res);
 
   auto cleanup_status = state->EagerCleanup();
-  EXPECT_FALSE(cleanup_status.ok());
-  EXPECT_EQ(PermanentError().code(), cleanup_status.code());
+  EXPECT_THAT(cleanup_status, StatusIs(PermanentError().code()));
   EXPECT_EQ(cleanup_status, state->EagerCleanup());
   EXPECT_EQ(cleanup_status, state->EagerCleanup());
 }
@@ -550,8 +548,7 @@ TEST_F(ParallelUploadTest, BrokenStream) {
 
   state->shards().clear();
   auto res = state->WaitForCompletion().get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(PermanentError().code(), res.status().code());
+  EXPECT_THAT(res, StatusIs(PermanentError().code()));
 }
 
 TEST(FirstOccurenceTest, Basic) {
@@ -721,8 +718,7 @@ TEST_F(ParallelUploadTest, NonExistentFile) {
   auto uploaders = CreateParallelUploadShards::Create(
       *client_, "nonexistent", kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(100), MaxStreams(200));
-  EXPECT_FALSE(uploaders);
-  EXPECT_EQ(StatusCode::kNotFound, uploaders.status().code());
+  EXPECT_THAT(uploaders, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(ParallelUploadTest, UnreadableFile) {
@@ -746,10 +742,9 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
   EXPECT_STATUS_OK(uploaders);
   ASSERT_EQ(1U, uploaders->size());
 
-  EXPECT_EQ(StatusCode::kNotFound, (*uploaders)[0].Upload().code());
+  EXPECT_THAT((*uploaders)[0].Upload(), StatusIs(StatusCode::kNotFound));
   auto res = (*uploaders)[0].WaitForCompletion().get();
-  ASSERT_FALSE(res);
-  EXPECT_EQ(StatusCode::kNotFound, res.status().code());
+  EXPECT_THAT(res, StatusIs(StatusCode::kNotFound));
 #endif  // __linux__
 }
 
@@ -772,8 +767,7 @@ TEST_F(ParallelUploadTest, FileOneStreamFailsUponCration) {
   auto uploaders = CreateParallelUploadShards::Create(
       *client_, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
       MinStreamSize(1), MaxStreams(2));
-  EXPECT_FALSE(uploaders);
-  EXPECT_EQ(PermanentError().code(), uploaders.status().code());
+  EXPECT_THAT(uploaders, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, FileBrokenStream) {
@@ -804,12 +798,11 @@ TEST_F(ParallelUploadTest, FileBrokenStream) {
   EXPECT_STATUS_OK(uploaders);
 
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
-  EXPECT_EQ(PermanentError().code(), (*uploaders)[1].Upload().code());
+  EXPECT_THAT((*uploaders)[1].Upload(), StatusIs(PermanentError().code()));
   EXPECT_STATUS_OK((*uploaders)[2].Upload());
 
   auto res = (*uploaders)[0].WaitForCompletion().get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(PermanentError().code(), res.status().code());
+  EXPECT_THAT(res, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
@@ -843,7 +836,7 @@ TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
 
   ASSERT_EQ(0, ::truncate(temp_file.name().c_str(), 0));
-  EXPECT_EQ(StatusCode::kInternal, (*uploaders)[1].Upload().code());
+  EXPECT_THAT((*uploaders)[1].Upload(), StatusIs(StatusCode::kInternal));
   std::ofstream f(temp_file.name(), std::ios::binary | std::ios::trunc);
   f.write("abc", 3);
   f.close();
@@ -852,8 +845,7 @@ TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
   EXPECT_STATUS_OK((*uploaders)[2].Upload());
 
   auto res = (*uploaders)[0].WaitForCompletion().get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal));
 #endif  // __linux__
 }
 
@@ -889,8 +881,7 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
   { auto to_destroy = std::move((*uploaders)[1]); }
 
   auto res = (*uploaders)[0].WaitForCompletion().get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kCancelled, res.status().code());
+  EXPECT_THAT(res, StatusIs(StatusCode::kCancelled));
 }
 
 TEST_F(ParallelUploadTest, FileSuccessBasic) {
@@ -941,8 +932,7 @@ TEST_F(ParallelUploadTest, UploadNonExistentFile) {
   auto res =
       ParallelUploadFile(*client_, "nonexistent", kBucketName, kDestObjectName,
                          kPrefix, false, MinStreamSize(1));
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kNotFound, res.status().code());
+  EXPECT_THAT(res, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(ParallelUploadTest, CleanupFailureIsIgnored) {
@@ -1005,53 +995,44 @@ TEST_F(ParallelUploadTest, CleanupFailureIsNotIgnored) {
 
 TEST(ParallelUploadPersistentState, NotJson) {
   auto res = ParallelUploadPersistentState::FromString("blah");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("not a valid JSON"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("not a valid JSON")));
 }
 
 TEST(ParallelUploadPersistentState, RootNotOject) {
   auto res = ParallelUploadPersistentState::FromString("\"blah\"");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("not a JSON object"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("not a JSON object")));
 }
 
 TEST(ParallelUploadPersistentState, NoDestination) {
   auto res = ParallelUploadPersistentState::FromString(
       nlohmann::json{{"a", "b"}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("doesn't contain a 'destination'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+                            HasSubstr("doesn't contain a 'destination'")));
 }
 
 TEST(ParallelUploadPersistentState, DestinationNotAString) {
   auto res = ParallelUploadPersistentState::FromString(
       nlohmann::json{{"destination", 2}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("'destination' is not a string"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+                            HasSubstr("'destination' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, NoGeneration) {
   auto res = ParallelUploadPersistentState::FromString(
       nlohmann::json{{"destination", "b"}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("doesn't contain a 'expected_generation'"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("doesn't contain a 'expected_generation'")));
 }
 
 TEST(ParallelUploadPersistentState, GenerationNotAString) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"},
       {"expected_generation", "blah"}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("'expected_generation' is not a number"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("'expected_generation' is not a number")));
 }
 
 TEST(ParallelUploadPersistentState, CustomDataNotAString) {
@@ -1059,18 +1040,15 @@ TEST(ParallelUploadPersistentState, CustomDataNotAString) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"custom_data", 123}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("'custom_data' is not a string"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("'custom_data' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
       {"destination", "dest"}, {"expected_generation", 1}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain 'streams'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+   HasSubstr("doesn't contain 'streams'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
@@ -1078,9 +1056,8 @@ TEST(ParallelUploadPersistentState, StreamsNotArray) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", 5}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("is not an array"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("is not an array")));
 }
 
 TEST(ParallelUploadPersistentState, StreamNotObject) {
@@ -1088,9 +1065,8 @@ TEST(ParallelUploadPersistentState, StreamNotObject) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {5}}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("'stream' is not an object"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+   HasSubstr("'stream' is not an object")));
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoName) {
@@ -1098,10 +1074,8 @@ TEST(ParallelUploadPersistentState, StreamHasNoName) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {nlohmann::json::object()}}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("stream doesn't contain a 'name'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("stream doesn't contain a 'name'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamNameNotString) {
@@ -1109,10 +1083,8 @@ TEST(ParallelUploadPersistentState, StreamNameNotString) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {{{"name", 1}}}}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("stream 'name' is not a string"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("stream 'name' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
@@ -1120,10 +1092,8 @@ TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", {{{"name", "abc"}}}}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("stream doesn't contain a 'resumable_session_id'"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("stream doesn't contain a 'resumable_session_id'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
@@ -1132,10 +1102,8 @@ TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
       {"expected_generation", 1},
       {"streams",
        {{{"name", "abc"}, {"resumable_session_id", 123}}}}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              HasSubstr("'resumable_session_id' is not a string"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+              HasSubstr("'resumable_session_id' is not a string")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsEmpty) {
@@ -1143,36 +1111,28 @@ TEST(ParallelUploadPersistentState, StreamsEmpty) {
       {"destination", "dest"},
       {"expected_generation", 1},
       {"streams", nlohmann::json::array()}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain any streams"));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
+   HasSubstr("doesn't contain any streams")));
 }
 
 TEST(ParseResumableSessionId, InvalidPrefix) {
-  auto res = ParseResumableSessionId("blahblah");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  res = ParseResumableSessionId("b");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(ParseResumableSessionId("blahblah"),
+                  StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(ParseResumableSessionId("b"), StatusIs(StatusCode::kInternal));
 }
 
 TEST(ParseResumableSessionId, NoSecondColon) {
-  auto res = ParseResumableSessionId("ParUpl:");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  res = ParseResumableSessionId("ParUpl:blahblah");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(ParseResumableSessionId("ParUpl:"),
+              StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(ParseResumableSessionId("ParUpl:blahblah"),
+              StatusIs(StatusCode::kInternal));
 }
 
 TEST(ParseResumableSessionId, GenerationNotANumber) {
-  auto res = ParseResumableSessionId("ParUpl:");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  res = ParseResumableSessionId("ParUpl:some_name:some_gen");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(ParseResumableSessionId("ParUpl:"),
+              StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(ParseResumableSessionId("ParUpl:some_name:some_gen"),
+              StatusIs(StatusCode::kInternal));
 }
 
 TEST(ParallelFileUploadSplitPointsToStringTest, Simple) {
@@ -1182,25 +1142,22 @@ TEST(ParallelFileUploadSplitPointsToStringTest, Simple) {
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotJson) {
   auto res = ParallelFileUploadSplitPointsFromString("blah");
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("not a valid JSON"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("not a valid JSON")));
 }
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotArray) {
   auto res = ParallelFileUploadSplitPointsFromString(
       nlohmann::json{{"a", "b"}, {"b", "c"}}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("not an array"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("not an array")));
 }
 
 TEST(ParallelFileUploadSplitPointsFromStringTest, NotNumber) {
   auto res =
       ParallelFileUploadSplitPointsFromString(nlohmann::json{1, "a", 2}.dump());
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("not a number"));
+  EXPECT_THAT(res,
+              StatusIs(StatusCode::kInternal, HasSubstr("not a number")));
 }
 
 TEST_F(ParallelUploadTest, ResumableSuccess) {
@@ -1260,9 +1217,8 @@ TEST_F(ParallelUploadTest, ResumableSuccess) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = res_future.get();
@@ -1304,15 +1260,13 @@ TEST_F(ParallelUploadTest, Suspend) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   std::move(state->shards()[2]).Suspend();
   state->shards().clear();
   auto res = res_future.get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kCancelled, res.status().code());
+  EXPECT_THAT(res, StatusIs(StatusCode::kCancelled));
 }
 
 TEST_F(ParallelUploadTest, Resume) {
@@ -1374,9 +1328,8 @@ TEST_F(ParallelUploadTest, Resume) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = res_future.get();
@@ -1398,8 +1351,7 @@ TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCration) {
   auto state =
       PrepareParallelUpload(*client_, kBucketName, kDestObjectName, num_shards,
                             kPrefix, UseResumableUploadSession(""));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(PermanentError().code(), state.status().code());
+  EXPECT_THAT(state, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, BrokenResumableStream) {
@@ -1433,8 +1385,7 @@ TEST_F(ParallelUploadTest, BrokenResumableStream) {
 
   state->shards().clear();
   auto res = state->WaitForCompletion().get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(PermanentError().code(), res.status().code());
+  EXPECT_THAT(res, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, ResumableSuccessDestinationExists) {
@@ -1478,9 +1429,8 @@ TEST_F(ParallelUploadTest, ResumableSuccessDestinationExists) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = res_future.get();
@@ -1530,9 +1480,8 @@ TEST_F(ParallelUploadTest, ResumableSuccessDestinationChangedUnderhandedly) {
   EXPECT_TRUE(Unsatisfied(res_future));
 
   auto cleanup_too_early = state->EagerCleanup();
-  ASSERT_FALSE(cleanup_too_early.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
-  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+  EXPECT_THAT(cleanup_too_early, StatusIs(StatusCode::kFailedPrecondition,
+                                          HasSubstr("still in progress")));
 
   state->shards().clear();
   auto res = res_future.get();
@@ -1551,8 +1500,7 @@ TEST_F(ParallelUploadTest, ResumableInitialGetMetadataFails) {
   auto state =
       PrepareParallelUpload(*client_, kBucketName, kDestObjectName, num_shards,
                             kPrefix, UseResumableUploadSession(""));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kPermissionDenied, state.status().code());
+  EXPECT_THAT(state, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(ParallelUploadTest, StoringPersistentStateFails) {
@@ -1569,8 +1517,7 @@ TEST_F(ParallelUploadTest, StoringPersistentStateFails) {
   auto state =
       PrepareParallelUpload(*client_, kBucketName, kDestObjectName, num_shards,
                             kPrefix, UseResumableUploadSession(""));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kPermissionDenied, state.status().code());
+  EXPECT_THAT(state, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
@@ -1590,8 +1537,7 @@ TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
       UseResumableUploadSession(kParallelResumableId));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+  EXPECT_THAT(state, StatusIs(StatusCode::kInternal));
 }
 
 TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCrationOnResume) {
@@ -1612,8 +1558,7 @@ TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCrationOnResume) {
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
       UseResumableUploadSession(kParallelResumableId));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(PermanentError().code(), state.status().code());
+  EXPECT_THAT(state, StatusIs(PermanentError().code()));
 }
 
 TEST_F(ParallelUploadTest, ResumableBadSessionId) {
@@ -1622,8 +1567,7 @@ TEST_F(ParallelUploadTest, ResumableBadSessionId) {
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
       UseResumableUploadSession("bad session id"));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+  EXPECT_THAT(state, StatusIs(StatusCode::kInternal));
 }
 
 TEST_F(ParallelUploadTest, ResumeBadNumShards) {
@@ -1643,10 +1587,9 @@ TEST_F(ParallelUploadTest, ResumeBadNumShards) {
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
       UseResumableUploadSession(kParallelResumableId));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kInternal, state.status().code());
-  EXPECT_THAT(state.status().message(),
-              HasSubstr("previously specified number of shards"));
+  EXPECT_THAT(state,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("previously specified number of shards")));
 }
 
 TEST_F(ParallelUploadTest, ResumeDifferentDest) {
@@ -1666,10 +1609,9 @@ TEST_F(ParallelUploadTest, ResumeDifferentDest) {
   auto state = PrepareParallelUpload(
       *client_, kBucketName, kDestObjectName, num_shards, kPrefix,
       UseResumableUploadSession(kParallelResumableId));
-  EXPECT_FALSE(state);
-  EXPECT_EQ(StatusCode::kInternal, state.status().code());
-  EXPECT_THAT(state.status().message(),
-              HasSubstr("resumable session ID is doesn't match"));
+  EXPECT_THAT(state,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("resumable session ID is doesn't match")));
 }
 
 TEST_F(ParallelUploadTest, ResumableUploadFileShards) {
@@ -1781,9 +1723,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileShards) {
   (*uploaders)[0].Upload();
   (*uploaders)[1].Upload();
   uploaders->clear();
-  auto res = res_future.get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kCancelled, res.status().code());
+  EXPECT_THAT(res_future.get(), StatusIs(StatusCode::kCancelled));
 }
 
 TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
@@ -1900,10 +1840,8 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
   (*uploaders)[0].Upload();
   uploaders->clear();
 
-  auto res = res_future.get();
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInternal, res.status().code());
-  EXPECT_THAT(res.status().message(), HasSubstr("Corrupted upload state"));
+  EXPECT_THAT(res_future.get(), StatusIs(StatusCode::kInternal,
+                                         HasSubstr("Corrupted upload state")));
 }
 
 }  // namespace
