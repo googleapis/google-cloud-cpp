@@ -107,7 +107,7 @@ class SubscriptionOptions {
    *
    * The Cloud Pub/Sub C++ client library uses streaming pull requests to
    * receive messages from the service. The service will stop delivering
-   * messages if more than @p message_count messages have not been acked nor
+   * messages if @p message_count or more messages have not been acked nor
    * nacked.
    *
    * @par Example
@@ -126,8 +126,8 @@ class SubscriptionOptions {
    *
    * The Cloud Pub/Sub C++ client library uses streaming pull requests to
    * receive messages from the service. The service will stop delivering
-   * messages if more than @p bytes or more worth of messages messages have
-   * not been acked nor nacked.
+   * messages if @p bytes or more worth of messages have not been acked nor
+   * nacked.
    *
    * @par Example
    * @snippet samples.cc subscriber-flow-control

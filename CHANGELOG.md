@@ -8,13 +8,13 @@
 
 **BREAKING CHANGES**:
 
-* Simplify the message flow control configuration, now that the library uses
+* Simplify the message flow control configuration. Now that the library uses
   streaming pulls, the low water marks are not used. The application developer
-  simply sets limits for the number of messages (and/or bytes) outstanding,
-  this limits are propagated to the service, and the service will stop streaming
-  if too many messages (or bytes) are outstanding. While the Pub/Sub library is
-  not GA, and this type of change is to be expected, we are close enough to a GA
-  release that we think highlight them is important.
+  simply sets limits for the number of messages (and/or bytes) outstanding.
+  These limits are propagated to the service, and the service will stop
+  streaming if too many messages (or bytes) are outstanding. While the Pub/Sub
+  library is not GA, and this type of change is to be expected, we are close
+  enough to a GA release that we think highlighting them is important.
 
 ## v1.19.0 - 2020-10
 
