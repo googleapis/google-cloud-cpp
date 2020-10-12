@@ -160,13 +160,24 @@ void StreamingSubscriptionBatchSource::OnStreamStart(
     }
     return;
   }
-  ChangeState(lk, StreamState::kActive, __func__, "status");
+  ChangeState(lk, StreamState::kActive, __func__, "success");
   stream_ = *std::move(stream);
   auto weak = WeakFromThis();
-  cq_.RunAsync([weak] {
-    if (auto self = weak.lock()) self->ReadLoop();
-  });
-  DrainQueues(std::move(lk));
+  auto sm = shutdown_manager_;
+  // The stream might be created after a shutdown, in which case we need to
+  // avoid starting work, and cancel the outstanding stream.
+  auto const already_shutdown = !shutdown_manager_->StartAsyncOperation(
+      __func__, "StartupStream", cq_, [weak, sm] {
+        sm->FinishedOperation("StartupStream");
+        auto self = weak.lock();
+        if (!self) return;
+        self->ReadLoop();
+        self->DrainQueues(std::unique_lock<std::mutex>(self->mu_));
+      });
+  if (already_shutdown) {
+    stream_->Cancel();
+    ShutdownStream(std::move(lk), "readloop-failure");
+  }
 }
 
 void StreamingSubscriptionBatchSource::ReadLoop() {

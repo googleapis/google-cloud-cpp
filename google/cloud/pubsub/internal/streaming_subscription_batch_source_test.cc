@@ -42,6 +42,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Property;
+using ::testing::Unused;
 
 class FakeStream {
  public:
@@ -316,6 +317,55 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsWithNull) {
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kUnknown));
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  promise<bool> start;
+  promise<bool> initial_write;
+  promise<Status> finish;
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&start] {
+          return start.get_future();
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&initial_write](::testing::Unused, ::testing::Unused) {
+              return initial_write.get_future();
+            });
+
+        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+        EXPECT_CALL(*stream, Finish).WillOnce([&finish] {
+          return finish.get_future();
+        });
+
+        return stream;
+      });
+
+  using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
+  ::testing::MockFunction<void(CallbackArg const&)> callback;
+  EXPECT_CALL(callback, Call).Times(0);
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
+
+  auto done = shutdown->Start({});
+  uut->Start(callback.AsStdFunction());
+  start.set_value(true);
+  shutdown->MarkAsShutdown("test", {});
+  initial_write.set_value(true);
+  finish.set_value(Status{StatusCode::kCancelled, "cancelled"});
+
+  EXPECT_EQ(Status{}, done.get());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
