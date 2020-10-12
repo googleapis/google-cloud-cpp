@@ -189,8 +189,8 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
   nlohmann::json assertion_header = {{"alg", "RS256"}, {"typ", "JWT"}};
-  if (info.private_key_id) {
-    assertion_header["kid"] = *(info.private_key_id);
+  if (!info.private_key_id.empty()) {
+    assertion_header["kid"] = info.private_key_id;
   }
 
   // Scopes must be specified in a comma-delimited string.

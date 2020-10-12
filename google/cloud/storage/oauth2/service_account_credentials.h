@@ -38,7 +38,7 @@ namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
 struct ServiceAccountCredentialsInfo {
   std::string client_email;
-  absl::optional<std::string> private_key_id;
+  std::string private_key_id;
   std::string private_key;
   std::string token_uri;
   // If no set is supplied, a default set of scopes will be used.
@@ -184,9 +184,7 @@ class ServiceAccountCredentials : public Credentials {
   }
 
   std::string AccountEmail() const override { return info_.client_email; }
-  std::string KeyId() const override {
-    return info_.private_key_id.value_or("");
-  }
+  std::string KeyId() const override { return info_.private_key_id; }
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
