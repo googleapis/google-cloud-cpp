@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['etag',['etag',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#a42dba773688281abf5c330fcf9d591a8',1,'google::cloud::v1::IamPolicy']]],
-  ['expected',['expected',['../namespacegoogle.html#aafe475310132afc6c560ab4c941b9467',1,'google::expected()'],['../subscription__mutation__builder__test_8cc.html#acee972ca680b0b6dd502ff16559fcb32',1,'expected():&#160;subscription_mutation_builder_test.cc']]]
+  ['filename',['filename',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#aee5b1ca24ae4fe215e88b75f0b3b5b52',1,'google::cloud::v1::LogRecord']]],
+  ['full_5fsubscription_5fname',['full_subscription_name',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#a7dee9da9918743c1c775095fe1657475',1,'google::cloud::pubsub::v1::SubscriberConnection::SubscribeParams']]],
+  ['function',['function',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a34c5e20d22e94c4fb643abf5cc6d4f29',1,'google::cloud::v1::LogRecord']]]
 ];
