@@ -42,8 +42,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   std::string const private_key_key = "private_key";
   std::string const token_uri_key = "token_uri";
   std::string const client_email_key = "client_email";
-  for (auto const& key :
-       {private_key_id_key, private_key_key, client_email_key}) {
+  for (auto const& key : {private_key_key, client_email_key}) {
     if (credentials.count(key) == 0) {
       return Status(StatusCode::kInvalidArgument,
                     "Invalid ServiceAccountCredentials, the " +
@@ -189,8 +188,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
-  nlohmann::json assertion_header = {
-      {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
+  nlohmann::json assertion_header = {{"alg", "RS256"}, {"typ", "JWT"}};
+  if (info.private_key_id) {
+    assertion_header["kid"] = *(info.private_key_id);
+  }
 
   // Scopes must be specified in a comma-delimited string.
   std::string scope_str;

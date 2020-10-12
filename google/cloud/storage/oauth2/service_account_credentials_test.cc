@@ -301,14 +301,12 @@ TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
 TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
   std::string contents = R"""({
       "type": "service_account",
-      "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "client_email": "test-only@test-group.example.com",
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field :
-       {"private_key_id", "private_key", "client_email", "token_uri"}) {
+  for (auto const& field : {"private_key", "client_email", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
@@ -323,13 +321,12 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
 TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
   std::string contents = R"""({
       "type": "service_account",
-      "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "client_email": "test-only@test-group.example.com",
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field : {"private_key_id", "private_key", "client_email"}) {
+  for (auto const& field : {"private_key", "client_email"}) {
     auto json = nlohmann::json::parse(contents);
     json.erase(field);
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
@@ -338,6 +335,21 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
     EXPECT_THAT(actual.status().message(), HasSubstr(" field is missing"));
     EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
   }
+}
+
+/// @test Parsing a service account JSON string allows an optional field.
+TEST_F(ServiceAccountCredentialsTest, ParseOptionalField) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  auto json = nlohmann::json::parse(contents);
+  auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
+  ASSERT_STATUS_OK(actual.status());
 }
 
 /// @test Verify that refreshing a credential updates the timestamps.
