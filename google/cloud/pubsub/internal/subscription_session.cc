@@ -14,6 +14,8 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/subscription_lease_management.h"
+#include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 
@@ -31,12 +33,10 @@ class SubscriptionSessionImpl
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::SubscriberConnection::SubscribeParams p) {
-    auto flow_control = SubscriptionFlowControl::Create(
-        executor, shutdown_manager, std::move(source),
-        p.options.message_count_lwm(), p.options.message_count_hwm(),
-        p.options.message_size_lwm(), p.options.message_size_hwm());
+    auto queue =
+        SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
-        executor, shutdown_manager, std::move(flow_control),
+        executor, shutdown_manager, std::move(queue),
         p.options.concurrency_lwm(), p.options.concurrency_hwm());
 
     auto self = std::make_shared<SubscriptionSessionImpl>(

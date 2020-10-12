@@ -22,29 +22,19 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 void SubscriptionMessageQueue::Start(MessageCallback cb) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
   callback_ = std::move(cb);
+  lk.unlock();
+  auto weak = std::weak_ptr<SubscriptionMessageQueue>(shared_from_this());
+  source_->Start([weak](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
+    if (auto self = weak.lock()) self->OnRead(std::move(r));
+  });
 }
 
 void SubscriptionMessageQueue::Shutdown() {
-  auto messages = [&] {
-    std::unique_lock<std::mutex> lk(mu_);
-    shutdown_ = true;
-    auto messages = std::move(messages_);
-    messages_.clear();
-    return messages;
-  }();
-
-  if (messages.empty()) return;
-  std::vector<std::string> ack_ids(messages.size());
-  std::size_t total_size = 0;
-  std::transform(messages.begin(), messages.end(), ack_ids.begin(),
-                 [&](google::pubsub::v1::ReceivedMessage& m) {
-                   total_size += MessageProtoSize(m.message());
-                   return std::move(*m.mutable_ack_id());
-                 });
-  source_->BulkNack(std::move(ack_ids), total_size);
+  Shutdown(std::unique_lock<std::mutex>(mu_));
+  source_->Shutdown();
 }
 
 void SubscriptionMessageQueue::Read(std::size_t max_callbacks) {
@@ -65,13 +55,61 @@ future<Status> SubscriptionMessageQueue::NackMessage(std::string const& ack_id,
 }
 
 void SubscriptionMessageQueue::OnRead(
-    google::pubsub::v1::StreamingPullResponse r) {
+    StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
   std::unique_lock<std::mutex> lk(mu_);
-  if (shutdown_) return;
-  std::move(r.mutable_received_messages()->begin(),
-            r.mutable_received_messages()->end(),
-            std::back_inserter(messages_));
-  DrainQueue(std::move(lk));
+  if (!r) {
+    shutdown_manager_->MarkAsShutdown(__func__, std::move(r).status());
+    Shutdown(std::move(lk));
+    return;
+  }
+  OnRead(std::move(lk), *std::move(r));
+}
+
+void SubscriptionMessageQueue::OnRead(
+    std::unique_lock<std::mutex> lk,
+    google::pubsub::v1::StreamingPullResponse r) {
+  auto handle_response = [&] {
+    shutdown_manager_->FinishedOperation("OnRead");
+    std::move(r.mutable_received_messages()->begin(),
+              r.mutable_received_messages()->end(),
+              std::back_inserter(messages_));
+    DrainQueue(std::move(lk));
+  };
+  auto bulk_nack = [&] {
+    lk.unlock();
+    std::vector<std::string> ack_ids(r.mutable_received_messages()->size());
+    std::size_t total_size = 0;
+    std::transform(r.mutable_received_messages()->begin(),
+                   r.mutable_received_messages()->end(), ack_ids.begin(),
+                   [&](google::pubsub::v1::ReceivedMessage& m) {
+                     total_size += MessageProtoSize(m.message());
+                     return std::move(*m.mutable_ack_id());
+                   });
+    (void)source_->BulkNack(std::move(ack_ids), total_size);
+  };
+  if (!shutdown_manager_->StartOperation(__func__, "OnRead", handle_response)) {
+    bulk_nack();
+  }
+}
+
+void SubscriptionMessageQueue::Shutdown(std::unique_lock<std::mutex> lk) {
+  auto messages = [&] {
+    shutdown_ = true;
+    auto messages = std::move(messages_);
+    messages_.clear();
+    lk.unlock();
+    return messages;
+  }();
+
+  if (messages.empty()) return;
+  std::vector<std::string> ack_ids(messages.size());
+  std::size_t total_size = 0;
+  std::transform(messages.begin(), messages.end(), ack_ids.begin(),
+                 [&](google::pubsub::v1::ReceivedMessage& m) {
+                   total_size += MessageProtoSize(m.message());
+                   return std::move(*m.mutable_ack_id());
+                 });
+  source_->BulkNack(std::move(ack_ids), total_size);
 }
 
 void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {

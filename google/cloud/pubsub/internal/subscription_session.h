@@ -19,8 +19,6 @@
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
-#include "google/cloud/pubsub/internal/subscription_flow_control.h"
-#include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/version.h"

@@ -29,11 +29,17 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-class SubscriptionMessageQueue : public SubscriptionMessageSource {
+class SubscriptionMessageQueue
+    : public SubscriptionMessageSource,
+      public std::enable_shared_from_this<SubscriptionMessageQueue> {
  public:
-  explicit SubscriptionMessageQueue(
-      std::shared_ptr<SubscriptionBatchSource> source)
-      : source_(std::move(source)) {}
+  static std::shared_ptr<SubscriptionMessageQueue> Create(
+      std::shared_ptr<SessionShutdownManager> shutdown_manager,
+      std::shared_ptr<SubscriptionBatchSource> source) {
+    return std::shared_ptr<SubscriptionMessageQueue>(
+        new SubscriptionMessageQueue(std::move(shutdown_manager),
+                                     std::move(source)));
+  }
 
   void Start(MessageCallback cb) override;
   void Shutdown() override;
@@ -43,11 +49,20 @@ class SubscriptionMessageQueue : public SubscriptionMessageSource {
   future<Status> NackMessage(std::string const& ack_id,
                              std::size_t size) override;
 
-  void OnRead(google::pubsub::v1::StreamingPullResponse r);
-
  private:
+  explicit SubscriptionMessageQueue(
+      std::shared_ptr<SessionShutdownManager> shutdown_manager,
+      std::shared_ptr<SubscriptionBatchSource> source)
+      : shutdown_manager_(std::move(shutdown_manager)),
+        source_(std::move(source)) {}
+
+  void OnRead(StatusOr<google::pubsub::v1::StreamingPullResponse> r);
+  void OnRead(std::unique_lock<std::mutex> lk,
+              google::pubsub::v1::StreamingPullResponse r);
+  void Shutdown(std::unique_lock<std::mutex> lk);
   void DrainQueue(std::unique_lock<std::mutex> lk);
 
+  std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionBatchSource> const source_;
 
   std::mutex mu_;
