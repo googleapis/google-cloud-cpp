@@ -48,6 +48,9 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Filter {
  public:
+  explicit Filter(::google::bigtable::v2::RowFilter rhs)
+      : filter_(std::move(rhs)) {}
+
   Filter(Filter&&) noexcept = default;
   Filter& operator=(Filter&&) noexcept = default;
   Filter(Filter const&) = default;
