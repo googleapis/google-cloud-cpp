@@ -65,12 +65,9 @@ class StreamingSubscriptionBatchSource
 
   void Shutdown() override;
   // TODO(#5191) - cleanup return types
-  future<Status> AckMessage(std::string const& ack_id,
-                            std::size_t size) override;
-  future<Status> NackMessage(std::string const& ack_id,
-                             std::size_t size) override;
-  future<Status> BulkNack(std::vector<std::string> ack_ids,
-                          std::size_t total_size) override;
+  future<Status> AckMessage(std::string const& ack_id) override;
+  future<Status> NackMessage(std::string const& ack_id) override;
+  future<Status> BulkNack(std::vector<std::string> ack_ids) override;
   future<Status> ExtendLeases(std::vector<std::string> ack_ids,
                               std::chrono::seconds extension) override;
 

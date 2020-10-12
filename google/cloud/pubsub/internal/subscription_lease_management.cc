@@ -42,27 +42,27 @@ void SubscriptionLeaseManagement::Shutdown() {
 }
 
 future<Status> SubscriptionLeaseManagement::AckMessage(
-    std::string const& ack_id, std::size_t size) {
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  return child_->AckMessage(ack_id, size);
+  return child_->AckMessage(ack_id);
 }
 
 future<Status> SubscriptionLeaseManagement::NackMessage(
-    std::string const& ack_id, std::size_t size) {
+    std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  return child_->NackMessage(ack_id, size);
+  return child_->NackMessage(ack_id);
 }
 
 future<Status> SubscriptionLeaseManagement::BulkNack(
-    std::vector<std::string> ack_ids, std::size_t total_size) {
+    std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto const& id : ack_ids) leases_.erase(id);
   lk.unlock();
-  return child_->BulkNack(std::move(ack_ids), total_size);
+  return child_->BulkNack(std::move(ack_ids));
 }
 
 // Users of this class should have no need to call ExtendLeases(); they create
@@ -178,7 +178,7 @@ void SubscriptionLeaseManagement::NackAll(std::unique_lock<std::mutex> lk) {
     ack_ids.push_back(kv.first);
   }
   lk.unlock();
-  BulkNack(std::move(ack_ids), 0);
+  BulkNack(std::move(ack_ids));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
