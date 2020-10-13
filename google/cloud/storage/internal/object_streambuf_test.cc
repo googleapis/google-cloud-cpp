@@ -17,6 +17,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::InSequence;
@@ -354,7 +356,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
   std::ostream output(&streambuf);
   output << payload;
   EXPECT_FALSE(output.good());
-  EXPECT_EQ(streambuf.last_status().code(), StatusCode::kAborted);
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
 }
 
 /// @test verify that the upload steam transitions to a bad state if the next
@@ -383,7 +385,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
   std::ostream output(&streambuf);
   output << payload;
   EXPECT_FALSE(output.good());
-  EXPECT_EQ(streambuf.last_status().code(), StatusCode::kAborted);
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
 }
 
 /// @test Verify that a stream flushes when mixing operations that add one
@@ -481,11 +483,8 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
 
   streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
-
-  EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code())
-      << ", status=" << response.status();
-  EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
-      << ", status=" << streambuf.last_status();
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 /// @test Verify that last error status is accessible for large payloads.
@@ -510,17 +509,14 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
                                  absl::make_unique<NullHashValidator>());
 
   streambuf.sputn(payload_1.data(), payload_1.size());
-  EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
-      << ", status=" << streambuf.last_status();
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kInvalidArgument));
   EXPECT_EQ(streambuf.resumable_session_id(), session_id);
 
   streambuf.sputn(payload_2.data(), payload_2.size());
-  EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
-      << ", status=" << streambuf.last_status();
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kInvalidArgument));
 
   auto response = streambuf.Close();
-  EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code())
-      << ", status=" << response.status();
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
 
 /// @test Verify that uploads of known size work.

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -22,6 +23,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
 
 ObjectReadStream CreateReader() {
   std::shared_ptr<internal::RawClient> client;
@@ -55,7 +58,7 @@ TEST(ObjectStream, ReadMoveConstructor) {
   ObjectReadStream copy(std::move(reader));
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_EQ(StatusCode::kNotFound, copy.status().code());
+  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kNotFound));
 
   EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
@@ -71,7 +74,7 @@ TEST(ObjectStream, ReadMoveAssignment) {
   copy = std::move(reader);
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_EQ(StatusCode::kNotFound, copy.status().code());
+  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kNotFound));
 
   EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
@@ -79,13 +82,13 @@ TEST(ObjectStream, ReadMoveAssignment) {
 
 TEST(ObjectStream, WriteMoveConstructor) {
   ObjectWriteStream writer = CreateWriter();
-  EXPECT_EQ(StatusCode::kNotFound, writer.metadata().status().code());
+  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kNotFound));
   EXPECT_NE(nullptr, writer.rdbuf());
 
   ObjectWriteStream copy(std::move(writer));
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_EQ(StatusCode::kNotFound, copy.metadata().status().code());
+  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kNotFound));
 
   EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());
@@ -93,7 +96,7 @@ TEST(ObjectStream, WriteMoveConstructor) {
 
 TEST(ObjectStream, WriteMoveAssignment) {
   ObjectWriteStream writer = CreateWriter();
-  EXPECT_EQ(StatusCode::kNotFound, writer.metadata().status().code());
+  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kNotFound));
   EXPECT_NE(nullptr, writer.rdbuf());
 
   ObjectWriteStream copy;
@@ -101,7 +104,7 @@ TEST(ObjectStream, WriteMoveAssignment) {
   copy = std::move(writer);
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_EQ(StatusCode::kNotFound, copy.metadata().status().code());
+  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kNotFound));
 
   EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
   EXPECT_NE(nullptr, copy.rdbuf());

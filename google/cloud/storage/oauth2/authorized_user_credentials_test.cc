@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <cstring>
@@ -33,9 +34,12 @@ using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::An;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::StrEq;
 
@@ -188,11 +192,10 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
   AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
   // Response 1
   auto status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
-  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
   // Response 2
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
@@ -257,10 +260,10 @@ TEST_F(AuthorizedUserCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string })""";
 
   auto info = ParseAuthorizedUserCredentials(config, "test-as-a-source");
-  ASSERT_FALSE(info.ok());
-  EXPECT_THAT(info.status().message(),
-              HasSubstr("Invalid AuthorizedUserCredentials"));
-  EXPECT_THAT(info.status().message(), HasSubstr("test-as-a-source"));
+  EXPECT_THAT(info,
+              StatusIs(Not(StatusCode::kOk),
+                       AllOf(HasSubstr("Invalid AuthorizedUserCredentials"),
+                             HasSubstr("test-as-a-source"))));
 }
 
 /// @test Parsing a service account JSON string should detect empty fields.
@@ -276,10 +279,10 @@ TEST_F(AuthorizedUserCredentialsTest, ParseEmptyFieldFails) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto info = ParseAuthorizedUserCredentials(json.dump(), "test-data");
-    ASSERT_FALSE(info.ok());
-    EXPECT_THAT(info.status().message(), HasSubstr(field));
-    EXPECT_THAT(info.status().message(), HasSubstr(" field is empty"));
-    EXPECT_THAT(info.status().message(), HasSubstr("test-data"));
+    EXPECT_THAT(info,
+                StatusIs(Not(StatusCode::kOk),
+                         AllOf(HasSubstr(field), HasSubstr(" field is empty"),
+                               HasSubstr("test-data"))));
   }
 }
 
@@ -296,10 +299,10 @@ TEST_F(AuthorizedUserCredentialsTest, ParseMissingFieldFails) {
     auto json = nlohmann::json::parse(contents);
     json.erase(field);
     auto info = ParseAuthorizedUserCredentials(json.dump(), "test-data");
-    ASSERT_FALSE(info.ok());
-    EXPECT_THAT(info.status().message(), HasSubstr(field));
-    EXPECT_THAT(info.status().message(), HasSubstr(" field is missing"));
-    EXPECT_THAT(info.status().message(), HasSubstr("test-data"));
+    EXPECT_THAT(info,
+                StatusIs(Not(StatusCode::kOk),
+                         AllOf(HasSubstr(field), HasSubstr(" field is missing"),
+                               HasSubstr("test-data"))));
   }
 }
 
@@ -317,17 +320,15 @@ TEST_F(AuthorizedUserCredentialsTest,
   FakeClock::reset_clock(1000);
   auto status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r1, {}},
                                                    FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 
   status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r2, {}},
                                               FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Parsing a refresh response yields a TemporaryToken.

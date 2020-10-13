@@ -16,6 +16,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,6 +29,7 @@ namespace {
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -54,7 +56,7 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
   // the IfGenerationMatch() and/or Generation() option set.
   StatusOr<EmptyResponse> result =
       client.DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().code(), result.status().code());
+  EXPECT_THAT(result, StatusIs(TransientError().code()));
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -71,7 +73,7 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(PermanentError().code(), result.status().code());
+  EXPECT_THAT(result, StatusIs(PermanentError().code()));
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -87,7 +89,7 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().code(), result.status().code());
+  EXPECT_THAT(result, StatusIs(TransientError().code()));
 }
 
 /// @test Verify that the retry loop works with exhausted retry policy.
@@ -99,9 +101,10 @@ TEST_F(RetryClientTest, ExpiredRetryPolicy) {
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
   ASSERT_FALSE(result);
-  EXPECT_EQ(StatusCode::kDeadlineExceeded, result.status().code());
-  EXPECT_THAT(result.status().message(),
-              HasSubstr("Retry policy exhausted before first attempt"));
+  EXPECT_THAT(
+      result,
+      StatusIs(StatusCode::kDeadlineExceeded,
+               HasSubstr("Retry policy exhausted before first attempt")));
 }
 
 }  // namespace

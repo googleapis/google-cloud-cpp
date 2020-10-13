@@ -16,6 +16,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,6 +26,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
 TEST(V2SignedUrlRequests, Sign) {
@@ -525,9 +527,8 @@ TEST(V4SignedUrlRequests, VirtualHostnameWithBadHostname) {
       SignedUrlDuration(valid_for), VirtualHostname(true),
       AddExtensionHeader("host", "some-other-hostname"));
   auto status = request.Validate();
-  ASSERT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kInvalidArgument, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("some-other-hostname"));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("some-other-hostname")));
 }
 
 TEST(V4SignedUrlRequests, BucketBoundHostname) {
@@ -590,9 +591,8 @@ TEST(V4SignedUrlRequests, BucketBoundHostnameWithBadHostname) {
       SignedUrlDuration(valid_for), BucketBoundHostname("mydomain.tld"),
       AddExtensionHeader("host", "some-other-hostname"));
   auto status = request.Validate();
-  ASSERT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kInvalidArgument, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("some-other-hostname"));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("some-other-hostname")));
 }
 
 TEST(V4SignedUrlRequests, BucketBoundHostnameXORVirtualHostname) {
@@ -604,9 +604,8 @@ TEST(V4SignedUrlRequests, BucketBoundHostnameXORVirtualHostname) {
       SignedUrlDuration(valid_for), BucketBoundHostname("mydomain.tld"),
       VirtualHostname(true));
   auto status = request.Validate();
-  ASSERT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kInvalidArgument, status.code());
-  EXPECT_THAT(status.message(), HasSubstr("simultaneously"));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("simultaneously")));
 }
 
 TEST(V4SignedUrlRequests, BucketBoundHostnameReset) {
