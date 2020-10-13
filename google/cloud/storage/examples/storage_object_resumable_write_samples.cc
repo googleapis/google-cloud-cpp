@@ -93,7 +93,6 @@ void DeleteResumableUpload(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [delete resumable upload]
   namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
