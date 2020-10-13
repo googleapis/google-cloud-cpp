@@ -170,7 +170,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
-          .set_maximum_batch_message_count(kMaxMessageBytes),
+          .set_maximum_batch_bytes(kMaxMessageBytes),
       mock, cq, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto r0 =
