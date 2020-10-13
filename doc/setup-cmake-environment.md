@@ -2,7 +2,7 @@
 
 This document describes how to setup your workstation to build the Google Cloud
 C++ client libraries using CMake. The intended audience is developers of the
-client librariues that want to verify their changes will work with CMake and/or
+client libraries that want to verify their changes will work with CMake and/or
 prefer to use CMake for whatever reason. The document assumes you are using a
 Linux workstation running Ubuntu, changing the instructions for other
 distributions or operating systems is left as an exercise to the reader, and
@@ -70,14 +70,16 @@ project:
 
 ```console
 cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
-```
-
-```console
-cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build cmake-out/home -- -j 4
 
 # Verify build by running tests
 (cd cmake-out/home && ctest --output-on-failure)
+```
+
+If you wish to skip the integration tests, you can instead use:
+
+```console
+(cd cmake-out/home && ctest --output-on-failure -LE integration-test)
 ```

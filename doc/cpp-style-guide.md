@@ -67,7 +67,7 @@ Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAM
 
 Order includes from local to global to minimize implicit dependencies between
 headers. That is, start with the `.h` file that corresponds to the current
-`.cc` file (also do this for the corresonding unit test file), followed by
+`.cc` file (also do this for the corresponding unit test file), followed by
 other `.h` files from the same project, followed by includes from external
 projects, followed by C++ standard library headers, followed by C system
 headers. For example:
