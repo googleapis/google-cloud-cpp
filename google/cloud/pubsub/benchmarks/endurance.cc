@@ -177,6 +177,7 @@ int main(int argc, char* argv[]) {
 
   // If there is no pre-defined topic for this test, create one and
   // automatically remove it at the end of the test.
+  std::function<void()> delete_topic = [] {};
   if (config->topic_id.empty()) {
     config->topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
     auto topic = pubsub::Topic(config->project_id, config->topic_id);
@@ -185,6 +186,9 @@ int main(int argc, char* argv[]) {
       std::cout << "CreateTopic() failed: " << create.status() << "\n";
       return 1;
     }
+    delete_topic = [topic_admin, topic]() mutable {
+      (void)topic_admin.DeleteTopic(topic);
+    };
   }
 
   std::cout << "# Running Cloud Pub/Sub experiment"
@@ -282,8 +286,7 @@ int main(int argc, char* argv[]) {
   std::cout << "Timestamp,RunningCount,Count,Min,Max,Average(us)\n";
 
   Cleanup cleanup;
-  cleanup.Defer(
-      [topic_admin, topic]() mutable { (void)topic_admin.DeleteTopic(topic); });
+  cleanup.Defer(delete_topic);
   for (auto const& sub : subscriptions) {
     cleanup.Defer([subscription_admin, sub]() mutable {
       (void)subscription_admin.DeleteSubscription(sub);
@@ -309,10 +312,7 @@ int main(int argc, char* argv[]) {
         auto const p = std::minmax_element(samples.begin(), samples.end());
         auto const sum = std::accumulate(samples.begin(), samples.end(),
                                          std::chrono::microseconds{0});
-        auto const mean = [](std::chrono::microseconds sum, std::size_t n) {
-          sum /= n;
-          return sum;
-        }(sum, samples.size());
+        auto const mean = sum / samples.size();
         auto const received_count = flow_control.ReceivedCount();
         std::cout << ts() << ',' << received_count << ',' << samples.size()
                   << ',' << p.first->count() << ',' << p.second->count() << ','
