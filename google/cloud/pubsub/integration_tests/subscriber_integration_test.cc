@@ -51,13 +51,12 @@ class SubscriberIntegrationTest : public ::testing::Test {
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-    auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic_));
+    auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
     ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                       StatusIs(StatusCode::kAlreadyExists)));
     auto subscription_metadata = subscription_admin.CreateSubscription(
         topic_, subscription_,
-        SubscriptionMutationBuilder{}.set_ack_deadline(
-            std::chrono::seconds(10)));
+        SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
     ASSERT_THAT(
         subscription_metadata,
         AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));

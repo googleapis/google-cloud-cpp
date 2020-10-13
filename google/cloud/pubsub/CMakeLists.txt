@@ -94,8 +94,8 @@ add_library(
     subscription_admin_client.h
     subscription_admin_connection.cc
     subscription_admin_connection.h
-    subscription_mutation_builder.cc
-    subscription_mutation_builder.h
+    subscription_builder.cc
+    subscription_builder.h
     subscription_options.cc
     subscription_options.h
     topic.cc
@@ -104,8 +104,8 @@ add_library(
     topic_admin_client.h
     topic_admin_connection.cc
     topic_admin_connection.h
-    topic_mutation_builder.cc
-    topic_mutation_builder.h
+    topic_builder.cc
+    topic_builder.h
     version.h
     version_info.h)
 target_include_directories(
@@ -213,12 +213,12 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         subscriber_test.cc
         subscription_admin_client_test.cc
         subscription_admin_connection_test.cc
-        subscription_mutation_builder_test.cc
+        subscription_builder_test.cc
         subscription_options_test.cc
         subscription_test.cc
         topic_admin_client_test.cc
         topic_admin_connection_test.cc
-        topic_mutation_builder_test.cc
+        topic_builder_test.cc
         topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

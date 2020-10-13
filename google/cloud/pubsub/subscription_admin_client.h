@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/snapshot_mutation_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/subscription_mutation_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -89,9 +89,9 @@ class SubscriptionAdminClient {
    */
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       Topic const& topic, Subscription const& subscription,
-      SubscriptionMutationBuilder builder = {}) {
+      SubscriptionBuilder builder = {}) {
     return connection_->CreateSubscription(
-        {std::move(builder).BuildCreateSubscription(topic, subscription)});
+        {std::move(builder).BuildCreateRequest(topic, subscription)});
   }
 
   /**
@@ -122,9 +122,9 @@ class SubscriptionAdminClient {
    * @param builder any additional configuration for the subscription
    */
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      Subscription const& subscription, SubscriptionMutationBuilder builder) {
+      Subscription const& subscription, SubscriptionBuilder builder) {
     return connection_->UpdateSubscription(
-        {std::move(builder).BuildUpdateSubscription(subscription)});
+        {std::move(builder).BuildUpdateRequest(subscription)});
   }
 
   /**
