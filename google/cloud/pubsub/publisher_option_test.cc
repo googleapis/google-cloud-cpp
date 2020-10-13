@@ -29,9 +29,9 @@ TEST(PublisherOptions, Setters) {
   auto const b = PublisherOptions{}
                      .set_maximum_hold_time(std::chrono::seconds(12))
                      .set_maximum_batch_bytes(123)
-                     .set_maximum_message_count(10)
+                     .set_maximum_batch_message_count(10)
                      .enable_message_ordering();
-  EXPECT_EQ(10, b.maximum_message_count());
+  EXPECT_EQ(10, b.maximum_batch_message_count());
   EXPECT_EQ(123, b.maximum_batch_bytes());
   auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::seconds(12));

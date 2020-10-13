@@ -58,7 +58,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
-          .set_maximum_message_count(4)
+          .set_maximum_batch_message_count(4)
           .set_maximum_hold_time(std::chrono::milliseconds(50)),
       mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
@@ -112,8 +112,9 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   // due to the zero-maximum-hold-time timer expiring.
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock, cq,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -168,8 +169,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
-          .set_maximum_message_count(4)
-          .set_maximum_batch_bytes(kMaxMessageBytes),
+          .set_maximum_batch_message_count(4)
+          .set_maximum_batch_message_count(kMaxMessageBytes),
       mock, cq, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto r0 =
@@ -223,7 +224,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
-          .set_maximum_message_count(4),
+          .set_maximum_batch_message_count(4),
       mock, cq, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto r0 =
@@ -287,7 +288,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
-          .set_maximum_message_count(4),
+          .set_maximum_batch_message_count(4),
       mock, cq, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
 
@@ -341,8 +342,8 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
-      bg.cq(), pubsub_testing::TestRetryPolicy(),
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
@@ -376,8 +377,8 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_message_count(2), mock,
-      bg.cq(), pubsub_testing::TestRetryPolicy(),
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
