@@ -166,9 +166,7 @@ TEST(SubscriptionLeaseManagementTest, DoesNotPropagateExtendLeases) {
   auto uut = SubscriptionLeaseManagement::Create(
       background.cq(), shutdown_manager, mock, std::chrono::seconds(30));
 
-  auto result =
-      uut->ExtendLeases({"a", "b", "c"}, std::chrono::seconds(10)).get();
-  ASSERT_THAT(result, StatusIs(StatusCode::kUnimplemented));
+  uut->ExtendLeases({"a", "b", "c"}, std::chrono::seconds(10));
 }
 
 }  // namespace

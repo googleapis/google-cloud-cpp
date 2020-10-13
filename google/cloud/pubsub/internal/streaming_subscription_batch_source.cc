@@ -42,40 +42,34 @@ void StreamingSubscriptionBatchSource::Shutdown() {
   stream_->Cancel();
 }
 
-future<Status> StreamingSubscriptionBatchSource::AckMessage(
-    std::string const& ack_id) {
+void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   ack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::NackMessage(
-    std::string const& ack_id) {
+void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   nack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::BulkNack(
+void StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     nack_queue_.push_back(std::move(a));
   }
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::ExtendLeases(
+void StreamingSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     deadlines_queue_.emplace_back(std::move(a), extension);
   }
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
 namespace {

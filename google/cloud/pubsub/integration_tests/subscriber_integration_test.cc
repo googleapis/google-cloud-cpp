@@ -175,13 +175,10 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
             received_ids.push_back(m.message().message_id());
           }
           ++callback_count;
-        }
-        for (auto const& m : response->received_messages()) {
-          source->AckMessage(m.ack_id()).then([&](future<Status>) {
-            std::lock_guard<std::mutex> lk(callback_mu);
-            ++ack_count;
-            callback_cv.notify_one();
-          });
+          for (auto const& m : response->received_messages()) {
+            source->AckMessage(m.ack_id());
+          }
+          ack_count += response->received_messages_size();
         }
         callback_cv.notify_one();
       };
