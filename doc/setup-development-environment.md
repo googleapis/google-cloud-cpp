@@ -28,7 +28,7 @@ code style rules:
 
 ```console
 sudo apt install -y clang-10 clang-tidy-10 clang-format-10 clang-tools-10
-sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10.0 100
+sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10 100
 sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
 ```
 
@@ -73,7 +73,7 @@ sudo npm install -g cspell
 Install the Python modules used in the integration tests:
 
 ```console
-pip3 install --user Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
+pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
     blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
     flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
     httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
