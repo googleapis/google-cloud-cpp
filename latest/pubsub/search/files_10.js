@@ -13,9 +13,9 @@ var searchData=
   ['topic_5fadmin_5fconnection_2eh',['topic_admin_connection.h',['../topic__admin__connection_8h.html',1,'']]],
   ['topic_5fadmin_5fconnection_5ftest_2ecc',['topic_admin_connection_test.cc',['../topic__admin__connection__test_8cc.html',1,'']]],
   ['topic_5fadmin_5fintegration_5ftest_2ecc',['topic_admin_integration_test.cc',['../topic__admin__integration__test_8cc.html',1,'']]],
-  ['topic_5fmutation_5fbuilder_2ecc',['topic_mutation_builder.cc',['../topic__mutation__builder_8cc.html',1,'']]],
-  ['topic_5fmutation_5fbuilder_2eh',['topic_mutation_builder.h',['../topic__mutation__builder_8h.html',1,'']]],
-  ['topic_5fmutation_5fbuilder_5ftest_2ecc',['topic_mutation_builder_test.cc',['../topic__mutation__builder__test_8cc.html',1,'']]],
+  ['topic_5fbuilder_2ecc',['topic_builder.cc',['../topic__builder_8cc.html',1,'']]],
+  ['topic_5fbuilder_2eh',['topic_builder.h',['../topic__builder_8h.html',1,'']]],
+  ['topic_5fbuilder_5ftest_2ecc',['topic_builder_test.cc',['../topic__builder__test_8cc.html',1,'']]],
   ['topic_5ftest_2ecc',['topic_test.cc',['../topic__test_8cc.html',1,'']]],
   ['tracing_5foptions_2ecc',['tracing_options.cc',['https://googleapis.dev/google-cloud-common/master/tracing__options_8cc.html',1,'']]],
   ['tracing_5foptions_2eh',['tracing_options.h',['https://googleapis.dev/google-cloud-common/master/tracing__options_8h.html',1,'']]]
