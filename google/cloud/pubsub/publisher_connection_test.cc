@@ -202,8 +202,8 @@ TEST(PublisherConnectionTest, HandleTooManyFailures) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}.enable_retry_publish_failures(), {}, mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
@@ -246,8 +246,9 @@ TEST(PublisherConnectionTest, HandleTransientDisabledRetry) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}.disable_retry_publish_failures(), {}, mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      topic, PublisherOptions{}, {}, mock,
+      pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
+      pubsub_testing::TestBackoffPolicy());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
@@ -278,8 +279,8 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}.enable_retry_publish_failures(), {}, mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();

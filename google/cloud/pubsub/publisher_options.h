@@ -120,16 +120,6 @@ class PublisherOptions {
     return *this;
   }
 
-  bool retry_publish_failures() const { return retry_publish_failures_; }
-  PublisherOptions& enable_retry_publish_failures() {
-    retry_publish_failures_ = true;
-    return *this;
-  }
-  PublisherOptions& disable_retry_publish_failures() {
-    retry_publish_failures_ = false;
-    return *this;
-  }
-
  private:
   static auto constexpr kDefaultMaximumHoldTime = std::chrono::milliseconds(10);
   static std::size_t constexpr kDefaultMaximumMessageCount = 100;
@@ -139,7 +129,6 @@ class PublisherOptions {
   std::size_t maximum_batch_message_count_ = kDefaultMaximumMessageCount;
   std::size_t maximum_batch_bytes_ = kDefaultMaximumMessageSize;
   bool message_ordering_ = false;
-  bool retry_publish_failures_ = false;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
