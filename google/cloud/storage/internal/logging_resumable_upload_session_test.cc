@@ -156,8 +156,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
 
   LoggingResumableUploadSession session(std::move(mock));
 
-  auto result = session.last_response();
-  EXPECT_THAT(result,
+  EXPECT_THAT(session.last_response(),
               StatusIs(StatusCode::kFailedPrecondition, "something bad"));
 
   EXPECT_THAT(log_backend_->ClearLogLines(),
