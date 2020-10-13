@@ -282,10 +282,9 @@ int main(int argc, char* argv[]) {
   std::cout << "Timestamp,RunningCount,Count,Min,Max,Average(us)\n";
 
   Cleanup cleanup;
-  cleanup.Defer([topic_admin, topic]() mutable {
-    (void)topic_admin.DeleteTopic(topic);
-  });
-  for (auto sub : subscriptions) {
+  cleanup.Defer(
+      [topic_admin, topic]() mutable { (void)topic_admin.DeleteTopic(topic); });
+  for (auto const& sub : subscriptions) {
     cleanup.Defer([subscription_admin, sub]() mutable {
       (void)subscription_admin.DeleteSubscription(sub);
     });
@@ -605,6 +604,8 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
   if (!config || !config->show_help) return error("--description parsing");
   config = ParseArgsImpl({cmd, "--project-id="}, kDescription);
   if (config) return error("--project-id validation");
+  config = ParseArgsImpl({cmd, "--topic-id=test-topic"}, kDescription);
+  if (!config) return error("--topic-id");
 
   return ParseArgsImpl(
       {
@@ -612,11 +613,13 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
           "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value_or(""),
           "--publisher-count=1",
           "--subscription-count=1",
+          "--pending-lwm=8000",
+          "--pending-hwm=10000",
           "--session-count=1",
           "--minimum-samples=1",
           "--maximum-samples=10",
           "--minimum-runtime=0",
-          "--maximum-runtime=1",
+          "--maximum-runtime=10",
       },
       kDescription);
 }
