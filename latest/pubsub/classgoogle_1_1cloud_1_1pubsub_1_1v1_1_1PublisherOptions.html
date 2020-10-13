@@ -91,11 +91,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4637a68ef22b47bd83936ceff5dc4199"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a4637a68ef22b47bd83936ceff5dc4199">set_maximum_hold_time</a> (std::chrono::duration&lt; Rep, Period &gt; v)</td></tr>
 <tr class="memdesc:a4637a68ef22b47bd83936ceff5dc4199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum hold time for the messages.  <a href="#a4637a68ef22b47bd83936ceff5dc4199">More...</a><br /></td></tr>
 <tr class="separator:a4637a68ef22b47bd83936ceff5dc4199"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea38f3d56cdb78538d46db4aee315c9d"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#aea38f3d56cdb78538d46db4aee315c9d">maximum_message_count</a> () const</td></tr>
-<tr class="separator:aea38f3d56cdb78538d46db4aee315c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89f5e860bd57c265a65dbc7088490af9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a89f5e860bd57c265a65dbc7088490af9">set_maximum_message_count</a> (std::size_t v)</td></tr>
-<tr class="memdesc:a89f5e860bd57c265a65dbc7088490af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of messages in a batch.  <a href="#a89f5e860bd57c265a65dbc7088490af9">More...</a><br /></td></tr>
-<tr class="separator:a89f5e860bd57c265a65dbc7088490af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f715974a2b4b40aaef801a45a9aaac"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#a72f715974a2b4b40aaef801a45a9aaac">maximum_batch_message_count</a> () const</td></tr>
+<tr class="separator:a72f715974a2b4b40aaef801a45a9aaac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae94e00760d0500baaf1103560f09ca99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#ae94e00760d0500baaf1103560f09ca99">set_maximum_batch_message_count</a> (std::size_t v)</td></tr>
+<tr class="memdesc:ae94e00760d0500baaf1103560f09ca99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of messages in a batch.  <a href="#ae94e00760d0500baaf1103560f09ca99">More...</a><br /></td></tr>
+<tr class="separator:ae94e00760d0500baaf1103560f09ca99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5eb42efe6153ef8bb79c87efa979951"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#aa5eb42efe6153ef8bb79c87efa979951">maximum_batch_bytes</a> () const</td></tr>
 <tr class="separator:aa5eb42efe6153ef8bb79c87efa979951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada99b193841f85a121251d070e8a2520"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#ada99b193841f85a121251d070e8a2520">set_maximum_batch_bytes</a> (std::size_t v)</td></tr>
@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <li>when the batch contains 1MiB of data or more.</li>
 </ul>
 <p>Applications developers should consult the Cloud Pub/Sub <a href="https://cloud.google.com/pubsub/pricing">pricing page</a> when selecting a batching configuration.</p>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::future;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](std::string project_id, std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    <span class="comment">// By default the publisher will flush a batch after 10ms, after it contains</span></div><div class="line">    <span class="comment">// more than 100 message, or after it contains more than 1MiB of data,</span></div><div class="line">    <span class="comment">// whichever comes first. This changes those defaults.</span></div><div class="line">    <span class="keyword">auto</span> publisher = pubsub::Publisher(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a52843c207d3a785cc60eb1631527ad06">pubsub::MakePublisherConnection</a>(</div><div class="line">        std::move(topic),</div><div class="line">        pubsub::PublisherOptions{}</div><div class="line">            .set_maximum_hold_time(std::chrono::milliseconds(20))</div><div class="line">            .set_maximum_batch_bytes(4 * 1024 * 1024L)</div><div class="line">            .set_maximum_message_count(200),</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}));</div><div class="line"></div><div class="line">    std::vector&lt;future&lt;void&gt;&gt; ids;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">char</span> <span class="keyword">const</span>* data : {<span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;2&quot;</span>, <span class="stringliteral">&quot;3&quot;</span>, <span class="stringliteral">&quot;go!&quot;</span>}) {</div><div class="line">      ids.push_back(</div><div class="line">          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())</div><div class="line">              .then([data](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div><div class="line">                <span class="keyword">auto</span> s = f.get();</div><div class="line">                <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div><div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Sent &#39;&quot;</span> &lt;&lt; data &lt;&lt; <span class="stringliteral">&quot;&#39; (&quot;</span> &lt;&lt; *s &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div><div class="line">              }));</div><div class="line">    }</div><div class="line">    publisher.Flush();</div><div class="line">    <span class="comment">// Block until they are actually sent.</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : ids) <span class="keywordtype">id</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::future;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](std::string project_id, std::string topic_id) {</div><div class="line">    <span class="keyword">auto</span> topic = pubsub::Topic(std::move(project_id), std::move(topic_id));</div><div class="line">    <span class="comment">// By default the publisher will flush a batch after 10ms, after it contains</span></div><div class="line">    <span class="comment">// more than 100 message, or after it contains more than 1MiB of data,</span></div><div class="line">    <span class="comment">// whichever comes first. This changes those defaults.</span></div><div class="line">    <span class="keyword">auto</span> publisher = pubsub::Publisher(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a52843c207d3a785cc60eb1631527ad06">pubsub::MakePublisherConnection</a>(</div><div class="line">        std::move(topic),</div><div class="line">        pubsub::PublisherOptions{}</div><div class="line">            .set_maximum_hold_time(std::chrono::milliseconds(20))</div><div class="line">            .set_maximum_batch_bytes(4 * 1024 * 1024L)</div><div class="line">            .set_maximum_batch_message_count(200),</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}));</div><div class="line"></div><div class="line">    std::vector&lt;future&lt;void&gt;&gt; ids;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">char</span> <span class="keyword">const</span>* data : {<span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;2&quot;</span>, <span class="stringliteral">&quot;3&quot;</span>, <span class="stringliteral">&quot;go!&quot;</span>}) {</div><div class="line">      ids.push_back(</div><div class="line">          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())</div><div class="line">              .then([data](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div><div class="line">                <span class="keyword">auto</span> s = f.get();</div><div class="line">                <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div><div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Sent &#39;&quot;</span> &lt;&lt; data &lt;&lt; <span class="stringliteral">&quot;&#39; (&quot;</span> &lt;&lt; *s &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div><div class="line">              }));</div><div class="line">    }</div><div class="line">    publisher.Flush();</div><div class="line">    <span class="comment">// Block until they are actually sent.</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <span class="keywordtype">id</span> : ids) <span class="keywordtype">id</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00046">46</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -175,7 +175,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00116">116</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00118">118</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +202,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00126">126</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00128">128</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00112">112</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00114">114</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +256,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00122">122</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00124">124</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +283,34 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00094">94</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00096">96</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a72f715974a2b4b40aaef801a45a9aaac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72f715974a2b4b40aaef801a45a9aaac">&#9670;&nbsp;</a></span>maximum_batch_message_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t google::cloud::pubsub::v1::PublisherOptions::maximum_batch_message_count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00077">77</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -316,33 +343,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aea38f3d56cdb78538d46db4aee315c9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea38f3d56cdb78538d46db4aee315c9d">&#9670;&nbsp;</a></span>maximum_message_count()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::size_t google::cloud::pubsub::v1::PublisherOptions::maximum_message_count </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00077">77</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
-
-</div>
-</div>
 <a id="a6061cfede61c452c63ac8637ebf7073a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6061cfede61c452c63ac8637ebf7073a">&#9670;&nbsp;</a></span>message_ordering()</h2>
 
@@ -366,7 +366,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00111">111</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00113">113</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -393,7 +393,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00121">121</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00123">123</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -424,7 +424,38 @@ Public Member Functions</h2></td></tr>
 <p>Set the maximum size for the messages in a batch. </p>
 <dl class="section note"><dt>Note</dt><dd>Application developers should keep in mind that Cloud Pub/Sub sets <a href="https://cloud.google.com/pubsub/quotas#resource_limits">limits</a> on the size of a batch (10MB). The library makes no attempt to validate the value provided in this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00106">106</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00108">108</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
+
+</div>
+</div>
+<a id="ae94e00760d0500baaf1103560f09ca99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae94e00760d0500baaf1103560f09ca99">&#9670;&nbsp;</a></span>set_maximum_batch_message_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a>&amp; google::cloud::pubsub::v1::PublisherOptions::set_maximum_batch_message_count </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the maximum number of messages in a batch. </p>
+<dl class="section note"><dt>Note</dt><dd>Application developers should keep in mind that Cloud Pub/Sub sets <a href="https://cloud.google.com/pubsub/quotas#resource_limits">limits</a> on the size of a batch (1,000 messages) The library makes no attempt to validate the value provided in this function. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00091">91</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
@@ -460,37 +491,6 @@ template&lt;typename Rep , typename Period &gt; </div>
 the first message in a batch starts the hold time counter. New messages do not extend the life of the batch. For example, if you have set the holding time to 10 milliseconds, start a batch with message 1, and publish a second message 5 milliseconds later, the second message will be flushed approximately 5 milliseconds after it is published. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00070">70</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
-
-</div>
-</div>
-<a id="a89f5e860bd57c265a65dbc7088490af9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89f5e860bd57c265a65dbc7088490af9">&#9670;&nbsp;</a></span>set_maximum_message_count()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a>&amp; google::cloud::pubsub::v1::PublisherOptions::set_maximum_message_count </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set the maximum number of messages in a batch. </p>
-<dl class="section note"><dt>Note</dt><dd>Application developers should keep in mind that Cloud Pub/Sub sets <a href="https://cloud.google.com/pubsub/quotas#resource_limits">limits</a> on the size of a batch (1,000 messages) The library makes no attempt to validate the value provided in this function. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="publisher__options_8h_source.html#l00089">89</a> of file <a class="el" href="publisher__options_8h_source.html">publisher_options.h</a>.</p>
 
 </div>
 </div>
