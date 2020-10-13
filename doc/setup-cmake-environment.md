@@ -74,6 +74,12 @@ cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build cmake-out/home -- -j 4
 
-# Verify build by running tests, but skipping the integration tests
+# Verify build by running tests
+(cd cmake-out/home && ctest --output-on-failure)
+```
+
+If you wish to skip the integration tests, you can instead use:
+
+```console
 (cd cmake-out/home && ctest --output-on-failure -LE integration-test)
 ```

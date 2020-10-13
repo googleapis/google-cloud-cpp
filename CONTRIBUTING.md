@@ -146,18 +146,35 @@ build system.  Changing the CMake files automatically update the corresponding
 Please see the [README](README.md) for the basic instructions on how to compile
 the code.  In this section we will describe some advanced options.
 
+### Building and Testing with CMake
+
+The following commands assume you are in the top level directory of
+`google-cloud-cpp`. Our CI scripts already use several subdirectories of
+`google-cloud-cpp/cmake-out`, it may be convenient for you to use it as well.
+For example, we can initialize CMake in `cmake-out/manual`:
+
+```console
+$ cmake -H. -Bcmake-out/manual
+```
+
+Then compile and test normally:
+
+```console
+$ cmake --build cmake-out/manual -j 4
+$ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
+```
+
 ### Changing the Compiler
 
 If your workstation has multiple compilers (or multiple versions of a compiler)
 installed, you can change the compiler using:
 
 ```console
-# Run this in your build directory, typically google-cloud-cpp/cmake-out/home
-$ CXX=clang++ CC=clang cmake -H. -Bcmake-out/home
+$ CXX=clang++ CC=clang cmake -H. -Bcmake-out/manual
 
 # Then compile and test normally:
-$ cmake --build cmake-out/home -j 4
-$ (cd cmake-out/home && ctest --output-on-failure -LE integration-test)
+$ cmake --build cmake-out/manual -j 4
+$ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
 ### Changing the Build Type
@@ -166,12 +183,11 @@ By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
 
 ```console
-# Run this in your build directory, typically google-cloud-cpp/cmake-out/home
-$ CXX=clang++ CC=clang cmake -H. -Bcmake-out/home -DCMAKE_BUILD_TYPE=Debug ..
+$ cmake -H. -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
 
 # Then compile and test normally:
-$ cmake --build cmake-out/home -j 4
-$ (cd cmake-out/home && ctest --output-on-failure -LE integration-test)
+$ cmake --build cmake-out/manual -j 4
+$ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
 This project supports `Debug`, `Release`, and `Coverage` builds.

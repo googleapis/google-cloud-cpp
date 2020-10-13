@@ -11,8 +11,9 @@ These instructions will describe how to install these tools for Ubuntu 18.04
 (Bionic Beaver). For other distributions you may consult the Dockerfile used by
 the integration tests. We use
 [Dockerfile.fedora-install](../ci/kokoro/docker/Dockerfile.fedora-install) to
-enforce formatting for our builds, however the instructions can easily be
-adapted to other distributions.
+to enforce formatting for our builds. If you use a different distribution, you
+will need to use the corresponding package manager (`dnf`, `zypper`, `apk`,
+etc.) and find the corresponding package names.
 
 First, install the basic development tools:
 
