@@ -30,7 +30,6 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
-using ::testing::Eq;
 
 /**
  * @test Verify GrpcClient and HybridClient report failures correctly.
