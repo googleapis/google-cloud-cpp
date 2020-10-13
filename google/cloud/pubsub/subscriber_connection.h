@@ -63,9 +63,7 @@ class SubscriberConnection {
 
   /// Wrap the arguments for `Subscribe()`
   struct SubscribeParams {
-    std::string full_subscription_name;
     ApplicationCallback callback;
-    SubscriptionOptions options;
   };
   //@}
 
@@ -86,15 +84,20 @@ class SubscriberConnection {
  * @par Changing Retry Parameters Example
  * @snippet samples.cc subscriber-retry-settings
  *
- * @param options (optional) configure the `SubscriberConnection` created by
- *     this function.
+ * @param subscription the Cloud Pub/Sub subscription used by the returned
+ *     connection.
+ * @param options configure the flow control and other parameters in the
+ *     returned connection.
+ * @param connection_options (optional) general configuration for this
+ *    connection, this type is also used to configure `pubsub::Publisher`.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    ConnectionOptions options = {},
+    Subscription subscription, SubscriptionOptions options = {},
+    ConnectionOptions connection_options = {},
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
@@ -105,7 +108,9 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    std::shared_ptr<SubscriberStub> stub, pubsub::ConnectionOptions options,
+    pubsub::Subscription subscription, pubsub::SubscriptionOptions options,
+    pubsub::ConnectionOptions connection_options,
+    std::shared_ptr<SubscriberStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
