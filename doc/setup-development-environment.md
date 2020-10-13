@@ -7,11 +7,12 @@ Install the dependencies needed for your distribution. The top-level
 to compile `google-cloud-cpp`. But for active development you may want to
 install additional tools to run the unit and integration tests.
 
-These instructions will describe how to install these tools for
-Ubuntu 18.04 (Bionic Beaver). For other distributions you may consult the
-Dockerfile used by the integration tests. For example,
-[Dockerfile.ubuntu](../ci/kokoro/docker/Dockerfile.ubuntu), or
-[Dockerfile.fedora](../ci/kokoro/docker/Dockerfile.fedora).
+These instructions will describe how to install these tools for Ubuntu 18.04
+(Bionic Beaver). For other distributions you may consult the Dockerfile used by
+the integration tests. We use
+[Dockerfile.fedora-install](../ci/kokoro/docker/Dockerfile.fedora-install) to
+enforce formatting for our builds, however the instructions can easily be
+adapted to other distributions.
 
 First, install the basic development tools:
 
@@ -22,23 +23,31 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
         pkg-config tar wget zlib1g-dev
 ```
 
-Then install `clang-6.0` and some additional Clang tools that we use to enforce
+Then install `clang-10` and some additional Clang tools that we use to enforce
 code style rules:
 
 ```console
-sudo apt install -y clang-6.0 clang-tidy clang-format-7 clang-tools
-sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100
-sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100
+sudo apt install -y clang-10 clang-tidy-10 clang-format-10 clang-tools-10
+sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10.0 100
+sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
 ```
 
 Install buildifier tool, which we use to format `BUILD` files:
 
 ```console
-sudo wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.17.2/buildifier
+sudo wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
 sudo chmod 755 /usr/bin/buildifier
 ```
 
-Install cmake_format to automatically format the CMake list files. We pin this
+Install shfmt tool, which we use to format our shell scripts:
+
+```console
+curl -L -o /usr/local/bin/shfmt \
+    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64"
+chmod 755 /usr/local/bin/shfmt
+```
+
+Install `cmake_format` to automatically format the CMake list files. We pin this
 tool to a specific version because the formatting changes when the "latest"
 version is updated, and we do not want the builds to break just
 because some third party changed something.
@@ -46,14 +55,29 @@ because some third party changed something.
 ```console
 sudo apt install -y python3 python3-pip
 pip3 install --upgrade pip3
-pip3 install cmake_format==0.6.0
+pip3 install cmake_format==0.6.8
+```
+
+Install black, which we use to format our Python scripts:
+
+```console
+pip3 install black==19.3b0
+```
+
+Install cspell for spell checking.
+
+```console
+sudo npm install -g cspell
 ```
 
 Install the Python modules used in the integration tests:
 
 ```console
-pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
-    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
+pip3 install --user Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
+    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
+    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
+    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
+    zope.event==4.5.0 zope.interface==5.1.0
 ```
 
 Add the pip directory to your PATH:
@@ -85,14 +109,14 @@ Run the Google Cloud Storage integration tests:
 
 ```console
 env -C cmake-out/home \
-    $PWD/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh
+    $PWD/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh .
 ```
 
 Run the Google Cloud Bigtable integration tests:
 
 ```console
 env -C cmake-out/home \
-    $PWD/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh
+    $PWD/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh .
 ```
 
 ### Installing Docker
