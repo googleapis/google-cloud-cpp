@@ -258,6 +258,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_pubsub_client_define_tests()
 endif (BUILD_TESTING)
 
+add_subdirectory(benchmarks)
 add_subdirectory(integration_tests)
 
 # Only compile the samples if we're building with exceptions enabled. They
