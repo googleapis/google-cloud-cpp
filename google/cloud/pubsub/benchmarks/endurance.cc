@@ -181,7 +181,7 @@ int main(int argc, char* argv[]) {
   if (config->topic_id.empty()) {
     config->topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
     auto topic = pubsub::Topic(config->project_id, config->topic_id);
-    auto create = topic_admin.CreateTopic(pubsub::TopicMutationBuilder{topic});
+    auto create = topic_admin.CreateTopic(pubsub::TopicBuilder{topic});
     if (!create) {
       std::cout << "CreateTopic() failed: " << create.status() << "\n";
       return 1;
