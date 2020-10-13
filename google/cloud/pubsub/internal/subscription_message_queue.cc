@@ -46,12 +46,14 @@ void SubscriptionMessageQueue::Read(std::size_t max_callbacks) {
 
 future<Status> SubscriptionMessageQueue::AckMessage(std::string const& ack_id,
                                                     std::size_t) {
-  return source_->AckMessage(ack_id);
+  source_->AckMessage(ack_id);
+  return make_ready_future(Status{});
 }
 
 future<Status> SubscriptionMessageQueue::NackMessage(std::string const& ack_id,
                                                      std::size_t) {
-  return source_->NackMessage(ack_id);
+  source_->NackMessage(ack_id);
+  return make_ready_future(Status{});
 }
 
 void SubscriptionMessageQueue::OnRead(

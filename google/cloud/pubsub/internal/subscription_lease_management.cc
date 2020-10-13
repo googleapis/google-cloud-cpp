@@ -41,37 +41,32 @@ void SubscriptionLeaseManagement::Shutdown() {
   child_->Shutdown();
 }
 
-future<Status> SubscriptionLeaseManagement::AckMessage(
-    std::string const& ack_id) {
+void SubscriptionLeaseManagement::AckMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  return child_->AckMessage(ack_id);
+  child_->AckMessage(ack_id);
 }
 
-future<Status> SubscriptionLeaseManagement::NackMessage(
-    std::string const& ack_id) {
+void SubscriptionLeaseManagement::NackMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   leases_.erase(ack_id);
   lk.unlock();
-  return child_->NackMessage(ack_id);
+  child_->NackMessage(ack_id);
 }
 
-future<Status> SubscriptionLeaseManagement::BulkNack(
-    std::vector<std::string> ack_ids) {
+void SubscriptionLeaseManagement::BulkNack(std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto const& id : ack_ids) leases_.erase(id);
   lk.unlock();
-  return child_->BulkNack(std::move(ack_ids));
+  child_->BulkNack(std::move(ack_ids));
 }
 
 // Users of this class should have no need to call ExtendLeases(); they create
 // it to automate lease management after all. We could create a hierarchy of
 // classes for "BatchSourceWithoutExtendLeases", but that seems like overkill.
-future<Status> SubscriptionLeaseManagement::ExtendLeases(
-    std::vector<std::string>, std::chrono::seconds) {
-  return make_ready_future(Status(StatusCode::kUnimplemented, __func__));
-}
+void SubscriptionLeaseManagement::ExtendLeases(std::vector<std::string>,
+                                               std::chrono::seconds) {}
 
 void SubscriptionLeaseManagement::OnRead(
     StatusOr<google::pubsub::v1::StreamingPullResponse> const& response) {
@@ -123,31 +118,14 @@ void SubscriptionLeaseManagement::RefreshMessageLeases(
     return;
   }
   lk.unlock();
-
-  shutdown_manager_->StartOperation(__func__, "OnRefreshMessageLeases", [&] {
-    refreshing_leases_ = true;
-    std::weak_ptr<SubscriptionLeaseManagement> weak = shared_from_this();
-    child_->ExtendLeases(ack_ids, extension)
-        .then([weak, ack_ids, new_deadline](future<Status>) {
-          if (auto self = weak.lock()) {
-            self->OnRefreshMessageLeases(ack_ids, new_deadline);
-          }
-        });
-  });
-}
-
-void SubscriptionLeaseManagement::OnRefreshMessageLeases(
-    std::vector<std::string> const& ack_ids,
-    std::chrono::system_clock::time_point new_server_deadline) {
-  if (shutdown_manager_->FinishedOperation(__func__)) return;
-  std::unique_lock<std::mutex> lk(mu_);
-  refreshing_leases_ = false;
+  child_->ExtendLeases(ack_ids, extension);
+  lk.lock();
   for (auto const& ack : ack_ids) {
     auto i = leases_.find(ack);
     if (i == leases_.end()) continue;
-    i->second.estimated_server_deadline = new_server_deadline;
+    i->second.estimated_server_deadline = new_deadline;
   }
-  StartRefreshTimer(std::move(lk), new_server_deadline);
+  StartRefreshTimer(std::move(lk), new_deadline);
 }
 
 void SubscriptionLeaseManagement::StartRefreshTimer(
