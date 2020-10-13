@@ -976,8 +976,7 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
     // of 100ms, a maximum backoff of 60 seconds, and the backoff will grow by
     // 30% after each attempt. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic),
-        pubsub::PublisherOptions{}.enable_retry_publish_failures(), {},
+        std::move(topic), pubsub::PublisherOptions{}, {},
         pubsub::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(10))
             .clone(),
@@ -1003,6 +1002,45 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
     std::cout << count << " messages sent successfully\n";
   }
   //! [END pubsub_publisher_retry_settings] [publisher-retry-settings]
+  (argv.at(0), argv.at(1));
+}
+
+void PublisherDisableRetries(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publisher-disable-retries <project-id> <topic-id>"};
+  }
+  //! [publisher-disable-retries]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic), pubsub::PublisherOptions{}, {},
+        pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
+        pubsub::ExponentialBackoffPolicy(
+            /*initial_delay=*/std::chrono::milliseconds(200),
+            /*maximum_delay=*/std::chrono::seconds(45),
+            /*scaling=*/2.0)
+            .clone()));
+
+    std::vector<future<bool>> done;
+    for (char const* data : {"1", "2", "3", "go!"}) {
+      done.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([](future<StatusOr<std::string>> f) {
+                return f.get().ok();
+              }));
+    }
+    publisher.Flush();
+    int count = 0;
+    for (auto& f : done) {
+      if (f.get()) ++count;
+    }
+    std::cout << count << " messages sent successfully\n";
+  }
+  //! [publisher-disable-retries]
   (argv.at(0), argv.at(1));
 }
 
@@ -1467,6 +1505,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the PublisherRetrySettings() sample" << std::endl;
   PublisherRetrySettings({project_id, topic_id});
 
+  std::cout << "\nRunning the PublisherDisableRetries() sample" << std::endl;
+  PublisherDisableRetries({project_id, topic_id});
+
   std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
   CustomBatchPublisher({project_id, topic_id});
 
@@ -1631,6 +1672,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"publisher-concurrency-control", PublisherConcurrencyControl},
       {"publisher-retry-settings", PublisherRetrySettings},
+      {"publisher-disable-retry", PublisherDisableRetries},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},

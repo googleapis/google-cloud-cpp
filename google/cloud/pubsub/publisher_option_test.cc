@@ -37,6 +37,10 @@ TEST(PublisherOptions, Setters) {
       std::chrono::seconds(12));
   EXPECT_EQ(expected, b.maximum_hold_time());
   EXPECT_TRUE(b.message_ordering());
+
+  auto const b1 =
+      PublisherOptions{}.enable_message_ordering().disable_message_ordering();
+  EXPECT_FALSE(b1.message_ordering());
 }
 
 }  // namespace

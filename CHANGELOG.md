@@ -9,6 +9,11 @@
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
 
+* Remove option to disable retries in `Publisher::Publish`. This is redundant as
+  the application can set a "no retries" retry policy. This is more consistent
+  with other Cloud Pub/Sub libraries. We include an example showing how to
+  configure a "no retries" retry policy.
+
 * Fix inconsistent naming for `PublisherOptions` attributes controlling the
   maximum number of messages per batch and the maximum number of bytes per
   batch.
