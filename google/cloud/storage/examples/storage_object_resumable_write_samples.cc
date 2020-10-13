@@ -147,6 +147,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ResumeResumableUpload() example" << std::endl;
   ResumeResumableUpload(client, {bucket_name, object_name, session_id});
 
+  std::cout << "\nRunning DeleteResumableUpload() example" << std::endl;
+  DeleteResumableUpload(client, {bucket_name, object_name});
+
   (void)client.DeleteObject(bucket_name, object_name);
 }
 
