@@ -9,6 +9,10 @@
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
 
+* Fix inconsistent naming for `PublisherOptions` attributes controlling the
+  maximum number of messages per batch and the maximum number of bytes per
+  batch.
+
 * Rename `TopicMutationBuilder` to `TopicBuilder`, and
   `SubscriptionMutationBuilder` to `SubscriptionBuilder`. This makes the C++
   library more familiar for Cloud Pub/Sub developers coming from other

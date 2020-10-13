@@ -1026,7 +1026,7 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
         pubsub::PublisherOptions{}
             .set_maximum_hold_time(std::chrono::milliseconds(20))
             .set_maximum_batch_bytes(4 * 1024 * 1024L)
-            .set_maximum_message_count(200),
+            .set_maximum_batch_message_count(200),
         pubsub::ConnectionOptions{}));
 
     std::vector<future<void>> ids;
@@ -1419,9 +1419,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
-          topic,
-          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
-              1)));
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_batch_message_count(1)));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
@@ -1483,7 +1482,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::pubsub::PublisherOptions{}
-                     .set_maximum_message_count(1)
+                     .set_maximum_batch_message_count(1)
                      .enable_message_ordering()));
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
 

@@ -79,7 +79,7 @@ void BatchingPublisherConnection::Flush(FlushParams) {
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
-  if (pending_.size() >= options_.maximum_message_count()) {
+  if (pending_.size() >= options_.maximum_batch_message_count()) {
     FlushImpl(std::move(lk));
     return;
   }
