@@ -146,7 +146,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # Run clang_tidy against files that regex match the first argument (less some
   # exclusions). Any remaining arguments are passed to clang-tidy.
   run_clang_tidy() {
-    readonly file_regex="$1"
+    local -r file_regex="$1"
     shift
     grep -E "${file_regex}" <<<"${modified}" |
       grep -v google/cloud/bigtable/examples/opencensus |
