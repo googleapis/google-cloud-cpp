@@ -141,14 +141,14 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   SOURCE_FILTER_REGEX='google/cloud/.*\.cc$'
 
   # Get the list of modified files.
-  readonly modified=$(git diff --diff-filter=d --name-only "${TARGET_BRANCH}")
+  readonly MODIFIED=$(git diff --diff-filter=d --name-only "${TARGET_BRANCH}")
 
   # Run clang_tidy against files that regex match the first argument (less some
   # exclusions). Any remaining arguments are passed to clang-tidy.
   run_clang_tidy() {
     local -r file_regex="$1"
     shift
-    grep -E "${file_regex}" <<<"${modified}" |
+    grep -E "${file_regex}" <<<"${MODIFIED}" |
       grep -v google/cloud/bigtable/examples/opencensus |
       grep -v generator/integration_tests/golden |
       xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy \
