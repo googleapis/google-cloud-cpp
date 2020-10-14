@@ -15,7 +15,6 @@ var searchData=
   ['operator_3e_3d',['operator&gt;=',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a0f75d85940dbf4d601952abb67995962',1,'google::cloud::v1::operator&gt;=(IamBindings const &amp;lhs, IamBindings const &amp;rhs)'],['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#a29509395c0efa8001dda776afca367a8',1,'google::cloud::v1::operator&gt;=(IamPolicy const &amp;lhs, IamPolicy const &amp;rhs)']]],
   ['optional',['optional',['https://googleapis.dev/google-cloud-common/master/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]],
   ['optional_2eh',['optional.h',['https://googleapis.dev/google-cloud-common/master/optional_8h.html',1,'']]],
-  ['options',['options',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html#a99cc5f2e6e726251f05121a78569b52f',1,'google::cloud::pubsub::v1::SubscriberConnection::SubscribeParams']]],
   ['ordering_5fkey',['ordering_key',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a4ef4dd8e92143144c155e26164ddd0cf',1,'google::cloud::pubsub::v1::Message']]],
   ['ordering_5fkey_5fpublisher_5fconnection_2ecc',['ordering_key_publisher_connection.cc',['../ordering__key__publisher__connection_8cc.html',1,'']]],
   ['ordering_5fkey_5fpublisher_5fconnection_2eh',['ordering_key_publisher_connection.h',['../ordering__key__publisher__connection_8h.html',1,'']]],
