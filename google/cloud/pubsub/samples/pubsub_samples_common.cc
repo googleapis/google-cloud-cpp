@@ -63,7 +63,7 @@ google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
     google::cloud::pubsub::Subscriber client(
         google::cloud::pubsub::MakeSubscriberConnection(subscription));
     argv.erase(argv.begin(), argv.begin() + 2);
-    command(std::move(client), std::move(subscription), std::move(argv));
+    command(std::move(client), std::move(argv));
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};

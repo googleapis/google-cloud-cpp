@@ -341,7 +341,6 @@ void UpdateDeadLetterSubscription(
 
 void ReceiveDeadLetterDeliveryAttempt(
     google::cloud::pubsub::Subscriber subscriber,
-    google::cloud::pubsub::Subscription const&,
     std::vector<std::string> const&) {
   //! [dead-letter-delivery-attempt]
   // [START pubsub_dead_letter_delivery_attempt]
@@ -755,7 +754,6 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
 }
 
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
-               google::cloud::pubsub::Subscription const&,
                std::vector<std::string> const&) {
   //! [START pubsub_quickstart_subscriber]
   //! [START pubsub_subscriber_async_pull] [subscribe]
@@ -794,7 +792,6 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
 }
 
 void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
-                            google::cloud::pubsub::Subscription const&,
                             std::vector<std::string> const&) {
   // [START pubsub_subscriber_error_listener]
   namespace pubsub = google::cloud::pubsub;
@@ -837,7 +834,6 @@ void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
 }
 
 void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
-                               google::cloud::pubsub::Subscription const&,
                                std::vector<std::string> const&) {
   //! [START pubsub_subscriber_async_pull_custom_attributes]
   namespace pubsub = google::cloud::pubsub;
@@ -1474,21 +1470,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishCustomAttributes(publisher, {});
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
-  Subscribe(subscriber, subscription, {});
+  Subscribe(subscriber, {});
 
   std::cout << "\nRunning Publish() sample [2]" << std::endl;
   Publish(publisher, {});
 
   std::cout << "\nRunning SubscribeErrorListener() sample" << std::endl;
-  SubscribeErrorListener(subscriber, subscription, {});
+  SubscribeErrorListener(subscriber, {});
 
   std::cout << "\nRunning Publish() sample [3]" << std::endl;
   Publish(publisher, {});
 
   std::cout << "\nRunning ReceiveDeadLetterDeliveryAttempt() sample"
             << std::endl;
-  ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber,
-                                   dead_letter_subscription, {});
+  ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber, {});
 
   std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
   RemoveDeadLetterPolicy(subscription_admin_client,
@@ -1517,7 +1512,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishCustomAttributes(publisher, {});
 
   std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
-  SubscribeCustomAttributes(subscriber, subscription, {});
+  SubscribeCustomAttributes(subscriber, {});
 
   auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
