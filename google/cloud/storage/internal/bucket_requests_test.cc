@@ -414,25 +414,6 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetIamConfigurationBPO) {
-  BucketMetadata original = CreateBucketMetadataForTest();
-  original.reset_encryption();
-  BucketMetadata updated = original;
-  BucketIamConfiguration configuration;
-  configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
-  updated.set_iam_configuration(std::move(configuration));
-  PatchBucketRequest request("test-bucket", original, updated);
-
-  auto patch = nlohmann::json::parse(request.payload());
-  auto expected = nlohmann::json::parse(R"""({
-      "iamConfiguration": {
-          "bucketPolicyOnly": {"enabled": true},
-          "uniformBucketLevelAccess":{"enabled": true}
-       }
-  })""");
-  EXPECT_EQ(expected, patch);
-}
-
 TEST(PatchBucketRequestTest, DiffSetIamConfigurationUBLA) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
@@ -446,24 +427,9 @@ TEST(PatchBucketRequestTest, DiffSetIamConfigurationUBLA) {
   auto patch = nlohmann::json::parse(request.payload());
   auto expected = nlohmann::json::parse(R"""({
       "iamConfiguration": {
-          "bucketPolicyOnly": {"enabled": true},
           "uniformBucketLevelAccess":{"enabled": true}
        }
   })""");
-  EXPECT_EQ(expected, patch);
-}
-
-TEST(PatchBucketRequestTest, DiffResetIamConfigurationBPO) {
-  BucketMetadata original = CreateBucketMetadataForTest();
-  BucketIamConfiguration configuration;
-  configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
-  original.set_iam_configuration(std::move(configuration));
-  BucketMetadata updated = original;
-  updated.reset_iam_configuration();
-  PatchBucketRequest request("test-bucket", original, updated);
-
-  auto patch = nlohmann::json::parse(request.payload());
-  auto expected = nlohmann::json::parse(R"""({"iamConfiguration": null})""");
   EXPECT_EQ(expected, patch);
 }
 

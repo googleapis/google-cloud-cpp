@@ -267,88 +267,6 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
-void EnableBucketPolicyOnly(google::cloud::storage::Client client,
-                            std::vector<std::string> const& argv) {
-  //! [enable bucket policy only]
-  // [START storage_enable_bucket_policy_only]
-  namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
-    gcs::BucketIamConfiguration configuration;
-    configuration.bucket_policy_only = gcs::BucketPolicyOnly{true, {}};
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
-
-    std::cout << "Successfully enabled Bucket Policy Only on bucket "
-              << updated_metadata->name() << "\n";
-  }
-  // [END storage_enable_bucket_policy_only]
-  //! [enable bucket policy only]
-  (std::move(client), argv.at(0));
-}
-
-void DisableBucketPolicyOnly(google::cloud::storage::Client client,
-                             std::vector<std::string> const& argv) {
-  //! [disable bucket policy only]
-  // [START storage_disable_bucket_policy_only]
-  namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
-    gcs::BucketIamConfiguration configuration;
-    configuration.bucket_policy_only = gcs::BucketPolicyOnly{false, {}};
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
-
-    std::cout << "Successfully disabled Bucket Policy Only on bucket "
-              << updated_metadata->name() << "\n";
-  }
-  // [END storage_disable_bucket_policy_only]
-  //! [disable bucket policy only]
-  (std::move(client), argv.at(0));
-}
-
-void GetBucketPolicyOnly(google::cloud::storage::Client client,
-                         std::vector<std::string> const& argv) {
-  //! [get bucket policy only]
-  // [START storage_get_bucket_policy_only]
-  namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
-    StatusOr<gcs::BucketMetadata> bucket_metadata =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
-
-    if (bucket_metadata->has_iam_configuration() &&
-        bucket_metadata->iam_configuration().bucket_policy_only.has_value()) {
-      gcs::BucketPolicyOnly bucket_policy_only =
-          *bucket_metadata->iam_configuration().bucket_policy_only;
-
-      std::cout << "Bucket Policy Only is enabled for "
-                << bucket_metadata->name() << "\n";
-      std::cout << "Bucket will be locked on " << bucket_policy_only << "\n";
-    } else {
-      std::cout << "Bucket Policy Only is not enabled for "
-                << bucket_metadata->name() << "\n";
-    }
-  }
-  // [END storage_get_bucket_policy_only]
-  //! [get bucket policy only]
-  (std::move(client), argv.at(0));
-}
-
 void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
   //! [enable uniform bucket level access]
@@ -565,15 +483,6 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetBucketClassAndLocation() example" << std::endl;
   GetBucketClassAndLocation(client, {bucket_name});
 
-  std::cout << "\nRunning EnableBucketPolicyOnly() example" << std::endl;
-  EnableBucketPolicyOnly(client, {bucket_name});
-
-  std::cout << "\nRunning DisableBucketPolicyOnly() example" << std::endl;
-  DisableBucketPolicyOnly(client, {bucket_name});
-
-  std::cout << "\nRunning GetBucketPolicyOnly() example" << std::endl;
-  GetBucketPolicyOnly(client, {bucket_name});
-
   std::cout << "\nRunning EnableUniformBucketLevelAccess() example"
             << std::endl;
   EnableUniformBucketLevelAccess(client, {bucket_name});
@@ -651,9 +560,6 @@ int main(int argc, char* argv[]) {
                  PatchBucketStorageClassWithBuilder),
       make_entry("get-bucket-class-and-location", {},
                  GetBucketClassAndLocation),
-      make_entry("enable-bucket-policy-only", {}, EnableBucketPolicyOnly),
-      make_entry("disable-bucket-policy-only", {}, DisableBucketPolicyOnly),
-      make_entry("get-bucket-policy-only", {}, GetBucketPolicyOnly),
       make_entry("enable-uniform-bucket-level-access", {},
                  EnableUniformBucketLevelAccess),
       make_entry("disable-uniform-bucket-level-access", {},
