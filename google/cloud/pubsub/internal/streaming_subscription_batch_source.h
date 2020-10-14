@@ -20,7 +20,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/retry_policy.h"
-#include "google/cloud/pubsub/subscription_options.h"
+#include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -45,7 +45,7 @@ class StreamingSubscriptionBatchSource
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
-      std::string client_id, pubsub::SubscriptionOptions const& options,
+      std::string client_id, pubsub::SubscriberOptions const& options,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
       : cq_(std::move(cq)),

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/subscription_options.h"
+#include "google/cloud/pubsub/subscriber_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,32 +21,32 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-TEST(SubscriptionOptionsTest, Default) {
-  SubscriptionOptions const options{};
+TEST(SubscriberOptionsTest, Default) {
+  SubscriberOptions const options{};
   EXPECT_LT(0, options.max_outstanding_messages());
   EXPECT_LT(0, options.max_outstanding_bytes());
   EXPECT_LE(options.concurrency_lwm(), options.concurrency_hwm());
   EXPECT_LT(0, options.concurrency_hwm());
 }
 
-TEST(SubscriptionOptionsTest, SetMessageCount) {
-  auto options = SubscriptionOptions{}.set_max_outstanding_messages(16);
+TEST(SubscriberOptionsTest, SetMessageCount) {
+  auto options = SubscriberOptions{}.set_max_outstanding_messages(16);
   EXPECT_EQ(16, options.max_outstanding_messages());
 
   options.set_max_outstanding_messages(-7);
   EXPECT_EQ(0, options.max_outstanding_messages());
 }
 
-TEST(SubscriptionOptionsTest, SetBytes) {
-  auto options = SubscriptionOptions{}.set_max_outstanding_bytes(16 * 1024);
+TEST(SubscriberOptionsTest, SetBytes) {
+  auto options = SubscriberOptions{}.set_max_outstanding_bytes(16 * 1024);
   EXPECT_EQ(16 * 1024, options.max_outstanding_bytes());
 
   options.set_max_outstanding_bytes(-7);
   EXPECT_EQ(0, options.max_outstanding_bytes());
 }
 
-TEST(SubscriptionOptionsTest, SetConcurrency) {
-  auto options = SubscriptionOptions{}.set_concurrency_watermarks(8, 16);
+TEST(SubscriberOptionsTest, SetConcurrency) {
+  auto options = SubscriberOptions{}.set_concurrency_watermarks(8, 16);
   EXPECT_EQ(16, options.concurrency_hwm());
   EXPECT_EQ(8, options.concurrency_lwm());
 

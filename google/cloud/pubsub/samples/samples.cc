@@ -1101,7 +1101,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
 
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriptionOptions{},
+        pubsub::SubscriberOptions{},
         pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
 
     // Because this is an example we want to exit eventually, use a mutex and
@@ -1156,7 +1156,7 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
+        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
             /*lwm=*/4, /*hwm=*/8),
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
@@ -1214,7 +1214,7 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
     auto constexpr kMiB = 1024 * 1024L;
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriptionOptions{}
+        pubsub::SubscriberOptions{}
             .set_max_outstanding_messages(1000)
             .set_max_outstanding_bytes(8 * kMiB)));
 
@@ -1261,7 +1261,7 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
     // grow by 30% after each attempt. This changes those defaults.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriptionOptions{}, pubsub::ConnectionOptions{},
+        pubsub::SubscriberOptions{}, pubsub::ConnectionOptions{},
         pubsub::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(1))
             .clone(),

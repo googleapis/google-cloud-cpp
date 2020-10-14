@@ -151,7 +151,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   auto source =
       std::make_shared<pubsub_internal::StreamingSubscriptionBatchSource>(
           background.cq(), shutdown, stub, subscription_.FullName(),
-          "test-client-0001", pubsub::SubscriptionOptions{},
+          "test-client-0001", pubsub::SubscriberOptions{},
           pubsub_testing::TestRetryPolicy(),
           pubsub_testing::TestBackoffPolicy());
 

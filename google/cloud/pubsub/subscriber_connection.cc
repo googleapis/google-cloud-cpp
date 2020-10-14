@@ -30,7 +30,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 SubscriberConnection::~SubscriberConnection() = default;
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, SubscriptionOptions options,
+    Subscription subscription, SubscriberOptions options,
     ConnectionOptions connection_options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
@@ -51,7 +51,7 @@ namespace {
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberConnectionImpl(
-      pubsub::Subscription subscription, pubsub::SubscriptionOptions options,
+      pubsub::Subscription subscription, pubsub::SubscriberOptions options,
       pubsub::ConnectionOptions const& connection_options,
       std::shared_ptr<pubsub_internal::SubscriberStub> stub,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
@@ -80,7 +80,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 
  private:
   pubsub::Subscription const subscription_;
-  pubsub::SubscriptionOptions const options_;
+  pubsub::SubscriberOptions const options_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::shared_ptr<BackgroundThreads> background_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
@@ -91,7 +91,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 }  // namespace
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    pubsub::Subscription subscription, pubsub::SubscriptionOptions options,
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
     pubsub::ConnectionOptions connection_options,
     std::shared_ptr<SubscriberStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,

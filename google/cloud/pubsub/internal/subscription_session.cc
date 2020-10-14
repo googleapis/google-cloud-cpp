@@ -29,7 +29,7 @@ class SubscriptionSessionImpl
     : public std::enable_shared_from_this<SubscriptionSessionImpl> {
  public:
   static future<Status> Create(
-      pubsub::SubscriptionOptions const& options,
+      pubsub::SubscriberOptions const& options,
       google::cloud::CompletionQueue executor,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
@@ -159,7 +159,7 @@ class SubscriptionSessionImpl
 
 future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription,
-    pubsub::SubscriptionOptions const& options,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor, std::string client_id,
     pubsub::SubscriberConnection::SubscribeParams p,
@@ -181,7 +181,7 @@ future<Status> CreateSubscriptionSession(
 
 future<Status> CreateTestingSubscriptionSession(
     pubsub::Subscription const& subscription,
-    pubsub::SubscriptionOptions const& options,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor,
     pubsub::SubscriberConnection::SubscribeParams p,
