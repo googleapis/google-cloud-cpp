@@ -9,6 +9,9 @@
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
 
+* Rename `pubsub::SubscriptionOptions` to `pubsub::SubscriberOptions` as these
+  are bound to a specific subscriber object.
+
 * Change the `pubsub::Subscriber` API. A `Subscriber` is now bound to a specific
   Cloud Pub/Sub subscription, with a fixed set of `SuscriptionOptions`, just
   like a `pubsub::Publisher` is bound to a specific topic and a set of

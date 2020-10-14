@@ -48,7 +48,7 @@ TEST(SubscriberConnectionTest, Basic) {
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      subscription, pubsub::SubscriptionOptions{},
+      subscription, pubsub::SubscriberOptions{},
       ConnectionOptions{grpc::InsecureChannelCredentials()}
           .DisableBackgroundThreads(cq),
       mock, pubsub_testing::TestRetryPolicy(),

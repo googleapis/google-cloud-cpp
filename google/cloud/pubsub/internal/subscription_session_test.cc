@@ -138,7 +138,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
 
   auto response = CreateTestingSubscriptionSession(
       subscription,
-      pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
+      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
       {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
@@ -179,7 +179,7 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
   std::thread t([&cq] { cq.Run(); });
   auto response = CreateTestingSubscriptionSession(
       subscription,
-      pubsub::SubscriptionOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
+      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
       {handler});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
@@ -213,7 +213,7 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
   google::cloud::CompletionQueue cq;
   auto response = CreateTestingSubscriptionSession(
       subscription,
-      pubsub::SubscriptionOptions{}
+      pubsub::SubscriberOptions{}
           .set_max_outstanding_messages(1)
           .set_max_outstanding_bytes(1)
           .set_max_deadline_time(std::chrono::seconds(60)),
@@ -256,7 +256,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
     };
 
     auto session = CreateSubscriptionSession(
-        subscription, pubsub::SubscriptionOptions{}, mock, background.cq(),
+        subscription, pubsub::SubscriberOptions{}, mock, background.cq(),
         "fake-client-id", {handler}, pubsub_testing::TestRetryPolicy(),
         pubsub_testing::TestBackoffPolicy());
     got_one.get_future()
@@ -378,7 +378,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
 
     auto session = CreateSubscriptionSession(
         subscription,
-        pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
+        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
             kMessageCount / 2, 2 * kMessageCount),
         mock, background.cq(), "fake-client-id", {handler},
         pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
@@ -439,7 +439,7 @@ TEST(SubscriptionSessionTest, FireAndForget) {
 
       (void)CreateSubscriptionSession(
           subscription,
-          pubsub::SubscriptionOptions{}
+          pubsub::SubscriberOptions{}
               .set_max_outstanding_messages(kMessageCount / 2)
               .set_concurrency_watermarks(0, kMessageCount / 2)
               .set_shutdown_polling_period(std::chrono::milliseconds(20)),

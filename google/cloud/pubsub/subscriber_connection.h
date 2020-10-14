@@ -22,8 +22,8 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/subscription.h"
-#include "google/cloud/pubsub/subscription_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <functional>
@@ -96,7 +96,7 @@ class SubscriberConnection {
  *     typically some form of exponential backoff with jitter.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, SubscriptionOptions options = {},
+    Subscription subscription, SubscriberOptions options = {},
     ConnectionOptions connection_options = {},
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
@@ -108,7 +108,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
-    pubsub::Subscription subscription, pubsub::SubscriptionOptions options,
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
     pubsub::ConnectionOptions connection_options,
     std::shared_ptr<SubscriberStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,

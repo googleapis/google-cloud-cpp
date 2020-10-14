@@ -88,6 +88,8 @@ add_library(
     subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
+    subscriber_options.cc
+    subscriber_options.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
@@ -96,8 +98,6 @@ add_library(
     subscription_admin_connection.h
     subscription_builder.cc
     subscription_builder.h
-    subscription_options.cc
-    subscription_options.h
     topic.cc
     topic.h
     topic_admin_client.cc
@@ -210,11 +210,11 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         snapshot_mutation_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc
+        subscriber_options_test.cc
         subscriber_test.cc
         subscription_admin_client_test.cc
         subscription_admin_connection_test.cc
         subscription_builder_test.cc
-        subscription_options_test.cc
         subscription_test.cc
         topic_admin_client_test.cc
         topic_admin_connection_test.cc

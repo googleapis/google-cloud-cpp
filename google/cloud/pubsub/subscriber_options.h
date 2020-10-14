@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_OPTIONS_H
 
 #include "google/cloud/pubsub/version.h"
 #include <chrono>
@@ -25,7 +25,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Configure how a subscription handles incoming messages.
+ * Configure how a `Subscriber` handles incoming messages.
  *
  * There are two main algorithms controlled by this function: the dispatching of
  * application callbacks, and requesting more data from the service.
@@ -75,9 +75,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @par Example: setting the flow control parameters
  * @snippet samples.cc subscriber-flow-control
  */
-class SubscriptionOptions {
+class SubscriberOptions {
  public:
-  SubscriptionOptions() = default;
+  SubscriberOptions() = default;
 
   /**
    * The maximum deadline for each incoming message.
@@ -97,7 +97,7 @@ class SubscriptionOptions {
   std::chrono::seconds max_deadline_time() const { return max_deadline_time_; }
 
   /// Set the maximum deadline for incoming messages.
-  SubscriptionOptions& set_max_deadline_time(std::chrono::seconds d) {
+  SubscriberOptions& set_max_deadline_time(std::chrono::seconds d) {
     max_deadline_time_ = d;
     return *this;
   }
@@ -116,7 +116,7 @@ class SubscriptionOptions {
    * @param message_count the maximum number of messages outstanding, use 0 or
    *     negative numbers to make the message count unlimited.
    */
-  SubscriptionOptions& set_max_outstanding_messages(std::int64_t message_count);
+  SubscriberOptions& set_max_outstanding_messages(std::int64_t message_count);
   std::int64_t max_outstanding_messages() const {
     return max_outstanding_messages_;
   }
@@ -135,7 +135,7 @@ class SubscriptionOptions {
    * @param bytes the maximum number of bytes outstanding, use 0 or negative
    *     numbers to make the number of bytes unlimited.
    */
-  SubscriptionOptions& set_max_outstanding_bytes(std::int64_t bytes);
+  SubscriberOptions& set_max_outstanding_bytes(std::int64_t bytes);
   std::int64_t max_outstanding_bytes() const { return max_outstanding_bytes_; }
 
   /**
@@ -168,8 +168,8 @@ class SubscriptionOptions {
    * @param lwm the low watermark, if this parameter greater than @p hwm then
    *    the low watermark is set to the same value as the high watermark
    */
-  SubscriptionOptions& set_concurrency_watermarks(std::size_t lwm,
-                                                  std::size_t hwm);
+  SubscriberOptions& set_concurrency_watermarks(std::size_t lwm,
+                                                std::size_t hwm);
   std::size_t concurrency_lwm() const { return concurrency_lwm_; }
   std::size_t concurrency_hwm() const { return concurrency_hwm_; }
 
@@ -182,8 +182,7 @@ class SubscriptionOptions {
    * shuts down. In this latter case the session polls periodically to detect
    * if the CQ has shutdown. This controls how often this polling happens.
    */
-  SubscriptionOptions& set_shutdown_polling_period(
-      std::chrono::milliseconds v) {
+  SubscriberOptions& set_shutdown_polling_period(std::chrono::milliseconds v) {
     shutdown_polling_period_ = v;
     return *this;
   }
@@ -211,4 +210,4 @@ class SubscriptionOptions {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_OPTIONS_H
