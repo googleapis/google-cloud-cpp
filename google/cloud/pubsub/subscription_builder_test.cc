@@ -456,6 +456,22 @@ TEST(SubscriptionBuilder, SetExpirationPolicy) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(SubscriptionBuilder, SetFilter) {
+  auto const actual = SubscriptionBuilder{}
+                          .set_filter("attributes:domain")
+                          .BuildUpdateRequest(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      filter: "attributes:domain"
+    }
+    update_mask { paths: "filter" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionBuilder, SetDeadLetterPolicy) {
   auto const actual =
       SubscriptionBuilder{}
