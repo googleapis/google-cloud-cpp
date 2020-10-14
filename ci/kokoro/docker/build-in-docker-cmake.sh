@@ -139,17 +139,32 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   HEADER_FILTER_REGEX=$(clang-tidy -dump-config |
     sed -n "s/HeaderFilterRegex: *'\([^']*\)'/\1/p")
   SOURCE_FILTER_REGEX='google/cloud/.*\.cc$'
+
+  # Get the list of modified files.
+  readonly MODIFIED=$(git diff --diff-filter=d --name-only "${TARGET_BRANCH}")
+
+  # Run clang_tidy against files that regex match the first argument (less some
+  # exclusions). Any remaining arguments are passed to clang-tidy.
+  run_clang_tidy() {
+    local -r file_regex="$1"
+    shift
+    grep -E "${file_regex}" <<<"${MODIFIED}" |
+      grep -v google/cloud/bigtable/examples/opencensus |
+      grep -v generator/integration_tests/golden |
+      xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy \
+        -p="${BINARY_DIR}" "$@"
+  }
+
   # We disable the following checks:
   #     misc-unused-using-decls
   #     readability-redundant-declaration
   # because they produce false positives when run on headers.
   # For more details, see issue #4230.
-  git diff --diff-filter=d --name-only "${TARGET_BRANCH}" |
-    grep -E "(${HEADER_FILTER_REGEX})|(${SOURCE_FILTER_REGEX})" |
-    grep -v google/cloud/bigtable/examples/opencensus |
-    grep -v generator/integration_tests/golden |
-    xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy -p="${BINARY_DIR}" \
-      -checks="-misc-unused-using-decls,-readability-redundant-declaration"
+  run_clang_tidy "${HEADER_FILTER_REGEX}" \
+    '-checks="-misc-unused-using-decls,-readability-redundant-declaration"'
+
+  # We don't need to exclude any checks for source files.
+  run_clang_tidy "${SOURCE_FILTER_REGEX}"
 fi
 
 echo "================================================================"
