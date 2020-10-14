@@ -33,8 +33,6 @@ TEST(SubscriberTest, SubscribeSimple) {
   auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
   EXPECT_CALL(*mock, Subscribe(_))
       .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
-        EXPECT_EQ(subscription.FullName(), p.full_subscription_name);
-
         {
           auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
           EXPECT_CALL(*ack, ack()).Times(1);
@@ -54,14 +52,13 @@ TEST(SubscriberTest, SubscribeSimple) {
 
   Subscriber subscriber(mock);
   auto status = subscriber
-                    .Subscribe(subscription,
-                               [&](Message const& m, AckHandler h) {
-                                 if (m.data() == "do-nack") {
-                                   std::move(h).nack();
-                                 } else {
-                                   std::move(h).ack();
-                                 }
-                               })
+                    .Subscribe([&](Message const& m, AckHandler h) {
+                      if (m.data() == "do-nack") {
+                        std::move(h).nack();
+                      } else {
+                        std::move(h).ack();
+                      }
+                    })
                     .get();
   ASSERT_STATUS_OK(status);
 }
@@ -71,19 +68,13 @@ TEST(SubscriberTest, SubscribeWithOptions) {
   Subscription const subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
   EXPECT_CALL(*mock, Subscribe(_))
-      .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
-        EXPECT_EQ(subscription.FullName(), p.full_subscription_name);
-        EXPECT_EQ(7200, p.options.max_deadline_time().count());
+      .WillOnce([&](SubscriberConnection::SubscribeParams const&) {
         return make_ready_future(Status{});
       });
 
   Subscriber subscriber(mock);
   auto handler = [&](Message const&, AckHandler const&) {};
-  auto status = subscriber
-                    .Subscribe(subscription, std::move(handler),
-                               SubscriptionOptions{}.set_max_deadline_time(
-                                   std::chrono::hours(2)))
-                    .get();
+  auto status = subscriber.Subscribe(std::move(handler)).get();
   ASSERT_STATUS_OK(status);
 }
 

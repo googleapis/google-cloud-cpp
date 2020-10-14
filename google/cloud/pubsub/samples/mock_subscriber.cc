@@ -86,8 +86,7 @@ TEST(MockSubscribeExample, Subscribe) {
     payloads.push_back(m.data());
     std::move(h).ack();
   };
-  auto session = subscriber.Subscribe(
-      pubsub::Subscription("mock-project", "mock-subscription"), handler);
+  auto session = subscriber.Subscribe(handler);
   //! [client-call]
 
   //! [expected-results]

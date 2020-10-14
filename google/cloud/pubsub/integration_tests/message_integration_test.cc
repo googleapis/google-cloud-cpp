@@ -69,7 +69,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
       AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
 
   auto publisher = Publisher(MakePublisherConnection(topic, {}));
-  auto subscriber = Subscriber(MakeSubscriberConnection());
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription));
 
   std::mutex mu;
   std::map<std::string, int> ids;
@@ -106,7 +106,7 @@ TEST(MessageIntegrationTest, PublishPullAck) {
     std::move(h).ack();
   };
 
-  auto result = subscriber.Subscribe(subscription, handler);
+  auto result = subscriber.Subscribe(handler);
   // Wait until there are no more ids pending, then cancel the subscription and
   // get its status.
   ids_empty.get_future().get();

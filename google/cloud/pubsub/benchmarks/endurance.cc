@@ -20,6 +20,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/memory/memory.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
@@ -234,11 +235,14 @@ int main(int argc, char* argv[]) {
     flow_control.Received(m);
   };
 
-  auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection());
+  std::vector<std::unique_ptr<pubsub::Subscriber>> subscribers;
   std::vector<future<google::cloud::Status>> sessions;
   for (auto i = 0; i != config->session_count; ++i) {
     auto const& subscription = subscriptions[i % subscriptions.size()];
-    sessions.push_back(subscriber.Subscribe(subscription, handler));
+    auto subscriber = absl::make_unique<pubsub::Subscriber>(
+        pubsub::MakeSubscriberConnection(subscription));
+    sessions.push_back(subscriber->Subscribe(handler));
+    subscribers.push_back(std::move(subscriber));
   }
   auto cleanup_sessions = [&] {
     for (auto& s : sessions) s.cancel();
@@ -296,9 +300,8 @@ int main(int argc, char* argv[]) {
   while (!ExperimentCompleted(*config, flow_control, start)) {
     std::this_thread::sleep_for(cycle);
     auto const idx = session_selector(generator);
-    auto const& subscription = subscriptions[idx % subscriptions.size()];
     sessions[idx].cancel();
-    sessions[idx] = subscriber.Subscribe(subscription, handler);
+    sessions[idx] = subscribers[idx]->Subscribe(handler);
 
     auto const now = std::chrono::steady_clock::now();
     if (now >= report_deadline) {

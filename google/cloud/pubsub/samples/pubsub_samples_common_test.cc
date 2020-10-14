@@ -65,7 +65,6 @@ TEST(PubSubSamplesCommon, SubscriberCommand) {
       "PUBSUB_EMULATOR_HOST", "localhost:8085");
   int call_count = 0;
   auto command = [&call_count](pubsub::Subscriber const&,
-                               pubsub::Subscription const&,
                                std::vector<std::string> const& argv) {
     ++call_count;
     ASSERT_EQ(2, argv.size());

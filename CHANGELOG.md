@@ -4,10 +4,18 @@
 
 ### Pub/Sub
 
-**BREAKING CHANGES**:
+**BREAKING CHANGES:**
 
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
+
+* Change the `pubsub::Subscriber` API. A `Subscriber` is now bound to a specific
+  Cloud Pub/Sub subscription, with a fixed set of `SuscriptionOptions`, just
+  like a `pubsub::Publisher` is bound to a specific topic and a set of
+  `PublisherOptions`. In addition to making publishers and subscribers more
+  symmetrical, this makes the library more consistent with the Cloud Pub/Sub
+  library for other languages. Finally, note that we are planning to rename
+  `SubscriptionOptions` to `SubscriberOptions` in a future PR too.
 
 * Remove option to disable retries in `Publisher::Publish`. This is redundant as
   the application can set a "no retries" retry policy. This is more consistent

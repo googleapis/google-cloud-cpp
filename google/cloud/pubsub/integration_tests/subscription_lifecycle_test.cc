@@ -83,19 +83,18 @@ TEST(MessageIntegrationTest, FireAndForget) {
   auto constexpr kMinimumMessages = 10;
 
   auto publisher = Publisher(MakePublisherConnection(topic, {}));
-  auto subscriber = Subscriber(MakeSubscriberConnection());
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription));
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   {
     (void)subscriber
-        .Subscribe(subscription,
-                   [&](Message const& m, AckHandler h) {
-                     std::move(h).ack();
-                     std::unique_lock<std::mutex> lk(mu);
-                     std::cout << "received " << m.message_id() << std::endl;
-                     received.insert(m.message_id());
-                     lk.unlock();
-                     cv.notify_one();
-                   })
+        .Subscribe([&](Message const& m, AckHandler h) {
+          std::move(h).ack();
+          std::unique_lock<std::mutex> lk(mu);
+          std::cout << "received " << m.message_id() << std::endl;
+          received.insert(m.message_id());
+          lk.unlock();
+          cv.notify_one();
+        })
         .then([&](future<Status> f) {
           std::unique_lock<std::mutex> lk(mu);
           subscription_result = f.get();
