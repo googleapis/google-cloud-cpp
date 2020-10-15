@@ -29,10 +29,9 @@ are close enough to a GA release that we think highlighting them is important.
   maximum number of messages per batch and the maximum number of bytes per
   batch.
 
-* Rename `TopicMutationBuilder` to `TopicBuilder`, and
-  `SubscriptionMutationBuilder` to `SubscriptionBuilder`. This makes the C++
-  library more familiar for Cloud Pub/Sub developers coming from other
-  languages.
+* Rename the `{Topic,Snapshot,Subscription}MutationBuilder` classes, removing
+  `Mutation` from their names. This makes the C++ library more familiar for
+  Cloud Pub/Sub developers coming from other languages.
 
 * Simplify the message flow control configuration. Now that the library uses
   streaming pulls, the low water marks are not used. The application developer

@@ -563,7 +563,7 @@ void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string snapshot_id) {
     auto snap = client.UpdateSnapshot(
         pubsub::Snapshot(project_id, std::move(snapshot_id)),
-        pubsub::SnapshotMutationBuilder{}.add_label("samples-cpp", "gcp"));
+        pubsub::SnapshotBuilder{}.add_label("samples-cpp", "gcp"));
     if (!snap.ok()) return;  // TODO(#4792) - emulator lacks UpdateSnapshot()
 
     std::cout << "The snapshot was successfully updated: "

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
+#include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
@@ -251,7 +251,7 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
   auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->CreateSnapshot(
-      {SnapshotMutationBuilder{}.BuildCreateMutation(subscription, snapshot)});
+      {SnapshotBuilder{}.BuildCreateRequest(subscription, snapshot)});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
 }
@@ -271,7 +271,7 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshotNotIdempotent) {
   auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->CreateSnapshot(
-      {SnapshotMutationBuilder{}.BuildCreateMutation(subscription)});
+      {SnapshotBuilder{}.BuildCreateRequest(subscription)});
   EXPECT_THAT(response,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -345,7 +345,7 @@ TEST(SubscriptionAdminConnectionTest, UpdateSnapshot) {
   auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->UpdateSnapshot(
-      {SnapshotMutationBuilder{}.BuildUpdateMutation(snapshot)});
+      {SnapshotBuilder{}.BuildUpdateRequest(snapshot)});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
 }
