@@ -69,17 +69,17 @@ def print_test(t):
         for c in t["chunks"]:
             o += '      R"chunk(\n'
 	    if ('rowKey' in c):
-                o += '      rowKey: "' + c['rowKey'] + '"\n'
+                o += '      row_key: "' + c['rowKey'] + '"\n'
 	    if ('familyName' in c):
-	        o += '      familyName: "' + c['familyName'] + '"\n'
+	        o += '      family_name: < value:"' + c['familyName'] + '">\n'
 	    if ('qualifier' in c):
-                o += '      qualifier: "' + c["qualifier"] + '"\n'
+                o += '      qualifier: < value:"' + c["qualifier"] + '">\n'
 	    if ('timestampMicros' in c):
-                o += '      timestampMicros: "' + str(c["timestampMicros"]) + '"\n'
+                o += '      timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
 	    if ('value' in c):
                 o += '      value: "' + c["value"] + '"\n'
 	    if ('commitRow' in c):
-                o += '      commitRow: "' + unicode(c["commitRow"]) + '"\n' 
+                o += '      commit_row: ' + unicode(c["commitRow"]).lower() + '\n' 
             o += '        )chunk",\n'
     if o[-1] == "\n":
         o += "  "	
@@ -91,13 +91,10 @@ def print_test(t):
 
     o += "\n"
 
-    ok = True
+    ok = False 
     if ('results' in t):
-       	#try:
 	    if ('error' in t["results"]):
                 ok = not any([r["error"] for r in t["results"]])
-	#except KeyError:
-	    #raise ValueError('No "error" key in "%s"' % (r, ))
 
     if ok:
         o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
@@ -110,13 +107,13 @@ def print_test(t):
         for r in t["results"]:
            o += "\n"
 	   if ('rowKey' in r):
-	       o += '      "rowKey: ' + r["rowKey"] + '\\n"\n'
+	       o += '      "rk: ' + r["rowKey"] + '\\n"\n'
 	   if ('familyName' in r):
-               o += '      "familyName: ' + r["familyName"] + '\\n"\n'
+               o += '      "fm: ' + r["familyName"] + '\\n"\n'
 	   if ('qualifier' in r):
-               o += '      "qualifier: ' + r["qualifier"] + '\\n"\n'
+               o += '      "qual: ' + r["qualifier"] + '\\n"\n'
 	   if ('timestampMicros' in r):
-               o += '      "timestampMicros: ' + str(r["timestampMicros"]) + '\\n"\n'
+               o += '      "ts: ' + str(r["timestampMicros"]) + '\\n"\n'
 	   if ('value' in r):
                o += '      "value: ' + r["value"] + '\\n"\n'
 	   if ('label' in r):
