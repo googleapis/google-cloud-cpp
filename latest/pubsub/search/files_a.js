@@ -2,7 +2,6 @@ var searchData=
 [
   ['message_2ecc',['message.cc',['../message_8cc.html',1,'']]],
   ['message_2eh',['message.h',['../message_8h.html',1,'']]],
-  ['message_5fintegration_5ftest_2ecc',['message_integration_test.cc',['../message__integration__test_8cc.html',1,'']]],
   ['message_5ftest_2ecc',['message_test.cc',['../message__test_8cc.html',1,'']]],
   ['mock_5fack_5fhandler_2eh',['mock_ack_handler.h',['../mock__ack__handler_8h.html',1,'']]],
   ['mock_5fpublisher_2ecc',['mock_publisher.cc',['../mock__publisher_8cc.html',1,'']]],
