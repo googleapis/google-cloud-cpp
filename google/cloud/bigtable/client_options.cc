@@ -41,9 +41,7 @@ std::string DefaultDataEndpoint() {
   auto direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   if (direct_path.has_value()) {
-    std::vector<std::string> const tokens =
-        absl::StrSplit(*std::move(direct_path), ',');
-    for (auto const& token : tokens) {
+    for (auto const& token : absl::StrSplit(*std::move(direct_path), ',')) {
       if (token == "bigtable") return "directpath-bigtable.googleapis.com";
     }
   }

@@ -44,8 +44,7 @@ void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
 }
 
 std::vector<std::string> SignUrlRequestCommon::ObjectNameParts() const {
-  std::vector<std::string> parts = absl::StrSplit(object_name(), '/');
-  return parts;
+  return absl::StrSplit(object_name(), '/');
 }
 
 std::vector<std::string> V4SignUrlRequest::ObjectNameParts() const {

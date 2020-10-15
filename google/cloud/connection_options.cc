@@ -28,8 +28,7 @@ std::set<std::string> DefaultTracingComponents() {
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (!tracing.has_value()) return {};
-  std::set<std::string> result = absl::StrSplit(*tracing, ',');
-  return result;
+  return absl::StrSplit(*tracing, ',');
 }
 
 TracingOptions DefaultTracingOptions() {
