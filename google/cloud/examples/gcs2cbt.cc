@@ -18,6 +18,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_split.h"
 #include <condition_variable>
 #include <fstream>
 #include <future>
@@ -36,18 +37,6 @@ namespace cbt = google::cloud::bigtable;
 namespace gcs = google::cloud::storage;
 
 namespace {
-
-/**
- * Breakdown a CSV file line into fields.
- *
- * TODO() - handle escape sequences with backslash.
- *
- * TODO() - handle quoted fields with embedded separators.
- *
- * TODO() - make the separator configurable.
- */
-std::vector<std::string> ParseLine(long lineno,  // NOLINT(google-runtime-int)
-                                   std::string const& line, char separator);
 
 struct Options {
   char separator;
@@ -109,7 +98,8 @@ int main(int argc, char* argv[]) try {
   std::string line;
   std::getline(is, line, '\n');
   int lineno = 0;
-  auto headers = ParseLine(++lineno, line, options.separator);
+  std::vector<std::string> const headers =
+      absl::StrSplit(line, options.separator);
 
   std::cout << "# HEADER " << line << "\n";
 
@@ -136,7 +126,8 @@ int main(int argc, char* argv[]) try {
     if (line.empty()) {
       break;
     }
-    auto parsed = ParseLine(lineno, line, options.separator);
+    std::vector<std::string> const parsed =
+        absl::StrSplit(line, options.separator);
 
     using std::chrono::milliseconds;
     auto ts = std::chrono::duration_cast<milliseconds>(
@@ -196,23 +187,6 @@ int main(int argc, char* argv[]) try {
 }
 
 namespace {
-std::vector<std::string> ParseLine(long lineno,  // NOLINT(google-runtime-int)
-                                   std::string const& line,
-                                   char separator) try {
-  std::vector<std::string> result;
-
-  // Extract the fields one at a time using a std::istringstream.
-  std::istringstream tokens(line);
-  std::string tk;
-  while (std::getline(tokens, tk, separator)) {
-    result.emplace_back(tk);
-  }
-  return result;
-} catch (std::exception const& ex) {
-  std::ostringstream os;
-  os << ex.what() << " in line #" << lineno << " (" << line << ")";
-  throw std::runtime_error(os.str());
-}
 
 std::string ConsumeArg(Options& options, std::vector<std::string>& argv,
                        char const* arg_name) {

@@ -21,6 +21,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
@@ -369,11 +370,9 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
       std::string assertion = p.substr(prefix.size());
 
-      std::istringstream is(assertion);
-      std::string encoded_header;
-      std::getline(is, encoded_header, '.');
-      std::string encoded_payload;
-      std::getline(is, encoded_payload, '.');
+      std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
+      std::string const& encoded_header = tokens[0];
+      std::string const& encoded_payload = tokens[1];
 
       auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
       std::string header_str{header_bytes.begin(), header_bytes.end()};
@@ -783,22 +782,16 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
 
-  std::istringstream is(kExpectedAssertionParam);
-  std::string expected_encoded_header;
-  std::getline(is, expected_encoded_header, '.');
-  std::string expected_encoded_payload;
-  std::getline(is, expected_encoded_payload, '.');
-  std::string expected_encoded_signature;
-  std::getline(is, expected_encoded_signature);
+  std::vector<std::string> expected_tokens =
+      absl::StrSplit(kExpectedAssertionParam, '.');
+  std::string const& expected_encoded_header = expected_tokens[0];
+  std::string const& expected_encoded_payload = expected_tokens[1];
+  std::string const& expected_encoded_signature = expected_tokens[2];
 
-  is.str(assertion);
-  is.clear();
-  std::string actual_encoded_header;
-  std::getline(is, actual_encoded_header, '.');
-  std::string actual_encoded_payload;
-  std::getline(is, actual_encoded_payload, '.');
-  std::string actual_encoded_signature;
-  std::getline(is, actual_encoded_signature);
+  std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
+  std::string const& actual_encoded_header = actual_tokens[0];
+  std::string const& actual_encoded_payload = actual_tokens[1];
+  std::string const& actual_encoded_signature = actual_tokens[2];
 
   EXPECT_EQ(expected_encoded_header, "assertion=" + actual_encoded_header);
   EXPECT_EQ(expected_encoded_payload, actual_encoded_payload);

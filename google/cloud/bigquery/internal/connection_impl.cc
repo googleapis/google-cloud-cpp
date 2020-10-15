@@ -17,6 +17,7 @@
 #include "google/cloud/bigquery/internal/streaming_read_result_source.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_split.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
 #include <memory>
 #include <sstream>
@@ -33,26 +34,6 @@ namespace bigquerystorage_proto = ::google::cloud::bigquery::storage::v1beta1;
 using ::google::cloud::Status;
 using ::google::cloud::StatusCode;
 using ::google::cloud::StatusOr;
-
-namespace {
-template <char Delimiter>
-class DelimitedBy : public std::string {};
-
-// TODO(aryann): Replace this with `absl::StrSplit` once it is
-// available.
-template <char Delimiter>
-std::vector<std::string> StrSplit(std::string const& input) {
-  std::istringstream iss(input);
-  return {std::istream_iterator<DelimitedBy<Delimiter>>(iss),
-          std::istream_iterator<DelimitedBy<Delimiter>>()};
-}
-
-template <char Delimiter>
-std::istream& operator>>(std::istream& is, DelimitedBy<Delimiter>& output) {
-  std::getline(is, output, Delimiter);
-  return is;
-}
-}  // namespace
 
 ConnectionImpl::ConnectionImpl(std::shared_ptr<StorageStub> read_stub)
     : read_stub_(std::move(read_stub)) {}
@@ -88,14 +69,14 @@ StatusOr<std::vector<ReadStream>> ConnectionImpl::ParallelRead(
 StatusOr<bigquerystorage_proto::ReadSession> ConnectionImpl::NewReadSession(
     std::string const& parent_project_id, std::string const& table,
     std::vector<std::string> const& columns) {
-  auto parts = StrSplit<':'>(table);
+  std::vector<std::string> parts = absl::StrSplit(table, ':');
   if (parts.size() != 2) {
     return Status(
         StatusCode::kInvalidArgument,
         "Table name must be of the form PROJECT_ID:DATASET_ID.TABLE_ID.");
   }
   std::string project_id = parts[0];
-  parts = StrSplit<'.'>(parts[1]);
+  parts = absl::StrSplit(parts[1], '.');
   if (parts.size() != 2) {
     return Status(
         StatusCode::kInvalidArgument,
