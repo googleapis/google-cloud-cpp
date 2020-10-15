@@ -782,16 +782,16 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
 
-  std::vector<std::string> tokens =
+  std::vector<std::string> expected_tokens =
       absl::StrSplit(kExpectedAssertionParam, '.');
-  std::string const& expected_encoded_header = tokens[0];
-  std::string const& expected_encoded_payload = tokens[1];
-  std::string const& expected_encoded_signature = tokens[2];
+  std::string const& expected_encoded_header = expected_tokens[0];
+  std::string const& expected_encoded_payload = expected_tokens[1];
+  std::string const& expected_encoded_signature = expected_tokens[2];
 
-  tokens = absl::StrSplit(assertion, '.');
-  std::string const& actual_encoded_header = tokens[0];
-  std::string const& actual_encoded_payload = tokens[1];
-  std::string const& actual_encoded_signature = tokens[2];
+  std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
+  std::string const& actual_encoded_header = actual_tokens[0];
+  std::string const& actual_encoded_payload = actual_tokens[1];
+  std::string const& actual_encoded_signature = actual_tokens[2];
 
   EXPECT_EQ(expected_encoded_header, "assertion=" + actual_encoded_header);
   EXPECT_EQ(expected_encoded_payload, actual_encoded_payload);
