@@ -223,6 +223,15 @@ class SubscriptionBuilder {
     return std::move(set_expiration_policy(std::move(v)));
   }
 
+  SubscriptionBuilder& set_filter(std::string v) & {
+    proto_.set_filter(std::move(v));
+    paths_.insert("filter");
+    return *this;
+  }
+  SubscriptionBuilder&& set_filter(std::string v) && {
+    return std::move(set_filter(std::move(v)));
+  }
+
   SubscriptionBuilder& set_dead_letter_policy(
       google::pubsub::v1::DeadLetterPolicy v) & {
     *proto_.mutable_dead_letter_policy() = std::move(v);

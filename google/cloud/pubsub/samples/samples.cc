@@ -218,6 +218,31 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateFilteredSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [create-filtered-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string topic_id, std::string subscription_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, std::move(topic_id)),
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionBuilder{}.set_filter(
+            R"""(attributes.is-even = "false")"""));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [create-filtered-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void CreatePushSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -707,8 +732,10 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
   std::vector<future<StatusOr<std::string>>> done;
   done.reserve(message_count);
   for (int i = 0; i != message_count; ++i) {
+    std::string const value = i % 2 == 0 ? "true" : "false";
     done.push_back(
         publisher.Publish(pubsub::MessageBuilder{}
+                              .SetAttributes({{"is-even", value}})
                               .SetData(prefix + " [" + std::to_string(i) + "]")
                               .Build()));
   }
@@ -1310,15 +1337,16 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto topic_id = RandomTopicId(generator);
-  auto subscription_id = RandomSubscriptionId(generator);
-  auto push_subscription_id = RandomSubscriptionId(generator);
-  auto ordering_subscription_id = RandomSubscriptionId(generator);
-  auto ordering_topic_id = "ordering-" + RandomTopicId(generator);
-  auto dead_letter_subscription_id = RandomSubscriptionId(generator);
-  auto dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
+  auto const topic_id = RandomTopicId(generator);
+  auto const subscription_id = RandomSubscriptionId(generator);
+  auto const filtered_subscription_id = RandomSubscriptionId(generator);
+  auto const push_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
+  auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
+  auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
 
-  auto snapshot_id = RandomSnapshotId(generator);
+  auto const snapshot_id = RandomSnapshotId(generator);
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
@@ -1353,6 +1381,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [2]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
 
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
@@ -1463,6 +1499,11 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriberConnection(
           dead_letter_subscription));
 
+  auto filtered_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(
+          google::cloud::pubsub::Subscription(project_id,
+                                              filtered_subscription_id)));
+
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
 
@@ -1471,6 +1512,10 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, {});
+
+  std::cout << "\nRunning Subscribe(filtered) sample" << std::endl;
+  PublishHelper(publisher, "Subscribe(filtered)", 8);
+  Subscribe(filtered_subscriber, {});
 
   std::cout << "\nRunning Publish() sample [2]" << std::endl;
   Publish(publisher, {});
@@ -1600,6 +1645,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriptionAdminCommand(
           "create-subscription", {"project-id", "topic-id", "subscription-id"},
           CreateSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-filtered-subscription",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateFilteredSubscription),
       CreateSubscriptionAdminCommand(
           "create-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
