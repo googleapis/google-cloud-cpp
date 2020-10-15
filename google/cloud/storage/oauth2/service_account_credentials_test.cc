@@ -371,8 +371,8 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       std::string assertion = p.substr(prefix.size());
 
       std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
-      std::string encoded_header = std::move(tokens[0]);
-      std::string encoded_payload = std::move(tokens[1]);
+      std::string const& encoded_header = std::move(tokens[0]);
+      std::string const& encoded_payload = std::move(tokens[1]);
 
       auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
       std::string header_str{header_bytes.begin(), header_bytes.end()};
@@ -784,14 +784,14 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
 
   std::vector<std::string> tokens =
       absl::StrSplit(kExpectedAssertionParam, '.');
-  std::string expected_encoded_header = std::move(tokens[0]);
-  std::string expected_encoded_payload = std::move(tokens[1]);
-  std::string expected_encoded_signature = std::move(tokens[2]);
+  std::string const& expected_encoded_header = std::move(tokens[0]);
+  std::string const& expected_encoded_payload = std::move(tokens[1]);
+  std::string const& expected_encoded_signature = std::move(tokens[2]);
 
   tokens = absl::StrSplit(assertion, '.');
-  std::string actual_encoded_header = std::move(tokens[0]);
-  std::string actual_encoded_payload = std::move(tokens[1]);
-  std::string actual_encoded_signature = std::move(tokens[2]);
+  std::string const& actual_encoded_header = std::move(tokens[0]);
+  std::string const& actual_encoded_payload = std::move(tokens[1]);
+  std::string const& actual_encoded_signature = std::move(tokens[2]);
 
   EXPECT_EQ(expected_encoded_header, "assertion=" + actual_encoded_header);
   EXPECT_EQ(expected_encoded_payload, actual_encoded_payload);
