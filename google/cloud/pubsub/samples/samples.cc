@@ -224,7 +224,7 @@ void CreateFilteredSubscription(
   //! [create-filtered-subscription]
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id) {
+     std::string topic_id, std::string subscription_id) {
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
