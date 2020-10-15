@@ -370,7 +370,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
       std::string assertion = p.substr(prefix.size());
 
-      std::vector<std::string> tokens = absl::StrSplit(assertion, '.');
+      std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
       std::string encoded_header = std::move(tokens[0]);
       std::string encoded_payload = std::move(tokens[1]);
 

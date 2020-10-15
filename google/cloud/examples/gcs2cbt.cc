@@ -98,7 +98,8 @@ int main(int argc, char* argv[]) try {
   std::string line;
   std::getline(is, line, '\n');
   int lineno = 0;
-  std::vector<std::string> headers = absl::StrSplit(line, options.separator);
+  std::vector<std::string> const headers =
+      absl::StrSplit(line, options.separator);
 
   std::cout << "# HEADER " << line << "\n";
 
@@ -125,7 +126,8 @@ int main(int argc, char* argv[]) try {
     if (line.empty()) {
       break;
     }
-    std::vector<std::string> parsed = absl::StrSplit(line, options.separator);
+    std::vector<std::string> const parsed =
+        absl::StrSplit(line, options.separator);
 
     using std::chrono::milliseconds;
     auto ts = std::chrono::duration_cast<milliseconds>(

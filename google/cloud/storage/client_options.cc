@@ -158,7 +158,7 @@ void ClientOptions::SetupFromEnvironment() {
   auto tracing =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
   if (tracing.has_value()) {
-    std::set<std::string> enabled = absl::StrSplit(*tracing, ',');
+    std::set<std::string> const enabled = absl::StrSplit(*tracing, ',');
     if (enabled.end() != enabled.find("http")) {
       GCP_LOG(INFO) << "Enabling logging for http";
       set_enable_http_tracing(true);
