@@ -16,7 +16,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/str_split.h"
 #include <sstream>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -26,12 +28,7 @@ std::set<std::string> DefaultTracingComponents() {
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (!tracing.has_value()) return {};
-  std::set<std::string> result;
-  std::istringstream is{*tracing};
-  std::string token;
-  while (std::getline(is, token, ',')) {
-    result.insert(token);
-  }
+  std::set<std::string> result = absl::StrSplit(*tracing, ',');
   return result;
 }
 

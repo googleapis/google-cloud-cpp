@@ -17,6 +17,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_split.h"
 #include <cstdlib>
 #include <set>
 #include <sstream>
@@ -157,12 +158,7 @@ void ClientOptions::SetupFromEnvironment() {
   auto tracing =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
   if (tracing.has_value()) {
-    std::set<std::string> enabled;
-    std::istringstream is{*tracing};
-    std::string token;
-    while (std::getline(is, token, ',')) {
-      enabled.emplace(token);
-    }
+    std::set<std::string> enabled = absl::StrSplit(*tracing, ',');
     if (enabled.end() != enabled.find("http")) {
       GCP_LOG(INFO) << "Enabling logging for http";
       set_enable_http_tracing(true);

@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "absl/strings/str_split.h"
 #include <sstream>
 #include <thread>
 
@@ -40,9 +41,9 @@ std::string DefaultDataEndpoint() {
   auto direct_path =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
   if (direct_path.has_value()) {
-    std::istringstream is(*std::move(direct_path));
-    std::string token;
-    while (std::getline(is, token, ',')) {
+    std::vector<std::string> const tokens =
+        absl::StrSplit(*std::move(direct_path), ',');
+    for (auto const& token : tokens) {
       if (token == "bigtable") return "directpath-bigtable.googleapis.com";
     }
   }

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "absl/strings/str_split.h"
 #include <algorithm>
 #include <cctype>
 #include <sstream>
@@ -43,14 +44,7 @@ void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
 }
 
 std::vector<std::string> SignUrlRequestCommon::ObjectNameParts() const {
-  std::vector<std::string> parts;
-  std::istringstream is(object_name());
-  std::string part;
-  do {
-    std::getline(is, part, '/');
-    parts.push_back(part);
-    is.tellg();
-  } while (is);
+  std::vector<std::string> parts = absl::StrSplit(object_name(), '/');
   return parts;
 }
 
