@@ -51,10 +51,11 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
             << join(", ", rhs.response_header) << "]}";
 }
 
-std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs) {
+std::ostream& operator<<(std::ostream& os,
+                         UniformBucketLevelAccess const& rhs) {
   google::cloud::internal::IosFlagsSaver save_format(os);
-  return os << "UniformBucketLevelAccess={enabled=" << std::boolalpha << rhs.enabled
-            << ", locked_time="
+  return os << "UniformBucketLevelAccess={enabled=" << std::boolalpha
+            << rhs.enabled << ", locked_time="
             << google::cloud::internal::FormatRfc3339(rhs.locked_time) << "}";
 }
 

@@ -153,6 +153,7 @@ struct UniformBucketLevelAccess {
   bool enabled;
   std::chrono::system_clock::time_point locked_time;
 };
+using BucketPolicyOnly = UniformBucketLevelAccess;
 
 //@{
 /// @name Comparison operators For UniformBucketLevelAccess
@@ -194,8 +195,8 @@ std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
 /**
  * The IAM configuration for a Bucket.
  *
- * Currently this only holds the UniformBucketLevelAccess. In the future, we may define
- * additional IAM which would be included in this object.
+ * Currently this only holds the UniformBucketLevelAccess. In the future, we may
+ * define additional IAM which would be included in this object.
  *
  * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.

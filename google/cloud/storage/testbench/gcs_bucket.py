@@ -128,7 +128,9 @@ class GcsBucket(object):
         """
         field_was_enabled = False
         if self.metadata.get("iamConfiguration"):
-            field_value = self.metadata.get("iamConfiguration").get("uniformBucketLevelAccess")
+            field_value = self.metadata.get("iamConfiguration").get(
+                "uniformBucketLevelAccess"
+            )
             if field_value:
                 field_was_enabled = field_value.get("enabled")
         config = patch.get("iamConfiguration")
