@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
+#include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -162,8 +162,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   // TODO(#4792) - the emulator does not support UpdateSnapshot()
   if (!UsingEmulator()) {
     auto update_snapshot_response = subscription_admin.UpdateSnapshot(
-        snapshot,
-        SnapshotMutationBuilder{}.add_label("test-label", "test-value"));
+        snapshot, SnapshotBuilder{}.add_label("test-label", "test-value"));
     ASSERT_STATUS_OK(update_snapshot_response);
     EXPECT_FALSE(update_snapshot_response->labels().empty());
   }
@@ -294,7 +293,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
       {}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = client.UpdateSnapshot(
       Snapshot("--invalid-project--", "--invalid-snapshot--"),
-      SnapshotMutationBuilder{}.clear_labels());
+      SnapshotBuilder{}.clear_labels());
   ASSERT_FALSE(response.ok());
 }
 
