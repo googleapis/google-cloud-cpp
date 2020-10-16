@@ -69,17 +69,17 @@ def print_test(t):
         for c in t["chunks"]:
             o += '      R"chunk(\n'
 	    if ('rowKey' in c):
-                o += '      row_key: "' + c['rowKey'] + '"\n'
+                o += '          row_key: "' + c['rowKey'] + '"\n'
 	    if ('familyName' in c):
-	        o += '      family_name: < value:"' + c['familyName'] + '">\n'
+	        o += '          family_name: < value:"' + c['familyName'] + '">\n'
 	    if ('qualifier' in c):
-                o += '      qualifier: < value:"' + c["qualifier"] + '">\n'
+                o += '          qualifier: < value:"' + c["qualifier"] + '">\n'
 	    if ('timestampMicros' in c):
-                o += '      timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
+                o += '          timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
 	    if ('value' in c):
-                o += '      value: "' + c["value"] + '"\n'
+                o += '          value: "' + c["value"] + '"\n'
 	    if ('commitRow' in c):
-                o += '      commit_row: ' + unicode(c["commitRow"]).lower() + '\n' 
+                o += '          commit_row: ' + unicode(c["commitRow"]).lower() + '\n' 
             o += '        )chunk",\n'
     if o[-1] == "\n":
         o += "  "	
