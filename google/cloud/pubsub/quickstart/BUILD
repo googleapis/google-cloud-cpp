@@ -22,7 +22,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        # TODO(#4856) - use the top-level target
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/pubsub:pubsub_client",
+        "@com_github_googleapis_google_cloud_cpp//:pubsub_client",
     ],
 )
