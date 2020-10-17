@@ -14,10 +14,17 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include <nlohmann/json.hpp>
 #include <iostream>
 
 int main() {
+  // Adding nlohmann/json to the global namespace when the user does not
+  // explicitly asks for it is too much namespace pollution. The application
+  // may not want that many dependencies. Also, on Windows that may drag really
+  // unwanted dependencies.
+#ifdef NLOHMANN_JSON_VERSION
+#error "NLOHMANN_JSON should not be included by storage public headers"
+#endif  // NLOHMANN_JSON_VERSION
+
   // Adding openssl to the global namespace when the user does not explicitly
   // asks for it is too much namespace pollution. The application may not want
   // that many dependencies. Also, on Windows that may drag really unwanted
