@@ -30,8 +30,9 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   callback_ = std::move(callback);
   lk.unlock();
 
-  shutdown_manager_->StartOperation(__func__, "stream",
-                                    [this] { StartStream(); });
+  shutdown_manager_->StartOperation(__func__, "stream", [this] {
+    StartStream(retry_policy_->clone(), backoff_policy_->clone());
+  });
 }
 
 void StreamingSubscriptionBatchSource::Shutdown() {
@@ -72,55 +73,41 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   DrainQueues(std::move(lk));
 }
 
-namespace {
-StatusOr<StreamingSubscriptionBatchSource::StreamShptr> Unknown(std::string m) {
-  return Status(StatusCode::kUnknown, std::move(m));
-}
-
-future<StatusOr<StreamingSubscriptionBatchSource::StreamShptr>> Unexpected(
-    std::string m) {
-  return make_ready_future(Unknown(std::move(m)));
-}
-
-}  // namespace
-
-void StreamingSubscriptionBatchSource::StartStream() {
-  // Starting a stream is a 3 step process.
+void StreamingSubscriptionBatchSource::StartStream(
+    std::shared_ptr<pubsub::RetryPolicy> retry_policy,
+    std::shared_ptr<pubsub::BackoffPolicy> backoff_policy) {
+  // Starting a stream is a 4 step process.
   // 1. Create a new SubscriberStub::AsyncPullStream object.
-  // 2. Call Start() on it, which is asynchronous...
-  // 3. Call Write() on it, which is also asynchronous...
-  // Once Write() completes we can repeatedly call Read().
-  // Because steps 2 and 3 may fail with transient errors we need to wrap these
-  // steps in an asynchronous retry loop.
+  // 2. Call Start() on it, which is asynchronous, which might fail, but rarel
+  //    does
+  // 3. Call Write() on it, which is also asynchronous and almost always
+  //    succeeds, could fail if the endpoint is invalid
+  // 4. Call Read() on it, which is also asynchronous, and it is the first
+  //    change to get errors such as kPermissionDenied, or kNotFound.
+  // Once Read() completes we can repeatedly call Read() and/or Write().
+  // Because steps 2 through 4 may fail with transient errors we need to wrap
+  // these steps in an asynchronous retry loop.
+
+  auto request = InitialRequest();
+  auto stream = stub_->AsyncStreamingPull(
+      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  if (!stream) {
+    shutdown_manager_->MarkAsShutdown(
+        __func__, Status(StatusCode::kUnknown, "null stream"));
+    return;
+  }
+
+  RetryLoopState rs{std::move(stream), std::move(retry_policy),
+                    std::move(backoff_policy)};
+
   auto weak = WeakFromThis();
-  auto start = [weak](google::cloud::CompletionQueue& cq,
-                      std::unique_ptr<grpc::ClientContext> context,
-                      google::pubsub::v1::StreamingPullRequest const& request)
-      -> future<StatusOr<StreamShptr>> {
-    auto self = weak.lock();
-    if (!self) return Unexpected("unbound weak_ptr in StartStream()");
+  rs.stream->Start().then([weak, rs, request](future<bool> f) {
+    if (auto s = weak.lock()) s->OnStart(rs, request, f.get());
+  });
+}
 
-    StreamShptr stream =
-        self->stub_->AsyncStreamingPull(cq, std::move(context), request);
-    if (!stream) return Unexpected("null stream in StartStream()");
-    return stream->Start().then([stream, request](future<bool> f) {
-      auto finish_broken_stream = [](StreamShptr const& stream) {
-        return stream->Finish().then(
-            [](future<Status> g) -> StatusOr<StreamShptr> {
-              auto status = g.get();
-              if (status.ok()) return Unknown("write error but OK");
-              return status;
-            });
-      };
-      if (!f.get()) return finish_broken_stream(stream);
-      return stream->Write(request, grpc::WriteOptions{}.set_write_through())
-          .then([stream, finish_broken_stream](future<bool> g) {
-            if (!g.get()) return finish_broken_stream(stream);
-            return make_ready_future(make_status_or(stream));
-          });
-    });
-  };
-
+google::pubsub::v1::StreamingPullRequest
+StreamingSubscriptionBatchSource::InitialRequest() const {
   google::pubsub::v1::StreamingPullRequest request;
   request.set_subscription(subscription_full_name_);
   request.set_client_id(client_id_);
@@ -131,46 +118,101 @@ void StreamingSubscriptionBatchSource::StartStream() {
                std::min(std::chrono::seconds(600), max_deadline_time_))
           .count();
   request.set_stream_ack_deadline_seconds(static_cast<std::int32_t>(deadline));
+  return request;
+}
 
-  AsyncRetryLoop(retry_policy_->clone(), backoff_policy_->clone(),
-                 Idempotency::kIdempotent, cq_, start, request, __func__)
-      .then([weak](future<StatusOr<StreamShptr>> f) {
-        if (auto self = weak.lock()) self->OnStreamStart(f.get());
+void StreamingSubscriptionBatchSource::OnStart(
+    RetryLoopState rs, google::pubsub::v1::StreamingPullRequest const& request,
+    bool ok) {
+  auto weak = WeakFromThis();
+  if (!ok) {
+    rs.stream->Finish().then([weak, rs](future<Status> f) mutable {
+      if (auto s = weak.lock()) s->OnInitialFinish(std::move(rs), f.get());
+    });
+    return;
+  }
+  rs.stream->Write(request, grpc::WriteOptions{}.set_write_through())
+      .then([weak, rs](future<bool> f) mutable {
+        if (auto s = weak.lock()) s->OnInitialWrite(std::move(rs), f.get());
       });
 }
 
-void StreamingSubscriptionBatchSource::OnStreamStart(
-    StatusOr<StreamShptr> stream) {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (!stream || !(*stream)) {
-    status_ = std::move(stream).status();
-    ChangeState(lk, StreamState::kNull, __func__, "status");
-    shutdown_manager_->FinishedOperation("stream");
-    shutdown_manager_->MarkAsShutdown(__func__, status_);
-    if (callback_) {
-      auto status = status_;
-      lk.unlock();
-      callback_(std::move(status));
-    }
+void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState rs,
+                                                      bool ok) {
+  auto weak = WeakFromThis();
+  if (!ok) {
+    rs.stream->Finish().then([weak, rs](future<Status> f) {
+      if (auto s = weak.lock()) s->OnInitialFinish(std::move(rs), f.get());
+    });
     return;
   }
-  ChangeState(lk, StreamState::kActive, __func__, "success");
-  stream_ = *std::move(stream);
+  rs.stream->Read().then(
+      [weak, rs](
+          future<absl::optional<google::pubsub::v1::StreamingPullResponse>> f) {
+        if (auto s = weak.lock()) s->OnInitialRead(std::move(rs), f.get());
+      });
+}
+
+void StreamingSubscriptionBatchSource::OnInitialRead(
+    RetryLoopState rs,
+    absl::optional<google::pubsub::v1::StreamingPullResponse> response) {
   auto weak = WeakFromThis();
-  auto sm = shutdown_manager_;
-  // The stream might be created after a shutdown, in which case we need to
-  // avoid starting work, and cancel the outstanding stream.
-  auto const already_shutdown = !shutdown_manager_->StartAsyncOperation(
-      __func__, "StartupStream", cq_, [weak, sm] {
-        sm->FinishedOperation("StartupStream");
-        auto self = weak.lock();
-        if (!self) return;
-        self->ReadLoop();
-        self->DrainQueues(std::unique_lock<std::mutex>(self->mu_));
+  if (!response.has_value()) {
+    rs.stream->Finish().then([weak, rs](future<Status> f) {
+      if (auto s = weak.lock()) s->OnInitialFinish(std::move(rs), f.get());
+    });
+    return;
+  }
+
+  std::unique_lock<std::mutex> lk(mu_);
+  ChangeState(lk, StreamState::kActive, __func__, "success");
+  status_ = Status{};
+  stream_ = std::move(rs.stream);
+  lk.unlock();
+  auto const scheduled =
+      shutdown_manager_->StartOperation(__func__, "read", [&] {
+        shutdown_manager_->FinishedOperation("read");
+        OnRead(std::move(response));
+      });
+  if (!scheduled) {
+    lk.lock();
+    stream_->Cancel();
+    ShutdownStream(std::move(lk), "early-shutdown");
+  }
+}
+
+void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
+                                                       Status status) {
+  if (!rs.retry_policy->OnFailure(status)) {
+    shutdown_manager_->FinishedOperation("stream");
+    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
+    return;
+  }
+  auto weak = WeakFromThis();
+  using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+  cq_.MakeRelativeTimer(rs.backoff_policy->OnCompletion())
+      .then([weak, rs, status](F) mutable {
+        if (auto s = weak.lock()) {
+          s->OnBackoff(std::move(rs), std::move(status));
+        }
+      });
+}
+
+void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
+                                                 Status status) {
+  if (rs.retry_policy->IsExhausted()) {
+    shutdown_manager_->FinishedOperation("stream");
+    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
+    return;
+  }
+  auto const already_shutdown =
+      shutdown_manager_->StartOperation(__func__, "retry", [&] {
+        shutdown_manager_->FinishedOperation("retry");
+        StartStream(std::move(rs.retry_policy), std::move(rs.backoff_policy));
       });
   if (already_shutdown) {
-    stream_->Cancel();
-    ShutdownStream(std::move(lk), "readloop-failure");
+    shutdown_manager_->FinishedOperation("stream");
+    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
   }
 }
 
@@ -232,8 +274,9 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
   ChangeState(lk, StreamState::kNull, __func__, "done");
   if (shutdown_manager_->FinishedOperation("stream")) return;
   lk.unlock();
-  shutdown_manager_->StartOperation(__func__, "stream",
-                                    [this] { StartStream(); });
+  shutdown_manager_->StartOperation(__func__, "stream", [this] {
+    StartStream(retry_policy_->clone(), backoff_policy_->clone());
+  });
 }
 
 void StreamingSubscriptionBatchSource::DrainQueues(
