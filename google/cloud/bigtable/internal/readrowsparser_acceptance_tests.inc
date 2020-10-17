@@ -358,13 +358,13 @@ TEST_F(AcceptanceTest, WithLabels) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          labels: [u'L_1']
+          labels: "L_1"
           value: "value-VAL_1"
           commit_row: false
         )chunk",
       R"chunk(
           timestamp_micros: 98
-          labels: [u'L_2']
+          labels: "L_2"
           value: "value-VAL_2"
           commit_row: true
         )chunk",
@@ -401,6 +401,7 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
+          value_size: 9
           value: "v"
           commit_row: false
         )chunk",
@@ -444,6 +445,7 @@ TEST_F(AcceptanceTest, SplitCell) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
+          value_size: 9
           value: "v"
           commit_row: false
         )chunk",
@@ -477,15 +479,18 @@ TEST_F(AcceptanceTest, SplitFourWays) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          labels: [u'L']
+          labels: "L"
+          value_size: 9
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 9
           value: "a"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 9
           value: "l"
           commit_row: false
         )chunk",
@@ -519,6 +524,7 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -528,6 +534,7 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
         )chunk",
       R"chunk(
           timestamp_micros: 98
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -568,6 +575,7 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -578,6 +586,7 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
       R"chunk(
           qualifier: < value: "D">
           timestamp_micros: 98
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -618,10 +627,12 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 11
           value: "a"
           commit_row: false
         )chunk",
@@ -632,10 +643,12 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
       R"chunk(
           qualifier: < value: "D">
           timestamp_micros: 98
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 11
           value: "a"
           commit_row: false
         )chunk",
@@ -676,6 +689,7 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -687,6 +701,7 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
           family_name: < value: "B">
           qualifier: < value: "E">
           timestamp_micros: 98
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -1222,7 +1237,7 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          labels: [u'L_1']
+          labels: "L_1"
           value: "value-VAL_1"
           commit_row: false
         )chunk",
@@ -1236,7 +1251,7 @@ TEST_F(AcceptanceTest, TwoRowsFourCellsLabels) {
           family_name: < value: "B">
           qualifier: < value: "D">
           timestamp_micros: 97
-          labels: [u'L_3']
+          labels: "L_3"
           value: "value-VAL_3"
           commit_row: false
         )chunk",
@@ -1292,6 +1307,7 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -1304,6 +1320,7 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
+          value_size: 11
           value: "v"
           commit_row: false
         )chunk",
@@ -1340,6 +1357,7 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
 TEST_F(AcceptanceTest, InvalidBareReset) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
+          reset_row: true
         )chunk",
   };
 
@@ -1356,6 +1374,7 @@ TEST_F(AcceptanceTest, InvalidBareReset) {
 TEST_F(AcceptanceTest, InvalidBadResetNoCommit) {
   std::vector<std::string> chunk_strings = {
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1388,6 +1407,7 @@ TEST_F(AcceptanceTest, InvalidMissingKeyAfterReset) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           timestamp_micros: 100
@@ -1417,6 +1437,7 @@ TEST_F(AcceptanceTest, NoDataAfterReset) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
   };
 
@@ -1441,6 +1462,7 @@ TEST_F(AcceptanceTest, SimpleReset) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1480,6 +1502,7 @@ TEST_F(AcceptanceTest, ResetToNewVal) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1519,6 +1542,7 @@ TEST_F(AcceptanceTest, ResetToNewQual) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1563,6 +1587,7 @@ TEST_F(AcceptanceTest, ResetWithSplits) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1602,6 +1627,7 @@ TEST_F(AcceptanceTest, ResetTwoCells) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1653,6 +1679,7 @@ TEST_F(AcceptanceTest, TwoResets) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1663,6 +1690,7 @@ TEST_F(AcceptanceTest, TwoResets) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1702,6 +1730,7 @@ TEST_F(AcceptanceTest, ResetThenTwoCells) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK"
@@ -1754,6 +1783,7 @@ TEST_F(AcceptanceTest, ResetToNewRow) {
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK_2"
@@ -1789,15 +1819,18 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          labels: [u'L']
+          labels: "L"
+          value_size: 10
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 10
           value: "a"
           commit_row: false
         )chunk",
       R"chunk(
+          reset_row: true
         )chunk",
       R"chunk(
           row_key: "RK_1"
@@ -1833,12 +1866,15 @@ TEST_F(AcceptanceTest, InvalidResetWithChunk) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          labels: [u'L']
+          labels: "L"
+          value_size: 10
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 10
           value: "a"
+          reset_row: true
         )chunk",
   };
 
@@ -1859,11 +1895,13 @@ TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          labels: [u'L']
+          labels: "L"
+          value_size: 10
           value: "v"
           commit_row: false
         )chunk",
       R"chunk(
+          value_size: 10
           value: "a"
           commit_row: true
         )chunk",

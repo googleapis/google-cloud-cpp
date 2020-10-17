@@ -73,8 +73,6 @@ def print_test(t):
 		base64_bytes = base64_string.encode("ascii")
 		sample_string_bytes = base64.b64decode(base64_bytes)
 		sample_string = sample_string_bytes.decode("ascii")
-		#print("Decoded string: " + sample_string)
-                #o += '          row_key: "' + c['rowKey'] + '"\n'
                 o += '          row_key: "' + sample_string + '"\n'
 	    if ('familyName' in c):
 	        o += '          family_name: < value: "' + c['familyName'] + '">\n'
@@ -83,19 +81,21 @@ def print_test(t):
 		base64_bytes = base64_string.encode("ascii")
 		sample_string_bytes = base64.b64decode(base64_bytes)
 		sample_string = sample_string_bytes.decode("ascii")
-                #o += '          qualifier: < value:"' + c["qualifier"] + '">\n'
                 o += '          qualifier: < value: "' + sample_string + '">\n'
 	    if ('timestampMicros' in c):
                 o += '          timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
 	    if ('labels' in c):
-                o += '          labels: ' + unicode(c["labels"]) + '\n'
+                o += '          labels: "' + str(*c["labels"]) + '"\n'
+	    if ('valueSize' in c):
+                o += '          value_size: ' + unicode(c["valueSize"]) + '\n'
 	    if ('value' in c):
 		base64_string = c['value'] 
 		base64_bytes = base64_string.encode("ascii")
 		sample_string_bytes = base64.b64decode(base64_bytes)
 		sample_string = sample_string_bytes.decode("ascii")
-                #o += '          value: "' + c["value"] + '"\n'
                 o += '          value: "' + sample_string + '"\n'
+	    if ('resetRow' in c):
+                o += '          reset_row: ' + unicode(c["resetRow"]).lower() + '\n' 
 	    if ('commitRow' in c):
                 o += '          commit_row: ' + unicode(c["commitRow"]).lower() + '\n' 
             o += '        )chunk",\n'
@@ -113,8 +113,6 @@ def print_test(t):
     if ('results' in t):
 	for r in t["results"]:
 	    if ('error' in r):
-                #ok = not any([r["error"] for r in t["results"]])
-                #ok = not any([r['error'] for r in t["results"]])
 		ok = False
 
     if ok:
