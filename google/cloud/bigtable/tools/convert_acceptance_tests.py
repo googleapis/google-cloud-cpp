@@ -86,14 +86,14 @@ def print_test(t):
                 o += '          timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
 	    if ('labels' in c):
                 o += '          labels: "' + str(*c["labels"]) + '"\n'
-	    if ('valueSize' in c):
-                o += '          value_size: ' + unicode(c["valueSize"]) + '\n'
 	    if ('value' in c):
 		base64_string = c['value'] 
 		base64_bytes = base64_string.encode("ascii")
 		sample_string_bytes = base64.b64decode(base64_bytes)
 		sample_string = sample_string_bytes.decode("ascii")
                 o += '          value: "' + sample_string + '"\n'
+	    if ('valueSize' in c):
+                o += '          value_size: ' + unicode(c["valueSize"]) + '\n'
 	    if ('resetRow' in c):
                 o += '          reset_row: ' + unicode(c["resetRow"]).lower() + '\n' 
 	    if ('commitRow' in c):

@@ -401,8 +401,8 @@ TEST_F(AcceptanceTest, SplitCellBareCommit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          value_size: 9
           value: "v"
+          value_size: 9
           commit_row: false
         )chunk",
       R"chunk(
@@ -445,8 +445,8 @@ TEST_F(AcceptanceTest, SplitCell) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          value_size: 9
           value: "v"
+          value_size: 9
           commit_row: false
         )chunk",
       R"chunk(
@@ -480,18 +480,18 @@ TEST_F(AcceptanceTest, SplitFourWays) {
           qualifier: < value: "C">
           timestamp_micros: 100
           labels: "L"
-          value_size: 9
           value: "v"
+          value_size: 9
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 9
           value: "a"
+          value_size: 9
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 9
           value: "l"
+          value_size: 9
           commit_row: false
         )chunk",
       R"chunk(
@@ -524,8 +524,8 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -534,8 +534,8 @@ TEST_F(AcceptanceTest, TwoSplitCells) {
         )chunk",
       R"chunk(
           timestamp_micros: 98
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -575,8 +575,8 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -586,8 +586,8 @@ TEST_F(AcceptanceTest, MultiqualifierSplits) {
       R"chunk(
           qualifier: < value: "D">
           timestamp_micros: 98
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -627,13 +627,13 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 11
           value: "a"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -643,13 +643,13 @@ TEST_F(AcceptanceTest, MultiqualifierMultisplit) {
       R"chunk(
           qualifier: < value: "D">
           timestamp_micros: 98
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 11
           value: "a"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -689,8 +689,8 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 99
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -701,8 +701,8 @@ TEST_F(AcceptanceTest, MultifamilySplit) {
           family_name: < value: "B">
           qualifier: < value: "E">
           timestamp_micros: 98
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -1307,8 +1307,8 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -1320,8 +1320,8 @@ TEST_F(AcceptanceTest, TwoRowsWithSplitsSameTimestamp) {
           family_name: < value: "A">
           qualifier: < value: "C">
           timestamp_micros: 100
-          value_size: 11
           value: "v"
+          value_size: 11
           commit_row: false
         )chunk",
       R"chunk(
@@ -1820,13 +1820,13 @@ TEST_F(AcceptanceTest, ResetInBetweenChunks) {
           qualifier: < value: "C">
           timestamp_micros: 100
           labels: "L"
-          value_size: 10
           value: "v"
+          value_size: 10
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 10
           value: "a"
+          value_size: 10
           commit_row: false
         )chunk",
       R"chunk(
@@ -1867,13 +1867,13 @@ TEST_F(AcceptanceTest, InvalidResetWithChunk) {
           qualifier: < value: "C">
           timestamp_micros: 100
           labels: "L"
-          value_size: 10
           value: "v"
+          value_size: 10
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 10
           value: "a"
+          value_size: 10
           reset_row: true
         )chunk",
   };
@@ -1896,13 +1896,13 @@ TEST_F(AcceptanceTest, InvalidCommitWithChunk) {
           qualifier: < value: "C">
           timestamp_micros: 100
           labels: "L"
-          value_size: 10
           value: "v"
+          value_size: 10
           commit_row: false
         )chunk",
       R"chunk(
-          value_size: 10
           value: "a"
+          value_size: 10
           commit_row: true
         )chunk",
   };
