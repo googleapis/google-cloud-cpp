@@ -321,6 +321,22 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   EXPECT_THAT(received, ElementsAreArray(published));
 }
 
+TEST_F(SubscriberIntegrationTest, ReportNotFound) {
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto const not_found_id = pubsub_testing::RandomSubscriptionId(generator_);
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto const subscription = pubsub::Subscription(project_id, not_found_id);
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription));
+
+  auto handler = [](pubsub::Message const&, AckHandler h) {
+    std::move(h).ack();
+  };
+
+  auto result = subscriber.Subscribe(handler);
+  EXPECT_THAT(result.get(), StatusIs(StatusCode::kNotFound));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
