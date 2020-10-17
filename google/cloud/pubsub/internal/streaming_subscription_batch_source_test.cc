@@ -215,12 +215,17 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+    using Response = google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
     auto write_response = [cq](google::pubsub::v1::StreamingPullRequest const&,
                                grpc::WriteOptions const&) mutable {
-      return cq.MakeRelativeTimer(us(10)).then([](F) { return false; });
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto read_response = [cq]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then(
+          [](F) { return absl::optional<Response>{}; });
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
@@ -230,6 +235,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
     auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
+    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
     EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
 
     return stream;
@@ -271,12 +278,17 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+    using Response = google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
     auto write_response = [cq](google::pubsub::v1::StreamingPullRequest const&,
                                grpc::WriteOptions const&) mutable {
-      return cq.MakeRelativeTimer(us(10)).then([](F) { return false; });
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto read_response = [cq]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then(
+          [](F) { return absl::optional<Response>{}; });
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
@@ -287,6 +299,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
     EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
 
     return stream;
@@ -371,8 +384,9 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
   success_stream.WaitForAction().set_value(true);  // Start()
-  shutdown->MarkAsShutdown("test", {});
   success_stream.WaitForAction().set_value(true);  // Write()
+  shutdown->MarkAsShutdown("test", {});
+  success_stream.WaitForAction().set_value(true);  // Read()
   success_stream.WaitForAction().set_value(true);  // Finish()
 
   EXPECT_EQ(Status{}, done.get());
