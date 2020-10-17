@@ -70,28 +70,22 @@ def print_test(t):
             o += '      R"chunk(\n'
 	    if ('rowKey' in c):
 		base64_string = c['rowKey'] 
-		base64_bytes = base64_string.encode("ascii")
-		sample_string_bytes = base64.b64decode(base64_bytes)
-		sample_string = sample_string_bytes.decode("ascii")
-                o += '          row_key: "' + sample_string + '"\n'
+		rowKey_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+                o += '          row_key: "' + rowKey_string + '"\n'
 	    if ('familyName' in c):
 	        o += '          family_name: < value: "' + c['familyName'] + '">\n'
 	    if ('qualifier' in c):
 		base64_string = c['qualifier'] 
-		base64_bytes = base64_string.encode("ascii")
-		sample_string_bytes = base64.b64decode(base64_bytes)
-		sample_string = sample_string_bytes.decode("ascii")
-                o += '          qualifier: < value: "' + sample_string + '">\n'
+		qualifier_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+                o += '          qualifier: < value: "' + qualifier_string + '">\n'
 	    if ('timestampMicros' in c):
                 o += '          timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
 	    if ('labels' in c):
                 o += '          labels: "' + str(*c["labels"]) + '"\n'
 	    if ('value' in c):
 		base64_string = c['value'] 
-		base64_bytes = base64_string.encode("ascii")
-		sample_string_bytes = base64.b64decode(base64_bytes)
-		sample_string = sample_string_bytes.decode("ascii")
-                o += '          value: "' + sample_string + '"\n'
+		value_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+                o += '          value: "' + value_string + '"\n'
 	    if ('valueSize' in c):
                 o += '          value_size: ' + unicode(c["valueSize"]) + '\n'
 	    if ('resetRow' in c):
