@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_hmac_keys_reader.h"
+#include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
+#include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/assert_ok.h"

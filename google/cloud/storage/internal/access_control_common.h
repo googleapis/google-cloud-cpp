@@ -19,15 +19,18 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
-#include <nlohmann/json.hpp>
 #include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct AccessControlCommonParser;
+}  // namespace internal
+
 /**
- * Represents the projectTeam field in *AcccessControls.
+ * Represents the projectTeam field in *AccessControls.
  *
  * @see
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
@@ -126,11 +129,9 @@ class AccessControlCommon {
 
   std::string const& self_link() const { return self_link_; }
 
-  static Status ParseFromJson(AccessControlCommon& result,
-                              nlohmann::json const& json);
-
  private:
   friend class GrpcClient;
+  friend struct internal::AccessControlCommonParser;
 
   std::string bucket_;
   std::string domain_;

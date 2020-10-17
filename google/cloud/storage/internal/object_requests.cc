@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/common_metadata_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -49,7 +50,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ObjectMetadata result{};
-  auto status = CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);
+  auto status = CommonMetadataParser<ObjectMetadata>::FromJson(result, json);
   if (!status.ok()) {
     return status;
   }

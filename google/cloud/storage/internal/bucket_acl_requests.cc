@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/access_control_common_parser.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
 
@@ -27,7 +28,7 @@ StatusOr<BucketAccessControl> BucketAccessControlParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   BucketAccessControl result{};
-  auto status = AccessControlCommon::ParseFromJson(result, json);
+  auto status = internal::AccessControlCommonParser::FromJson(result, json);
   if (!status.ok()) {
     return status;
   }

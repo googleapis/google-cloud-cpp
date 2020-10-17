@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/access_control_common_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -28,7 +30,7 @@ StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ObjectAccessControl result{};
-  auto status = AccessControlCommon::ParseFromJson(result, json);
+  auto status = internal::AccessControlCommonParser::FromJson(result, json);
   if (!status.ok()) {
     return status;
   }

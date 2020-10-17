@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hmac_key_requests.h"
-#include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include <iostream>
 
 namespace google {
@@ -21,36 +21,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
-StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
-    nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  HmacKeyMetadata result{};
-  result.access_id_ = json.value("accessId", "");
-  result.etag_ = json.value("etag", "");
-  result.id_ = json.value("id", "");
-  result.kind_ = json.value("kind", "");
-  result.project_id_ = json.value("projectId", "");
-  result.service_account_email_ = json.value("serviceAccountEmail", "");
-  result.state_ = json.value("state", "");
-  if (json.count("timeCreated") != 0) {
-    result.time_created_ =
-        google::cloud::internal::ParseRfc3339(json.value("timeCreated", ""));
-  }
-  if (json.count("updated") != 0) {
-    result.updated_ =
-        google::cloud::internal::ParseRfc3339(json.value("updated", ""));
-  }
-  return result;
-}
-
-StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromString(
-    std::string const& payload) {
-  auto json = nlohmann::json::parse(payload, nullptr, false);
-  return FromJson(json);
-}
 
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r) {
   os << "CreateHmacKeyRequest={project_id=" << r.project_id()

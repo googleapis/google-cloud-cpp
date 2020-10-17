@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/common_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
@@ -151,7 +153,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   BucketMetadata result{};
-  auto status = CommonMetadata<BucketMetadata>::ParseFromJson(result, json);
+  auto status = CommonMetadataParser<BucketMetadata>::FromJson(result, json);
   if (!status.ok()) {
     return status;
   }
