@@ -21,9 +21,9 @@ int main() {
   // explicitly asks for it is too much namespace pollution. The application
   // may not want that many dependencies. Also, on Windows that may drag really
   // unwanted dependencies.
-#ifdef NLOHMANN_JSON_VERSION
+#ifdef NLOHMANN_JSON_VERSION_MAJOR
 #error "NLOHMANN_JSON should not be included by storage public headers"
-#endif  // NLOHMANN_JSON_VERSION
+#endif  // NLOHMANN_JSON_VERSION_MAJOR
 
   // Adding openssl to the global namespace when the user does not explicitly
   // asks for it is too much namespace pollution. The application may not want
