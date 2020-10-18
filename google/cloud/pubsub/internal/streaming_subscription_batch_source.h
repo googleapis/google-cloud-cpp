@@ -101,7 +101,7 @@ class StreamingSubscriptionBatchSource
   void OnStart(RetryLoopState rs,
                google::pubsub::v1::StreamingPullRequest const& request,
                bool ok);
-  void OnInitialWrite(RetryLoopState rs, bool ok);
+  void OnInitialWrite(RetryLoopState const& rs, bool ok);
   void OnInitialRead(
       RetryLoopState rs,
       absl::optional<google::pubsub::v1::StreamingPullResponse> response);

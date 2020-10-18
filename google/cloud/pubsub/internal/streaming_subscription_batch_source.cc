@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
-#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/log.h"
 #include <ostream>
 
@@ -21,8 +20,6 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
-using google::cloud::internal::Idempotency;
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -136,7 +133,7 @@ void StreamingSubscriptionBatchSource::OnStart(
       });
 }
 
-void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState rs,
+void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
                                                       bool ok) {
   auto weak = WeakFromThis();
   if (!ok) {
