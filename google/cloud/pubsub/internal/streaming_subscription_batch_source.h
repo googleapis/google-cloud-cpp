@@ -107,6 +107,7 @@ class StreamingSubscriptionBatchSource
       absl::optional<google::pubsub::v1::StreamingPullResponse> response);
   void OnInitialFinish(RetryLoopState rs, Status status);
   void OnBackoff(RetryLoopState rs, Status status);
+  void OnRetryFailure(Status status);
 
   void ReadLoop();
 

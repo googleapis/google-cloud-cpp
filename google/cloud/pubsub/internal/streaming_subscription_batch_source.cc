@@ -184,8 +184,7 @@ void StreamingSubscriptionBatchSource::OnInitialRead(
 void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
                                                        Status status) {
   if (!rs.retry_policy->OnFailure(status)) {
-    shutdown_manager_->FinishedOperation("stream");
-    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
+    OnRetryFailure(std::move(status));
     return;
   }
   auto weak = WeakFromThis();
@@ -201,8 +200,7 @@ void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
 void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
                                                  Status status) {
   if (rs.retry_policy->IsExhausted()) {
-    shutdown_manager_->FinishedOperation("stream");
-    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
+    OnRetryFailure(std::move(status));
     return;
   }
   auto const scheduled =
@@ -212,8 +210,13 @@ void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
       });
   if (!scheduled) {
     shutdown_manager_->FinishedOperation("stream");
-    shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
   }
+}
+
+void StreamingSubscriptionBatchSource::OnRetryFailure(Status status) {
+  shutdown_manager_->FinishedOperation("stream");
+  shutdown_manager_->MarkAsShutdown(__func__, status);
+  callback_(std::move(status));
 }
 
 void StreamingSubscriptionBatchSource::ReadLoop() {
