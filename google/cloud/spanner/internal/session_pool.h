@@ -26,6 +26,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
+#include "absl/container/fixed_array.h"
 #include <google/spanner/v1/spanner.pb.h>
 #include <chrono>
 #include <condition_variable>
@@ -185,8 +186,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
   // the constructor runs (so the iterators are guaranteed to always be valid).
-  // TODO(#566) replace `vector` with `absl::FixedArray` when available.
-  using ChannelVec = std::vector<std::shared_ptr<Channel>>;
+  using ChannelVec = absl::FixedArray<std::shared_ptr<Channel>>;
   ChannelVec channels_;                                 // GUARDED_BY(mu_)
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
