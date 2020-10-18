@@ -37,7 +37,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::AtMost;
-using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -230,7 +229,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
-          [transient](F) mutable { return transient; });
+          [transient](F) { return transient; });
     };
 
     auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
@@ -293,7 +292,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
-          [transient](F) mutable { return transient; });
+          [transient](F) { return transient; });
     };
 
     auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
@@ -475,14 +474,13 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
   EXPECT_THAT(ids, ElementsAre("ack-0", "ack-1", "ack-2", "ack-3", "ack-4"));
 }
 
-#if 0
 TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
-  FakeStream success_stream(true, true, Status{});
+  FakeStream success_stream(Status{});
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([&](google::cloud::CompletionQueue& cq,
@@ -551,26 +549,29 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  success_stream.WaitForAction().set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Start()
+  success_stream.WaitForAction().set_value(true);  // Write()
+  success_stream.WaitForAction().set_value(true);  // Read()
   auto last_read = success_stream.WaitForAction();
 
   uut->AckMessage("fake-001");
   uut->AckMessage("fake-002");
   uut->NackMessage("fake-003");
   // Flush the first AckMessage()
-  success_stream.WaitForAction().set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Write()
   // Flush the compiled AckMessage() + NackMessage()
-  success_stream.WaitForAction().set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Write()
 
   uut->BulkNack({"fake-004", "fake-005"});
-  success_stream.WaitForAction().set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Write()
 
   uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
-  success_stream.WaitForAction().set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Write()
 
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
-  last_read.set_value(false);
+  last_read.set_value(false);                      // Read()
+  success_stream.WaitForAction().set_value(true);  // Finish()
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
@@ -582,7 +583,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   auto const expected_status = Status{StatusCode::kNotFound, "gone"};
-  FakeStream fake_stream(true, true, expected_status);
+  FakeStream fake_stream(expected_status);
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([&](google::cloud::CompletionQueue& cq,
@@ -614,17 +615,20 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  fake_stream.WaitForAction().set_value(true);
+  fake_stream.WaitForAction().set_value(true);  // Start()
+  fake_stream.WaitForAction().set_value(true);  // Write()
+  fake_stream.WaitForAction().set_value(true);  // Read()
 
-  auto pending_read = fake_stream.WaitForAction();
+  auto pending_read = fake_stream.WaitForAction();  // Read() start
   uut->AckMessage("fake-001");
-  auto pending_write = fake_stream.WaitForAction();
+  auto pending_write = fake_stream.WaitForAction();  // Write() start
 
-  pending_read.set_value(false);
+  pending_read.set_value(false);  // Read() done
   shutdown->MarkAsShutdown("test", expected_status);
   uut->Shutdown();
 
-  pending_write.set_value(true);
+  pending_write.set_value(true);                // Write() done
+  fake_stream.WaitForAction().set_value(true);  // Finish()
 
   EXPECT_EQ(expected_status, done.get());
 }
@@ -636,7 +640,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   auto const expected_status = Status{StatusCode::kNotFound, "gone"};
-  FakeStream fake_stream(true, true, expected_status);
+  FakeStream fake_stream(expected_status);
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([&](google::cloud::CompletionQueue& cq,
@@ -668,17 +672,20 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  fake_stream.WaitForAction().set_value(true);
+  fake_stream.WaitForAction().set_value(true);  // Start()
+  fake_stream.WaitForAction().set_value(true);  // Write()
+  fake_stream.WaitForAction().set_value(true);  // Read()
 
-  auto pending_read = fake_stream.WaitForAction();
+  auto pending_read = fake_stream.WaitForAction();  // Read() start
   uut->AckMessage("fake-001");
-  auto pending_write = fake_stream.WaitForAction();
+  auto pending_write = fake_stream.WaitForAction();  // Write() start
 
   shutdown->MarkAsShutdown("test", expected_status);
   uut->Shutdown();
 
-  pending_write.set_value(false);
-  pending_read.set_value(false);
+  pending_write.set_value(false);               // Write() done
+  pending_read.set_value(false);                // Read() done
+  fake_stream.WaitForAction().set_value(true);  // Finish()
 
   EXPECT_EQ(expected_status, done.get());
 }
@@ -690,7 +697,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   auto const expected_status = Status{};
-  FakeStream fake_stream(true, true, expected_status);
+  FakeStream fake_stream(expected_status);
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([&](google::cloud::CompletionQueue& cq,
@@ -710,73 +717,16 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  auto pending_read = fake_stream.WaitForAction();
+  fake_stream.WaitForAction().set_value(true);      // Start()
+  fake_stream.WaitForAction().set_value(true);      // Write()
+  auto pending_read = fake_stream.WaitForAction();  // Read() start
 
   uut->Shutdown();
   shutdown->MarkAsShutdown("test", expected_status);
 
-  pending_read.set_value(true);
+  pending_read.set_value(true);                 // Read() done
+  fake_stream.WaitForAction().set_value(true);  // Finish()
   EXPECT_EQ(expected_status, done.get());
-}
-
-TEST(StreamingSubscriptionBatchSourceTest, Resume) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  std::string const client_id = "fake-client-id";
-  AutomaticallyCreatedBackgroundThreads background;
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-
-  FakeStream stream0(true, true, Status{StatusCode::kUnavailable, "try-again"});
-  FakeStream stream1(true, true, Status{});
-
-  auto make_mock = [](FakeStream& fake_stream) {
-    return [&fake_stream](
-               google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::pubsub::v1::StreamingPullRequest const& request) {
-      auto stream =
-          fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-      using Request = google::pubsub::v1::StreamingPullRequest;
-      // Add expectations for Write() calls with empty subscriptions, only
-      // the first call has a non-empty value and it is already set.
-      EXPECT_CALL(*stream,
-                  Write(Property(&Request::subscription, std::string{}), _))
-          .WillRepeatedly([&](google::pubsub::v1::StreamingPullRequest const&,
-                              grpc::WriteOptions const&) {
-            return make_ready_future(true);
-          });
-      return stream;
-    };
-  };
-
-  // We abuse this test to verify logging works as expected too
-  auto capture = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto const id = google::cloud::LogSink::Instance().AddBackend(capture);
-
-  EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce(make_mock(stream0))
-      .WillOnce(make_mock(stream1));
-
-  auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
-      background.cq(), shutdown, mock, subscription.FullName(), client_id,
-      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
-
-  auto done = shutdown->Start({});
-  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  auto read0 = stream0.WaitForAction();
-  EXPECT_THAT(capture->ClearLogLines(), Contains(HasSubstr("OnStreamStart")));
-  read0.set_value(false);  // Read()
-
-  auto read1 = stream1.WaitForAction();
-  EXPECT_THAT(capture->ClearLogLines(), Contains(HasSubstr("OnStreamStart")));
-  read1.set_value(true);                // Read()
-  auto last = stream1.WaitForAction();  // Read()
-  shutdown->MarkAsShutdown("test", {});
-  uut->Shutdown();
-  last.set_value(false);
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StateOStream) {
@@ -791,7 +741,6 @@ TEST(StreamingSubscriptionBatchSourceTest, StateOStream) {
   EXPECT_EQ("kDisconnecting", as_string(StreamState::kDisconnecting));
   EXPECT_EQ("kFinishing", as_string(StreamState::kFinishing));
 }
-#endif
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
