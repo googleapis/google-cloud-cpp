@@ -265,7 +265,68 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
   EXPECT_EQ(done.get(), status);
 }
 
-#if 0
+TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  auto const transient = Status{StatusCode::kPermissionDenied, "uh-oh"};
+
+  auto async_pull_mock = [transient](
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext>,
+      google::pubsub::v1::StreamingPullRequest const&) {
+    using us = std::chrono::microseconds;
+    using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+    using Response = google::pubsub::v1::StreamingPullResponse;
+    auto start_response = [cq]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto write_response = [cq](google::pubsub::v1::StreamingPullRequest const&,
+                               grpc::WriteOptions const&) mutable {
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto read_response = [cq]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then(
+          [](F) { return absl::optional<Response>{}; });
+    };
+    auto finish_response = [cq, transient]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then(
+          [transient](F) mutable { return transient; });
+    };
+
+    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    EXPECT_CALL(*stream, Start).WillOnce(start_response);
+    EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
+    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
+    EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
+
+    return stream;
+  };
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce(async_pull_mock);
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
+
+  auto done = shutdown->Start({});
+  promise<Status> p;
+  uut->Start([&](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
+    p.set_value(std::move(r).status());
+  });
+  auto const status = p.get_future().get();
+  EXPECT_THAT(status,
+              StatusIs(transient.code(), HasSubstr(transient.message())));
+  uut->Shutdown();
+
+  EXPECT_EQ(done.get(), status);
+}
+
 TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
@@ -297,45 +358,6 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
   EXPECT_EQ(done.get(), status);
 }
 
-TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsWithNull) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  std::string const client_id = "fake-client-id";
-  AutomaticallyCreatedBackgroundThreads background;
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-
-  // Fake a request that "succeeds" on a null stream.
-  FakeStream fake_stream(true, false, {});
-
-  EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
-                    google::pubsub::v1::StreamingPullRequest const& request) {
-        return fake_stream.MakeWriteFailureStream(cq, std::move(context),
-                                                  request);
-      });
-
-  using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
-  ::testing::MockFunction<void(CallbackArg const&)> callback;
-  promise<void> received_call;
-  EXPECT_CALL(callback, Call(StatusIs(StatusCode::kUnknown)))
-      .WillOnce(
-          [&received_call](CallbackArg const&) { received_call.set_value(); });
-
-  auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
-      background.cq(), shutdown, mock, subscription.FullName(), client_id,
-      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
-
-  auto done = shutdown->Start({});
-  uut->Start(callback.AsStdFunction());
-  // Wait until we receive the callback to shutdown, otherwise we might race by
-  // shutting down before the status is set.
-  received_call.get_future().get();
-
-  shutdown->MarkAsShutdown("test", {});
-  uut->Shutdown();
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kUnknown));
-}
 
 TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
@@ -343,28 +365,14 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
-  promise<bool> start;
-  promise<bool> initial_write;
-  promise<Status> finish;
+  FakeStream success_stream(Status{StatusCode::kCancelled, "cancelled"});
+
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>,
-                    google::pubsub::v1::StreamingPullRequest const&) {
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&start] {
-          return start.get_future();
-        });
-        EXPECT_CALL(*stream, Write)
-            .WillOnce([&initial_write](::testing::Unused, ::testing::Unused) {
-              return initial_write.get_future();
-            });
-
-        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
-        EXPECT_CALL(*stream, Finish).WillOnce([&finish] {
-          return finish.get_future();
-        });
-
-        return stream;
+      .WillOnce([&](google::cloud::CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::pubsub::v1::StreamingPullRequest const& request) {
+        return success_stream.MakeWriteFailureStream(cq, std::move(context),
+                                                     request);
       });
 
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
@@ -378,14 +386,16 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
-  start.set_value(true);
+  success_stream.WaitForAction().set_value(true);  // Start()
+  success_stream.WaitForAction().set_value(true);  // Write()
   shutdown->MarkAsShutdown("test", {});
-  initial_write.set_value(true);
-  finish.set_value(Status{StatusCode::kCancelled, "cancelled"});
+  success_stream.WaitForAction().set_value(true);  // Read()
+  success_stream.WaitForAction().set_value(true);  // Finish()
 
   EXPECT_EQ(Status{}, done.get());
 }
 
+#if 0
 TEST(StreamingSubscriptionBatchSourceTest, StartFailureOnRead) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";

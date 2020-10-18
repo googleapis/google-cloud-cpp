@@ -92,8 +92,7 @@ void StreamingSubscriptionBatchSource::StartStream(
   auto stream = stub_->AsyncStreamingPull(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
   if (!stream) {
-    shutdown_manager_->MarkAsShutdown(
-        __func__, Status(StatusCode::kUnknown, "null stream"));
+    OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
     return;
   }
 
