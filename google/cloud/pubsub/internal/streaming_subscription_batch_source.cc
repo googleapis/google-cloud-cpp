@@ -205,12 +205,12 @@ void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
     shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
     return;
   }
-  auto const already_shutdown =
+  auto const scheduled =
       shutdown_manager_->StartOperation(__func__, "retry", [&] {
         shutdown_manager_->FinishedOperation("retry");
         StartStream(std::move(rs.retry_policy), std::move(rs.backoff_policy));
       });
-  if (already_shutdown) {
+  if (!scheduled) {
     shutdown_manager_->FinishedOperation("stream");
     shutdown_manager_->MarkAsShutdown(__func__, std::move(status));
   }
