@@ -31,7 +31,7 @@ RUN zypper refresh && \
 
 # ```bash
 RUN zypper refresh && \
-    zypper install -y grpc-devel
+    zypper install -y grpc-devel protobuf-devel
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
