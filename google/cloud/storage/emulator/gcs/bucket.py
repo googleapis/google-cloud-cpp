@@ -72,7 +72,13 @@ class Bucket:
     def __preprocess_rest(cls, data):
         proxy = scalpl.Cut(data)
         keys = utils.common.nested_key(data)
-        proxy.pop("iamConfiguration.bucketPolicyOnly", None)
+        if "iamConfiguration.uniformBucketLevelAccess.enabled" not in proxy:
+            if "iamConfiguration.bucketPolicyOnly" in proxy:
+                proxy["iamConfiguration.uniformBucketLevelAccess.enabled"] = proxy[
+                    "iamConfiguration.bucketPolicyOnly"
+                ]
+        else:
+            proxy.pop("iamConfiguration.bucketPolicyOnly", False)
         for key in keys:
             if key.endswith("createdBefore"):
                 proxy[key] = proxy[key] + "T00:00:00Z"
@@ -90,7 +96,7 @@ class Bucket:
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, predefined_acl, context):
-        if predefined_acl == "" and predefined_acl == 0:
+        if predefined_acl == "" or predefined_acl == 0:
             return
         if metadata.iam_configuration.uniform_bucket_level_access.enabled:
             utils.error.invalid(
@@ -106,7 +112,7 @@ class Bucket:
     def __insert_predefined_default_object_acl(
         cls, metadata, predefined_default_object_acl, context
     ):
-        if predefined_default_object_acl == "" and predefined_default_object_acl == 0:
+        if predefined_default_object_acl == "" or predefined_default_object_acl == 0:
             return
         if metadata.iam_configuration.uniform_bucket_level_access.enabled:
             utils.error.invalid(
@@ -136,12 +142,18 @@ class Bucket:
         default_projection = 1
         if len(metadata.acl) != 0 or len(metadata.default_object_acl) != 0:
             default_projection = 2
+        is_uniform = metadata.iam_configuration.uniform_bucket_level_access.enabled
+        metadata.iam_configuration.uniform_bucket_level_access.enabled = False
         if len(metadata.acl) == 0:
             predefined_acl = utils.acl.extract_predefined_acl(request, False, context)
             if predefined_acl == 0:
                 predefined_acl = 3
             elif predefined_acl == "":
                 predefined_acl = "projectPrivate"
+            elif is_uniform:
+                utils.error.invalid(
+                    "Predefined ACL with uniform bucket level access enabled", context
+                )
             cls.__insert_predefined_acl(metadata, predefined_acl, context)
         if len(metadata.default_object_acl) == 0:
             predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
@@ -151,9 +163,15 @@ class Bucket:
                 predefined_default_object_acl = 5
             elif predefined_default_object_acl == "":
                 predefined_default_object_acl = "projectPrivate"
+            elif is_uniform:
+                utils.error.invalid(
+                    "Predefined Default Object ACL with uniform bucket level access enabled",
+                    context,
+                )
             cls.__insert_predefined_default_object_acl(
                 metadata, predefined_default_object_acl, context
             )
+        metadata.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
         metadata.id = metadata.name
         metadata.project_number = int(utils.acl.PROJECT_NUMBER)
         metadata.metageneration = 0
@@ -165,14 +183,14 @@ class Bucket:
             metadata.owner.entity.encode("utf-8")
         ).hexdigest()
         return (
-            cls(metadata, {}, None),
+            cls(metadata, {}, cls.__init_iam_policy(metadata, context)),
             utils.common.extract_projection(request, default_projection, context),
         )
 
     # === IAM === #
 
     @classmethod
-    def init_iam_policy(cls, metadata, context):
+    def __init_iam_policy(cls, metadata, context):
         role_mapping = {
             "READER": "roles/storage.legacyBucketReader",
             "WRITER": "roles/storage.legacyBucketWriter",
@@ -220,7 +238,7 @@ class Bucket:
         if context is not None:
             metadata = request.metadata
         else:
-            json_format.ParseDict(
+            metadata = json_format.ParseDict(
                 self.__preprocess_rest(simdjson.loads(request.data)),
                 resources_pb2.Bucket(),
             )
@@ -256,13 +274,18 @@ class Bucket:
             metadata = json_format.ParseDict(data, resources_pb2.Bucket())
             paths = set()
             for key in utils.common.nested_key(data):
-                head = key[0 : key.find(".")]
+                key = utils.common.to_snake_case(key)
+                head = key
+                for i, c in enumerate(key):
+                    if c == "." or c == "[":
+                        head = key[0:i]
+                        break
                 if head in Bucket.modifiable_fields:
                     if "[" in key:
                         paths.add(head)
                     else:
                         paths.add(key)
-            update_mask.FromJsonString(",".join(paths))
+            update_mask = field_mask_pb2.FieldMask(paths=list(paths))
         self.__update_metadata(metadata, update_mask)
         self.__insert_predefined_acl(
             metadata, utils.acl.extract_predefined_acl(request, False, context), context
@@ -404,7 +427,7 @@ class Bucket:
                 simdjson.loads(request.data), resources_pb2.Notification()
             )
         notification.id = "notification-%d" % random.getrandbits(16)
-        self.notifications.append(notification)
+        self.notifications[notification.id] = notification
         return notification
 
     def get_notification(self, notification_id, context):

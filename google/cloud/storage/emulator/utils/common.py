@@ -17,6 +17,8 @@
 import re
 import scalpl
 import types
+import utils
+import simdjson
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
 
@@ -120,7 +122,7 @@ def filter_response_rest(response, projection, fields):
             if simplfied_key.startswith("owner"):
                 deleted_keys.add("owner")
             elif simplfied_key.startswith("items.owner"):
-                deleted_keys.add("items.owner")
+                deleted_keys.add(key[0 : key.find("owner") + len("owner")])
             elif simplfied_key.startswith("acl"):
                 deleted_keys.add("acl")
             elif simplfied_key.startswith("items.acl"):
@@ -142,10 +144,40 @@ def filter_response_rest(response, projection, fields):
                 if maybe_delete:
                     deleted_keys.add(key)
     proxy = scalpl.Cut(response)
-    print("delete: ", deleted_keys)
     for key in deleted_keys:
         del proxy[key]
     return proxy.data
+
+
+def parse_multipart(request):
+    content_type = request.headers.get("content-type")
+    if content_type is None or not content_type.startswith("multipart/related"):
+        utils.error.invalid("Content-type header in multipart upload", None)
+    _, _, boundary = content_type.partition("boundary=")
+    if boundary is None:
+        utils.error.missing("boundary in content-type header in multipart upload", None)
+
+    def parse_part(part):
+        result = part.split(b"\r\n")
+        if result[0] != b"" and result[-1] != b"":
+            utils.error.invalid("Multipart %s" % str(part), None)
+        result = list(filter(None, result))
+        headers = {}
+        if len(result) < 2:
+            result.append(b"")
+        for header in result[:-1]:
+            key, value = header.split(b": ")
+            headers[key.decode("utf-8")] = value.decode("utf-8")
+        return headers, result[-1]
+
+    boundary = boundary.encode("utf-8")
+    parts = request.data.split(b"--" + boundary)
+    if parts[-1] != b"--\r\n":
+        utils.error.missing("end marker (--%s--) in media body" % boundary, None)
+    _, resource = parse_part(parts[1])
+    metadata = simdjson.loads(resource)
+    media_headers, media = parse_part(parts[2])
+    return metadata, media_headers, media
 
 
 # === RESPONSE === #
