@@ -145,7 +145,8 @@ INSTANTIATE_TEST_SUITE_P(
                     "internal/database_admin_stub_factory.gcpcxx.pb.h",
                     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
                     "internal/database_admin_stub.gcpcxx.pb.h",
-                    "internal/database_admin_stub.gcpcxx.pb.cc"),
+                    "internal/database_admin_stub.gcpcxx.pb.cc",
+                    "retry_policy.gcpcxx.pb.h"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
            info) {
       return absl::StrReplaceAll(std::string(info.param),

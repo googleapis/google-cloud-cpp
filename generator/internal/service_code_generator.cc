@@ -41,6 +41,19 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   SetVars(service_vars_[header_path_key]);
 }
 
+ServiceCodeGenerator::ServiceCodeGenerator(
+    std::string const& header_path_key,
+    google::protobuf::ServiceDescriptor const* service_descriptor,
+    VarsDictionary service_vars,
+    std::map<std::string, VarsDictionary> service_method_vars,
+    google::protobuf::compiler::GeneratorContext* context)
+    : service_descriptor_(service_descriptor),
+      service_vars_(std::move(service_vars)),
+      service_method_vars_(std::move(service_method_vars)),
+      header_(context, service_vars_[header_path_key]) {
+  SetVars(service_vars_[header_path_key]);
+}
+
 VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
     google::protobuf::MethodDescriptor const& method) const {
   auto vars = service_vars_;

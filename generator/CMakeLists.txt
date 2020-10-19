@@ -41,6 +41,8 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/retry_policy_generator.cc
+    internal/retry_policy_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
     internal/stub_factory_generator.cc
