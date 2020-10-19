@@ -151,6 +151,7 @@ target_link_libraries(
     PUBLIC absl::memory
            absl::numeric
            absl::strings
+           absl::container
            absl::time
            google_cloud_cpp_grpc_utils
            google_cloud_cpp_common
