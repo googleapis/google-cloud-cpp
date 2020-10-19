@@ -65,36 +65,46 @@ def print_test(t):
     o += "TEST_F(AcceptanceTest, " + camel_case(t["description"]) + ") {\n"
 
     o += "  std::vector<std::string> chunk_strings = {\n"
-    if ('chunks' in t):
+    if "chunks" in t:
         for c in t["chunks"]:
             o += '      R"chunk(\n'
-	    if ('rowKey' in c):
-		base64_string = c['rowKey'] 
-		rowKey_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+            if "rowKey" in c:
+                base64_string = c["rowKey"]
+                rowKey_string = base64.b64decode(base64_string.encode("ascii")).decode(
+                    "ascii"
+                )
                 o += '          row_key: "' + rowKey_string + '"\n'
-	    if ('familyName' in c):
-	        o += '          family_name: < value: "' + c['familyName'] + '">\n'
-	    if ('qualifier' in c):
-		base64_string = c['qualifier'] 
-		qualifier_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+            if "familyName" in c:
+                o += '          family_name: < value: "' + c["familyName"] + '">\n'
+            if "qualifier" in c:
+                base64_string = c["qualifier"]
+                qualifier_string = base64.b64decode(
+                    base64_string.encode("ascii")
+                ).decode("ascii")
                 o += '          qualifier: < value: "' + qualifier_string + '">\n'
-	    if ('timestampMicros' in c):
-                o += '          timestamp_micros: ' + unicode(c["timestampMicros"]) + '\n'
-	    if ('labels' in c):
+            if "timestampMicros" in c:
+                o += (
+                    "          timestamp_micros: "
+                    + unicode(c["timestampMicros"])
+                    + "\n"
+                )
+            if "labels" in c:
                 o += '          labels: "' + str(*c["labels"]) + '"\n'
-	    if ('value' in c):
-		base64_string = c['value'] 
-		value_string = base64.b64decode(base64_string.encode("ascii")).decode("ascii")
+            if "value" in c:
+                base64_string = c["value"]
+                value_string = base64.b64decode(base64_string.encode("ascii")).decode(
+                    "ascii"
+                )
                 o += '          value: "' + value_string + '"\n'
-	    if ('valueSize' in c):
-                o += '          value_size: ' + unicode(c["valueSize"]) + '\n'
-	    if ('resetRow' in c):
-                o += '          reset_row: ' + unicode(c["resetRow"]).lower() + '\n' 
-	    if ('commitRow' in c):
-                o += '          commit_row: ' + unicode(c["commitRow"]).lower() + '\n' 
+            if "valueSize" in c:
+                o += "          value_size: " + unicode(c["valueSize"]) + "\n"
+            if "resetRow" in c:
+                o += "          reset_row: " + unicode(c["resetRow"]).lower() + "\n"
+            if "commitRow" in c:
+                o += "          commit_row: " + unicode(c["commitRow"]).lower() + "\n"
             o += '        )chunk",\n'
     if o[-1] == "\n":
-        o += "  "	
+        o += "  "
     o += "  };\n"
     o += "\n"
 
@@ -104,10 +114,10 @@ def print_test(t):
     o += "\n"
 
     ok = True
-    if ('results' in t):
-	for r in t["results"]:
-	    if ('error' in r):
-		ok = False
+    if "results" in t:
+        for r in t["results"]:
+            if "error" in r:
+                ok = False
 
     if ok:
         o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
@@ -116,27 +126,27 @@ def print_test(t):
 
     o += "\n"
     o += "  std::vector<std::string> expected_cells = {"
-    if ('results' in t):
+    if "results" in t:
         for r in t["results"]:
-	    if not ('error' in r):
-           	o += "\n"
-	   	if ('rowKey' in r):
-	       	    o += '      "rk: ' + r["rowKey"] + '\\n"\n'
-	   	if ('familyName' in r):
-               	    o += '      "fm: ' + r["familyName"] + '\\n"\n'
-	   	if ('qualifier' in r):
+            if not ("error" in r):
+                o += "\n"
+                if "rowKey" in r:
+                    o += '      "rk: ' + r["rowKey"] + '\\n"\n'
+                if "familyName" in r:
+                    o += '      "fm: ' + r["familyName"] + '\\n"\n'
+                if "qualifier" in r:
                     o += '      "qual: ' + r["qualifier"] + '\\n"\n'
-	   	if ('timestampMicros' in r):
+                if "timestampMicros" in r:
                     o += '      "ts: ' + str(r["timestampMicros"]) + '\\n"\n'
-	   	else:
+                else:
                     o += '      "ts: ' + str(0) + '\\n"\n'
-	   	if ('value' in r):
+                if "value" in r:
                     o += '      "value: ' + r["value"] + '\\n"\n'
-	   	else:
+                else:
                     o += '      "value: ' + '\\n"\n'
-	   	if ('label' in r):
+                if "label" in r:
                     o += '      "label: ' + r["label"] + '\\n",\n'
- 	   	else:
+                else:
                     o += '      "label: ' + '\\n",\n'
 
     if o[-1] == "\n":
