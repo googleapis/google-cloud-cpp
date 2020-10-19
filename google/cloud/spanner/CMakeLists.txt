@@ -148,10 +148,10 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     spanner_client
-    PUBLIC absl::memory
+    PUBLIC absl::container
+           absl::memory
            absl::numeric
            absl::strings
-           absl::container
            absl::time
            google_cloud_cpp_grpc_utils
            google_cloud_cpp_common
