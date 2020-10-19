@@ -314,7 +314,7 @@ enough to support the Google Cloud Platform proto files.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y grpc-devel
+sudo zypper install -y grpc-devel protobuf-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
