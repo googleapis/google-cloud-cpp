@@ -148,7 +148,7 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     spanner_client
-    PUBLIC absl::container
+    PUBLIC absl::fixed_array
            absl::memory
            absl::numeric
            absl::strings
