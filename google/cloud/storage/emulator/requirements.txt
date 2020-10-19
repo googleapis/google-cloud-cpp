@@ -5,3 +5,4 @@ pysimdjson==3.0.0
 pytest==6.0.2
 httpbin==0.7.0
 scalpl==0.4.0
+crc32c==2.1
