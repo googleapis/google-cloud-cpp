@@ -305,16 +305,19 @@ Install the minimal development tools, libcurl and OpenSSL:
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y ccache cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget zlib-devel
+sudo zypper install --allow-downgrade -y c-ares-devel ccache cmake gcc gcc-c++ \
+        git gzip libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
-The versions of gRPC and Protobuf packaged with openSUSE/Tumbleweed are recent
-enough to support the Google Cloud Platform proto files.
+The version of Protobuf packaged with openSUSE/Tumbleweed is recent enough to
+support the Google Cloud Platform proto files. However, the version of gRPC
+packaged with opensuse/Tumbleweed incorrectly installs partial Abseil binary
+artifacts, so we cannot use that package and must instead install Abseil and
+gRPC from source.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y grpc-devel
+sudo zypper install -y protobuf-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -343,6 +346,31 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
 sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
 sudo ldconfig && \
     cd /var/tmp && rm -fr build
+```
+
+#### gRPC
+
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We manually install it using:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### crc32c
