@@ -63,8 +63,6 @@ add_library(
     internal/subscription_batch_source.h
     internal/subscription_concurrency_control.cc
     internal/subscription_concurrency_control.h
-    internal/subscription_flow_control.cc
-    internal/subscription_flow_control.h
     internal/subscription_lease_management.cc
     internal/subscription_lease_management.h
     internal/subscription_message_queue.cc
@@ -85,29 +83,29 @@ add_library(
     retry_policy.h
     snapshot.cc
     snapshot.h
-    snapshot_mutation_builder.cc
-    snapshot_mutation_builder.h
+    snapshot_builder.cc
+    snapshot_builder.h
     subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
+    subscriber_options.cc
+    subscriber_options.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
     subscription_admin_client.h
     subscription_admin_connection.cc
     subscription_admin_connection.h
-    subscription_mutation_builder.cc
-    subscription_mutation_builder.h
-    subscription_options.cc
-    subscription_options.h
+    subscription_builder.cc
+    subscription_builder.h
     topic.cc
     topic.h
     topic_admin_client.cc
     topic_admin_client.h
     topic_admin_connection.cc
     topic_admin_connection.h
-    topic_mutation_builder.cc
-    topic_mutation_builder.h
+    topic_builder.cc
+    topic_builder.h
     version.h
     version_info.h)
 target_include_directories(
@@ -201,7 +199,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscription_concurrency_control_test.cc
-        internal/subscription_flow_control_test.cc
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
@@ -210,18 +207,18 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_connection_test.cc
         publisher_option_test.cc
         publisher_test.cc
-        snapshot_mutation_builder_test.cc
+        snapshot_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc
+        subscriber_options_test.cc
         subscriber_test.cc
         subscription_admin_client_test.cc
         subscription_admin_connection_test.cc
-        subscription_mutation_builder_test.cc
-        subscription_options_test.cc
+        subscription_builder_test.cc
         subscription_test.cc
         topic_admin_client_test.cc
         topic_admin_connection_test.cc
-        topic_mutation_builder_test.cc
+        topic_builder_test.cc
         topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
@@ -261,6 +258,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_pubsub_client_define_tests()
 endif (BUILD_TESTING)
 
+add_subdirectory(benchmarks)
 add_subdirectory(integration_tests)
 
 # Only compile the samples if we're building with exceptions enabled. They

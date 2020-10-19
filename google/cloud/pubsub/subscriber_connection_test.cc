@@ -48,10 +48,11 @@ TEST(SubscriberConnectionTest, Basic) {
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock,
+      subscription, pubsub::SubscriberOptions{},
       ConnectionOptions{grpc::InsecureChannelCredentials()}
           .DisableBackgroundThreads(cq),
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -62,7 +63,7 @@ TEST(SubscriberConnectionTest, Basic) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());
@@ -104,10 +105,11 @@ TEST(SubscriberConnectionTest, PullFailure) {
       });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()},
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      subscription, {}, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto handler = [&](Message const&, AckHandler const&) {};
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe({handler});
   EXPECT_THAT(response.get(),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
@@ -127,11 +129,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock,
+      subscription, {},
       ConnectionOptions{grpc::InsecureChannelCredentials()}
           .DisableBackgroundThreads(cq)
           .enable_tracing("rpc"),
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
@@ -140,7 +143,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
     waiter.set_value();
   };
   std::thread t([&cq] { cq.Run(); });
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());
@@ -177,8 +180,9 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
           });
 
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
-      mock, ConnectionOptions{grpc::InsecureChannelCredentials()},
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+      subscription, {}, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
@@ -186,7 +190,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
     if (received_one.test_and_set()) return;
     waiter.set_value();
   };
-  auto response = subscriber->Subscribe({subscription.FullName(), handler, {}});
+  auto response = subscriber->Subscribe({handler});
   waiter.get_future().wait();
   response.cancel();
   ASSERT_STATUS_OK(response.get());

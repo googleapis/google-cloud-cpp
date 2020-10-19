@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -27,9 +27,9 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 
-TEST(Topic, CreateTopicOnly) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
-                          .BuildCreateMutation();
+TEST(TopicBuilder, CreateTopicOnly) {
+  auto const actual =
+      TopicBuilder(Topic("test-project", "test-topic")).BuildCreateRequest();
   google::pubsub::v1::Topic expected;
   std::string const text = R"pb(
     name: "projects/test-project/topics/test-topic"
@@ -38,11 +38,11 @@ TEST(Topic, CreateTopicOnly) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, AddLabel) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, AddLabel) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
                           .add_label("key0", "label0")
                           .add_label("key1", "label1")
-                          .BuildUpdateMutation();
+                          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -55,12 +55,12 @@ TEST(Topic, AddLabel) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, ClearLabel) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, ClearLabel) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
                           .add_label("key0", "label0")
                           .clear_labels()
                           .add_label("key1", "label1")
-                          .BuildUpdateMutation();
+                          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -72,11 +72,11 @@ TEST(Topic, ClearLabel) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, AddAllowedPersistenceRegion) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, AddAllowedPersistenceRegion) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
                           .add_allowed_persistence_region("us-central1")
                           .add_allowed_persistence_region("us-west1")
-                          .BuildUpdateMutation();
+                          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -91,12 +91,12 @@ TEST(Topic, AddAllowedPersistenceRegion) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, ClearAllowedPersistenceRegions) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, ClearAllowedPersistenceRegions) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
                           .add_allowed_persistence_region("us-central1")
                           .clear_allowed_persistence_regions()
                           .add_allowed_persistence_region("us-west1")
-                          .BuildUpdateMutation();
+                          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -108,10 +108,10 @@ TEST(Topic, ClearAllowedPersistenceRegions) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, SetKmsKeyName) {
-  auto const actual = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, SetKmsKeyName) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
                           .set_kms_key_name("projects/.../test-only-string")
-                          .BuildUpdateMutation();
+                          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -123,14 +123,14 @@ TEST(Topic, SetKmsKeyName) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(Topic, MultipleChanges) {
-  auto builder = TopicMutationBuilder(Topic("test-project", "test-topic"))
+TEST(TopicBuilder, MultipleChanges) {
+  auto builder = TopicBuilder(Topic("test-project", "test-topic"))
                      .add_label("key0", "label0")
                      .add_label("key1", "label1")
                      .add_allowed_persistence_region("us-central1")
                      .add_allowed_persistence_region("us-west1")
                      .set_kms_key_name("projects/.../test-only-string");
-  auto const actual = std::move(builder).BuildUpdateMutation();
+  auto const actual = std::move(builder).BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {

@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
+#include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/subscription_mutation_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -89,9 +89,9 @@ class SubscriptionAdminClient {
    */
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       Topic const& topic, Subscription const& subscription,
-      SubscriptionMutationBuilder builder = {}) {
+      SubscriptionBuilder builder = {}) {
     return connection_->CreateSubscription(
-        {std::move(builder).BuildCreateSubscription(topic, subscription)});
+        {std::move(builder).BuildCreateRequest(topic, subscription)});
   }
 
   /**
@@ -122,9 +122,9 @@ class SubscriptionAdminClient {
    * @param builder any additional configuration for the subscription
    */
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      Subscription const& subscription, SubscriptionMutationBuilder builder) {
+      Subscription const& subscription, SubscriptionBuilder builder) {
     return connection_->UpdateSubscription(
-        {std::move(builder).BuildUpdateSubscription(subscription)});
+        {std::move(builder).BuildUpdateRequest(subscription)});
   }
 
   /**
@@ -192,9 +192,9 @@ class SubscriptionAdminClient {
    */
   // TODO(#4792) - add missing example once it is testable
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      Subscription const& subscription, SnapshotMutationBuilder builder = {}) {
+      Subscription const& subscription, SnapshotBuilder builder = {}) {
     return connection_->CreateSnapshot(
-        {std::move(builder).BuildCreateMutation(subscription)});
+        {std::move(builder).BuildCreateRequest(subscription)});
   }
 
   /**
@@ -213,9 +213,9 @@ class SubscriptionAdminClient {
    */
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       Subscription const& subscription, Snapshot const& snapshot,
-      SnapshotMutationBuilder builder = {}) {
+      SnapshotBuilder builder = {}) {
     return connection_->CreateSnapshot(
-        {std::move(builder).BuildCreateMutation(subscription, snapshot)});
+        {std::move(builder).BuildCreateRequest(subscription, snapshot)});
   }
 
   /**
@@ -247,9 +247,9 @@ class SubscriptionAdminClient {
    * @param builder the changes applied to the snapshot
    */
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      Snapshot const& snapshot, SnapshotMutationBuilder builder) {
+      Snapshot const& snapshot, SnapshotBuilder builder) {
     return connection_->UpdateSnapshot(
-        {std::move(builder).BuildUpdateMutation(snapshot)});
+        {std::move(builder).BuildUpdateRequest(snapshot)});
   }
 
   /**

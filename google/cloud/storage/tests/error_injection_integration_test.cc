@@ -18,6 +18,7 @@
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
@@ -31,6 +32,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 // This test uses dlsym(), which is not present on Windows.
 // One could replace it with LoadLibrary() on Windows, but it's only a test, so
@@ -224,15 +228,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   os << buf.data();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.IsOpen());
-  EXPECT_EQ(StatusCode::kUnavailable, os.last_status().code());
+  EXPECT_THAT(os.last_status(), StatusIs(StatusCode::kUnavailable));
 
   SymbolInterceptor::Instance().StopFailingSend();
   os.Close();
   EXPECT_FALSE(os.metadata());
-  EXPECT_FALSE(os.metadata().ok());
-  EXPECT_EQ(StatusCode::kUnavailable, os.metadata().status().code());
-  EXPECT_THAT(os.metadata().status().message(),
-              ::testing::HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(os.metadata(), StatusIs(StatusCode::kUnavailable,
+                                      HasSubstr("Retry policy exhausted")));
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
@@ -305,9 +307,9 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   SymbolInterceptor::Instance().StartFailingSend(
       SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET, 3);
   is.read(read_buf.data(), read_buf.size());
-  ASSERT_FALSE(is.status().ok());
+  EXPECT_THAT(is.status(), StatusIs(Not(StatusCode::kOk)));
   is.Close();
-  EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
+  EXPECT_THAT(is.status(), StatusIs(StatusCode::kUnavailable));
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 1);
 

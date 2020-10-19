@@ -19,8 +19,6 @@
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
-#include "google/cloud/pubsub/internal/subscription_flow_control.h"
-#include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/version.h"
@@ -36,6 +34,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<Status> CreateSubscriptionSession(
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor, std::string client_id,
     pubsub::SubscriberConnection::SubscribeParams p,
@@ -43,6 +43,8 @@ future<Status> CreateSubscriptionSession(
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
 future<Status> CreateTestingSubscriptionSession(
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor,
     pubsub::SubscriberConnection::SubscribeParams p,

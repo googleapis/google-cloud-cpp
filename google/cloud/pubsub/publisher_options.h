@@ -74,7 +74,9 @@ class PublisherOptions {
     return *this;
   }
 
-  std::size_t maximum_message_count() const { return maximum_message_count_; }
+  std::size_t maximum_batch_message_count() const {
+    return maximum_batch_message_count_;
+  }
 
   /**
    * Set the maximum number of messages in a batch.
@@ -86,8 +88,8 @@ class PublisherOptions {
    *
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
-  PublisherOptions& set_maximum_message_count(std::size_t v) {
-    maximum_message_count_ = v;
+  PublisherOptions& set_maximum_batch_message_count(std::size_t v) {
+    maximum_batch_message_count_ = v;
     return *this;
   }
 
@@ -118,26 +120,15 @@ class PublisherOptions {
     return *this;
   }
 
-  bool retry_publish_failures() const { return retry_publish_failures_; }
-  PublisherOptions& enable_retry_publish_failures() {
-    retry_publish_failures_ = true;
-    return *this;
-  }
-  PublisherOptions& disable_retry_publish_failures() {
-    retry_publish_failures_ = false;
-    return *this;
-  }
-
  private:
   static auto constexpr kDefaultMaximumHoldTime = std::chrono::milliseconds(10);
   static std::size_t constexpr kDefaultMaximumMessageCount = 100;
   static std::size_t constexpr kDefaultMaximumMessageSize = 1024 * 1024L;
 
   std::chrono::microseconds maximum_hold_time_ = kDefaultMaximumHoldTime;
-  std::size_t maximum_message_count_ = kDefaultMaximumMessageCount;
+  std::size_t maximum_batch_message_count_ = kDefaultMaximumMessageCount;
   std::size_t maximum_batch_bytes_ = kDefaultMaximumMessageSize;
   bool message_ordering_ = false;
-  bool retry_publish_failures_ = false;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/pubsub/topic_admin_connection.h"
-#include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 
@@ -82,9 +82,8 @@ class TopicAdminClient {
    *
    * @param builder the configuration for the new topic, includes the name.
    */
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      TopicMutationBuilder builder) {
-    return connection_->CreateTopic({std::move(builder).BuildCreateMutation()});
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder) {
+    return connection_->CreateTopic({std::move(builder).BuildCreateRequest()});
   }
 
   /**
@@ -112,9 +111,8 @@ class TopicAdminClient {
    *
    * @param builder the configuration for the new topic, includes the name.
    */
-  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      TopicMutationBuilder builder) {
-    return connection_->UpdateTopic({std::move(builder).BuildUpdateMutation()});
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(TopicBuilder builder) {
+    return connection_->UpdateTopic({std::move(builder).BuildUpdateRequest()});
   }
 
   /**

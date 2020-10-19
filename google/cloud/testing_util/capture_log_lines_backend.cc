@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
@@ -30,12 +31,9 @@ std::vector<std::string> CaptureLogLinesBackend::ClearLogLines() {
 
 void CaptureLogLinesBackend::Process(LogRecord const& lr) {
   // Break the records in lines, it is easier to analyze them as such.
-  std::istringstream is(lr.message);
-  std::string line;
   std::lock_guard<std::mutex> lk(mu_);
-  while (std::getline(is, line)) {
-    log_lines_.emplace_back(line);
-  }
+  std::vector<std::string> result = absl::StrSplit(lr.message, '\n');
+  log_lines_.insert(log_lines_.end(), result.begin(), result.end());
 }
 
 void CaptureLogLinesBackend::ProcessWithOwnership(LogRecord lr) { Process(lr); }

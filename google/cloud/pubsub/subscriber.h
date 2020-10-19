@@ -99,14 +99,12 @@ class Subscriber {
   /**
    * Create a new session to receive messages from @p subscription.
    *
-   * @note Callable must be CopyConstructible, as @p cb will be stored in a
+   * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
    *   [`std::function<>`][std-function-link].
    *
-   * @param subscription the Cloud Pub/Sub subscription to receive messages from
-   * @param cb an object usable to construct a
-   *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`
-   * @param options configure the subscription's flow control, maximum message
-   *     lease time and other parameters, see `SubscriptionOptions` for details
+   * @param cb the callable invoked when messages are received. This must be
+   *     usable to construct a
+   *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
@@ -116,11 +114,9 @@ class Subscriber {
    * https://en.cppreference.com/w/cpp/utility/functional/function
    */
   template <typename Callable>
-  future<Status> Subscribe(Subscription const& subscription, Callable&& cb,
-                           SubscriptionOptions options = {}) {
+  future<Status> Subscribe(Callable&& cb) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe(
-        {subscription.FullName(), std::move(f), std::move(options)});
+    return connection_->Subscribe({std::move(f)});
   }
 
  private:

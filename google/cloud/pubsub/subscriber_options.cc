@@ -12,27 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/topic_mutation_builder.h"
-#include <google/protobuf/util/field_mask_util.h>
+#include "google/cloud/pubsub/subscriber_options.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-google::pubsub::v1::Topic TopicMutationBuilder::BuildCreateMutation() && {
-  return std::move(proto_);
+SubscriberOptions& SubscriberOptions::set_max_outstanding_messages(
+    std::int64_t message_count) {
+  max_outstanding_messages_ = (std::max<std::int64_t>)(0, message_count);
+  return *this;
 }
 
-google::pubsub::v1::UpdateTopicRequest
-TopicMutationBuilder::BuildUpdateMutation() && {
-  google::pubsub::v1::UpdateTopicRequest request;
-  *request.mutable_topic() = std::move(proto_);
-  for (auto const& p : paths_) {
-    google::protobuf::util::FieldMaskUtil::AddPathToFieldMask<
-        google::pubsub::v1::Topic>(p, request.mutable_update_mask());
-  }
-  return request;
+SubscriberOptions& SubscriberOptions::set_max_outstanding_bytes(
+    std::int64_t bytes) {
+  max_outstanding_bytes_ = (std::max<std::int64_t>)(0, bytes);
+  return *this;
+}
+
+SubscriberOptions& SubscriberOptions::set_concurrency_watermarks(
+    std::size_t lwm, std::size_t hwm) {
+  concurrency_hwm_ = (std::max<std::size_t>)(1, hwm);
+  concurrency_lwm_ = (std::min)(concurrency_hwm_, lwm);
+  return *this;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

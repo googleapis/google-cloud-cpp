@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_MUTATION_BUILDER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_MUTATION_BUILDER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_BUILDER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_BUILDER_H
 
 #include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -31,43 +31,41 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * Build a request to create a Cloud Pub/Sub snapshot.
  */
-class SnapshotMutationBuilder {
+class SnapshotBuilder {
  public:
-  SnapshotMutationBuilder() = default;
+  SnapshotBuilder() = default;
 
   /// Build a CreateSnapshotRequest where the server assigns the snapshot id.
-  google::pubsub::v1::CreateSnapshotRequest BuildCreateMutation(
+  google::pubsub::v1::CreateSnapshotRequest BuildCreateRequest(
       Subscription const& subscription) &&;
 
   /// Build a CreateSnapshotRequest where the application assigns the snapshot
   /// id.
-  google::pubsub::v1::CreateSnapshotRequest BuildCreateMutation(
+  google::pubsub::v1::CreateSnapshotRequest BuildCreateRequest(
       Subscription const& subscription, Snapshot const& snapshot) &&;
 
   /// Build a UpdateSnapshotRequest.
-  google::pubsub::v1::UpdateSnapshotRequest BuildUpdateMutation(
+  google::pubsub::v1::UpdateSnapshotRequest BuildUpdateRequest(
       Snapshot const& snapshot) &&;
 
-  SnapshotMutationBuilder& add_label(std::string const& key,
-                                     std::string const& value) & {
+  SnapshotBuilder& add_label(std::string const& key,
+                             std::string const& value) & {
     using value_type = protobuf::Map<std::string, std::string>::value_type;
     proto_.mutable_labels()->insert(value_type(key, value));
     paths_.insert("labels");
     return *this;
   }
-  SnapshotMutationBuilder&& add_label(std::string const& key,
-                                      std::string const& value) && {
+  SnapshotBuilder&& add_label(std::string const& key,
+                              std::string const& value) && {
     return std::move(add_label(key, value));
   }
 
-  SnapshotMutationBuilder& clear_labels() & {
+  SnapshotBuilder& clear_labels() & {
     proto_.clear_labels();
     paths_.insert("labels");
     return *this;
   }
-  SnapshotMutationBuilder&& clear_labels() && {
-    return std::move(clear_labels());
-  }
+  SnapshotBuilder&& clear_labels() && { return std::move(clear_labels()); }
 
  private:
   google::pubsub::v1::Snapshot proto_;
@@ -79,4 +77,4 @@ class SnapshotMutationBuilder {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_MUTATION_BUILDER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SNAPSHOT_BUILDER_H

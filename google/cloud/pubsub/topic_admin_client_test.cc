@@ -37,7 +37,7 @@ TEST(TopicAdminClient, CreateTopic) {
       });
   TopicAdminClient client(mock);
   auto const response = client.CreateTopic(
-      TopicMutationBuilder(topic).set_kms_key_name("test-kms-key-name"));
+      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ("test-kms-key-name", response->kms_key_name());
   EXPECT_EQ(topic.FullName(), response->name());
@@ -75,7 +75,7 @@ TEST(TopicAdminClient, UpdateTopic) {
       });
   TopicAdminClient client(mock);
   auto const response = client.UpdateTopic(
-      TopicMutationBuilder(topic).set_kms_key_name("test-kms-key-name"));
+      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ("test-kms-key-name", response->kms_key_name());
   EXPECT_EQ(topic.FullName(), response->name());

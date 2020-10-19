@@ -20,6 +20,8 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
@@ -38,9 +40,11 @@ using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::StartsWith;
 using ::testing::StrEq;
@@ -291,31 +295,29 @@ TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string )""";
 
   auto actual = ParseServiceAccountCredentials(config, "test-as-a-source");
-  ASSERT_FALSE(actual) << "status=" << actual.status();
-  EXPECT_THAT(actual.status().message(),
-              HasSubstr("Invalid ServiceAccountCredentials"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("test-as-a-source"));
+  EXPECT_THAT(actual,
+              StatusIs(Not(StatusCode::kOk),
+                       AllOf(HasSubstr("Invalid ServiceAccountCredentials"),
+                             HasSubstr("test-as-a-source"))));
 }
 
 /// @test Parsing a service account JSON string should detect empty fields.
 TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
   std::string contents = R"""({
       "type": "service_account",
-      "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "client_email": "test-only@test-group.example.com",
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field :
-       {"private_key_id", "private_key", "client_email", "token_uri"}) {
+  for (auto const& field : {"private_key", "client_email", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
-    ASSERT_FALSE(actual) << "status=" << actual.status();
-    EXPECT_THAT(actual.status().message(), HasSubstr(field));
-    EXPECT_THAT(actual.status().message(), HasSubstr(" field is empty"));
-    EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
+    EXPECT_THAT(actual,
+                StatusIs(Not(StatusCode::kOk),
+                         AllOf(HasSubstr(field), HasSubstr(" field is empty"),
+                               HasSubstr("test-data"))));
   }
 }
 
@@ -323,21 +325,35 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
 TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
   std::string contents = R"""({
       "type": "service_account",
-      "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "client_email": "test-only@test-group.example.com",
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field : {"private_key_id", "private_key", "client_email"}) {
+  for (auto const& field : {"private_key", "client_email"}) {
     auto json = nlohmann::json::parse(contents);
     json.erase(field);
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
-    ASSERT_FALSE(actual) << "status=" << actual.status();
-    EXPECT_THAT(actual.status().message(), HasSubstr(field));
-    EXPECT_THAT(actual.status().message(), HasSubstr(" field is missing"));
-    EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
+    EXPECT_THAT(actual,
+                StatusIs(Not(StatusCode::kOk),
+                         AllOf(HasSubstr(field), HasSubstr(" field is missing"),
+                               HasSubstr("test-data"))));
   }
+}
+
+/// @test Parsing a service account JSON string allows an optional field.
+TEST_F(ServiceAccountCredentialsTest, ParseOptionalField) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  auto json = nlohmann::json::parse(contents);
+  auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
+  ASSERT_STATUS_OK(actual.status());
 }
 
 /// @test Verify that refreshing a credential updates the timestamps.
@@ -354,11 +370,9 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
       std::string assertion = p.substr(prefix.size());
 
-      std::istringstream is(assertion);
-      std::string encoded_header;
-      std::getline(is, encoded_header, '.');
-      std::string encoded_payload;
-      std::getline(is, encoded_payload, '.');
+      std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
+      std::string const& encoded_header = tokens[0];
+      std::string const& encoded_payload = tokens[1];
 
       auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
       std::string header_str{header_bytes.begin(), header_bytes.end()};
@@ -512,11 +526,10 @@ TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
 
   auto actual =
       credentials.SignBlob(SigningAccount("fake@fake.com"), "test-blob");
-  EXPECT_FALSE(actual);
-  EXPECT_EQ(actual.status().code(), StatusCode::kInvalidArgument);
   EXPECT_THAT(
-      actual.status().message(),
-      ::testing::HasSubstr("The current_credentials cannot sign blobs for "));
+      actual,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("The current_credentials cannot sign blobs for ")));
 }
 
 /// @test Verify that we can get the client id from a service account.
@@ -769,22 +782,16 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
 
-  std::istringstream is(kExpectedAssertionParam);
-  std::string expected_encoded_header;
-  std::getline(is, expected_encoded_header, '.');
-  std::string expected_encoded_payload;
-  std::getline(is, expected_encoded_payload, '.');
-  std::string expected_encoded_signature;
-  std::getline(is, expected_encoded_signature);
+  std::vector<std::string> expected_tokens =
+      absl::StrSplit(kExpectedAssertionParam, '.');
+  std::string const& expected_encoded_header = expected_tokens[0];
+  std::string const& expected_encoded_payload = expected_tokens[1];
+  std::string const& expected_encoded_signature = expected_tokens[2];
 
-  is.str(assertion);
-  is.clear();
-  std::string actual_encoded_header;
-  std::getline(is, actual_encoded_header, '.');
-  std::string actual_encoded_payload;
-  std::getline(is, actual_encoded_payload, '.');
-  std::string actual_encoded_signature;
-  std::getline(is, actual_encoded_signature);
+  std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
+  std::string const& actual_encoded_header = actual_tokens[0];
+  std::string const& actual_encoded_payload = actual_tokens[1];
+  std::string const& actual_encoded_signature = actual_tokens[2];
 
   EXPECT_EQ(expected_encoded_header, "assertion=" + actual_encoded_header);
   EXPECT_EQ(expected_encoded_payload, actual_encoded_payload);
@@ -821,17 +828,15 @@ TEST_F(ServiceAccountCredentialsTest,
   FakeClock::reset_clock(1000);
   auto status = ParseServiceAccountRefreshResponse(HttpResponse{400, r1, {}},
                                                    FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 
   status = ParseServiceAccountRefreshResponse(HttpResponse{400, r2, {}},
                                               FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Parsing a refresh response yields a TemporaryToken.

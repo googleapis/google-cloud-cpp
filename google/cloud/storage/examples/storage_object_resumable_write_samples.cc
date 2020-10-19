@@ -89,6 +89,28 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void DeleteResumableUpload(google::cloud::storage::Client client,
+                           std::vector<std::string> const& argv) {
+  //! [delete resumable upload]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::NewResumableUploadSession());
+    std::cout << "Created resumable upload: " << stream.resumable_session_id()
+              << "\n";
+
+    auto status = client.DeleteResumableUpload(stream.resumable_session_id());
+    if (!status.ok()) throw std::runtime_error(status.message());
+    std::cout << "Deleted resumable upload: " << stream.resumable_session_id()
+              << "\n";
+
+    stream.Close();
+  }
+  //! [delete resumable upload]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -124,6 +146,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ResumeResumableUpload() example" << std::endl;
   ResumeResumableUpload(client, {bucket_name, object_name, session_id});
 
+  std::cout << "\nRunning DeleteResumableUpload() example" << std::endl;
+  DeleteResumableUpload(client, {bucket_name, object_name});
+
   (void)client.DeleteObject(bucket_name, object_name);
 }
 
@@ -142,6 +167,7 @@ int main(int argc, char* argv[]) {
       make_entry("start-resumable-upload", {}, StartResumableUpload),
       make_entry("resume-resumable-upload", {"<session-id>"},
                  ResumeResumableUpload),
+      make_entry("delete-resumable-upload", {}, DeleteResumableUpload),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

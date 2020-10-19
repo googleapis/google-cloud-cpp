@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
+#include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
@@ -85,7 +85,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   EXPECT_THAT(subscription_names(subscription_admin, project_id),
               Not(Contains(subscription.FullName())));
 
-  auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic));
+  auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                     StatusIs(StatusCode::kAlreadyExists)));
 
@@ -100,7 +100,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto endpoint = "https://" + project_id + ".appspot.com/push";
   auto create_response = subscription_admin.CreateSubscription(
       topic, subscription,
-      SubscriptionMutationBuilder{}.set_push_config(
+      SubscriptionBuilder{}.set_push_config(
           PushConfigBuilder{}.set_push_endpoint(endpoint)));
   ASSERT_THAT(create_response, AnyOf(StatusIs(StatusCode::kOk),
                                      StatusIs(StatusCode::kAlreadyExists)));
@@ -113,7 +113,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   auto constexpr kTestDeadlineSeconds = 20;
   auto update_response = subscription_admin.UpdateSubscription(
-      subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
+      subscription, SubscriptionBuilder{}.set_ack_deadline(
                         std::chrono::seconds(kTestDeadlineSeconds)));
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(kTestDeadlineSeconds, update_response->ack_deadline_seconds());
@@ -162,8 +162,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   // TODO(#4792) - the emulator does not support UpdateSnapshot()
   if (!UsingEmulator()) {
     auto update_snapshot_response = subscription_admin.UpdateSnapshot(
-        snapshot,
-        SnapshotMutationBuilder{}.add_label("test-label", "test-value"));
+        snapshot, SnapshotBuilder{}.add_label("test-label", "test-value"));
     ASSERT_STATUS_OK(update_snapshot_response);
     EXPECT_FALSE(update_snapshot_response->labels().empty());
   }
@@ -179,11 +178,10 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
               Not(Contains(snapshot.FullName())));
 
   // TODO(#4792) - the emulator does not support DetachSubscription()
-  // TODO(#4850) - completely disabled as we are not in the EAP
-  //  if (!UsingEmulator()) {
-  //    auto detach_response = topic_admin.DetachSubscription(subscription);
-  //    ASSERT_STATUS_OK(detach_response);
-  //  }
+  if (!UsingEmulator()) {
+    auto detach_response = topic_admin.DetachSubscription(subscription);
+    ASSERT_STATUS_OK(detach_response);
+  }
 
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   EXPECT_THAT(delete_response, AnyOf(StatusIs(StatusCode::kOk),
@@ -221,7 +219,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
       {}, TestRetryPolicy(), TestBackoffPolicy()));
   auto create_response = client.UpdateSubscription(
       Subscription("--invalid-project--", "--invalid-subscription--"),
-      SubscriptionMutationBuilder{}.set_ack_deadline(std::chrono::seconds(20)));
+      SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(20)));
   ASSERT_FALSE(create_response.ok());
 }
 
@@ -295,7 +293,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
       {}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = client.UpdateSnapshot(
       Snapshot("--invalid-project--", "--invalid-snapshot--"),
-      SnapshotMutationBuilder{}.clear_labels());
+      SnapshotBuilder{}.clear_labels());
   ASSERT_FALSE(response.ok());
 }
 

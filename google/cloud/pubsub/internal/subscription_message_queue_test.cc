@@ -27,29 +27,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAre;
 
-TEST(SubscriptionMessageQueueTest, Basic) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
-  EXPECT_CALL(*mock, AckMessage)
-      .WillOnce([](std::string const& ack_id, std::size_t size) {
-        EXPECT_EQ("ack-m0", ack_id);
-        EXPECT_EQ(0, size);
-        return make_ready_future(Status{});
-      });
-  EXPECT_CALL(*mock, NackMessage)
-      .WillOnce([](std::string const& ack_id, std::size_t size) {
-        EXPECT_EQ("ack-m1", ack_id);
-        EXPECT_EQ(1, size);
-        return make_ready_future(Status{});
-      });
-  EXPECT_CALL(*mock, BulkNack).Times(1);
-  SubscriptionMessageQueue uut(mock);
-
-  std::vector<google::pubsub::v1::ReceivedMessage> received;
-  auto handler = [&received](google::pubsub::v1::ReceivedMessage m) {
-    received.push_back(std::move(m));
-  };
-
-  uut.Start(handler);
+std::vector<google::pubsub::v1::ReceivedMessage> GenerateMessages() {
   auto constexpr kTextM0 = R"pb(
     message {
       data: "m0"
@@ -81,35 +59,119 @@ TEST(SubscriptionMessageQueueTest, Basic) {
     ack_id: "ack-m2"
   )pb";
   google::pubsub::v1::ReceivedMessage m0;
+  if (!google::protobuf::TextFormat::ParseFromString(kTextM0, &m0)) return {};
   google::pubsub::v1::ReceivedMessage m1;
+  if (!google::protobuf::TextFormat::ParseFromString(kTextM1, &m1)) return {};
   google::pubsub::v1::ReceivedMessage m2;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kTextM0, &m0));
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kTextM1, &m1));
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kTextM2, &m2));
+  if (!google::protobuf::TextFormat::ParseFromString(kTextM2, &m2)) return {};
 
-  auto const text_response = [&] {
-    std::ostringstream os;
-    os << "received_messages { " << kTextM0 << "}";
-    os << "received_messages { " << kTextM1 << "}";
-    os << "received_messages { " << kTextM2 << "}";
-    return std::move(os).str();
-  }();
+  return {m0, m1, m2};
+}
+
+google::pubsub::v1::StreamingPullResponse GenerateResponse(
+    std::vector<google::pubsub::v1::ReceivedMessage> messages) {
   google::pubsub::v1::StreamingPullResponse response;
-  ASSERT_TRUE(
-      google::protobuf::TextFormat::ParseFromString(text_response, &response));
+  for (auto& m : messages) {
+    *response.add_received_messages() = std::move(m);
+  }
+  return response;
+}
 
-  uut.Read(1);
+TEST(SubscriptionMessageQueueTest, Basic) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown).Times(1);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  EXPECT_CALL(*mock, AckMessage("ack-m0")).WillOnce([](std::string const&) {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, NackMessage("ack-m1")).WillOnce([](std::string const&) {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, BulkNack).Times(1);
+
+  auto const messages = GenerateMessages();
+  ASSERT_FALSE(messages.empty());
+  auto const response = GenerateResponse(messages);
+
+  std::vector<google::pubsub::v1::ReceivedMessage> received;
+  auto handler = [&received](google::pubsub::v1::ReceivedMessage m) {
+    received.push_back(std::move(m));
+  };
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  shutdown->Start({});
+  auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
+  uut->Start(handler);
+
+  uut->Read(1);
   EXPECT_THAT(received, ElementsAre());
 
-  uut.OnRead(response);
-  uut.Read(1);
+  batch_callback(response);
+  uut->Read(1);
 
-  EXPECT_THAT(received, ElementsAre(IsProtoEqual(m0), IsProtoEqual(m1)));
-  uut.AckMessage("ack-m0", 0);
-  uut.NackMessage("ack-m1", 1);
+  EXPECT_THAT(received, ElementsAre(IsProtoEqual(messages[0]),
+                                    IsProtoEqual(messages[1])));
+  uut->AckMessage("ack-m0", 0);
+  uut->NackMessage("ack-m1", 1);
 
   received.clear();
-  uut.Shutdown();
+  uut->Shutdown();
+}
+
+/// @test Verify that messages received after a shutdown are nacked.
+TEST(SubscriptionMessageQueueTest, NackOnSessionShutdown) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  EXPECT_CALL(*mock, BulkNack)
+      .WillOnce([&](std::vector<std::string> const& ack_ids) {
+        EXPECT_THAT(ack_ids, ElementsAre("ack-m0", "ack-m1", "ack-m2"));
+        return make_ready_future(Status{});
+      });
+
+  ::testing::MockFunction<void(google::pubsub::v1::ReceivedMessage const&)>
+      mock_handler;
+
+  auto const response = GenerateResponse(GenerateMessages());
+  EXPECT_FALSE(response.received_messages().empty());
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
+  uut->Start(mock_handler.AsStdFunction());
+  uut->Read(1);
+  shutdown->MarkAsShutdown("test", {});
+  batch_callback(response);
+  uut->Shutdown();
+}
+
+/// @test Verify that receiving an error triggers the right shutdown.
+TEST(SubscriptionMessageQueueTest, HandleError) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  ::testing::MockFunction<void(google::pubsub::v1::ReceivedMessage const&)>
+      mock_handler;
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
+  auto done = shutdown->Start({});
+  uut->Start(mock_handler.AsStdFunction());
+  uut->Read(1);
+  auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
+  batch_callback(expected);
+
+  EXPECT_EQ(done.get(), expected);
 }
 
 }  // namespace

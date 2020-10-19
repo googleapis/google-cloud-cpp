@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
-#include "google/cloud/pubsub/subscription_mutation_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
@@ -50,7 +50,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
   namespace pubsub = google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::TopicMutationBuilder(
+    auto topic = client.CreateTopic(pubsub::TopicBuilder(
         pubsub::Topic(std::move(project_id), std::move(topic_id))));
     // Note that kAlreadyExists is a possible error when the library retries.
     if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -91,7 +91,7 @@ void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.UpdateTopic(
-        pubsub::TopicMutationBuilder(
+        pubsub::TopicBuilder(
             pubsub::Topic(std::move(project_id), std::move(topic_id)))
             .add_label("test-key", "test-value"));
     if (!topic) return;  // TODO(#4792) - emulator lacks UpdateTopic()
@@ -218,6 +218,31 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateFilteredSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [create-filtered-subscription]
+  namespace pubsub = google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string topic_id, std::string subscription_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, std::move(topic_id)),
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionBuilder{}.set_filter(
+            R"""(attributes.is-even = "false")"""));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [create-filtered-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void CreatePushSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -229,7 +254,7 @@ void CreatePushSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_push_config(
+        pubsub::SubscriptionBuilder{}.set_push_config(
             pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
@@ -254,7 +279,7 @@ void CreateOrderingSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.enable_message_ordering(true));
+        pubsub::SubscriptionBuilder{}.enable_message_ordering(true));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -281,8 +306,8 @@ void CreateDeadLetterSubscription(
     auto sub = client.CreateSubscription(
         pubsub::Topic(project_id, std::move(topic_id)),
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
-            pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
+        pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
+            pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
                 dead_letter_delivery_attempts)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -318,8 +343,8 @@ void UpdateDeadLetterSubscription(
      int dead_letter_delivery_attempts) {
     auto sub = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_dead_letter_policy(
-            pubsub::SubscriptionMutationBuilder::MakeDeadLetterPolicy(
+        pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
+            pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
                 dead_letter_delivery_attempts)));
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
@@ -341,18 +366,17 @@ void UpdateDeadLetterSubscription(
 
 void ReceiveDeadLetterDeliveryAttempt(
     google::cloud::pubsub::Subscriber subscriber,
-    google::cloud::pubsub::Subscription const& subscription,
     std::vector<std::string> const&) {
   //! [dead-letter-delivery-attempt]
   // [START pubsub_dead_letter_delivery_attempt]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
-  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+  [](pubsub::Subscriber subscriber) {
     std::mutex mu;
     std::condition_variable cv;
     int message_count = 0;
     auto session = subscriber.Subscribe(
-        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           std::cout << "Delivery attempt: " << h.delivery_attempt() << "\n";
           std::unique_lock<std::mutex> lk(mu);
@@ -373,7 +397,7 @@ void ReceiveDeadLetterDeliveryAttempt(
     // Report any final status, blocking.
     std::cout << "Message count: " << message_count << ", status: " << status
               << "\n";
-  }(std::move(subscriber), std::move(subscription));
+  }(std::move(subscriber));
   // [END pubsub_dead_letter_delivery_attempt]
   //! [dead-letter-delivery-attempt]
 }
@@ -387,7 +411,7 @@ void RemoveDeadLetterPolicy(
      std::string const& subscription_id) {
     auto sub = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.clear_dead_letter_policy());
+        pubsub::SubscriptionBuilder{}.clear_dead_letter_policy());
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
 
     std::cout << "The subscription has been updated to: " << sub->DebugString()
@@ -422,7 +446,7 @@ void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& subscription_id) {
     auto s = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
-        pubsub::SubscriptionMutationBuilder{}.set_ack_deadline(
+        pubsub::SubscriptionBuilder{}.set_ack_deadline(
             std::chrono::seconds(60)));
     if (!s) throw std::runtime_error(s.status().message());
 
@@ -539,7 +563,7 @@ void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string snapshot_id) {
     auto snap = client.UpdateSnapshot(
         pubsub::Snapshot(project_id, std::move(snapshot_id)),
-        pubsub::SnapshotMutationBuilder{}.add_label("samples-cpp", "gcp"));
+        pubsub::SnapshotBuilder{}.add_label("samples-cpp", "gcp"));
     if (!snap.ok()) return;  // TODO(#4792) - emulator lacks UpdateSnapshot()
 
     std::cout << "The snapshot was successfully updated: "
@@ -708,8 +732,10 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
   std::vector<future<StatusOr<std::string>>> done;
   done.reserve(message_count);
   for (int i = 0; i != message_count; ++i) {
+    std::string const value = i % 2 == 0 ? "true" : "false";
     done.push_back(
         publisher.Publish(pubsub::MessageBuilder{}
+                              .SetAttributes({{"is-even", value}})
                               .SetData(prefix + " [" + std::to_string(i) + "]")
                               .Build()));
   }
@@ -755,19 +781,18 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
 }
 
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
-               google::cloud::pubsub::Subscription const& subscription,
                std::vector<std::string> const&) {
   //! [START pubsub_quickstart_subscriber]
   //! [START pubsub_subscriber_async_pull] [subscribe]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+  [](pubsub::Subscriber subscriber) {
     std::mutex mu;
     std::condition_variable cv;
     int message_count = 0;
     auto session = subscriber.Subscribe(
-        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
@@ -790,34 +815,31 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   }
   //! [END pubsub_subscriber_async_pull] [subscribe]
   //! [END pubsub_quickstart_subscriber]
-  (std::move(subscriber), std::move(subscription));
+  (std::move(subscriber));
 }
 
-void SubscribeErrorListener(
-    google::cloud::pubsub::Subscriber subscriber,
-    google::cloud::pubsub::Subscription const& subscription,
-    std::vector<std::string> const&) {
+void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
+                            std::vector<std::string> const&) {
   // [START pubsub_subscriber_error_listener]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+  [](pubsub::Subscriber subscriber) {
     std::mutex mu;
     std::condition_variable cv;
     bool done = false;
     int message_count = 0;
     auto session =
         subscriber
-            .Subscribe(subscription,
-                       [&](pubsub::Message const& m, pubsub::AckHandler h) {
-                         std::cout << "Received message " << m << "\n";
-                         std::unique_lock<std::mutex> lk(mu);
-                         ++message_count;
-                         done = true;
-                         lk.unlock();
-                         cv.notify_one();
-                         std::move(h).ack();
-                       })
+            .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
+              std::cout << "Received message " << m << "\n";
+              std::unique_lock<std::mutex> lk(mu);
+              ++message_count;
+              done = true;
+              lk.unlock();
+              cv.notify_one();
+              std::move(h).ack();
+            })
             // Setup an error handler for the subscription session
             .then([&](future<google::cloud::Status> f) {
               std::cout << "Subscription session result: " << f.get() << "\n";
@@ -835,23 +857,21 @@ void SubscribeErrorListener(
     std::cout << "Message count:" << message_count << "\n";
   }
   // [END pubsub_subscriber_error_listener]
-  (std::move(subscriber), std::move(subscription));
+  (std::move(subscriber));
 }
 
-void SubscribeCustomAttributes(
-    google::cloud::pubsub::Subscriber subscriber,
-    google::cloud::pubsub::Subscription const& subscription,
-    std::vector<std::string> const&) {
+void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
+                               std::vector<std::string> const&) {
   //! [START pubsub_subscriber_async_pull_custom_attributes]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+  [](pubsub::Subscriber subscriber) {
     std::mutex mu;
     std::condition_variable cv;
     int message_count = 0;
     auto session = subscriber.Subscribe(
-        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message with attributes:\n";
           for (auto const& kv : m.attributes()) {
             std::cout << "  " << kv.first << ": " << kv.second << "\n";
@@ -873,7 +893,7 @@ void SubscribeCustomAttributes(
               << "\n";
   }
   //! [END pubsub_subscriber_async_pull_custom_attributes]
-  (std::move(subscriber), std::move(subscription));
+  (std::move(subscriber));
 }
 
 void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
@@ -976,8 +996,7 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
     // of 100ms, a maximum backoff of 60 seconds, and the backoff will grow by
     // 30% after each attempt. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic),
-        pubsub::PublisherOptions{}.enable_retry_publish_failures(), {},
+        std::move(topic), pubsub::PublisherOptions{}, {},
         pubsub::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(10))
             .clone(),
@@ -1006,6 +1025,45 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void PublisherDisableRetries(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publisher-disable-retries <project-id> <topic-id>"};
+  }
+  //! [publisher-disable-retries]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic), pubsub::PublisherOptions{}, {},
+        pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
+        pubsub::ExponentialBackoffPolicy(
+            /*initial_delay=*/std::chrono::milliseconds(200),
+            /*maximum_delay=*/std::chrono::seconds(45),
+            /*scaling=*/2.0)
+            .clone()));
+
+    std::vector<future<bool>> done;
+    for (char const* data : {"1", "2", "3", "go!"}) {
+      done.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([](future<StatusOr<std::string>> f) {
+                return f.get().ok();
+              }));
+    }
+    publisher.Flush();
+    int count = 0;
+    for (auto& f : done) {
+      if (f.get()) ++count;
+    }
+    std::cout << count << " messages sent successfully\n";
+  }
+  //! [publisher-disable-retries]
+  (argv.at(0), argv.at(1));
+}
+
 void CustomBatchPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -1026,7 +1084,7 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
         pubsub::PublisherOptions{}
             .set_maximum_hold_time(std::chrono::milliseconds(20))
             .set_maximum_batch_bytes(4 * 1024 * 1024L)
-            .set_maximum_message_count(200),
+            .set_maximum_batch_message_count(200),
         pubsub::ConnectionOptions{}));
 
     std::vector<future<void>> ids;
@@ -1069,9 +1127,9 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     });
 
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
+        pubsub::SubscriberOptions{},
         pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
-    auto subscription =
-        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
 
     // Because this is an example we want to exit eventually, use a mutex and
     // condition variable to notify the current thread and stop the example.
@@ -1089,7 +1147,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
 
     // Receive messages in the previously allocated thread pool.
     auto result = subscriber.Subscribe(
-        subscription, [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           increase_count();
           std::move(h).ack();
@@ -1124,9 +1182,10 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
+        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
+            /*lwm=*/4, /*hwm=*/8),
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
-    auto subscription =
-        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1149,10 +1208,7 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     // Create a subscription where up to 8 messages are handled concurrently. By
     // default the library uses `0` and `std::thread::hardwarde_concurrency()`
     // for the concurrency watermarks.
-    auto session = subscriber.Subscribe(
-        subscription, std::move(handler),
-        pubsub::SubscriptionOptions{}.set_concurrency_watermarks(
-            /*lwm=*/4, /*hwm=*/8));
+    auto session = subscriber.Subscribe(std::move(handler));
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
@@ -1165,15 +1221,30 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
-void SubscriberFlowControlSettings(
-    google::cloud::pubsub::Subscriber subscriber,
-    google::cloud::pubsub::Subscription const& subscription,
-    std::vector<std::string> const&) {
+void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{
+        "subscriber-retry-settings <project-id> <subscription-id>"};
+  }
+
   //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber, pubsub::Subscription const& subscription) {
+  [](std::string project_id, std::string subscription_id) {
+    // Change the flow control watermarks, by default the client library uses
+    // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
+    // size watermarks. Recall that the library stops requesting messages if
+    // any of the high watermarks are reached, and the library resumes
+    // requesting messages when *both* low watermarks are reached.
+    auto constexpr kMiB = 1024 * 1024L;
+    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
+        pubsub::SubscriberOptions{}
+            .set_max_outstanding_messages(1000)
+            .set_max_outstanding_bytes(8 * kMiB)));
+
     std::mutex mu;
     std::condition_variable cv;
     int count = 0;
@@ -1187,18 +1258,7 @@ void SubscriberFlowControlSettings(
       }
       cv.notify_one();
     };
-
-    // Change the flow control watermarks, by default the client library uses
-    // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
-    // size watermarks. Recall that the library stops requesting messages if
-    // any of the high watermarks are reached, and the library resumes
-    // requesting messages when *both* low watermarks are reached.
-    auto constexpr kMiB = 1024 * 1024L;
-    auto session = subscriber.Subscribe(
-        subscription, std::move(handler),
-        pubsub::SubscriptionOptions{}
-            .set_message_count_watermarks(/*lwm=*/800, /*hwm=*/1000)
-            .set_message_size_watermarks(/*lwm=*/4 * kMiB, /*hwm=*/8 * kMiB));
+    auto session = subscriber.Subscribe(std::move(handler));
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
@@ -1208,7 +1268,7 @@ void SubscriberFlowControlSettings(
     std::cout << "Message count: " << count << ", status: " << status << "\n";
   }
   //! [END pubsub_subscriber_flow_settings] [subscriber-flow-control]
-  (std::move(subscriber), std::move(subscription));
+  (argv.at(0), argv.at(1));
 }
 
 void SubscriberRetrySettings(std::vector<std::string> const& argv) {
@@ -1227,7 +1287,8 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will
     // grow by 30% after each attempt. This changes those defaults.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
-        pubsub::ConnectionOptions{},
+        pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
+        pubsub::SubscriberOptions{}, pubsub::ConnectionOptions{},
         pubsub::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(1))
             .clone(),
@@ -1236,8 +1297,6 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
             /*maximum_delay=*/std::chrono::seconds(10),
             /*scaling=*/2.0)
             .clone()));
-    auto subscription =
-        pubsub::Subscription(std::move(project_id), std::move(subscription_id));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1253,8 +1312,7 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
       cv.notify_one();
     };
 
-    auto session = subscriber.Subscribe(subscription, std::move(handler),
-                                        pubsub::SubscriptionOptions{});
+    auto session = subscriber.Subscribe(std::move(handler));
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
@@ -1279,15 +1337,16 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto topic_id = RandomTopicId(generator);
-  auto subscription_id = RandomSubscriptionId(generator);
-  auto push_subscription_id = RandomSubscriptionId(generator);
-  auto ordering_subscription_id = RandomSubscriptionId(generator);
-  auto ordering_topic_id = "ordering-" + RandomTopicId(generator);
-  auto dead_letter_subscription_id = RandomSubscriptionId(generator);
-  auto dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
+  auto const topic_id = RandomTopicId(generator);
+  auto const subscription_id = RandomSubscriptionId(generator);
+  auto const filtered_subscription_id = RandomSubscriptionId(generator);
+  auto const push_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_subscription_id = RandomSubscriptionId(generator);
+  auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
+  auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
+  auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
 
-  auto snapshot_id = RandomSnapshotId(generator);
+  auto const snapshot_id = RandomSnapshotId(generator);
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
@@ -1322,6 +1381,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
+
+  std::cout << "\nRunning CreateFilteredSubscription() sample [2]" << std::endl;
+  CreateFilteredSubscription(subscription_admin_client,
+                             {project_id, topic_id, filtered_subscription_id});
 
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
@@ -1419,17 +1486,23 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
-          topic,
-          google::cloud::pubsub::PublisherOptions{}.set_maximum_message_count(
-              1)));
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_batch_message_count(1)));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection());
-  auto dead_letter_subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection());
+      google::cloud::pubsub::MakeSubscriberConnection(subscription));
+
   auto dead_letter_subscription = google::cloud::pubsub::Subscription(
       project_id, dead_letter_subscription_id);
+  auto dead_letter_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(
+          dead_letter_subscription));
+
+  auto filtered_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(
+          google::cloud::pubsub::Subscription(project_id,
+                                              filtered_subscription_id)));
 
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
@@ -1438,21 +1511,24 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishCustomAttributes(publisher, {});
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
-  Subscribe(subscriber, subscription, {});
+  Subscribe(subscriber, {});
+
+  std::cout << "\nRunning Subscribe(filtered) sample" << std::endl;
+  PublishHelper(publisher, "Subscribe(filtered)", 8);
+  Subscribe(filtered_subscriber, {});
 
   std::cout << "\nRunning Publish() sample [2]" << std::endl;
   Publish(publisher, {});
 
   std::cout << "\nRunning SubscribeErrorListener() sample" << std::endl;
-  SubscribeErrorListener(subscriber, subscription, {});
+  SubscribeErrorListener(subscriber, {});
 
   std::cout << "\nRunning Publish() sample [3]" << std::endl;
   Publish(publisher, {});
 
   std::cout << "\nRunning ReceiveDeadLetterDeliveryAttempt() sample"
             << std::endl;
-  ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber,
-                                   dead_letter_subscription, {});
+  ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber, {});
 
   std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
   RemoveDeadLetterPolicy(subscription_admin_client,
@@ -1468,6 +1544,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the PublisherRetrySettings() sample" << std::endl;
   PublisherRetrySettings({project_id, topic_id});
 
+  std::cout << "\nRunning the PublisherDisableRetries() sample" << std::endl;
+  PublisherDisableRetries({project_id, topic_id});
+
   std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
   CustomBatchPublisher({project_id, topic_id});
 
@@ -1478,12 +1557,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishCustomAttributes(publisher, {});
 
   std::cout << "\nRunning SubscribeCustomAttributes() sample" << std::endl;
-  SubscribeCustomAttributes(subscriber, subscription, {});
+  SubscribeCustomAttributes(subscriber, {});
 
   auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::pubsub::PublisherOptions{}
-                     .set_maximum_message_count(1)
+                     .set_maximum_batch_message_count(1)
                      .enable_message_ordering()));
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
 
@@ -1498,7 +1577,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning SubscriberFlowControlSettings() sample" << std::endl;
   PublishHelper(publisher, "SubscriberFlowControlSettings", 4);
-  SubscriberFlowControlSettings(subscriber, subscription, {});
+  SubscriberFlowControlSettings({project_id, subscription_id});
 
   std::cout << "\nRunning SubscriberRetrySettings() sample" << std::endl;
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
@@ -1567,6 +1646,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-subscription", {"project-id", "topic-id", "subscription-id"},
           CreateSubscription),
       CreateSubscriptionAdminCommand(
+          "create-filtered-subscription",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateFilteredSubscription),
+      CreateSubscriptionAdminCommand(
           "create-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
           CreatePushSubscription),
@@ -1632,11 +1715,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"publisher-concurrency-control", PublisherConcurrencyControl},
       {"publisher-retry-settings", PublisherRetrySettings},
+      {"publisher-disable-retry", PublisherDisableRetries},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
-      CreateSubscriberCommand("subscriber-flow-control-settings", {},
-                              SubscriberFlowControlSettings),
+      {"subscriber-flow-control-settings", SubscriberFlowControlSettings},
       {"subscriber-retry-settings", SubscriberRetrySettings},
       {"auto", AutoRun},
   });

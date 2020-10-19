@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
+#include "absl/strings/str_split.h"
 #include <chrono>
 #include <sstream>
 
@@ -438,14 +439,9 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
 
   // A simple, though probably not very efficient, parser for mutations.
   auto parse = [](std::string const& mut) {
-    std::istringstream is(mut);
-    is.exceptions(std::ios_base::failbit | std::ios_base::badbit);
-    std::string family;
-    std::getline(is, family, ':');
-    std::string column;
-    std::getline(is, column, '=');
-    std::string value{std::istreambuf_iterator<char>{is}, {}};
-    return InsertOrUpdate{family, column, value};
+    std::vector<std::string> const tokens =
+        absl::StrSplit(mut, absl::ByAnyChar(":="));
+    return InsertOrUpdate{tokens[0], tokens[1], tokens[2]};
   };
 
   auto it = argv.cbegin();

@@ -401,3 +401,16 @@ TEST(FiltersTest, MoveProto) {
   differencer.ReportDifferencesToString(&delta);
   EXPECT_TRUE(differencer.Compare(proto_copy, proto_move)) << delta;
 }
+
+/// @test Verify that the ctor receiving a v2 RowFilter works as expected.
+TEST(FiltersTest, RowFilterCtor) {
+  using F = bigtable::Filter;
+  // We use a simple filter just as a sanity check.
+  btproto::RowFilter row_filter;
+  row_filter.set_row_key_regex_filter("[A-Za-z][A-Za-z0-9_]*");
+  auto filter = F(row_filter);
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(row_filter, filter.as_proto())) << delta;
+}

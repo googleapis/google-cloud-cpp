@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/subscription_mutation_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 
 namespace google {
 namespace cloud {
@@ -30,8 +30,7 @@ PushConfigBuilder::BuildModifyPushConfig(Subscription const& subscription) && {
 }
 
 google::pubsub::v1::UpdateSubscriptionRequest
-SubscriptionMutationBuilder::BuildUpdateSubscription(
-    Subscription const& subscription) && {
+SubscriptionBuilder::BuildUpdateRequest(Subscription const& subscription) && {
   google::pubsub::v1::UpdateSubscriptionRequest request;
   *request.mutable_subscription() = std::move(proto_);
   request.mutable_subscription()->set_name(subscription.FullName());
@@ -42,8 +41,7 @@ SubscriptionMutationBuilder::BuildUpdateSubscription(
   return request;
 }
 
-google::pubsub::v1::Subscription
-SubscriptionMutationBuilder::BuildCreateSubscription(
+google::pubsub::v1::Subscription SubscriptionBuilder::BuildCreateRequest(
     Topic const& topic, Subscription const& subscription) && {
   google::pubsub::v1::Subscription request = std::move(proto_);
   request.set_topic(topic.FullName());
@@ -51,7 +49,7 @@ SubscriptionMutationBuilder::BuildCreateSubscription(
   return request;
 }
 
-SubscriptionMutationBuilder& SubscriptionMutationBuilder::set_push_config(
+SubscriptionBuilder& SubscriptionBuilder::set_push_config(
     PushConfigBuilder v) & {
   if (v.paths_.empty()) {
     proto_.clear_push_config();

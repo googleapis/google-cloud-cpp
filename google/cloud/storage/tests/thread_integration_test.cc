@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <future>
 #include <thread>
@@ -167,11 +168,8 @@ class CaptureSendHeaderBackend : public LogBackend {
 
   void Process(LogRecord const& lr) override {
     // Break the records in lines, because we will analyze the output per line.
-    std::istringstream is(lr.message);
-    std::string line;
-    while (std::getline(is, line)) {
-      log_lines.emplace_back(line);
-    }
+    std::vector<std::string> lines = absl::StrSplit(lr.message, '\n');
+    log_lines.insert(log_lines.end(), lines.begin(), lines.end());
   }
 
   void ProcessWithOwnership(LogRecord lr) override { Process(lr); }

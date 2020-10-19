@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/topic_mutation_builder.h"
+#include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -51,7 +51,7 @@ TEST(TopicAdminConnectionTest, Create) {
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
-  auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
+  auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -74,7 +74,7 @@ TEST(TopicAdminConnectionTest, Metadata) {
 
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
-  auto const expected = TopicMutationBuilder(topic).BuildCreateMutation();
+  auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -119,9 +119,9 @@ TEST(TopicAdminConnectionTest, Update) {
   auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
       {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response =
-      topic_admin->UpdateTopic({TopicMutationBuilder(topic)
+      topic_admin->UpdateTopic({TopicBuilder(topic)
                                     .add_label("test-key", "test-value")
-                                    .BuildUpdateMutation()});
+                                    .BuildUpdateRequest()});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
 }

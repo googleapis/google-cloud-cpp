@@ -1,7 +1,43 @@
-
 # Changelog
 
 ## v1.20.0 - TBD
+
+### Pub/Sub
+
+**BREAKING CHANGES:**
+
+While the Pub/Sub library is not GA, and breaking changes are to be expected, we
+are close enough to a GA release that we think highlighting them is important.
+
+* Rename `pubsub::SubscriptionOptions` to `pubsub::SubscriberOptions` as these
+  are bound to a specific subscriber object.
+
+* Change the `pubsub::Subscriber` API. A `Subscriber` is now bound to a specific
+  Cloud Pub/Sub subscription, with a fixed set of `SuscriptionOptions`, just
+  like a `pubsub::Publisher` is bound to a specific topic and a set of
+  `PublisherOptions`. In addition to making publishers and subscribers more
+  symmetrical, this makes the library more consistent with the Cloud Pub/Sub
+  library for other languages. Finally, note that we are planning to rename
+  `SubscriptionOptions` to `SubscriberOptions` in a future PR too.
+
+* Remove option to disable retries in `Publisher::Publish`. This is redundant as
+  the application can set a "no retries" retry policy. This is more consistent
+  with other Cloud Pub/Sub libraries. We include an example showing how to
+  configure a "no retries" retry policy.
+
+* Fix inconsistent naming for `PublisherOptions` attributes controlling the
+  maximum number of messages per batch and the maximum number of bytes per
+  batch.
+
+* Rename the `{Topic,Snapshot,Subscription}MutationBuilder` classes, removing
+  `Mutation` from their names. This makes the C++ library more familiar for
+  Cloud Pub/Sub developers coming from other languages.
+
+* Simplify the message flow control configuration. Now that the library uses
+  streaming pulls, the low water marks are not used. The application developer
+  simply sets limits for the number of messages (and/or bytes) outstanding.
+  These limits are propagated to the service, and the service will stop
+  streaming if too many messages (or bytes) are outstanding.
 
 ## v1.19.0 - 2020-10
 

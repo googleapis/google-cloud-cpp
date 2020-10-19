@@ -115,19 +115,22 @@ class Publisher {
   /**
    * Publishes a message to this publisher's topic
    *
-   * Note that the message may be batched based on the Publisher's
+   * Note that the message may be batched, depending on the Publisher's
    * configuration. It could be delayed until the batch has enough messages,
    * or enough data, or enough time has elapsed. See the `PublisherOptions`
    * documentation for more details.
    *
    * @par Idempotency
-   * This is a non-idempotent operation. By default the request is *not* retried
-   * if there is a transient error. Applications wanting to retry requests can
-   * do so by enabling the `retry_publish_failures()` parameter in the
-   * `PublisherOptions`.
+   * This is a non-idempotent operation. As Cloud Pub/Sub has "at least once"
+   * delivery semantics applications are expected to handle duplicate messages
+   * without problems. However, if the application does not want to retry these
+   * requests they can set the retry policy as shown in the example below.
    *
    * @par Example
    * @snippet samples.cc publish
+   *
+   * @par Disabling Retries Example
+   * @snippet samples.cc publisher-disable-retries
    *
    * @par Changing Retry Parameters Example
    * @snippet samples.cc publisher-retry-settings

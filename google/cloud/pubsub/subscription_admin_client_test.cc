@@ -42,7 +42,7 @@ TEST(SubscriptionAdminClient, CreateSubscription) {
   SubscriptionAdminClient client(mock);
   auto const response =
       client.CreateSubscription(topic, subscription,
-                                SubscriptionMutationBuilder{}.set_ack_deadline(
+                                SubscriptionBuilder{}.set_ack_deadline(
                                     std::chrono::seconds(kDeadlineSeconds)));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
@@ -88,7 +88,7 @@ TEST(SubscriptionAdminClient, UpdateSubscription) {
           });
   SubscriptionAdminClient client(mock);
   auto const response = client.UpdateSubscription(
-      subscription, SubscriptionMutationBuilder{}.set_ack_deadline(
+      subscription, SubscriptionBuilder{}.set_ack_deadline(
                         std::chrono::seconds(kDeadlineSeconds)));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
@@ -173,7 +173,7 @@ TEST(SubscriptionAdminClient, CreateSnapshot) {
           });
   SubscriptionAdminClient client(mock);
   auto const response = client.CreateSnapshot(
-      subscription, snapshot, SnapshotMutationBuilder{}.add_label("k0", "l0"));
+      subscription, snapshot, SnapshotBuilder{}.add_label("k0", "l0"));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(snapshot.FullName(), response->name());
 }
@@ -206,8 +206,8 @@ TEST(SubscriptionAdminClient, UpdateSnapshot) {
             return make_status_or(response);
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.UpdateSnapshot(
-      snapshot, SnapshotMutationBuilder{}.add_label("k1", "l1"));
+  auto const response =
+      client.UpdateSnapshot(snapshot, SnapshotBuilder{}.add_label("k1", "l1"));
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(snapshot.FullName(), response->name());
 }

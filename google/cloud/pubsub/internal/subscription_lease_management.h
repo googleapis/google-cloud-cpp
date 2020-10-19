@@ -75,14 +75,11 @@ class SubscriptionLeaseManagement
 
   void Start(BatchCallback cb) override;
   void Shutdown() override;
-  future<Status> AckMessage(std::string const& ack_id,
-                            std::size_t size) override;
-  future<Status> NackMessage(std::string const& ack_id,
-                             std::size_t size) override;
-  future<Status> BulkNack(std::vector<std::string> ack_ids,
-                          std::size_t total_size) override;
-  future<Status> ExtendLeases(std::vector<std::string> ack_ids,
-                              std::chrono::seconds extension) override;
+  void AckMessage(std::string const& ack_id) override;
+  void NackMessage(std::string const& ack_id) override;
+  void BulkNack(std::vector<std::string> ack_ids) override;
+  void ExtendLeases(std::vector<std::string> ack_ids,
+                    std::chrono::seconds extension) override;
 
  private:
   SubscriptionLeaseManagement(
@@ -102,11 +99,6 @@ class SubscriptionLeaseManagement
 
   /// If needed asynchronous update the message leases in the server.
   void RefreshMessageLeases(std::unique_lock<std::mutex> lk);
-
-  /// Invoked when the asynchronous RPC to update message leases completes.
-  void OnRefreshMessageLeases(
-      std::vector<std::string> const& ack_ids,
-      std::chrono::system_clock::time_point new_server_deadline);
 
   /// Start the timer to update ack deadlines.
   void StartRefreshTimer(

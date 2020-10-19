@@ -42,40 +42,34 @@ void StreamingSubscriptionBatchSource::Shutdown() {
   stream_->Cancel();
 }
 
-future<Status> StreamingSubscriptionBatchSource::AckMessage(
-    std::string const& ack_id, std::size_t) {
+void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   ack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::NackMessage(
-    std::string const& ack_id, std::size_t) {
+void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   nack_queue_.push_back(ack_id);
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::BulkNack(
-    std::vector<std::string> ack_ids, std::size_t) {
+void StreamingSubscriptionBatchSource::BulkNack(
+    std::vector<std::string> ack_ids) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     nack_queue_.push_back(std::move(a));
   }
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
-future<Status> StreamingSubscriptionBatchSource::ExtendLeases(
+void StreamingSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     deadlines_queue_.emplace_back(std::move(a), extension);
   }
   DrainQueues(std::move(lk));
-  return make_ready_future(Status{});
 }
 
 namespace {
@@ -160,13 +154,24 @@ void StreamingSubscriptionBatchSource::OnStreamStart(
     }
     return;
   }
-  ChangeState(lk, StreamState::kActive, __func__, "status");
+  ChangeState(lk, StreamState::kActive, __func__, "success");
   stream_ = *std::move(stream);
   auto weak = WeakFromThis();
-  cq_.RunAsync([weak] {
-    if (auto self = weak.lock()) self->ReadLoop();
-  });
-  DrainQueues(std::move(lk));
+  auto sm = shutdown_manager_;
+  // The stream might be created after a shutdown, in which case we need to
+  // avoid starting work, and cancel the outstanding stream.
+  auto const already_shutdown = !shutdown_manager_->StartAsyncOperation(
+      __func__, "StartupStream", cq_, [weak, sm] {
+        sm->FinishedOperation("StartupStream");
+        auto self = weak.lock();
+        if (!self) return;
+        self->ReadLoop();
+        self->DrainQueues(std::unique_lock<std::mutex>(self->mu_));
+      });
+  if (already_shutdown) {
+    stream_->Cancel();
+    ShutdownStream(std::move(lk), "readloop-failure");
+  }
 }
 
 void StreamingSubscriptionBatchSource::ReadLoop() {

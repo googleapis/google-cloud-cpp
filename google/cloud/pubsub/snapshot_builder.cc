@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/snapshot_mutation_builder.h"
+#include "google/cloud/pubsub/snapshot_builder.h"
 #include <google/protobuf/util/field_mask_util.h>
 
 namespace google {
@@ -20,8 +20,7 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-google::pubsub::v1::CreateSnapshotRequest
-SnapshotMutationBuilder::BuildCreateMutation(
+google::pubsub::v1::CreateSnapshotRequest SnapshotBuilder::BuildCreateRequest(
     Subscription const& subscription) && {
   google::pubsub::v1::CreateSnapshotRequest request;
   request.set_subscription(subscription.FullName());
@@ -29,9 +28,8 @@ SnapshotMutationBuilder::BuildCreateMutation(
   return request;
 }
 
-google::pubsub::v1::CreateSnapshotRequest
-SnapshotMutationBuilder::BuildCreateMutation(Subscription const& subscription,
-                                             Snapshot const& snapshot) && {
+google::pubsub::v1::CreateSnapshotRequest SnapshotBuilder::BuildCreateRequest(
+    Subscription const& subscription, Snapshot const& snapshot) && {
   google::pubsub::v1::CreateSnapshotRequest request;
   request.set_subscription(subscription.FullName());
   request.set_name(snapshot.FullName());
@@ -39,8 +37,8 @@ SnapshotMutationBuilder::BuildCreateMutation(Subscription const& subscription,
   return request;
 }
 
-google::pubsub::v1::UpdateSnapshotRequest
-SnapshotMutationBuilder::BuildUpdateMutation(Snapshot const& snapshot) && {
+google::pubsub::v1::UpdateSnapshotRequest SnapshotBuilder::BuildUpdateRequest(
+    Snapshot const& snapshot) && {
   google::pubsub::v1::UpdateSnapshotRequest request;
   for (auto const& p : paths_) {
     google::protobuf::util::FieldMaskUtil::AddPathToFieldMask<

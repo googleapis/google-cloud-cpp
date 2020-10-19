@@ -33,9 +33,8 @@ google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     PublisherCommand const& command);
 
-using SubscriberCommand = std::function<void(
-    pubsub::Subscriber, pubsub::Subscription const& subscription,
-    std::vector<std::string> const&)>;
+using SubscriberCommand =
+    std::function<void(pubsub::Subscriber, std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
     std::string const& name, std::vector<std::string> const& arg_names,

@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,20 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-cc_binary(
-    name = "quickstart",
-    srcs = [
-        "quickstart.cc",
+load(":pubsub_client_benchmark_programs.bzl", "pubsub_client_benchmark_programs")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
+    srcs = [test],
+    tags = [
+        "integration-test",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:pubsub_client",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/pubsub:pubsub_client",
+        "//google/cloud/pubsub:pubsub_client_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
     ],
-)
+) for test in pubsub_client_benchmark_programs]

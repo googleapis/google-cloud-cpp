@@ -42,6 +42,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Property;
+using ::testing::Unused;
 
 class FakeStream {
  public:
@@ -129,10 +130,10 @@ class FakeStream {
   std::deque<promise<bool>> actions_;
 };
 
-pubsub::SubscriptionOptions TestSubscriptionOptions() {
-  return pubsub::SubscriptionOptions()
-      .set_message_size_watermarks(0, 100)
-      .set_message_size_watermarks(0, 100 * 1024 * 1024L)
+pubsub::SubscriberOptions TestSubscriptionOptions() {
+  return pubsub::SubscriberOptions()
+      .set_max_outstanding_messages(100)
+      .set_max_outstanding_bytes(100 * 1024 * 1024L)
       .set_max_deadline_time(std::chrono::seconds(300));
 }
 
@@ -318,6 +319,55 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsWithNull) {
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kUnknown));
 }
 
+TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  promise<bool> start;
+  promise<bool> initial_write;
+  promise<Status> finish;
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&start] {
+          return start.get_future();
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce([&initial_write](::testing::Unused, ::testing::Unused) {
+              return initial_write.get_future();
+            });
+
+        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+        EXPECT_CALL(*stream, Finish).WillOnce([&finish] {
+          return finish.get_future();
+        });
+
+        return stream;
+      });
+
+  using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
+  ::testing::MockFunction<void(CallbackArg const&)> callback;
+  EXPECT_CALL(callback, Call).Times(0);
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
+
+  auto done = shutdown->Start({});
+  uut->Start(callback.AsStdFunction());
+  start.set_value(true);
+  shutdown->MarkAsShutdown("test", {});
+  initial_write.set_value(true);
+  finish.set_value(Status{StatusCode::kCancelled, "cancelled"});
+
+  EXPECT_EQ(Status{}, done.get());
+}
+
 TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
@@ -396,15 +446,15 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   success_stream.WaitForAction().set_value(true);
   auto last_read = success_stream.WaitForAction();
 
-  uut->AckMessage("fake-001", 0);
-  uut->AckMessage("fake-002", 0);
-  uut->NackMessage("fake-003", 0);
+  uut->AckMessage("fake-001");
+  uut->AckMessage("fake-002");
+  uut->NackMessage("fake-003");
   // Flush the first AckMessage()
   success_stream.WaitForAction().set_value(true);
   // Flush the compiled AckMessage() + NackMessage()
   success_stream.WaitForAction().set_value(true);
 
-  uut->BulkNack({"fake-004", "fake-005"}, 0);
+  uut->BulkNack({"fake-004", "fake-005"});
   success_stream.WaitForAction().set_value(true);
 
   uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
@@ -459,7 +509,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   fake_stream.WaitForAction().set_value(true);
 
   auto pending_read = fake_stream.WaitForAction();
-  uut->AckMessage("fake-001", 0);
+  uut->AckMessage("fake-001");
   auto pending_write = fake_stream.WaitForAction();
 
   pending_read.set_value(false);
@@ -513,7 +563,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   fake_stream.WaitForAction().set_value(true);
 
   auto pending_read = fake_stream.WaitForAction();
-  uut->AckMessage("fake-001", 0);
+  uut->AckMessage("fake-001");
   auto pending_write = fake_stream.WaitForAction();
 
   shutdown->MarkAsShutdown("test", expected_status);

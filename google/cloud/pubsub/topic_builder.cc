@@ -12,33 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/subscription_options.h"
-#include <algorithm>
+#include "google/cloud/pubsub/topic_builder.h"
+#include <google/protobuf/util/field_mask_util.h>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-SubscriptionOptions& SubscriptionOptions::set_message_count_watermarks(
-    std::size_t lwm, std::size_t hwm) {
-  message_count_hwm_ = (std::max<std::size_t>)(1, hwm);
-  message_count_lwm_ = (std::min)(message_count_hwm_, lwm);
-  return *this;
+google::pubsub::v1::Topic TopicBuilder::BuildCreateRequest() && {
+  return std::move(proto_);
 }
 
-SubscriptionOptions& SubscriptionOptions::set_message_size_watermarks(
-    std::size_t lwm, std::size_t hwm) {
-  message_size_hwm_ = (std::max<std::size_t>)(1, hwm);
-  message_size_lwm_ = (std::min)(message_size_hwm_, lwm);
-  return *this;
-}
-
-SubscriptionOptions& SubscriptionOptions::set_concurrency_watermarks(
-    std::size_t lwm, std::size_t hwm) {
-  concurrency_hwm_ = (std::max<std::size_t>)(1, hwm);
-  concurrency_lwm_ = (std::min)(concurrency_hwm_, lwm);
-  return *this;
+google::pubsub::v1::UpdateTopicRequest TopicBuilder::BuildUpdateRequest() && {
+  google::pubsub::v1::UpdateTopicRequest request;
+  *request.mutable_topic() = std::move(proto_);
+  for (auto const& p : paths_) {
+    google::protobuf::util::FieldMaskUtil::AddPathToFieldMask<
+        google::pubsub::v1::Topic>(p, request.mutable_update_mask());
+  }
+  return request;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -20,7 +20,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/retry_policy.h"
-#include "google/cloud/pubsub/subscription_options.h"
+#include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -45,7 +45,7 @@ class StreamingSubscriptionBatchSource
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
-      std::string client_id, pubsub::SubscriptionOptions const& options,
+      std::string client_id, pubsub::SubscriberOptions const& options,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
       : cq_(std::move(cq)),
@@ -53,8 +53,8 @@ class StreamingSubscriptionBatchSource
         stub_(std::move(stub)),
         subscription_full_name_(std::move(subscription_full_name)),
         client_id_(std::move(client_id)),
-        max_outstanding_messages_(options.message_count_hwm()),
-        max_outstanding_bytes_(options.message_size_hwm()),
+        max_outstanding_messages_(options.max_outstanding_messages()),
+        max_outstanding_bytes_(options.max_outstanding_bytes()),
         max_deadline_time_(options.max_deadline_time()),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}
@@ -64,15 +64,11 @@ class StreamingSubscriptionBatchSource
   void Start(BatchCallback callback) override;
 
   void Shutdown() override;
-  // TODO(#5191) - cleanup return types
-  future<Status> AckMessage(std::string const& ack_id,
-                            std::size_t size) override;
-  future<Status> NackMessage(std::string const& ack_id,
-                             std::size_t size) override;
-  future<Status> BulkNack(std::vector<std::string> ack_ids,
-                          std::size_t total_size) override;
-  future<Status> ExtendLeases(std::vector<std::string> ack_ids,
-                              std::chrono::seconds extension) override;
+  void AckMessage(std::string const& ack_id) override;
+  void NackMessage(std::string const& ack_id) override;
+  void BulkNack(std::vector<std::string> ack_ids) override;
+  void ExtendLeases(std::vector<std::string> ack_ids,
+                    std::chrono::seconds extension) override;
 
   using AsyncPullStream = SubscriberStub::AsyncPullStream;
   using StreamShptr = std::shared_ptr<AsyncPullStream>;

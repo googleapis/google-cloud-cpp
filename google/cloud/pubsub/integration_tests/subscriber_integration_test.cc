@@ -35,6 +35,8 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
+using ::testing::ElementsAreArray;
+using ::testing::IsEmpty;
 
 class SubscriberIntegrationTest : public ::testing::Test {
  protected:
@@ -51,13 +53,12 @@ class SubscriberIntegrationTest : public ::testing::Test {
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-    auto topic_metadata = topic_admin.CreateTopic(TopicMutationBuilder(topic_));
+    auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
     ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
                                       StatusIs(StatusCode::kAlreadyExists)));
     auto subscription_metadata = subscription_admin.CreateSubscription(
         topic_, subscription_,
-        SubscriptionMutationBuilder{}.set_ack_deadline(
-            std::chrono::seconds(10)));
+        SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
     ASSERT_THAT(
         subscription_metadata,
         AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
@@ -152,7 +153,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   auto source =
       std::make_shared<pubsub_internal::StreamingSubscriptionBatchSource>(
           background.cq(), shutdown, stub, subscription_.FullName(),
-          "test-client-0001", pubsub::SubscriptionOptions{},
+          "test-client-0001", pubsub::SubscriberOptions{},
           pubsub_testing::TestRetryPolicy(),
           pubsub_testing::TestBackoffPolicy());
 
@@ -176,13 +177,10 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
             received_ids.push_back(m.message().message_id());
           }
           ++callback_count;
-        }
-        for (auto const& m : response->received_messages()) {
-          source->AckMessage(m.ack_id(), 0).then([&](future<Status>) {
-            std::lock_guard<std::mutex> lk(callback_mu);
-            ++ack_count;
-            callback_cv.notify_one();
-          });
+          for (auto const& m : response->received_messages()) {
+            source->AckMessage(m.ack_id());
+          }
+          ack_count += response->received_messages_size();
         }
         callback_cv.notify_one();
       };
@@ -218,6 +216,109 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   shutdown->MarkAsShutdown("test", {});
   source->Shutdown();
   EXPECT_STATUS_OK(done.get());
+}
+
+TEST_F(SubscriberIntegrationTest, PublishPullAck) {
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
+
+  std::mutex mu;
+  std::map<std::string, int> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
+    EXPECT_STATUS_OK(response);
+    if (response) {
+      std::lock_guard<std::mutex> lk(mu);
+      ids.emplace(*std::move(response), 0);
+    }
+  }
+  EXPECT_FALSE(ids.empty());
+
+  promise<void> ids_empty;
+  auto handler = [&](pubsub::Message const& m, AckHandler h) {
+    SCOPED_TRACE("Search for message " + m.message_id());
+    std::unique_lock<std::mutex> lk(mu);
+    auto i = ids.find(m.message_id());
+    // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
+    // perfectly possible, in that case the message would not be in the map of
+    // of pending ids.
+    if (i == ids.end()) return;
+    // The first time just NACK the message to exercise that path, we expect
+    // Cloud Pub/Sub to retry.
+    if (i->second == 0) {
+      std::move(h).nack();
+      ++i->second;
+      return;
+    }
+    ids.erase(i);
+    if (ids.empty()) ids_empty.set_value();
+    lk.unlock();
+    std::move(h).ack();
+  };
+
+  auto result = subscriber.Subscribe(handler);
+  // Wait until there are no more ids pending, then cancel the subscription and
+  // get its status.
+  ids_empty.get_future().get();
+  result.cancel();
+  EXPECT_STATUS_OK(result.get());
+}
+
+TEST_F(SubscriberIntegrationTest, FireAndForget) {
+  std::mutex mu;
+  std::condition_variable cv;
+  std::set<std::string> received;
+  Status subscription_result;
+  std::set<std::string> published;
+  std::vector<Status> publish_errors;
+  auto constexpr kMinimumMessages = 10;
+
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
+  internal::AutomaticallyCreatedBackgroundThreads background(4);
+  {
+    (void)subscriber
+        .Subscribe([&](Message const& m, AckHandler h) {
+          std::move(h).ack();
+          std::unique_lock<std::mutex> lk(mu);
+          std::cout << "received " << m.message_id() << std::endl;
+          received.insert(m.message_id());
+          lk.unlock();
+          cv.notify_one();
+        })
+        .then([&](future<Status> f) {
+          std::unique_lock<std::mutex> lk(mu);
+          subscription_result = f.get();
+          cv.notify_one();
+        });
+
+    std::vector<future<void>> pending;
+    for (int i = 0; i != kMinimumMessages; ++i) {
+      pending.push_back(
+          publisher
+              .Publish(MessageBuilder{}
+                           .SetAttributes({{"index", std::to_string(i)}})
+                           .Build())
+              .then([&](future<StatusOr<std::string>> f) {
+                std::unique_lock<std::mutex> lk(mu);
+                auto s = f.get();
+                if (!s) {
+                  publish_errors.push_back(std::move(s).status());
+                  return;
+                }
+                published.insert(*std::move(s));
+              }));
+    }
+    publisher.Flush();
+    for (auto& p : pending) p.get();
+  }
+  {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return received.size() >= published.size(); });
+  }
+  EXPECT_THAT(publish_errors, IsEmpty());
+  EXPECT_THAT(received, ElementsAreArray(published));
 }
 
 }  // namespace

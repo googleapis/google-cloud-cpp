@@ -120,14 +120,26 @@ class TestCommonUtils:
 
     def test_parse_fields(self):
         fields = "kind, items ( acl( entity, role), name, id)"
-        fields = fields.replace(" ", "")
-        assert utils.common.parse_fields(fields) == [
-            "kind",
-            "items.acl.entity",
-            "items.acl.role",
-            "items.name",
-            "items.id",
-        ]
+        assert (
+            utils.common.parse_fields(fields).sort()
+            == [
+                "kind",
+                "items.acl.entity",
+                "items.acl.role",
+                "items.name",
+                "items.id",
+            ].sort()
+        )
+
+        fields = "kind, items(name, labels(number), acl(role))"
+        assert (
+            utils.common.parse_fields(fields).sort()
+            == ["kind", "items.name", "items.labels.number", "items.acl.role"].sort()
+        )
+
+    def test_remove_index(self):
+        key = "items[1].name[0].id[0].acl"
+        assert utils.common.remove_index(key) == "items.name.id.acl"
 
     def test_nested_key(self):
         doc = {
@@ -158,6 +170,82 @@ class TestCommonUtils:
         request.args["projection"] = "full"
         projection = utils.common.extract_projection(request, 1, None)
         assert projection == "full"
+
+    def test_filter_response_rest(self):
+        response = {
+            "kind": "storage#buckets",
+            "items": [
+                {
+                    "name": "bucket1",
+                    "labels": {"number": "1", "order": "1"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+                {
+                    "name": "bucket2",
+                    "labels": {"number": "2", "order": "2"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+                {
+                    "name": "bucket3",
+                    "labels": {"number": "3", "order": "3"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+            ],
+        }
+        response_full = utils.common.filter_response_rest(
+            response, "full", "kind, items(name, labels(number), acl(role))"
+        )
+        assert response_full == {
+            "kind": "storage#buckets",
+            "items": [
+                {
+                    "name": "bucket1",
+                    "labels": {"number": "1"},
+                    "acl": [{"role": "OWNER"}],
+                },
+                {
+                    "name": "bucket2",
+                    "labels": {"number": "2"},
+                    "acl": [{"role": "OWNER"}],
+                },
+                {
+                    "name": "bucket3",
+                    "labels": {"number": "3"},
+                    "acl": [{"role": "OWNER"}],
+                },
+            ],
+        }
+
+        response = {
+            "kind": "storage#buckets",
+            "items": [
+                {
+                    "name": "bucket1",
+                    "labels": {"number": "1", "order": "1"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+                {
+                    "name": "bucket2",
+                    "labels": {"number": "2", "order": "2"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+                {
+                    "name": "bucket3",
+                    "labels": {"number": "3", "order": "3"},
+                    "acl": [{"entity": "entity", "role": "OWNER"}],
+                },
+            ],
+        }
+        response_noacl = utils.common.filter_response_rest(
+            response, "noAcl", "items(name, labels)"
+        )
+        assert response_noacl == {
+            "items": [
+                {"name": "bucket1", "labels": {"number": "1", "order": "1"}},
+                {"name": "bucket2", "labels": {"number": "2", "order": "2"}},
+                {"name": "bucket3", "labels": {"number": "3", "order": "3"}},
+            ]
+        }
 
 
 class TestGeneration:

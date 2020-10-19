@@ -132,17 +132,15 @@ TEST_F(ComputeEngineCredentialsTest,
   FakeClock::reset_clock(1000);
   auto status = ParseComputeEngineRefreshResponse(
       HttpResponse{400, token_info_resp, {}}, FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 
   status = ParseComputeEngineRefreshResponse(
       HttpResponse{400, token_info_resp2, {}}, FakeClock::now());
-  EXPECT_FALSE(status);
-  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Parsing a refresh response yields a TemporaryToken.
@@ -252,16 +250,15 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
   // Response 1
   auto status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
-  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
   // Response 2
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
   // Response 3
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk),
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Mock a failed refresh response.
@@ -337,19 +334,18 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
   // Response 1
   auto status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
-  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
   // Response 2
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
   // Response 3
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
   // Response 4
   status = credentials.AuthorizationHeader();
-  EXPECT_FALSE(status) << "status=" << status.status();
-  EXPECT_THAT(status.status().message(),
-              ::testing::HasSubstr("Could not find all required fields"));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk),
+                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Verify that we can force a refresh of the service account email.

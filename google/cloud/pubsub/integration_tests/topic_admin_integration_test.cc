@@ -68,7 +68,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
 
-  auto create_response = publisher.CreateTopic(TopicMutationBuilder(topic));
+  auto create_response = publisher.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(create_response, AnyOf(StatusIs(StatusCode::kOk),
                                      StatusIs(StatusCode::kAlreadyExists)));
   EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
@@ -78,7 +78,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
   auto update_response = publisher.UpdateTopic(
-      TopicMutationBuilder(topic).add_label("test-key", "test-value"));
+      TopicBuilder(topic).add_label("test-key", "test-value"));
   // TODO(#4792) - cleanup this workaround whenever the emulator is fixed
   if (!UsingEmulator()) {
     ASSERT_STATUS_OK(update_response);
@@ -102,7 +102,7 @@ TEST(TopicAdminIntegrationTest, CreateTopicFailure) {
   auto publisher = TopicAdminClient(
       MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
   auto create_response = publisher.CreateTopic(
-      TopicMutationBuilder(Topic("invalid-project", "invalid-topic")));
+      TopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
 }
 
@@ -119,7 +119,7 @@ TEST(TopicAdminIntegrationTest, UpdateTopicFailure) {
   auto publisher = TopicAdminClient(
       MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = publisher.UpdateTopic(
-      TopicMutationBuilder(Topic("invalid-project", "invalid-topic")));
+      TopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(response);
 }
 
