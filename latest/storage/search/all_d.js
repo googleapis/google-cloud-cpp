@@ -19,8 +19,8 @@ var searchData=
   ['notification_5fmetadata_2eh',['notification_metadata.h',['../notification__metadata_8h.html',1,'']]],
   ['notification_5fpayload_5fformat_2eh',['notification_payload_format.h',['../notification__payload__format_8h.html',1,'']]],
   ['notificationmetadata',['NotificationMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html',1,'google::cloud::storage::v1::NotificationMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#a8ad23fb2713690bd6a8943135048b526',1,'google::cloud::storage::v1::NotificationMetadata::NotificationMetadata()']]],
-  ['nullstream',['NullStream',['https://googleapis.dev/google-cloud-common/master/structgoogle_1_1cloud_1_1v1_1_1NullStream.html',1,'google::cloud::v1']]],
-  ['num_5fchannels',['num_channels',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332',1,'google::cloud::v1::ConnectionOptions']]],
+  ['nullstream',['NullStream',['https://googleapis.dev/cpp/google-cloud-common/latest/structgoogle_1_1cloud_1_1v1_1_1NullStream.html',1,'google::cloud::v1']]],
+  ['num_5fchannels',['num_channels',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332',1,'google::cloud::v1::ConnectionOptions']]],
   ['num_5fnewer_5fversions',['num_newer_versions',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRuleCondition.html#a27be5e4d14409b3e3c762962cdbf0374',1,'google::cloud::storage::v1::LifecycleRuleCondition']]],
   ['numnewerversions',['NumNewerVersions',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRule.html#a61e2529414d713581c72d4de7b199004',1,'google::cloud::storage::v1::LifecycleRule']]]
 ];

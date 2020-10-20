@@ -11,6 +11,6 @@ var searchData=
   ['noncurrenttimebefore',['NoncurrentTimeBefore',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRule.html#a9d7b4d495fcf286a14e52c1eccb89944',1,'google::cloud::storage::v1::LifecycleRule']]],
   ['none',['None',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1payload__format.html#aa0638449ec802380c23e7df2510a4ce8',1,'google::cloud::storage::v1::payload_format']]],
   ['notificationmetadata',['NotificationMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#a8ad23fb2713690bd6a8943135048b526',1,'google::cloud::storage::v1::NotificationMetadata']]],
-  ['num_5fchannels',['num_channels',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332',1,'google::cloud::v1::ConnectionOptions']]],
+  ['num_5fchannels',['num_channels',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332',1,'google::cloud::v1::ConnectionOptions']]],
   ['numnewerversions',['NumNewerVersions',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1LifecycleRule.html#a61e2529414d713581c72d4de7b199004',1,'google::cloud::storage::v1::LifecycleRule']]]
 ];

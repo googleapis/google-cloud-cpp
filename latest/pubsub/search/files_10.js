@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['terminate_5fhandler_2ecc',['terminate_handler.cc',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8cc.html',1,'']]],
-  ['terminate_5fhandler_2eh',['terminate_handler.h',['https://googleapis.dev/google-cloud-common/master/terminate__handler_8h.html',1,'']]],
+  ['terminate_5fhandler_2ecc',['terminate_handler.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/terminate__handler_8cc.html',1,'']]],
+  ['terminate_5fhandler_2eh',['terminate_handler.h',['https://googleapis.dev/cpp/google-cloud-common/latest/terminate__handler_8h.html',1,'']]],
   ['test_5fretry_5fpolicies_2ecc',['test_retry_policies.cc',['../test__retry__policies_8cc.html',1,'']]],
   ['test_5fretry_5fpolicies_2eh',['test_retry_policies.h',['../test__retry__policies_8h.html',1,'']]],
   ['topic_2ecc',['topic.cc',['../topic_8cc.html',1,'']]],
@@ -17,6 +17,6 @@ var searchData=
   ['topic_5fbuilder_2eh',['topic_builder.h',['../topic__builder_8h.html',1,'']]],
   ['topic_5fbuilder_5ftest_2ecc',['topic_builder_test.cc',['../topic__builder__test_8cc.html',1,'']]],
   ['topic_5ftest_2ecc',['topic_test.cc',['../topic__test_8cc.html',1,'']]],
-  ['tracing_5foptions_2ecc',['tracing_options.cc',['https://googleapis.dev/google-cloud-common/master/tracing__options_8cc.html',1,'']]],
-  ['tracing_5foptions_2eh',['tracing_options.h',['https://googleapis.dev/google-cloud-common/master/tracing__options_8h.html',1,'']]]
+  ['tracing_5foptions_2ecc',['tracing_options.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/tracing__options_8cc.html',1,'']]],
+  ['tracing_5foptions_2eh',['tracing_options.h',['https://googleapis.dev/cpp/google-cloud-common/latest/tracing__options_8h.html',1,'']]]
 ];

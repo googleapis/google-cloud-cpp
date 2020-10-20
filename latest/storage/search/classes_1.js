@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['backgroundthreads',['BackgroundThreads',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html',1,'google::cloud::v1']]],
+  ['backgroundthreads',['BackgroundThreads',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html',1,'google::cloud::v1']]],
   ['bucketaccesscontrol',['BucketAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketAccessControl.html',1,'google::cloud::storage::v1']]],
   ['bucketaccesscontrolpatchbuilder',['BucketAccessControlPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketAccessControlPatchBuilder.html',1,'google::cloud::storage::v1']]],
   ['bucketbilling',['BucketBilling',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketBilling.html',1,'google::cloud::storage::v1']]],

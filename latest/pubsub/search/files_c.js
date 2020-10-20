@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['polling_5fpolicy_2eh',['polling_policy.h',['https://googleapis.dev/google-cloud-common/master/polling__policy_8h.html',1,'']]],
+  ['polling_5fpolicy_2eh',['polling_policy.h',['https://googleapis.dev/cpp/google-cloud-common/latest/polling__policy_8h.html',1,'']]],
   ['publisher_2dmock_2edox',['publisher-mock.dox',['../publisher-mock_8dox.html',1,'']]],
   ['publisher_2ecc',['publisher.cc',['../publisher_8cc.html',1,'']]],
   ['publisher_2eh',['publisher.h',['../publisher_8h.html',1,'']]],

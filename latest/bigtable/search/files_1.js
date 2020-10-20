@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['background_5fthreads_2eh',['background_threads.h',['https://googleapis.dev/google-cloud-common/master/background__threads_8h.html',1,'']]],
-  ['backoff_5fpolicy_2eh',['backoff_policy.h',['https://googleapis.dev/google-cloud-common/master/backoff__policy_8h.html',1,'']]],
+  ['background_5fthreads_2eh',['background_threads.h',['https://googleapis.dev/cpp/google-cloud-common/latest/background__threads_8h.html',1,'']]],
+  ['backoff_5fpolicy_2eh',['backoff_policy.h',['https://googleapis.dev/cpp/google-cloud-common/latest/backoff__policy_8h.html',1,'']]],
   ['bigtable_2dhello_2dinstance_2dadmin_2edox',['bigtable-hello-instance-admin.dox',['../bigtable-hello-instance-admin_8dox.html',1,'']]],
   ['bigtable_2dhello_2dtable_2dadmin_2edox',['bigtable-hello-table-admin.dox',['../bigtable-hello-table-admin_8dox.html',1,'']]],
   ['bigtable_2dhello_2dworld_2edox',['bigtable-hello-world.dox',['../bigtable-hello-world_8dox.html',1,'']]],

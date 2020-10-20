@@ -8,6 +8,6 @@ var searchData=
   ['object_5frewriter_2eh',['object_rewriter.h',['../object__rewriter_8h.html',1,'']]],
   ['object_5fstream_2ecc',['object_stream.cc',['../object__stream_8cc.html',1,'']]],
   ['object_5fstream_2eh',['object_stream.h',['../object__stream_8h.html',1,'']]],
-  ['optional_2eh',['optional.h',['https://googleapis.dev/google-cloud-common/master/optional_8h.html',1,'']]],
+  ['optional_2eh',['optional.h',['https://googleapis.dev/cpp/google-cloud-common/latest/optional_8h.html',1,'']]],
   ['override_5fdefault_5fproject_2eh',['override_default_project.h',['../override__default__project_8h.html',1,'']]]
 ];

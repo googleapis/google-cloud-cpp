@@ -13,8 +13,8 @@ var searchData=
   ['sourceencryptionkey',['SourceEncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1SourceEncryptionKey.html',1,'google::cloud::storage::v1']]],
   ['sourcegeneration',['SourceGeneration',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1SourceGeneration.html',1,'google::cloud::storage::v1']]],
   ['startoffset',['StartOffset',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1StartOffset.html',1,'google::cloud::storage::v1']]],
-  ['status',['Status',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1']]],
-  ['statusor',['StatusOr',['https://googleapis.dev/google-cloud-common/master/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1']]],
+  ['status',['Status',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1']]],
+  ['statusor',['StatusOr',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1']]],
   ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v1']]],
   ['subresourceoption',['SubResourceOption',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1SubResourceOption.html',1,'google::cloud::storage::v1']]]
 ];
