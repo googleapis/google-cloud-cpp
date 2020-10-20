@@ -50,7 +50,7 @@ TEST(SubscriberTest, SubscribeSimple) {
         return make_ready_future(Status{});
       });
 
-  Subscriber subscriber(mock);
+  Subscriber subscriber(subscription, mock);
   auto status = subscriber
                     .Subscribe([&](Message const& m, AckHandler h) {
                       if (m.data() == "do-nack") {
@@ -72,7 +72,7 @@ TEST(SubscriberTest, SubscribeWithOptions) {
         return make_ready_future(Status{});
       });
 
-  Subscriber subscriber(mock);
+  Subscriber subscriber(subscription, mock);
   auto handler = [&](Message const&, AckHandler const&) {};
   auto status = subscriber.Subscribe(std::move(handler)).get();
   ASSERT_STATUS_OK(status);

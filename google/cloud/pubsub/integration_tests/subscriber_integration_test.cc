@@ -220,7 +220,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
   auto publisher = Publisher(MakePublisherConnection(topic_, {}));
-  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
+  auto subscriber = Subscriber(subscription_);
 
   std::mutex mu;
   std::map<std::string, int> ids;
@@ -275,7 +275,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   auto constexpr kMinimumMessages = 10;
 
   auto publisher = Publisher(MakePublisherConnection(topic_, {}));
-  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
+  auto subscriber = Subscriber(subscription_);
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   {
     (void)subscriber

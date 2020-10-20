@@ -1126,10 +1126,10 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
       return std::thread([cq]() mutable { cq.Run(); });
     });
 
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{},
-        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
 
     // Because this is an example we want to exit eventually, use a mutex and
     // condition variable to notify the current thread and stop the example.
@@ -1181,11 +1181,12 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   [](std::string project_id, std::string subscription_id) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
         pubsub::SubscriberOptions{}.set_concurrency_watermarks(
             /*lwm=*/4, /*hwm=*/8),
-        pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1239,11 +1240,11 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
     // any of the high watermarks are reached, and the library resumes
     // requesting messages when *both* low watermarks are reached.
     auto constexpr kMiB = 1024 * 1024L;
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
         pubsub::SubscriberOptions{}
             .set_max_outstanding_messages(1000)
-            .set_max_outstanding_bytes(8 * kMiB)));
+            .set_max_outstanding_bytes(8 * kMiB));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1286,17 +1287,18 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
     // By default a subscriber will retry for 60 seconds, with an initial
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will
     // grow by 30% after each attempt. This changes those defaults.
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{}, pubsub::ConnectionOptions{},
-        pubsub::LimitedTimeRetryPolicy(
-            /*maximum_duration=*/std::chrono::minutes(1))
-            .clone(),
-        pubsub::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::milliseconds(200),
-            /*maximum_delay=*/std::chrono::seconds(10),
-            /*scaling=*/2.0)
-            .clone()));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{},
+            pubsub::LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(1))
+                .clone(),
+            pubsub::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::milliseconds(200),
+                /*maximum_delay=*/std::chrono::seconds(10),
+                /*scaling=*/2.0)
+                .clone()));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1490,19 +1492,19 @@ void AutoRun(std::vector<std::string> const& argv) {
                      .set_maximum_batch_message_count(1)));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
-  auto subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(subscription));
+  auto subscriber_connection =
+      google::cloud::pubsub::MakeSubscriberConnection();
+  auto subscriber =
+      google::cloud::pubsub::Subscriber(subscription, subscriber_connection);
 
   auto dead_letter_subscription = google::cloud::pubsub::Subscription(
       project_id, dead_letter_subscription_id);
   auto dead_letter_subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(
-          dead_letter_subscription));
+      dead_letter_subscription, subscriber_connection);
 
   auto filtered_subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(
-          google::cloud::pubsub::Subscription(project_id,
-                                              filtered_subscription_id)));
+      google::cloud::pubsub::Subscription(project_id, filtered_subscription_id),
+      subscriber_connection);
 
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
