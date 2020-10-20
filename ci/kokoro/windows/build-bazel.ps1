@@ -73,6 +73,8 @@ $build_flags = @(
     "--per_file_copt=^//google/cloud@-experimental:external",
     "--per_file_copt=^//google/cloud@-external:W0",
     "--per_file_copt=^//google/cloud@-external:anglebrackets"
+# Disable warnings on generated proto files.
+    "--per_file_copt=.*\.pb\.cc@/wd4244"
 )
 
 $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"

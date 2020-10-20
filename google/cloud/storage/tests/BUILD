@@ -21,6 +21,19 @@ load(
     "storage_client_integration_tests",
 )
 
+proto_library(
+    name = "storage_conformance_tests_proto",
+    srcs = [
+        "conformance_tests.proto",
+    ],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
+)
+
+cc_proto_library(
+    name = "storage_conformance_tests_cc_proto",
+    deps = [":storage_conformance_tests_proto"],
+)
+
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
@@ -36,6 +49,7 @@ load(
         "integration-test",
     ],
     deps = [
+        ":storage_conformance_tests_cc_proto",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",

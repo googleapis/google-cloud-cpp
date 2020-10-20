@@ -15,7 +15,7 @@
 # ~~~
 
 set(storage_client_integration_tests
-    # cmake-format: sort
+    # cmake - format : sort
     bucket_integration_test.cc
     curl_download_request_integration_test.cc
     curl_request_integration_test.cc
@@ -42,7 +42,6 @@ set(storage_client_integration_tests
     object_rewrite_integration_test.cc
     object_write_streambuf_integration_test.cc
     service_account_integration_test.cc
-    signed_url_conformance_test.cc
     signed_url_integration_test.cc
     slow_reader_chunk_integration_test.cc
     slow_reader_stream_integration_test.cc
@@ -50,14 +49,37 @@ set(storage_client_integration_tests
     storage_include_test.cc
     thread_integration_test.cc)
 
+# Signed URL conformance tests are parsed using protos. In order to simplify the
+# build files, only build these conformance tests if gRPC in GCS is compiled.
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    list(APPEND storage_client_integration_tests signed_url_conformance_test.cc)
+    # We need to disable clang tidy for the generated CC files.
+    google_cloud_cpp_proto_library(
+        google_cloud_cpp_storage_tests_conformance_protos
+        conformance_tests.proto PROTO_PATH_DIRECTORIES
+        ${CMAKE_CURRENT_SOURCE_DIR} LOCAL_INCLUDE)
+    if (CMAKE_VERSION VERSION_GREATER 3.6)
+        # This works because we're not using clang-tidy with older cmake
+        # versions.
+        set_target_properties(google_cloud_cpp_storage_tests_conformance_protos
+                              PROPERTIES CXX_CLANG_TIDY "")
+    endif ()
+    if (MSVC)
+        # We're compiling generated code, so there's no use in MSVC failing on
+        # warnings.
+        target_compile_options(google_cloud_cpp_storage_tests_conformance_protos
+                               PUBLIC "/wd4244")
+    endif ()
+endif ()
+
 foreach (fname ${storage_client_integration_tests})
     google_cloud_cpp_add_executable(target "storage" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE storage_client
                 storage_client_testing
-                google_cloud_cpp_testing
                 google_cloud_cpp_common
+                google_cloud_cpp_testing
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
@@ -65,6 +87,12 @@ foreach (fname ${storage_client_integration_tests})
                 Threads::Threads
                 absl::strings
                 nlohmann_json)
+    if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+        target_link_libraries(
+            ${target} PRIVATE storage_client
+                              google_cloud_cpp_storage_tests_conformance_protos)
+    endif ()
+
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS

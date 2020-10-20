@@ -227,6 +227,7 @@ std::vector<PolicyDocumentCondition> PolicyDocumentV4Request::GetAllConditions()
   for (auto const& field : extension_fields_) {
     conditions.push_back(PolicyDocumentCondition({field.first, field.second}));
   }
+  std::sort(conditions.begin(), conditions.end());
   auto const& document = policy_document();
   std::copy(document.conditions.begin(), document.conditions.end(),
             std::back_inserter(conditions));
