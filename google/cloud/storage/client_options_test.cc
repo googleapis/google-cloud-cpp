@@ -132,10 +132,6 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
             internal::JsonEndpoint(options));
   EXPECT_EQ("https://storage.googleapis.com/upload/storage/v1",
             internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("https://storage-download.googleapis.com",
-            internal::XmlDownloadEndpoint(options));
-  EXPECT_EQ("https://storage-upload.googleapis.com",
-            internal::XmlUploadEndpoint(options));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             internal::IamEndpoint(options));
 }
