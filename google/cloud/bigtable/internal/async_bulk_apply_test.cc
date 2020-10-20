@@ -31,7 +31,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = google::bigtable::v2;
-namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
