@@ -36,7 +36,6 @@ namespace bt = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 
 class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
