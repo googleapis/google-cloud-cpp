@@ -319,15 +319,20 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
 
   auto self = shared_from_this();
-  return std::unique_ptr<ResumableUploadSession>(
-      new GrpcResumableUploadSession(self, response.upload_id()));
+  return std::unique_ptr<ResumableUploadSession>(new GrpcResumableUploadSession(
+      self,
+      {request.bucket_name(), request.object_name(), response.upload_id()}));
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
-GrpcClient::RestoreResumableSession(std::string const& upload_id) {
+GrpcClient::RestoreResumableSession(std::string const& upload_url) {
   auto self = shared_from_this();
+  auto upload_session_params = DecodeGrpcResumableUploadSessionUrl(upload_url);
+  if (!upload_session_params) {
+    return upload_session_params.status();
+  }
   auto session = std::unique_ptr<ResumableUploadSession>(
-      new GrpcResumableUploadSession(self, upload_id));
+      new GrpcResumableUploadSession(self, *upload_session_params));
   auto response = session->ResetSession();
   if (response.status().ok()) {
     return session;
