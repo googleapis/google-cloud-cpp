@@ -210,7 +210,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.patch_default_object_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
-    response["kind"] = "storage#bucketAccessControl"
+    response["kind"] = "storage#objectAccessControl"
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(response, None, fields)
 
@@ -290,10 +290,174 @@ def bucket_lock_retention_policy(bucket_name):
     return bucket.rest()
 
 
+# === OBJECT === #
+
+
+@gcs.route("/b/<bucket_name>/o")
+def object_list(bucket_name):
+    db.insert_test_bucket(None)
+    items, prefixes = db.list_object(flask.request, bucket_name, None)
+    response = {
+        "kind": "storage#objects",
+        "nextPageToken": "",
+        "items": [json_format.MessageToDict(blob.metadata) for blob in items],
+        "prefixes": prefixes,
+    }
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["UPDATE"])
+def object_update(bucket_name, object_name):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    blob.patch(flask.request, None)
+    projection = utils.common.extract_projection(flask.request, 2, None)
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(
+        json_format.MessageToDict(blob.metadata), projection, fields
+    )
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH"])
+def object_patch(bucket_name, object_name):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    blob.patch(flask.request, None)
+    projection = utils.common.extract_projection(flask.request, 1, None)
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(
+        json_format.MessageToDict(blob.metadata), projection, fields
+    )
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["DELETE"])
+def object_delete(bucket_name, object_name):
+    db.delete_object(flask.request, bucket_name, object_name, None)
+    return ""
+
+
+# === OBJECT ACCESS CONTROL === #
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl")
+def object_acl_list(bucket_name, object_name):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    response = {"kind": "storage#objectAccessControls", "items": []}
+    for acl in blob.metadata.acl:
+        acl_rest = json_format.MessageToDict(acl)
+        acl_rest["kind"] = "storage#objectAccessControl"
+        response["items"].append(acl_rest)
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl", methods=["POST"])
+def object_acl_insert(bucket_name, object_name):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    acl = blob.insert_acl(flask.request, None)
+    response = json_format.MessageToDict(acl)
+    response["kind"] = "storage#objectAccessControl"
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>")
+def object_acl_get(bucket_name, object_name, entity):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    acl = blob.get_acl(entity, None)
+    response = json_format.MessageToDict(acl)
+    response["kind"] = "storage#objectAccessControl"
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PUT"])
+def object_acl_update(bucket_name, object_name, entity):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    acl = blob.update_acl(flask.request, entity, None)
+    response = json_format.MessageToDict(acl)
+    response["kind"] = "storage#objectAccessControl"
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH"])
+def object_acl_patch(bucket_name, object_name, entity):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    acl = blob.patch_acl(flask.request, entity, None)
+    response = json_format.MessageToDict(acl)
+    response["kind"] = "storage#objectAccessControl"
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(response, None, fields)
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["DELETE"])
+def object_acl_delete(bucket_name, object_name, entity):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    blob.delete_default_object_acl(entity, None)
+    return ""
+
+
+# Define the WSGI application to handle bucket requests.
+DOWNLOAD_HANDLER_PATH = "/download/storage/v1"
+download = flask.Flask(__name__)
+download.debug = True
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>")
+@download.route("/b/<bucket_name>/o/<path:object_name>")
+def object_get(bucket_name, object_name):
+    blob = db.get_object(flask.request, bucket_name, object_name, False, None)
+    media = flask.request.args.get("alt", None)
+    if media is None or media == "json":
+        projection = utils.common.extract_projection(flask.request, 1, None)
+        fields = flask.request.args.get("fields", None)
+        return utils.common.filter_response_rest(
+            json_format.MessageToDict(blob.metadata), projection, fields
+        )
+    if media != "media":
+        utils.error.invalid("Alt %s")
+    return blob.media
+
+
+# Define the WSGI application to handle bucket requests.
+UPLOAD_HANDLER_PATH = "/upload/storage/v1"
+upload = flask.Flask(__name__)
+upload.debug = True
+
+
+@upload.route("/b/<bucket_name>/o", methods=["POST"])
+def object_insert(bucket_name):
+    bucket = db.get_bucket_without_generation(bucket_name, None).metadata
+    upload_type = flask.request.args.get("uploadType")
+    if upload_type is None:
+        utils.error.missing("uploadType", None)
+    elif upload_type not in {"multipart", "media", "resumable"}:
+        utils.error.invalid("uploadType %s" % upload_type)
+    if upload_type == "resumable":
+        return ""
+    blob, projection = None, ""
+    if upload_type == "media":
+        blob, projection = gcs_type.object.Object.init_media(flask.request, bucket)
+    elif upload_type == "multipart":
+        blob, projection = gcs_type.object.Object.init_multipart(flask.request, bucket)
+    fields = flask.request.args.get("fields", None)
+    return utils.common.filter_response_rest(
+        json_format.MessageToDict(blob.metadata), projection, fields
+    )
+
+
 # === SERVER === #
 
 
-server = DispatcherMiddleware(root, {"/httpbin": httpbin.app, GCS_HANDLER_PATH: gcs})
+server = DispatcherMiddleware(
+    root,
+    {
+        "/httpbin": httpbin.app,
+        GCS_HANDLER_PATH: gcs,
+        DOWNLOAD_HANDLER_PATH: download,
+        UPLOAD_HANDLER_PATH: upload,
+    },
+)
 
 
 def run(port, database):

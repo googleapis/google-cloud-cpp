@@ -64,6 +64,10 @@ class Object:
 
     @classmethod
     def init(cls, request, metadata, media, bucket, is_destination, context):
+        if context is not None:
+            instruction = request.headers.get("x-goog-testbench-instructions")
+            if instruction == "inject-upload-data-error":
+                media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
         metadata.generation = random.getrandbits(63)
         metadata.metageneration = 1
@@ -76,7 +80,7 @@ class Object:
         actual_md5Hash = base64.b64encode(hashlib.md5(media).digest()).decode("utf-8")
         if metadata.md5_hash != "" and actual_md5Hash != metadata.md5_hash:
             utils.error.mismatch("md5Hash", metadata.md5_hash, actual_md5Hash, context)
-        actual_crc32c = crc32c.crc32(media)
+        actual_crc32c = crc32c.crc32c(media)
         if metadata.HasField("crc32c") and actual_crc32c != metadata.crc32c.value:
             utils.error.mismatch(
                 "crc32c", metadata.crc32c.value, actual_crc32c, context
@@ -89,16 +93,39 @@ class Object:
         metadata.owner.entity_id = hashlib.md5(
             metadata.owner.entity.encode("utf-8")
         ).hexdigest()
-        predefined_acl = utils.acl.extract_predefined_acl(
-            request, is_destination, context
+        algorithm, key_b64, key_sha256_b64 = utils.csek.extract(request, False, context)
+        if algorithm != "":
+            utils.csek.check(algorithm, key_b64, key_sha256_b64, context)
+            metadata.customer_encryption.encryption_algorithm = algorithm
+            metadata.customer_encryption.key_sha256 = key_sha256_b64
+        default_projection = 1
+        is_uniform = bucket.iam_configuration.uniform_bucket_level_access.enabled
+        bucket.iam_configuration.uniform_bucket_level_access.enabled = False
+        if len(metadata.acl) != 0:
+            default_projection = 2
+        else:
+            predefined_acl = utils.acl.extract_predefined_acl(
+                request, is_destination, context
+            )
+            if predefined_acl == 0:
+                predefined_acl = 5
+            elif predefined_acl == "":
+                predefined_acl = "projectPrivate"
+            elif is_uniform:
+                utils.error.invalid(
+                    "Predefined ACL with uniform bucket level access enabled", context
+                )
+            cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
+        bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
+        return (
+            cls(metadata, media, bucket),
+            utils.common.extract_projection(request, default_projection, context),
         )
-        cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
-        return cls(metadata, media, bucket)
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
-        return cls.init(metadata, media, request, bucket, is_destination, None)
+        return cls.init(request, metadata, media, bucket, is_destination, None)
 
     @classmethod
     def init_media(cls, request, bucket):
@@ -145,6 +172,31 @@ class Object:
                 ">I", base64.b64decode(metadata["crc32c"].encode("utf-8"))
             )[0]
         return cls.init_dict(request, metadata, media, bucket, False)
+
+    @classmethod
+    def init_xml(cls, request, bucket, name):
+        media = request.data
+        metadata = {
+            "bucket": bucket.name,
+            "name": name,
+            "metadata": {"x_testbench_upload": "xml"},
+        }
+        if "content-type" in request.headers:
+            metadata["contentType"] = request.headers["content-type"]
+        fake_request = utils.common.FakeRequest.init_xml(request)
+        x_goog_hash = fake_request.headers.get("x-goog-hash")
+        if x_goog_hash is not None:
+            for checksum in x_goog_hash.split(","):
+                if checksum.startswith("md5="):
+                    md5Hash = checksum[4:]
+                    metadata["md5Hash"] = md5Hash
+                if checksum.startswith("crc32c="):
+                    crc32c_value = checksum[7:]
+                    metadata["crc32c"] = struct.unpack(
+                        ">I", base64.b64decode(crc32c_value.encode("utf-8"))
+                    )[0]
+        blob, _ = cls.init_dict(fake_request, metadata, media, bucket, False)
+        return blob, fake_request
 
     # === METADATA === #
 

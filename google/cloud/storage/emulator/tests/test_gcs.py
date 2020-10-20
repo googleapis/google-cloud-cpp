@@ -225,5 +225,30 @@ class TestBucket:
             assert acl.entity != entity
 
 
+class TestObject:
+    def testInitMedia(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+        request = utils.common.FakeRequest(
+            args={"name": "object"}, data=b"12345678", headers={}
+        )
+        blob, _ = gcs.object.Object.init_media(request, bucket.metadata)
+        assert blob.metadata.name == "object"
+        assert blob.media == b"12345678"
+
+    def testInitMultiPart(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        request = utils.common.FakeRequest(
+            args={},
+            headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"key": "value"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+        )
+        blob, _ = gcs.object.Object.init_multipart(request, bucket.metadata)
+        assert blob.metadata.name == "object"
+        assert blob.media == b"123456789"
+        assert blob.metadata.metadata["key"] == "value"
+
+
 def run():
     pytest.main(["-v"])
