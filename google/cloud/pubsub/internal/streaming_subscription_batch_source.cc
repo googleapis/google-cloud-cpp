@@ -181,12 +181,11 @@ void StreamingSubscriptionBatchSource::ReadLoop() {
   auto stream = stream_;
   lk.unlock();
   auto weak = WeakFromThis();
-  stream->Read().then(
-      [weak](
-          future<absl::optional<google::pubsub::v1::StreamingPullResponse>> f) {
-        if (auto self = weak.lock()) self->OnRead(f.get());
-      });
-  lk.lock();
+  using ResponseType =
+      absl::optional<google::pubsub::v1::StreamingPullResponse>;
+  stream->Read().then([weak, stream](future<ResponseType> f) {
+    if (auto self = weak.lock()) self->OnRead(f.get());
+  });
 }
 
 void StreamingSubscriptionBatchSource::OnRead(
@@ -220,7 +219,7 @@ void StreamingSubscriptionBatchSource::ShutdownStream(
   auto weak = WeakFromThis();
   // There are no pending reads or writes, and something (probable a read or
   // write error) recommends we shutdown the stream
-  stream->Finish().then([weak](future<Status> f) {
+  stream->Finish().then([weak, stream](future<Status> f) {
     if (auto self = weak.lock()) self->OnFinish(f.get());
   });
 }
@@ -268,9 +267,10 @@ void StreamingSubscriptionBatchSource::DrainQueues(
   // best-effort anyway, there is no guarantee that the server will act on any
   // of these.
   auto weak = WeakFromThis();
-  stream->Write(request, grpc::WriteOptions{}).then([weak](future<bool> f) {
-    if (auto self = weak.lock()) self->OnWrite(f.get());
-  });
+  stream->Write(request, grpc::WriteOptions{})
+      .then([weak, stream](future<bool> f) {
+        if (auto self = weak.lock()) self->OnWrite(f.get());
+      });
 }
 
 void StreamingSubscriptionBatchSource::OnWrite(bool ok) {

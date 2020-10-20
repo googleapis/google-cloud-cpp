@@ -20,29 +20,43 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
+  std::ostringstream os;
+  os << "{";
+  char const* sep = "";
+  for (auto const& kv : ops) {
+    os << sep << "{" << kv.first << ": " << kv.second << "}";
+    sep = ", ";
+  }
+  os << "}";
+  return std::move(os).str();
+};
+
 SessionShutdownManager::~SessionShutdownManager() {
   if (signaled_) return;
   GCP_LOG(DEBUG) << __func__ << "() - do signal"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
+                 << ", result=" << result_ << ", ops=" << FormatOps(ops_);
   signaled_ = true;
   done_.set_value(std::move(result_));
 }
 
 void SessionShutdownManager::LogStart(const char* caller, const char* name) {
+  auto increase_count = [&] { return ++ops_[name]; };
   GCP_LOG(DEBUG) << "operation <" << name << "> starting from " << caller
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
+                 << ", result=" << result_ << ", count=" << increase_count();
 }
 
 bool SessionShutdownManager::FinishedOperation(char const* name) {
   std::unique_lock<std::mutex> lk(mu_);
+  auto decrease_count = [&] { return --ops_[name]; };
   GCP_LOG(DEBUG) << "operation <" << name << "> finished"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
+                 << ", result=" << result_ << ", count=" << decrease_count();
   bool r = shutdown_;
   --outstanding_operations_;
   SignalOnShutdown(std::move(lk));
@@ -54,7 +68,7 @@ void SessionShutdownManager::MarkAsShutdown(char const* caller, Status status) {
   GCP_LOG(DEBUG) << __func__ << "() - from " << caller << "() - shutting down"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
+                 << ", result=" << result_ << ", status=" << status;
   shutdown_ = true;
   result_ = std::move(status);
   SignalOnShutdown(std::move(lk));
@@ -64,7 +78,7 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
   GCP_LOG(DEBUG) << __func__ << "() - maybe signal"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
-                 << ", result=" << result_;
+                 << ", result=" << result_ << ", ops=" << FormatOps(ops_);
   if (outstanding_operations_ > 0 || !shutdown_ || signaled_) return;
   // No other thread will go beyond this point, as `signaled_` is only set
   // once.
