@@ -109,7 +109,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
   bulk_apply_future.then(
       [](future<std::vector<FailedMutation>> f) { f.get(); });
 
-  ASSERT_EQ(0U, cq_impl_->size());
+  ASSERT_EQ(1U, cq_impl_->size());
 
   cq_impl_->SimulateCompletion(true);
   // state == PROCESSING
