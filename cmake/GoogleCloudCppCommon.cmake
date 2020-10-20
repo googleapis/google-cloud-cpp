@@ -86,11 +86,11 @@ else ()
         if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
             if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
                 set(DOXYGEN_TAGFILES
-                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
+                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/latest/"
                 )
             elseif (NOT "${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
                 set(DOXYGEN_TAGFILES
-                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/google-cloud-common/master/"
+                    "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/latest/"
                 )
             else ()
                 set(DOXYGEN_TAGFILES
