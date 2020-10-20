@@ -81,7 +81,7 @@ void StreamingSubscriptionBatchSource::StartStream(
   // 3. Call Write() on it, which is also asynchronous and almost always
   //    succeeds, could fail if the endpoint is invalid
   // 4. Call Read() on it, which is also asynchronous, and it is the first
-  //    change to get errors such as kPermissionDenied, or kNotFound.
+  //    chance to get errors such as kPermissionDenied, or kNotFound.
   // Once Read() completes we can repeatedly call Read() and/or Write().
   // Because steps 2 through 4 may fail with transient errors we need to wrap
   // these steps in an asynchronous retry loop.
