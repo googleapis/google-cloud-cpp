@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H
 
+#include "google/cloud/pubsub/internal/message_batcher.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include <mutex>
@@ -25,38 +26,29 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class BatchingPublisherConnection
-    : public pubsub::PublisherConnection,
+    : public MessageBatcher,
       public std::enable_shared_from_this<BatchingPublisherConnection> {
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::PublisherOptions options,
-      std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+      std::shared_ptr<pubsub::PublisherConnection> connection) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(
-            std::move(topic), std::move(options), std::move(stub),
-            std::move(cq), std::move(retry_policy), std::move(backoff_policy)));
+        new BatchingPublisherConnection(std::move(topic), std::move(options),
+                                        std::move(connection)));
   }
 
-  future<StatusOr<std::string>> Publish(PublishParams p) override;
-  void Flush(FlushParams) override;
+  future<StatusOr<std::string>> Publish(pubsub::Message m) override;
+  void Flush() override;
 
  private:
   explicit BatchingPublisherConnection(
       pubsub::Topic topic, pubsub::PublisherOptions options,
-      std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+      std::shared_ptr<pubsub::PublisherConnection> connection)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         options_(std::move(options)),
-        stub_(std::move(stub)),
-        cq_(std::move(cq)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        connection_(std::move(connection)),
+        cq_(connection_->cq()) {}
 
   void OnTimer();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
@@ -65,10 +57,8 @@ class BatchingPublisherConnection
   pubsub::Topic topic_;
   std::string topic_full_name_;
   pubsub::PublisherOptions options_;
-  std::shared_ptr<pubsub_internal::PublisherStub> stub_;
+  std::shared_ptr<pubsub::PublisherConnection> connection_;
   google::cloud::CompletionQueue cq_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 
   std::mutex mu_;
   struct Item {

@@ -24,6 +24,7 @@ pubsub_client_hdrs = [
     "internal/batching_publisher_connection.h",
     "internal/default_retry_policies.h",
     "internal/emulator_overrides.h",
+    "internal/message_batcher.h",
     "internal/ordering_key_publisher_connection.h",
     "internal/publisher_logging.h",
     "internal/publisher_metadata.h",

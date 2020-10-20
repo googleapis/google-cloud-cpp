@@ -12,28 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_BATCHER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_BATCHER_H
+
+#include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/version.h"
+#include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(
-    pubsub::Message m) {
-  if (!m.ordering_key().empty()) {
-    return google::cloud::make_ready_future(StatusOr<std::string>(
-        Status(StatusCode::kInvalidArgument,
-               "Attempted to publish a message with an ordering"
-               " key with a publisher that does not have message"
-               " ordering enabled.")));
-  }
-  return child_->Publish(std::move(m));
-}
+/**
+ * Defines the interface to batch published messages.
+ */
+class MessageBatcher {
+ public:
+  virtual ~MessageBatcher() = default;
 
-void RejectsWithOrderingKey::Flush() { return child_->Flush(); }
+  /// Receive a new message to batch
+  virtual future<StatusOr<std::string>> Publish(pubsub::Message m) = 0;
+
+  /// Flush any pending messages
+  virtual void Flush() = 0;
+};
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_BATCHER_H

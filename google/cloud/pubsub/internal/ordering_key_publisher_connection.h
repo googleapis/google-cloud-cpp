@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_ORDERING_KEY_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_ORDERING_KEY_PUBLISHER_CONNECTION_H
 
-#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/internal/message_batcher.h"
 #include "google/cloud/pubsub/version.h"
 #include <functional>
 #include <map>
@@ -26,10 +26,10 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-class OrderingKeyPublisherConnection : public pubsub::PublisherConnection {
+class OrderingKeyPublisherConnection : public MessageBatcher {
  public:
   using ConnectionFactory =
-      std::function<std::shared_ptr<PublisherConnection>(std::string const&)>;
+      std::function<std::shared_ptr<MessageBatcher>(std::string const&)>;
 
   static std::shared_ptr<OrderingKeyPublisherConnection> Create(
       ConnectionFactory factory) {
@@ -39,8 +39,8 @@ class OrderingKeyPublisherConnection : public pubsub::PublisherConnection {
 
   ~OrderingKeyPublisherConnection() override = default;
 
-  future<StatusOr<std::string>> Publish(PublishParams p) override;
-  void Flush(FlushParams) override;
+  future<StatusOr<std::string>> Publish(pubsub::Message m) override;
+  void Flush() override;
 
  private:
   explicit OrderingKeyPublisherConnection(ConnectionFactory factory)
@@ -48,7 +48,7 @@ class OrderingKeyPublisherConnection : public pubsub::PublisherConnection {
 
   ConnectionFactory factory_;
   std::mutex mu_;
-  std::map<std::string, std::shared_ptr<PublisherConnection>> children_;
+  std::map<std::string, std::shared_ptr<MessageBatcher>> children_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
