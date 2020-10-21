@@ -146,10 +146,7 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
             internal::JsonEndpoint(options));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234/upload/storage/v1",
             internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234",
-            internal::XmlDownloadEndpoint(options));
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234",
-            internal::XmlUploadEndpoint(options));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234", internal::XmlEndpoint(options));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             internal::IamEndpoint(options));
 }
@@ -163,8 +160,7 @@ TEST_F(ClientOptionsTest, EndpointsTestBench) {
             internal::JsonEndpoint(options));
   EXPECT_EQ("http://localhost:1234/upload/storage/v1",
             internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlDownloadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlUploadEndpoint(options));
+  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
   EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
 }
 

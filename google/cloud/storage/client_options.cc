@@ -44,18 +44,8 @@ std::string JsonUploadEndpoint(ClientOptions const& options) {
          "/upload/storage/" + options.version();
 }
 
-std::string XmlDownloadEndpoint(ClientOptions const& options) {
-  auto testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (testbench) return *testbench;
-  auto const& endpoint = options.endpoint_;
-  return endpoint;
-}
-
-std::string XmlUploadEndpoint(ClientOptions const& options) {
-  auto testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (testbench) return *testbench;
-  auto const& endpoint = options.endpoint_;
-  return endpoint;
+std::string XmlEndpoint(ClientOptions const& options) {
+  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT").value_or(options.endpoint_);
 }
 
 std::string IamEndpoint(ClientOptions const& options) {

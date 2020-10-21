@@ -239,10 +239,8 @@ CurlClient::CurlClient(ClientOptions options)
       storage_endpoint_(JsonEndpoint(options_)),
       storage_host_(ExtractUrlHostpart(storage_endpoint_)),
       upload_endpoint_(JsonUploadEndpoint(options_)),
-      xml_upload_endpoint_(XmlUploadEndpoint(options_)),
-      xml_upload_host_(ExtractUrlHostpart(xml_upload_endpoint_)),
-      xml_download_endpoint_(XmlDownloadEndpoint(options_)),
-      xml_download_host_(ExtractUrlHostpart(xml_download_endpoint_)),
+      xml_endpoint_(XmlEndpoint(options_)),
+      xml_host_(ExtractUrlHostpart(xml_endpoint_)),
       iam_endpoint_(IamEndpoint(options_)),
       xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
@@ -1171,15 +1169,14 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
     InsertObjectMediaRequest const& request) {
-  CurlRequestBuilder builder(xml_upload_endpoint_ + "/" +
-                                 request.bucket_name() + "/" +
+  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
                                  UrlEscapeString(request.object_name()),
                              xml_upload_factory_);
   auto status = SetupBuilderCommon(builder, "PUT");
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: " + xml_upload_host_);
+  builder.AddHeader("Host: " + xml_host_);
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1257,15 +1254,14 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
     ReadObjectRangeRequest const& request) {
-  CurlRequestBuilder builder(xml_download_endpoint_ + "/" +
-                                 request.bucket_name() + "/" +
+  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
                                  UrlEscapeString(request.object_name()),
                              xml_download_factory_);
   auto status = SetupBuilderCommon(builder, "GET");
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: " + xml_download_host_);
+  builder.AddHeader("Host: " + xml_host_);
 
   //
   // Apply the options from ReadObjectMediaRequest that are set, translating
