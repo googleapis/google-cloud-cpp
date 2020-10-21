@@ -136,25 +136,23 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
     return;
   }
   // If the batch is empty obviously we do not need a timer, and if it has more
-  // than one element then we already have setup a timer previously.
-  if (pending_.size() == 1U) {
-    batch_expiration_ =
-        std::chrono::system_clock::now() + options_.maximum_hold_time();
-    lk.unlock();
-    // We need a weak_ptr<> because this class owns the completion queue,
-    // creating a lambda with a shared_ptr<> owning this class would create a
-    // cycle.  Unfortunately some older compiler/libraries lack
-    // `weak_from_this()`.
-    auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
-    // Note that at this point the lock is released, so whether the timer
-    // schedules later on schedules in this thread has no effect.
-    cq_.MakeDeadlineTimer(batch_expiration_)
-        .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
-          auto self = weak.lock();
-          if (!self) return;
-          self->OnTimer();
-        });
-  }
+  // than one element then we have setup a timer previously and there is no need
+  // to set it again.
+  if (pending_.size() != 1U) return;
+  auto const expiration = batch_expiration_ =
+      std::chrono::system_clock::now() + options_.maximum_hold_time();
+  lk.unlock();
+  // We need a weak_ptr<> because this class owns the completion queue,
+  // creating a lambda with a shared_ptr<> owning this class would create a
+  // cycle.  Unfortunately some older compiler/libraries lack
+  // `weak_from_this()`.
+  auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
+  // Note that at this point the lock is released, so whether the timer
+  // schedules later on schedules in this thread has no effect.
+  cq_.MakeDeadlineTimer(expiration)
+      .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
+        if (auto self = weak.lock()) self->OnTimer();
+      });
 }
 
 void BatchingPublisherConnection::OnTimer() {
