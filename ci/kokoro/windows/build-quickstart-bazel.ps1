@@ -99,6 +99,7 @@ $quickstart_args=@{
     "spanner"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
 }
 
+# TODO(#5296) - add pubsub to the list
 ForEach($library in ("bigtable", "storage", "spanner")) {
     Set-Location "${project_root}/google/cloud/${library}/quickstart"
     ForEach($_ in (1, 2, 3)) {
