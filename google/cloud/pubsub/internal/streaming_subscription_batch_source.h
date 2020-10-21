@@ -88,9 +88,28 @@ class StreamingSubscriptionBatchSource
     return {shared_from_this()};
   }
 
-  void StartStream();
+  void StartStream(std::shared_ptr<pubsub::RetryPolicy> retry_policy,
+                   std::shared_ptr<pubsub::BackoffPolicy> backoff_policy);
 
-  void OnStreamStart(StatusOr<StreamShptr> stream);
+  struct RetryLoopState {
+    std::shared_ptr<AsyncPullStream> stream;
+    std::shared_ptr<pubsub::RetryPolicy> retry_policy;
+    std::shared_ptr<pubsub::BackoffPolicy> backoff_policy;
+  };
+
+  google::pubsub::v1::StreamingPullRequest InitialRequest() const;
+  void OnStart(RetryLoopState rs,
+               google::pubsub::v1::StreamingPullRequest const& request,
+               bool ok);
+  void OnInitialWrite(RetryLoopState const& rs, bool ok);
+  void OnInitialRead(
+      RetryLoopState rs,
+      absl::optional<google::pubsub::v1::StreamingPullResponse> response);
+  void OnInitialError(RetryLoopState rs);
+  void OnInitialFinish(RetryLoopState rs, Status status);
+  void OnBackoff(RetryLoopState rs, Status status);
+  void OnRetryFailure(Status status);
+
   void ReadLoop();
 
   void OnRead(

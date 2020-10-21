@@ -20,8 +20,8 @@ First, install the basic development tools:
 ```console
 sudo apt update
 sudo apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
-        pkg-config tar wget zlib1g-dev
+        libc-ares-dev libc-ares2 libbenchmark-dev libcurl4-openssl-dev libssl-dev \
+        make pkg-config tar wget zlib1g-dev
 ```
 
 Then install `clang-10` and some additional Clang tools that we use to enforce

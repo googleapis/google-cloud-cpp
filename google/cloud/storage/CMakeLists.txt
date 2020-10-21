@@ -239,10 +239,8 @@ target_link_libraries(
            ZLIB::ZLIB)
 google_cloud_cpp_add_common_options(storage_client)
 target_include_directories(
-    storage_client
-    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-           $<INSTALL_INTERFACE:include>)
+    storage_client PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                          $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
@@ -271,6 +269,14 @@ create_bazel_config(storage_client)
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
+    # We need to disable clang tidy for the generated CC files.
+    set(saved_tidy "${CMAKE_CXX_CLANG_TIDY}")
+    set(CMAKE_CXX_CLANG_TIDY "")
+    google_cloud_cpp_proto_library(
+        google_cloud_cpp_storage_protos
+        internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
+        ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
+    set(CMAKE_CXX_CLANG_TIDY "${saved_tidy}")
     add_library(
         storage_client_grpc
         grpc_plugin.cc
@@ -281,6 +287,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_object_read_source.h
         internal/grpc_resumable_upload_session.cc
         internal/grpc_resumable_upload_session.h
+        internal/grpc_resumable_upload_session_url.cc
+        internal/grpc_resumable_upload_session_url.h
         internal/hybrid_client.cc
         internal/hybrid_client.h)
     target_link_libraries(
@@ -288,6 +296,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PUBLIC storage_client
                google_cloud_cpp_grpc_utils
                google_cloud_cpp_common
+               google_cloud_cpp_storage_protos
                nlohmann_json::nlohmann_json
                googleapis-c++::storage_protos
                gRPC::grpc++
@@ -301,10 +310,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                ZLIB::ZLIB)
     google_cloud_cpp_add_common_options(storage_client_grpc)
     target_include_directories(
-        storage_client_grpc
-        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-               $<INSTALL_INTERFACE:include>)
+        storage_client_grpc PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                   $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_grpc
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     target_compile_definitions(storage_client_grpc
@@ -352,10 +359,8 @@ if (BUILD_TESTING)
                GTest::gtest)
     google_cloud_cpp_add_common_options(storage_client_testing)
     target_include_directories(
-        storage_client_testing
-        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-               $<INSTALL_INTERFACE:include>)
+        storage_client_testing PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                      $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     create_bazel_config(storage_client_testing)
@@ -491,7 +496,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_client_object_request_test.cc
             internal/grpc_client_test.cc
             internal/grpc_object_read_source_test.cc
-            internal/grpc_resumable_upload_session_test.cc)
+            internal/grpc_resumable_upload_session_test.cc
+            internal/grpc_resumable_upload_session_url_test.cc)
 
         foreach (fname ${storage_client_grpc_unit_tests})
             google_cloud_cpp_add_executable(target "storage" "${fname}")

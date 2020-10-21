@@ -59,7 +59,8 @@ class MockGrpcClient : public GrpcClient {
 
 TEST(GrpcResumableUploadSessionTest, Simple) {
   auto mock = MockGrpcClient::Create();
-  GrpcResumableUploadSession session(mock, "test-upload-id");
+  GrpcResumableUploadSession session(
+      mock, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -109,7 +110,8 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
 
 TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
   auto mock = MockGrpcClient::Create();
-  GrpcResumableUploadSession session(mock, "test-upload-id");
+  GrpcResumableUploadSession session(
+      mock, {"test-bucket", "test-object", "test-upload-id"});
 
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   auto const payload = MakeRandomData(rng, 8 * 1024 * 1024L);
@@ -157,7 +159,8 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
 
 TEST(GrpcResumableUploadSessionTest, Reset) {
   auto mock = MockGrpcClient::Create();
-  GrpcResumableUploadSession session(mock, "test-upload-id");
+  GrpcResumableUploadSession session(
+      mock, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -207,7 +210,10 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
   session.ResetSession();
   EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_EQ("test-upload-id", session.session_id());
+  auto decoded_session_url =
+      DecodeGrpcResumableUploadSessionUrl(session.session_id());
+  ASSERT_STATUS_OK(decoded_session_url);
+  EXPECT_EQ("test-upload-id", decoded_session_url->upload_id);
   StatusOr<ResumableUploadResponse> const& last_response =
       session.last_response();
   ASSERT_STATUS_OK(last_response);
@@ -216,7 +222,8 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
 TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   auto mock = MockGrpcClient::Create();
-  GrpcResumableUploadSession session(mock, "test-upload-id");
+  GrpcResumableUploadSession session(
+      mock, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -271,7 +278,10 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
 
   session.ResetSession();
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_EQ("test-upload-id", session.session_id());
+  auto decoded_session_url =
+      DecodeGrpcResumableUploadSessionUrl(session.session_id());
+  ASSERT_STATUS_OK(decoded_session_url);
+  EXPECT_EQ("test-upload-id", decoded_session_url->upload_id);
   StatusOr<ResumableUploadResponse> const& last_response =
       session.last_response();
   ASSERT_STATUS_OK(last_response);

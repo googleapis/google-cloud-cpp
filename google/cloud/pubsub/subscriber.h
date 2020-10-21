@@ -93,8 +93,17 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class Subscriber {
  public:
-  explicit Subscriber(std::shared_ptr<SubscriberConnection> connection)
-      : connection_(std::move(connection)) {}
+  explicit Subscriber(Subscription subscription,
+                      std::shared_ptr<SubscriberConnection> connection)
+      : subscription_(std::move(subscription)),
+        connection_(std::move(connection)) {}
+
+  explicit Subscriber(Subscription subscription, SubscriberOptions options = {},
+                      std::shared_ptr<SubscriberConnection> connection =
+                          MakeSubscriberConnection())
+      : subscription_(std::move(subscription)),
+        connection_(std::move(connection)),
+        options_(std::move(options)) {}
 
   /**
    * Create a new session to receive messages from @p subscription.
@@ -116,11 +125,13 @@ class Subscriber {
   template <typename Callable>
   future<Status> Subscribe(Callable&& cb) {
     std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({std::move(f)});
+    return connection_->Subscribe({subscription_, options_, std::move(f)});
   }
 
  private:
+  Subscription subscription_;
   std::shared_ptr<SubscriberConnection> connection_;
+  SubscriberOptions options_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

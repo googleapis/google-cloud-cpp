@@ -20,19 +20,19 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<StatusOr<std::string>> OrderingKeyPublisherConnection::Publish(
-    PublishParams p) {
-  auto child = [this, &p] {
+    pubsub::Message m) {
+  auto child = [this, &m] {
     std::lock_guard<std::mutex> lk(mu_);
-    auto i = children_.emplace(p.message.ordering_key(),
-                               std::shared_ptr<PublisherConnection>{});
-    if (i.second) i.first->second = factory_(p.message.ordering_key());
+    auto i =
+        children_.emplace(m.ordering_key(), std::shared_ptr<MessageBatcher>{});
+    if (i.second) i.first->second = factory_(m.ordering_key());
     return i.first->second;
   }();
 
-  return child->Publish(std::move(p));
+  return child->Publish(std::move(m));
 }
 
-void OrderingKeyPublisherConnection::Flush(FlushParams p) {
+void OrderingKeyPublisherConnection::Flush() {
   // Make a copy so we can iterate without holding a lock, that is important as
   // other threads may be interested in publishing events and/or adding new
   // ordering keys. Locking while performing many (potentially long) requests is
@@ -41,7 +41,7 @@ void OrderingKeyPublisherConnection::Flush(FlushParams p) {
     std::lock_guard<std::mutex> lk(mu_);
     return children_;
   };
-  for (auto const& kv : copy_children()) kv.second->Flush(p);
+  for (auto const& kv : copy_children()) kv.second->Flush();
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

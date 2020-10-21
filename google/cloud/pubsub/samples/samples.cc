@@ -918,9 +918,10 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
     });
 
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
-    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), pubsub::PublisherOptions{},
-        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+    auto publisher = pubsub::Publisher(
+        std::move(topic),
+        pubsub::MakePublisherConnection(
+            pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
 
     std::vector<future<void>> ids;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -958,10 +959,10 @@ void PublisherConcurrencyControl(std::vector<std::string> const& argv) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // Override the default number of background (I/O) threads. By default the
     // library uses `std::thread::hardware_concurrency()` threads.
-    auto options =
-        pubsub::ConnectionOptions{}.set_background_thread_pool_size(8);
-    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), pubsub::PublisherOptions{}, std::move(options)));
+    auto publisher = pubsub::Publisher(
+        std::move(topic),
+        pubsub::MakePublisherConnection(
+            pubsub::ConnectionOptions{}.set_background_thread_pool_size(8)));
 
     std::vector<future<void>> ids;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -995,16 +996,18 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
     // By default a publisher will retry for 60 seconds, with an initial backoff
     // of 100ms, a maximum backoff of 60 seconds, and the backoff will grow by
     // 30% after each attempt. This changes those defaults.
-    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), pubsub::PublisherOptions{}, {},
-        pubsub::LimitedTimeRetryPolicy(
-            /*maximum_duration=*/std::chrono::minutes(10))
-            .clone(),
-        pubsub::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::milliseconds(200),
-            /*maximum_delay=*/std::chrono::seconds(45),
-            /*scaling=*/2.0)
-            .clone()));
+    auto publisher = pubsub::Publisher(
+        std::move(topic),
+        pubsub::MakePublisherConnection(
+            {},
+            pubsub::LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(10))
+                .clone(),
+            pubsub::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::milliseconds(200),
+                /*maximum_delay=*/std::chrono::seconds(45),
+                /*scaling=*/2.0)
+                .clone()));
 
     std::vector<future<bool>> done;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -1036,14 +1039,17 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
   using google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
-    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), pubsub::PublisherOptions{}, {},
-        pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
-        pubsub::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::milliseconds(200),
-            /*maximum_delay=*/std::chrono::seconds(45),
-            /*scaling=*/2.0)
-            .clone()));
+    auto publisher = pubsub::Publisher(
+        std::move(topic),
+        pubsub::MakePublisherConnection(
+            {},
+            pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0)
+                .clone(),
+            pubsub::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::milliseconds(200),
+                /*maximum_delay=*/std::chrono::seconds(45),
+                /*scaling=*/2.0)
+                .clone()));
 
     std::vector<future<bool>> done;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -1079,13 +1085,12 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
     // By default the publisher will flush a batch after 10ms, after it contains
     // more than 100 message, or after it contains more than 1MiB of data,
     // whichever comes first. This changes those defaults.
-    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+    auto publisher = pubsub::Publisher(
         std::move(topic),
         pubsub::PublisherOptions{}
             .set_maximum_hold_time(std::chrono::milliseconds(20))
             .set_maximum_batch_bytes(4 * 1024 * 1024L)
-            .set_maximum_batch_message_count(200),
-        pubsub::ConnectionOptions{}));
+            .set_maximum_batch_message_count(200));
 
     std::vector<future<void>> ids;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -1126,10 +1131,10 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
       return std::thread([cq]() mutable { cq.Run(); });
     });
 
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{},
-        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
 
     // Because this is an example we want to exit eventually, use a mutex and
     // condition variable to notify the current thread and stop the example.
@@ -1181,11 +1186,12 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   [](std::string project_id, std::string subscription_id) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
         pubsub::SubscriberOptions{}.set_concurrency_watermarks(
             /*lwm=*/4, /*hwm=*/8),
-        pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1239,11 +1245,11 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
     // any of the high watermarks are reached, and the library resumes
     // requesting messages when *both* low watermarks are reached.
     auto constexpr kMiB = 1024 * 1024L;
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
         pubsub::SubscriberOptions{}
             .set_max_outstanding_messages(1000)
-            .set_max_outstanding_bytes(8 * kMiB)));
+            .set_max_outstanding_bytes(8 * kMiB));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1286,17 +1292,18 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
     // By default a subscriber will retry for 60 seconds, with an initial
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will
     // grow by 30% after each attempt. This changes those defaults.
-    auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
+    auto subscriber = pubsub::Subscriber(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{}, pubsub::ConnectionOptions{},
-        pubsub::LimitedTimeRetryPolicy(
-            /*maximum_duration=*/std::chrono::minutes(1))
-            .clone(),
-        pubsub::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::milliseconds(200),
-            /*maximum_delay=*/std::chrono::seconds(10),
-            /*scaling=*/2.0)
-            .clone()));
+        pubsub::MakeSubscriberConnection(
+            pubsub::ConnectionOptions{},
+            pubsub::LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(1))
+                .clone(),
+            pubsub::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::milliseconds(200),
+                /*maximum_delay=*/std::chrono::seconds(10),
+                /*scaling=*/2.0)
+                .clone()));
 
     std::mutex mu;
     std::condition_variable cv;
@@ -1485,24 +1492,24 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
-      google::cloud::pubsub::MakePublisherConnection(
-          topic, google::cloud::pubsub::PublisherOptions{}
-                     .set_maximum_batch_message_count(1)));
+      topic,
+      google::cloud::pubsub::PublisherOptions{}.set_maximum_batch_message_count(
+          1));
   auto subscription =
       google::cloud::pubsub::Subscription(project_id, subscription_id);
-  auto subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(subscription));
+  auto subscriber_connection =
+      google::cloud::pubsub::MakeSubscriberConnection();
+  auto subscriber =
+      google::cloud::pubsub::Subscriber(subscription, subscriber_connection);
 
   auto dead_letter_subscription = google::cloud::pubsub::Subscription(
       project_id, dead_letter_subscription_id);
   auto dead_letter_subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(
-          dead_letter_subscription));
+      dead_letter_subscription, subscriber_connection);
 
   auto filtered_subscriber = google::cloud::pubsub::Subscriber(
-      google::cloud::pubsub::MakeSubscriberConnection(
-          google::cloud::pubsub::Subscription(project_id,
-                                              filtered_subscription_id)));
+      google::cloud::pubsub::Subscription(project_id, filtered_subscription_id),
+      subscriber_connection);
 
   std::cout << "\nRunning Publish() sample [1]" << std::endl;
   Publish(publisher, {});
@@ -1560,10 +1567,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   SubscribeCustomAttributes(subscriber, {});
 
   auto publisher_with_ordering_key = google::cloud::pubsub::Publisher(
-      google::cloud::pubsub::MakePublisherConnection(
-          topic, google::cloud::pubsub::PublisherOptions{}
-                     .set_maximum_batch_message_count(1)
-                     .enable_message_ordering()));
+      topic, google::cloud::pubsub::PublisherOptions{}
+                 .set_maximum_batch_message_count(1)
+                 .enable_message_ordering());
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
 
   if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});

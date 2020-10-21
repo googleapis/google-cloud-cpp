@@ -152,6 +152,9 @@ cmake_dependent_option(
     ON "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION}" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 
+# Building this target results in all protobufs being compiled.
+add_custom_target(google-cloud-cpp-protos)
+
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     add_subdirectory(external/googleapis)
 endif ()

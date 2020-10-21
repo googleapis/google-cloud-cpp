@@ -216,10 +216,8 @@ class CurlClient : public RawClient,
   std::string const storage_endpoint_;
   std::string const storage_host_;
   std::string const upload_endpoint_;
-  std::string const xml_upload_endpoint_;
-  std::string const xml_upload_host_;
-  std::string const xml_download_endpoint_;
-  std::string const xml_download_host_;
+  std::string const xml_endpoint_;
+  std::string const xml_host_;
   std::string const iam_endpoint_;
   bool const xml_enabled_;
 

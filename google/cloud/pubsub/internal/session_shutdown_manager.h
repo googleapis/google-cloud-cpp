@@ -19,6 +19,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/status.h"
 #include <mutex>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -117,6 +118,7 @@ class SessionShutdownManager {
   int outstanding_operations_ = 0;
   Status result_;
   promise<Status> done_;
+  std::unordered_map<std::string, int> ops_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
