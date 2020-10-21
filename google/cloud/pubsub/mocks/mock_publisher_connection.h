@@ -32,9 +32,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class MockPublisherConnection : public pubsub::PublisherConnection {
  public:
-  MOCK_METHOD1(Publish, future<StatusOr<::google::pubsub::v1::PublishResponse>>(
-                            pubsub::PublisherConnection::PublishParams));
-  MOCK_METHOD0(cq, google::cloud::CompletionQueue());
+  MOCK_METHOD(future<StatusOr<std::string>>, Publish,
+              (pubsub::PublisherConnection::PublishParams), (override));
+  MOCK_METHOD(void, Flush, (pubsub::PublisherConnection::FlushParams),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

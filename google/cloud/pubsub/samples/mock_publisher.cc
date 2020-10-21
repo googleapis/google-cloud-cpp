@@ -32,22 +32,16 @@ TEST(MockPublishExample, PublishSimple) {
   //! [create-mock]
 
   //! [setup-expectations]
-  google::cloud::CompletionQueue cq;
-  std::thread t{[&cq] { cq.Run(); }};
-  EXPECT_CALL(*mock, cq).WillRepeatedly([&] { return cq; });
   EXPECT_CALL(*mock, Publish)
       .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(1, p.request.messages_size());
-        google::pubsub::v1::PublishResponse response;
-        response.add_message_ids("test-id-0");
+        EXPECT_EQ("test-data-0", p.message.data());
         return google::cloud::make_ready_future(
-            google::cloud::make_status_or(response));
+            google::cloud::StatusOr<std::string>("test-id-0"));
       });
   //! [setup-expectations]
 
   //! [create-client]
-  auto const topic = pubsub::Topic("test-project", "test-topic");
-  pubsub::Publisher publisher(topic, mock);
+  pubsub::Publisher publisher(mock);
   //! [create-client]
 
   //! [client-call]
@@ -60,11 +54,6 @@ TEST(MockPublishExample, PublishSimple) {
   EXPECT_TRUE(id.ok());
   EXPECT_EQ("test-id-0", *id);
   //! [expected-results]
-
-  //! [shutdown]
-  cq.Shutdown();
-  t.join();
-  //! [shutdown]
 }
 
 }  // namespace

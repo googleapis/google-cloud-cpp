@@ -425,10 +425,10 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
                    int task) {
   auto make_publisher = [config, task] {
     auto const topic = pubsub::Topic(config.project_id, config.topic_id);
-    return pubsub::Publisher(
-        topic, pubsub::MakePublisherConnection(
-                   pubsub::ConnectionOptions{}.set_channel_pool_domain(
-                       "publisher:" + std::to_string(task))));
+    return pubsub::Publisher(pubsub::MakePublisherConnection(
+        topic, {},
+        pubsub::ConnectionOptions{}.set_channel_pool_domain(
+            "publisher:" + std::to_string(task))));
   };
   auto publisher = make_publisher();
 

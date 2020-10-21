@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_H
 
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/message_batcher.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/version.h"
@@ -103,13 +102,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class Publisher {
  public:
-  explicit Publisher(Topic topic, PublisherOptions options = {},
-                     std::shared_ptr<PublisherConnection> connection =
-                         MakePublisherConnection());
-
-  explicit Publisher(Topic topic,
-                     std::shared_ptr<PublisherConnection> connection)
-      : Publisher(std::move(topic), {}, std::move(connection)) {}
+  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions options = {});
 
   //@{
   Publisher(Publisher const&) = default;
@@ -145,7 +139,7 @@ class Publisher {
    *     a unrecoverable error.
    */
   future<StatusOr<std::string>> Publish(Message m) {
-    return batcher_->Publish({std::move(m)});
+    return connection_->Publish({std::move(m)});
   }
 
   /**
@@ -162,10 +156,10 @@ class Publisher {
    *     application can use the `future<StatusOr<std::string>>` returned in
    *     each `Publish()` call to find out what the results are.
    */
-  void Flush() { batcher_->Flush(); }
+  void Flush() { connection_->Flush({}); }
 
  private:
-  std::shared_ptr<pubsub_internal::MessageBatcher> batcher_;
+  std::shared_ptr<PublisherConnection> connection_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

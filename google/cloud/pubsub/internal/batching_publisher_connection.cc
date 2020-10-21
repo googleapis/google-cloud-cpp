@@ -65,16 +65,16 @@ struct Batch {
 };
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
-    pubsub::Message m) {
+    PublishParams p) {
   promise<StatusOr<std::string>> promise;
   auto f = promise.get_future();
   std::unique_lock<std::mutex> lk(mu_);
-  pending_.push_back(Item{std::move(promise), std::move(m)});
+  pending_.push_back(Item{std::move(promise), std::move(p.message)});
   MaybeFlush(std::move(lk));
   return f;
 }
 
-void BatchingPublisherConnection::Flush() {
+void BatchingPublisherConnection::Flush(FlushParams) {
   FlushImpl(std::unique_lock<std::mutex>(mu_));
 }
 
@@ -144,7 +144,17 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   pending_.clear();
   lk.unlock();
 
-  connection_->Publish({std::move(request)}).then(std::move(batch));
+  auto& stub = stub_;
+  google::cloud::internal::AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      google::cloud::internal::Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::PublishRequest const& request) {
+        return stub->AsyncPublish(cq, std::move(context), request);
+      },
+      std::move(request), __func__)
+      .then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
