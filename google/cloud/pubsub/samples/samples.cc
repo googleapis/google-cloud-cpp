@@ -780,6 +780,49 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
   (std::move(publisher));
 }
 
+void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
+                       std::vector<std::string> const&) {
+  //! [START pubsub_resume_publish_with_ordering_keys] [resume-publish]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    struct SampleData {
+      std::string ordering_key;
+      std::string data;
+    } data[] = {
+        {"key1", "message1"}, {"key2", "message2"}, {"key1", "message3"},
+        {"key1", "message4"}, {"key1", "message5"},
+    };
+    std::vector<future<void>> done;
+    for (auto const& datum : data) {
+      auto handler = [datum,
+                      publisher](future<StatusOr<std::string>> f) mutable {
+        auto const msg = datum.ordering_key + "#" + datum.data;
+        auto id = f.get();
+        if (!id) {
+          std::cout << "An error has occurred publishing " << msg << "\n";
+          publisher.ResumePublish(datum.ordering_key);
+          return;
+        }
+        std::cout << "Message " << msg << " published as id=" << *id << "\n";
+      };
+      done.push_back(
+          publisher
+              .Publish(pubsub::MessageBuilder{}
+                           .SetData("Hello World! [" + datum.data + "]")
+                           .SetOrderingKey(datum.ordering_key)
+                           .Build())
+              .then(handler));
+    }
+    publisher.Flush();
+    // Block until all the messages are published (optional)
+    for (auto& f : done) f.get();
+  }
+  //! [END pubsub_resume_publish_with_ordering_keys] [resume-publish]
+  (std::move(publisher));
+}
+
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                std::vector<std::string> const&) {
   //! [START pubsub_quickstart_subscriber]
@@ -1573,6 +1616,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
 
   if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});
+  if (UsingEmulator()) ResumeOrderingKey(publisher_with_ordering_key, {});
 
   std::cout << "\nRunning Publish() sample [4]" << std::endl;
   Publish(publisher, {});
@@ -1711,6 +1755,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish-custom-attributes", {},
                              PublishCustomAttributes),
       CreatePublisherCommand("publish-ordering-key", {}, PublishOrderingKey),
+      CreatePublisherCommand("resume-ordering-key", {}, ResumeOrderingKey),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),

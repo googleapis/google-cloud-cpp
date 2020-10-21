@@ -116,7 +116,7 @@ class PublisherOptions {
   /**
    * Enable message ordering.
    *
-   * @see the documentation for the @ref `Publisher` class for details.
+   * @see the documentation for the `Publisher` class for details.
    */
   PublisherOptions& enable_message_ordering() {
     message_ordering_ = true;
@@ -126,7 +126,7 @@ class PublisherOptions {
   /**
    * Disable message ordering.
    *
-   * @see the documentation for the @ref `Publisher` class for details.
+   * @see the documentation for the `Publisher` class for details.
    */
   PublisherOptions& disable_message_ordering() {
     message_ordering_ = false;
