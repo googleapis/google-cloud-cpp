@@ -27,8 +27,7 @@ class ClientOptions;
 namespace internal {
 std::string JsonEndpoint(ClientOptions const&);
 std::string JsonUploadEndpoint(ClientOptions const&);
-std::string XmlDownloadEndpoint(ClientOptions const&);
-std::string XmlUploadEndpoint(ClientOptions const&);
+std::string XmlEndpoint(ClientOptions const&);
 std::string IamEndpoint(ClientOptions const&);
 }  // namespace internal
 
@@ -229,8 +228,7 @@ class ClientOptions {
  private:
   friend std::string internal::JsonEndpoint(ClientOptions const&);
   friend std::string internal::JsonUploadEndpoint(ClientOptions const&);
-  friend std::string internal::XmlDownloadEndpoint(ClientOptions const&);
-  friend std::string internal::XmlUploadEndpoint(ClientOptions const&);
+  friend std::string internal::XmlEndpoint(ClientOptions const&);
   friend std::string internal::IamEndpoint(ClientOptions const&);
 
   void SetupFromEnvironment();
