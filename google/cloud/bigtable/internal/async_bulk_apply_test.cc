@@ -33,7 +33,7 @@ namespace {
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 
@@ -71,7 +71,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
 
   auto* reader =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
-  EXPECT_CALL(*reader, Read(_, _))
+  EXPECT_CALL(*reader, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& r1 = *r->add_entries();
         r1.set_index(0);
@@ -83,13 +83,13 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
 
-  EXPECT_CALL(*reader, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status::OK;
   });
 
-  EXPECT_CALL(*reader, StartCall(_)).Times(1);
+  EXPECT_CALL(*reader, StartCall).Times(1);
 
-  EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
       .WillOnce([reader](grpc::ClientContext*,
                          btproto::MutateRowsRequest const&,
                          grpc::CompletionQueue*) {
@@ -128,12 +128,12 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
                                   {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
 
-  auto* reader =
+  auto* reader0 =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
   auto* reader1 =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
 
-  EXPECT_CALL(*reader, Read(_, _))
+  EXPECT_CALL(*reader0, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& r1 = *r->add_entries();
         r1.set_index(0);
@@ -141,7 +141,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
 
-  EXPECT_CALL(*reader1, Read(_, _))
+  EXPECT_CALL(*reader1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& r1 = *r->add_entries();
         r1.set_index(0);
@@ -149,24 +149,24 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
 
-  EXPECT_CALL(*reader, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader0, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status::OK;
   });
 
-  EXPECT_CALL(*reader1, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader1, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status::OK;
   });
 
-  EXPECT_CALL(*reader, StartCall(_)).Times(1);
-  EXPECT_CALL(*reader1, StartCall(_)).Times(1);
+  EXPECT_CALL(*reader0, StartCall).Times(1);
+  EXPECT_CALL(*reader1, StartCall).Times(1);
 
-  EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
-      .WillOnce([reader](grpc::ClientContext*,
-                         btproto::MutateRowsRequest const&,
-                         grpc::CompletionQueue*) {
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .WillOnce([reader0](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
         return std::unique_ptr<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
-            reader);
+            reader0);
       })
       .WillOnce([reader1](grpc::ClientContext*,
                           btproto::MutateRowsRequest const&,
@@ -213,12 +213,12 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyFailureRetry) {
                                   {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
 
-  auto* reader =
+  auto* reader0 =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
   auto* reader1 =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
 
-  EXPECT_CALL(*reader, Read(_, _))
+  EXPECT_CALL(*reader0, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& r1 = *r->add_entries();
         r1.set_index(0);
@@ -226,7 +226,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyFailureRetry) {
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
 
-  EXPECT_CALL(*reader1, Read(_, _))
+  EXPECT_CALL(*reader1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& r1 = *r->add_entries();
         r1.set_index(0);
@@ -238,24 +238,24 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyFailureRetry) {
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
 
-  EXPECT_CALL(*reader, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader0, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
   });
 
-  EXPECT_CALL(*reader1, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader1, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status::OK;
   });
 
-  EXPECT_CALL(*reader, StartCall(_)).Times(1);
-  EXPECT_CALL(*reader1, StartCall(_)).Times(1);
+  EXPECT_CALL(*reader0, StartCall).Times(1);
+  EXPECT_CALL(*reader1, StartCall).Times(1);
 
-  EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
-      .WillOnce([reader](grpc::ClientContext*,
-                         btproto::MutateRowsRequest const&,
-                         grpc::CompletionQueue*) {
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .WillOnce([reader0](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
         return std::unique_ptr<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
-            reader);
+            reader0);
       })
       .WillOnce([reader1](grpc::ClientContext*,
                           btproto::MutateRowsRequest const&,
