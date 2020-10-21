@@ -30,22 +30,29 @@ class BatchingPublisherConnection
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::PublisherOptions options,
+      std::string ordering_key,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
       google::cloud::CompletionQueue cq,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
     return std::shared_ptr<BatchingPublisherConnection>(
         new BatchingPublisherConnection(
-            std::move(topic), std::move(options), std::move(stub),
-            std::move(cq), std::move(retry_policy), std::move(backoff_policy)));
+            std::move(topic), std::move(options), std::move(ordering_key),
+            std::move(stub), std::move(cq), std::move(retry_policy),
+            std::move(backoff_policy)));
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
   void Flush(FlushParams) override;
+  void ResumePublish(ResumePublishParams p) override;
+
+  void UnCork();
+  void DiscardCorked(Status const& status);
 
  private:
   explicit BatchingPublisherConnection(
       pubsub::Topic topic, pubsub::PublisherOptions options,
+      std::string ordering_key,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
       google::cloud::CompletionQueue cq,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
@@ -53,6 +60,7 @@ class BatchingPublisherConnection
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         options_(std::move(options)),
+        ordering_key_(std::move(ordering_key)),
         stub_(std::move(stub)),
         cq_(std::move(cq)),
         retry_policy_(std::move(retry_policy)),
@@ -62,9 +70,10 @@ class BatchingPublisherConnection
   void MaybeFlush(std::unique_lock<std::mutex> lk);
   void FlushImpl(std::unique_lock<std::mutex> lk);
 
-  pubsub::Topic topic_;
-  std::string topic_full_name_;
-  pubsub::PublisherOptions options_;
+  pubsub::Topic const topic_;
+  std::string const topic_full_name_;
+  pubsub::PublisherOptions const options_;
+  std::string const ordering_key_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
   google::cloud::CompletionQueue cq_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
@@ -77,6 +86,8 @@ class BatchingPublisherConnection
   };
   std::vector<Item> pending_;
   std::chrono::system_clock::time_point batch_expiration_;
+  bool corked_ = false;
+  Status corked_status_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

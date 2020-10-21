@@ -16,7 +16,6 @@
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,25 +24,39 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
 
-TEST(RejectsWithOrderingKeyTest, PublishWithOrderingKeyFailure) {
+TEST(RejectsWithOrderingKeyTest, MessageRejected) {
   auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
   pubsub::Topic const topic("test-project", "test-topic");
+  EXPECT_CALL(*mock, Publish).Times(0);
+  EXPECT_CALL(*mock, ResumePublish).Times(1);
+
+  auto publisher = RejectsWithOrderingKey::Create(mock);
+  auto response = publisher
+                      ->Publish({pubsub::MessageBuilder{}
+                                     .SetData("test-data-0")
+                                     .SetOrderingKey("test-ordering-key-0")
+                                     .Build()})
+                      .get();
+  EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
+  publisher->ResumePublish({"test-ordering-key-0"});
+}
+
+TEST(RejectsWithOrderingKeyTest, MessageAccepted) {
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([](pubsub::PublisherConnection::PublishParams const&) {
+        return make_ready_future(StatusOr<std::string>("test-id"));
+      });
 
   auto publisher = RejectsWithOrderingKey::Create(mock);
   auto response =
       publisher
-          ->Publish({pubsub::MessageBuilder{}
-                         .SetData("test-data-0")
-                         .SetOrderingKey("test-ordering-key-0")
-                         .Build()})
-          .then([&](future<StatusOr<std::string>> f) {
-            auto response = f.get();
-            EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code());
-            EXPECT_THAT(response.status().message(),
-                        HasSubstr("does not have message ordering enabled"));
-          });
+          ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ("test-id", *response);
 }
 
 }  // namespace

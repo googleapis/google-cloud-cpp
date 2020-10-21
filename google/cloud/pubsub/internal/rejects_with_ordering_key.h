@@ -35,6 +35,7 @@ class RejectsWithOrderingKey : public pubsub::PublisherConnection {
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
   void Flush(FlushParams) override;
+  void ResumePublish(ResumePublishParams p) override;
 
  private:
   explicit RejectsWithOrderingKey(

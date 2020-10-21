@@ -25,8 +25,6 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::testing::_;
-
 TEST(OrderingKeyPublisherConnectionTest, Publish) {
   struct TestStep {
     std::string ordering_key;
@@ -39,7 +37,7 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
   std::vector<pubsub::Message> received;
   auto factory = [&](std::string const& ordering_key) {
     auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
-    EXPECT_CALL(*mock, Publish(_))
+    EXPECT_CALL(*mock, Publish)
         .WillRepeatedly(
             [ordering_key](
                 pubsub::PublisherConnection::PublishParams const& p) {
@@ -48,7 +46,8 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
                             std::string(p.message.data());
               return make_ready_future(make_status_or(ack_id));
             });
-    EXPECT_CALL(*mock, Flush(_)).Times(2);
+    EXPECT_CALL(*mock, ResumePublish).Times(ordering_key == "k0" ? 1 : 0);
+    EXPECT_CALL(*mock, Flush).Times(2);
     return mock;
   };
 
@@ -71,6 +70,7 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
   }
   for (auto& r : results) r.get();
 
+  publisher->ResumePublish({"k0"});
   publisher->Flush({});
   publisher->Flush({});
 }

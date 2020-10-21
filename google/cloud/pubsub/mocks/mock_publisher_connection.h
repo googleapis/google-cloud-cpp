@@ -36,6 +36,8 @@ class MockPublisherConnection : public pubsub::PublisherConnection {
               (pubsub::PublisherConnection::PublishParams), (override));
   MOCK_METHOD(void, Flush, (pubsub::PublisherConnection::FlushParams),
               (override));
+  MOCK_METHOD(void, ResumePublish,
+              (pubsub::PublisherConnection::ResumePublishParams), (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
