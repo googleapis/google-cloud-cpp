@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_REJECTS_WITH_ORDERING_KEY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_REJECTS_WITH_ORDERING_KEY_H
 
-#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/internal/message_batcher.h"
 #include "google/cloud/pubsub/version.h"
 
 namespace google {
@@ -23,25 +23,24 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-class RejectsWithOrderingKey : public pubsub::PublisherConnection {
+class RejectsWithOrderingKey : public MessageBatcher {
  public:
   static std::shared_ptr<RejectsWithOrderingKey> Create(
-      std::shared_ptr<pubsub::PublisherConnection> connection) {
+      std::shared_ptr<MessageBatcher> child) {
     return std::shared_ptr<RejectsWithOrderingKey>(
-        new RejectsWithOrderingKey(std::move(connection)));
+        new RejectsWithOrderingKey(std::move(child)));
   }
 
   ~RejectsWithOrderingKey() override = default;
 
-  future<StatusOr<std::string>> Publish(PublishParams p) override;
-  void Flush(FlushParams) override;
+  future<StatusOr<std::string>> Publish(pubsub::Message m) override;
+  void Flush() override;
 
  private:
-  explicit RejectsWithOrderingKey(
-      std::shared_ptr<PublisherConnection> connection)
-      : connection_(std::move(connection)) {}
+  explicit RejectsWithOrderingKey(std::shared_ptr<MessageBatcher> child)
+      : child_(std::move(child)) {}
 
-  std::shared_ptr<PublisherConnection> connection_;
+  std::shared_ptr<MessageBatcher> child_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

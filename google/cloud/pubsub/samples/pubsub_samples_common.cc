@@ -37,8 +37,7 @@ google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     }
     Topic const topic(argv.at(0), argv.at(1));
     argv.erase(argv.begin(), argv.begin() + 2);
-    google::cloud::pubsub::Publisher client(
-        google::cloud::pubsub::MakePublisherConnection(topic, {}));
+    google::cloud::pubsub::Publisher client(topic);
     command(std::move(client), std::move(argv));
   };
   return google::cloud::testing_util::Commands::value_type{name,

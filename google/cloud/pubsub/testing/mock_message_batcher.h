@@ -12,28 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_BATCHER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_BATCHER_H
+
+#include "google/cloud/pubsub/internal/message_batcher.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace pubsub_testing {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(
-    pubsub::Message m) {
-  if (!m.ordering_key().empty()) {
-    return google::cloud::make_ready_future(StatusOr<std::string>(
-        Status(StatusCode::kInvalidArgument,
-               "Attempted to publish a message with an ordering"
-               " key with a publisher that does not have message"
-               " ordering enabled.")));
-  }
-  return child_->Publish(std::move(m));
-}
-
-void RejectsWithOrderingKey::Flush() { return child_->Flush(); }
+/**
+ * A class to mock pubsub_internal::MessageBatcher
+ */
+class MockMessageBatcher : public pubsub_internal::MessageBatcher {
+ public:
+  MOCK_METHOD1(Publish, future<StatusOr<std::string>>(pubsub::Message));
+  MOCK_METHOD0(Flush, void());
+};
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_internal
+}  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_BATCHER_H

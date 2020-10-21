@@ -100,6 +100,11 @@ errors=""
 for library in $(quickstart::libraries); do
   echo
   echo "================================================================"
+  if [[ "${library}" == "pubsub" ]]; then
+    # TODO(#5296) - remove this code to skip vcpkg-based builds
+    io::log_yellow "Skipping ${library}, see #5296"
+    continue
+  fi
   io::log_yellow "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
     io::log_red "Building ${library}'s quickstart failed"
