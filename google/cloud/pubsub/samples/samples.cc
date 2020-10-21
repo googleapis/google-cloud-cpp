@@ -796,13 +796,13 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
     };
     std::vector<future<void>> done;
     for (auto const& datum : data) {
-      auto handler = [datum,
-                      publisher](future<StatusOr<std::string>> f) mutable {
-        auto const msg = datum.ordering_key + "#" + datum.data;
+      auto& da = datum;  // workaround MSVC capture rules
+      auto handler = [da, publisher](future<StatusOr<std::string>> f) mutable {
+        auto const msg = da.ordering_key + "#" + da.data;
         auto id = f.get();
         if (!id) {
           std::cout << "An error has occurred publishing " << msg << "\n";
-          publisher.ResumePublish(datum.ordering_key);
+          publisher.ResumePublish(da.ordering_key);
           return;
         }
         std::cout << "Message " << msg << " published as id=" << *id << "\n";
