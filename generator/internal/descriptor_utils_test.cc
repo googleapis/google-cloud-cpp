@@ -89,8 +89,14 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("metadata_header_path",
                        "google/cloud/frobber/internal/"
                        "frobber_metadata_decorator.gcpcxx.pb.h"),
+        std::make_pair("product_namespace", "frobber"),
+        std::make_pair("product_internal_namespace", "frobber_internal"),
         std::make_pair("proto_file_name",
                        "google/cloud/frobber/v1/frobber.proto"),
+        std::make_pair("retry_policy_header_path",
+                       "google/cloud/frobber/retry_policy.gcpcxx.pb.h"),
+        std::make_pair("retry_traits_header_path",
+                       "google/cloud/frobber/retry_traits.h"),
         std::make_pair("service_endpoint", ""),
         std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair(
@@ -104,11 +110,7 @@ INSTANTIATE_TEST_SUITE_P(
             "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.cc"),
         std::make_pair(
             "stub_factory_header_path",
-            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.h"),
-        std::make_pair("version_header_path", "google/cloud/frobber/version.h"),
-        std::make_pair("version_cc_path", "google/cloud/frobber/version.cc"),
-        std::make_pair("version_info_header_path",
-                       "google/cloud/frobber/version_info.h")),
+            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.h")),
     [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
       return std::get<0>(info.param);
     });

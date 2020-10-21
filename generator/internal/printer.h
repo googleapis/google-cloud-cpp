@@ -35,6 +35,7 @@ using VarsDictionary = std::map<std::string, std::string>;
  */
 class Printer {
  public:
+  Printer() = default;
   Printer(google::protobuf::compiler::GeneratorContext* generator_context,
           std::string const& file_name)
       : output_(generator_context->Open(file_name)),
