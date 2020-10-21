@@ -41,7 +41,7 @@ class BatchingPublisherConnection
 
   future<StatusOr<std::string>> Publish(pubsub::Message m) override;
   void Flush() override;
-  void ResumePublish(std::string const&);
+  void ResumePublish(std::string const&) override;
 
   void UnCork();
   void DiscardCorked(Status const& status);

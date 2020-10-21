@@ -35,6 +35,7 @@ class RejectsWithOrderingKey : public MessageBatcher {
 
   future<StatusOr<std::string>> Publish(pubsub::Message m) override;
   void Flush() override;
+  void ResumePublish(std::string const&) override;
 
  private:
   explicit RejectsWithOrderingKey(std::shared_ptr<MessageBatcher> child)

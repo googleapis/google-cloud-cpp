@@ -21,14 +21,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<StatusOr<std::string>> OrderingKeyPublisherConnection::Publish(
     pubsub::Message m) {
-  auto child = [this, &m] {
-    std::lock_guard<std::mutex> lk(mu_);
-    auto i =
-        children_.emplace(m.ordering_key(), std::shared_ptr<MessageBatcher>{});
-    if (i.second) i.first->second = factory_(m.ordering_key());
-    return i.first->second;
-  }();
-
+  auto child = GetChild(m.ordering_key());
   return child->Publish(std::move(m));
 }
 
@@ -42,6 +35,20 @@ void OrderingKeyPublisherConnection::Flush() {
     return children_;
   };
   for (auto const& kv : copy_children()) kv.second->Flush();
+}
+
+void OrderingKeyPublisherConnection::ResumePublish(
+    std::string const& ordering_key) {
+  auto child = GetChild(ordering_key);
+  child->ResumePublish(ordering_key);
+}
+
+std::shared_ptr<MessageBatcher> OrderingKeyPublisherConnection::GetChild(
+    std::string const& ordering_key) {
+  std::lock_guard<std::mutex> lk(mu_);
+  auto i = children_.emplace(ordering_key, std::shared_ptr<MessageBatcher>{});
+  if (i.second) i.first->second = factory_(ordering_key);
+  return i.first->second;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

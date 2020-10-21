@@ -30,6 +30,7 @@ class MockMessageBatcher : public pubsub_internal::MessageBatcher {
  public:
   MOCK_METHOD1(Publish, future<StatusOr<std::string>>(pubsub::Message));
   MOCK_METHOD0(Flush, void());
+  MOCK_METHOD1(ResumePublish, void(std::string const&));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

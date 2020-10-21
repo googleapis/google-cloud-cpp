@@ -42,6 +42,7 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
           auto ack_id = m.ordering_key() + "#" + std::string(m.data());
           return make_ready_future(make_status_or(ack_id));
         });
+    EXPECT_CALL(*mock, ResumePublish).Times(ordering_key == "k0" ? 1 : 0);
     EXPECT_CALL(*mock, Flush).Times(2);
     return mock;
   };
@@ -64,6 +65,7 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
   }
   for (auto& r : results) r.get();
 
+  publisher->ResumePublish("k0");
   publisher->Flush();
   publisher->Flush();
 }

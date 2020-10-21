@@ -51,6 +51,16 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * });
  * @endcode
  *
+ * @par Message Ordering
+ * A `Publisher` configured to preserve message ordering will sequence the
+ * messages that share a common ordering key (see
+ * `MessageBuilder::SetOrderingKey()`). Messages will be batched by ordering
+ * key, and new batches will wait until the status of the previous batch is
+ * known. Or an error, all pending and queued messages are discarded, and the
+ * publisher rejects any new messages for the ordering key that experienced
+ * problems. The application must call `Publisher::ResumePublishing()` to
+ * to restore publishing.
+ *
  * @par Performance
  *
  * `Publisher` objects are relatively cheap to create, copy, and move. However,
@@ -163,6 +173,18 @@ class Publisher {
    *     each `Publish()` call to find out what the results are.
    */
   void Flush() { batcher_->Flush(); }
+
+  /**
+   * Resume publishing after an error.
+   *
+   * If the publisher options have message ordering enabled (see
+   * `PublisherOptions::message_ordering()`) all messages for a key that
+   * experience failure will be rejected until the application calls this
+   * function.
+   */
+  void ResumePublish(std::string const& ordering_key) {
+    batcher_->ResumePublish(ordering_key);
+  }
 
  private:
   std::shared_ptr<pubsub_internal::MessageBatcher> batcher_;

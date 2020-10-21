@@ -37,6 +37,9 @@ class MessageBatcher {
 
   /// Flush any pending messages
   virtual void Flush() = 0;
+
+  /// Resume publishing after an error if ordering keys are enabled
+  virtual void ResumePublish(std::string const& ordering_key) = 0;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

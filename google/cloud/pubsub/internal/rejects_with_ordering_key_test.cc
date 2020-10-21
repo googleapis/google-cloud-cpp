@@ -30,6 +30,7 @@ using ::google::cloud::testing_util::StatusIs;
 TEST(RejectsWithOrderingKeyTest, MessageRejected) {
   auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
   EXPECT_CALL(*mock, Publish).Times(0);
+  EXPECT_CALL(*mock, ResumePublish).Times(0);
 
   auto publisher = RejectsWithOrderingKey::Create(mock);
   auto response = publisher
@@ -39,6 +40,7 @@ TEST(RejectsWithOrderingKeyTest, MessageRejected) {
                                      .Build()})
                       .get();
   EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
+  publisher->ResumePublish("test-ordering-key-0");
 }
 
 TEST(RejectsWithOrderingKeyTest, MessageAccepted) {
