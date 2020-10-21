@@ -35,7 +35,6 @@ namespace btproto = google::bigtable::v2;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 
 class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
  protected:
