@@ -63,7 +63,6 @@ class PublisherConnection {
   struct PublishParams {
     google::pubsub::v1::PublishRequest request;
   };
-
   //@}
 
   /// Defines the interface for `Publisher::Publish()`
