@@ -31,22 +31,30 @@ class BatchingPublisherConnection
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::PublisherOptions options,
+      std::string ordering_key,
       std::shared_ptr<pubsub::PublisherConnection> connection) {
     return std::shared_ptr<BatchingPublisherConnection>(
         new BatchingPublisherConnection(std::move(topic), std::move(options),
+                                        std::move(ordering_key),
                                         std::move(connection)));
   }
 
   future<StatusOr<std::string>> Publish(pubsub::Message m) override;
   void Flush() override;
+  void ResumePublish(std::string const&);
+
+  void UnCork();
+  void DiscardCorked(Status const& status);
 
  private:
   explicit BatchingPublisherConnection(
       pubsub::Topic topic, pubsub::PublisherOptions options,
+      std::string ordering_key,
       std::shared_ptr<pubsub::PublisherConnection> connection)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         options_(std::move(options)),
+        ordering_key_(std::move(ordering_key)),
         connection_(std::move(connection)),
         cq_(connection_->cq()) {}
 
@@ -54,10 +62,11 @@ class BatchingPublisherConnection
   void MaybeFlush(std::unique_lock<std::mutex> lk);
   void FlushImpl(std::unique_lock<std::mutex> lk);
 
-  pubsub::Topic topic_;
-  std::string topic_full_name_;
-  pubsub::PublisherOptions options_;
-  std::shared_ptr<pubsub::PublisherConnection> connection_;
+  pubsub::Topic const topic_;
+  std::string const topic_full_name_;
+  pubsub::PublisherOptions const options_;
+  std::string const ordering_key_;
+  std::shared_ptr<pubsub::PublisherConnection> const connection_;
   google::cloud::CompletionQueue cq_;
 
   std::mutex mu_;
@@ -67,6 +76,8 @@ class BatchingPublisherConnection
   };
   std::vector<Item> pending_;
   std::chrono::system_clock::time_point batch_expiration_;
+  bool corked_ = false;
+  Status corked_status_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -28,11 +28,13 @@ struct Batch {
   // well name it as one.
   google::cloud::CompletionQueue executor;
   std::vector<promise<StatusOr<std::string>>> waiters;
+  std::weak_ptr<BatchingPublisherConnection> weak;
 
   void operator()(future<StatusOr<google::pubsub::v1::PublishResponse>> f) {
     auto response = f.get();
     if (!response) {
       SatisfyAllWaiters(response.status());
+      if (auto batcher = weak.lock()) batcher->DiscardCorked(response.status());
       return;
     }
     if (static_cast<std::size_t>(response->message_ids_size()) !=
@@ -50,6 +52,7 @@ struct Batch {
     for (auto& w : waiters) {
       executor.RunAsync(SetValue{std::move(w), response->message_ids(idx++)});
     }
+    if (auto batcher = weak.lock()) batcher->UnCork();
   }
 
   void SatisfyAllWaiters(Status const& status) {
@@ -66,16 +69,56 @@ struct Batch {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     pubsub::Message m) {
-  promise<StatusOr<std::string>> promise;
-  auto f = promise.get_future();
+  promise<StatusOr<std::string>> p;
+  auto f = p.get_future();
   std::unique_lock<std::mutex> lk(mu_);
-  pending_.push_back(Item{std::move(promise), std::move(m)});
+  if (!corked_status_.ok()) {
+    struct MoveCapture {
+      promise<StatusOr<std::string>> p;
+      Status status;
+      void operator()() { p.set_value(std::move(status)); }
+    };
+    cq_.RunAsync(MoveCapture{std::move(p), corked_status_});
+    return f;
+  }
+  pending_.push_back(Item{std::move(p), std::move(m)});
   MaybeFlush(std::move(lk));
   return f;
 }
 
 void BatchingPublisherConnection::Flush() {
   FlushImpl(std::unique_lock<std::mutex>(mu_));
+}
+
+void BatchingPublisherConnection::ResumePublish(std::string const& key) {
+  if (ordering_key_ != key) return;
+  UnCork();
+}
+
+void BatchingPublisherConnection::UnCork() {
+  std::unique_lock<std::mutex> lk(mu_);
+  corked_ = false;
+  corked_status_ = {};
+  MaybeFlush(std::move(lk));
+}
+
+void BatchingPublisherConnection::DiscardCorked(Status const& status) {
+  auto pending = [&] {
+    std::unique_lock<std::mutex> lk(mu_);
+    corked_ = true;
+    corked_status_ = status;
+    std::vector<Item> tmp;
+    tmp.swap(pending_);
+    return tmp;
+  }();
+  for (auto& p : pending) {
+    struct MoveCapture {
+      promise<StatusOr<std::string>> p;
+      Status status;
+      void operator()() { p.set_value(std::move(status)); }
+    };
+    cq_.RunAsync(MoveCapture{std::move(p.response), status});
+  }
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
@@ -126,13 +169,14 @@ void BatchingPublisherConnection::OnTimer() {
 }
 
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.empty()) return;
+  if (pending_.empty() || corked_) return;
 
   auto context = absl::make_unique<grpc::ClientContext>();
 
   Batch batch;
   batch.executor = cq_;
   batch.waiters.reserve(pending_.size());
+  batch.weak = shared_from_this();
   google::pubsub::v1::PublishRequest request;
   request.set_topic(topic_full_name_);
   request.mutable_messages()->Reserve(static_cast<int>(pending_.size()));
@@ -142,6 +186,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
     *request.add_messages() = pubsub_internal::ToProto(std::move(i.message));
   }
   pending_.clear();
+  corked_ = !ordering_key_.empty();
   lk.unlock();
 
   connection_->Publish({std::move(request)}).then(std::move(batch));

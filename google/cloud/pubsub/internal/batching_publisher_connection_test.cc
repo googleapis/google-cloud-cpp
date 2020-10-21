@@ -15,10 +15,13 @@
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <condition_variable>
+#include <deque>
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -63,7 +66,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
           .set_maximum_hold_time(std::chrono::milliseconds(50)),
-      mock);
+      {}, mock);
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
@@ -108,11 +111,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
         return make_ready_future(make_status_or(response));
       });
 
-  // Use our own completion queue, initially inactive, to avoid race conditions
-  // due to the zero-maximum-hold-time timer expiring.
-  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2), {},
       mock);
   auto r0 =
       publisher
@@ -131,13 +131,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
-  std::thread t([&cq] { cq.Run(); });
-
   r0.get();
   r1.get();
-
-  cq.Shutdown();
-  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
@@ -160,15 +155,12 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   auto constexpr kMessageSizeOverhead = 20;
   auto constexpr kMaxMessageBytes =
       sizeof("test-data-N") + kMessageSizeOverhead + 2;
-  // Use our own completion queue, initially inactive, to avoid race conditions
-  // due to the zero-maximum-hold-time timer expiring.
-  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
-      mock);
+      {}, mock);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -186,13 +178,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
-  std::thread t([&cq] { cq.Run(); });
-
   r0.get();
   r1.get();
-
-  cq.Shutdown();
-  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
@@ -211,15 +198,12 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
         return make_ready_future(make_status_or(response));
       });
 
-  // Use our own completion queue, initially inactive, to avoid race conditions
-  // due to the maximum-hold-time timer expiring.
-  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      mock);
+      {}, mock);
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -237,13 +221,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
-  std::thread t([&cq] { cq.Run(); });
-
   r0.get();
   r1.get();
-
-  cq.Shutdown();
-  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByFlush) {
@@ -270,15 +249,12 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
         return make_ready_future(make_status_or(response));
       });
 
-  // Use our own completion queue, initially inactive, to avoid race conditions
-  // due to the maximum-hold-time timer expiring.
-  google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      mock);
+      {}, mock);
 
   std::vector<future<void>> results;
   for (auto i : {0, 1}) {
@@ -309,10 +285,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
             }));
   }
 
-  std::thread t([&cq] { cq.Run(); });
   for (auto& r : results) r.get();
-  cq.Shutdown();
-  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, HandleError) {
@@ -329,7 +302,7 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
       });
 
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2), {},
       mock);
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
@@ -362,7 +335,7 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
       });
 
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2), {},
       mock);
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
@@ -380,6 +353,207 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
 
   r0.get();
   r1.get();
+}
+
+TEST(BatchingPublisherConnectionTest, OrderingBatchCorked) {
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> pending;
+  auto add_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    pending.emplace_back();
+    cv.notify_one();
+    return pending.back().get_future();
+  };
+  auto wait_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !pending.empty(); });
+    auto p = std::move(pending.front());
+    pending.pop_front();
+    return p;
+  };
+  auto make_response = [&](int expected_count) {
+    return [&, expected_count](
+               pubsub::PublisherConnection::PublishParams const& p) {
+      EXPECT_EQ(expected_count, p.request.messages_size());
+      google::pubsub::v1::PublishResponse response;
+      for (auto const& m : p.request.messages()) {
+        response.add_message_ids("id-" + m.data());
+      }
+      return add_pending().then(
+          [response](future<void>) { return make_status_or(response); });
+    };
+  };
+  auto constexpr kBatchSize = 2;
+  auto constexpr kMessageCount = 3 * kBatchSize;
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(make_response(kBatchSize))
+      .WillOnce(make_response(kMessageCount - kBatchSize));
+
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}.set_maximum_batch_message_count(kBatchSize),
+      "test-key", mock);
+  std::vector<future<StatusOr<std::string>>> responses;
+  for (int i = 0; i != kMessageCount; ++i) {
+    responses.push_back(
+        publisher->Publish({pubsub::MessageBuilder{}
+                                .SetData("d-" + std::to_string(i))
+                                .SetOrderingKey("test-key")
+                                .Build()}));
+  }
+
+  // None of the responses should be ready because the mock has not sent a
+  // response
+  for (auto& r : responses) {
+    using ms = std::chrono::milliseconds;
+    EXPECT_EQ(std::future_status::timeout, r.wait_for(ms(0)));
+  }
+  // Trigger the first response.
+  wait_pending().set_value();
+  for (int i = 0; i != kBatchSize; ++i) {
+    ASSERT_STATUS_OK(responses[i].get());
+  }
+
+  // Trigger the second response.
+  wait_pending().set_value();
+  for (int i = kBatchSize; i != kMessageCount; ++i) {
+    ASSERT_STATUS_OK(responses[i].get());
+  }
+}
+
+TEST(BatchingPublisherConnectionTest, OrderingBatchRejectAfterError) {
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  pubsub::Topic const topic("test-project", "test-topic");
+  auto const expected_status = Status{StatusCode::kPermissionDenied, "uh-oh"};
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
+  EXPECT_CALL(*mock, Publish).Times(0);
+
+  auto constexpr kBatchSize = 2;
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}.set_maximum_batch_message_count(kBatchSize),
+      "test-key", mock);
+
+  // Simulate a previous error
+  publisher->DiscardCorked(expected_status);
+  for (int i = 0; i != 3 * kBatchSize; ++i) {
+    auto response = publisher
+                        ->Publish({pubsub::MessageBuilder{}
+                                       .SetData("d-" + std::to_string(i))
+                                       .SetOrderingKey("test-key")
+                                       .Build()})
+                        .get();
+    EXPECT_EQ(response.status(), expected_status);
+  }
+}
+
+TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> pending;
+  auto add_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    pending.emplace_back();
+    cv.notify_one();
+    return pending.back().get_future();
+  };
+  auto wait_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !pending.empty(); });
+    auto p = std::move(pending.front());
+    pending.pop_front();
+    return p;
+  };
+  auto const expected_status = Status{StatusCode::kPermissionDenied, "uh-oh"};
+  auto make_error_response = [&](int expected_count) {
+    return [&, expected_count](
+               pubsub::PublisherConnection::PublishParams const& p) {
+      EXPECT_EQ(expected_count, p.request.messages_size());
+      google::pubsub::v1::PublishResponse response;
+      for (auto const& m : p.request.messages()) {
+        response.add_message_ids("id-" + m.data());
+      }
+      return add_pending().then([&](future<void>) {
+        return StatusOr<google::pubsub::v1::PublishResponse>(expected_status);
+      });
+    };
+  };
+  auto make_response = [&](int expected_count) {
+    return [&, expected_count](
+               pubsub::PublisherConnection::PublishParams const& p) {
+      EXPECT_EQ(expected_count, p.request.messages_size());
+      google::pubsub::v1::PublishResponse response;
+      for (auto const& m : p.request.messages()) {
+        response.add_message_ids("id-" + m.data());
+      }
+      return add_pending().then(
+          [response](future<void>) { return make_status_or(response); });
+    };
+  };
+
+  auto constexpr kBatchSize = 2;
+  auto constexpr kDiscarded = 2 * kBatchSize;
+  auto constexpr kResumed = 3 * kBatchSize;
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce(make_error_response(kBatchSize))
+      .WillOnce(make_response(kBatchSize))
+      .WillOnce(make_response(kResumed - kBatchSize));
+
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}.set_maximum_batch_message_count(kBatchSize),
+      "test-key", mock);
+  std::vector<future<StatusOr<std::string>>> responses;
+  for (int i = 0; i != kBatchSize + kDiscarded; ++i) {
+    responses.push_back(
+        publisher->Publish({pubsub::MessageBuilder{}
+                                .SetData("d-" + std::to_string(i))
+                                .SetOrderingKey("test-key")
+                                .Build()}));
+  }
+
+  // None of the responses should be ready because the mock has not sent a
+  // response
+  for (auto& r : responses) {
+    using ms = std::chrono::milliseconds;
+    EXPECT_EQ(std::future_status::timeout, r.wait_for(ms(0)));
+  }
+  // Trigger the first response.
+  wait_pending().set_value();
+  for (auto& r : responses) {
+    ASSERT_EQ(r.get().status(), expected_status);
+  }
+
+  // Allow the publisher to publish again.
+  publisher->ResumePublish("test-key");
+  responses.clear();
+  for (int i = 0; i != kResumed; ++i) {
+    responses.push_back(
+        publisher->Publish({pubsub::MessageBuilder{}
+                                .SetData("d-" + std::to_string(i))
+                                .SetOrderingKey("test-key")
+                                .Build()}));
+  }
+
+  // Trigger the following responses.
+  wait_pending().set_value();  // First batch
+  wait_pending().set_value();  // Corked batch
+  for (auto& r : responses) {
+    ASSERT_STATUS_OK(r.get());
+  }
 }
 
 }  // namespace

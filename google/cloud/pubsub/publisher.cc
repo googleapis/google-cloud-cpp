@@ -26,16 +26,16 @@ std::shared_ptr<pubsub_internal::MessageBatcher> MakeMessageBatcher(
     pubsub::Topic topic, pubsub::PublisherOptions options,
     std::shared_ptr<pubsub::PublisherConnection> connection) {
   if (options.message_ordering()) {
-    auto factory = [topic, options, connection](std::string const&) {
+    auto factory = [topic, options, connection](std::string const& key) {
       return pubsub_internal::BatchingPublisherConnection::Create(
-          topic, options, connection);
+          topic, options, key, connection);
     };
     return pubsub_internal::OrderingKeyPublisherConnection::Create(
         std::move(factory));
   }
   return pubsub_internal::RejectsWithOrderingKey::Create(
       pubsub_internal::BatchingPublisherConnection::Create(
-          std::move(topic), std::move(options), std::move(connection)));
+          std::move(topic), std::move(options), {}, std::move(connection)));
 }
 
 }  // namespace
