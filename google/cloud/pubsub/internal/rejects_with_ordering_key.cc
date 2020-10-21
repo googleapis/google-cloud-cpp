@@ -33,8 +33,7 @@ future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(
 
 void RejectsWithOrderingKey::Flush() { return child_->Flush(); }
 
-void RejectsWithOrderingKey::ResumePublish(std::string const&) {
-}
+void RejectsWithOrderingKey::ResumePublish(std::string const&) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
