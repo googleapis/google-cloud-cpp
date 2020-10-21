@@ -220,7 +220,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
   auto publisher = Publisher(MakePublisherConnection(topic_, {}));
-  auto subscriber = Subscriber(subscription_);
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
 
   std::mutex mu;
   std::map<std::string, int> ids;
@@ -275,7 +275,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   auto constexpr kMinimumMessages = 10;
 
   auto publisher = Publisher(MakePublisherConnection(topic_, {}));
-  auto subscriber = Subscriber(subscription_);
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
   {
     (void)subscriber
         .Subscribe([&](Message const& m, AckHandler h) {
@@ -326,7 +326,7 @@ TEST_F(SubscriberIntegrationTest, ReportNotFound) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto const subscription = pubsub::Subscription(project_id, not_found_id);
-  auto subscriber = Subscriber(subscription);
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription));
 
   auto handler = [](pubsub::Message const&, AckHandler h) {
     std::move(h).ack();

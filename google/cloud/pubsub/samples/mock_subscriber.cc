@@ -77,8 +77,7 @@ TEST(MockSubscribeExample, Subscribe) {
   //! [setup-expectations]
 
   //! [create-client]
-  pubsub::Subscription subscription("fake-project", "fake-subscription");
-  pubsub::Subscriber subscriber(subscription, mock);
+  pubsub::Subscriber subscriber(mock);
   //! [create-client]
 
   //! [client-call]

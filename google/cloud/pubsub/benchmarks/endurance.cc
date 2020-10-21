@@ -240,7 +240,7 @@ int main(int argc, char* argv[]) {
   for (auto i = 0; i != config->session_count; ++i) {
     auto const& subscription = subscriptions[i % subscriptions.size()];
     auto subscriber = absl::make_unique<pubsub::Subscriber>(
-        subscription, pubsub::MakeSubscriberConnection());
+        pubsub::MakeSubscriberConnection(subscription));
     sessions.push_back(subscriber->Subscribe(handler));
     subscribers.push_back(std::move(subscriber));
   }
