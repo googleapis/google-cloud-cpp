@@ -43,11 +43,11 @@ storage_client_integration_tests = [
     "object_rewrite_integration_test.cc",
     "object_write_streambuf_integration_test.cc",
     "service_account_integration_test.cc",
-    "signed_url_conformance_test.cc",
     "signed_url_integration_test.cc",
     "slow_reader_chunk_integration_test.cc",
     "slow_reader_stream_integration_test.cc",
     "small_reads_integration_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",
+    "signed_url_conformance_test.cc",
 ]
