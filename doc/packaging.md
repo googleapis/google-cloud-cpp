@@ -43,7 +43,7 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out --target install
 ```
 
