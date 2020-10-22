@@ -66,6 +66,11 @@ class PublisherConnection {
 
   /// Wrap the arguments for `Flush()`
   struct FlushParams {};
+
+  /// Wrap the arguments for `ResumePublish()`
+  struct ResumePublishParams {
+    std::string ordering_key;
+  };
   //@}
 
   /// Defines the interface for `Publisher::Publish()`
@@ -73,6 +78,9 @@ class PublisherConnection {
 
   /// Defines the interface for `Publisher::Flush()`
   virtual void Flush(FlushParams) = 0;
+
+  /// Defines the interface for `Publisher::ResumePublish()`
+  virtual void ResumePublish(ResumePublishParams p) = 0;
 };
 
 /**

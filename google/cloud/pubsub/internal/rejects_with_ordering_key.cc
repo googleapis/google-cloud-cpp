@@ -34,6 +34,10 @@ void RejectsWithOrderingKey::Flush(FlushParams p) {
   return connection_->Flush(p);
 }
 
+void RejectsWithOrderingKey::ResumePublish(ResumePublishParams p) {
+  connection_->ResumePublish(std::move(p));
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

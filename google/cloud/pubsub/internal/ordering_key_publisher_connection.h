@@ -41,10 +41,14 @@ class OrderingKeyPublisherConnection : public pubsub::PublisherConnection {
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
   void Flush(FlushParams) override;
+  void ResumePublish(ResumePublishParams p) override;
 
  private:
   explicit OrderingKeyPublisherConnection(ConnectionFactory factory)
       : factory_(std::move(factory)) {}
+
+  std::shared_ptr<PublisherConnection> GetChild(
+      std::string const& ordering_key);
 
   ConnectionFactory factory_;
   std::mutex mu_;

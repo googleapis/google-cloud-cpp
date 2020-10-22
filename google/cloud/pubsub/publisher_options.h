@@ -110,11 +110,24 @@ class PublisherOptions {
     return *this;
   }
 
+  /// Return `true` if message ordering is enabled.
   bool message_ordering() const { return message_ordering_; }
+
+  /**
+   * Enable message ordering.
+   *
+   * @see the documentation for the `Publisher` class for details.
+   */
   PublisherOptions& enable_message_ordering() {
     message_ordering_ = true;
     return *this;
   }
+
+  /**
+   * Disable message ordering.
+   *
+   * @see the documentation for the `Publisher` class for details.
+   */
   PublisherOptions& disable_message_ordering() {
     message_ordering_ = false;
     return *this;

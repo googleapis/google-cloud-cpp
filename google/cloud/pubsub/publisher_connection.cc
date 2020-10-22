@@ -41,6 +41,9 @@ class ContainingPublisherConnection : public PublisherConnection {
     return child_->Publish(std::move(p));
   }
   void Flush(FlushParams p) override { child_->Flush(std::move(p)); }
+  void ResumePublish(ResumePublishParams p) override {
+    child_->ResumePublish(std::move(p));
+  }
 
  private:
   std::shared_ptr<BackgroundThreads> background_;
@@ -103,15 +106,16 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
       std::shared_ptr<pubsub::BackoffPolicy const> backoff =
           std::move(backoff_policy);
       auto factory = [topic, options, stub, cq, retry,
-                      backoff](std::string const&) {
-        return BatchingPublisherConnection::Create(
-            topic, options, stub, cq, retry->clone(), backoff->clone());
+                      backoff](std::string const& ordering_key) {
+        return BatchingPublisherConnection::Create(topic, options, ordering_key,
+                                                   stub, cq, retry->clone(),
+                                                   backoff->clone());
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
     return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
-        std::move(topic), std::move(options), std::move(stub), std::move(cq),
-        std::move(retry_policy), std::move(backoff_policy)));
+        std::move(topic), std::move(options), {}, std::move(stub),
+        std::move(cq), std::move(retry_policy), std::move(backoff_policy)));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());
