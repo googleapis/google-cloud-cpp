@@ -75,6 +75,14 @@ INSTANTIATE_TEST_SUITE_P(
                        "google/cloud/frobber/connection_options.gcpcxx.pb.cc"),
         std::make_pair("grpc_stub_fqn",
                        "::google::cloud::frobber::v1::FrobberService"),
+        std::make_pair("idempotency_class_name",
+                       "FrobberServiceConnectionIdempotencyPolicy"),
+        std::make_pair("idempotency_policy_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection_idempotency_policy.gcpcxx.pb.cc"),
+        std::make_pair("idempotency_policy_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection_idempotency_policy.gcpcxx.pb.h"),
         std::make_pair("logging_class_name", "FrobberServiceLogging"),
         std::make_pair("logging_cc_path",
                        "google/cloud/frobber/internal/"
@@ -93,6 +101,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("product_internal_namespace", "frobber_internal"),
         std::make_pair("proto_file_name",
                        "google/cloud/frobber/v1/frobber.proto"),
+        std::make_pair("proto_grpc_header_path",
+                       "google/cloud/frobber/v1/frobber.grpc.pb.h"),
         std::make_pair("retry_policy_header_path",
                        "google/cloud/frobber/retry_policy.gcpcxx.pb.h"),
         std::make_pair("retry_traits_header_path",
@@ -178,11 +188,21 @@ class CreateMethodVarsTest
           name: "Method0"
           input_type: "google.protobuf.Bar"
           output_type: "google.protobuf.Empty"
+          options {
+            [google.api.http] {
+              delete: "/v1/{name=projects/*/instances/*/backups/*}"
+            }
+          }
         }
         method {
           name: "Method1"
           input_type: "google.protobuf.Bar"
           output_type: "google.protobuf.Bar"
+          options {
+            [google.api.http] {
+              delete: "/v1/{name=projects/*/instances/*/backups/*}"
+            }
+          }
         }
         method {
           name: "Method2"
@@ -282,6 +302,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "::google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method0", "response_type",
                              "::google::protobuf::Empty"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "default_idempotency", "kNonIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
         MethodVarsTestValues("google.protobuf.Service.Method1",
@@ -309,6 +331,8 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_request_url_substitution",
                              "projects/*/instances/*"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "default_idempotency", "kNonIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
                              "::google::protobuf::Method2Metadata"),
@@ -328,6 +352,8 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "method_request_url_substitution",
                              "projects/*/instances/*"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "default_idempotency", "kIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "range_output_field_name", "repeated_field"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
@@ -342,6 +368,8 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "method_request_url_substitution",
                              "projects/*/instances/*/backups/*"),
+        MethodVarsTestValues("google.protobuf.Service.Method4",
+                             "default_idempotency", "kNonIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature0", "std::string const& name"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
@@ -360,6 +388,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_body", "*"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "default_idempotency", "kNonIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
@@ -369,7 +399,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "/v1/{name=projects/*/instances/*/databases/*}"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_url_substitution",
-                             "projects/*/instances/*/databases/*")),
+                             "projects/*/instances/*/databases/*"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "default_idempotency", "kIdempotent")),
     [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
