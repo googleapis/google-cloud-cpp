@@ -20,12 +20,14 @@ from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 
 class Database:
-    def __init__(self, buckets):
+    def __init__(self, buckets, objects, live_generations):
         self.buckets = buckets
+        self.objects = objects
+        self.live_generations = live_generations
 
     @classmethod
     def init(cls):
-        return cls({})
+        return cls({}, {}, {})
 
     # === BUCKET === #
 
@@ -38,7 +40,7 @@ class Database:
             metageneration, match, not_match, True, context
         )
 
-    def __get_bucket_without_generation(self, bucket_name, context):
+    def get_bucket_without_generation(self, bucket_name, context):
         bucket = self.buckets.get(bucket_name)
         if bucket is None:
             utils.error.notfound("Bucket %s" % bucket_name, context)
@@ -46,9 +48,11 @@ class Database:
 
     def insert_bucket(self, request, bucket, context):
         self.buckets[bucket.metadata.name] = bucket
+        self.objects[bucket.metadata.name] = {}
+        self.live_generations[bucket.metadata.name] = {}
 
     def get_bucket(self, request, bucket_name, context):
-        bucket = self.__get_bucket_without_generation(bucket_name, context)
+        bucket = self.get_bucket_without_generation(bucket_name, context)
         self.__check_bucket_metageneration(request, bucket, context)
         return bucket
 
@@ -76,3 +80,110 @@ class Database:
             self.insert_bucket(request, bucket_test, context)
             bucket_test.metadata.metageneration = 4
             bucket_test.metadata.versioning.enabled = True
+
+    # === OBJECT === #
+
+    def __get_bucket_for_object(self, bucket_name, context):
+        bucket = self.objects.get(bucket_name)
+        if bucket is None:
+            utils.error.notfound("Bucket %s" % bucket_name, context)
+        return bucket
+
+    @classmethod
+    def __extract_list_object_request(cls, request, context):
+        delimiter, prefix, versions = "", "", False
+        start_offset, end_offset = "", None
+        if context is not None:
+            delimiter = request.delimiter
+            prefix = request.prefix
+            versions = request.versions
+        else:
+            delimiter = request.args.get("delimiter", "")
+            prefix = request.args.get("prefix", "")
+            versions = request.args.get("versions", False, type=bool)
+            start_offset = request.args.get("startOffset", "")
+            end_offset = request.args.get("endOffset")
+        return delimiter, prefix, versions, start_offset, end_offset
+
+    def list_object(self, request, bucket_name, context):
+        bucket = self.__get_bucket_for_object(bucket_name, context)
+        (
+            delimiter,
+            prefix,
+            versions,
+            start_offset,
+            end_offset,
+        ) = self.__extract_list_object_request(request, context)
+        items = []
+        prefixes = set()
+        for obj in bucket.values():
+            generation = obj.metadata.generation
+            name = obj.metadata.name
+            if not versions and generation != self.live_generations[bucket_name].get(
+                name
+            ):
+                continue
+            if name.find(prefix) != 0:
+                continue
+            if name < start_offset:
+                continue
+            if end_offset is not None and name >= end_offset:
+                continue
+            delimiter_index = name.find(delimiter, len(prefix))
+            if delimiter != "" and delimiter_index > 0:
+                prefixes.add(name[: delimiter_index + 1])
+                continue
+            items.append(obj.metadata)
+        return items, list(prefixes)
+
+    def check_object_generation(
+        self, request, bucket_name, object_name, is_source, context
+    ):
+        bucket = self.__get_bucket_for_object(bucket_name, context)
+        generation = utils.generation.extract_generation(request, is_source, context)
+        if generation == 0:
+            generation = self.live_generations[bucket_name].get(object_name, 0)
+        match, not_match = utils.generation.extract_precondition(
+            request, False, is_source, context
+        )
+        utils.generation.check_generation(generation, match, not_match, False, context)
+        blob = bucket.get("%s#%d" % (object_name, generation))
+        metageneration = blob.metadata.metageneration if blob is not None else None
+        match, not_match = utils.generation.extract_precondition(
+            request, True, is_source, context
+        )
+        utils.generation.check_generation(
+            metageneration, match, not_match, True, context
+        )
+        return blob, generation
+
+    def get_object(self, request, bucket_name, object_name, is_source, context):
+        blob, generation = self.check_object_generation(
+            bucket_name, object_name, request, is_source, context
+        )
+        if blob is None:
+            if generation == 0:
+                utils.error.notfound("Live version of object %s" % object_name, context)
+            else:
+                utils.error.notfound(
+                    "Object %s with generation %d" % (object_name, generation), context
+                )
+        return blob
+
+    def insert_object(self, request, bucket_name, blob, context):
+        self.check_object_generation(
+            bucket_name, blob.metadata.name, request, False, context
+        )
+        bucket = self.__get_bucket_for_object(bucket_name, context)
+        name = blob.metadata.name
+        generation = blob.metadata.generation
+        bucket["%s#%d" % (name, generation)] = blob
+        self.live_generations[bucket_name][name] = generation
+
+    def delete_object(self, request, bucket_name, object_name, context):
+        blob = self.get_object(request, bucket_name, object_name, False, context)
+        generation = blob.metadata.generation
+        live_generation = self.live_generations[bucket_name][object_name]
+        if generation == live_generation:
+            del self.live_generations[bucket_name][object_name]
+        del self.objects[bucket_name]["%s#%d" % (object_name, generation)]
