@@ -36,7 +36,6 @@ $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
 
-$project_root = (Get-Item -Path ".\" -Verbose).FullName
 $vcpkg_dir = "cmake-out\vcpkg"
 $packages = @("zlib", "openssl",
               "protobuf", "c-ares", "benchmark",
@@ -59,7 +58,9 @@ if ($RunningCI -and (Test-Path "${vcpkg_dir}")) {
 }
 if (-not (Test-Path ${vcpkg_dir})) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
-    git clone --quiet --depth 10 --branch 2020.07 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+    git clone --quiet --shallow-since 2020-10-01 `
+        https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+    git -C "${vcpkg_dir}" checkout b999dfdfec58560df7978bd9e8bdb7476d29ef5f
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red `
             "vcpkg git setup failed with exit code $LastExitCode"

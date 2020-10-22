@@ -45,9 +45,9 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 if [[ -d "${vcpkg_dir}" ]]; then
   git -C "${vcpkg_dir}" pull --quiet
 else
-  git clone --quiet \
+  git clone --quiet --shallow-since 2020-10-01 \
     https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-  git -C "${vcpkg_dir}" checkout 8776756e08dddfc47b209eebfec5c927f14c7c74
+  git -C "${vcpkg_dir}" checkout b999dfdfec58560df7978bd9e8bdb7476d29ef5f
 fi
 
 if [[ -d "${HOME}/vcpkg-quickstart-cache" && ! -d \
