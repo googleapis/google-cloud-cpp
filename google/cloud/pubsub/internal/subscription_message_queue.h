@@ -19,6 +19,9 @@
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/random.h"
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <deque>
 #include <functional>
@@ -50,6 +53,23 @@ class SubscriptionMessageQueue
                              std::size_t size) override;
 
  private:
+  // This class keeps a collection of queues indexed by ordering key, using
+  // the empty string to index the queue of messages without an ordering key.
+  // A queue with a real ordering key is is ready if (a) it is not empty, and
+  // (b) there are no other messages for that ordering key being processed.
+  //
+  // When the next stage requests more messages we pull from the ready queues
+  // first, one message at a time, picking the queue at random, until the next
+  // stage has no more room. Because the queues with ordering keys become
+  // immediately not-ready they are blocked after one message.
+  //
+  // [1]: the messages without an ordering key are indexed with an empty string.
+  struct State {
+    std::deque<google::pubsub::v1::ReceivedMessage> messages;
+    std::int64_t running;
+  };
+  using QueueByOrderingKey = absl::flat_hash_map<std::string, State>;
+
   explicit SubscriptionMessageQueue(
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source)
@@ -61,15 +81,26 @@ class SubscriptionMessageQueue
               google::pubsub::v1::StreamingPullResponse r);
   void Shutdown(std::unique_lock<std::mutex> lk);
   void DrainQueue(std::unique_lock<std::mutex> lk);
+  bool KeepDraining(std::unique_lock<std::mutex> const&) {
+    return !runnable_queues_.empty() && available_slots_ > 0 && !shutdown_;
+  }
+  absl::optional<google::pubsub::v1::ReceivedMessage> PickFromRunnable(
+      std::unique_lock<std::mutex> const&);
+
+  /// Process a nack() or ack() for a message
+  void HandlerDone(std::string const& ack_id);
 
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionBatchSource> const source_;
 
   std::mutex mu_;
   MessageCallback callback_;
-  std::size_t read_count_ = 0;
-  std::deque<google::pubsub::v1::ReceivedMessage> messages_;
   bool shutdown_ = false;
+  std::size_t available_slots_ = 0;
+  QueueByOrderingKey queues_;
+  absl::flat_hash_map<std::string, std::string> ordering_key_by_ack_id_;
+  absl::flat_hash_set<std::string> runnable_queues_;
+  google::cloud::internal::DefaultPRNG generator_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

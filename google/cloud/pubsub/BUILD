@@ -25,6 +25,8 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
     ],
 )
@@ -70,6 +72,7 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_unit_tests]
