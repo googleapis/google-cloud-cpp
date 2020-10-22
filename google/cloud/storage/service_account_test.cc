@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/service_account.h"
+#include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include <gmock/gmock.h>
 

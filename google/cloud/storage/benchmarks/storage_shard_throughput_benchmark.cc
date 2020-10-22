@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"

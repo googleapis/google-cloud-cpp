@@ -12,11 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H
-
-#include "google/cloud/storage/internal/access_control_common.h"
-#include "google/cloud/status.h"
+#include "google/cloud/storage/internal/bucket_access_control_parser.h"
+#include "google/cloud/storage/internal/access_control_common_parser.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -24,15 +21,27 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-struct AccessControlCommonParser {
-  static Status FromJson(AccessControlCommon& result,
-                         nlohmann::json const& json);
-};
+StatusOr<BucketAccessControl> BucketAccessControlParser::FromJson(
+    nlohmann::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  BucketAccessControl result{};
+  auto status = internal::AccessControlCommonParser::FromJson(result, json);
+  if (!status.ok()) {
+    return status;
+  }
+  return result;
+}
+
+StatusOr<BucketAccessControl> BucketAccessControlParser::FromString(
+    std::string const& payload) {
+  auto json = nlohmann::json::parse(payload, nullptr, false);
+  return FromJson(json);
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H

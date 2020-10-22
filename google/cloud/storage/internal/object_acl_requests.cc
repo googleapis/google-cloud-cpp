@@ -15,8 +15,8 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/access_control_common_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder.h"
-#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace google {
@@ -24,27 +24,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
-    nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  ObjectAccessControl result{};
-  auto status = internal::AccessControlCommonParser::FromJson(result, json);
-  if (!status.ok()) {
-    return status;
-  }
-  result.generation_ = internal::ParseLongField(json, "generation");
-  result.object_ = json.value("object", "");
-  return result;
-}
-
-StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromString(
-    std::string const& payload) {
-  auto json = nlohmann::json::parse(payload, nullptr, false);
-  return FromJson(json);
-}
-
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r) {
   os << "ListObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();

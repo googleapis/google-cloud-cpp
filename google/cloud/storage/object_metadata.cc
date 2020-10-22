@@ -120,15 +120,14 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  std::vector<nlohmann::json> array;
-  array.reserve(v.size());
+  nlohmann::json array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });
   }
-  impl_.SetArrayField("acl", array);
+  impl_.SetArrayField("acl", array.dump());
   return *this;
 }
 

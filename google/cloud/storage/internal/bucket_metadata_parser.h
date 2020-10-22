@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H
 
-#include "google/cloud/storage/internal/access_control_common.h"
-#include "google/cloud/status.h"
+#include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -24,10 +24,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-struct AccessControlCommonParser {
-  static Status FromJson(AccessControlCommon& result,
-                         nlohmann::json const& json);
+struct BucketMetadataParser {
+  static StatusOr<BucketMetadata> FromJson(nlohmann::json const& json);
+  static StatusOr<BucketMetadata> FromString(std::string const& payload);
 };
+
+std::string BucketMetadataToJsonString(BucketMetadata const& meta);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
@@ -35,4 +37,4 @@ struct AccessControlCommonParser {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_PARSER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H

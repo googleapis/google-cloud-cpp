@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {

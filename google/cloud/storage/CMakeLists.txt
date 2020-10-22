@@ -85,8 +85,12 @@ add_library(
     internal/access_control_common_parser.h
     internal/binary_data_as_debug_string.cc
     internal/binary_data_as_debug_string.h
+    internal/bucket_access_control_parser.cc
+    internal/bucket_access_control_parser.h
     internal/bucket_acl_requests.cc
     internal/bucket_acl_requests.h
+    internal/bucket_metadata_parser.cc
+    internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
     internal/common_metadata.h
@@ -129,6 +133,8 @@ add_library(
     internal/hmac_key_requests.h
     internal/http_response.cc
     internal/http_response.h
+    internal/lifecycle_rule_parser.cc
+    internal/lifecycle_rule_parser.h
     internal/logging_client.cc
     internal/logging_client.h
     internal/logging_resumable_upload_session.cc
@@ -139,8 +145,12 @@ add_library(
     internal/notification_metadata_parser.h
     internal/notification_requests.cc
     internal/notification_requests.h
+    internal/object_access_control_parser.cc
+    internal/object_access_control_parser.h
     internal/object_acl_requests.cc
     internal/object_acl_requests.h
+    internal/object_metadata_parser.cc
+    internal/object_metadata_parser.h
     internal/object_read_source.h
     internal/object_requests.cc
     internal/object_requests.h
@@ -149,6 +159,7 @@ add_library(
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/parameter_pack_validation.h
+    internal/patch_builder.cc
     internal/patch_builder.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
@@ -163,6 +174,8 @@ add_library(
     internal/retry_object_read_source.h
     internal/retry_resumable_upload_session.cc
     internal/retry_resumable_upload_session.h
+    internal/service_account_parser.cc
+    internal/service_account_parser.h
     internal/service_account_requests.cc
     internal/service_account_requests.h
     internal/sha256_hash.cc
