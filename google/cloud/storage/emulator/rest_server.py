@@ -19,7 +19,7 @@ import gcs as gcs_type
 from google.protobuf import json_format
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
 db = None
 
@@ -73,7 +73,7 @@ def bucket_get(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     projection = utils.common.extract_projection(
-        flask.request, resources_pb2.CommonEnums.Projection.NO_ACL, None
+        flask.request, CommonEnums.Projection.NO_ACL, None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -85,7 +85,7 @@ def bucket_update(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.update(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, resources_pb2.CommonEnums.Projection.FULL, None
+        flask.request, CommonEnums.Projection.FULL, None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -96,7 +96,7 @@ def bucket_patch(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, resources_pb2.CommonEnums.Projection.FULL, None
+        flask.request, CommonEnums.Projection.FULL, None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -319,7 +319,7 @@ def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, resources_pb2.CommonEnums.Projection.FULL, None
+        flask.request, CommonEnums.Projection.FULL, None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(
@@ -332,7 +332,7 @@ def object_patch(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, resources_pb2.CommonEnums.Projection.NO_ACL, None
+        flask.request, CommonEnums.Projection.NO_ACL, None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(
@@ -421,7 +421,7 @@ def object_get(bucket_name, object_name):
     media = flask.request.args.get("alt", None)
     if media is None or media == "json":
         projection = utils.common.extract_projection(
-            flask.request, resources_pb2.CommonEnums.Projection.NO_ACL, None
+            flask.request, CommonEnums.Projection.NO_ACL, None
         )
         fields = flask.request.args.get("fields", None)
         return utils.common.filter_response_rest(

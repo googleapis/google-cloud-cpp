@@ -24,6 +24,7 @@ import struct
 import simdjson
 from google.protobuf import field_mask_pb2, json_format
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
 
 class Object:
@@ -53,7 +54,7 @@ class Object:
         if (
             predefined_acl == ""
             or predefined_acl
-            == resources_pb2.CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+            == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
         ):
             return
         if bucket.iam_configuration.uniform_bucket_level_access.enabled:
@@ -102,21 +103,21 @@ class Object:
             utils.csek.check(algorithm, key_b64, key_sha256_b64, context)
             metadata.customer_encryption.encryption_algorithm = algorithm
             metadata.customer_encryption.key_sha256 = key_sha256_b64
-        default_projection = resources_pb2.CommonEnums.Projection.NO_ACL
+        default_projection = CommonEnums.Projection.NO_ACL
         is_uniform = bucket.iam_configuration.uniform_bucket_level_access.enabled
         bucket.iam_configuration.uniform_bucket_level_access.enabled = False
         if len(metadata.acl) != 0:
-            default_projection = resources_pb2.CommonEnums.Projection.FULL
+            default_projection = CommonEnums.Projection.FULL
         else:
             predefined_acl = utils.acl.extract_predefined_acl(
                 request, is_destination, context
             )
             if (
                 predefined_acl
-                == resources_pb2.CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+                == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
             ):
                 predefined_acl = (
-                    resources_pb2.CommonEnums.PredefinedBucketAcl.OBJECT_ACL_PROJECT_PRIVATE
+                    CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
                 )
             elif predefined_acl == "":
                 predefined_acl = "projectPrivate"
