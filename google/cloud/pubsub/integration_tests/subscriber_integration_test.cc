@@ -48,6 +48,8 @@ class SubscriberIntegrationTest : public ::testing::Test {
     topic_ = Topic(project_id, pubsub_testing::RandomTopicId(generator_));
     subscription_ = Subscription(
         project_id, pubsub_testing::RandomSubscriptionId(generator_));
+    ordered_subscription_ = Subscription(
+        project_id, pubsub_testing::RandomSubscriptionId(generator_));
 
     auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
     auto subscription_admin =
@@ -62,6 +64,14 @@ class SubscriberIntegrationTest : public ::testing::Test {
     ASSERT_THAT(
         subscription_metadata,
         AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
+    auto ordered_subscription_metadata = subscription_admin.CreateSubscription(
+        topic_, ordered_subscription_,
+        SubscriptionBuilder{}
+            .set_ack_deadline(std::chrono::seconds(30))
+            .enable_message_ordering(true));
+    ASSERT_THAT(
+        subscription_metadata,
+        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
   }
 
   void TearDown() override {
@@ -69,6 +79,11 @@ class SubscriberIntegrationTest : public ::testing::Test {
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
+    auto delete_ordered_subscription =
+        subscription_admin.DeleteSubscription(ordered_subscription_);
+    EXPECT_THAT(
+        delete_ordered_subscription,
+        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kNotFound)));
     auto delete_subscription =
         subscription_admin.DeleteSubscription(subscription_);
     EXPECT_THAT(delete_subscription, AnyOf(StatusIs(StatusCode::kOk),
@@ -81,6 +96,7 @@ class SubscriberIntegrationTest : public ::testing::Test {
   google::cloud::internal::DefaultPRNG generator_;
   Topic topic_ = Topic("unused", "unused");
   Subscription subscription_ = Subscription("unused", "unused");
+  Subscription ordered_subscription_ = Subscription("unused", "unused");
 };
 
 TEST_F(SubscriberIntegrationTest, RawStub) {
@@ -334,6 +350,60 @@ TEST_F(SubscriberIntegrationTest, ReportNotFound) {
 
   auto result = subscriber.Subscribe(handler);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(SubscriberIntegrationTest, PublishOrdered) {
+  auto publisher = Publisher(MakePublisherConnection(
+      topic_, pubsub::PublisherOptions{}.enable_message_ordering()));
+  auto subscriber = Subscriber(MakeSubscriberConnection(ordered_subscription_));
+
+  struct SampleData {
+    std::string ordering_key;
+    std::string data;
+  } data[] = {
+      {"key1", "message1-1"}, {"key2", "message2-1"}, {"key1", "message1-2"},
+      {"key1", "message1-3"}, {"key2", "message2-2"},
+  };
+
+  std::mutex mu;
+  std::map<std::string, int> ids;
+  std::vector<future<void>> responses;
+  for (auto const& d : data) {
+    responses.push_back(publisher
+                            .Publish(MessageBuilder{}
+                                         .SetData(d.data)
+                                         .SetOrderingKey(d.ordering_key)
+                                         .Build())
+                            .then([&](future<StatusOr<std::string>> f) {
+                              auto id = f.get();
+                              if (!id) return;
+                              std::unique_lock<std::mutex> lk(mu);
+                              ids.emplace(*id, 0);
+                            }));
+    publisher.ResumePublish("key2");
+  }
+  publisher.Flush();
+  for (auto& f : responses) f.get();
+  EXPECT_FALSE(ids.empty());
+
+  promise<void> ids_empty;
+  auto handler = [&](pubsub::Message const& m, AckHandler h) {
+    SCOPED_TRACE("Search for message " + m.message_id());
+    std::unique_lock<std::mutex> lk(mu);
+    auto i = ids.find(m.message_id());
+    if (i == ids.end()) return;
+    ids.erase(i);
+    if (ids.empty()) ids_empty.set_value();
+    lk.unlock();
+    std::move(h).ack();
+  };
+
+  auto result = subscriber.Subscribe(handler);
+  // Wait until there are no more ids pending, then cancel the subscription and
+  // get its status.
+  ids_empty.get_future().get();
+  result.cancel();
+  EXPECT_STATUS_OK(result.get());
 }
 
 }  // namespace
