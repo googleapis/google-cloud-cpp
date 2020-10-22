@@ -54,7 +54,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * messages that share a common ordering key (see
  * `MessageBuilder::SetOrderingKey()`). Messages will be batched by ordering
  * key, and new batches will wait until the status of the previous batch is
- * known. Or an error, all pending and queued messages are discarded, and the
+ * known. On an error, all pending and queued messages are discarded, and the
  * publisher rejects any new messages for the ordering key that experienced
  * problems. The application must call `Publisher::ResumePublishing()` to
  * to restore publishing.

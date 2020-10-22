@@ -70,7 +70,7 @@ class SubscriberIntegrationTest : public ::testing::Test {
             .set_ack_deadline(std::chrono::seconds(30))
             .enable_message_ordering(true));
     ASSERT_THAT(
-        subscription_metadata,
+        ordered_subscription_metadata,
         AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
   }
 
