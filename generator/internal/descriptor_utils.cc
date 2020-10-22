@@ -18,6 +18,7 @@
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_options_generator.h"
+#include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
@@ -166,6 +167,33 @@ void SetResourceRoutingMethodVars(
   }
   method_vars["method_request_body"] = http_rule.body();
 }
+
+std::string DefaultIdempotencyFromHttpOperation(
+    google::protobuf::MethodDescriptor const& method) {
+  if (!method.options().HasExtension(google::api::http)) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                   << ": google::api::http extension not found" << std::endl;
+  }
+
+  google::api::HttpRule http_rule =
+      method.options().GetExtension(google::api::http);
+
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+    case google::api::HttpRule::kPut:
+      return "kIdempotent";
+      break;
+    case google::api::HttpRule::kPost:
+    case google::api::HttpRule::kDelete:
+    case google::api::HttpRule::kPatch:
+      return "kNonIdempotent";
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
+  }
+}
 }  // namespace
 
 VarsDictionary CreateServiceVars(
@@ -179,6 +207,14 @@ VarsDictionary CreateServiceVars(
   vars["connection_options_cc_path"] = absl::StrCat(
       vars["product_path"], "connection_options", GeneratedFileSuffix(), ".cc");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
+  vars["idempotency_class_name"] =
+      absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");
+  vars["idempotency_policy_cc_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection_idempotency_policy", GeneratedFileSuffix(), ".cc");
+  vars["idempotency_policy_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection_idempotency_policy", GeneratedFileSuffix(), ".h");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] =
       absl::StrCat(vars["product_path"], "internal/",
@@ -201,6 +237,8 @@ VarsDictionary CreateServiceVars(
   vars["product_internal_namespace"] =
       BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
   vars["proto_file_name"] = descriptor.file()->name();
+  vars["proto_grpc_header_path"] = absl::StrCat(
+      absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
   vars["retry_policy_header_path"] = absl::StrCat(
       vars["product_path"], "retry_policy", GeneratedFileSuffix(), ".h");
   vars["retry_traits_header_path"] =
@@ -232,6 +270,8 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   for (int i = 0; i < service.method_count(); i++) {
     auto method = service.method(i);
     VarsDictionary method_vars;
+    method_vars["default_idempotency"] =
+        DefaultIdempotencyFromHttpOperation(*method);
     method_vars["method_name"] = method->name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
     method_vars["request_type"] =
@@ -258,6 +298,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   code_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
