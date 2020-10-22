@@ -189,7 +189,6 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_FTP_WEIRD_PASS_REPLY:
     case CURLE_FTP_WEIRD_227_FORMAT:
     case CURLE_FTP_CANT_GET_HOST:
-    // missing in some older libcurl versions:   CURLE_HTTP2
     case CURLE_FTP_COULDNT_SET_TYPE:
       code = StatusCode::kUnknown;
       break;
