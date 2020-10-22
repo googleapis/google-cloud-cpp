@@ -57,9 +57,10 @@ $quickstart_args=@{
     "storage"=@("${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
     "bigtable"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
     "spanner"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
+    "pubsub"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}")
 }
 
-ForEach($library in ("bigtable", "storage", "spanner")) {
+ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
     Set-Location "${project_root}"
 
     $binary_dir="cmake-out/quickstart-${library}-${env:VCPKG_TRIPLET}"
