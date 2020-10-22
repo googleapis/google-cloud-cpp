@@ -47,6 +47,7 @@ TEST(CurlHandleTest, AsStatus) {
       {CURLE_FTP_PORT_FAILED, StatusCode::kUnknown},
       {CURLE_GOT_NOTHING, StatusCode::kUnavailable},
       {CURLE_AGAIN, StatusCode::kUnknown},
+      {CURLE_HTTP2, StatusCode::kUnavailable},
   };
 
   for (auto const& codes : expected_codes) {

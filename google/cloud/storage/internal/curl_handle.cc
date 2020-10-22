@@ -334,8 +334,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       // As described above, there are about 100 error codes, some are
       // explicitly marked as obsolete, some are not available in all libcurl
       // versions. Use this `default:` case to treat all such errors as
-      // `kUnknown`.
-      code = StatusCode::kUnknown;
+      // `kUnavailable` and they will be retried.
+      code = StatusCode::kUnavailable;
       break;
   }
   return Status(code, std::move(os).str());
