@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"

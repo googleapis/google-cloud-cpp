@@ -120,7 +120,7 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  nlohmann::json array = nlohmann::json::array();
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},

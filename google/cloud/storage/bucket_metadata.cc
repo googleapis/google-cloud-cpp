@@ -230,7 +230,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  nlohmann::json array = nlohmann::json::array();
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
@@ -263,7 +263,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
   if (v.empty()) {
     return ResetCors();
   }
-  nlohmann::json array = nlohmann::json::array();
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     nlohmann::json entry;
     if (a.max_age_seconds.has_value()) {
@@ -306,7 +306,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetDefaultAcl(
   if (v.empty()) {
     return ResetDefaultAcl();
   }
-  nlohmann::json array = nlohmann::json::array();
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
@@ -404,7 +404,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     return ResetLifecycle();
   }
   internal::PatchBuilder subpatch;
-  nlohmann::json array = nlohmann::json::array();
+  auto array = nlohmann::json::array();
   for (auto const& a : v.rule) {
     nlohmann::json condition;
     auto const& c = a.condition();
