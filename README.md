@@ -121,6 +121,11 @@ int main(int argc, char* argv[]) {
   }
 
   auto reader = client->ReadObject(bucket_name, "quickstart.txt");
+  if (!reader) {
+    std::cerr << "Error reading object: " << reader.status() << "\n";
+    return 1;
+  }
+
   std::string contents{std::istreambuf_iterator<char>{reader}, {}};
   std::cout << contents << "\n";
 
