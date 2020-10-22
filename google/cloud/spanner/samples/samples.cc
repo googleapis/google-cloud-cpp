@@ -431,21 +431,23 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
   using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
+  std::vector<std::string> extra_statements;
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX)
+      ) PRIMARY KEY (SingerId))""");
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Albums (
+          SingerId     INT64 NOT NULL,
+          AlbumId      INT64 NOT NULL,
+          AlbumTitle   STRING(MAX)
+      ) PRIMARY KEY (SingerId, AlbumId),
+          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
   future<StatusOr<google::spanner::admin::database::v1::Database>> f =
-      client.CreateDatabase(database, {R"""(
-          CREATE TABLE Singers (
-              SingerId   INT64 NOT NULL,
-              FirstName  STRING(1024),
-              LastName   STRING(1024),
-              SingerInfo BYTES(MAX)
-          ) PRIMARY KEY (SingerId))""",
-                                       R"""(
-          CREATE TABLE Albums (
-              SingerId     INT64 NOT NULL,
-              AlbumId      INT64 NOT NULL,
-              AlbumTitle   STRING(MAX)
-          ) PRIMARY KEY (SingerId, AlbumId),
-              INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
+      client.CreateDatabase(database, std::move(extra_statements));
   StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
   if (!db) throw std::runtime_error(db.status().message());
   std::cout << "Created database [" << database << "]\n";
