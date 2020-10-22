@@ -30,12 +30,14 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 SubscriberConnection::~SubscriberConnection() = default;
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
+    Subscription subscription, SubscriberOptions options,
     ConnectionOptions connection_options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto stub = pubsub_internal::CreateDefaultSubscriberStub(connection_options,
                                                            /*channel_id=*/0);
   return pubsub_internal::MakeSubscriberConnection(
+      std::move(subscription), std::move(options),
       std::move(connection_options), std::move(stub), std::move(retry_policy),
       std::move(backoff_policy));
 }
@@ -49,11 +51,14 @@ namespace {
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberConnectionImpl(
+      pubsub::Subscription subscription, pubsub::SubscriberOptions options,
       pubsub::ConnectionOptions const& connection_options,
       std::shared_ptr<pubsub_internal::SubscriberStub> stub,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
-      : stub_(std::move(stub)),
+      : subscription_(std::move(subscription)),
+        options_(std::move(options)),
+        stub_(std::move(stub)),
         background_(connection_options.background_threads_factory()()),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
@@ -69,11 +74,13 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
       return google::cloud::internal::Sample(generator_, kLength, kChars);
     }();
     return CreateSubscriptionSession(
-        stub_, background_->cq(), std::move(client_id), std::move(p),
-        retry_policy_->clone(), backoff_policy_->clone());
+        subscription_, options_, stub_, background_->cq(), std::move(client_id),
+        std::move(p), retry_policy_->clone(), backoff_policy_->clone());
   }
 
  private:
+  pubsub::Subscription const subscription_;
+  pubsub::SubscriberOptions const options_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::shared_ptr<BackgroundThreads> background_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
@@ -84,6 +91,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 }  // namespace
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
     pubsub::ConnectionOptions connection_options,
     std::shared_ptr<SubscriberStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
@@ -106,6 +114,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
         default_thread_pool_size());
   }
   return std::make_shared<SubscriberConnectionImpl>(
+      std::move(subscription), std::move(options),
       std::move(connection_options), std::move(stub), std::move(retry_policy),
       std::move(backoff_policy));
 }

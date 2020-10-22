@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
-#include "google/cloud/pubsub/testing/mock_message_batcher.h"
+#include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -25,35 +25,25 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
-TEST(RejectsWithOrderingKeyTest, MessageRejected) {
-  auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
-  EXPECT_CALL(*mock, Publish).Times(0);
-
-  auto publisher = RejectsWithOrderingKey::Create(mock);
-  auto response = publisher
-                      ->Publish({pubsub::MessageBuilder{}
-                                     .SetData("test-data-0")
-                                     .SetOrderingKey("test-ordering-key-0")
-                                     .Build()})
-                      .get();
-  EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
-}
-
-TEST(RejectsWithOrderingKeyTest, MessageAccepted) {
-  auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
-  EXPECT_CALL(*mock, Publish).WillOnce([](pubsub::Message const&) {
-    return make_ready_future(StatusOr<std::string>("test-id"));
-  });
+TEST(RejectsWithOrderingKeyTest, PublishWithOrderingKeyFailure) {
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  pubsub::Topic const topic("test-project", "test-topic");
 
   auto publisher = RejectsWithOrderingKey::Create(mock);
   auto response =
       publisher
-          ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
-          .get();
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ("test-id", *response);
+          ->Publish({pubsub::MessageBuilder{}
+                         .SetData("test-data-0")
+                         .SetOrderingKey("test-ordering-key-0")
+                         .Build()})
+          .then([&](future<StatusOr<std::string>> f) {
+            auto response = f.get();
+            EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code());
+            EXPECT_THAT(response.status().message(),
+                        HasSubstr("does not have message ordering enabled"));
+          });
 }
 
 }  // namespace

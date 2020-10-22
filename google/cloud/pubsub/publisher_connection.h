@@ -61,16 +61,18 @@ class PublisherConnection {
 
   /// Wrap the arguments for `Publish()`
   struct PublishParams {
-    google::pubsub::v1::PublishRequest request;
+    Message message;
   };
+
+  /// Wrap the arguments for `Flush()`
+  struct FlushParams {};
   //@}
 
   /// Defines the interface for `Publisher::Publish()`
-  virtual future<StatusOr<google::pubsub::v1::PublishResponse>> Publish(
-      PublishParams p) = 0;
+  virtual future<StatusOr<std::string>> Publish(PublishParams p) = 0;
 
-  /// Returns the completion queue used by this publisher
-  virtual google::cloud::CompletionQueue cq() = 0;
+  /// Defines the interface for `Publisher::Flush()`
+  virtual void Flush(FlushParams) = 0;
 };
 
 /**
@@ -83,6 +85,10 @@ class PublisherConnection {
  *
  * @see `PublisherConnection`
  *
+ * @param topic the Cloud Pub/Sub topic used by the returned
+ *     `PublisherConnection`.
+ * @param options configure the batching policy and other parameters in the
+ *     returned connection.
  * @param connection_options (optional) general configuration for this
  *    connection, this type is also used to configure `pubsub::Subscriber`.
  * @param retry_policy (optional) configure the retry loop. This is only used
@@ -92,6 +98,7 @@ class PublisherConnection {
  *    @p options.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
+    Topic topic, PublisherOptions options,
     ConnectionOptions connection_options = {},
     std::unique_ptr<RetryPolicy const> retry_policy = {},
     std::unique_ptr<BackoffPolicy const> backoff_policy = {});
@@ -103,6 +110,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
+    pubsub::Topic topic, pubsub::PublisherOptions options,
     pubsub::ConnectionOptions connection_options,
     std::shared_ptr<PublisherStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,

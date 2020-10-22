@@ -84,7 +84,7 @@ class SubscriberIntegrationTest : public ::testing::Test {
 };
 
 TEST_F(SubscriberIntegrationTest, RawStub) {
-  auto publisher = Publisher(topic_);
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
@@ -142,10 +142,9 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
 }
 
 TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
-  auto publisher = Publisher(
-      topic_,
-      MakePublisherConnection(
-          pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
+  auto publisher = Publisher(MakePublisherConnection(
+      topic_, {},
+      pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
@@ -220,8 +219,8 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 }
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
-  auto publisher = Publisher(topic_);
-  auto subscriber = Subscriber(subscription_);
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
 
   std::mutex mu;
   std::map<std::string, int> ids;
@@ -275,8 +274,8 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   std::vector<Status> publish_errors;
   auto constexpr kMinimumMessages = 10;
 
-  auto publisher = Publisher(topic_);
-  auto subscriber = Subscriber(subscription_);
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
   {
     (void)subscriber
         .Subscribe([&](Message const& m, AckHandler h) {
@@ -322,14 +321,18 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
 }
 
 TEST_F(SubscriberIntegrationTest, ReportNotFound) {
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
   auto const not_found_id = pubsub_testing::RandomSubscriptionId(generator_);
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto const subscription = pubsub::Subscription(project_id, not_found_id);
-  auto subscriber = Subscriber(subscription);
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription));
 
-  auto result =
-      subscriber.Subscribe([](pubsub::Message const&, AckHandler const&) {});
+  auto handler = [](pubsub::Message const&, AckHandler h) {
+    std::move(h).ack();
+  };
+
+  auto result = subscriber.Subscribe(handler);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kNotFound));
 }
 

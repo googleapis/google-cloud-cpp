@@ -40,7 +40,6 @@ add_library(
     internal/default_retry_policies.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
-    internal/message_batcher.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_logging.cc
@@ -168,7 +167,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         pubsub_client_testing # cmake-format: sort
         testing/fake_streaming_pull.cc
         testing/fake_streaming_pull.h
-        testing/mock_message_batcher.h
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h

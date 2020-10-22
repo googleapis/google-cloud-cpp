@@ -31,19 +31,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-
-std::vector<std::string> DataElements(
-    google::pubsub::v1::PublishRequest const& request) {
-  std::vector<std::string> data;
-  std::transform(request.messages().begin(), request.messages().end(),
-                 std::back_inserter(data),
-                 [](google::pubsub::v1::PubsubMessage const& m) {
-                   return std::string(m.data());
-                 });
-  return data;
-}
 
 TEST(PublisherConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
@@ -54,21 +42,21 @@ TEST(PublisherConnectionTest, Basic) {
                     std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_THAT(DataElements(request), ElementsAre("test-data-0"));
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      {}, mock, pubsub_testing::TestRetryPolicy(),
+      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
-  google::pubsub::v1::PublishRequest request;
-  request.set_topic(topic.FullName());
-  request.add_messages()->set_data("test-data-0");
-  auto response = publisher->Publish({std::move(request)}).get();
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
   ASSERT_STATUS_OK(response);
-  EXPECT_THAT(response->message_ids(), ElementsAre("test-message-id-0"));
+  EXPECT_EQ("test-message-id-0", *response);
 }
 
 TEST(PublisherConnectionTest, Metadata) {
@@ -91,12 +79,11 @@ TEST(PublisherConnectionTest, Metadata) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock,
+      topic, {}, ConnectionOptions{}.enable_tracing("rpc"), mock,
       pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
-  google::pubsub::v1::PublishRequest request;
-  request.set_topic(topic.FullName());
-  request.add_messages()->set_data("test-data-0");
-  auto response = publisher->Publish({std::move(request)}).get();
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
   ASSERT_STATUS_OK(response);
 }
 
@@ -120,15 +107,85 @@ TEST(PublisherConnectionTest, Logging) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock,
+      topic, {}, ConnectionOptions{}.enable_tracing("rpc"), mock,
       pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
-  google::pubsub::v1::PublishRequest request;
-  request.add_messages()->set_data("test-data-0");
-  auto response = publisher->Publish({std::move(request)}).get();
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
   ASSERT_STATUS_OK(response);
 
   EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("AsyncPublish")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+TEST(PublisherConnectionTest, OrderingKey) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        return make_ready_future(make_status_or(response));
+      });
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, PublisherOptions{}.enable_message_ordering(), {}, mock,
+      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ("test-message-id-0", *response);
+}
+
+TEST(PublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  auto response = publisher
+                      ->Publish({MessageBuilder{}
+                                     .SetOrderingKey("test-ordering-key-0")
+                                     .SetData("test-data-0")
+                                     .Build()})
+                      .get();
+  EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code());
+  EXPECT_THAT(response.status().message(),
+              HasSubstr("does not have message ordering enabled"));
+}
+
+TEST(PublisherConnectionTest, HandleInvalidResponse) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const&) {
+        google::pubsub::v1::PublishResponse response;
+        return make_ready_future(make_status_or(response));
+      });
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
+  // It is very unlikely we will see this in production, it would indicate a bug
+  // in the Cloud Pub/Sub service where we successfully published N events, but
+  // we received M != N message ids back.
+  EXPECT_EQ(StatusCode::kUnknown, response.status().code());
+  EXPECT_THAT(response.status().message(),
+              HasSubstr("mismatched message id count"));
 }
 
 TEST(PublisherConnectionTest, HandleTooManyFailures) {
@@ -145,10 +202,11 @@ TEST(PublisherConnectionTest, HandleTooManyFailures) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      {}, mock, pubsub_testing::TestRetryPolicy(),
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto response =
-      publisher->Publish({google::pubsub::v1::PublishRequest{}}).get();
+      publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
+          .get();
   EXPECT_THAT(response.status(),
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -166,10 +224,11 @@ TEST(PublisherConnectionTest, HandlePermanentError) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      {}, mock, pubsub_testing::TestRetryPolicy(),
+      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto response =
-      publisher->Publish({google::pubsub::v1::PublishRequest{}}).get();
+      publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
+          .get();
   EXPECT_THAT(response.status(),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
@@ -187,11 +246,12 @@ TEST(PublisherConnectionTest, HandleTransientDisabledRetry) {
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      {}, mock,
+      topic, PublisherOptions{}, {}, mock,
       pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
       pubsub_testing::TestBackoffPolicy());
   auto response =
-      publisher->Publish({google::pubsub::v1::PublishRequest{}}).get();
+      publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
+          .get();
   EXPECT_THAT(response.status(),
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -211,21 +271,21 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
                     std::unique_ptr<grpc::ClientContext>,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_THAT(DataElements(request), ElementsAre("test-data-0"));
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
       });
 
   auto publisher = pubsub_internal::MakePublisherConnection(
-      {}, mock, pubsub_testing::TestRetryPolicy(),
+      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
-  google::pubsub::v1::PublishRequest request;
-  request.set_topic(topic.FullName());
-  request.add_messages()->set_data("test-data-0");
-  auto response = publisher->Publish({std::move(request)}).get();
+  auto response =
+      publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
+          .get();
   ASSERT_STATUS_OK(response);
-  EXPECT_THAT(response->message_ids(), ElementsAre("test-message-id-0"));
+  EXPECT_EQ("test-message-id-0", *response);
 }
 
 }  // namespace

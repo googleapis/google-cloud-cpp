@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
-#include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
+#include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,43 +28,40 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::Return;
-
-std::vector<std::string> DataElements(
-    pubsub::PublisherConnection::PublishParams const& p) {
-  std::vector<std::string> data;
-  std::transform(p.request.messages().begin(), p.request.messages().end(),
-                 std::back_inserter(data),
-                 [](google::pubsub::v1::PubsubMessage const& m) {
-                   return std::string(m.data());
-                 });
-  return data;
-}
 
 TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
-        EXPECT_THAT(DataElements(p), ElementsAre("test-data-0", "test-data-1"));
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        std::vector<std::string> data;
+        std::transform(request.messages().begin(), request.messages().end(),
+                       std::back_inserter(data),
+                       [](google::pubsub::v1::PubsubMessage const& m) {
+                         return std::string(m.data());
+                       });
+        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
         return make_ready_future(make_status_or(response));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
           .set_maximum_hold_time(std::chrono::milliseconds(50)),
-      mock);
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
@@ -88,20 +86,22 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
             EXPECT_EQ("test-message-id-1", *r);
             EXPECT_NE(main_thread, std::this_thread::get_id());
           }));
-  publisher->Flush();
+  publisher->Flush({});
   for (auto& p : published) p.get();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
-        EXPECT_THAT(DataElements(p), ElementsAre("test-data-0", "test-data-1"));
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(2, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        EXPECT_EQ("test-data-1", request.messages(1).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -113,7 +113,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
-      mock);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -141,15 +142,17 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
-        EXPECT_THAT(DataElements(p), ElementsAre("test-data-0", "test-data-1"));
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(2, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        EXPECT_EQ("test-data-1", request.messages(1).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -168,7 +171,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
           .set_maximum_batch_bytes(kMaxMessageBytes),
-      mock);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -196,15 +200,17 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
-        EXPECT_THAT(DataElements(p), ElementsAre("test-data-0", "test-data-1"));
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(2, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        EXPECT_EQ("test-data-1", request.messages(1).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -219,7 +225,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      mock);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData("test-data-0").Build()})
@@ -247,24 +254,28 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByFlush) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
-        EXPECT_THAT(DataElements(p), ElementsAre("test-data-0", "test-data-1"));
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(2, request.messages_size());
+        EXPECT_EQ("test-data-0", request.messages(0).data());
+        EXPECT_EQ("test-data-1", request.messages(1).data());
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
         return make_ready_future(make_status_or(response));
       })
-      .WillRepeatedly([&](pubsub::PublisherConnection::PublishParams const& p) {
-        EXPECT_EQ(topic.FullName(), p.request.topic());
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
         google::pubsub::v1::PublishResponse response;
-        for (auto const& m : p.request.messages()) {
+        for (auto const& m : request.messages()) {
           response.add_message_ids("ack-for-" + std::string(m.data()));
         }
         return make_ready_future(make_status_or(response));
@@ -278,7 +289,8 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      mock);
+      mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
 
   std::vector<future<void>> results;
   for (auto i : {0, 1}) {
@@ -296,7 +308,7 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
 
   // Trigger the first `.WillOnce()` expectation.  CQ is not running yet, so the
   // flush cannot be explained by a timer, and the message count is too low.
-  publisher->Flush();
+  publisher->Flush({});
 
   for (auto i : {2, 3, 4}) {
     auto data = std::string{"test-data-"} + std::to_string(i);
@@ -316,21 +328,23 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
 }
 
 TEST(BatchingPublisherConnectionTest, HandleError) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(
             StatusOr<google::pubsub::v1::PublishResponse>(error_status));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
-      mock);
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
     EXPECT_THAT(r.status(),
@@ -350,24 +364,26 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
 }
 
 TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
-  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  EXPECT_CALL(*mock, cq).WillRepeatedly(Return(background.cq()));
-  EXPECT_CALL(*mock, Publish)
-      .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+  EXPECT_CALL(*mock, AsyncPublish(_, _, _))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         return make_ready_future(make_status_or(response));
       });
 
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto publisher = BatchingPublisherConnection::Create(
       topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
-      mock);
+      mock, bg.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto check_status = [&](future<StatusOr<std::string>> f) {
     auto r = f.get();
-    EXPECT_THAT(r.status(), StatusIs(StatusCode::kUnknown,
-                                     HasSubstr("mismatched message id count")));
+    EXPECT_EQ(StatusCode::kUnknown, r.status().code());
+    EXPECT_THAT(r.status().message(), HasSubstr("mismatched message id count"));
   };
   auto r0 =
       publisher

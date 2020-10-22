@@ -13,37 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher.h"
-#include "google/cloud/pubsub/internal/batching_publisher_connection.h"
-#include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
-#include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-namespace {
-std::shared_ptr<pubsub_internal::MessageBatcher> MakeMessageBatcher(
-    pubsub::Topic topic, pubsub::PublisherOptions options,
-    std::shared_ptr<pubsub::PublisherConnection> connection) {
-  if (options.message_ordering()) {
-    auto factory = [topic, options, connection](std::string const&) {
-      return pubsub_internal::BatchingPublisherConnection::Create(
-          topic, options, connection);
-    };
-    return pubsub_internal::OrderingKeyPublisherConnection::Create(
-        std::move(factory));
-  }
-  return pubsub_internal::RejectsWithOrderingKey::Create(
-      pubsub_internal::BatchingPublisherConnection::Create(
-          std::move(topic), std::move(options), std::move(connection)));
-}
 
-}  // namespace
-
-Publisher::Publisher(Topic topic, PublisherOptions options,
-                     std::shared_ptr<PublisherConnection> connection)
-    : batcher_(MakeMessageBatcher(std::move(topic), std::move(options),
-                                  std::move(connection))) {}
+// TODO(#4581) - use the options to setup batching
+// TODO(#4584) - use the ordering key configuration
+Publisher::Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions)
+    : connection_(std::move(connection)) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

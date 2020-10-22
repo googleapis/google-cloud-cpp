@@ -240,7 +240,7 @@ int main(int argc, char* argv[]) {
   for (auto i = 0; i != config->session_count; ++i) {
     auto const& subscription = subscriptions[i % subscriptions.size()];
     auto subscriber = absl::make_unique<pubsub::Subscriber>(
-        subscription, pubsub::MakeSubscriberConnection());
+        pubsub::MakeSubscriberConnection(subscription));
     sessions.push_back(subscriber->Subscribe(handler));
     subscribers.push_back(std::move(subscriber));
   }
@@ -425,10 +425,10 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
                    int task) {
   auto make_publisher = [config, task] {
     auto const topic = pubsub::Topic(config.project_id, config.topic_id);
-    return pubsub::Publisher(
-        topic, pubsub::MakePublisherConnection(
-                   pubsub::ConnectionOptions{}.set_channel_pool_domain(
-                       "publisher:" + std::to_string(task))));
+    return pubsub::Publisher(pubsub::MakePublisherConnection(
+        topic, {},
+        pubsub::ConnectionOptions{}.set_channel_pool_domain(
+            "publisher:" + std::to_string(task))));
   };
   auto publisher = make_publisher();
 

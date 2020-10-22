@@ -19,19 +19,20 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(
-    pubsub::Message m) {
-  if (!m.ordering_key().empty()) {
+future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(PublishParams p) {
+  if (!p.message.ordering_key().empty()) {
     return google::cloud::make_ready_future(StatusOr<std::string>(
         Status(StatusCode::kInvalidArgument,
                "Attempted to publish a message with an ordering"
                " key with a publisher that does not have message"
                " ordering enabled.")));
   }
-  return child_->Publish(std::move(m));
+  return connection_->Publish(std::move(p));
 }
 
-void RejectsWithOrderingKey::Flush() { return child_->Flush(); }
+void RejectsWithOrderingKey::Flush(FlushParams p) {
+  return connection_->Flush(p);
+}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
