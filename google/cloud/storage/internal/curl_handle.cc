@@ -189,7 +189,6 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_FTP_WEIRD_PASS_REPLY:
     case CURLE_FTP_WEIRD_227_FORMAT:
     case CURLE_FTP_CANT_GET_HOST:
-    // missing in some older libcurl versions:   CURLE_HTTP2
     case CURLE_FTP_COULDNT_SET_TYPE:
       code = StatusCode::kUnknown;
       break;
@@ -334,8 +333,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       // As described above, there are about 100 error codes, some are
       // explicitly marked as obsolete, some are not available in all libcurl
       // versions. Use this `default:` case to treat all such errors as
-      // `kUnknown`.
-      code = StatusCode::kUnknown;
+      // `kUnavailable` and they will be retried.
+      code = StatusCode::kUnavailable;
       break;
   }
   return Status(code, std::move(os).str());
