@@ -50,7 +50,11 @@ class Object:
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
-        if predefined_acl == "" or predefined_acl == 0:
+        if (
+            predefined_acl == ""
+            or predefined_acl
+            == resources_pb2.CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+        ):
             return
         if bucket.iam_configuration.uniform_bucket_level_access.enabled:
             utils.error.invalid(
@@ -98,17 +102,22 @@ class Object:
             utils.csek.check(algorithm, key_b64, key_sha256_b64, context)
             metadata.customer_encryption.encryption_algorithm = algorithm
             metadata.customer_encryption.key_sha256 = key_sha256_b64
-        default_projection = 1
+        default_projection = resources_pb2.CommonEnums.Projection.NO_ACL
         is_uniform = bucket.iam_configuration.uniform_bucket_level_access.enabled
         bucket.iam_configuration.uniform_bucket_level_access.enabled = False
         if len(metadata.acl) != 0:
-            default_projection = 2
+            default_projection = resources_pb2.CommonEnums.Projection.FULL
         else:
             predefined_acl = utils.acl.extract_predefined_acl(
                 request, is_destination, context
             )
-            if predefined_acl == 0:
-                predefined_acl = 5
+            if (
+                predefined_acl
+                == resources_pb2.CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+            ):
+                predefined_acl = (
+                    resources_pb2.CommonEnums.PredefinedBucketAcl.OBJECT_ACL_PROJECT_PRIVATE
+                )
             elif predefined_acl == "":
                 predefined_acl = "projectPrivate"
             elif is_uniform:
