@@ -47,17 +47,19 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       admin_client, project_id, *instance_id,
       std::chrono::system_clock::now() - std::chrono::hours(48));
 
+  // TODO(#5024): Remove these checks when the emulator supports NUMERIC.
+  bool const emulator =
+      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+
   std::cout << "Creating database and table " << std::flush;
-  std::string create_singers = R"sql(
+  std::vector<std::string> extra_statements;
+  extra_statements.emplace_back(R"sql(
         CREATE TABLE Singers (
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024)
         ) PRIMARY KEY (SingerId)
-      )sql";
-  // TODO(#5024): Remove these checks when the emulator supports NUMERIC.
-  bool const emulator =
-      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+      )sql");
   std::string create_datatypes = R"sql(
         CREATE TABLE DataTypes (
           Id STRING(256) NOT NULL,
@@ -87,8 +89,9 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   create_datatypes.append(R"sql(
         ) PRIMARY KEY (Id)
       )sql");
-  auto database_future = admin_client.CreateDatabase(
-      *db_, {std::move(create_singers), std::move(create_datatypes)});
+  extra_statements.push_back(std::move(create_datatypes));
+  auto database_future =
+      admin_client.CreateDatabase(*db_, std::move(extra_statements));
 
   int i = 0;
   int const timeout = 120;
