@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/iam_policy.h"
 #include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <sstream>
 
 namespace google {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/notification_requests.h"
+#include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
 #include <gmock/gmock.h>
