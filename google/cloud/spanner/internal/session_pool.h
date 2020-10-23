@@ -185,7 +185,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
-  // the constructor runs (so the iterators are guaranteed to always be valid).
+  // the constructor runs.
+  // n.b. `FixedArray` iterators are never invalidated.
   using ChannelVec = absl::FixedArray<std::shared_ptr<Channel>>;
   ChannelVec channels_;                                 // GUARDED_BY(mu_)
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
