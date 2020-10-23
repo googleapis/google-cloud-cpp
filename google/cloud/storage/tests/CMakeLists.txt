@@ -42,6 +42,7 @@ set(storage_client_integration_tests
     object_rewrite_integration_test.cc
     object_write_streambuf_integration_test.cc
     service_account_integration_test.cc
+    signed_url_conformance_test.cc
     signed_url_integration_test.cc
     slow_reader_chunk_integration_test.cc
     slow_reader_stream_integration_test.cc
@@ -52,7 +53,6 @@ set(storage_client_integration_tests
 # Signed URL conformance tests are parsed using protos. In order to simplify the
 # build files, only build these conformance tests if gRPC in GCS is compiled.
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    list(APPEND storage_client_integration_tests signed_url_conformance_test.cc)
     # We need to disable clang tidy for the generated CC files.
     google_cloud_cpp_proto_library(
         google_cloud_cpp_storage_tests_conformance_protos

@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/testing/storage_integration_test.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
-#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/tests/conformance_tests.pb.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -366,3 +367,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
 
   return RUN_ALL_TESTS();
 }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
