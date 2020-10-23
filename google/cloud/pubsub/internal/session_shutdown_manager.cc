@@ -34,7 +34,7 @@ std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
 
 SessionShutdownManager::~SessionShutdownManager() {
   if (signaled_) return;
-  GCP_LOG(DEBUG) << __func__ << "() - do signal"
+  GCP_LOG(TRACE) << __func__ << "() - do signal"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", ops=" << FormatOps(ops_);
@@ -44,7 +44,7 @@ SessionShutdownManager::~SessionShutdownManager() {
 
 void SessionShutdownManager::LogStart(const char* caller, const char* name) {
   auto increase_count = [&] { return ++ops_[name]; };
-  GCP_LOG(DEBUG) << "operation <" << name << "> starting from " << caller
+  GCP_LOG(TRACE) << "operation <" << name << "> starting from " << caller
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", count=" << increase_count();
@@ -53,7 +53,7 @@ void SessionShutdownManager::LogStart(const char* caller, const char* name) {
 bool SessionShutdownManager::FinishedOperation(char const* name) {
   std::unique_lock<std::mutex> lk(mu_);
   auto decrease_count = [&] { return --ops_[name]; };
-  GCP_LOG(DEBUG) << "operation <" << name << "> finished"
+  GCP_LOG(TRACE) << "operation <" << name << "> finished"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", count=" << decrease_count();
@@ -65,7 +65,7 @@ bool SessionShutdownManager::FinishedOperation(char const* name) {
 
 void SessionShutdownManager::MarkAsShutdown(char const* caller, Status status) {
   std::unique_lock<std::mutex> lk(mu_);
-  GCP_LOG(DEBUG) << __func__ << "() - from " << caller << "() - shutting down"
+  GCP_LOG(TRACE) << __func__ << "() - from " << caller << "() - shutting down"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", status=" << status;
@@ -75,7 +75,7 @@ void SessionShutdownManager::MarkAsShutdown(char const* caller, Status status) {
 }
 
 void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
-  GCP_LOG(DEBUG) << __func__ << "() - maybe signal"
+  GCP_LOG(TRACE) << __func__ << "() - maybe signal"
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", ops=" << FormatOps(ops_);

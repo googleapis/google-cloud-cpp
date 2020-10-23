@@ -73,7 +73,7 @@ class SubscriptionSessionImpl
 
  private:
   void InitiateApplicationShutdown() {
-    GCP_LOG(DEBUG) << __func__ << "()";
+    GCP_LOG(TRACE) << __func__ << "()";
     std::unique_lock<std::mutex> lk(mu_);
     std::shared_ptr<SubscriptionConcurrencyControl> p = pipeline_;
     switch (shutdown_state_) {
@@ -91,7 +91,7 @@ class SubscriptionSessionImpl
   }
 
   void ShutdownCompleted() {
-    GCP_LOG(DEBUG) << __func__ << "()";
+    GCP_LOG(TRACE) << __func__ << "()";
     std::lock_guard<std::mutex> lk(mu_);
     pipeline_.reset();
     shutdown_state_ = kShutdownCompleted;
@@ -99,7 +99,7 @@ class SubscriptionSessionImpl
   }
 
   void ScheduleTimer() {
-    GCP_LOG(DEBUG) << __func__ << "()";
+    GCP_LOG(TRACE) << __func__ << "()";
     using TimerArg = future<StatusOr<std::chrono::system_clock::time_point>>;
 
     std::unique_lock<std::mutex> lk(mu_);
@@ -113,7 +113,7 @@ class SubscriptionSessionImpl
   }
 
   void OnTimer(bool cancelled) {
-    GCP_LOG(DEBUG) << __func__ << "(" << cancelled << ")";
+    GCP_LOG(TRACE) << __func__ << "(" << cancelled << ")";
     if (!cancelled) {
       ScheduleTimer();
       return;

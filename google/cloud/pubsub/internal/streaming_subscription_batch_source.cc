@@ -73,7 +73,6 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
 void StreamingSubscriptionBatchSource::StartStream(
     std::shared_ptr<pubsub::RetryPolicy> retry_policy,
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   // Starting a stream is a 4 step process.
   // 1. Create a new SubscriberStub::AsyncPullStream object.
   // 2. Call Start() on it, which is asynchronous, which might fail, but rarely
@@ -122,7 +121,6 @@ StreamingSubscriptionBatchSource::InitialRequest() const {
 void StreamingSubscriptionBatchSource::OnStart(
     RetryLoopState rs, google::pubsub::v1::StreamingPullRequest const& request,
     bool ok) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   shutdown_manager_->FinishedOperation("InitialStart");
   if (!ok) {
     OnInitialError(std::move(rs));
@@ -158,7 +156,6 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
 void StreamingSubscriptionBatchSource::OnInitialRead(
     RetryLoopState rs,
     absl::optional<google::pubsub::v1::StreamingPullResponse> response) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   shutdown_manager_->FinishedOperation("InitialRead");
   if (!response.has_value()) {
     OnInitialError(std::move(rs));
@@ -183,7 +180,6 @@ void StreamingSubscriptionBatchSource::OnInitialRead(
 }
 
 void StreamingSubscriptionBatchSource::OnInitialError(RetryLoopState rs) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   auto weak = WeakFromThis();
   auto const scheduled =
       shutdown_manager_->StartOperation(__func__, "finish", [&] {
@@ -199,7 +195,6 @@ void StreamingSubscriptionBatchSource::OnInitialError(RetryLoopState rs) {
 
 void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
                                                        Status status) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   if (!rs.retry_policy->OnFailure(status)) {
     OnRetryFailure(std::move(status));
     return;
@@ -220,7 +215,6 @@ void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
 
 void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
                                                  Status status) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   if (rs.retry_policy->IsExhausted()) {
     OnRetryFailure(std::move(status));
     return;
@@ -236,7 +230,6 @@ void StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,
 }
 
 void StreamingSubscriptionBatchSource::OnRetryFailure(Status status) {
-  GCP_LOG(DEBUG) << __func__ << "()";
   if (shutdown_manager_->FinishedOperation("stream")) return;
   shutdown_manager_->MarkAsShutdown(__func__, status);
   callback_(std::move(status));
@@ -375,7 +368,7 @@ std::ostream& operator<<(std::ostream& os,
 void StreamingSubscriptionBatchSource::ChangeState(
     std::unique_lock<std::mutex> const&, StreamState s, char const* where,
     char const* reason) {
-  GCP_LOG(DEBUG) << where << " (" << reason << ") " << stream_state_ << ":" << s
+  GCP_LOG(TRACE) << where << " (" << reason << ") " << stream_state_ << ":" << s
                  << " read=" << pending_read_ << " write=" << pending_write_
                  << " shutdown=" << shutdown_
                  << " stream=" << (stream_ ? "not-null" : "null")
