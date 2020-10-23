@@ -14,6 +14,11 @@
 # limitations under the License.
 # ~~~
 
+# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
+set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
+find_package(absl CONFIG REQUIRED)
+unset(FPHSA_NAME_MISMATCHED)
+
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
@@ -176,6 +181,8 @@ set(GOOGLE_CLOUD_PC_DESCRIPTION
 set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
 set(GOOGLE_CLOUD_PC_LIBS "-lbigquery_client")
+google_cloud_cpp_absl_pkg_config(absl_pkg_config bigquery_client)
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lbigquery_client" ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config.pc.in"
