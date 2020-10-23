@@ -62,8 +62,8 @@ struct Config {
   int subscription_count = 4;
   int session_count = 8;
 
-  int minimum_samples = 30 * 1000;
-  int maximum_samples = (std::numeric_limits<int>::max)();
+  std::int64_t minimum_samples = 30 * 1000;
+  std::int64_t maximum_samples = (std::numeric_limits<std::int64_t>::max)();
   std::chrono::seconds minimum_runtime = std::chrono::seconds(5);
   std::chrono::seconds maximum_runtime = std::chrono::seconds(300);
 
