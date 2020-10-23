@@ -304,8 +304,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::conformance::storage::v1::TestFile tests;
   auto status = google::protobuf::util::JsonStringToMessage(json_rep, &tests);
   if (!status.ok()) {
-    std::cerr << "Failed to parse conformance tests: " << status.error_code()
-              << ": " << status.error_message() << "\n";
+    std::cerr << "Failed to parse conformance tests: " << status.ToString()
+              << "\n";
     return 1;
   }
 
