@@ -14,10 +14,15 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/iam_policy.h"
+#include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/lifecycle_rule_parser.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {

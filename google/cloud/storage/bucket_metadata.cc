@@ -230,15 +230,14 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetAcl(
   if (v.empty()) {
     return ResetAcl();
   }
-  std::vector<nlohmann::json> array;
-  array.reserve(v.size());
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });
   }
-  impl_.SetArrayField("acl", array);
+  impl_.SetArrayField("acl", array.dump());
   return *this;
 }
 
@@ -264,8 +263,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
   if (v.empty()) {
     return ResetCors();
   }
-  std::vector<nlohmann::json> array;
-  array.reserve(v.size());
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     nlohmann::json entry;
     if (a.max_age_seconds.has_value()) {
@@ -282,7 +280,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
     }
     array.emplace_back(std::move(entry));
   }
-  impl_.SetArrayField("cors", array);
+  impl_.SetArrayField("cors", array.dump());
   return *this;
 }
 
@@ -308,15 +306,14 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetDefaultAcl(
   if (v.empty()) {
     return ResetDefaultAcl();
   }
-  std::vector<nlohmann::json> array;
-  array.reserve(v.size());
+  auto array = nlohmann::json::array();
   for (auto const& a : v) {
     array.emplace_back(nlohmann::json{
         {"entity", a.entity()},
         {"role", a.role()},
     });
   }
-  impl_.SetArrayField("defaultObjectAcl", array);
+  impl_.SetArrayField("defaultObjectAcl", array.dump());
   return *this;
 }
 
@@ -407,8 +404,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     return ResetLifecycle();
   }
   internal::PatchBuilder subpatch;
-  std::vector<nlohmann::json> array;
-  array.reserve(v.rule.size());
+  auto array = nlohmann::json::array();
   for (auto const& a : v.rule) {
     nlohmann::json condition;
     auto const& c = a.condition();
@@ -441,7 +437,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
         {"condition", condition},
     });
   }
-  subpatch.SetArrayField("rule", array);
+  subpatch.SetArrayField("rule", array.dump());
   impl_.AddSubPatch("lifecycle", subpatch);
   return *this;
 }

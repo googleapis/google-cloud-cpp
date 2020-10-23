@@ -29,18 +29,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-struct LifecycleRuleParser {
-  static StatusOr<LifecycleRule> FromJson(nlohmann::json const& json);
-  static StatusOr<LifecycleRule> FromString(std::string const& text);
-};
-
-struct BucketMetadataParser {
-  static StatusOr<BucketMetadata> FromJson(nlohmann::json const& json);
-  static StatusOr<BucketMetadata> FromString(std::string const& payload);
-};
-
-std::string BucketMetadataToJsonString(BucketMetadata const& meta);
-
 /**
  * Requests the list of buckets for a project.
  */
@@ -108,9 +96,7 @@ class CreateBucketRequest
       : project_id_(std::move(project_id)), metadata_(std::move(metadata)) {}
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const {
-    return BucketMetadataToJsonString(metadata_);
-  }
+  std::string json_payload() const;
 
   std::string const& project_id() const { return project_id_; }
   CreateBucketRequest& set_project_id(std::string project_id) {
@@ -163,9 +149,7 @@ class UpdateBucketRequest
       : metadata_(std::move(metadata)) {}
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const {
-    return BucketMetadataToJsonString(metadata_);
-  }
+  std::string json_payload() const;
 
   BucketMetadata const& metadata() const { return metadata_; }
 

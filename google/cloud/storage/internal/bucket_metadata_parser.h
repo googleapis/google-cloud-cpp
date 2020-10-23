@@ -12,22 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/service_account_requests.h"
-#include <iostream>
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H
+
+#include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os,
-                         GetProjectServiceAccountRequest const& r) {
-  os << "GetProjectServiceAccountRequest={project_id=" << r.project_id();
-  r.DumpOptions(os, ", ");
-  return os << "}";
-}
+struct BucketMetadataParser {
+  static StatusOr<BucketMetadata> FromJson(nlohmann::json const& json);
+  static StatusOr<BucketMetadata> FromString(std::string const& payload);
+};
+
+std::string BucketMetadataToJsonString(BucketMetadata const& meta);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_PARSER_H

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include <iostream>
 #include <sstream>

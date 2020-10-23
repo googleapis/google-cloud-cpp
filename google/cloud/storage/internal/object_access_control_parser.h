@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,22 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/service_account_requests.h"
-#include <iostream>
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_ACCESS_CONTROL_PARSER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_ACCESS_CONTROL_PARSER_H
+
+#include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os,
-                         GetProjectServiceAccountRequest const& r) {
-  os << "GetProjectServiceAccountRequest={project_id=" << r.project_id();
-  r.DumpOptions(os, ", ");
-  return os << "}";
-}
+struct ObjectAccessControlParser {
+  static StatusOr<ObjectAccessControl> FromJson(nlohmann::json const& json);
+  static StatusOr<ObjectAccessControl> FromString(std::string const& payload);
+};
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_ACCESS_CONTROL_PARSER_H

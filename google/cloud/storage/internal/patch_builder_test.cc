@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/patch_builder.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -58,50 +60,6 @@ TEST(PatchBuilderTest, Int) {
   builder.AddIntField("untouched-value", std::int32_t(7), std::int32_t(7));
   nlohmann::json expected{
       {"set-value", 42},
-      {"unset-value", nullptr},
-  };
-  auto actual = nlohmann::json::parse(builder.ToString());
-  EXPECT_EQ(expected, actual) << builder.ToString();
-}
-
-TEST(PatchBuilderTest, OptionalBool) {
-  PatchBuilder builder;
-  using bopt = absl::optional<bool>;
-  builder.AddOptionalField("set-value", bopt(false), bopt(true));
-  builder.AddOptionalField("unset-value", bopt(false), bopt());
-  builder.AddOptionalField("untouched-value", bopt(true), bopt(true));
-  nlohmann::json expected{
-      {"set-value", true},
-      {"unset-value", nullptr},
-  };
-  auto actual = nlohmann::json::parse(builder.ToString());
-  EXPECT_EQ(expected, actual) << builder.ToString();
-}
-
-TEST(PatchBuilderTest, OptionalInt) {
-  PatchBuilder builder;
-  using opt = absl::optional<std::int64_t>;
-  builder.AddOptionalField("set-value", opt(0), opt(42));
-  builder.AddOptionalField("unset-value", opt(42), opt());
-  builder.AddOptionalField("untouched-value", opt(7), opt(7));
-  builder.AddOptionalField("set-to-zero", opt(1), opt(0));
-  nlohmann::json expected{
-      {"set-value", 42},
-      {"unset-value", nullptr},
-      {"set-to-zero", 0},
-  };
-  auto actual = nlohmann::json::parse(builder.ToString());
-  EXPECT_EQ(expected, actual) << builder.ToString();
-}
-
-TEST(PatchBuilderTest, ArrayField) {
-  PatchBuilder builder;
-  using vec = std::vector<int>;
-  builder.AddArrayField("set-value", vec{1, 2, 3}, vec{4, 2});
-  builder.AddArrayField("unset-value", vec{4, 2}, vec{});
-  builder.AddArrayField("untouched-value", vec{7, 6, 5}, vec{7, 6, 5});
-  nlohmann::json expected{
-      {"set-value", {4, 2}},
       {"unset-value", nullptr},
   };
   auto actual = nlohmann::json::parse(builder.ToString());
@@ -182,15 +140,19 @@ TEST(PatchBuilderTest, SetIntField) {
 
 TEST(PatchBuilderTest, SetArrayField) {
   PatchBuilder builder;
-  builder.SetArrayField("field-a", std::vector<std::string>{});
-  builder.SetArrayField("field-b", std::vector<std::string>{"foo", "bar"});
-  builder.SetArrayField("field-c", std::vector<std::int32_t>{2, 3, 5, 7});
-  builder.SetArrayField("field-d", std::vector<bool>{false, true, true});
+  builder.SetArrayField("field-a", nlohmann::json::array().dump());
+  builder.SetArrayField("field-b",
+                        nlohmann::json::array({"foo", "bar"}).dump());
+  builder.SetArrayField("field-c", nlohmann::json::array({2, 3, 5, 7}).dump());
+  builder.SetArrayField("field-d",
+                        nlohmann::json::array({false, true, true}).dump());
+
   nlohmann::json expected{
       {"field-a", std::vector<std::string>{}},
       {"field-b", std::vector<std::string>{"foo", "bar"}},
       {"field-c", std::vector<int>{2, 3, 5, 7}},
       {"field-d", std::vector<bool>{false, true, true}},
+      {"field-a", {{"entity", "entity-0"}, {"role", "role-0"}}},
   };
   auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();

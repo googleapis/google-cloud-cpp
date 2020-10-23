@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,20 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/service_account_requests.h"
-#include <iostream>
+#include "google/cloud/storage/internal/service_account_parser.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os,
-                         GetProjectServiceAccountRequest const& r) {
-  os << "GetProjectServiceAccountRequest={project_id=" << r.project_id();
-  r.DumpOptions(os, ", ");
-  return os << "}";
+StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
+    nlohmann::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  ServiceAccount result{};
+  result.kind_ = json.value("kind", "");
+  result.email_address_ = json.value("email_address", "");
+  return result;
 }
+
+StatusOr<ServiceAccount> ServiceAccountParser::FromString(
+    std::string const& payload) {
+  auto json = nlohmann::json::parse(payload, nullptr, false);
+  return FromJson(json);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

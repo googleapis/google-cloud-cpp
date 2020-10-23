@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/status.h"
