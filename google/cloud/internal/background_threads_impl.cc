@@ -43,6 +43,7 @@ AutomaticallyCreatedBackgroundThreads::
 void AutomaticallyCreatedBackgroundThreads::Shutdown() {
   cq_.Shutdown();
   for (auto& t : pool_) t.join();
+  pool_.clear();
 }
 
 }  // namespace internal
