@@ -408,7 +408,7 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchCorked) {
           EXPECT_EQ(expected_count, request.messages_size());
           google::pubsub::v1::PublishResponse response;
           for (auto const& m : request.messages()) {
-            response.add_message_ids("id-" + m.data());
+            response.add_message_ids("id-" + std::string(m.data()));
           }
           return add_pending().then(
               [response](future<void>) { return make_status_or(response); });
@@ -522,7 +522,7 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
           EXPECT_EQ(expected_count, request.messages_size());
           google::pubsub::v1::PublishResponse response;
           for (auto const& m : request.messages()) {
-            response.add_message_ids("id-" + m.data());
+            response.add_message_ids("id-" + std::string(m.data()));
           }
           return add_pending().then(
               [response](future<void>) { return make_status_or(response); });
