@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
