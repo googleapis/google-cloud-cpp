@@ -282,8 +282,73 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
 
 SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
 
+StatusOr<google::pubsub::v1::Subscription>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+SubscriptionAdminConnection::CreateSubscription(CreateSubscriptionParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Subscription>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+SubscriptionAdminConnection::GetSubscription(GetSubscriptionParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Subscription>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+SubscriptionAdminConnection::UpdateSubscription(UpdateSubscriptionParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+ListSubscriptionsRange SubscriptionAdminConnection::ListSubscriptions(
+    ListSubscriptionsParams) {  // NOLINT(performance-unnecessary-value-param)
+  return internal::UnimplementedPaginationRange<
+      ListSubscriptionsRange>::Create();
+}
+
+Status SubscriptionAdminConnection::DeleteSubscription(
+    DeleteSubscriptionParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+Status SubscriptionAdminConnection::ModifyPushConfig(ModifyPushConfigParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Snapshot>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+SubscriptionAdminConnection::CreateSnapshot(CreateSnapshotParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminConnection::GetSnapshot(
+    GetSnapshotParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Snapshot>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+SubscriptionAdminConnection::UpdateSnapshot(UpdateSnapshotParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+ListSnapshotsRange SubscriptionAdminConnection::ListSnapshots(
+    ListSnapshotsParams) {  // NOLINT(performance-unnecessary-value-param)
+  return internal::UnimplementedPaginationRange<ListSnapshotsRange>::Create();
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+Status SubscriptionAdminConnection::DeleteSnapshot(DeleteSnapshotParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminConnection::Seek(
+    SeekParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
-
 }  // namespace cloud
 }  // namespace google

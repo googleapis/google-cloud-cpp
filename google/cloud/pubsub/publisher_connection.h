@@ -74,13 +74,13 @@ class PublisherConnection {
   //@}
 
   /// Defines the interface for `Publisher::Publish()`
-  virtual future<StatusOr<std::string>> Publish(PublishParams p) = 0;
+  virtual future<StatusOr<std::string>> Publish(PublishParams p);
 
   /// Defines the interface for `Publisher::Flush()`
-  virtual void Flush(FlushParams) = 0;
+  virtual void Flush(FlushParams);
 
   /// Defines the interface for `Publisher::ResumePublish()`
-  virtual void ResumePublish(ResumePublishParams p) = 0;
+  virtual void ResumePublish(ResumePublishParams p);
 };
 
 /**

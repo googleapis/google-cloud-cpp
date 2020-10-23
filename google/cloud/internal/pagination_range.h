@@ -216,6 +216,22 @@ class PaginationRange {
   bool on_last_page_;
 };
 
+template <typename T>
+struct UnimplementedPaginationRange {};
+
+template <typename T, typename Request, typename Response>
+struct UnimplementedPaginationRange<PaginationRange<T, Request, Response>> {
+  static PaginationRange<T, Request, Response> Create() {
+    return PaginationRange<T, Request, Response>(
+        Request{},
+        [](Request const&) {
+          return StatusOr<Response>(
+              Status{StatusCode::kUnimplemented, "needs-override"});
+        },
+        [](Response) { return std::vector<T>{}; });
+  }
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

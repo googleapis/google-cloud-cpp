@@ -53,6 +53,17 @@ class ContainingPublisherConnection : public PublisherConnection {
 
 PublisherConnection::~PublisherConnection() = default;
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+future<StatusOr<std::string>> PublisherConnection::Publish(PublishParams) {
+  return make_ready_future(StatusOr<std::string>(
+      Status{StatusCode::kUnimplemented, "needs-override"}));
+}
+
+void PublisherConnection::Flush(FlushParams) {}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+void PublisherConnection::ResumePublish(ResumePublishParams) {}
+
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options, ConnectionOptions connection_options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,

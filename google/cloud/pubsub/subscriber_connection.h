@@ -68,7 +68,7 @@ class SubscriberConnection {
   //@}
 
   /// Defines the interface for `Subscriber::Subscribe()`
-  virtual future<Status> Subscribe(SubscribeParams p) = 0;
+  virtual future<Status> Subscribe(SubscribeParams p);
 };
 
 /**

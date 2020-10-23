@@ -29,6 +29,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 SubscriberConnection::~SubscriberConnection() = default;
 
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+future<Status> SubscriberConnection::Subscribe(SubscribeParams) {
+  return make_ready_future(
+      Status{StatusCode::kUnimplemented, "needs-override"});
+}
+
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, SubscriberOptions options,
     ConnectionOptions connection_options,

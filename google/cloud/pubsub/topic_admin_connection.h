@@ -141,33 +141,30 @@ class TopicAdminConnection {
   //@}
 
   /// Defines the interface for `TopicAdminClient::CreateTopic()`
-  virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      CreateTopicParams) = 0;
+  virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(CreateTopicParams);
 
   /// Defines the interface for `TopicAdminClient::GetTopic()`
-  virtual StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams) = 0;
+  virtual StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams);
 
   /// Defines the interface for `TopicAdminClient::UpdateTopic()`
-  virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      UpdateTopicParams) = 0;
+  virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(UpdateTopicParams);
 
   /// Defines the interface for `TopicAdminClient::ListTopics()`
-  virtual ListTopicsRange ListTopics(ListTopicsParams) = 0;
+  virtual ListTopicsRange ListTopics(ListTopicsParams);
 
   /// Defines the interface for `TopicAdminClient::DeleteTopic()`
-  virtual Status DeleteTopic(DeleteTopicParams) = 0;
+  virtual Status DeleteTopic(DeleteTopicParams);
 
   /// Defines the interface for `TopicAdminClient::DetachSubscriptions()`
   virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-      DetachSubscription(DetachSubscriptionParams) = 0;
+      DetachSubscription(DetachSubscriptionParams);
 
   /// Defines the interface for `TopicAdminClient::ListTopicSubscriptions()`
   virtual ListTopicSubscriptionsRange ListTopicSubscriptions(
-      ListTopicSubscriptionsParams) = 0;
+      ListTopicSubscriptionsParams);
 
   /// Defines the interface for `TopicAdminClient::ListTopicSnapshots()`
-  virtual ListTopicSnapshotsRange ListTopicSnapshots(
-      ListTopicSnapshotsParams) = 0;
+  virtual ListTopicSnapshotsRange ListTopicSnapshots(ListTopicSnapshotsParams);
 };
 
 /**
