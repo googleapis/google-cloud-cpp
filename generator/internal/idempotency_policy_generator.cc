@@ -84,7 +84,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
         "\n",}
                  // clang-format on
              },
-             And(IsNonStreaming, Not(IsPaginated))),
+             All(IsNonStreaming, Not(IsPaginated))),
          MethodPattern(
              {
                  // clang-format off
@@ -93,7 +93,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
         "\n",}
                  // clang-format on
              },
-             And(IsNonStreaming, IsPaginated))},
+             All(IsNonStreaming, IsPaginated))},
         __FILE__, __LINE__);
   }
 
@@ -171,7 +171,7 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
     "  }\n\n",}
                  // clang-format on
              },
-             And(IsNonStreaming, Not(IsPaginated))),
+             All(IsNonStreaming, Not(IsPaginated))),
          MethodPattern(
              {
                  // clang-format off
@@ -181,7 +181,7 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
     "  }\n\n",}
                  // clang-format on
              },
-             And(IsNonStreaming, IsPaginated))},
+             All(IsNonStreaming, IsPaginated))},
         __FILE__, __LINE__);
   }
   cc_.Print(  // clang-format off
