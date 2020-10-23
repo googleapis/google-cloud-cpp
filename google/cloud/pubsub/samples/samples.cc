@@ -1608,9 +1608,10 @@ void AutoRun(std::vector<std::string> const& argv) {
                      .set_maximum_batch_message_count(1)
                      .enable_message_ordering()));
   std::cout << "\nRunning PublishOrderingKey() sample" << std::endl;
+  PublishOrderingKey(publisher_with_ordering_key, {});
 
-  if (UsingEmulator()) PublishOrderingKey(publisher_with_ordering_key, {});
-  if (UsingEmulator()) ResumeOrderingKey(publisher_with_ordering_key, {});
+  std::cout << "\nRunning ResumeOrderingKey() sample" << std::endl;
+  ResumeOrderingKey(publisher_with_ordering_key, {});
 
   std::cout << "\nRunning Publish() sample [4]" << std::endl;
   Publish(publisher, {});
