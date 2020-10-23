@@ -49,8 +49,9 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                           googleapis-c++::cloud_bigquery_protos)
+    bigquery_client
+    PUBLIC absl::memory absl::strings google_cloud_cpp_grpc_utils
+           google_cloud_cpp_common googleapis-c++::cloud_bigquery_protos)
 google_cloud_cpp_add_common_options(bigquery_client)
 set_target_properties(
     bigquery_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
