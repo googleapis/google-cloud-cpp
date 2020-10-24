@@ -105,8 +105,7 @@ struct TestParams {
 
 // Test names may only contain alphanumeric characters, yuck.
 std::ostream& operator<<(std::ostream& os, TestParams const& rhs) {
-  return os << "Thread" << rhs.thread_count
-            << "Key" << rhs.key_count
+  return os << "Thread" << rhs.thread_count << "Key" << rhs.key_count
             << "Message" << rhs.message_count;
 }
 
@@ -295,6 +294,105 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   uut->Shutdown();
 }
 
+/// @test Verify duplicate messages are handled correctly
+TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown).Times(1);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
+  EXPECT_CALL(*mock, NackMessage("ack--000001")).Times(1);
+  EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
+  EXPECT_CALL(*mock, AckMessage("ack--000001")).Times(1);
+  EXPECT_CALL(*mock, BulkNack).Times(0);
+
+  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
+    auto key = m.message().ordering_key();
+    received[key].push_back(m.message().message_id());
+  };
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  shutdown->Start({});
+  // Create the queue and allow it to push 5 messages
+  auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
+  uut->Start(handler);
+  uut->Read(4);
+
+  // Generate some messages, expecting only one for each key.
+  auto const response = AsPullResponse(GenerateOrderKeyMessages({}, 0, 2));
+  batch_callback(response);
+  batch_callback(response);
+  batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 2, 4)));
+
+  EXPECT_THAT(received[{}], ElementsAre("id--000000", "id--000001",
+                                        "id--000000", "id--000001"));
+
+  received.clear();  // keep expectations shorter
+  uut->AckMessage("ack--000000", 0);
+  uut->NackMessage("ack--000001", 0);
+  uut->Read(2);
+  EXPECT_THAT(received[{}], ElementsAre("id--000002", "id--000003"));
+
+  uut->AckMessage("ack--000000", 0);
+  uut->AckMessage("ack--000001", 0);
+  uut->Read(2);
+  EXPECT_THAT(received[{}], ElementsAre("id--000002", "id--000003",
+                                        "id--000004", "id--000005"));
+
+  uut->Shutdown();
+}
+
+/// @test Verify duplicate messages are handled correctly
+TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  EXPECT_CALL(*mock, Shutdown).Times(1);
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
+  EXPECT_CALL(*mock, BulkNack).Times(0);
+
+  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
+    auto key = m.message().ordering_key();
+    received[key].push_back(m.message().message_id());
+  };
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  shutdown->Start({});
+  // Create the queue and allow it to push 5 messages
+  auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
+  uut->Start(handler);
+  uut->Read(8);
+
+  // Generate some messages, expecting only one for each key.
+  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k0", 0, 1)));
+  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3)));
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
+
+  received.clear();  // keep expectations shorter
+  uut->AckMessage("ack-k0-000000", 0);
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
+
+  received.clear();  // keep expectations shorter
+  uut->AckMessage("ack-k0-000000", 0);
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
+
+  received.clear();  // keep expectations shorter
+  uut->AckMessage("ack-k0-000001", 0);
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000002"));
+
+  uut->Shutdown();
+}
+
 /// @test Work with large sets of non-keyed messages
 TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
   auto const message_count = GetParam().message_count;
@@ -391,22 +489,22 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
 
 INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceST,
                          SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{1, 4, 100000}),
+                         ::testing::Values(TestParams{1, 4, 10/*0000*/}),
                          ::testing::PrintToStringParamName());
 
 INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceMT,
                          SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{8, 4, 100000}),
+                         ::testing::Values(TestParams{8, 4, 10/*0000*/}),
                          ::testing::PrintToStringParamName());
 
 INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceST,
                          SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{1, 1000, 100000}),
+                         ::testing::Values(TestParams{1, 1000, 10/*0000*/}),
                          ::testing::PrintToStringParamName());
 
 INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceMT,
                          SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{8, 1000, 100000}),
+                         ::testing::Values(TestParams{8, 1000, 10/*0000*/}),
                          ::testing::PrintToStringParamName());
 
 }  // namespace

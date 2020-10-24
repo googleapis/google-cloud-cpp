@@ -162,7 +162,7 @@ SubscriptionMessageQueue::PickFromRunnable(
 }
 
 void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   auto loc = ordering_key_by_ack_id_.find(ack_id);
   if (loc == ordering_key_by_ack_id_.end()) return;
   auto key = std::move(loc->second);
@@ -171,6 +171,7 @@ void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
   if (--q.running == 0 && !q.messages.empty()) {
     runnable_queues_.insert(std::move(key));
   }
+  DrainQueue(std::move(lk));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
