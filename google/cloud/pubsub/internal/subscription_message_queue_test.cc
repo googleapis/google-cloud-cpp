@@ -81,6 +81,39 @@ google::pubsub::v1::StreamingPullResponse AsPullResponse(
   return response;
 }
 
+std::vector<google::pubsub::v1::ReceivedMessage> GenerateOrderKeyMessages(
+    std::string const& key, int start, int count) {
+  std::vector<google::pubsub::v1::ReceivedMessage> result;
+  for (int i = 0; i != count; ++i) {
+    auto const id = key + "-" + absl::StrFormat("%06d", start + i);
+    google::pubsub::v1::ReceivedMessage m;
+    m.mutable_message()->set_message_id("id-" + id);
+    m.mutable_message()->set_data("m-" + id);
+    m.mutable_message()->set_ordering_key(key);
+    m.set_ack_id("ack-" + id);
+    result.push_back(std::move(m));
+  }
+  return result;
+}
+
+// We need to test with different numbers of threads, ordering key sizes, etc.
+struct TestParams {
+  int thread_count;
+  int key_count;
+  int message_count;
+};
+
+// Test names may only contain alphanumeric characters, yuck.
+std::ostream& operator<<(std::ostream& os, TestParams const& rhs) {
+  return os << "Thread" << rhs.thread_count
+            << "Key" << rhs.key_count
+            << "Message" << rhs.message_count;
+}
+
+class SubscriptionMessageQueueOrderingTest
+    : public ::testing::Test,
+      public ::testing::WithParamInterface<TestParams> {};
+
 TEST(SubscriptionMessageQueueTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
@@ -178,21 +211,6 @@ TEST(SubscriptionMessageQueueTest, HandleError) {
   EXPECT_EQ(done.get(), expected);
 }
 
-std::vector<google::pubsub::v1::ReceivedMessage> GenerateOrderKeyMessages(
-    std::string const& key, int start, int count) {
-  std::vector<google::pubsub::v1::ReceivedMessage> result;
-  for (int i = 0; i != count; ++i) {
-    auto const id = key + "-" + absl::StrFormat("%04d", start + i);
-    google::pubsub::v1::ReceivedMessage m;
-    m.mutable_message()->set_message_id("id-" + id);
-    m.mutable_message()->set_data("m-" + id);
-    m.mutable_message()->set_ordering_key(key);
-    m.set_ack_id("ack-" + id);
-    result.push_back(std::move(m));
-  }
-  return result;
-}
-
 /// @test Verify messages with ordering keys are delivered in order
 TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
@@ -224,59 +242,65 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   batch_callback(AsPullResponse(GenerateOrderKeyMessages("k1", 0, 3)));
   batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 0, 3)));
 
-  EXPECT_THAT(received["k0"], ElementsAre("id-k0-0000"));
-  EXPECT_THAT(received["k1"], ElementsAre("id-k1-0000"));
-  EXPECT_THAT(received[{}], ElementsAre("id--0000", "id--0001", "id--0002"));
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
+  EXPECT_THAT(received["k1"], ElementsAre("id-k1-000000"));
+  EXPECT_THAT(received[{}],
+              ElementsAre("id--000000", "id--000001", "id--000002"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack--0000", 0);
-  uut->AckMessage("ack--0001", 0);
-  uut->AckMessage("ack--0002", 0);
+  uut->AckMessage("ack--000000", 0);
+  uut->AckMessage("ack--000001", 0);
+  uut->AckMessage("ack--000002", 0);
   EXPECT_THAT(received["k0"], IsEmpty());
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
   received.clear();  // keep expectations shorter
-  uut->NackMessage("ack-k0-0000", 0);
+  uut->NackMessage("ack-k0-000000", 0);
   uut->Read(4);
-  EXPECT_THAT(received["k0"], ElementsAre("id-k0-0001"));
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
-  uut->NackMessage("ack-k1-0000", 0);
+  uut->NackMessage("ack-k1-000000", 0);
   uut->Read(1);
-  EXPECT_THAT(received["k0"], ElementsAre("id-k0-0001"));
-  EXPECT_THAT(received["k1"], ElementsAre("id-k1-0001"));
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
+  EXPECT_THAT(received["k1"], ElementsAre("id-k1-000001"));
   EXPECT_THAT(received[{}], IsEmpty());
 
   received.clear();  // keep expectations shorter
   batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 3, 2)));
-  uut->AckMessage("ack-k0-0001", 0);
-  uut->AckMessage("ack-k1-0001", 0);
+  uut->AckMessage("ack-k0-000001", 0);
+  uut->AckMessage("ack-k1-000001", 0);
   uut->Read(2);
-  EXPECT_THAT(received["k0"], ElementsAre("id-k0-0002"));
-  EXPECT_THAT(received["k1"], ElementsAre("id-k1-0002"));
-  EXPECT_THAT(received[{}], ElementsAre("id--0003", "id--0004"));
+  EXPECT_THAT(received["k0"], ElementsAre("id-k0-000002"));
+  EXPECT_THAT(received["k1"], ElementsAre("id-k1-000002"));
+  EXPECT_THAT(received[{}], ElementsAre("id--000003", "id--000004"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack-k0-0002", 0);
-  uut->AckMessage("ack-k1-0002", 0);
-  uut->AckMessage("ack--0003", 0);
-  uut->AckMessage("ack--0004", 0);
+  uut->AckMessage("ack-k0-000002", 0);
+  uut->AckMessage("ack-k1-000002", 0);
+  uut->AckMessage("ack--000003", 0);
+  uut->AckMessage("ack--000004", 0);
   uut->Read(4);
   EXPECT_THAT(received["k0"], IsEmpty());
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
   batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 5, 5)));
-  EXPECT_THAT(received[{}], ElementsAre("id--0005", "id--0006", "id--0007",
-                                        "id--0008", "id--0009"));
+  EXPECT_THAT(received[{}],
+              ElementsAre("id--000005", "id--000006", "id--000007",
+                          "id--000008", "id--000009"));
 
   uut->Shutdown();
 }
 
-/// @test Verify messages with ordering keys are delivered in order
-TEST(SubscriptionMessageQueueTest, RespectOrderingKeysTorture) {
+/// @test Work with large sets of non-keyed messages
+TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
+  auto const message_count = GetParam().message_count;
+  auto const thread_count = GetParam().thread_count;
+  auto const key_count = GetParam().key_count;
+
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
   BatchCallback batch_callback;
@@ -293,55 +317,61 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeysTorture) {
   // Create the queue and allow it to push many messages
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(8);
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(
+      thread_count);
   std::mutex mu;
-  std::condition_variable cv;
-  auto constexpr kExpectedCount = 400;
-  int received_count = 0;
-  absl::flat_hash_map<std::string, std::vector<std::string>> received;
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto delay = [&] {
+    std::lock_guard<std::mutex> lk(mu);
+    return std::uniform_int_distribution<int>(0, 50)(generator);
+  };
+
+  std::condition_variable cv;
+  std::int64_t received_count = 0;
+  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+
   auto handler = [&](google::pubsub::v1::ReceivedMessage const& m) {
     background.cq().RunAsync([&, m]() {
-      auto delay = [&] {
-        std::lock_guard<std::mutex> lk(mu);
-        return std::uniform_int_distribution<int>(0, 500)(generator);
-      }();
-      std::this_thread::sleep_for(std::chrono::microseconds(delay));
-      auto key = m.message().ordering_key();
+      std::this_thread::sleep_for(std::chrono::microseconds(delay()));
       bool notify = false;
       {
         std::lock_guard<std::mutex> lk(mu);
-        received[key].push_back(m.message().message_id());
-        ++received_count;
-        notify = received_count >= kExpectedCount;
+        received[m.message().ordering_key()].push_back(
+            m.message().message_id());
+        notify = (++received_count >= message_count);
       }
+      if (notify) cv.notify_one();
       uut->AckMessage(m.ack_id(), 0);
       uut->Read(1);
-      if (notify) cv.notify_one();
     });
   };
 
-  auto constexpr kMaxCallbacks = 150;
+  auto constexpr kMaxCallbacks = 128;
   uut->Start(handler);
   uut->Read(kMaxCallbacks);
 
-  auto worker = [batch_callback](std::string const& key, int count, int step) {
+  auto worker = [batch_callback](std::string const& key, int count) {
     auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
-    for (int i = 0; i < count; i += step) {
+    using random = std::uniform_int_distribution<int>;
+    for (int i = 0; i < count;) {
+      auto step = random(0, count - i)(gen);
       batch_callback(AsPullResponse(GenerateOrderKeyMessages(key, i, step)));
-      auto delay = std::uniform_int_distribution<int>(0, 500)(gen);
-      std::this_thread::sleep_for(std::chrono::microseconds(delay));
+      i += step;
+      std::this_thread::sleep_for(
+          std::chrono::microseconds(random(0, 50)(gen)));
     }
   };
   std::vector<std::thread> tasks;
-  tasks.emplace_back(worker, std::string("k0"), 100, 3);
-  tasks.emplace_back(worker, std::string("k1"), 100, 5);
-  tasks.emplace_back(worker, std::string("k2"), 100, 7);
-  tasks.emplace_back(worker, std::string{}, 100, 11);
+  auto constexpr kMinMessages = 100;
+  auto const per_key_count = message_count / key_count + kMinMessages;
+  tasks.emplace_back(worker, std::string{}, per_key_count);
+  for (int i = 1; i != key_count; ++i) {
+    tasks.emplace_back(worker, absl::StrFormat("%06d", i), per_key_count);
+  }
 
   {
     std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&] { return received_count >= kExpectedCount; });
+    cv.wait(lk, [&] { return received_count >= message_count; });
   }
 
   for (auto& t : tasks) t.join();
@@ -358,6 +388,26 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeysTorture) {
 
   uut->Shutdown();
 }
+
+INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceST,
+                         SubscriptionMessageQueueOrderingTest,
+                         ::testing::Values(TestParams{1, 4, 100000}),
+                         ::testing::PrintToStringParamName());
+
+INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceMT,
+                         SubscriptionMessageQueueOrderingTest,
+                         ::testing::Values(TestParams{8, 4, 100000}),
+                         ::testing::PrintToStringParamName());
+
+INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceST,
+                         SubscriptionMessageQueueOrderingTest,
+                         ::testing::Values(TestParams{1, 1000, 100000}),
+                         ::testing::PrintToStringParamName());
+
+INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceMT,
+                         SubscriptionMessageQueueOrderingTest,
+                         ::testing::Values(TestParams{8, 1000, 100000}),
+                         ::testing::PrintToStringParamName());
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
