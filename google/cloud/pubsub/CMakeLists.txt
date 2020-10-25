@@ -119,9 +119,8 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    pubsub_client
-    PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-           googleapis-c++::pubsub_protos absl::flat_hash_map)
+    pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+                         googleapis-c++::pubsub_protos absl::flat_hash_map)
 google_cloud_cpp_add_common_options(pubsub_client)
 set_target_properties(
     pubsub_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
