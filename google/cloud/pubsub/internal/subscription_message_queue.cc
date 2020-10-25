@@ -81,11 +81,13 @@ void SubscriptionMessageQueue::OnRead(
         runnable_messages_.push_back(std::move(m));
         continue;
       }
-      // If the queue is just created Queues require ordering are runnable only
-      // if there are no running messages.
+      // The message requires ordering, find out if there is an existing queue
+      // for its ordering key, and insert one if necessary.
       auto loc = queues_.insert({key, {}});
       // There is no queue for this ordering key, that means no other messages
-      // are present, we can clear the queue.
+      // are present, we can push the message to the runnable queue. We leave
+      // the per-ordering-key queue as a marker for any other incoming messages
+      // with the same ordering key.
       if (loc.second) {
         runnable_messages_.push_back(std::move(m));
         continue;
@@ -137,6 +139,8 @@ void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
     auto m = std::move(runnable_messages_.front());
     runnable_messages_.pop_front();
     --available_slots_;
+    // No need to track messages without an ordering key, as there is no action
+    // to take in their HandlerDone() member function.
     if (!m.message().ordering_key().empty()) {
       ordering_key_by_ack_id_[m.ack_id()] = m.message().ordering_key();
     }
@@ -150,13 +154,19 @@ void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
 
 void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
+  // Find out the ordering key for this message.
   auto loc = ordering_key_by_ack_id_.find(ack_id);
+  // Messages without an ordering key are not inserted in the collection (see
+  // `DrainQueue()`), so this happens routinely.
   if (loc == ordering_key_by_ack_id_.end()) return;
   auto key = std::move(loc->second);
   ordering_key_by_ack_id_.erase(loc);
   auto ql = queues_.find(key);
+  // This is purely defensive, but should not happen.
   if (ql == queues_.end()) return;
   if (ql->second.empty()) {
+    // There are no more messages for this ordering key, remove the queue, as it
+    // also serves as a marker to order the next message.
     queues_.erase(ql);
     return;
   }
