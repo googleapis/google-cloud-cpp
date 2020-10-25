@@ -76,14 +76,22 @@ void SubscriptionMessageQueue::OnRead(
     shutdown_manager_->FinishedOperation("OnRead");
     for (auto& m : *r.mutable_received_messages()) {
       auto key = m.message().ordering_key();
-      auto const ordered = !key.empty();
-      auto& queue = queues_[key];
-      queue.messages.push_back(std::move(m));
-      // Queues require ordering are runnable only if there are no running
-      // messages
-      if (!ordered || queue.running == 0) {
-        runnable_queues_.insert(std::move(key));
+      if (key.empty()) {
+        // Empty key, requires no ordering and therefore immediately runnable.
+        runnable_messages_.push_back(std::move(m));
+        continue;
       }
+      // If the queue is just created Queues require ordering are runnable only
+      // if there are no running messages.
+      auto loc = queues_.insert({key, {}});
+      // There is no queue for this ordering key, that means no other messages
+      // are present, we can clear the queue.
+      if (loc.second) {
+        runnable_messages_.push_back(std::move(m));
+        continue;
+      }
+      // Insert the messages into the existing queue.
+      loc.first->second.push_back(std::move(m));
     }
     DrainQueue(std::move(lk));
   };
@@ -104,14 +112,19 @@ void SubscriptionMessageQueue::OnRead(
 
 void SubscriptionMessageQueue::Shutdown(std::unique_lock<std::mutex> lk) {
   shutdown_ = true;
+  available_slots_ = 0;
   auto ack_ids = [&](std::unique_lock<std::mutex>) {
     std::vector<std::string> ack_ids;
     for (auto& kv : queues_) {
-      for (auto& m : kv.second.messages) {
+      for (auto& m : kv.second) {
         ack_ids.push_back(std::move(*m.mutable_ack_id()));
       }
     }
     queues_.clear();
+    for (auto& m : runnable_messages_) {
+      ack_ids.push_back(std::move(*m.mutable_ack_id()));
+    }
+    runnable_messages_.clear();
     return ack_ids;
   }(std::move(lk));
 

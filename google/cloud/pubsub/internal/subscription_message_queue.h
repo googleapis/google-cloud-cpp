@@ -64,11 +64,7 @@ class SubscriptionMessageQueue
   // immediately not-ready they are blocked after one message.
   //
   // [1]: the messages without an ordering key are indexed with an empty string.
-  struct State {
-    std::deque<google::pubsub::v1::ReceivedMessage> messages;
-    std::int64_t running;
-  };
-  using QueueByOrderingKey = absl::flat_hash_map<std::string, State>;
+  using QueueByOrderingKey = absl::flat_hash_map<std::string, std::deque<google::pubsub::v1::ReceivedMessage>>;
 
   explicit SubscriptionMessageQueue(
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
@@ -82,7 +78,7 @@ class SubscriptionMessageQueue
   void Shutdown(std::unique_lock<std::mutex> lk);
   void DrainQueue(std::unique_lock<std::mutex> lk);
   bool KeepDraining(std::unique_lock<std::mutex> const&) {
-    return !runnable_queues_.empty() && available_slots_ > 0 && !shutdown_;
+    return !runnable_messages_.empty() && available_slots_ > 0 && !shutdown_;
   }
   absl::optional<google::pubsub::v1::ReceivedMessage> PickFromRunnable(
       std::unique_lock<std::mutex> const&);
@@ -97,9 +93,9 @@ class SubscriptionMessageQueue
   MessageCallback callback_;
   bool shutdown_ = false;
   std::size_t available_slots_ = 0;
+  std::deque<google::pubsub::v1::ReceivedMessage> runnable_messages_;
   QueueByOrderingKey queues_;
   absl::flat_hash_map<std::string, std::string> ordering_key_by_ack_id_;
-  absl::flat_hash_set<std::string> runnable_queues_;
   google::cloud::internal::DefaultPRNG generator_;
 };
 
