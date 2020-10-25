@@ -21,7 +21,6 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/random.h"
 #include "absl/container/flat_hash_map.h"
-#include "absl/container/flat_hash_set.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <deque>
 #include <functional>
@@ -32,6 +31,31 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+/**
+ * Keeps the queue of runnable messages.
+ *
+ * Recall that subscription message processing happens in stages, see
+ * `SubscriptionSession` and go/cloud-cxx:pub-sub-subscriptions-dd for more
+ * details.
+ *
+ * The next stage setups a callback in `Start()` to receive messages from this
+ * stage. This stage keeps a queue of messages ready to run, the next stage
+ * drains the queue by calling `Read(n)` which allow this stage to send up to
+ * `n` messages. After `n` messages are sent more calls to `Read(n)` *are*
+ * required, the queue does not drain just because some messages completed.
+ *
+ * Messages with ordering keys are executed in order. The class keeps a message
+ * queue per ordering key. The queue is created when a message with a new
+ * ordering key is received. The queue is deleted when the last message with the
+ * given ordering key is handled by the application (via the handler ack/nack
+ * calls). Effectively this means that the presence of the queue serves as a
+ * flag to block sending messages with the queue's ordering key to the next
+ * stage.
+ *
+ * For messages with an ordering key, this class also maintains a mapping of
+ * ack_id to ordering key. This is necessary to determine which ordering key
+ * queue is drained when the message is acknowledged or rejected.
+ */
 class SubscriptionMessageQueue
     : public SubscriptionMessageSource,
       public std::enable_shared_from_this<SubscriptionMessageQueue> {
@@ -53,19 +77,6 @@ class SubscriptionMessageQueue
                              std::size_t size) override;
 
  private:
-  // This class keeps a collection of queues indexed by ordering key, using
-  // the empty string to index the queue of messages without an ordering key.
-  // A queue with a real ordering key is is ready if (a) it is not empty, and
-  // (b) there are no other messages for that ordering key being processed.
-  //
-  // When the next stage requests more messages we pull from the ready queues
-  // first, one message at a time, picking the queue at random, until the next
-  // stage has no more room. Because the queues with ordering keys become
-  // immediately not-ready they are blocked after one message.
-  //
-  // [1]: the messages without an ordering key are indexed with an empty string.
-  using QueueByOrderingKey = absl::flat_hash_map<std::string, std::deque<google::pubsub::v1::ReceivedMessage>>;
-
   explicit SubscriptionMessageQueue(
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source)
@@ -77,17 +88,16 @@ class SubscriptionMessageQueue
               google::pubsub::v1::StreamingPullResponse r);
   void Shutdown(std::unique_lock<std::mutex> lk);
   void DrainQueue(std::unique_lock<std::mutex> lk);
-  bool KeepDraining(std::unique_lock<std::mutex> const&) {
-    return !runnable_messages_.empty() && available_slots_ > 0 && !shutdown_;
-  }
-  absl::optional<google::pubsub::v1::ReceivedMessage> PickFromRunnable(
-      std::unique_lock<std::mutex> const&);
 
   /// Process a nack() or ack() for a message
   void HandlerDone(std::string const& ack_id);
 
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionBatchSource> const source_;
+
+  using QueueByOrderingKey =
+      absl::flat_hash_map<std::string,
+                          std::deque<google::pubsub::v1::ReceivedMessage>>;
 
   std::mutex mu_;
   MessageCallback callback_;
@@ -96,7 +106,6 @@ class SubscriptionMessageQueue
   std::deque<google::pubsub::v1::ReceivedMessage> runnable_messages_;
   QueueByOrderingKey queues_;
   absl::flat_hash_map<std::string, std::string> ordering_key_by_ack_id_;
-  google::cloud::internal::DefaultPRNG generator_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

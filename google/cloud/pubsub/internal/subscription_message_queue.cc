@@ -133,45 +133,19 @@ void SubscriptionMessageQueue::Shutdown(std::unique_lock<std::mutex> lk) {
 }
 
 void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
-  while (KeepDraining(lk)) {
-    auto m = PickFromRunnable(lk);
-    if (!m) continue;
+  while (!runnable_messages_.empty() && available_slots_ > 0 && !shutdown_) {
+    auto m = std::move(runnable_messages_.front());
+    runnable_messages_.pop_front();
+    --available_slots_;
+    if (!m.message().ordering_key().empty()) {
+      ordering_key_by_ack_id_[m.ack_id()] = m.message().ordering_key();
+    }
     // Don't hold a lock during the callback, as the callee may call `Read()`
     // or something similar.
     lk.unlock();
-    callback_(std::move(*m));
+    callback_(std::move(m));
     lk.lock();
   }
-}
-
-absl::optional<google::pubsub::v1::ReceivedMessage>
-SubscriptionMessageQueue::PickFromRunnable(
-    std::unique_lock<std::mutex> const&) {
-  // Pick one of the runnable queues at random, and select the next element
-  // from that queue.
-  auto idx = std::uniform_int_distribution<std::size_t>(
-      0, runnable_queues_.size() - 1)(generator_);
-  auto r = runnable_queues_.begin();
-  for (std::size_t i = 0; i != idx; ++i) ++r;  // std::advance() did not work
-  auto key = *r;
-  auto const ordered = !key.empty();
-  auto ql = queues_.find(key);
-  if (ql == queues_.end()) return {};
-  auto& q = ql->second;
-  if (q.messages.empty()) {
-    runnable_queues_.erase(r);
-    return {};
-  }
-  auto m = std::move(q.messages.front());
-  ordering_key_by_ack_id_[m.ack_id()] = std::move(key);
-  q.messages.pop_front();
-  ++q.running;
-  --available_slots_;
-  if (q.messages.empty() || ordered) {
-    // The queue is no longer runnable, remove it from consideration.
-    runnable_queues_.erase(r);
-  }
-  return m;
 }
 
 void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
@@ -180,10 +154,15 @@ void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
   if (loc == ordering_key_by_ack_id_.end()) return;
   auto key = std::move(loc->second);
   ordering_key_by_ack_id_.erase(loc);
-  auto& q = queues_[key];
-  if (--q.running == 0 && !q.messages.empty()) {
-    runnable_queues_.insert(std::move(key));
+  auto ql = queues_.find(key);
+  if (ql == queues_.end()) return;
+  if (ql->second.empty()) {
+    queues_.erase(ql);
+    return;
   }
+  auto m = std::move(ql->second.front());
+  ql->second.pop_front();
+  runnable_messages_.push_back(std::move(m));
   DrainQueue(std::move(lk));
 }
 

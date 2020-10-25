@@ -26,7 +26,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_absl//absl/container:flat_hash_map",
-        "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
     ],
 )

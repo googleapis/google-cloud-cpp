@@ -487,25 +487,11 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
   uut->Shutdown();
 }
 
-INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceST,
-                         SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{1, 4, 10/*0000*/}),
-                         ::testing::PrintToStringParamName());
-
-INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingSmallKeySpaceMT,
-                         SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{8, 4, 10/*0000*/}),
-                         ::testing::PrintToStringParamName());
-
-INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceST,
-                         SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{1, 1000, 10/*0000*/}),
-                         ::testing::PrintToStringParamName());
-
-INSTANTIATE_TEST_SUITE_P(SubscriptionMessageQueueOrderingLargeKeySpaceMT,
-                         SubscriptionMessageQueueOrderingTest,
-                         ::testing::Values(TestParams{8, 1000, 10/*0000*/}),
-                         ::testing::PrintToStringParamName());
+INSTANTIATE_TEST_SUITE_P(
+    SubscriptionMessageQueueOrderingTest, SubscriptionMessageQueueOrderingTest,
+    ::testing::Values(TestParams{1, 4, 1000}, TestParams{1, 1000, 1000},
+                      TestParams{8, 4, 1000}, TestParams{8, 1000, 1000}),
+    ::testing::PrintToStringParamName());
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
