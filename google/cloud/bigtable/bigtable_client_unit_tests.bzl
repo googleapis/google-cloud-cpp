@@ -42,6 +42,7 @@ bigtable_client_unit_tests = [
     "instance_update_config_test.cc",
     "internal/async_bulk_apply_test.cc",
     "internal/async_longrunning_op_test.cc",
+    "internal/async_poll_op_test.cc",
     "internal/async_retry_multi_page_test.cc",
     "internal/async_retry_unary_rpc_and_poll_test.cc",
     "internal/bulk_mutator_test.cc",
