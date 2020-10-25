@@ -305,12 +305,14 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
   return {total_bytes, duration_cast<microseconds>(elapsed)};
 }
 
+using ::google::cloud::testing_util::OptionDescriptor;
+
 google::cloud::StatusOr<Options> ParseArgsDefault(
     std::vector<std::string> argv) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
-  std::vector<gcs_bm::OptionDescriptor> desc{
+  std::vector<OptionDescriptor> desc{
       {"--help", "print usage information",
        [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print benchmark description",
@@ -346,9 +348,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
          options.chunk_count = std::stoi(val);
        }},
   };
-  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
+  auto usage = BuildUsage(desc, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(desc, argv);
+  auto unparsed = OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }

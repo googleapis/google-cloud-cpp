@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/testing_util/command_line_parsing.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace storage_benchmarks {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace testing_util {
 namespace {
 
 using ::testing::HasSubstr;
 
-TEST(StorageBenchmarksParseArgsTest, UsageSimple) {
+TEST(CommandLineParsing, UsageSimple) {
   std::vector<OptionDescriptor> desc{
       {"--option1", "help-for-option1", [](std::string const&) {}},
       {"--option2", "help-for-option2", [](std::string const&) {}},
@@ -35,14 +36,14 @@ TEST(StorageBenchmarksParseArgsTest, UsageSimple) {
   EXPECT_THAT(usage, HasSubstr("help-for-option2"));
 }
 
-TEST(StorageBenchmarksParseArgsTest, Empty) {
+TEST(CommandLineParsing, Empty) {
   OptionDescriptor d{"--unused", "should not be called",
                      [](std::string const& val) { FAIL() << "value=" << val; }};
   auto unparsed = OptionsParse({d}, {});
   EXPECT_TRUE(unparsed.empty());
 }
 
-TEST(StorageBenchmarksParseArgsTest, Simple) {
+TEST(CommandLineParsing, Simple) {
   std::string option1_val = "not-set";
   std::string option2_val = "not-set";
 
@@ -63,7 +64,7 @@ TEST(StorageBenchmarksParseArgsTest, Simple) {
   EXPECT_EQ(option2_val, "value2");
 }
 
-TEST(StorageBenchmarksParseArgsTest, PrefixArgument) {
+TEST(CommandLineParsing, PrefixArgument) {
   std::string option1_with_suffix_val = "not-set";
   std::string option1_val = "not-set";
 
@@ -84,7 +85,19 @@ TEST(StorageBenchmarksParseArgsTest, PrefixArgument) {
   EXPECT_EQ(option1_val, "value1");
 }
 
+TEST(CommandLineParsing, FormatSize) {
+  EXPECT_EQ("1023.0B", FormatSize(1023));
+  EXPECT_EQ("1.0KiB", FormatSize(kKiB));
+  EXPECT_EQ("1.1KiB", FormatSize(kKiB + 100));
+  EXPECT_EQ("1.0MiB", FormatSize(kMiB));
+  EXPECT_EQ("1.0GiB", FormatSize(kGiB));
+  EXPECT_EQ("1.1GiB", FormatSize(kGiB + 128 * kMiB));
+  EXPECT_EQ("1.0TiB", FormatSize(kTiB));
+  EXPECT_EQ("2.0TiB", FormatSize(2 * kTiB));
+}
+
 }  // namespace
-}  // namespace storage_benchmarks
+}  // namespace testing_util
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

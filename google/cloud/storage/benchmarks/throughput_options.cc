@@ -19,6 +19,8 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
+using ::google::cloud::testing_util::OptionDescriptor;
+
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::vector<std::string> const& argv, std::string const& description) {
   ThroughputOptions options;
