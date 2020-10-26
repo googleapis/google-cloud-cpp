@@ -15,32 +15,12 @@
 # ~~~
 
 function (spanner_client_define_benchmarks)
-    # Find out if the platform supports getrusage(). Note that the Bazel builds
-    # do not test for this, and therefore the feature is *not* used for any
-    # Bazel-based build.
-    include(CheckCXXSymbolExists)
-    check_cxx_symbol_exists(getrusage sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
-    check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
-    add_library(getrusage_flags INTERFACE)
-    target_compile_definitions(
-        getrusage_flags
-        INTERFACE
-            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
-            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
-    )
-
     add_library(spanner_client_benchmarks # cmake-format: sort
                 benchmarks_config.cc benchmarks_config.h)
     target_link_libraries(
         spanner_client_benchmarks
-        PUBLIC getrusage_flags
-               spanner_client_mocks
-               googleapis-c++::spanner_client
-               google_cloud_cpp_testing
-               GTest::gmock_main
-               GTest::gmock
+        PUBLIC spanner_client_mocks googleapis-c++::spanner_client
+               google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                GTest::gtest)
     create_bazel_config(spanner_client_benchmarks YEAR "2019")
     google_cloud_cpp_add_common_options(spanner_client_benchmarks)
@@ -70,7 +50,6 @@ function (spanner_client_define_benchmarks)
             ${target}
             PRIVATE spanner_client_benchmarks
                     googleapis-c++::spanner_client
-                    getrusage_flags
                     spanner_client_testing
                     google_cloud_cpp_testing
                     GTest::gmock_main

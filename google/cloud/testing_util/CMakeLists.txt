@@ -27,6 +27,8 @@ if (BUILD_TESTING)
         command_line_parsing.cc
         command_line_parsing.h
         contains_once.h
+        cpu_usage.cc
+        cpu_usage.h
         crash_handler.cc
         crash_handler.h
         example_driver.cc
@@ -44,6 +46,19 @@ if (BUILD_TESTING)
         PUBLIC absl::symbolize absl::failure_signal_handler
                google_cloud_cpp_common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
+
+    include(CheckCXXSymbolExists)
+    check_cxx_symbol_exists(getrusage sys/resource.h
+                            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
+    check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
+                            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
+
+    target_compile_definitions(
+        google_cloud_cpp_testing
+        PUBLIC
+            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
+            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
+    )
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 

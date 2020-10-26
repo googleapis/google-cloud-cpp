@@ -21,6 +21,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/cpu_usage.h"
 #include "absl/memory/memory.h"
 #include "absl/time/civil_time.h"
 #include <google/spanner/v1/result_set.pb.h>
@@ -32,9 +33,6 @@
 #include <random>
 #include <sstream>
 #include <thread>
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-#include <sys/resource.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
 /**
  * @file
@@ -236,39 +234,7 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-class SimpleTimer {
- public:
-  SimpleTimer() : elapsed_time_(0), cpu_time_(0) {}
-
-  /// Start the timer, call before the code being measured.
-  void Start();
-
-  /// Stop the timer, call after the code being measured.
-  void Stop();
-
-  //@{
-  /**
-   * @name Measurement results.
-   *
-   * @note The values are only valid after calling Start() and Stop().
-   */
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  std::chrono::microseconds cpu_time() const { return cpu_time_; }
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  std::string const& annotations() const { return annotations_; }
-  //@}
-
- private:
-  std::chrono::steady_clock::time_point start_;
-  std::chrono::microseconds elapsed_time_;
-  std::chrono::microseconds cpu_time_;
-  std::string annotations_;
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  struct rusage start_usage_ = {};
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-};
+using ::google::cloud::testing_util::CpuUsage;
 
 struct BoolTraits {
   using native_type = bool;
@@ -619,7 +585,7 @@ class ReadExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    SimpleTimer overall;
+    CpuUsage overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -697,7 +663,7 @@ class ReadExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySet(config);
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
 
       google::spanner::v1::ReadRequest request{};
@@ -778,7 +744,7 @@ class ReadExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySet(config);
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
       auto rows = client.Read(table_name_, key, column_names);
       int row_count = 0;
@@ -840,7 +806,7 @@ class SelectExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    SimpleTimer overall;
+    CpuUsage overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -916,7 +882,7 @@ class SelectExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySetBegin(config);
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
@@ -1000,7 +966,7 @@ class SelectExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySetBegin(config);
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
       auto rows = client.ExecuteQuery(spanner::SqlStatement(
           statement, {{"begin", spanner::Value(key)},
@@ -1079,7 +1045,7 @@ class UpdateExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    SimpleTimer overall;
+    CpuUsage overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -1165,7 +1131,7 @@ class UpdateExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
@@ -1261,7 +1227,7 @@ class UpdateExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
       std::unordered_map<std::string, spanner::Value> const params{
           {"key", spanner::Value(key)},      {"v0", spanner::Value(values[0])},
@@ -1347,7 +1313,7 @@ class MutationExperiment : public Experiment {
     std::shuffle(random_keys_.begin(), random_keys_.end(), generator);
 
     // Capture some overall getrusage() statistics as comments.
-    SimpleTimer overall;
+    CpuUsage overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -1443,7 +1409,7 @@ class MutationExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
 
       grpc::ClientContext context;
@@ -1525,7 +1491,7 @@ class MutationExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      SimpleTimer timer;
+      CpuUsage timer;
       timer.Start();
 
       int row_count = 0;
@@ -1684,80 +1650,6 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"mutation-timestamp", MakeMutationFactory<TimestampTraits>()},
       {"mutation-numeric", MakeMutationFactory<NumericTraits>()},
   };
-}
-
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-namespace {
-int RUsageWho() {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return RUSAGE_THREAD;
-#else
-  return RUSAGE_SELF;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-}
-}  // namespace
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-
-void SimpleTimer::Start() {
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  (void)getrusage(RUsageWho(), &start_usage_);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  start_ = std::chrono::steady_clock::now();
-}
-
-void SimpleTimer::Stop() {
-  using std::chrono::duration_cast;
-  using std::chrono::microseconds;
-  using std::chrono::seconds;
-  using std::chrono::steady_clock;
-  elapsed_time_ = duration_cast<microseconds>(steady_clock::now() - start_);
-
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  auto as_usec = [](timeval const& tv) {
-    return microseconds(seconds(tv.tv_sec)) + microseconds(tv.tv_usec);
-  };
-
-  struct rusage now {};
-  (void)getrusage(RUsageWho(), &now);
-  auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
-  auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
-  cpu_time_ = utime + stime;
-  double cpu_fraction = 0;
-  if (elapsed_time_.count() != 0) {
-    cpu_fraction = static_cast<double>(cpu_time_.count()) /
-                   static_cast<double>(elapsed_time_.count());
-  }
-  now.ru_minflt -= start_usage_.ru_minflt;
-  now.ru_majflt -= start_usage_.ru_majflt;
-  now.ru_nswap -= start_usage_.ru_nswap;
-  now.ru_inblock -= start_usage_.ru_inblock;
-  now.ru_oublock -= start_usage_.ru_oublock;
-  now.ru_msgsnd -= start_usage_.ru_msgsnd;
-  now.ru_msgrcv -= start_usage_.ru_msgrcv;
-  now.ru_nsignals -= start_usage_.ru_nsignals;
-  now.ru_nvcsw -= start_usage_.ru_nvcsw;
-  now.ru_nivcsw -= start_usage_.ru_nivcsw;
-
-  std::ostringstream os;
-  os << "# user time                    =" << utime.count() << " us\n"
-     << "# system time                  =" << stime.count() << " us\n"
-     << "# CPU fraction                 =" << cpu_fraction << "\n"
-     << "# maximum resident set size    =" << now.ru_maxrss << " KiB\n"
-     << "# integral shared memory size  =" << now.ru_ixrss << " KiB\n"
-     << "# integral unshared data size  =" << now.ru_idrss << " KiB\n"
-     << "# integral unshared stack size =" << now.ru_isrss << " KiB\n"
-     << "# soft page faults             =" << now.ru_minflt << "\n"
-     << "# hard page faults             =" << now.ru_majflt << "\n"
-     << "# swaps                        =" << now.ru_nswap << "\n"
-     << "# block input operations       =" << now.ru_inblock << "\n"
-     << "# block output operations      =" << now.ru_oublock << "\n"
-     << "# IPC messages sent            =" << now.ru_msgsnd << "\n"
-     << "# IPC messages received        =" << now.ru_msgrcv << "\n"
-     << "# signals received             =" << now.ru_nsignals << "\n"
-     << "# voluntary context switches   =" << now.ru_nvcsw << "\n"
-     << "# involuntary context switches =" << now.ru_nivcsw << "\n";
-  annotations_ = std::move(os).str();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
 }  // namespace
