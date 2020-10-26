@@ -75,7 +75,10 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="subscription__message__queue_8h_source.html">google/cloud/pubsub/internal/subscription_message_queue.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="mock__subscription__batch__source_8h_source.html">google/cloud/pubsub/testing/mock_subscription_batch_source.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/internal/background_threads_impl.h&quot;</code><br />
 <code>#include &quot;google/cloud/testing_util/is_proto_equal.h&quot;</code><br />
+<code>#include &quot;absl/container/flat_hash_map.h&quot;</code><br />
+<code>#include &quot;absl/strings/str_format.h&quot;</code><br />
 <code>#include &lt;google/protobuf/text_format.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 </div>
@@ -89,6 +92,55 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a9309710c00bee82ea9a466e574d1806a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9309710c00bee82ea9a466e574d1806a">&#9670;&nbsp;</a></span>key_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int key_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__message__queue__test_8cc_source.html#l00102">102</a> of file <a class="el" href="subscription__message__queue__test_8cc_source.html">subscription_message_queue_test.cc</a>.</p>
+
+</div>
+</div>
+<a id="a21d557fb1a24b78862f142e9ee2b3324"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21d557fb1a24b78862f142e9ee2b3324">&#9670;&nbsp;</a></span>message_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int message_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__message__queue__test_8cc_source.html#l00103">103</a> of file <a class="el" href="subscription__message__queue__test_8cc_source.html">subscription_message_queue_test.cc</a>.</p>
+
+</div>
+</div>
+<a id="a774208e1be4f8ad02ea0fbafff834ee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774208e1be4f8ad02ea0fbafff834ee8">&#9670;&nbsp;</a></span>thread_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int thread_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="subscription__message__queue__test_8cc_source.html#l00101">101</a> of file <a class="el" href="subscription__message__queue__test_8cc_source.html">subscription_message_queue_test.cc</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
