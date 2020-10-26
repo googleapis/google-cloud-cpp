@@ -45,6 +45,7 @@ C++ client library.
 )""";
 
 struct Config {
+  std::string endpoint;
   std::string project_id;
   std::string topic_id;
   std::string subscription_id;
@@ -55,14 +56,17 @@ struct Config {
   bool publisher = false;
   int publisher_thread_count = 1;
   int publisher_io_threads = 0;
+  int publisher_io_channels = 0;
   int publisher_max_batch_size = 1000;
   std::int64_t publisher_max_batch_bytes = 10 * kMiB;
-  std::int64_t publisher_pending_lwm = 9 * 1000000;
-  std::int64_t publisher_pending_hwm = 10 * 1000000;
+  std::int64_t publisher_pending_hwm = 2000000;
+  std::int64_t publisher_pending_lwm = 1000000;
+  std::int64_t publisher_target_messages_per_second = 1200 * 2000;
 
   bool subscriber = false;
   int subscriber_thread_count = 1;
   int subscriber_io_threads = 0;
+  int subscriber_io_channels = 0;
   int subscriber_max_outstanding_messages = 0;
   std::int64_t subscriber_max_outstanding_bytes = 100 * kMiB;
   int subscriber_max_concurrency = 0;
@@ -74,6 +78,8 @@ struct Config {
 
   bool show_help = false;
 };
+
+void Print(std::ostream& os, Config const&);
 
 StatusOr<Config> ParseArgs(std::vector<std::string> args);
 
@@ -141,35 +147,7 @@ int main(int argc, char* argv[]) {
     });
   }
 
-  std::cout << "# Running Cloud Pub/Sub experiment"
-            << "\n# Start time: "
-            << google::cloud::internal::FormatRfc3339(
-                   std::chrono::system_clock::now())
-            << "\n# Topic ID: " << config->topic_id
-            << "\n# Subscription ID: " << config->subscription_id
-            << "\n# Payload Size: " << FormatSize(config->payload_size)
-            << "\n# Iteration_Duration: " << config->iteration_duration.count()
-            << "s" << std::boolalpha << "\n# Publisher: " << config->publisher
-            << "\n# Publisher Threads: " << config->publisher_thread_count
-            << "\n# Publisher I/O Threads: " << config->publisher_io_threads
-            << "\n# Publisher Max Batch Size: "
-            << config->publisher_max_batch_size
-            << "\n# Publisher Max Batch Bytes: "
-            << FormatSize(config->publisher_max_batch_bytes) << std::boolalpha
-            << "\n# Subscriber: " << config->subscriber
-            << "\n# Subscriber Threads: " << config->subscriber_thread_count
-            << "\n# Subscriber I/O Threads: " << config->subscriber_io_threads
-            << "\n# Subscriber Max Outstanding Messages: "
-            << config->subscriber_max_outstanding_messages
-            << "\n# Subscriber Max Outstanding Bytes: "
-            << FormatSize(config->subscriber_max_outstanding_bytes)
-            << "\n# Subscriber Max Concurrency: "
-            << config->subscriber_max_concurrency
-            << "\n# Minimum Samples: " << config->minimum_samples
-            << "\n# Maximum Samples: " << config->maximum_samples
-            << "\n# Minimum Runtime: " << config->minimum_runtime.count() << "s"
-            << "\n# Maximum Runtime: " << config->maximum_runtime.count() << "s"
-            << std::endl;
+  Print(std::cout, *config);
 
   auto const topic = pubsub::Topic(config->project_id, config->topic_id);
 
@@ -224,6 +202,120 @@ void PrintResult(Config const& config, std::string const& operation,
             << std::endl;
 }
 
+std::string MakePayload(Config const& config) {
+  auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  return google::cloud::internal::Sample(
+      gen, static_cast<int>(config.payload_size), "0123456789");
+}
+
+class MessageGenerator {
+ public:
+  MessageGenerator(Config const& config, pubsub::Publisher publisher)
+      : config_(config),
+        payload_(MakePayload(config)),
+        publisher_(std::move(publisher)) {}
+
+  void Run(int id) {
+    std::mutex pending_mu;
+    std::condition_variable pending_cv;
+    std::int64_t pending = 0;
+    bool filling = true;
+    auto const thread_count = (std::max)(1, config_.publisher_thread_count);
+    auto const lwm = (std::min)(config_.publisher_pending_lwm / thread_count,
+                                std::int64_t{0});
+    auto const hwm = (std::max)(config_.publisher_pending_hwm / thread_count,
+                                std::int64_t{1});
+    auto pending_wait = [&] {
+      std::unique_lock<std::mutex> lk(pending_mu);
+      pending_cv.wait(lk, [&] { return filling || pending <= lwm; });
+      if (++pending >= hwm) {
+        filling = false;
+        ++hwm_hit_;
+      }
+    };
+    auto pending_done = [&] {
+      std::unique_lock<std::mutex> lk(pending_mu);
+      if (--pending > lwm) return;
+      if (filling && pending != 0) return;
+      ++lwm_hit_;
+      filling = true;
+      lk.unlock();
+      pending_cv.notify_one();
+    };
+    auto none_pending = [&] {
+      std::unique_lock<std::mutex> lk(pending_mu);
+      pending_cv.wait(lk, [&] { return pending == 0; });
+    };
+
+    // We typically want to send tens of thousands or a million messages
+    // per second, but sleeping for just one microsecond (or less) does not
+    // work, the sleep call takes about 100us. We pace every kPacingCount
+    // messages instead.
+    auto constexpr kPacingCount = 8192;
+    auto const pacing_period = [&] {
+      using std::chrono::microseconds;
+      if (config_.publisher_target_messages_per_second == 0) {
+        return microseconds(0);
+      }
+      return microseconds(std::chrono::seconds(1)) * kPacingCount /
+             config_.publisher_target_messages_per_second;
+    }();
+
+    using std::chrono::duration_cast;
+    using std::chrono::steady_clock;
+    auto const start = std::chrono::steady_clock::now();
+    auto pacing_time = start + pacing_period;
+    for (std::int64_t i = 0; !shutdown_.load(); ++i) {
+      pending_wait();
+      auto const elapsed =
+          duration_cast<std::chrono::microseconds>(steady_clock::now() - start);
+      publisher_
+          .Publish(
+              pubsub::MessageBuilder{}
+                  .SetAttribute("sendTime", std::to_string(elapsed.count()))
+                  .SetAttribute("clientId", std::to_string(id))
+                  .SetAttribute("sequenceNumber", std::to_string(i))
+                  .SetAttributes({
+                      {"sendTime", std::to_string(elapsed.count())},
+                      {"clientId", std::to_string(id)},
+                      {"sequenceNumber", std::to_string(i)},
+                  })
+                  .SetData(payload_)
+                  .Build())
+          .then([&](future<StatusOr<std::string>> f) {
+            ++acked_count_;
+            if (!f.get()) ++error_count_;
+            pending_done();
+          });
+      ++send_count_;
+      if (i % kPacingCount == 0 && i != 0) {
+        auto const now = steady_clock::now();
+        if (now < pacing_time) std::this_thread::sleep_for(pacing_time - now);
+        pacing_time = now + pacing_period;
+      }
+    }
+    none_pending();
+  }
+
+  std::int64_t AckedCount() const { return acked_count_.load(); }
+  std::int64_t ErrorCount() const { return error_count_.load(); }
+  std::int64_t SendCount() const { return send_count_.load(); }
+  std::int64_t HwmHit() const { return hwm_hit_; }
+  std::int64_t LwmHit() const { return lwm_hit_; }
+  void Shutdown() { shutdown_.store(true); }
+
+ private:
+  Config const config_;
+  std::string payload_;
+  std::atomic<bool> shutdown_{false};
+  std::atomic<std::int64_t> acked_count_{0};
+  std::atomic<std::int64_t> error_count_{0};
+  std::atomic<std::int64_t> send_count_{0};
+  std::atomic<std::int64_t> hwm_hit_{0};
+  std::atomic<std::int64_t> lwm_hit_{0};
+  pubsub::Publisher publisher_;
+};
+
 void PublisherTask(Config const& config) {
   auto publisher_options =
       pubsub::PublisherOptions{}
@@ -232,68 +324,25 @@ void PublisherTask(Config const& config) {
               static_cast<std::size_t>(config.publisher_max_batch_bytes));
   auto connection_options =
       pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
-  if (config.publisher_io_threads) {
+  if (!config.endpoint.empty()) {
+    connection_options.set_endpoint(config.endpoint);
+  }
+  if (config.publisher_io_threads != 0) {
     connection_options.set_background_thread_pool_size(
         config.publisher_io_threads);
+  }
+  if (config.publisher_io_channels != 0) {
+    connection_options.set_num_channels(config.publisher_io_channels);
   }
 
   pubsub::Publisher publisher(pubsub::MakePublisherConnection(
       pubsub::Topic(config.project_id, config.topic_id),
       std::move(publisher_options), std::move(connection_options)));
-  auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const data = google::cloud::internal::Sample(
-      gen, static_cast<int>(config.payload_size), "0123456789");
 
-  std::mutex pending_mu;
-  std::condition_variable pending_cv;
-  std::int64_t pending = 0;
-  std::int64_t hwm_count = 0;
-  auto const lwm = config.publisher_pending_lwm;
-  auto const hwm = config.publisher_pending_hwm;
-  auto pending_wait = [&] {
-    std::unique_lock<std::mutex> lk(pending_mu);
-    ++pending;
-    if (pending < hwm) return;
-    ++hwm_count;
-    pending_cv.wait(lk, [&] { return pending < lwm; });
-  };
-  auto pending_done = [&] {
-    std::unique_lock<std::mutex> lk(pending_mu);
-    if (--pending < lwm) pending_cv.notify_all();
-  };
-  auto pending_nothing = [&] {
-    std::unique_lock<std::mutex> lk(pending_mu);
-    pending_cv.wait(lk, [&] { return pending == 0; });
-  };
+  MessageGenerator generator(config, publisher);
 
-  std::atomic<std::int64_t> send_count{0};
-  std::atomic<std::int64_t> error_count{0};
-  std::atomic<bool> shutdown{false};
-  auto worker = [&](int id) {
-    using std::chrono::steady_clock;
-    using std::chrono::duration_cast;
-    auto const start = std::chrono::steady_clock::now();
-    for (std::int64_t i = 0; !shutdown.load(); ++i) {
-      pending_wait();
-      auto const elapsed =
-          duration_cast<std::chrono::microseconds>(steady_clock::now() - start);
-      publisher
-          .Publish(pubsub::MessageBuilder{}
-                       .SetAttributes({
-                           {"sendTime", std::to_string(elapsed.count())},
-                           {"clientId", std::to_string(id)},
-                           {"sequenceNumber", std::to_string(i)},
-                       })
-                       .SetData(data)
-                       .Build())
-          .then([&](future<StatusOr<std::string>> f) {
-            ++send_count;
-            if (!f.get()) ++error_count;
-            pending_done();
-          });
-    }
-  };
   std::vector<std::thread> workers;
+  auto worker = [&generator](int id) { generator.Run(id); };
   int task_id = 0;
   std::generate_n(std::back_inserter(workers), config.publisher_thread_count,
                   [&] {
@@ -304,18 +353,20 @@ void PublisherTask(Config const& config) {
     using std::chrono::steady_clock;
     Timer usage;
     usage.Start();
-    auto const start_count = send_count.load();
+    auto const acked_count_start = generator.AckedCount();
+    auto const send_count_start = generator.SendCount();
     std::this_thread::sleep_for(config.iteration_duration);
-    auto const count = send_count.load() - start_count;
+    auto const acked_count_elapsed = generator.AckedCount() - acked_count_start;
+    auto const send_count_elapsed = generator.SendCount() - send_count_start;
     usage.Stop();
-    PrintResult(config, "Pub", i, count, usage);
+    PrintResult(config, "Pub", i, send_count_elapsed, usage);
+    PrintResult(config, "Ack", i, acked_count_elapsed, usage);
   }
-  shutdown.store(true);
+  generator.Shutdown();
   for (auto& w : workers) w.join();
-  // Need to wait until all pending callbacks have executed.
-  pending_nothing();
-  std::cout << "# Publisher: error_count=" << error_count
-            << ", hwm_count=" << hwm_count << std::endl;
+  std::cout << "# Publisher: error_count=" << generator.ErrorCount()
+            << ", hwm_hits=" << generator.HwmHit()
+            << ", lwm_hit=" << generator.LwmHit() << std::endl;
 }
 
 void SubscriberTask(Config const& config) {
@@ -327,9 +378,15 @@ void SubscriberTask(Config const& config) {
           .set_max_concurrency(config.subscriber_max_concurrency);
   auto connection_options =
       pubsub::ConnectionOptions{}.set_channel_pool_domain("Subscriber");
+  if (!config.endpoint.empty()) {
+    connection_options.set_endpoint(config.endpoint);
+  }
   if (config.subscriber_io_threads != 0) {
     connection_options.set_background_thread_pool_size(
         config.subscriber_io_threads);
+  }
+  if (config.subscriber_io_channels != 0) {
+    connection_options.set_num_channels(config.subscriber_io_channels);
   }
 
   pubsub::Subscriber subscriber(pubsub::MakeSubscriberConnection(
@@ -372,6 +429,50 @@ void SubscriberTask(Config const& config) {
   }
 }
 
+void PrintPublisher(std::ostream& os, Config const& config) {
+  os << "\n# Publisher: " << std::boolalpha << config.publisher
+     << "\n# Publisher Threads: " << config.publisher_thread_count
+     << "\n# Publisher I/O Threads: " << config.publisher_io_threads
+     << "\n# Publisher I/O Channels: " << config.publisher_io_channels
+     << "\n# Publisher Max Batch Size: " << config.publisher_max_batch_size
+     << "\n# Publisher Max Batch Bytes: "
+     << FormatSize(config.publisher_max_batch_bytes)
+     << "\n# Publisher Pending LWM: " << config.publisher_pending_lwm
+     << "\n# Publisher Pending HWM: " << config.publisher_pending_hwm
+     << "\n# Publisher Target messages/s: "
+     << config.publisher_target_messages_per_second;
+}
+
+void PrintSubscriber(std::ostream& os, Config const& config) {
+  os << "\n# Subscriber: " << std::boolalpha << config.subscriber
+     << "\n# Subscriber Threads: " << config.subscriber_thread_count
+     << "\n# Subscriber I/O Threads: " << config.subscriber_io_threads
+     << "\n# Subscriber I/O Channels: " << config.subscriber_io_channels
+     << "\n# Subscriber Max Outstanding Messages: "
+     << config.subscriber_max_outstanding_messages
+     << "\n# Subscriber Max Outstanding Bytes: "
+     << FormatSize(config.subscriber_max_outstanding_bytes)
+     << "\n# Subscriber Max Concurrency: " << config.subscriber_max_concurrency;
+}
+
+void Print(std::ostream& os, Config const& config) {
+  os << "# Running Cloud Pub/Sub experiment"
+     << "\n# Start time: "
+     << google::cloud::internal::FormatRfc3339(std::chrono::system_clock::now())
+     << "\n# Endpoint: " << config.endpoint
+     << "\n# Topic ID: " << config.topic_id
+     << "\n# Subscription ID: " << config.subscription_id
+     << "\n# Payload Size: " << FormatSize(config.payload_size)
+     << "\n# Iteration_Duration: " << config.iteration_duration.count() << "s"
+     << "\n# Minimum Samples: " << config.minimum_samples
+     << "\n# Maximum Samples: " << config.maximum_samples
+     << "\n# Minimum Runtime: " << config.minimum_runtime.count() << "s"
+     << "\n# Maximum Runtime: " << config.maximum_runtime.count() << "s";
+  if (config.publisher) PrintPublisher(os, config);
+  if (config.subscriber) PrintSubscriber(os, config);
+  os << std::endl;
+}
+
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::OptionDescriptor;
 using ::google::cloud::testing_util::ParseBoolean;
@@ -390,6 +491,8 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        [&show_help](std::string const&) { show_help = true; }},
       {"--description", "print benchmark description",
        [&show_description](std::string const&) { show_description = true; }},
+      {"--endpoint", "use the given endpoint",
+       [&options](std::string const& val) { options.endpoint = val; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
       {"--topic-id", "use an existing topic for the benchmark",
@@ -420,6 +523,12 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        [&options](std::string const& val) {
          options.publisher_io_threads = std::stoi(val);
        }},
+      {"--publisher-io-channels",
+       "number of publisher I/O (gRPC) channels, set to 0 to use the library "
+       "default",
+       [&options](std::string const& val) {
+         options.publisher_io_channels = std::stoi(val);
+       }},
       {"--publisher-max-batch-size", "configure batching parameters",
        [&options](std::string const& val) {
          options.publisher_max_batch_size = std::stoi(val);
@@ -427,6 +536,20 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
       {"--publisher-max-batch-bytes", "configure batching parameters",
        [&options](std::string const& val) {
          options.publisher_max_batch_bytes = ParseSize(val);
+       }},
+      {"--publisher-pending-lwm", "message generation flow control",
+       [&options](std::string const& val) {
+         options.publisher_pending_lwm = std::stol(val);
+       }},
+      {"--publisher-pending-hwm", "message generation flow control",
+       [&options](std::string const& val) {
+         options.publisher_pending_hwm = std::stol(val);
+       }},
+      {"--publisher-target-messages-per-second",
+       "limit the number of messages generated per second."
+       " If set to 0 this flow control feature is disabled.",
+       [&options](std::string const& val) {
+         options.publisher_target_messages_per_second = std::stol(val);
        }},
 
       {"--subscriber", "run a subscriber in this program",
@@ -441,6 +564,12 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        "number of subscriber I/O threads, set to 0 to use the library default",
        [&options](std::string const& val) {
          options.subscriber_io_threads = std::stoi(val);
+       }},
+      {"--subscriber-io-channels",
+       "number of subscriber I/O (gRPC) channels, set to 0 to use the library "
+       "default",
+       [&options](std::string const& val) {
+         options.subscriber_io_channels = std::stoi(val);
        }},
       {"--subscriber-max-outstanding-messages",
        "configure message flow control",
@@ -516,6 +645,8 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
   if (!config) return error("--topic-id");
   config = ParseArgsImpl({cmd, "--subscription-id=test"}, kDescription);
   if (!config) return error("--subscription-id");
+  config = ParseArgsImpl({cmd, "--endpoint=test"}, kDescription);
+  if (!config) return error("--endpoint");
 
   return ParseArgsImpl(
       {
@@ -524,11 +655,13 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
           "--publisher=true",
           "--publisher-thread-count=1",
           "--publisher-io-threads=1",
+          "--publisher-io-channels=1",
           "--publisher-max-batch-size=2",
           "--publisher-max-batch-bytes=1KiB",
           "--subscriber=true",
           "--subscriber-thread-count=1",
           "--subscriber-io-threads=1",
+          "--subscriber-io-channels=1",
           "--subscriber-max-outstanding-bytes=100MiB",
           "--subscriber-max-concurrency=1000",
           "--iteration-duration=1s",
