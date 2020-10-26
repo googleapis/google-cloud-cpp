@@ -45,7 +45,6 @@ cc_library(
             "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=1",
             "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE_THREAD=1",
         ],
-        ":windows": [],
         "//conditions:default": [],
     }),
     deps = [
