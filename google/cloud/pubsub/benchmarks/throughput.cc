@@ -235,7 +235,24 @@ class PublishWorker {
     using std::chrono::duration_cast;
     using std::chrono::steady_clock;
 
+    // We typically want to send tens of thousands or a million messages
+    // per second, but sleeping for just one microsecond (or less) does not
+    // work, the sleep call takes about 100us. We pace every kPacingCount
+    // messages instead.
+    auto constexpr kPacingCount = 8192;
+    auto const enable_pacing =
+        config_.publisher_target_messages_per_second != 0;
+    auto const pacing_period = [&] {
+      using std::chrono::microseconds;
+      if (config_.publisher_target_messages_per_second == 0) {
+        return microseconds(0);
+      }
+      return microseconds(std::chrono::seconds(1)) * kPacingCount /
+             config_.publisher_target_messages_per_second;
+    }();
+
     auto const start = std::chrono::steady_clock::now();
+    auto pacing_time = start + pacing_period;
     for (std::int64_t i = 0; NotShutdownAndReady(); ++i) {
       auto const elapsed =
           duration_cast<std::chrono::microseconds>(steady_clock::now() - start);
@@ -257,6 +274,11 @@ class PublishWorker {
           });
       ++send_count;
       send_bytes.fetch_add(bytes);
+      if (enable_pacing && i != 0 && i % kPacingCount == 0) {
+        auto const now = steady_clock::now();
+        if (now < pacing_time) std::this_thread::sleep_for(pacing_time - now);
+        pacing_time = now + pacing_period;
+      }
     }
     WaitUntilAllAcked();
   }
@@ -317,7 +339,7 @@ void PublisherTask(Config const& config) {
   if (!config.endpoint.empty()) {
     connection_options.set_endpoint(config.endpoint);
   }
-  if (config.publisher_io_threads) {
+  if (config.publisher_io_threads != 0) {
     connection_options.set_background_thread_pool_size(
         config.publisher_io_threads);
   }
