@@ -34,22 +34,10 @@ if (BUILD_TESTING)
         throughput_result.h)
     target_link_libraries(
         storage_benchmarks
-        PUBLIC storage_client storage_client_testing
+        PUBLIC storage_client storage_client_testing google_cloud_cpp_testing
                google_cloud_cpp_grpc_utils googleapis-c++::storage_protos
                CURL::libcurl)
     google_cloud_cpp_add_common_options(storage_benchmarks)
-
-    include(CheckCXXSymbolExists)
-    check_cxx_symbol_exists(getrusage sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
-    check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
-    target_compile_definitions(
-        storage_benchmarks
-        PUBLIC
-            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
-            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
-    )
 
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)

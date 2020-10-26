@@ -19,14 +19,12 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "google/cloud/testing_util/timer.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
 #include <sstream>
 #include <string>
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-#include <sys/resource.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
 namespace google {
 namespace cloud {
@@ -47,39 +45,7 @@ using ::google::cloud::testing_util::ParseBoolean;
 using ::google::cloud::testing_util::ParseBufferSize;
 using ::google::cloud::testing_util::ParseDuration;
 using ::google::cloud::testing_util::ParseSize;
-
-class SimpleTimer {
- public:
-  SimpleTimer() = default;
-
-  /// Start the timer, call before the code being measured.
-  void Start();
-
-  /// Stop the timer, call after the code being measured.
-  void Stop();
-
-  //@{
-  /**
-   * @name Measurement results.
-   *
-   * @note The values are only valid after calling Start() and Stop().
-   */
-  std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
-  std::chrono::microseconds cpu_time() const { return cpu_time_; }
-  std::string const& annotations() const { return annotations_; }
-  //@}
-
-  static bool SupportPerThreadUsage();
-
- private:
-  std::chrono::steady_clock::time_point start_;
-  std::chrono::microseconds elapsed_time_;
-  std::chrono::microseconds cpu_time_;
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  struct rusage start_usage_;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  std::string annotations_;
-};
+using ::google::cloud::testing_util::Timer;
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count);

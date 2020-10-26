@@ -31,6 +31,7 @@ google_cloud_cpp_testing_hdrs = [
     "scoped_thread.h",
     "status_matchers.h",
     "testing_types.h",
+    "timer.h",
 ]
 
 google_cloud_cpp_testing_srcs = [
@@ -41,4 +42,5 @@ google_cloud_cpp_testing_srcs = [
     "example_driver.cc",
     "scoped_environment.cc",
     "testing_types.cc",
+    "timer.cc",
 ]

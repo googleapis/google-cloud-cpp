@@ -18,10 +18,35 @@ licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
+config_setting(
+    name = "windows",
+    values = {"cpu": "x64_windows"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "linux_x86_64",
+    values = {"cpu": "k8"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "macos",
+    values = {"cpu": "darwin"},
+    visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "google_cloud_cpp_testing",
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
+    defines = select({
+        ":linux_x86_64": [
+            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=1",
+            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE_THREAD=1",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_absl//absl/debugging:failure_signal_handler",
