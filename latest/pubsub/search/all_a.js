@@ -50,7 +50,7 @@ var searchData=
   ['mocksubscriberconnection',['MockSubscriberConnection',['../classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockSubscriberConnection.html',1,'google::cloud::pubsub_mocks::v1']]],
   ['mocksubscriptionadminconnection',['MockSubscriptionAdminConnection',['../classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockSubscriptionAdminConnection.html',1,'google::cloud::pubsub_mocks::v1']]],
   ['mocktopicadminconnection',['MockTopicAdminConnection',['../classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockTopicAdminConnection.html',1,'google::cloud::pubsub_mocks::v1']]],
-  ['modifypushconfig',['ModifyPushConfig',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab966db6182917f116f73df5d39fb234d',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['modifypushconfig',['ModifyPushConfig',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af3db0b218a96c4b65ea8f52bb4f75449',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
   ['modifypushconfigparams',['ModifyPushConfigParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ModifyPushConfigParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
   ['modifypushsubscription',['ModifyPushSubscription',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8ef97d5d66bd3dc034b9433222332b1d',1,'google::cloud::pubsub::v1::SubscriptionAdminClient']]]
 ];
