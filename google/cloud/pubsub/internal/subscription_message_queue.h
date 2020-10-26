@@ -38,7 +38,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * `SubscriptionSession` and go/cloud-cxx:pub-sub-subscriptions-dd for more
  * details.
  *
- * The next stage setups a callback in `Start()` to receive messages from this
+ * The next stage sets up a callback in `Start()` to receive messages from this
  * stage. This stage keeps a queue of messages ready to run, the next stage
  * drains the queue by calling `Read(n)` which allow this stage to send up to
  * `n` messages. After `n` messages are sent more calls to `Read(n)` *are*

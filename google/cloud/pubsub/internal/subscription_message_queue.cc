@@ -115,20 +115,21 @@ void SubscriptionMessageQueue::OnRead(
 void SubscriptionMessageQueue::Shutdown(std::unique_lock<std::mutex> lk) {
   shutdown_ = true;
   available_slots_ = 0;
-  auto ack_ids = [&](std::unique_lock<std::mutex>) {
-    std::vector<std::string> ack_ids;
-    for (auto& kv : queues_) {
-      for (auto& m : kv.second) {
-        ack_ids.push_back(std::move(*m.mutable_ack_id()));
-      }
-    }
-    queues_.clear();
-    for (auto& m : runnable_messages_) {
+  QueueByOrderingKey queues;
+  queues.swap(queues_);
+  std::deque<google::pubsub::v1::ReceivedMessage> runnable_messages;
+  runnable_messages.swap(runnable_messages_);
+  lk.unlock();
+
+  std::vector<std::string> ack_ids;
+  for (auto& kv : queues) {
+    for (auto& m : kv.second) {
       ack_ids.push_back(std::move(*m.mutable_ack_id()));
     }
-    runnable_messages_.clear();
-    return ack_ids;
-  }(std::move(lk));
+  }
+  for (auto& m : runnable_messages) {
+    ack_ids.push_back(std::move(*m.mutable_ack_id()));
+  }
 
   if (ack_ids.empty()) return;
   source_->BulkNack(std::move(ack_ids));
