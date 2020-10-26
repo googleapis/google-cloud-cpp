@@ -18,6 +18,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
@@ -34,52 +35,18 @@ namespace storage_benchmarks {
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::storage::testing::MakeRandomFileName;
 using ::google::cloud::storage::testing::MakeRandomObjectName;
-
-constexpr std::int64_t kKiB = 1024;
-constexpr std::int64_t kMiB = 1024 * kKiB;
-constexpr std::int64_t kGiB = 1024 * kMiB;
-constexpr std::int64_t kTiB = 1024 * kGiB;
-
-constexpr std::int64_t kKB = 1000;
-constexpr std::int64_t kMB = 1000 * kKB;
-constexpr std::int64_t kGB = 1000 * kMB;
-constexpr std::int64_t kTB = 1000 * kGB;
-
-/// Parse a string as a byte size, with support for unit suffixes.
-std::int64_t ParseSize(std::string const& val);
-
-/**
- * Parse a string as a byte size, with support for unit suffixes.
- *
- * The size must be small enough for an in-memory buffer.
- */
-std::size_t ParseBufferSize(std::string const& val);
-
-/// Parse a string as a duration with support for hours (h), minutes (m), or
-/// second (s) suffixes.
-std::chrono::seconds ParseDuration(std::string const& val);
-
-/// Parse a string as a boolean, with a default value if the string is empty.
-absl::optional<bool> ParseBoolean(std::string const& val);
-
-/// Defines a command-line option.
-struct OptionDescriptor {
-  using OptionParser = std::function<void(std::string const&)>;
-
-  std::string option;
-  std::string help;
-  OptionParser parser;
-};
-
-/// Build the `Usage` string from a list of command-line option descriptions.
-std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
-                       std::string const& command_path);
-
-/**
- * Parse @p argv using the descriptions in @p desc, return unparsed arguments.
- */
-std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
-                                      std::vector<std::string> argv);
+using ::google::cloud::testing_util::kGB;
+using ::google::cloud::testing_util::kGiB;
+using ::google::cloud::testing_util::kKB;
+using ::google::cloud::testing_util::kKiB;
+using ::google::cloud::testing_util::kMB;
+using ::google::cloud::testing_util::kMiB;
+using ::google::cloud::testing_util::kTB;
+using ::google::cloud::testing_util::kTiB;
+using ::google::cloud::testing_util::ParseBoolean;
+using ::google::cloud::testing_util::ParseBufferSize;
+using ::google::cloud::testing_util::ParseDuration;
+using ::google::cloud::testing_util::ParseSize;
 
 class SimpleTimer {
  public:
@@ -113,8 +80,6 @@ class SimpleTimer {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   std::string annotations_;
 };
-
-std::string FormatSize(std::uintmax_t size);
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count);

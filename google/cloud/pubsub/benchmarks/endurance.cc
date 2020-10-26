@@ -20,6 +20,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/memory/memory.h"
 #include <chrono>
 #include <iostream>
@@ -457,63 +458,9 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
   if (last_publish.valid()) last_publish.get();
 }
 
-struct OptionDescriptor {
-  using OptionParser = std::function<void(std::string const&)>;
-
-  std::string option;
-  std::string help;
-  OptionParser parser;
-};
-
-std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
-                       std::string const& command_path) {
-  std::ostringstream os;
-  os << "Usage: " << command_path << " [options] <region>\n";
-  for (auto const& d : desc) {
-    os << "    " << d.option << ": " << d.help << "\n";
-  }
-  return std::move(os).str();
-}
-
-std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
-                                      std::vector<std::string> argv) {
-  if (argv.empty()) {
-    return argv;
-  }
-  std::string const usage = BuildUsage(desc, argv[0]);
-
-  auto next_arg = argv.begin() + 1;
-  while (next_arg != argv.end()) {
-    std::string const& argument = *next_arg;
-
-    // Try to match `argument` against the options in `desc`
-    bool matched = false;
-    for (auto const& d : desc) {
-      if (argument.rfind(d.option, 0) != 0) {
-        // Not a match, keep searching
-        continue;
-      }
-      std::string val = argument.substr(d.option.size());
-      if (!val.empty() && val[0] != '=') {
-        // Matched a prefix of an option, keep searching.
-        continue;
-      }
-      if (!val.empty()) {
-        // The first character must be '=', remove it too.
-        val.erase(val.begin());
-      }
-      d.parser(val);
-      // This is a match, consume the argument and stop the search.
-      matched = true;
-      break;
-    }
-    // If next_arg is matched against any option erase it, otherwise skip it.
-    next_arg = matched ? argv.erase(next_arg) : next_arg + 1;
-  }
-  return argv;
-}
-
-using google::cloud::internal::GetEnv;
+using ::google::cloud::internal::GetEnv;
+using ::google::cloud::testing_util::OptionDescriptor;
+using ::google::cloud::testing_util::ParseDuration;
 
 google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
                                               std::string const& description) {
@@ -561,11 +508,11 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        }},
       {"--minimum-runtime", "run for at least this time",
        [&options](std::string const& val) {
-         options.minimum_runtime = std::chrono::seconds(std::stoi(val));
+         options.minimum_runtime = ParseDuration(val);
        }},
       {"--maximum-runtime", "run for at most this time",
        [&options](std::string const& val) {
-         options.maximum_runtime = std::chrono::seconds(std::stoi(val));
+         options.maximum_runtime = ParseDuration(val);
        }},
   };
   auto const usage = BuildUsage(desc, args[0]);
@@ -621,8 +568,8 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
           "--session-count=1",
           "--minimum-samples=1",
           "--maximum-samples=10",
-          "--minimum-runtime=0",
-          "--maximum-runtime=10",
+          "--minimum-runtime=0s",
+          "--maximum-runtime=2s",
       },
       kDescription);
 }

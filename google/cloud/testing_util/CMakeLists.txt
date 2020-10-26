@@ -24,6 +24,8 @@ if (BUILD_TESTING)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
+        command_line_parsing.cc
+        command_line_parsing.h
         contains_once.h
         crash_handler.cc
         crash_handler.h
@@ -48,6 +50,7 @@ if (BUILD_TESTING)
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
         assert_ok_test.cc
+        command_line_parsing_test.cc
         contains_once_test.cc
         crash_handler_test.cc
         example_driver_test.cc

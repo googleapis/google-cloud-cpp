@@ -161,7 +161,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
   # because they produce false positives when run on headers.
   # For more details, see issue #4230.
   run_clang_tidy "${HEADER_FILTER_REGEX}" \
-    '-checks="-misc-unused-using-decls,-readability-redundant-declaration"'
+    --checks="-misc-unused-using-decls,-readability-redundant-declaration"
 
   # We don't need to exclude any checks for source files.
   run_clang_tidy "${SOURCE_FILTER_REGEX}"
