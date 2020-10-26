@@ -59,9 +59,6 @@ std::chrono::seconds ParseDuration(std::string const& val) {
 }
 
 absl::optional<bool> ParseBoolean(std::string const& val) {
-  if (val.empty()) {
-    return {};
-  }
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
                  [](char x) { return static_cast<char>(std::tolower(x)); });
@@ -98,8 +95,8 @@ std::string FormatSize(std::uintmax_t size) {
 }
 
 std::string Basename(std::string const& path) {
-  // With C++17 we would use `std::filesystem::path`, until then do the poor's
-  // person version.
+  // With C++17 we would use `std::filesystem::path`, until then use
+  // `find_last_of()`
 #if _WIN32
   return path.substr(path.find_last_of("\\/") + 1);
 #else

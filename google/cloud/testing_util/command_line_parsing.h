@@ -51,7 +51,8 @@ std::size_t ParseBufferSize(std::string const& val);
 /// second (s) suffixes.
 std::chrono::seconds ParseDuration(std::string const& val);
 
-/// Parse a string as a boolean, with a default value if the string is empty.
+/// Parse a string as a boolean, returning a not-present value if the string is
+/// empty.
 absl::optional<bool> ParseBoolean(std::string const& val);
 
 /// Defines a command-line option.
