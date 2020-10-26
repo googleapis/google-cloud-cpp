@@ -81,8 +81,6 @@ class SimpleTimer {
   std::string annotations_;
 };
 
-std::string FormatSize(std::uintmax_t size);
-
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count);
 
