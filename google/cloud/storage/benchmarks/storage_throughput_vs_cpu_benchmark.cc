@@ -287,7 +287,7 @@ TestResults RunThread(ThroughputOptions const& options,
 
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
-  gcs_bm::CpuUsage timer;
+  gcs_bm::Timer timer;
   TestResults results;
 
   std::int32_t iteration_count = 0;

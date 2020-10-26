@@ -210,7 +210,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (!CpuUsage::SupportPerThreadUsage() && options.thread_count > 1) {
+  if (!Timer::SupportPerThreadUsage() && options.thread_count > 1) {
     std::cerr <<
         R"""(
 # WARNING

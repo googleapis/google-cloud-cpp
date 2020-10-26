@@ -21,7 +21,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/cpu_usage.h"
+#include "google/cloud/testing_util/timer.h"
 #include "absl/memory/memory.h"
 #include "absl/time/civil_time.h"
 #include <google/spanner/v1/result_set.pb.h>
@@ -234,7 +234,7 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-using ::google::cloud::testing_util::CpuUsage;
+using ::google::cloud::testing_util::Timer;
 
 struct BoolTraits {
   using native_type = bool;
@@ -585,7 +585,7 @@ class ReadExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    CpuUsage overall;
+    Timer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -663,7 +663,7 @@ class ReadExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySet(config);
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
 
       google::spanner::v1::ReadRequest request{};
@@ -744,7 +744,7 @@ class ReadExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySet(config);
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
       auto rows = client.Read(table_name_, key, column_names);
       int row_count = 0;
@@ -806,7 +806,7 @@ class SelectExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    CpuUsage overall;
+    Timer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -882,7 +882,7 @@ class SelectExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySetBegin(config);
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
@@ -966,7 +966,7 @@ class SelectExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = impl_.RandomKeySetBegin(config);
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
       auto rows = client.ExecuteQuery(spanner::SqlStatement(
           statement, {{"begin", spanner::Value(key)},
@@ -1045,7 +1045,7 @@ class UpdateExperiment : public Experiment {
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    CpuUsage overall;
+    Timer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -1131,7 +1131,7 @@ class UpdateExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
@@ -1227,7 +1227,7 @@ class UpdateExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
       std::unordered_map<std::string, spanner::Value> const params{
           {"key", spanner::Value(key)},      {"v0", spanner::Value(values[0])},
@@ -1313,7 +1313,7 @@ class MutationExperiment : public Experiment {
     std::shuffle(random_keys_.begin(), random_keys_.end(), generator);
 
     // Capture some overall getrusage() statistics as comments.
-    CpuUsage overall;
+    Timer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
@@ -1409,7 +1409,7 @@ class MutationExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
 
       grpc::ClientContext context;
@@ -1491,7 +1491,7 @@ class MutationExperiment : public Experiment {
           impl_.GenerateRandomValue(), impl_.GenerateRandomValue(),
       };
 
-      CpuUsage timer;
+      Timer timer;
       timer.Start();
 
       int row_count = 0;

@@ -19,7 +19,7 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
-#include "google/cloud/testing_util/cpu_usage.h"
+#include "google/cloud/testing_util/timer.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
@@ -33,7 +33,6 @@ namespace storage_benchmarks {
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::storage::testing::MakeRandomFileName;
 using ::google::cloud::storage::testing::MakeRandomObjectName;
-using ::google::cloud::testing_util::CpuUsage;
 using ::google::cloud::testing_util::kGB;
 using ::google::cloud::testing_util::kGiB;
 using ::google::cloud::testing_util::kKB;
@@ -46,6 +45,7 @@ using ::google::cloud::testing_util::ParseBoolean;
 using ::google::cloud::testing_util::ParseBufferSize;
 using ::google::cloud::testing_util::ParseDuration;
 using ::google::cloud::testing_util::ParseSize;
+using ::google::cloud::testing_util::Timer;
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count);

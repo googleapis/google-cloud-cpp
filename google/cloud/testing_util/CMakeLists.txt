@@ -27,8 +27,6 @@ if (BUILD_TESTING)
         command_line_parsing.cc
         command_line_parsing.h
         contains_once.h
-        cpu_usage.cc
-        cpu_usage.h
         crash_handler.cc
         crash_handler.h
         example_driver.cc
@@ -40,7 +38,9 @@ if (BUILD_TESTING)
         scoped_thread.h
         status_matchers.h
         testing_types.cc
-        testing_types.h)
+        testing_types.h
+        timer.cc
+        timer.h)
     target_link_libraries(
         google_cloud_cpp_testing
         PUBLIC absl::symbolize absl::failure_signal_handler

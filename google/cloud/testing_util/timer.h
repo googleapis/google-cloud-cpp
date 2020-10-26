@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CPU_USAGE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CPU_USAGE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_TIMER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_TIMER_H
 
 #include "google/cloud/version.h"
 #include <chrono>
@@ -26,9 +26,9 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-class CpuUsage {
+class Timer {
  public:
-  CpuUsage() = default;
+  Timer() = default;
 
   /// Start the timer, call before the code being measured.
   void Start();
@@ -64,4 +64,4 @@ class CpuUsage {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CPU_USAGE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_TIMER_H

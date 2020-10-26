@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/testing_util/cpu_usage.h"
+#include "google/cloud/testing_util/timer.h"
 #include <sstream>
 
 namespace google {
@@ -32,14 +32,14 @@ int rusage_who() {
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
-void CpuUsage::Start() {
+void Timer::Start() {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   (void)getrusage(rusage_who(), &start_usage_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   start_ = std::chrono::steady_clock::now();
 }
 
-void CpuUsage::Stop() {
+void Timer::Stop() {
   elapsed_time_ = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::steady_clock::now() - start_);
 
@@ -92,7 +92,7 @@ void CpuUsage::Stop() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
-bool CpuUsage::SupportPerThreadUsage() {
+bool Timer::SupportPerThreadUsage() {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   return true;
 #else
