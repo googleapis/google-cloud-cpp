@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 
@@ -22,6 +23,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -205,6 +207,15 @@ TEST(RangeFromPagination, IteratorCoverage) {
   EXPECT_THAT(item.status().message(), HasSubstr("bad-luck"));
   ++i1;
   EXPECT_TRUE(i1 == range.end());
+}
+
+TEST(RangeFromPagination, Unimplemented) {
+  using NonProtoRange = PaginationRange<std::string, Request, Response>;
+
+  NonProtoRange range = UnimplementedPaginationRange<NonProtoRange>::Create();
+  auto i = range.begin();
+  EXPECT_NE(i, range.end());
+  EXPECT_THAT(*i, StatusIs(StatusCode::kUnimplemented));
 }
 
 }  // namespace
