@@ -62,13 +62,12 @@ template <typename T, typename... Ps>
 std::function<bool(T const&)> GenericAll(Ps&&... p) {
   std::vector<std::function<bool(T const&)>> predicates(
       {std::forward<Ps>(p)...});
-  auto r = [predicates](T const& m) -> bool {
+  return [predicates](T const& m) -> bool {
     for (auto const& p : predicates) {
       if (!p(m)) return false;
     }
     return true;
   };
-  return r;
 }
 
 template <typename... Ps>
@@ -85,13 +84,12 @@ template <typename T, typename... Ps>
 std::function<bool(T const&)> GenericAny(Ps&&... p) {
   std::vector<std::function<bool(T const&)>> predicates(
       {std::forward<Ps>(p)...});
-  auto r = [predicates](T const& m) -> bool {
+  return [predicates](T const& m) -> bool {
     for (auto const& p : predicates) {
       if (p(m)) return true;
     }
     return false;
   };
-  return r;
 }
 
 template <typename... Ps>
