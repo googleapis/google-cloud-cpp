@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=31
+ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
 
 # Install the tools necessary to run Bazel and CMake Super builds.
