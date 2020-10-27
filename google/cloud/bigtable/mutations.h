@@ -378,7 +378,6 @@ class SingleRowMutation {
 
   void emplace_many(Mutation m) { emplace_back(std::move(m)); }
 
- private:
   ::google::bigtable::v2::MutateRowRequest request_;
 };
 
@@ -549,7 +548,6 @@ class BulkMutation {
 
   void emplace_many(SingleRowMutation m) { emplace_back(std::move(m)); }
 
- private:
   google::bigtable::v2::MutateRowsRequest request_;
 };
 

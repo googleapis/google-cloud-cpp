@@ -168,9 +168,9 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
   //   http://man7.org/linux/man-pages/man4/full.4.html
   // I (coryan@) did not know about it, so I thought a longer comment may be in
   // order.
-  auto file_name = "/dev/full";
+  auto constexpr kFileName = "/dev/full";
 
-  auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
+  auto status = client->DownloadToFile(bucket_name_, object_name, kFileName);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.message(), HasSubstr(object_name)) << "status=" << status;
 

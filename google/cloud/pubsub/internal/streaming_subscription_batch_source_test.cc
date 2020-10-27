@@ -229,6 +229,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
+          // NOLINTNEXTLINE(performance-no-automatic-move)
           [transient](F) { return transient; });
     };
 
@@ -292,6 +293,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
+          // NOLINTNEXTLINE(performance-no-automatic-move)
           [transient](F) { return transient; });
     };
 

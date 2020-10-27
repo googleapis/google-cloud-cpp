@@ -145,8 +145,8 @@ namespace internal {
 
 // Construction from a base64-encoded US-ASCII `std::string`.
 StatusOr<Bytes> BytesFromBase64(std::string input) {
-  auto* p = reinterpret_cast<unsigned char const*>(input.data());
-  auto* ep = p + input.size();
+  auto const* p = reinterpret_cast<unsigned char const*>(input.data());
+  auto const* ep = p + input.size();
   while (ep - p >= 4) {
     auto i0 = kCharToIndexExcessOne[p[0]];
     auto i1 = kCharToIndexExcessOne[p[1]];

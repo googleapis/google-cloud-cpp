@@ -90,7 +90,7 @@ TEST_F(LoggingResultSetReaderTest, Finish) {
   Status const expected_status = Status(StatusCode::kOutOfRange, "weird");
   auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Finish()).WillOnce([expected_status] {
-    return expected_status;
+    return expected_status;  // NOLINT(performance-no-automatic-move)
   });
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   auto status = reader.Finish();

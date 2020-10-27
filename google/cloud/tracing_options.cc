@@ -24,10 +24,10 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 absl::optional<bool> ParseBoolean(std::string const& str) {
-  for (const auto t : {"Y", "y", "T", "t", "1", "on"}) {
+  for (auto const* t : {"Y", "y", "T", "t", "1", "on"}) {
     if (str == t) return true;
   }
-  for (const auto f : {"N", "n", "F", "f", "0", "off"}) {
+  for (auto const* f : {"N", "n", "F", "f", "0", "off"}) {
     if (str == f) return false;
   }
   return {};

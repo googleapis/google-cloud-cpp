@@ -190,7 +190,6 @@ class RowRange {
     return AboveEnd(RowKeyType(key));
   }
 
- private:
   ::google::bigtable::v2::RowRange row_range_;
 };
 

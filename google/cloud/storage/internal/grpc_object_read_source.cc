@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -61,7 +62,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       return source;
     }
     auto const nbytes = std::min(n - offset, source.size());
-    std::memcpy(buf + offset, source.data(), nbytes);
+    std::copy(source.data(), source.data() + nbytes, buf + offset);
     offset += nbytes;
     source.erase(0, nbytes);
     return source;
@@ -79,7 +80,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
           std::move(*response.mutable_checksummed_data()->mutable_content()));
     }
     if (response.has_object_checksums()) {
-      auto& checksums = response.object_checksums();
+      auto const& checksums = response.object_checksums();
       if (checksums.has_crc32c()) {
         headers.emplace("x-goog-hash", "crc32c=" + GrpcClient::Crc32cFromProto(
                                                        checksums.crc32c()));

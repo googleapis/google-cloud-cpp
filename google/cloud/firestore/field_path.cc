@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/firestore/field_path.h"
-#include <array>
+#include <algorithm>
 #include <cctype>
 
 namespace google {
@@ -22,13 +22,8 @@ namespace firestore {
 
 FieldPath::FieldPath(std::vector<std::string> parts)
     : parts_(std::move(parts)) {
-  for (auto const& part : parts_) {
-    if (part.empty()) {
-      this->valid_ = false;
-      return;
-    }
-  }
-  this->valid_ = true;
+  this->valid_ = std::all_of(parts_.begin(), parts_.end(),
+                             [](std::string const& p) { return !p.empty(); });
 }
 
 FieldPath FieldPath::InvalidFieldPath() {
@@ -120,13 +115,7 @@ std::ostream& operator<<(std::ostream& os, FieldPath const& field_path) {
 }
 
 bool FieldPath::InvalidCharacters(std::string const& string) {
-  std::array<char, 6> const invalid_chars = {"~*/[]"};
-  for (auto const invalid_char : invalid_chars) {
-    if (string.find(invalid_char) != std::string::npos) {
-      return true;
-    }
-  }
-  return false;
+  return string.find_first_of("~*/[]") != std::string::npos;
 }
 
 std::vector<std::string> FieldPath::Split(std::string string) {

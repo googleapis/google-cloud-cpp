@@ -65,7 +65,6 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
 
- protected:
   std::string project_id_;
   std::string zone_a_;
   std::string zone_b_;

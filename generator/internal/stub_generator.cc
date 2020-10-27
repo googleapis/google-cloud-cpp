@@ -70,8 +70,8 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
-    PrintMethod(*method, header_, MergeServiceAndMethodVars(*method),
+    auto const& method = *service_descriptor_->method(i);
+    PrintMethod(method, header_, MergeServiceAndMethodVars(method),
                 {MethodPattern(
                     {{IsResponseTypeEmpty,
                       // clang-format off
@@ -119,10 +119,10 @@ Status StubGenerator::GenerateHeader() {
                       // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     // emit methods
     PrintMethod(
-        *method, header_, MergeServiceAndMethodVars(*method),
+        method, header_, MergeServiceAndMethodVars(method),
         {MethodPattern({{IsResponseTypeEmpty,
                          // clang-format off
     "  Status\n",
@@ -196,9 +196,9 @@ Status StubGenerator::GenerateCc() {
 
   // default stub class member methods
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
             {{IsResponseTypeEmpty,
               // clang-format off

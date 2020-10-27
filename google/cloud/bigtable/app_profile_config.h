@@ -61,7 +61,6 @@ class AppProfileConfig {
  private:
   AppProfileConfig() = default;
 
- private:
   google::bigtable::admin::v2::CreateAppProfileRequest proto_;
 };
 

@@ -162,7 +162,7 @@ void ReadKeysSet(std::vector<std::string> argv) {
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) throw std::runtime_error(row.status().message());
       std::cout << row->row_key() << ":\n";
-      for (auto& cell : row->cells()) {
+      for (auto const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"

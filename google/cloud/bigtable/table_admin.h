@@ -1330,7 +1330,7 @@ class TableAdmin {
   }
 
   /// Return the fully qualified name of a Cluster.
-  std::string ClusterName(std::string const& cluster_id) {
+  std::string ClusterName(std::string const& cluster_id) const {
     return instance_name() + "/clusters/" + cluster_id;
   }
 

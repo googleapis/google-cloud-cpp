@@ -41,7 +41,7 @@ namespace internal {
 template <typename Derived, typename T>
 class ComplexOption {
  public:
-  ComplexOption() : value_{} {}
+  ComplexOption() = default;
   explicit ComplexOption(T value) : value_(std::move(value)) {}
 
   char const* option_name() const { return Derived::name(); }

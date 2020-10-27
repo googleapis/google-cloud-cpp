@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/connection_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/memory/memory.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
@@ -65,9 +64,9 @@ Status ConnectionGenerator::GenerateHeader() {
 
   // List*Range types
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, header_, MergeServiceAndMethodVars(*method),
+        method, header_, MergeServiceAndMethodVars(method),
         {MethodPattern(
             {
                 // clang-format off
@@ -91,9 +90,9 @@ Status ConnectionGenerator::GenerateHeader() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, header_, MergeServiceAndMethodVars(*method),
+        method, header_, MergeServiceAndMethodVars(method),
         {MethodPattern(
              {
                  {IsResponseTypeEmpty,
@@ -194,9 +193,9 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
              {
                  {IsResponseTypeEmpty,
@@ -309,9 +308,9 @@ Status ConnectionGenerator::GenerateCc() {
   //  clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
              {
                  {IsResponseTypeEmpty,
@@ -444,9 +443,9 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
             {
                 {IsResponseTypeEmpty,

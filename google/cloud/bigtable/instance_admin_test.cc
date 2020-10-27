@@ -523,11 +523,11 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
         EXPECT_NE(nullptr, response);
         response->set_version(3);
         response->set_etag("random-tag");
-        auto new_binding = response->add_bindings();
-        new_binding->set_role("writer");
-        new_binding->add_members("abc@gmail.com");
-        new_binding->add_members("xyz@gmail.com");
-        new_binding->set_allocated_condition(new google::type::Expr);
+        auto& new_binding = *response->add_bindings();
+        new_binding.set_role("writer");
+        new_binding.add_members("abc@gmail.com");
+        new_binding.add_members("xyz@gmail.com");
+        new_binding.set_allocated_condition(new google::type::Expr);
 
         return grpc::Status::OK;
       });
@@ -1158,10 +1158,10 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
 
-        auto new_binding = response->add_bindings();
-        new_binding->set_role("writer");
-        new_binding->add_members("abc@gmail.com");
-        new_binding->add_members("xyz@gmail.com");
+        auto& new_binding = *response->add_bindings();
+        new_binding.set_role("writer");
+        new_binding.add_members("abc@gmail.com");
+        new_binding.add_members("xyz@gmail.com");
         response->set_etag("test-tag");
         *status = grpc::Status::OK;
       });
@@ -1210,10 +1210,10 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicy) {
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
 
-        auto new_binding = response->add_bindings();
-        new_binding->set_role("writer");
-        new_binding->add_members("abc@gmail.com");
-        new_binding->add_members("xyz@gmail.com");
+        auto& new_binding = *response->add_bindings();
+        new_binding.set_role("writer");
+        new_binding.add_members("abc@gmail.com");
+        new_binding.add_members("xyz@gmail.com");
         response->set_etag("test-tag");
         *status = grpc::Status::OK;
       });

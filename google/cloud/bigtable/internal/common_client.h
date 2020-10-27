@@ -133,7 +133,6 @@ class CommonClient {
     return current;
   }
 
- private:
   std::mutex mu_;
   ClientOptions options_;
   std::vector<ChannelPtr> channels_;

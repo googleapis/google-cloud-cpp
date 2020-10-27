@@ -45,7 +45,7 @@ TEST(StorageMockingSamples, MockReadObject) {
   std::string const text = "this is a mock http response";
   std::size_t offset = 0;
   // Simulate a Read() call in the MockObjectReadSource object created below
-  auto simulate_read = [&text, &offset](char* buf, std::size_t n) {
+  auto simulate_read = [&text, &offset](void* buf, std::size_t n) {
     auto const l = (std::min)(n, text.size() - offset);
     std::memcpy(buf, text.data() + offset, l);
     offset += l;

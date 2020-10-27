@@ -37,7 +37,7 @@ struct OperationResult {
 struct BenchmarkResult {
   std::chrono::milliseconds elapsed;
   std::deque<OperationResult> operations;
-  long row_count;  // NOLINT(google-runtime-int)
+  std::int64_t row_count;
 };
 
 /**
@@ -67,7 +67,7 @@ class Benchmark {
   std::string MakeRandomKey(google::cloud::internal::DefaultPRNG& gen) const;
 
   /// Return the key for row @p id.
-  std::string MakeKey(long id) const;  // NOLINT(google-runtime-int)
+  std::string MakeKey(std::int64_t id) const;
 
   /// Measure the time to compute an operation.
   template <typename Operation>
@@ -120,8 +120,7 @@ class Benchmark {
  private:
   /// Populate the table rows in the range [@p begin, @p end)
   google::cloud::StatusOr<BenchmarkResult> PopulateTableShard(
-      bigtable::Table& table, long begin,  // NOLINT(google-runtime-int)
-      long end);                           // NOLINT(google-runtime-int)
+      bigtable::Table& table, std::int64_t begin, std::int64_t end) const;
 
   /**
    * Return how much space to reserve for digits if the table has @p table_size
@@ -129,7 +128,6 @@ class Benchmark {
    */
   int KeyWidth() const;
 
- private:
   BenchmarkSetup setup_;
   int key_width_;
   bigtable::ClientOptions client_options_;

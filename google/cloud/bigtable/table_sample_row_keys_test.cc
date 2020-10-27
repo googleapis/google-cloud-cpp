@@ -19,35 +19,39 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <typeinfo>
 
-namespace bigtable = google::cloud::bigtable;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
-using ::testing::_;
-using ::testing::Return;
-
-/// Define types and functions used for this tests.
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
-class TableSampleRowKeysTest : public bigtable::testing::TableTestFixture {};
-using bigtable::testing::MockSampleRowKeysReader;
-}  // anonymous namespace
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::bigtable::testing::MockSampleRowKeysReader;
+using ::testing::Return;
+using ::testing::Unused;
+
+using TableSampleRowKeysTest =
+    ::google::cloud::bigtable::testing::TableTestFixture;
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
 TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader =
-      new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(reader->MakeMockReturner());
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, SampleRowKeys).WillOnce([](Unused, Unused) {
+    auto reader = absl::make_unique<MockSampleRowKeysReader>(
+        "google.bigtable.v2.Bigtable.SampleRowKeys");
+    EXPECT_CALL(*reader, Read)
+        .WillOnce([](btproto::SampleRowKeysResponse* r) {
+          {
+            r->set_row_key("test1");
+            r->set_offset_bytes(11);
+          }
+          return true;
+        })
+        .WillOnce(Return(false));
+    EXPECT_CALL(*reader, Finish).WillOnce(Return(grpc::Status::OK));
+    return reader;
+  });
   auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
@@ -61,20 +65,21 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
 TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader =
-      new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(reader->MakeMockReturner());
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*client_, SampleRowKeys).WillOnce([](Unused, Unused) {
+    auto reader = absl::make_unique<MockSampleRowKeysReader>(
+        "google.bigtable.v2.Bigtable.SampleRowKeys");
+    EXPECT_CALL(*reader, Read)
+        .WillOnce([](btproto::SampleRowKeysResponse* r) {
+          {
+            r->set_row_key("test1");
+            r->set_offset_bytes(11);
+          }
+          return true;
+        })
+        .WillOnce(Return(false));
+    EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+    return reader;
+  });
   auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
@@ -87,46 +92,48 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
 TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
   namespace btproto = ::google::bigtable::v2;
 
-  auto reader =
-      new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
-  auto reader_retry =
-      new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(reader->MakeMockReturner())
-      .WillOnce(reader_retry->MakeMockReturner());
+  EXPECT_CALL(*client_, SampleRowKeys)
+      .WillOnce([](Unused, Unused) {
+        auto reader = absl::make_unique<MockSampleRowKeysReader>(
+            "google.bigtable.v2.Bigtable.SampleRowKeys");
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([](btproto::SampleRowKeysResponse* r) {
+              {
+                r->set_row_key("test1");
+                r->set_offset_bytes(11);
+              }
+              return true;
+            })
+            .WillOnce(Return(false));
 
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
+        EXPECT_CALL(*reader, Finish())
+            .WillOnce(Return(
+                grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+        return reader;
       })
-      .WillOnce(Return(false));
+      .WillOnce([](Unused, Unused) {
+        auto reader_retry = absl::make_unique<MockSampleRowKeysReader>(
+            "google.bigtable.v2.Bigtable.SampleRowKeys");
+        EXPECT_CALL(*reader_retry, Read)
+            .WillOnce([](btproto::SampleRowKeysResponse* r) {
+              {
+                r->set_row_key("test2");
+                r->set_offset_bytes(123);
+              }
+              return true;
+            })
+            .WillOnce([](btproto::SampleRowKeysResponse* r) {
+              {
+                r->set_row_key("test3");
+                r->set_offset_bytes(1234);
+              }
+              return true;
+            })
+            .WillOnce(Return(false));
 
-  EXPECT_CALL(*reader, Finish())
-      .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
-
-  EXPECT_CALL(*reader_retry, Read(_))
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test2");
-          r->set_offset_bytes(123);
-        }
-        return true;
-      })
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test3");
-          r->set_offset_bytes(1234);
-        }
-        return true;
-      })
-      .WillOnce(Return(false));
-
-  EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+        EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+        return reader_retry;
+      });
 
   auto results = table_.SampleRows();
   ASSERT_STATUS_OK(results);
@@ -148,44 +155,49 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
-  ::bigtable::Table custom_table(
+  Table custom_table(
       client_, "foo_table",
       // Configure the Table to stop at 3 failures.
-      ::bigtable::LimitedErrorCountRetryPolicy(2),
+      LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.
-      ::bigtable::ExponentialBackoffPolicy(10_us, 40_us),
-      ::bigtable::SafeIdempotentMutationPolicy());
+      ExponentialBackoffPolicy(10_us, 40_us), SafeIdempotentMutationPolicy());
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 =
-      new MockSampleRowKeysReader("google.bigtable.v2.Bigtable.SampleRowKeys");
-  EXPECT_CALL(*r1, Read(_))
-      .WillOnce([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-
-  auto create_cancelled_stream = [&](grpc::ClientContext*,
-                                     btproto::SampleRowKeysRequest const&) {
-    auto stream = new MockSampleRowKeysReader(
+  auto create_cancelled_stream = [](Unused, Unused) {
+    auto stream = absl::make_unique<MockSampleRowKeysReader>(
         "google.bigtable.v2.Bigtable.SampleRowKeys");
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish())
+    EXPECT_CALL(*stream, Read).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish)
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream->AsUniqueMocked();
+    return stream;
   };
 
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(r1->MakeMockReturner())
+  EXPECT_CALL(*client_, SampleRowKeys)
+      .WillOnce([](Unused, Unused) {
+        auto r1 = absl::make_unique<MockSampleRowKeysReader>(
+            "google.bigtable.v2.Bigtable.SampleRowKeys");
+        EXPECT_CALL(*r1, Read)
+            .WillOnce([](btproto::SampleRowKeysResponse* r) {
+              {
+                r->set_row_key("test1");
+                r->set_offset_bytes(11);
+              }
+              return true;
+            })
+            .WillOnce(Return(false));
+        EXPECT_CALL(*r1, Finish)
+            .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+        return r1;
+      })
       .WillOnce(create_cancelled_stream)
       .WillOnce(create_cancelled_stream);
 
   EXPECT_FALSE(custom_table.SampleRows());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

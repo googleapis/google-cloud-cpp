@@ -509,7 +509,7 @@ inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
  */
 class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
-  BucketMetadata() : project_number_(0) {}
+  BucketMetadata() = default;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
@@ -882,7 +882,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string location_;
   std::string location_type_;
   absl::optional<BucketLogging> logging_;
-  std::int64_t project_number_{0};
+  std::int64_t project_number_ = 0;
   absl::optional<BucketRetentionPolicy> retention_policy_;
   absl::optional<BucketVersioning> versioning_;
   absl::optional<BucketWebsite> website_;

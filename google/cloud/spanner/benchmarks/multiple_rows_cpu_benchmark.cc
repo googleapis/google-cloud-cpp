@@ -254,8 +254,10 @@ struct BytesTraits {
       google::cloud::internal::DefaultPRNG& generator) {
     static std::string const kPopulation = [] {
       std::string result;
-      for (int c = std::numeric_limits<char>::min();
-           c <= std::numeric_limits<char>::max(); ++c) {
+      // NOLINTNEXTLINE(bugprone-signed-char-misuse)
+      int constexpr kCharMin = (std::numeric_limits<char>::min)();
+      int constexpr kCharMax = (std::numeric_limits<char>::max)();
+      for (auto c = kCharMin; c <= kCharMax; ++c) {
         result.push_back(static_cast<char>(c));
       }
       return result;

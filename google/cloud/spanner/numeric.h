@@ -201,7 +201,8 @@ template <typename T,
           typename std::enable_if<std::numeric_limits<T>::is_integer &&
                                       !std::numeric_limits<T>::is_signed,
                                   int>::type = 0>
-StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
+StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
+    Numeric const& n, int exponent = 0) {
   std::string const& rep = n.ToString();
   if (exponent != 0) {
     auto const en = internal::MakeNumeric(rep, exponent);
@@ -238,7 +239,8 @@ template <typename T,
           typename std::enable_if<std::numeric_limits<T>::is_integer &&
                                       std::numeric_limits<T>::is_signed,
                                   int>::type = 0>
-StatusOr<T> ToInteger(Numeric const& n, int exponent = 0) {
+StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
+    Numeric const& n, int exponent = 0) {
   std::string const& rep = n.ToString();
   if (exponent != 0) {
     auto const en = internal::MakeNumeric(rep, exponent);

@@ -80,7 +80,7 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
 
 CurlRequestBuilder& CurlRequestBuilder::AddHeader(std::string const& header) {
   ValidateBuilderState(__func__);
-  auto new_header = curl_slist_append(headers_.get(), header.c_str());
+  auto* new_header = curl_slist_append(headers_.get(), header.c_str());
   (void)headers_.release();
   headers_.reset(new_header);
   return *this;
