@@ -87,7 +87,12 @@ echo "================================================================"
 io::log "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
 "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-  "${BAZEL_BIN}" fetch ...
+  "${BAZEL_BIN}" fetch ... \
+  @local_config_platform//... \
+  @local_config_cc_toolchains//... \
+  @local_config_sh//... \
+  @go_sdk//... \
+  @remotejdk11_linux//:jdk
 
 echo "================================================================"
 io::log "Compiling and running unit tests"

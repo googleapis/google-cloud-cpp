@@ -100,10 +100,20 @@ $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
-    bazel $common_flags fetch ...
+    # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+    # but are needed to compile the code
+    $external=@(
+        @local_config_platform//...
+        @local_config_cc_toolchains//...
+        @local_config_sh//...
+        @go_sdk//...
+        @remotejdk11_win//:jdk
+    )
+    bazel $common_flags fetch ... $external
     if ($LastExitCode -eq 0) {
         break
     }
+    Start-Sleep -Seconds (60 * $_)
 }
 
 # All the build_flags should be set by now, so we'll copy them, and add a few

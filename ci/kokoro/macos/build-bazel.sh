@@ -74,12 +74,22 @@ fi
 echo
 echo "================================================================"
 for repeat in 1 2 3; do
+  # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+  # but are needed to compile the code
+  external=(
+    @local_config_platform//...
+    @local_config_cc_toolchains//...
+    @local_config_sh//...
+    @go_sdk//...
+    @remotejdk11_macos//:jdk
+  )
   io::log_yellow "Fetch bazel dependencies [${repeat}/3]."
-  if "${BAZEL_BIN}" fetch ...; then
+  if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
     break
   else
     io::log_yellow "bazel fetch failed with $?"
   fi
+  sleep $((120 * repeat ))
 done
 
 echo

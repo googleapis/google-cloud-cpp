@@ -84,13 +84,23 @@ build_quickstart() {
   io::log "capture bazel version"
   ${BAZEL_BIN} version
   for repeat in 1 2 3; do
+    # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+    # but are needed to compile the code
+    external=(
+      @local_config_platform//...
+      @local_config_cc_toolchains//...
+      @local_config_sh//...
+      @go_sdk//...
+      @remotejdk11_macos//:jdk
+    )
     echo
     io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]."
-    if "${BAZEL_BIN}" fetch ...; then
+    if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
       break
     else
       io::log_yellow "bazel fetch failed with $?"
     fi
+    sleep $((120 * repeat ))
   done
 
   echo
