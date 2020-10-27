@@ -20,7 +20,14 @@
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/random.h"
+// TODO(#4501) - these hacks can be removed if #include <absl/...> works
+#include "google/cloud/internal/diagnostics_push.inc"
+#if _MSC_VER
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/container/flat_hash_map.h"
+// TODO(#4501) - end
+#include "google/cloud/internal/diagnostics_pop.inc"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <deque>
 #include <functional>
