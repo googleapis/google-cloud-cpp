@@ -350,7 +350,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    if (name == "POSTPolicyCharacterEscaping") {
+    if (name == "POSTPolicyCharacterEscaping" ||
+        name == "POSTPolicyWithAdditionalMetadata") {
       // Escaping is not supported if exceptions are unavailable.
       continue;
     }
