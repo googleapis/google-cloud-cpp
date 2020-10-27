@@ -20,7 +20,14 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include "absl/memory/memory.h"
+// TODO(#4501) - this file can be removed if #include <absl/...> works
+#include "google/cloud/internal/diagnostics_push.inc"
+#if _MSC_VER
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
 #include "absl/strings/substitute.h"
+// TODO(#4501) - end
+#include "google/cloud/internal/diagnostics_pop.inc"
 #include "absl/types/optional.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
