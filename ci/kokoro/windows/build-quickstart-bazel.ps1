@@ -103,12 +103,22 @@ $quickstart_args=@{
 ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
     Set-Location "${project_root}/google/cloud/${library}/quickstart"
     ForEach($_ in (1, 2, 3)) {
+        # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+        # but are needed to compile the code
+        $external=@(
+            "@local_config_platform//...",
+            "@local_config_cc_toolchains//...",
+            "@local_config_sh//...",
+            "@go_sdk//...",
+            "@remotejdk11_win//:jdk"
+        )
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "Fetch dependencies for ${library} [$_]"
-        bazel $common_flags fetch $build_flags ...
+        bazel $common_flags fetch $build_flags ... $external
         if ($LastExitCode -eq 0) {
             break
         }
+        Start-Sleep -Seconds (60 * $_)
     }
 
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
