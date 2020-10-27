@@ -89,7 +89,7 @@ for repeat in 1 2 3; do
   else
     io::log_yellow "bazel fetch failed with $?"
   fi
-  sleep $((120 * repeat ))
+  sleep $((120 * repeat))
 done
 
 echo

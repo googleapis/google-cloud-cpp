@@ -100,7 +100,7 @@ build_quickstart() {
     else
       io::log_yellow "bazel fetch failed with $?"
     fi
-    sleep $((120 * repeat ))
+    sleep $((120 * repeat))
   done
 
   echo
