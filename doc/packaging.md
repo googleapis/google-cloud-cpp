@@ -185,7 +185,7 @@ these dependencies.
 
 ## Table of Contents
 
-- [Fedora 31](#fedora-31)
+- [Fedora 33](#fedora-33)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
 - [Ubuntu (20.04 LTS - Focal Fossa)](#ubuntu-2004-lts---focal-fossa)
@@ -196,7 +196,7 @@ these dependencies.
 - [CentOS 8](#centos-8)
 - [CentOS 7](#centos-7)
 
-### Fedora (31)
+### Fedora (33)
 
 Install the minimal development tools:
 

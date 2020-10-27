@@ -19,8 +19,8 @@ FROM fedora:${DISTRO_VERSION}
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y clang clang-tools-extra cmake findutils gcc-c++ git \
-        llvm llvm-devel make ninja-build openssl-devel python3 python3-devel \
-        python3-lit python3-pip tar unzip which wget xz
+        llvm llvm-devel make ninja-build openssl-devel python3 python3.8 \
+        python3-devel python3-lit python3-pip tar unzip which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -79,6 +79,7 @@ RUN cmake --build .build-libcxx --target install-cxx
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
+ENV CLOUDSDK_PYTHON=python3.8
 RUN /var/tmp/ci/install-cloud-sdk.sh
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN dnf makecache && dnf install -y java-latest-openjdk
