@@ -20,6 +20,20 @@ release notes.
 Before beginning the release process, verify all CI builds are passing on
 master.
 
+### Update the API baseline
+
+Run the `update-abi` build to update the API baseline. Once you cut the release
+any new APIs are, well, released, and we should think carefully about removing
+them.
+
+```bash
+./ci/kokoro/docker/build.sh update-abi
+```
+
+This may take a while, leave it running while you perform the next step. You
+can, but are not required to, send a single PR to update the baseline and the
+`CHANGELOG.md` file.
+
 ### Update CHANGELOG.md
 
 Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
