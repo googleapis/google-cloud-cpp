@@ -2,6 +2,15 @@
 
 ## v1.20.0 - TBD
 
+### Storage
+
+**BREAKING CHANGES:**
+
+* Our public headers no longer include `nlohmann/json.hpp`. Please update your
+  code to directly include this header if you need it. We believe it is not a
+  good practice to depend on indirectly included headers, but do feel we should
+  warn our customers of this change.
+
 ### Pub/Sub
 
 **BREAKING CHANGES:**
