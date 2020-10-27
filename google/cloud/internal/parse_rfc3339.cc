@@ -208,7 +208,7 @@ std::chrono::system_clock::time_point ParseRfc3339(
     gmtime_s(&lcl, &now);
 #else
     gmtime_r(&now, &lcl);
-#endif                 // _WIN32
+#endif  // _WIN32
     lcl.tm_isdst = 0;  // Force use of the "standard" UTC offset.
     return std::chrono::seconds(mktime(&lcl) - now);
   }();
