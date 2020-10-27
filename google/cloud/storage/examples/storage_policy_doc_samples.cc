@@ -102,7 +102,7 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
       os << "  <input name='" << field.first << "' value='" << field.second
          << "' type='hidden' />\n";
     }
-    os << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
+    os << "  <input type='submit' value='Upload File' /><br />\n"
        << "  <input type='file' name='file' /><br />\n"
        << "</form>";
 
