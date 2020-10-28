@@ -28,9 +28,9 @@ vcpkg_dir="cmake-out/vcpkg-quickstart"
 if [[ -d "${vcpkg_dir}" ]]; then
   git -C "${vcpkg_dir}" pull --quiet
 else
-  git clone --quiet --shallow-since 2020-10-01 \
+  git clone --quiet --shallow-since 2020-10-20 \
     https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-  git -C "${vcpkg_dir}" checkout b999dfdfec58560df7978bd9e8bdb7476d29ef5f
+  git -C "${vcpkg_dir}" checkout 79e72302cdbbf8ca646879b13cd84ebd68707abf
 fi
 
 if [[ -d "cmake-out/vcpkg-quickstart-cache" && ! -d \
