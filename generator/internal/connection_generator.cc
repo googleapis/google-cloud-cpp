@@ -404,6 +404,7 @@ Status ConnectionGenerator::GenerateCc() {
     " private:\n");
   // clang-format on
 
+  // TODO(#4038) - use the (implicit) completion queue to run this loop.
   cc_.Print(service_vars_,  // clang-format off
     "  template <typename MethodResponse, template<typename> class Extractor,\n"
     "    typename Stub>\n"
@@ -418,7 +419,6 @@ Status ConnectionGenerator::GenerateCc() {
     "    cancel_stub->CancelOperation(context, request);\n"
     "    });\n"
     "    auto f = pr.get_future();\n"
-    "    // TODO(#127) - use the (implicit) completion queue to run this loop.\n"
     "    std::thread t(\n"
     "        [](std::shared_ptr<Stub> stub,\n"
     "           google::longrunning::Operation operation,\n"
@@ -432,10 +432,6 @@ Status ConnectionGenerator::GenerateCc() {
     "                return stub->GetOperation(context, request);\n"
     "              },\n"
     "              std::move(operation), location);\n"
-    "\n"
-    "          // Drop our reference to stub; ideally we'd have std::moved into the\n"
-    "          // lambda. Doing this also prevents a false leak from being reported\n"
-    "          // when using googlemock.\n"
     "          stub.reset();\n"
     "          promise.set_value(std::move(result));\n"
     "        },\n"

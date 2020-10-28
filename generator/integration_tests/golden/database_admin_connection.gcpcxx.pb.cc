@@ -536,7 +536,6 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     cancel_stub->CancelOperation(context, request);
     });
     auto f = pr.get_future();
-    // TODO(#127) - use the (implicit) completion queue to run this loop.
     std::thread t(
         [](std::shared_ptr<Stub> stub,
            google::longrunning::Operation operation,
@@ -551,9 +550,6 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
               },
               std::move(operation), location);
 
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
           stub.reset();
           promise.set_value(std::move(result));
         },

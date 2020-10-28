@@ -116,7 +116,7 @@ TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   *non_empty_method->mutable_output_type() = "google.protobuf.Bar";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsResponseTypeEmpty(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
@@ -144,7 +144,7 @@ TEST(PredicateUtilsTest, IsLongrunningOperation) {
   *not_lro_method->mutable_output_type() = "google.longrunning.Bar";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
@@ -186,7 +186,7 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
   bidirectional_streaming->set_server_streaming(true);
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor_lro =
+  FileDescriptor const* service_file_descriptor_lro =
       pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsNonStreaming(*service_file_descriptor_lro->service(0)->method(0)));
@@ -238,7 +238,7 @@ TEST(PredicateUtilsTest, IsLongrunningMetadataTypeUsedAsResponseEmptyResponse) {
                                                             &service_file));
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(IsLongrunningMetadataTypeUsedAsResponse(
       *service_file_descriptor->service(0)->method(0)));
 }
@@ -284,7 +284,7 @@ TEST(PredicateUtilsTest,
                                                             &service_file));
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsLongrunningMetadataTypeUsedAsResponse(
       *service_file_descriptor->service(0)->method(0)));
 }
@@ -316,7 +316,7 @@ TEST(PredicateUtilsTest,
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
                                                             &service_file));
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsLongrunningMetadataTypeUsedAsResponse(
       *service_file_descriptor->service(0)->method(0)));
 }
@@ -364,7 +364,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
   *paginated_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
   auto result =
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
@@ -393,7 +393,7 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
   *no_page_size_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -421,7 +421,7 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
   *no_page_token_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -455,7 +455,7 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
   *no_next_page_token_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -502,7 +502,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
   *no_repeated_message_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -565,7 +565,7 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
       "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
                "");
 }
