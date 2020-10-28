@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include <gmock/gmock.h>
@@ -29,7 +28,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 using ::google::cloud::StatusOr;
-using ::google::cloud::internal::GetEnv;
 
 auto constexpr kDescription = R"""(
 A stress test for the Cloud Spanner C++ client library.
@@ -54,7 +52,7 @@ struct Config {
 
   bool show_help = false;
 };
-StatusOr<Config> config;
+Config config;
 
 using ::google::cloud::testing_util::OptionDescriptor;
 using ::google::cloud::testing_util::ParseDuration;
@@ -129,10 +127,10 @@ struct Result {
 };
 
 int TaskCount() {
-  if (config->threads != 0) return config->threads;
+  if (config.threads != 0) return config.threads;
   auto cores = std::thread::hardware_concurrency();
-  return cores == 0 ? config->threads_per_core
-                    : static_cast<int>(cores) * config->threads_per_core;
+  return cores == 0 ? config.threads_per_core
+                    : static_cast<int>(cores) * config.threads_per_core;
 }
 
 class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
@@ -158,17 +156,17 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     std::uniform_int_distribution<std::int64_t> random_key(0,
-                                                           config->table_size);
+                                                           config.table_size);
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, config->maximum_read_size);
+        0, config.maximum_read_size);
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
     for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + config->duration;
+              deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
@@ -226,17 +224,17 @@ TEST_F(ClientStressTest, UpsertAndRead) {
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     std::uniform_int_distribution<std::int64_t> random_key(0,
-                                                           config->table_size);
+                                                           config.table_size);
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, config->maximum_read_size);
+        0, config.maximum_read_size);
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
     for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + config->duration;
+              deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
@@ -293,14 +291,14 @@ int main(int argc, char* argv[]) {
   namespace spanner = ::google::cloud::spanner;
   ::testing::InitGoogleMock(&argc, argv);
 
-  spanner::config =
-      spanner::ParseArgs({argv, argv + argc}, spanner::kDescription);
-  if (!spanner::config) {
+  auto config = spanner::ParseArgs({argv, argv + argc}, spanner::kDescription);
+  if (!config) {
     std::cerr << "Error parsing command-line arguments\n";
-    std::cerr << spanner::config.status() << "\n";
+    std::cerr << config.status() << "\n";
     return 1;
   }
-  if (spanner::config->show_help) return 0;
+  if (config->show_help) return 0;
+  spanner::config = std::move(*config);
 
   return RUN_ALL_TESTS();
 }
