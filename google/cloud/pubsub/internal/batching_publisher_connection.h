@@ -80,11 +80,9 @@ class BatchingPublisherConnection
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 
   std::mutex mu_;
-  struct Item {
-    promise<StatusOr<std::string>> response;
-    pubsub::Message message;
-  };
-  std::vector<Item> pending_;
+  std::vector<promise<StatusOr<std::string>>> waiters_;
+  google::pubsub::v1::PublishRequest pending_;
+  std::size_t current_bytes_ = 0;
   std::chrono::system_clock::time_point batch_expiration_;
   bool corked_ = false;
   Status corked_status_;
