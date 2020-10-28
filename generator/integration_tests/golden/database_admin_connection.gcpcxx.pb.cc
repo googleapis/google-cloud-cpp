@@ -549,7 +549,6 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
                 return stub->GetOperation(context, request);
               },
               std::move(operation), location);
-
           stub.reset();
           promise.set_value(std::move(result));
         },
