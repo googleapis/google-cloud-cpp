@@ -23,6 +23,10 @@
 #include <random>
 #include <thread>
 
+namespace google {
+namespace cloud {
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 using ::google::cloud::StatusOr;
 using ::google::cloud::internal::GetEnv;
@@ -52,11 +56,11 @@ struct Config {
 };
 StatusOr<Config> config;
 
-StatusOr<Config> ParseArgs(std::vector<std::string> args);
 using ::google::cloud::testing_util::OptionDescriptor;
+using ::google::cloud::testing_util::ParseDuration;
 
-StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
-                               std::string const& description) {
+StatusOr<Config> ParseArgs(std::vector<std::string> args,
+                           std::string const& description) {
   Config options;
   bool show_help = false;
   bool show_description = false;
@@ -72,11 +76,11 @@ StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        }},
       {"--maximum-read-size", "the maximum read size in each query",
        [&options](std::string const& val) {
-         options.maximum_read_size = std::stoi(val);
+         options.maximum_read_size = std::stol(val);
        }},
       {"--duration", "how long to run the test for in seconds",
        [&options](std::string const& val) {
-         options.duration = std::chrono::seconds(std::stoi(val));
+         options.duration = ParseDuration(val);
        }},
       {"--threads", "if this is 0, threads-per-core is used instead",
        [&options](std::string const& val) {
@@ -101,46 +105,6 @@ StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
 
   return options;
 }
-
-StatusOr<Config> SelfTest(std::string const& cmd) {
-  auto error = [](std::string m) {
-    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                 std::move(m));
-  };
-
-  auto config = ParseArgsImpl({cmd, "--help"}, kDescription);
-  if (!config || !config->show_help) return error("--help parsing");
-  config = ParseArgsImpl({cmd, "--description", "--help"}, kDescription);
-  if (!config || !config->show_help) return error("--description parsing");
-  config = ParseArgsImpl({cmd, "--maximum-read-size=1000"}, kDescription);
-  if (!config) return error("--maximum-read-size");
-
-  return ParseArgsImpl(
-      {
-          cmd,
-          "--table-size=10000000",
-          "--maximum-read-size=10000",
-          "--duration=5",
-          "--threads=0",
-          "--threads-per-core=4",
-      },
-      kDescription);
-}
-
-StatusOr<Config> ParseArgs(std::vector<std::string> args) {
-  bool auto_run =
-      GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
-  if (auto_run) return SelfTest(args[0]);
-  return ParseArgsImpl(std::move(args), kDescription);
-}
-
-}  // namespace
-
-namespace google {
-namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-namespace {
 
 struct Result {
   Status last_failure;
@@ -172,6 +136,17 @@ int TaskCount() {
 }
 
 class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
+
+/// @test Test that ParseArgs works correctly.
+TEST_F(ClientStressTest, ParseArgs) {
+  std::string const cmd = "dummy-cmd";
+  auto config = ParseArgs({cmd, "--help"}, kDescription);
+  EXPECT_TRUE(config && config->show_help);
+  config = ParseArgs({cmd, "--description", "--help"}, kDescription);
+  EXPECT_TRUE(config && config->show_help);
+  config = ParseArgs({cmd, "--maximum-read-size=1000"}, kDescription);
+  EXPECT_TRUE(config);
+}
 
 /// @test Stress test the library using ExecuteQuery calls.
 TEST_F(ClientStressTest, UpsertAndSelect) {
@@ -315,15 +290,17 @@ TEST_F(ClientStressTest, UpsertAndRead) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
+  namespace spanner = ::google::cloud::spanner;
   ::testing::InitGoogleMock(&argc, argv);
 
-  config = ParseArgs({argv, argv + argc});
-  if (!config) {
+  spanner::config =
+      spanner::ParseArgs({argv, argv + argc}, spanner::kDescription);
+  if (!spanner::config) {
     std::cerr << "Error parsing command-line arguments\n";
-    std::cerr << config.status() << "\n";
+    std::cerr << spanner::config.status() << "\n";
     return 1;
   }
-  if (config->show_help) return 0;
+  if (spanner::config->show_help) return 0;
 
   return RUN_ALL_TESTS();
 }
