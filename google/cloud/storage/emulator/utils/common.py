@@ -19,6 +19,7 @@ import scalpl
 import types
 import utils
 import simdjson
+import random
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
 
@@ -42,6 +43,30 @@ def remove_index(string):
 class FakeRequest(types.SimpleNamespace):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @classmethod
+    def init_xml(cls, request):
+        headers = {
+            key.lower(): value
+            for key, value in request.headers.items()
+            if key.lower().startswith("x-goog-")
+        }
+        args = request.args.to_dict()
+        args.update(cls.xml_headers_to_json_args(headers))
+        return cls(args=args, headers=headers)
+
+    @classmethod
+    def xml_headers_to_json_args(cls, headers):
+        field_map = {
+            "x-goog-if-generation-match": "ifGenerationMatch",
+            "x-goog-if-meta-generation-match": "ifMetagenerationMatch",
+            "x-goog-acl": "predefinedAcl",
+        }
+        args = {}
+        for field_xml, field_json in field_map.items():
+            if field_xml in headers:
+                args[field_json] = headers[field_xml]
+        return args
 
 
 # === REST === #
@@ -192,3 +217,12 @@ def extract_projection(request, default, context):
         return (
             projection if projection in projection_map else projection_map[default - 1]
         )
+
+
+# === DATA === #
+
+
+def corrupt_media(media):
+    if not media:
+        return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), "utf-8")
+    return b"B" + media[1:] if media[0:1] == b"A" else b"A" + media[1:]

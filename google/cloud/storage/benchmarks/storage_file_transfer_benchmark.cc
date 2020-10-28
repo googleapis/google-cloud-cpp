@@ -206,13 +206,15 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
+using ::google::cloud::testing_util::OptionDescriptor;
+
 google::cloud::StatusOr<Options> ParseArgsDefault(
     std::vector<std::string> const& argv) {
   Options options;
 
   bool wants_help = false;
   bool wants_description = false;
-  std::vector<gcs_bm::OptionDescriptor> descriptors{
+  std::vector<OptionDescriptor> descriptors{
       {"--help", "print the usage message",
        [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print a description of the benchmark",
@@ -238,9 +240,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
       {"--region", "The GCS region used for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
   };
-  auto usage = gcs_bm::BuildUsage(descriptors, argv[0]);
+  auto usage = BuildUsage(descriptors, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(descriptors, argv);
+  auto unparsed = OptionsParse(descriptors, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }

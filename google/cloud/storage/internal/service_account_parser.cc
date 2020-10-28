@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,37 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/access_control_common.h"
-#include <nlohmann/json.hpp>
+#include "google/cloud/storage/internal/service_account_parser.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-Status AccessControlCommon::ParseFromJson(AccessControlCommon& result,
-                                          nlohmann::json const& json) {
+StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
+    nlohmann::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
-  result.bucket_ = json.value("bucket", "");
-  result.domain_ = json.value("domain", "");
-  result.email_ = json.value("email", "");
-  result.entity_ = json.value("entity", "");
-  result.entity_id_ = json.value("entityId", "");
-  result.etag_ = json.value("etag", "");
-  result.id_ = json.value("id", "");
+  ServiceAccount result{};
   result.kind_ = json.value("kind", "");
-  result.role_ = json.value("role", "");
-  result.self_link_ = json.value("selfLink", "");
-  if (json.count("projectTeam") != 0) {
-    auto tmp = json["projectTeam"];
-    ProjectTeam p;
-    p.project_number = tmp.value("projectNumber", "");
-    p.team = tmp.value("team", "");
-    result.project_team_ = std::move(p);
-  }
-  return Status();
+  result.email_address_ = json.value("email_address", "");
+  return result;
+}
+
+StatusOr<ServiceAccount> ServiceAccountParser::FromString(
+    std::string const& payload) {
+  auto json = nlohmann::json::parse(payload, nullptr, false);
+  return FromJson(json);
 }
 
 }  // namespace internal

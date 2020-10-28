@@ -15,6 +15,7 @@
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <type_traits>
 
 namespace google {

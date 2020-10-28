@@ -19,6 +19,15 @@
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/random.h"
+// TODO(#4501) - these hacks can be removed if #include <absl/...> works
+#include "google/cloud/internal/diagnostics_push.inc"
+#if _MSC_VER
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
+#include "absl/container/flat_hash_map.h"
+// TODO(#4501) - end
+#include "google/cloud/internal/diagnostics_pop.inc"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <deque>
 #include <functional>
@@ -29,6 +38,31 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+/**
+ * Keeps the queue of runnable messages.
+ *
+ * Recall that subscription message processing happens in stages, see
+ * `SubscriptionSession` and go/cloud-cxx:pub-sub-subscriptions-dd for more
+ * details.
+ *
+ * The next stage sets up a callback in `Start()` to receive messages from this
+ * stage. This stage keeps a queue of messages ready to run, the next stage
+ * drains the queue by calling `Read(n)` which allow this stage to send up to
+ * `n` messages. After `n` messages are sent more calls to `Read(n)` *are*
+ * required, the queue does not drain just because some messages completed.
+ *
+ * Messages with ordering keys are executed in order. The class keeps a message
+ * queue per ordering key. The queue is created when a message with a new
+ * ordering key is received. The queue is deleted when the last message with the
+ * given ordering key is handled by the application (via the handler ack/nack
+ * calls). Effectively this means that the presence of the queue serves as a
+ * flag to block sending messages with the queue's ordering key to the next
+ * stage.
+ *
+ * For messages with an ordering key, this class also maintains a mapping of
+ * ack_id to ordering key. This is necessary to determine which ordering key
+ * queue is drained when the message is acknowledged or rejected.
+ */
 class SubscriptionMessageQueue
     : public SubscriptionMessageSource,
       public std::enable_shared_from_this<SubscriptionMessageQueue> {
@@ -62,14 +96,23 @@ class SubscriptionMessageQueue
   void Shutdown(std::unique_lock<std::mutex> lk);
   void DrainQueue(std::unique_lock<std::mutex> lk);
 
+  /// Process a nack() or ack() for a message
+  void HandlerDone(std::string const& ack_id);
+
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionBatchSource> const source_;
 
+  using QueueByOrderingKey =
+      absl::flat_hash_map<std::string,
+                          std::deque<google::pubsub::v1::ReceivedMessage>>;
+
   std::mutex mu_;
   MessageCallback callback_;
-  std::size_t read_count_ = 0;
-  std::deque<google::pubsub::v1::ReceivedMessage> messages_;
   bool shutdown_ = false;
+  std::size_t available_slots_ = 0;
+  std::deque<google::pubsub::v1::ReceivedMessage> runnable_messages_;
+  QueueByOrderingKey queues_;
+  absl::flat_hash_map<std::string, std::string> ordering_key_by_ack_id_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

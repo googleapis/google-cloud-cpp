@@ -34,6 +34,8 @@ add_library(
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
     internal/generator_interface.h
+    internal/idempotency_policy_generator.cc
+    internal/idempotency_policy_generator.h
     internal/logging_decorator_generator.cc
     internal/logging_decorator_generator.h
     internal/metadata_decorator_generator.cc
@@ -41,6 +43,8 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/retry_policy_generator.cc
+    internal/retry_policy_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
     internal/stub_factory_generator.cc

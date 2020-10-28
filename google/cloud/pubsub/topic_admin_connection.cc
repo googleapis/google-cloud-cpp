@@ -243,6 +243,50 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 TopicAdminConnection::~TopicAdminConnection() = default;
 
+StatusOr<google::pubsub::v1::Topic> TopicAdminConnection::CreateTopic(
+    CreateTopicParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Topic> TopicAdminConnection::GetTopic(
+    GetTopicParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::Topic> TopicAdminConnection::UpdateTopic(
+    UpdateTopicParams) {  // NOLINT(performance-unnecessary-value-param)
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+ListTopicsRange TopicAdminConnection::ListTopics(ListTopicsParams) {
+  return internal::UnimplementedPaginationRange<ListTopicsRange>::Create();
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+Status TopicAdminConnection::DeleteTopic(DeleteTopicParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+TopicAdminConnection::DetachSubscription(DetachSubscriptionParams) {
+  return Status{StatusCode::kUnimplemented, "needs-override"};
+}
+
+ListTopicSubscriptionsRange TopicAdminConnection::ListTopicSubscriptions(
+    ListTopicSubscriptionsParams) {  // NOLINT(performance-unnecessary-value-param)
+  return internal::UnimplementedPaginationRange<
+      ListTopicSubscriptionsRange>::Create();
+}
+
+ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(
+    ListTopicSnapshotsParams) {  // NOLINT(performance-unnecessary-value-param)
+
+  return internal::UnimplementedPaginationRange<
+      ListTopicSnapshotsRange>::Create();
+}
+
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,

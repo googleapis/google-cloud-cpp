@@ -28,11 +28,13 @@ struct Batch {
   // well name it as one.
   google::cloud::CompletionQueue executor;
   std::vector<promise<StatusOr<std::string>>> waiters;
+  std::weak_ptr<BatchingPublisherConnection> weak;
 
   void operator()(future<StatusOr<google::pubsub::v1::PublishResponse>> f) {
     auto response = f.get();
     if (!response) {
       SatisfyAllWaiters(response.status());
+      if (auto batcher = weak.lock()) batcher->DiscardCorked(response.status());
       return;
     }
     if (static_cast<std::size_t>(response->message_ids_size()) !=
@@ -50,6 +52,7 @@ struct Batch {
     for (auto& w : waiters) {
       executor.RunAsync(SetValue{std::move(w), response->message_ids(idx++)});
     }
+    if (auto batcher = weak.lock()) batcher->UnCork();
   }
 
   void SatisfyAllWaiters(Status const& status) {
@@ -65,17 +68,57 @@ struct Batch {
 };
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
-    pubsub::Message m) {
-  promise<StatusOr<std::string>> promise;
-  auto f = promise.get_future();
+    PublishParams p) {
+  promise<StatusOr<std::string>> pr;
+  auto f = pr.get_future();
   std::unique_lock<std::mutex> lk(mu_);
-  pending_.push_back(Item{std::move(promise), std::move(m)});
+  if (!corked_status_.ok()) {
+    struct MoveCapture {
+      promise<StatusOr<std::string>> p;
+      Status status;
+      void operator()() { p.set_value(std::move(status)); }
+    };
+    cq_.RunAsync(MoveCapture{std::move(pr), corked_status_});
+    return f;
+  }
+  pending_.push_back(Item{std::move(pr), std::move(p.message)});
   MaybeFlush(std::move(lk));
   return f;
 }
 
-void BatchingPublisherConnection::Flush() {
+void BatchingPublisherConnection::Flush(FlushParams) {
   FlushImpl(std::unique_lock<std::mutex>(mu_));
+}
+
+void BatchingPublisherConnection::ResumePublish(ResumePublishParams p) {
+  if (ordering_key_ != p.ordering_key) return;
+  UnCork();
+}
+
+void BatchingPublisherConnection::UnCork() {
+  std::unique_lock<std::mutex> lk(mu_);
+  corked_ = false;
+  corked_status_ = {};
+  MaybeFlush(std::move(lk));
+}
+
+void BatchingPublisherConnection::DiscardCorked(Status const& status) {
+  auto pending = [&] {
+    std::unique_lock<std::mutex> lk(mu_);
+    corked_ = true;
+    corked_status_ = status;
+    std::vector<Item> tmp;
+    tmp.swap(pending_);
+    return tmp;
+  }();
+  for (auto& p : pending) {
+    struct MoveCapture {
+      promise<StatusOr<std::string>> p;
+      Status status;
+      void operator()() { p.set_value(std::move(status)); }
+    };
+    cq_.RunAsync(MoveCapture{std::move(p.response), status});
+  }
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
@@ -93,25 +136,23 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
     return;
   }
   // If the batch is empty obviously we do not need a timer, and if it has more
-  // than one element then we already have setup a timer previously.
-  if (pending_.size() == 1U) {
-    batch_expiration_ =
-        std::chrono::system_clock::now() + options_.maximum_hold_time();
-    lk.unlock();
-    // We need a weak_ptr<> because this class owns the completion queue,
-    // creating a lambda with a shared_ptr<> owning this class would create a
-    // cycle.  Unfortunately some older compiler/libraries lack
-    // `weak_from_this()`.
-    auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
-    // Note that at this point the lock is released, so whether the timer
-    // schedules later on schedules in this thread has no effect.
-    cq_.MakeDeadlineTimer(batch_expiration_)
-        .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
-          auto self = weak.lock();
-          if (!self) return;
-          self->OnTimer();
-        });
-  }
+  // than one element then we have setup a timer previously and there is no need
+  // to set it again.
+  if (pending_.size() != 1U) return;
+  auto const expiration = batch_expiration_ =
+      std::chrono::system_clock::now() + options_.maximum_hold_time();
+  lk.unlock();
+  // We need a weak_ptr<> because this class owns the completion queue,
+  // creating a lambda with a shared_ptr<> owning this class would create a
+  // cycle.  Unfortunately some older compiler/libraries lack
+  // `weak_from_this()`.
+  auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
+  // Note that at this point the lock is released, so whether the timer
+  // schedules later on schedules in this thread has no effect.
+  cq_.MakeDeadlineTimer(expiration)
+      .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
+        if (auto self = weak.lock()) self->OnTimer();
+      });
 }
 
 void BatchingPublisherConnection::OnTimer() {
@@ -126,13 +167,14 @@ void BatchingPublisherConnection::OnTimer() {
 }
 
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.empty()) return;
+  if (pending_.empty() || corked_) return;
 
   auto context = absl::make_unique<grpc::ClientContext>();
 
   Batch batch;
   batch.executor = cq_;
   batch.waiters.reserve(pending_.size());
+  batch.weak = shared_from_this();
   google::pubsub::v1::PublishRequest request;
   request.set_topic(topic_full_name_);
   request.mutable_messages()->Reserve(static_cast<int>(pending_.size()));
@@ -142,9 +184,20 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
     *request.add_messages() = pubsub_internal::ToProto(std::move(i.message));
   }
   pending_.clear();
+  corked_ = !ordering_key_.empty();
   lk.unlock();
 
-  connection_->Publish({std::move(request)}).then(std::move(batch));
+  auto& stub = stub_;
+  google::cloud::internal::AsyncRetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(),
+      google::cloud::internal::Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::pubsub::v1::PublishRequest const& request) {
+        return stub->AsyncPublish(cq, std::move(context), request);
+      },
+      std::move(request), __func__)
+      .then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

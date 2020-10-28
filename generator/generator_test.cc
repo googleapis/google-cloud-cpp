@@ -76,26 +76,14 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
-  auto connection_options_header_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto connection_options_cc_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto stub_header_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto stub_cc_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto logging_header_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto logging_cc_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto metadata_header_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto metadata_cc_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto stub_factory_header_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  auto stub_factory_cc_output =
-      absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+  int constexpr kNumMockOutputStreams = 13;
+  std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
+      mock_outputs;
+  mock_outputs.reserve(kNumMockOutputStreams);
+  for (int i = 0; i < kNumMockOutputStreams; ++i) {
+    mock_outputs.push_back(
+        absl::make_unique<generator_testing::MockZeroCopyOutputStream>());
+  }
 
   DescriptorPool pool;
   FileDescriptorProto service_file;
@@ -104,33 +92,24 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   service_file.mutable_options()->set_cc_generic_services(false);
   const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
 
-  EXPECT_CALL(*connection_options_header_output, Next(_, _))
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*connection_options_cc_output, Next(_, _))
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*stub_header_output, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*stub_cc_output, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*logging_header_output, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*logging_cc_output, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*metadata_header_output, Next(_, _))
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*metadata_cc_output, Next(_, _)).WillRepeatedly(Return(false));
-  EXPECT_CALL(*stub_factory_header_output, Next(_, _))
-      .WillRepeatedly(Return(false));
-  EXPECT_CALL(*stub_factory_cc_output, Next(_, _))
-      .WillRepeatedly(Return(false));
+  for (auto& output : mock_outputs) {
+    EXPECT_CALL(*output, Next).WillRepeatedly(Return(false));
+  }
 
   EXPECT_CALL(*context_, Open(_))
-      .WillOnce(Return(connection_options_header_output.release()))
-      .WillOnce(Return(connection_options_cc_output.release()))
-      .WillOnce(Return(stub_header_output.release()))
-      .WillOnce(Return(stub_cc_output.release()))
-      .WillOnce(Return(logging_header_output.release()))
-      .WillOnce(Return(logging_cc_output.release()))
-      .WillOnce(Return(metadata_header_output.release()))
-      .WillOnce(Return(metadata_cc_output.release()))
-      .WillOnce(Return(stub_factory_header_output.release()))
-      .WillOnce(Return(stub_factory_cc_output.release()));
+      .WillOnce(Return(mock_outputs[0].release()))
+      .WillOnce(Return(mock_outputs[1].release()))
+      .WillOnce(Return(mock_outputs[2].release()))
+      .WillOnce(Return(mock_outputs[3].release()))
+      .WillOnce(Return(mock_outputs[4].release()))
+      .WillOnce(Return(mock_outputs[5].release()))
+      .WillOnce(Return(mock_outputs[6].release()))
+      .WillOnce(Return(mock_outputs[7].release()))
+      .WillOnce(Return(mock_outputs[8].release()))
+      .WillOnce(Return(mock_outputs[9].release()))
+      .WillOnce(Return(mock_outputs[10].release()))
+      .WillOnce(Return(mock_outputs[11].release()))
+      .WillOnce(Return(mock_outputs[12].release()));
 
   std::string actual_error;
   Generator generator;

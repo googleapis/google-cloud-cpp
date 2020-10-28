@@ -25,6 +25,11 @@ set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_PUBSUB_NS=v1")
 
 include(GoogleCloudCppCommon)
 
+# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
+set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
+find_package(absl CONFIG REQUIRED)
+unset(FPHSA_NAME_MISMATCHED)
+
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     pubsub_client # cmake-format: sort
@@ -40,7 +45,6 @@ add_library(
     internal/default_retry_policies.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
-    internal/message_batcher.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_logging.cc
@@ -116,7 +120,7 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                         googleapis-c++::pubsub_protos)
+                         googleapis-c++::pubsub_protos absl::flat_hash_map)
 google_cloud_cpp_add_common_options(pubsub_client)
 set_target_properties(
     pubsub_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
@@ -168,7 +172,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         pubsub_client_testing # cmake-format: sort
         testing/fake_streaming_pull.cc
         testing/fake_streaming_pull.h
-        testing/mock_message_batcher.h
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
@@ -238,6 +241,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
                     googleapis-c++::pubsub_client
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
+                    absl::str_format
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)

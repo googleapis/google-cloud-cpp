@@ -15,11 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H
 
-#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
-#include <nlohmann/json.hpp>
 #include <chrono>
 #include <map>
 #include <utility>
@@ -63,6 +61,8 @@ inline bool operator>=(Owner const& lhs, Owner const& rhs) {
 
 namespace internal {
 class GrpcClient;
+template <typename Derived>
+struct CommonMetadataParser;
 
 /**
  * Defines common attributes to both `BucketMetadata` and `ObjectMetadata`.
@@ -76,33 +76,6 @@ template <typename Derived>
 class CommonMetadata {
  public:
   CommonMetadata() = default;
-
-  static Status ParseFromJson(CommonMetadata<Derived>& result,
-                              nlohmann::json const& json) {
-    if (!json.is_object()) {
-      return Status(StatusCode::kInvalidArgument, __func__);
-    }
-    result.etag_ = json.value("etag", "");
-    result.id_ = json.value("id", "");
-    result.kind_ = json.value("kind", "");
-    result.metageneration_ = ParseLongField(json, "metageneration");
-    result.name_ = json.value("name", "");
-    if (json.count("owner") != 0) {
-      Owner o;
-      o.entity = json["owner"].value("entity", "");
-      o.entity_id = json["owner"].value("entityId", "");
-      result.owner_ = std::move(o);
-    }
-    result.self_link_ = json.value("selfLink", "");
-    result.storage_class_ = json.value("storageClass", "");
-    result.time_created_ = ParseTimestampField(json, "timeCreated");
-    result.updated_ = ParseTimestampField(json, "updated");
-    return Status();
-  }
-  static StatusOr<CommonMetadata> ParseFromString(std::string const& payload) {
-    auto json = nlohmann::json::parse(payload);
-    return ParseFromJson(json);
-  }
 
   std::string const& etag() const { return etag_; }
   std::string const& id() const { return id_; }
@@ -131,6 +104,8 @@ class CommonMetadata {
 
  private:
   friend class GrpcClient;
+  template <typename ParserDerived>
+  friend struct CommonMetadataParser;
 
   // Keep the fields in alphabetical order.
   std::string etag_;

@@ -33,27 +33,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-struct ObjectMetadataParser {
-  static StatusOr<ObjectMetadata> FromJson(nlohmann::json const& json);
-  static StatusOr<ObjectMetadata> FromString(std::string const& payload);
-};
-
-//@{
-/**
- * @name Create the correct JSON payload depending on the operation.
- *
- * Depending on the specific operation being performed the JSON object sent to
- * the server needs to exclude different fields. We handle this by having
- * different functions for each operation, though their implementations are
- * shared.
- */
-nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta);
-nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta);
-nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta);
-nlohmann::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta);
-nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
-//@}
-
 /**
  * Represents a request to the `Objects: list` API.
  */
@@ -238,9 +217,7 @@ class UpdateObjectRequest
         metadata_(std::move(metadata)) {}
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const {
-    return ObjectMetadataJsonForUpdate(metadata_).dump();
-  }
+  std::string json_payload() const;
 
   ObjectMetadata const& metadata() const { return metadata_; }
 

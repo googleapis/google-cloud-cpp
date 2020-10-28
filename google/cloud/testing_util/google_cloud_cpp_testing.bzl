@@ -21,6 +21,7 @@ google_cloud_cpp_testing_hdrs = [
     "capture_log_lines_backend.h",
     "check_predicate_becomes_false.h",
     "chrono_literals.h",
+    "command_line_parsing.h",
     "contains_once.h",
     "crash_handler.h",
     "example_driver.h",
@@ -30,13 +31,16 @@ google_cloud_cpp_testing_hdrs = [
     "scoped_thread.h",
     "status_matchers.h",
     "testing_types.h",
+    "timer.h",
 ]
 
 google_cloud_cpp_testing_srcs = [
     "assert_ok.cc",
     "capture_log_lines_backend.cc",
+    "command_line_parsing.cc",
     "crash_handler.cc",
     "example_driver.cc",
     "scoped_environment.cc",
     "testing_types.cc",
+    "timer.cc",
 ]

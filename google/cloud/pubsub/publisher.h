@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_H
 
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/message_batcher.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/version.h"
@@ -38,7 +37,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *   service.
  *
  * @par Example
- *
  * @code
  * namespace pubsub = ::google::cloud::pubsub;
  *
@@ -51,8 +49,17 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * });
  * @endcode
  *
- * @par Performance
+ * @par Message Ordering
+ * A `Publisher` configured to preserve message ordering will sequence the
+ * messages that share a common ordering key (see
+ * `MessageBuilder::SetOrderingKey()`). Messages will be batched by ordering
+ * key, and new batches will wait until the status of the previous batch is
+ * known. On an error, all pending and queued messages are discarded, and the
+ * publisher rejects any new messages for the ordering key that experienced
+ * problems. The application must call `Publisher::ResumePublishing()` to
+ * to restore publishing.
  *
+ * @par Performance
  * `Publisher` objects are relatively cheap to create, copy, and move. However,
  * each `Publisher` object must be created with a
  * `std::shared_ptr<PublisherConnection>`, which itself is relatively expensive
@@ -61,14 +68,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * interface for more details.
  *
  * @par Thread Safety
- *
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
  * @par Background Threads
- *
  * This class uses the background threads configured via `ConnectionOptions`.
  * Applications can create their own pool of background threads by (a) creating
  * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
@@ -79,7 +84,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @snippet samples.cc custom-thread-pool-publisher
  *
  * @par Asynchronous Functions
- *
  * Some of the member functions in this class return a `future<T>` (or
  * `future<StatusOr<T>>`) object.  Readers are probably familiar with
  * [`std::future<T>`][std-future-link]. Our version adds a `.then()` function to
@@ -89,7 +93,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * documentation.
  *
  * @par Error Handling
- *
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
@@ -103,13 +106,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class Publisher {
  public:
-  explicit Publisher(Topic topic, PublisherOptions options = {},
-                     std::shared_ptr<PublisherConnection> connection =
-                         MakePublisherConnection());
-
-  explicit Publisher(Topic topic,
-                     std::shared_ptr<PublisherConnection> connection)
-      : Publisher(std::move(topic), {}, std::move(connection)) {}
+  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions options = {});
 
   //@{
   Publisher(Publisher const&) = default;
@@ -145,7 +143,7 @@ class Publisher {
    *     a unrecoverable error.
    */
   future<StatusOr<std::string>> Publish(Message m) {
-    return batcher_->Publish({std::move(m)});
+    return connection_->Publish({std::move(m)});
   }
 
   /**
@@ -162,10 +160,25 @@ class Publisher {
    *     application can use the `future<StatusOr<std::string>>` returned in
    *     each `Publish()` call to find out what the results are.
    */
-  void Flush() { batcher_->Flush(); }
+  void Flush() { connection_->Flush({}); }
+
+  /**
+   * Resume publishing after an error.
+   *
+   * If the publisher options have message ordering enabled (see
+   * `PublisherOptions::message_ordering()`) all messages for a key that
+   * experience failure will be rejected until the application calls this
+   * function.
+   *
+   * @par Example
+   * @snippet samples.cc resume-publish
+   */
+  void ResumePublish(std::string ordering_key) {
+    connection_->ResumePublish({std::move(ordering_key)});
+  }
 
  private:
-  std::shared_ptr<pubsub_internal::MessageBatcher> batcher_;
+  std::shared_ptr<PublisherConnection> connection_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

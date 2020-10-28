@@ -19,6 +19,8 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
+using ::google::cloud::testing_util::OptionDescriptor;
+
 google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::vector<std::string> const& argv, std::string const& description) {
   ThroughputOptions options;
@@ -208,7 +210,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (!SimpleTimer::SupportPerThreadUsage() && options.thread_count > 1) {
+  if (!Timer::SupportPerThreadUsage() && options.thread_count > 1) {
     std::cerr <<
         R"""(
 # WARNING

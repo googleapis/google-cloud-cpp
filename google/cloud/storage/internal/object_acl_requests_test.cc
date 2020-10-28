@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
 #include <gmock/gmock.h>
 
 namespace google {

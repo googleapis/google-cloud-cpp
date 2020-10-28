@@ -30,6 +30,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::EndsWith;
+using ::testing::HasSubstr;
 
 class DatabaseAdminClientTest : public ::testing::Test {
  protected:
@@ -170,8 +171,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));
   EXPECT_EQ(1, metadata->statements_size());
   EXPECT_EQ(1, metadata->commit_timestamps_size());
-  if (metadata->statements_size() > 1) {
-    EXPECT_EQ(create_table_statement, metadata->statements(0));
+  if (metadata->statements_size() >= 1) {
+    EXPECT_THAT(metadata->statements(0), HasSubstr("CREATE TABLE"));
   }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;

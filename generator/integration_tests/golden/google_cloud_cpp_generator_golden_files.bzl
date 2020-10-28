@@ -19,6 +19,8 @@
 google_cloud_cpp_generator_golden_files = [
     "connection_options.gcpcxx.pb.cc",
     "connection_options.gcpcxx.pb.h",
+    "database_admin_connection_idempotency_policy.gcpcxx.pb.cc",
+    "database_admin_connection_idempotency_policy.gcpcxx.pb.h",
     "internal/database_admin_logging_decorator.gcpcxx.pb.cc",
     "internal/database_admin_logging_decorator.gcpcxx.pb.h",
     "internal/database_admin_metadata_decorator.gcpcxx.pb.cc",
@@ -27,4 +29,6 @@ google_cloud_cpp_generator_golden_files = [
     "internal/database_admin_stub.gcpcxx.pb.h",
     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
     "internal/database_admin_stub_factory.gcpcxx.pb.h",
+    "retry_policy.gcpcxx.pb.h",
+    "retry_traits.h",
 ]

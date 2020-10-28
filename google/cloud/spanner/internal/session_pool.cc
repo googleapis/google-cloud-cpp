@@ -67,15 +67,15 @@ SessionPool::SessionPool(Database db,
       clock_(std::move(clock)),
       max_pool_size_(options_.max_sessions_per_channel() *
                      static_cast<int>(stubs.size())),
-      random_generator_(std::random_device()()) {
+      random_generator_(std::random_device()()),
+      channels_(stubs.size()) {
   if (stubs.empty()) {
     google::cloud::internal::ThrowInvalidArgument(
         "SessionPool requires a non-empty set of stubs");
   }
 
-  channels_.reserve(stubs.size());
-  for (auto& stub : stubs) {
-    channels_.push_back(std::make_shared<Channel>(std::move(stub)));
+  for (auto i = 0U; i < stubs.size(); ++i) {
+    channels_[i] = std::make_shared<Channel>(std::move(stubs[i]));
   }
   // `channels_` is never resized after this point.
   next_dissociated_stub_channel_ = channels_.begin();
@@ -213,7 +213,7 @@ SessionPool::ComputeCreateCounts(int sessions_to_create) {
       (std::min)(total_sessions_ + sessions_to_create, max_pool_size_);
 
   // Sort the channels in *descending* order of session count.
-  std::vector<std::shared_ptr<Channel>> channels_by_count = channels_;
+  absl::FixedArray<std::shared_ptr<Channel>> channels_by_count = channels_;
   std::sort(channels_by_count.begin(), channels_by_count.end(),
             [](std::shared_ptr<Channel> const& lhs,
                std::shared_ptr<Channel> const& rhs) {

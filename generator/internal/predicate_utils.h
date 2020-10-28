@@ -58,101 +58,91 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method);
 /**
  * Returns true if all predicates return true.
  */
-template <typename T>
-class GenericAll {
- public:
-  template <typename... Predicates>
-  explicit GenericAll(Predicates&&... p)
-      : predicates_({std::forward<Predicates>(p)...}) {}
-
-  bool operator()(T const& m) const {
-    for (auto const& p : predicates_) {
+template <typename T, typename... Ps>
+std::function<bool(T const&)> GenericAll(Ps&&... p) {
+  std::vector<std::function<bool(T const&)>> predicates(
+      {std::forward<Ps>(p)...});
+  return [predicates](T const& m) -> bool {
+    for (auto const& p : predicates) {
       if (!p(m)) return false;
     }
     return true;
-  }
+  };
+}
 
- private:
-  std::vector<std::function<bool(T const& m)>> predicates_;
-};
-
-using All = GenericAll<google::protobuf::MethodDescriptor>;
+template <typename... Ps>
+std::function<bool(google::protobuf::MethodDescriptor const&)> All(Ps&&... p) {
+  return GenericAll<google::protobuf::MethodDescriptor, Ps...>(
+      std::forward<Ps>(p)...);
+}
 
 /**
  * Returns true if any predicate returns true.
  * @tparam T
  */
-template <typename T>
-class GenericAny {
- public:
-  template <typename... Predicates>
-  explicit GenericAny(Predicates&&... p)
-      : predicates_({std::forward<Predicates>(p)...}) {}
-
-  bool operator()(T const& m) const {
-    for (auto const& p : predicates_) {
+template <typename T, typename... Ps>
+std::function<bool(T const&)> GenericAny(Ps&&... p) {
+  std::vector<std::function<bool(T const&)>> predicates(
+      {std::forward<Ps>(p)...});
+  return [predicates](T const& m) -> bool {
+    for (auto const& p : predicates) {
       if (p(m)) return true;
     }
     return false;
-  }
+  };
+}
 
- private:
-  std::vector<std::function<bool(T const& m)>> predicates_;
-};
-
-using Any = GenericAny<google::protobuf::MethodDescriptor>;
+template <typename... Ps>
+std::function<bool(google::protobuf::MethodDescriptor const&)> Any(Ps&&... p) {
+  return GenericAny<google::protobuf::MethodDescriptor, Ps...>(
+      std::forward<Ps>(p)...);
+}
 
 /**
  * Returns true if both predicates return true.
  */
 template <typename T>
-class GenericAnd {
- public:
-  GenericAnd(std::function<bool(T const& m)> lhs,
-             std::function<bool(T const& m)> rhs)
-      : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(T const& m) const { return lhs_(m) && rhs_(m); }
+std::function<bool(T const&)> GenericAnd(
+    std::function<bool(T const&)> const& lhs,
+    std::function<bool(T const&)> const& rhs) {
+  return [lhs, rhs](T const& m) -> bool { return lhs(m) && rhs(m); };
+}
 
- private:
-  std::function<bool(T const& m)> lhs_;
-  std::function<bool(T const& m)> rhs_;
-};
-
-using And = GenericAnd<google::protobuf::MethodDescriptor>;
+inline std::function<bool(google::protobuf::MethodDescriptor const&)> And(
+    std::function<bool(google::protobuf::MethodDescriptor const&)> const& lhs,
+    std::function<bool(google::protobuf::MethodDescriptor const&)> const& rhs) {
+  return GenericAnd(lhs, rhs);
+}
 
 /**
  * Returns true if either predicate returns true.
  */
 template <typename T>
-class GenericOr {
- public:
-  GenericOr(std::function<bool(T const& m)> lhs,
-            std::function<bool(T const& m)> rhs)
-      : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(T const& m) const { return lhs_(m) || rhs_(m); }
+std::function<bool(T const&)> GenericOr(
+    std::function<bool(T const&)> const& lhs,
+    std::function<bool(T const&)> const& rhs) {
+  return [lhs, rhs](T const& m) -> bool { return lhs(m) || rhs(m); };
+}
 
- private:
-  std::function<bool(T const& m)> lhs_;
-  std::function<bool(T const& m)> rhs_;
-};
-
-using Or = GenericOr<google::protobuf::MethodDescriptor>;
+inline std::function<bool(google::protobuf::MethodDescriptor const&)> Or(
+    std::function<bool(google::protobuf::MethodDescriptor const&)> const& lhs,
+    std::function<bool(google::protobuf::MethodDescriptor const&)> const& rhs) {
+  return GenericOr(lhs, rhs);
+}
 
 /**
  * Predicate negation operation.
  */
 template <typename T>
-class GenericNot {
- public:
-  explicit GenericNot(std::function<bool(T const& m)> lhs)
-      : lhs_(std::move(lhs)) {}
-  bool operator()(T const& m) const { return !lhs_(m); }
+std::function<bool(T const&)> GenericNot(
+    std::function<bool(T const&)> const& p) {
+  return [p](T const& m) -> bool { return !p(m); };
+}
 
- private:
-  std::function<bool(T const& m)> lhs_;
-};
-
-using Not = GenericNot<google::protobuf::MethodDescriptor>;
+inline std::function<bool(google::protobuf::MethodDescriptor const&)> Not(
+    std::function<bool(google::protobuf::MethodDescriptor const&)> const& p) {
+  return GenericNot(p);
+}
 
 /**
  * When provided with two strings and a predicate, returns one of the strings

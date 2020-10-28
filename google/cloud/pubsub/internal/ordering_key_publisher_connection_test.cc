@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
-#include "google/cloud/pubsub/testing/mock_message_batcher.h"
+#include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -35,17 +36,22 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
 
   std::vector<pubsub::Message> received;
   auto factory = [&](std::string const& ordering_key) {
-    auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
+    auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
     EXPECT_CALL(*mock, Publish)
-        .WillRepeatedly([ordering_key](pubsub::Message const& m) {
-          EXPECT_EQ(ordering_key, m.ordering_key());
-          auto ack_id = m.ordering_key() + "#" + std::string(m.data());
-          return make_ready_future(make_status_or(ack_id));
-        });
+        .WillRepeatedly(
+            [ordering_key](
+                pubsub::PublisherConnection::PublishParams const& p) {
+              EXPECT_EQ(ordering_key, p.message.ordering_key());
+              auto ack_id = p.message.ordering_key() + "#" +
+                            std::string(p.message.data());
+              return make_ready_future(make_status_or(ack_id));
+            });
+    EXPECT_CALL(*mock, ResumePublish).Times(ordering_key == "k0" ? 1 : 0);
     EXPECT_CALL(*mock, Flush).Times(2);
     return mock;
   };
 
+  google::cloud::CompletionQueue cq;
   auto publisher = OrderingKeyPublisherConnection::Create(factory);
 
   std::vector<future<void>> results;
@@ -64,8 +70,9 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
   }
   for (auto& r : results) r.get();
 
-  publisher->Flush();
-  publisher->Flush();
+  publisher->ResumePublish({"k0"});
+  publisher->Flush({});
+  publisher->Flush({});
 }
 
 }  // namespace

@@ -24,6 +24,7 @@ import simdjson
 
 import utils
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.iam.v1 import policy_pb2
 from google.protobuf import field_mask_pb2, json_format
 
@@ -96,7 +97,11 @@ class Bucket:
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, predefined_acl, context):
-        if predefined_acl == "" or predefined_acl == 0:
+        if (
+            predefined_acl == ""
+            or predefined_acl
+            == CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED
+        ):
             return
         if metadata.iam_configuration.uniform_bucket_level_access.enabled:
             utils.error.invalid(
@@ -112,7 +117,11 @@ class Bucket:
     def __insert_predefined_default_object_acl(
         cls, metadata, predefined_default_object_acl, context
     ):
-        if predefined_default_object_acl == "" or predefined_default_object_acl == 0:
+        if (
+            predefined_default_object_acl == ""
+            or predefined_default_object_acl
+            == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+        ):
             return
         if metadata.iam_configuration.uniform_bucket_level_access.enabled:
             utils.error.invalid(
@@ -139,15 +148,20 @@ class Bucket:
                 resources_pb2.Bucket(),
             )
         cls.__validate_bucket_name(metadata.name, context)
-        default_projection = 1
+        default_projection = CommonEnums.Projection.NO_ACL
         if len(metadata.acl) != 0 or len(metadata.default_object_acl) != 0:
-            default_projection = 2
+            default_projection = CommonEnums.Projection.FULL
         is_uniform = metadata.iam_configuration.uniform_bucket_level_access.enabled
         metadata.iam_configuration.uniform_bucket_level_access.enabled = False
         if len(metadata.acl) == 0:
             predefined_acl = utils.acl.extract_predefined_acl(request, False, context)
-            if predefined_acl == 0:
-                predefined_acl = 3
+            if (
+                predefined_acl
+                == CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED
+            ):
+                predefined_acl = (
+                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PROJECT_PRIVATE
+                )
             elif predefined_acl == "":
                 predefined_acl = "projectPrivate"
             elif is_uniform:
@@ -159,8 +173,13 @@ class Bucket:
             predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
                 request, context
             )
-            if predefined_default_object_acl == 0:
-                predefined_default_object_acl = 5
+            if (
+                predefined_default_object_acl
+                == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+            ):
+                predefined_default_object_acl = (
+                    CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
+                )
             elif predefined_default_object_acl == "":
                 predefined_default_object_acl = "projectPrivate"
             elif is_uniform:

@@ -24,6 +24,8 @@ if (BUILD_TESTING)
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
+        command_line_parsing.cc
+        command_line_parsing.h
         contains_once.h
         crash_handler.cc
         crash_handler.h
@@ -36,18 +38,34 @@ if (BUILD_TESTING)
         scoped_thread.h
         status_matchers.h
         testing_types.cc
-        testing_types.h)
+        testing_types.h
+        timer.cc
+        timer.h)
     target_link_libraries(
         google_cloud_cpp_testing
         PUBLIC absl::symbolize absl::failure_signal_handler
                google_cloud_cpp_common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
 
+    include(CheckCXXSymbolExists)
+    check_cxx_symbol_exists(getrusage sys/resource.h
+                            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
+    check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
+                            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
+
+    target_compile_definitions(
+        google_cloud_cpp_testing
+        PUBLIC
+            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
+            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
+    )
+
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
         assert_ok_test.cc
+        command_line_parsing_test.cc
         contains_once_test.cc
         crash_handler_test.cc
         example_driver_test.cc

@@ -13,10 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
-#include "google/cloud/pubsub/testing/mock_message_batcher.h"
+#include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,8 +27,10 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 
 TEST(RejectsWithOrderingKeyTest, MessageRejected) {
-  auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  pubsub::Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, Publish).Times(0);
+  EXPECT_CALL(*mock, ResumePublish).Times(1);
 
   auto publisher = RejectsWithOrderingKey::Create(mock);
   auto response = publisher
@@ -39,13 +40,15 @@ TEST(RejectsWithOrderingKeyTest, MessageRejected) {
                                      .Build()})
                       .get();
   EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
+  publisher->ResumePublish({"test-ordering-key-0"});
 }
 
 TEST(RejectsWithOrderingKeyTest, MessageAccepted) {
-  auto mock = std::make_shared<pubsub_testing::MockMessageBatcher>();
-  EXPECT_CALL(*mock, Publish).WillOnce([](pubsub::Message const&) {
-    return make_ready_future(StatusOr<std::string>("test-id"));
-  });
+  auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([](pubsub::PublisherConnection::PublishParams const&) {
+        return make_ready_future(StatusOr<std::string>("test-id"));
+      });
 
   auto publisher = RejectsWithOrderingKey::Create(mock);
   auto response =

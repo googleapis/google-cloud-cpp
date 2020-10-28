@@ -153,45 +153,44 @@ class SubscriptionAdminConnection {
 
   /// Defines the interface for `SubscriptionAdminClient::CreateSubscription()`
   virtual StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      CreateSubscriptionParams) = 0;
+      CreateSubscriptionParams);
 
   /// Defines the interface for `SubscriptionAdminClient::GetSubscription()`
   virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      GetSubscriptionParams) = 0;
+      GetSubscriptionParams);
 
   /// Defines the interface for `SubscriptionAdminClient::UpdateSubscription()`
   virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      UpdateSubscriptionParams) = 0;
+      UpdateSubscriptionParams);
 
   /// Defines the interface for `SubscriptionAdminClient::ListSubscriptions()`
-  virtual ListSubscriptionsRange ListSubscriptions(ListSubscriptionsParams) = 0;
+  virtual ListSubscriptionsRange ListSubscriptions(ListSubscriptionsParams);
 
   /// Defines the interface for `SubscriptionAdminClient::DeleteSubscription()`
-  virtual Status DeleteSubscription(DeleteSubscriptionParams) = 0;
+  virtual Status DeleteSubscription(DeleteSubscriptionParams);
 
   /// Defines the interface for `SubscriptionAdminClient::ModifyPushConfig()`
-  virtual Status ModifyPushConfig(ModifyPushConfigParams) = 0;
+  virtual Status ModifyPushConfig(ModifyPushConfigParams);
 
   /// Defines the interface for `SnapshotAdminClient::CreateSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      CreateSnapshotParams) = 0;
+      CreateSnapshotParams);
 
   /// Defines the interface for `SnapshotAdminClient::GetSnapshot()`
-  virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      GetSnapshotParams) = 0;
+  virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(GetSnapshotParams);
 
   /// Defines the interface for `SnapshotAdminClient::UpdateSnapshot()`
   virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      UpdateSnapshotParams) = 0;
+      UpdateSnapshotParams);
 
   /// Defines the interface for `SubscriptionAdminClient::ListSnapshots()`
-  virtual ListSnapshotsRange ListSnapshots(ListSnapshotsParams) = 0;
+  virtual ListSnapshotsRange ListSnapshots(ListSnapshotsParams);
 
   /// Defines the interface for `SnapshotAdminClient::DeleteSnapshot()`
-  virtual Status DeleteSnapshot(DeleteSnapshotParams) = 0;
+  virtual Status DeleteSnapshot(DeleteSnapshotParams);
 
   /// Defines the interface for `SubscriptionAdminClient::Seek()`
-  virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams) = 0;
+  virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams);
 };
 
 /**

@@ -59,9 +59,6 @@ nlohmann::json TransformConditions(
 /// If c is ASCII escape it and append it to result. Return if it is ASCII.
 bool EscapeAsciiChar(std::string& result, char32_t c) {
   switch (c) {
-    case '\\':
-      result.append("\\\\");
-      return true;
     case '\b':
       result.append("\\b");
       return true;
@@ -227,6 +224,7 @@ std::vector<PolicyDocumentCondition> PolicyDocumentV4Request::GetAllConditions()
   for (auto const& field : extension_fields_) {
     conditions.push_back(PolicyDocumentCondition({field.first, field.second}));
   }
+  std::sort(conditions.begin(), conditions.end());
   auto const& document = policy_document();
   std::copy(document.conditions.begin(), document.conditions.end(),
             std::back_inserter(conditions));

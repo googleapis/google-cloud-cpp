@@ -2,17 +2,21 @@
 
 ## v1.20.0 - TBD
 
+### Storage
+
+**BREAKING CHANGES:**
+
+* Our public headers no longer include `nlohmann/json.hpp`. Please update your
+  code to directly include this header if you need it. We believe it is not a
+  good practice to depend on indirectly included headers, but do feel we should
+  warn our customers of this change.
+
 ### Pub/Sub
 
 **BREAKING CHANGES:**
 
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
-
-* Allow sharing connections between multiple `pubsub::Publisher` objects.
-  Creating a `pubsub::PublisherConnection` no longer requires a `pubsub::Topic`
-  or the `pubsub::PublisherOptions`. These are now parameters for the
-  `pubsub::Publisher` constructor.
 
 * Rename `pubsub::SubscriptionOptions` to `pubsub::SubscriberOptions` as these
   are bound to a specific subscriber object.

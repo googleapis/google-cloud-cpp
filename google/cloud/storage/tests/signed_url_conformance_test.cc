@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/testing/storage_integration_test.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
-#include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/storage/tests/conformance_tests.pb.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
+#include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
 #include <fstream>
 #include <type_traits>
 
@@ -46,39 +49,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using google::cloud::conformance::storage::v1::SigningV4Test;
+using google::cloud::conformance::storage::v1::UrlStyle;
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
-std::map<std::string, nlohmann::json>* signing_tests;
-std::map<std::string, nlohmann::json>* post_policy_tests;
-
-std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
-    nlohmann::json j_obj, std::string const& field) {
-  std::vector<std::pair<std::string, std::string>> res;
-
-  // Check for the keys of the relevant field
-  for (auto& x : j_obj[field].items()) {
-    // The keys are returned in alphabetical order by `nlohmann::json`, but
-    // the order does not matter when creating signed urls.
-    res.emplace_back(x.key(), x.value());
-  }
-  return res;
-}
-
-std::vector<std::pair<std::string, std::string>> ExtractHeaders(
-    nlohmann::json j_obj) {
-  return ExtractListOfPairs(std::move(j_obj), "headers");
-}
-
-std::vector<std::pair<std::string, std::string>> ExtractQueryParams(
-    nlohmann::json j_obj) {
-  return ExtractListOfPairs(std::move(j_obj), "queryParameters");
-}
-
-std::vector<std::pair<std::string, std::string>> ExtractFields(
-    nlohmann::json j_obj) {
-  return ExtractListOfPairs(std::move(j_obj), "fields");
-}
+std::map<std::string, SigningV4Test>* signing_tests;
+std::map<std::string, PostPolicyV4Test>* post_policy_tests;
 
 class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -107,67 +85,65 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
-  auto j_obj = (*signing_tests)[GetParam()];
-  std::string const method_name = j_obj["method"];
-  std::string const bucket_name = j_obj["bucket"];
-  std::string const object_name = j_obj["object"];
-  std::string const scheme = j_obj["scheme"];
-  std::string url_style;
-  if (j_obj.count("urlStyle") > 0) {
-    url_style = j_obj["urlStyle"].get<std::string>();
-  }
-  std::string const date = j_obj["timestamp"];
-  auto const valid_for =
-      std::chrono::seconds(internal::ParseIntField(j_obj, "expiration"));
-  std::string const expected = j_obj["expectedUrl"];
-  std::string const expected_canonical_request =
-      j_obj["expectedCanonicalRequest"];
-  std::string const expected_string_to_sign = j_obj["expectedStringToSign"];
+  auto const& test_params = (*signing_tests)[GetParam()];
+  auto const& method_name = test_params.method();
+  auto const& bucket_name = test_params.bucket();
+  auto const& object_name = test_params.object();
+  auto const& scheme = test_params.scheme();
+  auto const& url_style = test_params.urlstyle();
+  auto const date =
+      ::google::cloud::internal::ToChronoTimePoint(test_params.timestamp());
+  auto const valid_for = std::chrono::seconds(test_params.expiration());
+  auto const& expected = test_params.expectedurl();
+  auto const& expected_canonical_request =
+      test_params.expectedcanonicalrequest();
+  auto const& expected_string_to_sign = test_params.expectedstringtosign();
 
   // Extract the headers for each object
-  auto headers = ExtractHeaders(j_obj);
-  auto params = ExtractQueryParams(j_obj);
+  auto headers = test_params.headers();
+  auto params = test_params.query_parameters();
 
   google::cloud::storage::internal::V4SignUrlRequest request(
       method_name, bucket_name, object_name);
-  request.set_multiple_options(
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-      SignedUrlDuration(valid_for));
+  request.set_multiple_options(SignedUrlTimestamp(date),
+                               SignedUrlDuration(valid_for));
 
   std::vector<AddExtensionHeaderOption> header_extensions(5);
   ASSERT_LE(headers.size(), header_extensions.size());
-  for (std::size_t i = 0; i < headers.size(); ++i) {
-    auto& header = headers.at(i);
+  std::size_t idx = 0;
+  for (auto const& name_val : headers) {
     request.set_multiple_options(
-        AddExtensionHeader(header.first, header.second));
-    header_extensions[i] = AddExtensionHeader(header.first, header.second);
+        AddExtensionHeader(name_val.first, name_val.second));
+    header_extensions[idx++] =
+        AddExtensionHeader(name_val.first, name_val.second);
   }
 
   std::vector<AddQueryParameterOption> query_params(5);
   ASSERT_LE(params.size(), query_params.size());
-  for (std::size_t i = 0; i < params.size(); ++i) {
-    auto& param = params.at(i);
+  idx = 0;
+  for (auto const& name_val : params) {
     request.set_multiple_options(
-        AddQueryParameterOption(param.first, param.second));
-    query_params[i] = AddQueryParameterOption(param.first, param.second);
+        AddQueryParameterOption(name_val.first, name_val.second));
+    query_params[idx++] =
+        AddQueryParameterOption(name_val.first, name_val.second);
   }
 
   VirtualHostname virtual_hotname;
-  if (url_style == "VIRTUAL_HOSTED_STYLE") {
+  if (url_style == UrlStyle::VIRTUAL_HOSTED_STYLE) {
     virtual_hotname = VirtualHostname(true);
     request.set_multiple_options(VirtualHostname(true));
   }
 
   BucketBoundHostname domain_named_bucket;
-  if (url_style == "BUCKET_BOUND_HOSTNAME") {
-    domain_named_bucket = BucketBoundHostname(j_obj["bucketBoundHostname"]);
+  if (url_style == UrlStyle::BUCKET_BOUND_HOSTNAME) {
+    domain_named_bucket =
+        BucketBoundHostname(test_params.bucketboundhostname());
     request.set_multiple_options(
-        BucketBoundHostname(j_obj["bucketBoundHostname"]));
+        BucketBoundHostname(test_params.bucketboundhostname()));
   }
 
   auto actual = client.CreateV4SignedUrl(
-      method_name, bucket_name, object_name,
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      method_name, bucket_name, object_name, SignedUrlTimestamp(date),
       SignedUrlDuration(valid_for), header_extensions[0], header_extensions[1],
       header_extensions[2], header_extensions[3], header_extensions[4],
       query_params[0], query_params[1], query_params[2], query_params[3],
@@ -194,7 +170,7 @@ INSTANTIATE_TEST_SUITE_P(
       std::vector<std::string> res;
       std::transform(signing_tests->begin(), signing_tests->end(),
                      std::back_inserter(res),
-                     [](std::pair<std::string, nlohmann::json> const& p) {
+                     [](std::pair<std::string, SigningV4Test> const& p) {
                        return p.first;
                      });
       return res;
@@ -208,81 +184,62 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   std::string account_email = creds->get()->AccountEmail();
   Client client(*creds);
 
-  auto const j_obj = (*post_policy_tests)[GetParam()];
-  auto const input = j_obj["policyInput"];
-  auto const output = j_obj["policyOutput"];
-  std::string const bucket_name = input["bucket"];
-  std::string const object_name = input["object"];
-  auto const valid_for = std::chrono::seconds(input["expiration"].get<int>());
-  auto timestamp = google::cloud::internal::ParseRfc3339(input["timestamp"]);
-  std::string const scheme = input["scheme"];
+  auto const& test_params = (*post_policy_tests)[GetParam()];
+  auto const& input = test_params.policyinput();
+  auto const& output = test_params.policyoutput();
+  auto const& bucket_name = input.bucket();
+  auto const& object_name = input.object();
+  auto const valid_for = std::chrono::seconds(input.expiration());
+  auto const timestamp =
+      ::google::cloud::internal::ToChronoTimePoint(input.timestamp());
+  auto const& scheme = input.scheme();
   BucketBoundHostname domain_named_bucket;
-  std::string url_style;
-  if (input.count("urlStyle") > 0) {
-    url_style = input["urlStyle"].get<std::string>();
-  }
-  if (url_style == "BUCKET_BOUND_HOSTNAME") {
-    domain_named_bucket = BucketBoundHostname(input["bucketBoundHostname"]);
+  auto const& url_style = input.urlstyle();
+  if (url_style == UrlStyle::BUCKET_BOUND_HOSTNAME) {
+    domain_named_bucket = BucketBoundHostname(input.bucketboundhostname());
   }
   VirtualHostname virtual_hotname;
-  if (url_style == "VIRTUAL_HOSTED_STYLE") {
+  if (url_style == UrlStyle::VIRTUAL_HOSTED_STYLE) {
     virtual_hotname = VirtualHostname(true);
   }
 
   std::vector<PolicyDocumentCondition> conditions;
-  if (input.count("conditions") > 0) {
-    auto conditions_json = input["conditions"];
-    if (!conditions_json.is_discarded()) {
-      for (auto const& condition : conditions_json.items()) {
-        std::vector<std::string> tokens;
-        if (condition.value().size() == 2) {
-          if (condition.key() == "startsWith") {
-            conditions.emplace_back(PolicyDocumentCondition::StartsWith(
-                condition.value()[0].get<std::string>().substr(1),
-                condition.value()[1]));
-          } else if (condition.key() == "contentLengthRange") {
-            conditions.emplace_back(PolicyDocumentCondition::ContentLengthRange(
-                condition.value()[0], condition.value()[1]));
-          } else {
-            ASSERT_TRUE(false) << "Unknown operator: " << condition.key();
-          }
-        } else if (condition.value().size() == 1) {
-          conditions.emplace_back(PolicyDocumentCondition::ExactMatchObject(
-              condition.key(), condition.value()[0]));
+  auto const& condition = input.conditions();
 
-        } else {
-          ASSERT_TRUE(false)
-              << "Expected 2 or 3 tokens, got " << condition.value().size() + 1;
-        }
-      }
-    }
+  ASSERT_TRUE(condition.startswith().empty() ||
+              condition.startswith().size() == 2U)
+      << condition.startswith().size();
+  if (condition.startswith().size() == 2U) {
+    conditions.emplace_back(PolicyDocumentCondition::StartsWith(
+        condition.startswith()[0].substr(1), condition.startswith()[1]));
+  }
+  ASSERT_TRUE(condition.contentlengthrange().empty() ||
+              condition.contentlengthrange().size() == 2U)
+      << condition.contentlengthrange().size();
+  if (condition.contentlengthrange().size() == 2U) {
+    conditions.emplace_back(PolicyDocumentCondition::ContentLengthRange(
+        condition.contentlengthrange()[0], condition.contentlengthrange()[1]));
   }
 
-  std::string const expected_url = output["url"];
-  auto fields = output["fields"];
-  std::string const expected_key = fields["key"];
-  std::string const expected_algorithm = fields["x-goog-algorithm"];
-  std::string const expected_credential = fields["x-goog-credential"];
-  std::string const expected_date = fields["x-goog-date"];
-  std::string const expected_signature = fields["x-goog-signature"];
-  std::string const expected_policy = fields["policy"];
+  auto const& expected_url = output.url();
+  auto const& fields = output.fields();
+  auto const& expected_algorithm = fields.at("x-goog-algorithm");
+  auto const& expected_credential = fields.at("x-goog-credential");
+  auto const& expected_date = fields.at("x-goog-date");
+  auto const& expected_signature = fields.at("x-goog-signature");
+  auto const& expected_policy = fields.at("policy");
 
-  std::map<std::string, std::string> expected_form_fields;
-  for (auto const& field : fields.items()) {
-    expected_form_fields[field.key()] = field.value().get<std::string>();
-  }
   // We need to escape it because `nlohmann::json` interprets the escaped
   // characters.
   std::string const expected_decoded_policy =
-      *internal::PostPolicyV4Escape(output["expectedDecodedPolicy"]);
-
-  auto headers = ExtractFields(input);
+      *internal::PostPolicyV4Escape(output.expecteddecodedpolicy());
 
   std::vector<AddExtensionFieldOption> extension_fields(5);
-  ASSERT_LE(headers.size(), extension_fields.size());
-  for (std::size_t i = 0; i < headers.size(); ++i) {
-    auto& header = headers.at(i);
-    extension_fields[i] = AddExtensionField(header.first, header.second);
+  ASSERT_LE(input.fields().size(), extension_fields.size());
+  std::size_t idx = 0;
+  for (auto const& name_val : input.fields()) {
+    extension_fields[idx++] =
+        AddExtensionField(name_val.first, name_val.second);
   }
   PolicyDocumentV4 doc{bucket_name, object_name, valid_for, timestamp,
                        std::move(conditions)};
@@ -301,7 +258,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
                                doc_res->expiration - valid_for));
   EXPECT_EQ(expected_algorithm, doc_res->signing_algorithm);
   EXPECT_EQ(expected_signature, doc_res->signature);
-  EXPECT_EQ(expected_form_fields, doc_res->required_form_fields);
+  EXPECT_EQ((std::map<std::string, std::string>(fields.begin(), fields.end())),
+            doc_res->required_form_fields);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -310,7 +268,7 @@ INSTANTIATE_TEST_SUITE_P(
       std::vector<std::string> res;
       std::transform(post_policy_tests->begin(), post_policy_tests->end(),
                      std::back_inserter(res),
-                     [](std::pair<std::string, nlohmann::json> const& p) {
+                     [](std::pair<std::string, PostPolicyV4Test> const& p) {
                        return p.first;
                      });
       return res;
@@ -321,6 +279,9 @@ INSTANTIATE_TEST_SUITE_P(
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+using google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using google::cloud::conformance::storage::v1::SigningV4Test;
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   auto conformance_tests_file =
@@ -333,66 +294,32 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
         << " environment variable must be set and not empty.\n";
     return 1;
   }
+
   std::ifstream ifstr(conformance_tests_file);
   if (!ifstr.is_open()) {
     std::cerr << "Failed to open data file: \"" << conformance_tests_file
               << "\"\n";
     return 1;
   }
+  std::string json_rep(std::istreambuf_iterator<char>{ifstr}, {});
+  google::cloud::conformance::storage::v1::TestFile tests;
+  auto status = google::protobuf::util::JsonStringToMessage(json_rep, &tests);
+  if (!status.ok()) {
+    std::cerr << "Failed to parse conformance tests: " << status.ToString()
+              << "\n";
+    return 1;
+  }
 
   auto signing_tests_destroyer =
-      absl::make_unique<std::map<std::string, nlohmann::json>>();
+      absl::make_unique<std::map<std::string, SigningV4Test>>();
   google::cloud::storage::signing_tests = signing_tests_destroyer.get();
 
   // The implementation is not yet completed and these tests still fail, so skip
   // them so far.
   std::set<std::string> nonconformant_url_tests{"ListObjects"};
 
-  auto json = nlohmann::json::parse(ifstr);
-  if (json.is_discarded()) {
-    std::cerr << "Failed to parse provided data file\n";
-    return 1;
-  }
-
-  if (!json.is_object()) {
-    std::cerr << "The provided file should contain one JSON object.\n";
-    return 1;
-  }
-  if (json.count("signingV4Tests") < 1) {
-    std::cerr << "The provided file should contain a 'signingV4Tests' entry.\n"
-              << json;
-    return 1;
-  }
-
-  auto signing_tests_json = json["signingV4Tests"];
-  if (!signing_tests_json.is_array()) {
-    std::cerr << "Expected an obects' value to be arrays, found: "
-              << signing_tests_json << ".\n";
-    return 1;
-  }
-  if (!signing_tests_json.is_array()) {
-    std::cerr << "Expected an obects' value to be arrays, found: "
-              << signing_tests_json << ".\n";
-    return 1;
-  }
-
-  for (auto const& j_obj : signing_tests_json) {
-    if (!j_obj.is_object()) {
-      std::cerr << "Expected an array of objects, got this element in array: "
-                << j_obj << "\n";
-      return 1;
-    }
-    if (j_obj.count("description") != 1) {
-      std::cerr << "Expected all tests to have a description\n";
-      return 1;
-    }
-    auto j_descr = j_obj["description"];
-    if (!j_descr.is_string()) {
-      std::cerr << "Expected description to be a string, got: " << j_descr
-                << "\n";
-      return 1;
-    }
-    std::string name_with_spaces = j_descr;
+  for (auto const& signing_test : tests.signing_v4_tests()) {
+    std::string name_with_spaces = signing_test.description();
     std::string name;
     // gtest doesn't allow for anything other than [a-zA-Z]
     std::copy_if(name_with_spaces.begin(), name_with_spaces.end(),
@@ -403,39 +330,19 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       continue;
     }
     bool inserted =
-        google::cloud::storage::signing_tests->emplace(name, j_obj).second;
+        google::cloud::storage::signing_tests->emplace(name, signing_test)
+            .second;
     if (!inserted) {
       std::cerr << "Duplicate test description: " << name << "\n";
     }
   }
 
   auto post_policy_tests_destroyer =
-      absl::make_unique<std::map<std::string, nlohmann::json>>();
+      absl::make_unique<std::map<std::string, PostPolicyV4Test>>();
   google::cloud::storage::post_policy_tests = post_policy_tests_destroyer.get();
 
-  auto post_policy_tests_json = json["postPolicyV4Tests"];
-  if (!post_policy_tests_json.is_array()) {
-    std::cerr << "Expected an obects' value to be arrays, found: "
-              << post_policy_tests_json << ".\n";
-    return 1;
-  }
-  for (auto const& j_obj : post_policy_tests_json.items()) {
-    if (!j_obj.value().is_object()) {
-      std::cerr << "Expected an array of objects, got this element in array: "
-                << j_obj.value() << "\n";
-      return 1;
-    }
-    if (j_obj.value().count("description") != 1) {
-      std::cerr << "Expected all tests to have a description\n";
-      return 1;
-    }
-    auto j_descr = j_obj.value()["description"];
-    if (!j_descr.is_string()) {
-      std::cerr << "Expected description to be a string, got: " << j_descr
-                << "\n";
-      return 1;
-    }
-    std::string name_with_spaces = j_descr;
+  for (auto const& policy_test : tests.post_policy_v4_tests()) {
+    std::string name_with_spaces = policy_test.description();
     std::string name;
     // gtest doesn't allow for anything other than [a-zA-Z]
     std::copy_if(name_with_spaces.begin(), name_with_spaces.end(),
@@ -443,13 +350,14 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    if (name == "POSTPolicyCharacterEscaping") {
+    if (name == "POSTPolicyCharacterEscaping" ||
+        name == "POSTPolicyWithAdditionalMetadata") {
       // Escaping is not supported if exceptions are unavailable.
       continue;
     }
 #endif  // !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     bool inserted =
-        google::cloud::storage::post_policy_tests->emplace(name, j_obj.value())
+        google::cloud::storage::post_policy_tests->emplace(name, policy_test)
             .second;
     if (!inserted) {
       std::cerr << "Duplicate test description: " << name << "\n";
@@ -460,3 +368,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
 
   return RUN_ALL_TESTS();
 }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

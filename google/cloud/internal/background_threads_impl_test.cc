@@ -108,6 +108,21 @@ TEST(AutomaticallyCreatedBackgroundThreads, ManyThreads) {
   EXPECT_THAT(ids, Not(Contains(std::this_thread::get_id())));
 }
 
+/// @test Verify that automatically created completion queues work.
+TEST(AutomaticallyCreatedBackgroundThreads, ManualShutdown) {
+  auto constexpr kThreadCount = 4;
+  AutomaticallyCreatedBackgroundThreads actual(kThreadCount);
+  EXPECT_EQ(kThreadCount, actual.pool_size());
+
+  std::vector<promise<void>> promises(2 * kThreadCount);
+  for (auto& p : promises) {
+    actual.cq().RunAsync([&p] { p.set_value(); });
+  }
+  for (auto& p : promises) p.get_future().get();
+
+  actual.Shutdown();
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

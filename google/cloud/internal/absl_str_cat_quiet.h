@@ -30,6 +30,6 @@
 #endif  // _MSC_VER
 #include "absl/strings/str_cat.h"
 // TODO(#4501) - end
-#include "google/cloud/internal/diagnostics_push.inc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ABSL_STR_CAT_QUIET_H

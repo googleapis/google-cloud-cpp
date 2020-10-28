@@ -58,7 +58,7 @@ TEST(PolicyDocumentV4Request, SigningAccount) {
 }
 
 TEST(PostPolicyV4EscapeTest, OnlyAscii) {
-  EXPECT_EQ("\\\\\\b\\f\\n\\r\\t\\vabcd",
+  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\vabcd",
             *PostPolicyV4Escape("\\\b\f\n\r\t\vabcd"));
 }
 
@@ -75,7 +75,7 @@ TEST(PostPolicyV4EscapeTest, InvalidUtf) {
 TEST(PostPolicyV4EscapeTest, Simple) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_EQ("\127\065abcd$", *PostPolicyV4Escape("\127\065abcd$"));
-  EXPECT_EQ("\\\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
+  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
             *PostPolicyV4Escape(u8"\\\b\f\n\r\t\v\u0080\u0119"));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THAT(PostPolicyV4Escape("ąę"), StatusIs(StatusCode::kUnimplemented));

@@ -19,6 +19,15 @@
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
+#include "absl/memory/memory.h"
+// TODO(#4501) - this file can be removed if #include <absl/...> works
+#include "google/cloud/internal/diagnostics_push.inc"
+#if _MSC_VER
+#pragma warning(disable : 4244)
+#endif  // _MSC_VER
+#include "absl/strings/substitute.h"
+// TODO(#4501) - end
+#include "google/cloud/internal/diagnostics_pop.inc"
 #include "absl/types/optional.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
@@ -93,15 +102,12 @@ DefaultStorageStub::CreateReadSession(
   // request messages. As such, we must hoist the values required for
   // routing into a header.
   //
-  // TODO(aryann): Replace the below string concatenations with
-  // `absl::Substitute`.
-  //
   // TODO(aryann): URL escape the project ID and dataset ID before
   // placing them into the routing header.
-  std::string routing_header = "table_reference.project_id=";
-  routing_header += request.table_reference().project_id();
-  routing_header += "&table_reference.dataset_id=";
-  routing_header += request.table_reference().dataset_id();
+  std::string routing_header = absl::Substitute(
+      "table_reference.project_id=$0&table_reference.dataset_id=$1",
+      request.table_reference().project_id(),
+      request.table_reference().dataset_id());
   client_context.AddMetadata(kRoutingHeader, routing_header);
 
   grpc::Status grpc_status =
@@ -115,24 +121,18 @@ DefaultStorageStub::CreateReadSession(
 std::unique_ptr<StreamReader<bigquerystorage_proto::ReadRowsResponse>>
 DefaultStorageStub::ReadRows(
     bigquerystorage_proto::ReadRowsRequest const& request) {
-  // TODO(aryann): Replace this with `absl::make_unique`.
-  auto client_context =
-      std::unique_ptr<grpc::ClientContext>(new grpc::ClientContext);
+  auto client_context = absl::make_unique<grpc::ClientContext>();
 
-  // TODO(aryann): Replace the below string concatenations with
-  // `absl::Substitute`.
-  //
   // TODO(aryann): URL escape the project ID and dataset ID before
   // placing them into the routing header.
-  std::string routing_header = "read_position.stream.name=";
-  routing_header += request.read_position().stream().name();
+  std::string routing_header = absl::Substitute(
+      "read_position.stream.name=$0", request.read_position().stream().name());
   client_context->AddMetadata(kRoutingHeader, routing_header);
 
   auto stream = grpc_stub_->ReadRows(client_context.get(), request);
-  // TODO(aryann): Replace this with `absl::make_unique`.
-  return std::unique_ptr<StreamReader<bigquerystorage_proto::ReadRowsResponse>>(
-      new GrpcStreamReader<bigquerystorage_proto::ReadRowsResponse>(
-          std::move(client_context), std::move(stream)));
+  return absl::make_unique<
+      GrpcStreamReader<bigquerystorage_proto::ReadRowsResponse>>(
+      std::move(client_context), std::move(stream));
 }
 
 }  // namespace

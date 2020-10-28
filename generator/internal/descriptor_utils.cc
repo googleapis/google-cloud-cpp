@@ -18,9 +18,11 @@
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_options_generator.h"
+#include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/retry_policy_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
@@ -165,6 +167,33 @@ void SetResourceRoutingMethodVars(
   }
   method_vars["method_request_body"] = http_rule.body();
 }
+
+std::string DefaultIdempotencyFromHttpOperation(
+    google::protobuf::MethodDescriptor const& method) {
+  if (!method.options().HasExtension(google::api::http)) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                   << ": google::api::http extension not found" << std::endl;
+  }
+
+  google::api::HttpRule http_rule =
+      method.options().GetExtension(google::api::http);
+
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+    case google::api::HttpRule::kPut:
+      return "kIdempotent";
+      break;
+    case google::api::HttpRule::kPost:
+    case google::api::HttpRule::kDelete:
+    case google::api::HttpRule::kPatch:
+      return "kNonIdempotent";
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
+  }
+}
 }  // namespace
 
 VarsDictionary CreateServiceVars(
@@ -173,31 +202,19 @@ VarsDictionary CreateServiceVars(
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
-  vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
-  vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
-  vars["proto_file_name"] = descriptor.file()->name();
-  vars["service_endpoint"] =
-      descriptor.options().GetExtension(google::api::default_host);
   vars["connection_options_header_path"] = absl::StrCat(
       vars["product_path"], "connection_options", GeneratedFileSuffix(), ".h");
   vars["connection_options_cc_path"] = absl::StrCat(
       vars["product_path"], "connection_options", GeneratedFileSuffix(), ".cc");
-  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
-  vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
-                                      ServiceNameToFilePath(descriptor.name()),
-                                      "_stub", GeneratedFileSuffix(), ".cc");
-  vars["stub_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub",
-                   GeneratedFileSuffix(), ".h");
-  vars["stub_factory_cc_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
-                   GeneratedFileSuffix(), ".cc");
-  vars["stub_factory_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
-                   GeneratedFileSuffix(), ".h");
+  vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
+  vars["idempotency_class_name"] =
+      absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");
+  vars["idempotency_policy_cc_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection_idempotency_policy", GeneratedFileSuffix(), ".cc");
+  vars["idempotency_policy_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection_idempotency_policy", GeneratedFileSuffix(), ".h");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] =
       absl::StrCat(vars["product_path"], "internal/",
@@ -216,10 +233,34 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()),
                    "_metadata_decorator", GeneratedFileSuffix(), ".h");
-  vars["version_header_path"] = absl::StrCat(vars["product_path"], "version.h");
-  vars["version_cc_path"] = absl::StrCat(vars["product_path"], "version.cc");
-  vars["version_info_header_path"] =
-      absl::StrCat(vars["product_path"], "version_info.h");
+  vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
+  vars["product_internal_namespace"] =
+      BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
+  vars["proto_file_name"] = descriptor.file()->name();
+  vars["proto_grpc_header_path"] = absl::StrCat(
+      absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
+  vars["retry_policy_header_path"] = absl::StrCat(
+      vars["product_path"], "retry_policy", GeneratedFileSuffix(), ".h");
+  vars["retry_traits_header_path"] =
+      absl::StrCat(vars["product_path"], "retry_traits", ".h");
+  vars["service_endpoint"] =
+      descriptor.options().GetExtension(google::api::default_host);
+  vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
+  vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
+                                      ServiceNameToFilePath(descriptor.name()),
+                                      "_stub", GeneratedFileSuffix(), ".cc");
+  vars["stub_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub",
+                   GeneratedFileSuffix(), ".h");
+  vars["stub_factory_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".cc");
+  vars["stub_factory_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".h");
   return vars;
 }
 
@@ -229,6 +270,8 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   for (int i = 0; i < service.method_count(); i++) {
     auto method = service.method(i);
     VarsDictionary method_vars;
+    method_vars["default_idempotency"] =
+        DefaultIdempotencyFromHttpOperation(*method);
     method_vars["method_name"] = method->name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
     method_vars["request_type"] =
@@ -253,23 +296,29 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<std::unique_ptr<GeneratorInterface>> class_generators;
-  class_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
+  std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
+  code_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
-  class_generators.push_back(absl::make_unique<StubGenerator>(
+  code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
-  class_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
+  code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
-  class_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+  code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
-  class_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+  code_generators.push_back(absl::make_unique<RetryPolicyGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
-  return class_generators;
+  code_generators.push_back(absl::make_unique<StubGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  return code_generators;
 }
 
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,

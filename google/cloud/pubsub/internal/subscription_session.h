@@ -34,6 +34,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<Status> CreateSubscriptionSession(
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor, std::string client_id,
     pubsub::SubscriberConnection::SubscribeParams p,
@@ -41,6 +43,8 @@ future<Status> CreateSubscriptionSession(
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
 future<Status> CreateTestingSubscriptionSession(
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
     std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
     google::cloud::CompletionQueue const& executor,
     pubsub::SubscriberConnection::SubscribeParams p,

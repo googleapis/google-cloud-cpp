@@ -24,12 +24,12 @@ in googletest style to run as unit tests for the ReadRows response
 parser.
 
 Usage:
-    curl -L 'https://raw.githubusercontent.com/googleapis/conformance-tests/master/bigtable/v2/readrows.json' \
-      | python ../tools/convert_acceptance_tests.py \
-      | clang-format >readrowsparser_acceptance_tests.inc
+  curl -L \
+   https://raw.githubusercontent.com/googleapis/conformance-tests/master/bigtable/v2/readrows.json |
+  python3 ../tools/convert_acceptance_tests.py |
+  clang-format >readrowsparser_acceptance_tests.inc
 
 """
-from __future__ import print_function
 
 import json
 import sys
@@ -55,115 +55,132 @@ FILE_HEADER = """
 """
 
 
-def camel_case(s):
-    words = "".join([c for c in s if c.isalpha() or c == " "]).split(" ")
+def camel_case(test_name):
+    """Convert a test name to CameCase"""
+    words = "".join([c for c in test_name if c.isalpha() or c == " "]).split(" ")
     return "".join([w[:1].upper() + w[1:].lower() for w in words])
 
 
-def print_test(t):
-    o = '// Test name: "' + t["description"] + '"\n'
-    o += "TEST_F(AcceptanceTest, " + camel_case(t["description"]) + ") {\n"
+def test_case_is_success(test):
+    """Determine if the the test expects a successful parse"""
+    if "results" not in test:
+        return True
+    for result in test["results"]:
+        if "error" in result:
+            return False
+    return True
 
-    o += "  std::vector<std::string> chunk_strings = {\n"
-    if "chunks" in t:
-        for c in t["chunks"]:
-            o += '      R"chunk(\n'
-            if "rowKey" in c:
-                base64_string = c["rowKey"]
-                rowKey_string = base64.b64decode(base64_string.encode("ascii")).decode(
-                    "ascii"
-                )
-                o += '          row_key: "' + rowKey_string + '"\n'
-            if "familyName" in c:
-                o += '          family_name: < value: "' + c["familyName"] + '">\n'
-            if "qualifier" in c:
-                base64_string = c["qualifier"]
-                qualifier_string = base64.b64decode(
-                    base64_string.encode("ascii")
-                ).decode("ascii")
-                o += '          qualifier: < value: "' + qualifier_string + '">\n'
-            if "timestampMicros" in c:
-                o += (
-                    "          timestamp_micros: "
-                    + unicode(c["timestampMicros"])
-                    + "\n"
-                )
-            if "labels" in c:
-                o += '          labels: "' + str(*c["labels"]) + '"\n'
-            if "value" in c:
-                base64_string = c["value"]
-                value_string = base64.b64decode(base64_string.encode("ascii")).decode(
-                    "ascii"
-                )
-                o += '          value: "' + value_string + '"\n'
-            if "valueSize" in c:
-                o += "          value_size: " + unicode(c["valueSize"]) + "\n"
-            if "resetRow" in c:
-                o += "          reset_row: " + unicode(c["resetRow"]).lower() + "\n"
-            if "commitRow" in c:
-                o += "          commit_row: " + unicode(c["commitRow"]).lower() + "\n"
-            o += '        )chunk",\n'
-    if o[-1] == "\n":
-        o += "  "
-    o += "  };\n"
-    o += "\n"
 
-    o += "  auto chunks = ConvertChunks(std::move(chunk_strings));\n"
-    o += "  ASSERT_FALSE(chunks.empty());\n"
+def get_chunks(test):
+    """Return the chunks as C++ code"""
+    if "chunks" not in test:
+        return ""
+    output = ""
+    for chunk in test["chunks"]:
+        output += '      R"chunk(\n'
+        if "rowKey" in chunk:
+            base64_string = chunk["rowKey"]
+            rowkey_string = base64.b64decode(base64_string.encode("ascii")).decode(
+                "ascii"
+            )
+            output += '          row_key: "' + rowkey_string + '"\n'
+        if "familyName" in chunk:
+            output += '          family_name: < value: "' + chunk["familyName"] + '">\n'
+        if "qualifier" in chunk:
+            base64_string = chunk["qualifier"]
+            qualifier_string = base64.b64decode(base64_string.encode("ascii")).decode(
+                "ascii"
+            )
+            output += '          qualifier: < value: "' + qualifier_string + '">\n'
+        if "timestampMicros" in chunk:
+            output += "          timestamp_micros: " + chunk["timestampMicros"] + "\n"
+        if "labels" in chunk:
+            output += '          labels: "' + str(*chunk["labels"]) + '"\n'
+        if "value" in chunk:
+            base64_string = chunk["value"]
+            value_string = base64.b64decode(base64_string.encode("ascii")).decode(
+                "ascii"
+            )
+            output += '          value: "' + value_string + '"\n'
+        if "valueSize" in chunk:
+            output += "          value_size: " + str(chunk["valueSize"]) + "\n"
+        if "resetRow" in chunk:
+            output += "          reset_row: " + str(chunk["resetRow"]).lower() + "\n"
+        if "commitRow" in chunk:
+            output += "          commit_row: " + str(chunk["commitRow"]).lower() + "\n"
+        output += '        )chunk",\n'
+    return output
 
-    o += "\n"
 
-    ok = True
-    if "results" in t:
-        for r in t["results"]:
-            if "error" in r:
-                ok = False
+def get_results(test):
+    """Return the results as C++ code"""
+    if "results" not in test:
+        return ""
+    output = ""
+    for result in test["results"]:
+        if "error" not in result:
+            output += "\n"
+            if "rowKey" in result:
+                output += '      "rk: ' + result["rowKey"] + '\\n"\n'
+            if "familyName" in result:
+                output += '      "fm: ' + result["familyName"] + '\\n"\n'
+            if "qualifier" in result:
+                output += '      "qual: ' + result["qualifier"] + '\\n"\n'
+            if "timestampMicros" in result:
+                output += '      "ts: ' + str(result["timestampMicros"]) + '\\n"\n'
+            else:
+                output += '      "ts: ' + str(0) + '\\n"\n'
+            if "value" in result:
+                output += '      "value: ' + result["value"] + '\\n"\n'
+            else:
+                output += '      "value: ' + '\\n"\n'
+            if "label" in result:
+                output += '      "label: ' + result["label"] + '\\n",\n'
+            else:
+                output += '      "label: ' + '\\n",\n'
+    return output
 
-    if ok:
-        o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
+
+def print_test(test):
+    """Prints a single test as a C++ Google Test"""
+    output = '// Test name: "' + test["description"] + '"\n'
+    output += "TEST_F(AcceptanceTest, " + camel_case(test["description"]) + ") {\n"
+
+    output += "  std::vector<std::string> chunk_strings = {\n"
+    chunks = get_chunks(test)
+    output += chunks
+    if chunks[-1] == "\n":
+        output += "  "
+    output += "  };\n"
+    output += "\n"
+
+    output += "  auto chunks = ConvertChunks(std::move(chunk_strings));\n"
+    output += "  ASSERT_FALSE(chunks.empty());\n\n"
+
+    if test_case_is_success(test):
+        output += "EXPECT_STATUS_OK(FeedChunks(chunks));\n\n"
     else:
-        o += "EXPECT_FALSE(FeedChunks(chunks).ok());\n"
+        output += "EXPECT_FALSE(FeedChunks(chunks).ok());\n\n"
 
-    o += "\n"
-    o += "  std::vector<std::string> expected_cells = {"
-    if "results" in t:
-        for r in t["results"]:
-            if not ("error" in r):
-                o += "\n"
-                if "rowKey" in r:
-                    o += '      "rk: ' + r["rowKey"] + '\\n"\n'
-                if "familyName" in r:
-                    o += '      "fm: ' + r["familyName"] + '\\n"\n'
-                if "qualifier" in r:
-                    o += '      "qual: ' + r["qualifier"] + '\\n"\n'
-                if "timestampMicros" in r:
-                    o += '      "ts: ' + str(r["timestampMicros"]) + '\\n"\n'
-                else:
-                    o += '      "ts: ' + str(0) + '\\n"\n'
-                if "value" in r:
-                    o += '      "value: ' + r["value"] + '\\n"\n'
-                else:
-                    o += '      "value: ' + '\\n"\n'
-                if "label" in r:
-                    o += '      "label: ' + r["label"] + '\\n",\n'
-                else:
-                    o += '      "label: ' + '\\n",\n'
+    output += "  std::vector<std::string> expected_cells = {"
+    results = get_results(test)
+    output += results
+    if results[-1] == "\n":
+        output += "  "
+    output += "};\n"
 
-    if o[-1] == "\n":
-        o += "  "
-    o += "};\n"
-
-    o += "  EXPECT_EQ(expected_cells, ExtractCells());\n"
-    o += "}\n"
-    return o
+    output += "  EXPECT_EQ(expected_cells, ExtractCells());\n"
+    output += "}\n"
+    return output
 
 
 def main():
-    t = json.loads(sys.stdin.read())
+    """Convert the conformance tests in Protobuf JSON to C++"""
+    test_definitions = json.loads(sys.stdin.read())
 
     print(FILE_HEADER.lstrip())
-    for tt in t["readRowsTests"]:
-        print(print_test(tt))
+    for test in test_definitions["readRowsTests"]:
+        print(print_test(test))
 
 
 if __name__ == "__main__":

@@ -64,13 +64,13 @@ class AckHandler {
    public:
     virtual ~Impl() = 0;
     /// The implementation for `AckHandler::ack()`
-    virtual void ack() = 0;
+    virtual void ack() {}
     /// The implementation for `AckHandler::nack()`
-    virtual void nack() = 0;
+    virtual void nack() {}
     /// The implementation for `AckHandler::ack_id()`
-    virtual std::string ack_id() const = 0;
+    virtual std::string ack_id() const { return {}; }
     /// The implementation for `AckHandler::delivery_attempt()`
-    virtual std::int32_t delivery_attempt() const = 0;
+    virtual std::int32_t delivery_attempt() const { return 0; }
   };
 
   /**

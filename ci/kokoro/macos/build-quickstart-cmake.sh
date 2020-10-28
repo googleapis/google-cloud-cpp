@@ -28,7 +28,9 @@ vcpkg_dir="cmake-out/vcpkg-quickstart"
 if [[ -d "${vcpkg_dir}" ]]; then
   git -C "${vcpkg_dir}" pull --quiet
 else
-  git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+  git clone --quiet --shallow-since 2020-10-01 \
+    https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
+  git -C "${vcpkg_dir}" checkout b999dfdfec58560df7978bd9e8bdb7476d29ef5f
 fi
 
 if [[ -d "cmake-out/vcpkg-quickstart-cache" && ! -d \
@@ -95,11 +97,6 @@ errors=""
 for library in $(quickstart::libraries); do
   echo
   echo "================================================================"
-  if [[ "${library}" == "pubsub" ]]; then
-    # TODO(#5296) - remove this code to skip vcpkg-based builds
-    io::log_yellow "Skipping ${library}, see #5296"
-    continue
-  fi
   io::log_yellow "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
     io::log_red "Building ${library}'s quickstart failed"

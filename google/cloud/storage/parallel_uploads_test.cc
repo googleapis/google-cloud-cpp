@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/internal/bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/retry_policy.h"

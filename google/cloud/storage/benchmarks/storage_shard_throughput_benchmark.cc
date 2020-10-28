@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -304,12 +305,14 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
   return {total_bytes, duration_cast<microseconds>(elapsed)};
 }
 
+using ::google::cloud::testing_util::OptionDescriptor;
+
 google::cloud::StatusOr<Options> ParseArgsDefault(
     std::vector<std::string> argv) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
-  std::vector<gcs_bm::OptionDescriptor> desc{
+  std::vector<OptionDescriptor> desc{
       {"--help", "print usage information",
        [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print benchmark description",
@@ -345,9 +348,9 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
          options.chunk_count = std::stoi(val);
        }},
   };
-  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
+  auto usage = BuildUsage(desc, argv[0]);
 
-  auto unparsed = gcs_bm::OptionsParse(desc, argv);
+  auto unparsed = OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
   }

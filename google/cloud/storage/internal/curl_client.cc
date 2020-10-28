@@ -13,10 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/bucket_access_control_parser.h"
+#include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
+#include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
+#include "google/cloud/storage/internal/notification_metadata_parser.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
+#include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"

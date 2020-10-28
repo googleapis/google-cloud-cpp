@@ -137,9 +137,9 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   };
 
   auto response = CreateTestingSubscriptionSession(
-      mock, cq,
-      {subscription,
-       pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), handler});
+      subscription,
+      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
+      {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
     ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
@@ -178,9 +178,9 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto response = CreateTestingSubscriptionSession(
-      mock, cq,
-      {subscription,
-       pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), handler});
+      subscription,
+      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
+      {handler});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -212,13 +212,12 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
 
   google::cloud::CompletionQueue cq;
   auto response = CreateTestingSubscriptionSession(
-      mock, cq,
-      {subscription,
-       pubsub::SubscriberOptions{}
-           .set_max_outstanding_messages(1)
-           .set_max_outstanding_bytes(1)
-           .set_max_deadline_time(std::chrono::seconds(60)),
-       handler});
+      subscription,
+      pubsub::SubscriberOptions{}
+          .set_max_outstanding_messages(1)
+          .set_max_outstanding_bytes(1)
+          .set_max_deadline_time(std::chrono::seconds(60)),
+      mock, cq, {handler});
   // Setup the system to cancel after the second message.
   auto done = enough_messages.get_future().then(
       [&](future<void>) { response.cancel(); });
@@ -257,9 +256,9 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
     };
 
     auto session = CreateSubscriptionSession(
-        mock, background.cq(), "fake-client-id",
-        {subscription, pubsub::SubscriberOptions{}, handler},
-        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+        subscription, pubsub::SubscriberOptions{}, mock, background.cq(),
+        "fake-client-id", {handler}, pubsub_testing::TestRetryPolicy(),
+        pubsub_testing::TestBackoffPolicy());
     got_one.get_future()
         .then([&session](future<void>) { session.cancel(); })
         .get();
@@ -317,7 +316,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
     };
 
     auto session = CreateSubscriptionSession(
-        mock, background.cq(), "fake-client-id", {subscription, {}, handler},
+        subscription, {}, mock, background.cq(), "fake-client-id", {handler},
         pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
     {
       std::unique_lock<std::mutex> lk(mu);
@@ -378,11 +377,10 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
     };
 
     auto session = CreateSubscriptionSession(
-        mock, background.cq(), "fake-client-id",
-        {subscription,
-         pubsub::SubscriberOptions{}.set_concurrency_watermarks(
-             kMessageCount / 2, 2 * kMessageCount),
-         handler},
+        subscription,
+        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
+            kMessageCount / 2, 2 * kMessageCount),
+        mock, background.cq(), "fake-client-id", {handler},
         pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
     {
       std::unique_lock<std::mutex> lk(mu);
@@ -440,13 +438,12 @@ TEST(SubscriptionSessionTest, FireAndForget) {
       };
 
       (void)CreateSubscriptionSession(
-          mock, background.cq(), "fake-client-id",
-          {subscription,
-           pubsub::SubscriberOptions{}
-               .set_max_outstanding_messages(kMessageCount / 2)
-               .set_concurrency_watermarks(0, kMessageCount / 2)
-               .set_shutdown_polling_period(std::chrono::milliseconds(20)),
-           handler},
+          subscription,
+          pubsub::SubscriberOptions{}
+              .set_max_outstanding_messages(kMessageCount / 2)
+              .set_concurrency_watermarks(0, kMessageCount / 2)
+              .set_shutdown_polling_period(std::chrono::milliseconds(20)),
+          mock, background.cq(), "fake-client-id", {handler},
           pubsub_testing::TestRetryPolicy(),
           pubsub_testing::TestBackoffPolicy())
           .then([&](future<Status> f) {
