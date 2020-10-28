@@ -15,6 +15,7 @@
 #include "generator/internal/predicate_utils.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -115,7 +116,7 @@ TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   *non_empty_method->mutable_output_type() = "google.protobuf.Bar";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsResponseTypeEmpty(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
@@ -143,7 +144,7 @@ TEST(PredicateUtilsTest, IsLongrunningOperation) {
   *not_lro_method->mutable_output_type() = "google.longrunning.Bar";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
@@ -185,7 +186,7 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
   bidirectional_streaming->set_server_streaming(true);
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor_lro =
+  FileDescriptor const* service_file_descriptor_lro =
       pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsNonStreaming(*service_file_descriptor_lro->service(0)->method(0)));
@@ -195,6 +196,129 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
       IsNonStreaming(*service_file_descriptor_lro->service(0)->method(2)));
   EXPECT_FALSE(
       IsNonStreaming(*service_file_descriptor_lro->service(0)->method(3)));
+}
+
+TEST(PredicateUtilsTest, IsLongrunningMetadataTypeUsedAsResponseEmptyResponse) {
+  FileDescriptorProto longrunning_file;
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operation.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    dependency: "google/longrunning/operation.proto"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {
+            response_type: "google.protobuf.Empty"
+            metadata_type: "google.protobuf.Method2Metadata"
+          }
+          [google.api.http] {
+            put: "/v1/{parent=projects/*/instances/*}/databases"
+          }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(IsLongrunningMetadataTypeUsedAsResponse(
+      *service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest,
+     IsLongrunningMetadataTypeUsedAsResponseNonEmptyResponse) {
+  FileDescriptorProto longrunning_file;
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operation.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    dependency: "google/longrunning/operation.proto"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {
+            response_type: "google.protobuf.Method2Response"
+            metadata_type: "google.protobuf.Method2Metadata"
+          }
+          [google.api.http] {
+            patch: "/v1/{parent=projects/*/instances/*}/databases"
+          }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsLongrunningMetadataTypeUsedAsResponse(
+      *service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest,
+     IsLongrunningMetadataTypeUsedAsResponseNotLongrunning) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+        options {
+          [google.api.http] {
+            patch: "/v1/{parent=projects/*/instances/*}/databases"
+          }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsLongrunningMetadataTypeUsedAsResponse(
+      *service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, PaginationSuccess) {
@@ -240,7 +364,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
   *paginated_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
   auto result =
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
@@ -269,7 +393,7 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
   *no_page_size_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -297,7 +421,7 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
   *no_page_token_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -331,7 +455,7 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
   *no_next_page_token_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -378,7 +502,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
   *no_repeated_message_method->mutable_output_type() = "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
@@ -441,7 +565,7 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
       "google.protobuf.Output";
 
   DescriptorPool pool;
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
                "");
 }

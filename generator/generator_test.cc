@@ -28,7 +28,6 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -76,13 +75,11 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
-  int constexpr kNumMockOutputStreams = 13;
+  int constexpr kNumMockOutputStreams = 15;
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
-      mock_outputs;
-  mock_outputs.reserve(kNumMockOutputStreams);
-  for (int i = 0; i < kNumMockOutputStreams; ++i) {
-    mock_outputs.push_back(
-        absl::make_unique<generator_testing::MockZeroCopyOutputStream>());
+      mock_outputs(kNumMockOutputStreams);
+  for (auto& output : mock_outputs) {
+    output = absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   }
 
   DescriptorPool pool;
@@ -96,20 +93,12 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
     EXPECT_CALL(*output, Next).WillRepeatedly(Return(false));
   }
 
-  EXPECT_CALL(*context_, Open(_))
-      .WillOnce(Return(mock_outputs[0].release()))
-      .WillOnce(Return(mock_outputs[1].release()))
-      .WillOnce(Return(mock_outputs[2].release()))
-      .WillOnce(Return(mock_outputs[3].release()))
-      .WillOnce(Return(mock_outputs[4].release()))
-      .WillOnce(Return(mock_outputs[5].release()))
-      .WillOnce(Return(mock_outputs[6].release()))
-      .WillOnce(Return(mock_outputs[7].release()))
-      .WillOnce(Return(mock_outputs[8].release()))
-      .WillOnce(Return(mock_outputs[9].release()))
-      .WillOnce(Return(mock_outputs[10].release()))
-      .WillOnce(Return(mock_outputs[11].release()))
-      .WillOnce(Return(mock_outputs[12].release()));
+  int next_mock = 0;
+  EXPECT_CALL(*context_, Open)
+      .Times(kNumMockOutputStreams)
+      .WillRepeatedly([&next_mock, &mock_outputs](::testing::Unused) {
+        return mock_outputs[next_mock++].release();
+      });
 
   std::string actual_error;
   Generator generator;
