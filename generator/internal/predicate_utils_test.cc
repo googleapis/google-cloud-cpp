@@ -31,67 +31,67 @@ bool PredicateTrue(int const&) { return true; }
 bool PredicateFalse(int const&) { return false; }
 
 TEST(PredicateUtilsTest, GenericNot) {
-  int bar;
-  EXPECT_TRUE(GenericNot<int>(PredicateFalse)(bar));
-  EXPECT_FALSE(GenericNot<int>(PredicateTrue)(bar));
+  int const unused = 0;
+  EXPECT_TRUE(GenericNot<int>(PredicateFalse)(unused));
+  EXPECT_FALSE(GenericNot<int>(PredicateTrue)(unused));
 }
 
 TEST(PredicateUtilsTest, GenericAnd) {
-  int bar;
-  EXPECT_TRUE(GenericAnd<int>(PredicateTrue, PredicateTrue)(bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateTrue)(bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateTrue, PredicateFalse)(bar));
-  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateFalse)(bar));
+  int const unused = 0;
+  EXPECT_TRUE(GenericAnd<int>(PredicateTrue, PredicateTrue)(unused));
+  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateTrue)(unused));
+  EXPECT_FALSE(GenericAnd<int>(PredicateTrue, PredicateFalse)(unused));
+  EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateFalse)(unused));
 
   EXPECT_TRUE(
-      GenericAnd<int>(PredicateTrue, GenericNot<int>(PredicateFalse))(bar));
+      GenericAnd<int>(PredicateTrue, GenericNot<int>(PredicateFalse))(unused));
   EXPECT_TRUE(
-      GenericAnd<int>(GenericNot<int>(PredicateFalse), PredicateTrue)(bar));
+      GenericAnd<int>(GenericNot<int>(PredicateFalse), PredicateTrue)(unused));
   EXPECT_TRUE(
-      GenericNot<int>(GenericAnd<int>(PredicateTrue, PredicateFalse))(bar));
+      GenericNot<int>(GenericAnd<int>(PredicateTrue, PredicateFalse))(unused));
 }
 
 TEST(PredicateUtilsTest, GenericOr) {
-  int bar;
-  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateTrue)(bar));
-  EXPECT_TRUE(GenericOr<int>(PredicateFalse, PredicateTrue)(bar));
-  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateFalse)(bar));
-  EXPECT_FALSE(GenericOr<int>(PredicateFalse, PredicateFalse)(bar));
+  int const unused = 0;
+  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateTrue)(unused));
+  EXPECT_TRUE(GenericOr<int>(PredicateFalse, PredicateTrue)(unused));
+  EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateFalse)(unused));
+  EXPECT_FALSE(GenericOr<int>(PredicateFalse, PredicateFalse)(unused));
 }
 
 TEST(PredicateUtilsTest, GenericAll) {
-  int bar;
-  EXPECT_TRUE(GenericAll<int>(PredicateTrue)(bar));
-  EXPECT_FALSE(GenericAll<int>(PredicateFalse)(bar));
-  EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse)(bar));
-  EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue)(bar));
+  int const unused = 0;
+  EXPECT_TRUE(GenericAll<int>(PredicateTrue)(unused));
+  EXPECT_FALSE(GenericAll<int>(PredicateFalse)(unused));
+  EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse)(unused));
+  EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue)(unused));
   EXPECT_TRUE(
-      GenericAll<int>(PredicateTrue, PredicateTrue, PredicateTrue)(bar));
+      GenericAll<int>(PredicateTrue, PredicateTrue, PredicateTrue)(unused));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateFalse, PredicateTrue, PredicateTrue)(bar));
+      GenericAll<int>(PredicateFalse, PredicateTrue, PredicateTrue)(unused));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateTrue, PredicateFalse, PredicateTrue)(bar));
+      GenericAll<int>(PredicateTrue, PredicateFalse, PredicateTrue)(unused));
   EXPECT_FALSE(
-      GenericAll<int>(PredicateFalse, PredicateFalse, PredicateFalse)(bar));
+      GenericAll<int>(PredicateFalse, PredicateFalse, PredicateFalse)(unused));
 
   EXPECT_FALSE(GenericAll<int>(
-      PredicateFalse, GenericOr<int>(PredicateFalse, PredicateTrue))(bar));
+      PredicateFalse, GenericOr<int>(PredicateFalse, PredicateTrue))(unused));
 }
 
 TEST(PredicateUtilsTest, GenericAny) {
-  int bar;
-  EXPECT_TRUE(GenericAny<int>(PredicateTrue)(bar));
-  EXPECT_FALSE(GenericAny<int>(PredicateFalse)(bar));
-  EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse)(bar));
-  EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue)(bar));
+  int const unused = 0;
+  EXPECT_TRUE(GenericAny<int>(PredicateTrue)(unused));
+  EXPECT_FALSE(GenericAny<int>(PredicateFalse)(unused));
+  EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse)(unused));
+  EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue)(unused));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateTrue, PredicateTrue, PredicateTrue)(bar));
+      GenericAny<int>(PredicateTrue, PredicateTrue, PredicateTrue)(unused));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateFalse, PredicateTrue, PredicateTrue)(bar));
+      GenericAny<int>(PredicateFalse, PredicateTrue, PredicateTrue)(unused));
   EXPECT_TRUE(
-      GenericAny<int>(PredicateTrue, PredicateFalse, PredicateTrue)(bar));
+      GenericAny<int>(PredicateTrue, PredicateFalse, PredicateTrue)(unused));
   EXPECT_FALSE(
-      GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(bar));
+      GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(unused));
 }
 
 TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
@@ -447,38 +447,38 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentTrueString) {
-  int bar;
+  int const unused = 0;
   PredicatedFragment<int> f = {PredicateTrue, "True", "False"};
-  EXPECT_EQ(f(bar), "True");
+  EXPECT_EQ(f(unused), "True");
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentFalseString) {
-  int bar;
+  int const unused = 0;
   PredicatedFragment<int> f = {PredicateFalse, "True", "False"};
-  EXPECT_EQ(f(bar), "False");
+  EXPECT_EQ(f(unused), "False");
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentStringOnly) {
-  int bar;
+  int const unused = 0;
   PredicatedFragment<int> f = {"True"};
-  EXPECT_EQ(f(bar), "True");
+  EXPECT_EQ(f(unused), "True");
 }
 
 TEST(Pattern, OperatorParens) {
-  int bar;
+  int const unused = 0;
   Pattern<int> p({}, PredicateFalse);
-  EXPECT_FALSE(p(bar));
+  EXPECT_FALSE(p(unused));
 }
 
 TEST(Pattern, FragmentsAccessor) {
-  int bar;
+  int const unused = 0;
   Pattern<int> p({{PredicateFalse, "fragment0_true", "fragment0_false"},
                   {PredicateTrue, "fragment1_true", "fragment1_false"}},
                  PredicateTrue);
-  EXPECT_TRUE(p(bar));
+  EXPECT_TRUE(p(unused));
   std::string result;
   for (auto const& pf : p.fragments()) {
-    result += pf(bar);
+    result += pf(unused);
   }
 
   EXPECT_EQ(result, std::string("fragment0_falsefragment1_true"));
