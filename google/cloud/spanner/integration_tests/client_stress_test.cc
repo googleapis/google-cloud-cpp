@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/command_line_parsing.h"
 #include <gmock/gmock.h>
 #include <future>
 #include <random>
@@ -26,12 +27,82 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+using ::google::cloud::StatusOr;
 
-std::int64_t flag_table_size = 10 * 1000 * 1000;
-std::int64_t flag_maximum_read_size = 10 * 1000;
-std::chrono::seconds flag_duration(5);
-int flag_threads = 0;  // 0 means use the threads_per_core setting.
-int flag_threads_per_core = 4;
+auto constexpr kDescription = R"""(
+A stress test for the Cloud Spanner C++ client library.
+
+This experiment is largely a torture test for the library. The objective is to
+detect bugs that escape unit and integration tests. Such tests are typically
+short-lived and predictable, so we write a test that is long-lived and
+unpredictable to find problems that would go otherwise unnoticed.
+
+This test creates a number of threads testing `ExecuteQuery` and randomly
+switching between insert and read calls.
+)""";
+
+struct Config {
+  std::int64_t table_size = 10 * 1000 * 1000;
+  std::int64_t maximum_read_size = 10 * 1000;
+
+  std::chrono::seconds duration = std::chrono::seconds(5);
+
+  int threads = 0;  // 0 means use the threads_per_core setting.
+  int threads_per_core = 4;
+
+  bool show_help = false;
+};
+Config config;
+
+using ::google::cloud::testing_util::OptionDescriptor;
+using ::google::cloud::testing_util::ParseDuration;
+
+StatusOr<Config> ParseArgs(std::vector<std::string> args,
+                           std::string const& description) {
+  Config options;
+  bool show_help = false;
+  bool show_description = false;
+
+  std::vector<OptionDescriptor> desc{
+      {"--help", "print usage information",
+       [&show_help](std::string const&) { show_help = true; }},
+      {"--description", "print client stress test information",
+       [&show_description](std::string const&) { show_description = true; }},
+      {"--table-size", "the maximum size of each table key",
+       [&options](std::string const& val) {
+         options.table_size = std::stol(val);
+       }},
+      {"--maximum-read-size", "the maximum read size in each query",
+       [&options](std::string const& val) {
+         options.maximum_read_size = std::stol(val);
+       }},
+      {"--duration", "how long to run the test for in seconds",
+       [&options](std::string const& val) {
+         options.duration = ParseDuration(val);
+       }},
+      {"--threads", "if this is 0, threads-per-core is used instead",
+       [&options](std::string const& val) {
+         options.threads = std::stoi(val);
+       }},
+      {"--threads-per-core", "how many tasks to run simultaneously",
+       [&options](std::string const& val) {
+         options.threads_per_core = std::stoi(val);
+       }}};
+  auto const usage = BuildUsage(desc, args[0]);
+  auto unparsed = OptionsParse(desc, args);
+
+  if (show_description) {
+    std::cout << description << "\n\n";
+  }
+
+  if (show_help) {
+    std::cout << usage << "\n";
+    options.show_help = true;
+    return options;
+  }
+
+  return options;
+}
 
 struct Result {
   Status last_failure;
@@ -56,13 +127,24 @@ struct Result {
 };
 
 int TaskCount() {
-  if (flag_threads != 0) return flag_threads;
+  if (config.threads != 0) return config.threads;
   auto cores = std::thread::hardware_concurrency();
-  return cores == 0 ? flag_threads_per_core
-                    : static_cast<int>(cores) * flag_threads_per_core;
+  return cores == 0 ? config.threads_per_core
+                    : static_cast<int>(cores) * config.threads_per_core;
 }
 
 class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
+
+/// @test Test that ParseArgs works correctly.
+TEST_F(ClientStressTest, ParseArgs) {
+  std::string const cmd = "dummy-cmd";
+  auto config = ParseArgs({cmd, "--help"}, kDescription);
+  EXPECT_TRUE(config && config->show_help);
+  config = ParseArgs({cmd, "--description", "--help"}, kDescription);
+  EXPECT_TRUE(config && config->show_help);
+  config = ParseArgs({cmd, "--maximum-read-size=1000"}, kDescription);
+  EXPECT_TRUE(config);
+}
 
 /// @test Stress test the library using ExecuteQuery calls.
 TEST_F(ClientStressTest, UpsertAndSelect) {
@@ -73,17 +155,18 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
 
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
-    std::uniform_int_distribution<std::int64_t> random_key(0, flag_table_size);
+    std::uniform_int_distribution<std::int64_t> random_key(0,
+                                                           config.table_size);
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, flag_maximum_read_size);
+        0, config.maximum_read_size);
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
     for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + flag_duration;
+              deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
@@ -140,17 +223,18 @@ TEST_F(ClientStressTest, UpsertAndRead) {
 
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
-    std::uniform_int_distribution<std::int64_t> random_key(0, flag_table_size);
+    std::uniform_int_distribution<std::int64_t> random_key(0,
+                                                           config.table_size);
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, flag_maximum_read_size);
+        0, config.maximum_read_size);
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
     for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + flag_duration;
+              deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
@@ -204,35 +288,17 @@ TEST_F(ClientStressTest, UpsertAndRead) {
 }  // namespace google
 
 int main(int argc, char* argv[]) {
+  namespace spanner = ::google::cloud::spanner;
   ::testing::InitGoogleMock(&argc, argv);
 
-  // TODO(#...) - refactor google-cloud-cpp code for command-line parsing.
-  std::string const table_size_arg = "--table-size=";
-  std::string const maximum_read_size_arg = "--maximum-read-size=";
-  std::string const duration_arg = "--duration=";
-  std::string const threads_arg = "--threads=";
-  std::string const threads_per_core_arg = "--threads-per-core=";
-  for (int i = 1; i != argc; ++i) {
-    std::string arg = argv[i];
-    if (arg.rfind(table_size_arg) == 0) {
-      google::cloud::spanner::flag_table_size =
-          std::stol(arg.substr(table_size_arg.size()));
-    } else if (arg.rfind(maximum_read_size_arg) == 0) {
-      google::cloud::spanner::flag_maximum_read_size =
-          std::stoi(arg.substr(maximum_read_size_arg.size()));
-    } else if (arg.rfind(threads_arg) == 0) {
-      google::cloud::spanner::flag_threads =
-          std::stoi(arg.substr(threads_arg.size()));
-    } else if (arg.rfind(threads_per_core_arg) == 0) {
-      google::cloud::spanner::flag_threads_per_core =
-          std::stoi(arg.substr(threads_per_core_arg.size()));
-    } else if (arg.rfind(duration_arg, 0) == 0) {
-      google::cloud::spanner::flag_duration =
-          std::chrono::seconds(std::stoi(arg.substr(duration_arg.size())));
-    } else if (arg.rfind("--", 0) == 0) {
-      std::cerr << "Unknown flag: " << arg << "\n";
-    }
+  auto config = spanner::ParseArgs({argv, argv + argc}, spanner::kDescription);
+  if (!config) {
+    std::cerr << "Error parsing command-line arguments\n";
+    std::cerr << config.status() << "\n";
+    return 1;
   }
+  if (config->show_help) return 0;
+  spanner::config = std::move(*config);
 
   return RUN_ALL_TESTS();
 }
