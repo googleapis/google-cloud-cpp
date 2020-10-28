@@ -16,7 +16,6 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/strip.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/predicate_utils.h"
@@ -130,11 +129,9 @@ Status MetadataDecoratorGenerator::GenerateCc() {
                               "google/cloud/grpc_error_delegate.h",
                               "google/cloud/internal/compiler_info.h",
                               "google/cloud/status_or.h"});
-  GenerateSystemIncludes(
-      cc_, {absl::StrCat(absl::StripSuffix(service_descriptor_->file()->name(),
-                                           ".proto"),
-                         ".grpc.pb.h"),
-            "google/longrunning/operations.grpc.pb.h", "memory"});
+  GenerateSystemIncludes(cc_,
+                         {service_vars_["proto_grpc_header_path"],
+                          "google/longrunning/operations.grpc.pb.h", "memory"});
   cc_.Print("\n");
 
   auto result = OpenNamespaces(cc_, NamespaceType::kInternal);
