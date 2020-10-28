@@ -70,6 +70,16 @@ fi
 build_quickstart() {
   local -r library="$1"
 
+  # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+  # but are needed to compile the code
+  external=(
+    @local_config_platform//...
+    @local_config_cc_toolchains//...
+    @local_config_sh//...
+    @go_sdk//...
+    @remotejdk11_linux//:jdk
+  )
+
   pushd "${PROJECT_ROOT}/google/cloud/${library}/quickstart" >/dev/null
   trap "popd >/dev/null" RETURN
   io::log "capture bazel version"
@@ -77,7 +87,7 @@ build_quickstart() {
   io::log "fetch dependencies for ${library}'s quickstart"
   # retry up to 3 times with exponential backoff, initial interval 120s
   "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    "${BAZEL_BIN}" fetch ...
+    "${BAZEL_BIN}" fetch ... "${external[@]}"
 
   echo
   io::log_yellow "Compiling ${library}'s quickstart"
