@@ -15,6 +15,8 @@
 #include "generator/internal/predicate_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
+#include <google/api/client.pb.h>
+#include <google/longrunning/operations.pb.h>
 #include <string>
 
 namespace google {
@@ -91,6 +93,16 @@ bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method) {
 
 bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.protobuf.Empty";
+}
+
+bool IsLongrunningMetadataTypeUsedAsResponse(
+    google::protobuf::MethodDescriptor const& method) {
+  if (method.output_type()->full_name() == "google.longrunning.Operation") {
+    auto operation_info =
+        method.options().GetExtension(google::longrunning::operation_info);
+    return operation_info.response_type() == "google.protobuf.Empty";
+  }
+  return false;
 }
 
 }  // namespace generator_internal

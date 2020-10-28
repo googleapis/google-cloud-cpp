@@ -138,6 +138,8 @@ INSTANTIATE_TEST_SUITE_P(
     Generator, GeneratorIntegrationTest,
     testing::Values("connection_options.gcpcxx.pb.h",
                     "connection_options.gcpcxx.pb.cc",
+                    "database_admin_connection.gcpcxx.pb.h",
+                    "database_admin_connection.gcpcxx.pb.cc",
                     "database_admin_connection_idempotency_policy.gcpcxx.pb.h",
                     "database_admin_connection_idempotency_policy.gcpcxx.pb.cc",
                     "internal/database_admin_logging_decorator.gcpcxx.pb.h",

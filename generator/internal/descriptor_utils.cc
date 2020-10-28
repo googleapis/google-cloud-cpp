@@ -17,6 +17,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_options_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
@@ -202,6 +203,13 @@ VarsDictionary CreateServiceVars(
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["class_comment_block"] = "// TODO: pull in comments";
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
+  vars["connection_class_name"] = absl::StrCat(descriptor.name(), "Connection");
+  vars["connection_cc_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection", GeneratedFileSuffix(), ".cc");
+  vars["connection_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection", GeneratedFileSuffix(), ".h");
   vars["connection_options_header_path"] = absl::StrCat(
       vars["product_path"], "connection_options", GeneratedFileSuffix(), ".h");
   vars["connection_options_cc_path"] = absl::StrCat(
@@ -297,6 +305,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
+  code_generators.push_back(absl::make_unique<ConnectionGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   code_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
