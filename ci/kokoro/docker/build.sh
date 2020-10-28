@@ -145,7 +145,9 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora
-  export DISTRO_VERSION=33
+  # Holding the TSAN build back because:
+  #   https://github.com/google/sanitizers/issues/1259
+  export DISTRO_VERSION=31
   export BAZEL_CONFIG="tsan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
