@@ -32,6 +32,9 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+        "@com_google_absl//absl/time",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_integration_tests]

@@ -16,22 +16,25 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <future>
 #include <random>
 #include <thread>
+
+ABSL_FLAG(std::int64_t, table_size, 10 * 1000 * 1000, "");
+ABSL_FLAG(std::int64_t, maximum_read_size, 10 * 1000, "");
+ABSL_FLAG(absl::Duration, duration, absl::Seconds(5), "");
+ABSL_FLAG(int, threads, 0, "0 means use the threads_per_core setting");
+ABSL_FLAG(int, threads_per_core, 4, "");
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
-
-std::int64_t flag_table_size = 10 * 1000 * 1000;
-std::int64_t flag_maximum_read_size = 10 * 1000;
-std::chrono::seconds flag_duration(5);
-int flag_threads = 0;  // 0 means use the threads_per_core setting.
-int flag_threads_per_core = 4;
 
 struct Result {
   Status last_failure;
@@ -56,10 +59,11 @@ struct Result {
 };
 
 int TaskCount() {
-  if (flag_threads != 0) return flag_threads;
+  if (absl::GetFlag(FLAGS_threads) != 0) return absl::GetFlag(FLAGS_threads);
   auto cores = std::thread::hardware_concurrency();
-  return cores == 0 ? flag_threads_per_core
-                    : static_cast<int>(cores) * flag_threads_per_core;
+  return cores == 0
+             ? absl::GetFlag(FLAGS_threads_per_core)
+             : static_cast<int>(cores) * absl::GetFlag(FLAGS_threads_per_core);
 }
 
 class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
@@ -73,18 +77,19 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
 
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
-    std::uniform_int_distribution<std::int64_t> random_key(0, flag_table_size);
+    std::uniform_int_distribution<std::int64_t> random_key(
+        0, absl::GetFlag(FLAGS_table_size));
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, flag_maximum_read_size);
+        0, absl::GetFlag(FLAGS_maximum_read_size));
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
-    for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + flag_duration;
-         start < deadline; start = std::chrono::steady_clock::now()) {
+    for (auto start = absl::Now(),
+              deadline = start + absl::GetFlag(FLAGS_duration);
+         start < deadline; start = absl::Now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
 
@@ -140,18 +145,19 @@ TEST_F(ClientStressTest, UpsertAndRead) {
 
     // Each thread needs its own random bits generator.
     auto generator = google::cloud::internal::MakeDefaultPRNG();
-    std::uniform_int_distribution<std::int64_t> random_key(0, flag_table_size);
+    std::uniform_int_distribution<std::int64_t> random_key(
+        0, absl::GetFlag(FLAGS_table_size));
     std::uniform_int_distribution<int> random_action(0, 1);
     std::uniform_int_distribution<std::int64_t> random_limit(
-        0, flag_maximum_read_size);
+        0, absl::GetFlag(FLAGS_maximum_read_size));
     enum Action {
       kInsert = 0,
       kSelect = 1,
     };
 
-    for (auto start = std::chrono::steady_clock::now(),
-              deadline = start + flag_duration;
-         start < deadline; start = std::chrono::steady_clock::now()) {
+    for (auto start = absl::Now(),
+              deadline = start + absl::GetFlag(FLAGS_duration);
+         start < deadline; start = absl::Now()) {
       auto key = random_key(generator);
       auto action = static_cast<Action>(random_action(generator));
 
@@ -206,33 +212,7 @@ TEST_F(ClientStressTest, UpsertAndRead) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
 
-  // TODO(#...) - refactor google-cloud-cpp code for command-line parsing.
-  std::string const table_size_arg = "--table-size=";
-  std::string const maximum_read_size_arg = "--maximum-read-size=";
-  std::string const duration_arg = "--duration=";
-  std::string const threads_arg = "--threads=";
-  std::string const threads_per_core_arg = "--threads-per-core=";
-  for (int i = 1; i != argc; ++i) {
-    std::string arg = argv[i];
-    if (arg.rfind(table_size_arg) == 0) {
-      google::cloud::spanner::flag_table_size =
-          std::stol(arg.substr(table_size_arg.size()));
-    } else if (arg.rfind(maximum_read_size_arg) == 0) {
-      google::cloud::spanner::flag_maximum_read_size =
-          std::stoi(arg.substr(maximum_read_size_arg.size()));
-    } else if (arg.rfind(threads_arg) == 0) {
-      google::cloud::spanner::flag_threads =
-          std::stoi(arg.substr(threads_arg.size()));
-    } else if (arg.rfind(threads_per_core_arg) == 0) {
-      google::cloud::spanner::flag_threads_per_core =
-          std::stoi(arg.substr(threads_per_core_arg.size()));
-    } else if (arg.rfind(duration_arg, 0) == 0) {
-      google::cloud::spanner::flag_duration =
-          std::chrono::seconds(std::stoi(arg.substr(duration_arg.size())));
-    } else if (arg.rfind("--", 0) == 0) {
-      std::cerr << "Unknown flag: " << arg << "\n";
-    }
-  }
+  absl::ParseCommandLine(argc, argv);
 
   return RUN_ALL_TESTS();
 }
