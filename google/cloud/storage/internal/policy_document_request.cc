@@ -59,9 +59,6 @@ nlohmann::json TransformConditions(
 /// If c is ASCII escape it and append it to result. Return if it is ASCII.
 bool EscapeAsciiChar(std::string& result, char32_t c) {
   switch (c) {
-    case '\\':
-      result.append("\\\\");
-      return true;
     case '\b':
       result.append("\\b");
       return true;
