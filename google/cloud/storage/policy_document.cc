@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/policy_document.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <algorithm>
 #include <iostream>
@@ -22,22 +23,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace {
-std::string Join(char const* sep, std::vector<std::string> const& list) {
-  if (list.empty()) {
-    return std::string{};
-  }
-  return std::accumulate(++list.begin(), list.end(), list.front(),
-                         [sep](std::string a, std::string const& b) {
-                           a += sep;
-                           a += b;
-                           return a;
-                         });
-};
-}  // namespace
-
 std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs) {
-  return os << "PolicyDocumentCondition=[" << Join(", ", rhs.elements()) << "]";
+  return os << "PolicyDocumentCondition=["
+            << absl::StrJoin(rhs.elements(), ", ") << "]";
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
@@ -45,11 +33,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
   os << "expiration=" << google::cloud::internal::FormatRfc3339(rhs.expiration)
      << ", ";
   os << "conditions=[";
-  char const* sep = "";
-  for (auto const& c : rhs.conditions) {
-    os << sep << c;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.conditions, ", ", absl::StreamFormatter());
   return os << "]}";
 }
 
@@ -61,11 +45,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentV4 const& rhs) {
      << ", timestamp=" << google::cloud::internal::FormatRfc3339(rhs.timestamp)
      << ", ";
   os << "conditions=[";
-  char const* sep = "";
-  for (auto const& c : rhs.conditions) {
-    os << sep << c;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.conditions, ", ", absl::StreamFormatter());
   return os << "]}";
 }
 

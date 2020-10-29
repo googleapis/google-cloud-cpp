@@ -15,6 +15,7 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
 
@@ -50,11 +51,7 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   os << "ObjectMetadata={name=" << rhs.name() << ", acl=[";
-  char const* sep = "";
-  for (auto const& acl : rhs.acl()) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.acl(), ", ", absl::StreamFormatter());
   os << "], bucket=" << rhs.bucket()
      << ", cache_control=" << rhs.cache_control()
      << ", component_count=" << rhs.component_count()
@@ -75,10 +72,9 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << ", id=" << rhs.id() << ", kind=" << rhs.kind()
      << ", kms_key_name=" << rhs.kms_key_name()
      << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
-  sep = "metadata.";
-  for (auto const& kv : rhs.metadata_) {
-    os << sep << kv.first << "=" << kv.second;
-    sep = ", metadata.";
+  if (!rhs.metadata_.empty()) {
+    os << "metadata."
+       << absl::StrJoin(rhs.metadata_, ", metadata.", absl::PairFormatter("="));
   }
   os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name();
 

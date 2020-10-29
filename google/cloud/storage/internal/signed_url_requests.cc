@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "absl/strings/str_split.h"
 #include <algorithm>
@@ -284,14 +285,14 @@ std::multimap<std::string, std::string> V4SignUrlRequest::AllQueryParameters(
 }
 
 std::string V4SignUrlRequest::SignedHeaders() const {
-  std::string result;
-  char const* sep = "";
-  for (auto&& kv : common_request_.extension_headers()) {
-    result += sep;
-    result += kv.first;
-    sep = ";";
-  }
-  return result;
+  struct ExtensionHeaderFormatter {
+    void operator()(std::string* out,
+                    std::pair<std::string, std::string> const& rhs) {
+      out->append(rhs.first);
+    }
+  };
+  return absl::StrJoin(common_request_.extension_headers(), ";",
+                       ExtensionHeaderFormatter{});
 }
 
 std::string V4SignUrlRequest::PayloadHashValue() const {
