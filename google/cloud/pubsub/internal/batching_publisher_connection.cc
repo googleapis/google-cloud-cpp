@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/internal/async_retry_loop.h"
-#include <numeric>
 
 namespace google {
 namespace cloud {
@@ -71,6 +70,7 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
   promise<StatusOr<std::string>> pr;
   auto f = pr.get_future();
+  auto const bytes = pubsub_internal::MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
   if (!corked_status_.ok()) {
     struct MoveCapture {
@@ -81,7 +81,22 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     cq_.RunAsync(MoveCapture{std::move(pr), corked_status_});
     return f;
   }
-  pending_.push_back(Item{std::move(pr), std::move(p.message)});
+  auto proto = pubsub_internal::ToProto(std::move(p.message));
+  waiters_.push_back(std::move(pr));
+
+  // Use RAII to preserve the strong exception guarantee.
+  struct UndoPush {
+    std::vector<promise<StatusOr<std::string>>>* waiters;
+
+    ~UndoPush() {
+      if (waiters != nullptr) waiters->pop_back();
+    }
+    void release() { waiters = nullptr; }
+  } undo{&waiters_};
+
+  *pending_.add_messages() = std::move(proto);
+  undo.release();  // no throws after this point, we can rest easy
+  current_bytes_ += bytes;
   MaybeFlush(std::move(lk));
   return f;
 }
@@ -103,42 +118,39 @@ void BatchingPublisherConnection::UnCork() {
 }
 
 void BatchingPublisherConnection::DiscardCorked(Status const& status) {
-  auto pending = [&] {
+  auto waiters = [&] {
     std::unique_lock<std::mutex> lk(mu_);
     corked_ = true;
     corked_status_ = status;
-    std::vector<Item> tmp;
-    tmp.swap(pending_);
+    pending_.Clear();
+    std::vector<promise<StatusOr<std::string>>> tmp;
+    tmp.swap(waiters_);
     return tmp;
   }();
-  for (auto& p : pending) {
+  for (auto& p : waiters) {
     struct MoveCapture {
       promise<StatusOr<std::string>> p;
       Status status;
       void operator()() { p.set_value(std::move(status)); }
     };
-    cq_.RunAsync(MoveCapture{std::move(p.response), status});
+    cq_.RunAsync(MoveCapture{std::move(p), status});
   }
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
-  if (pending_.size() >= options_.maximum_batch_message_count()) {
+  if (pending_.messages_size() >=
+      static_cast<std::int32_t>(options_.maximum_batch_message_count())) {
     FlushImpl(std::move(lk));
     return;
   }
-  auto const bytes =
-      std::accumulate(pending_.begin(), pending_.end(), std::size_t{0},
-                      [](std::size_t a, Item const& b) {
-                        return a + pubsub_internal::MessageSize(b.message);
-                      });
-  if (bytes >= options_.maximum_batch_bytes()) {
+  if (current_bytes_ >= options_.maximum_batch_bytes()) {
     FlushImpl(std::move(lk));
     return;
   }
   // If the batch is empty obviously we do not need a timer, and if it has more
   // than one element then we have setup a timer previously and there is no need
   // to set it again.
-  if (pending_.size() != 1U) return;
+  if (pending_.messages_size() != 1) return;
   auto const expiration = batch_expiration_ =
       std::chrono::system_clock::now() + options_.maximum_hold_time();
   lk.unlock();
@@ -167,25 +179,21 @@ void BatchingPublisherConnection::OnTimer() {
 }
 
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.empty() || corked_) return;
+  if (pending_.messages().empty() || corked_) return;
+
+  Batch batch;
+  batch.waiters.swap(waiters_);
+  google::pubsub::v1::PublishRequest request;
+  request.Swap(&pending_);
+  corked_ = !ordering_key_.empty();
+  current_bytes_ = 0;
+  lk.unlock();
 
   auto context = absl::make_unique<grpc::ClientContext>();
 
-  Batch batch;
   batch.executor = cq_;
-  batch.waiters.reserve(pending_.size());
   batch.weak = shared_from_this();
-  google::pubsub::v1::PublishRequest request;
   request.set_topic(topic_full_name_);
-  request.mutable_messages()->Reserve(static_cast<int>(pending_.size()));
-
-  for (auto& i : pending_) {
-    batch.waiters.push_back(std::move(i.response));
-    *request.add_messages() = pubsub_internal::ToProto(std::move(i.message));
-  }
-  pending_.clear();
-  corked_ = !ordering_key_.empty();
-  lk.unlock();
 
   auto& stub = stub_;
   google::cloud::internal::AsyncRetryLoop(
