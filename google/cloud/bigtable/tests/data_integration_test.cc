@@ -499,16 +499,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
       ++rowid;
     }
     auto failures = table.BulkApply(std::move(bulk));
-    ASSERT_TRUE(failures.empty()) << "failures=" << [&failures]() {
-      std::ostringstream os;
-      char const* sep = "[";
-      for (auto const& f : failures) {
-        os << sep << "failed[" << f.original_index() << "]=" << f.status();
-        sep = ", ";
-      }
-      os << "]";
-      return os.str();
-    }();
+    ASSERT_THAT(failures, ::testing::ElementsAre());
   }
   auto samples = table.SampleRows();
   ASSERT_STATUS_OK(samples);

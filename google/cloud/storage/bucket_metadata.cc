@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
@@ -29,26 +30,17 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
-  auto join = [](char const* sep, std::vector<std::string> const& list) {
-    if (list.empty()) {
-      return std::string{};
-    }
-    return std::accumulate(++list.begin(), list.end(), list.front(),
-                           [sep](std::string a, std::string const& b) {
-                             a += sep;
-                             a += b;
-                             return a;
-                           });
-  };
   os << "CorsEntry={";
+
   char const* sep = "";
   if (rhs.max_age_seconds.has_value()) {
     os << "max_age_seconds=" << *rhs.max_age_seconds;
     sep = ", ";
   }
-  return os << sep << "method=[" << join(", ", rhs.method) << "], origin=["
-            << join(", ", rhs.origin) << "], response_header=["
-            << join(", ", rhs.response_header) << "]}";
+  return os << sep << "method=[" << absl::StrJoin(rhs.method, ", ")
+            << "], origin=[" << absl::StrJoin(rhs.origin, ", ")
+            << "], response_header=["
+            << absl::StrJoin(rhs.response_header, ", ") << "]}";
 }
 
 std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs) {
@@ -107,11 +99,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   os << "BucketMetadata={name=" << rhs.name();
 
   os << ", acl=[";
-  char const* sep = "";
-  for (auto const& acl : rhs.acl()) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.acl(), ", ", absl::StreamFormatter());
   os << "]";
 
   if (rhs.has_billing()) {
@@ -122,22 +110,14 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
 
   os << ", cors=[";
-  sep = "";
-  for (auto const& cors : rhs.cors()) {
-    os << sep << cors;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.cors(), ", ", absl::StreamFormatter());
   os << "]";
 
   os << ", default_event_based_hold=" << std::boolalpha
      << rhs.default_event_based_hold();
 
   os << ", default_acl=[";
-  sep = "";
-  for (auto const& acl : rhs.default_acl()) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(rhs.default_acl(), ", ", absl::StreamFormatter());
   os << "]";
 
   if (rhs.has_encryption()) {
@@ -159,11 +139,7 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   if (rhs.has_lifecycle()) {
     os << ", lifecycle.rule=[";
-    sep = "";
-    for (auto const& r : rhs.lifecycle().rule) {
-      os << sep << r;
-      sep = ", ";
-    }
+    os << absl::StrJoin(rhs.lifecycle().rule, ", ", absl::StreamFormatter());
     os << "]";
   }
 

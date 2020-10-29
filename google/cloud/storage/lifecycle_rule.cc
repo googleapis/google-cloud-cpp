@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/lifecycle_rule.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <algorithm>
 #include <iostream>
 
@@ -80,11 +81,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
   }
   if (rhs.matches_storage_class.has_value()) {
     os << sep << "matches_storage_class=[";
-    sep = "";
-    for (auto const& s : *rhs.matches_storage_class) {
-      os << sep << s;
-      sep = ", ";
-    }
+    os << absl::StrJoin(*rhs.matches_storage_class, ", ");
     os << "]";
     sep = ", ";
   }

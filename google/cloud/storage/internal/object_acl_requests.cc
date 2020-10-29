@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iostream>
 
 namespace google {
@@ -51,11 +52,7 @@ StatusOr<ListObjectAclResponse> ListObjectAclResponse::FromHttpResponse(
 
 std::ostream& operator<<(std::ostream& os, ListObjectAclResponse const& r) {
   os << "ListObjectAclResponse={items={";
-  char const* sep = "";
-  for (auto const& acl : r.items) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());
   return os << "}}";
 }
 

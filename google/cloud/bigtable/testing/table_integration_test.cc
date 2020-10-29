@@ -251,15 +251,7 @@ void TableIntegrationTest::CreateCells(
     bulk.emplace_back(std::move(kv.second));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  ASSERT_TRUE(failures.empty()) << "failures=" << [&failures]() {
-    std::ostringstream os;
-    char const* sep = "[";
-    for (auto const& f : failures) {
-      os << sep << "failure[" << f.original_index() << "]=" << f.status();
-      sep = ", ";
-    }
-    return os.str();
-  }();
+  ASSERT_THAT(failures, ::testing::ElementsAre());
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(

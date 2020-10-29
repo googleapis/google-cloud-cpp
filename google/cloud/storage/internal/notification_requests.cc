@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iostream>
 
 namespace google {
@@ -46,11 +47,7 @@ StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
 
 std::ostream& operator<<(std::ostream& os, ListNotificationsResponse const& r) {
   os << "ListNotificationResponse={items={";
-  char const* sep = "";
-  for (auto const& acl : r.items) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());
   return os << "}}";
 }
 

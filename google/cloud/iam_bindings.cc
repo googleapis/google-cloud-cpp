@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/iam_bindings.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <algorithm>
 #include <iostream>
 #include <iterator>
@@ -79,17 +80,16 @@ void IamBindings::RemoveMembers(std::string const& role,
 
 std::ostream& operator<<(std::ostream& os, IamBindings const& rhs) {
   os << "IamBindings={";
-  char const* sep = "";
-  for (auto const& kv : rhs) {
-    os << sep << kv.first << ": [";
-    char const* sep2 = "";
-    for (auto const& member : kv.second) {
-      os << sep2 << member;
-      sep2 = ", ";
+  struct IamBindingFormatter {
+    void operator()(std::string* out,
+                    std::pair<std::string, std::set<std::string>> const& rhs) {
+      out->append(rhs.first);
+      out->append(": [");
+      out->append(absl::StrJoin(rhs.second, ", "));
+      out->append("]");
     }
-    os << "]";
-    sep = ", ";
-  }
+  };
+  os << absl::StrJoin(rhs, ", ", IamBindingFormatter{});
   return os << "}";
 }
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -23,11 +24,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
   std::ostringstream os;
   os << "{";
-  char const* sep = "";
-  for (auto const& kv : ops) {
-    os << sep << "{" << kv.first << ": " << kv.second << "}";
-    sep = ", ";
-  }
+  os << absl::StrJoin(ops, ", ", absl::PairFormatter("="));
   os << "}";
   return std::move(os).str();
 };

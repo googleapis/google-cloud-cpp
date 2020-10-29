@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
 
@@ -51,11 +52,7 @@ ListDefaultObjectAclResponse::FromHttpResponse(std::string const& payload) {
 std::ostream& operator<<(std::ostream& os,
                          ListDefaultObjectAclResponse const& r) {
   os << "ListDefaultObjectAclResponse={items={";
-  char const* sep = "";
-  for (auto const& acl : r.items) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());
   return os << "}}";
 }
 

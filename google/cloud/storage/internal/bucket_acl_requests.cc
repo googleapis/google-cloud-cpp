@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iostream>
 
 namespace google {
@@ -47,11 +48,7 @@ StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
 
 std::ostream& operator<<(std::ostream& os, ListBucketAclResponse const& r) {
   os << "ListBucketAclResponse={items={";
-  char const* sep = "";
-  for (auto const& acl : r.items) {
-    os << sep << acl;
-    sep = ", ";
-  }
+  os << absl::StrJoin(r.items, ", ", absl::StreamFormatter());
   return os << "}}";
 }
 
