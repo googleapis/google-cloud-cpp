@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['kbigtablemutationlimit',['kBigtableMutationLimit',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a527c1b9bc7ae34b22874980abccba5ad',1,'google::cloud::bigtable::v1']]],
-  ['kdefaultmaxbatches',['kDefaultMaxBatches',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a72d07c2ef7daba57e8815a3ba2de2921',1,'google::cloud::bigtable::v1']]],
-  ['kdefaultmaxoutstandingsize',['kDefaultMaxOutstandingSize',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a667ead2da5c348033da263b7f9e25c65',1,'google::cloud::bigtable::v1']]],
-  ['kdefaultmaxsizeperbatch',['kDefaultMaxSizePerBatch',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a306d72dae7d1961e0f5b688fc4af2679',1,'google::cloud::bigtable::v1']]],
-  ['kmaxclusteridlength',['kMaxClusterIdLength',['../namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#ae060af98317700e8e87744712e9ea2d3',1,'google::cloud::bigtable::examples']]]
+  ['kbigtablemutationlimit_1350',['kBigtableMutationLimit',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a64fb56104a35b29a5e74c77e38859b35',1,'google::cloud::bigtable::kBigtableMutationLimit()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a64fb56104a35b29a5e74c77e38859b35',1,'google::cloud::bigtable::v1::kBigtableMutationLimit()']]],
+  ['kdefaultmaxbatches_1351',['kDefaultMaxBatches',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7cdc23047a3f0510660505c161297833',1,'google::cloud::bigtable::kDefaultMaxBatches()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7cdc23047a3f0510660505c161297833',1,'google::cloud::bigtable::v1::kDefaultMaxBatches()']]],
+  ['kdefaultmaxoutstandingsize_1352',['kDefaultMaxOutstandingSize',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a2ba803ecdf34c215db3578c63d60e007',1,'google::cloud::bigtable::kDefaultMaxOutstandingSize()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a2ba803ecdf34c215db3578c63d60e007',1,'google::cloud::bigtable::v1::kDefaultMaxOutstandingSize()']]],
+  ['kdefaultmaxsizeperbatch_1353',['kDefaultMaxSizePerBatch',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#abf04a50d5eadbef5cd6941184482d446',1,'google::cloud::bigtable::kDefaultMaxSizePerBatch()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#abf04a50d5eadbef5cd6941184482d446',1,'google::cloud::bigtable::v1::kDefaultMaxSizePerBatch()']]],
+  ['kmaxclusteridlength_1354',['kMaxClusterIdLength',['../namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a25f1cc2eba8d5a6db1b91e6d28325635',1,'google::cloud::bigtable::examples']]]
 ];

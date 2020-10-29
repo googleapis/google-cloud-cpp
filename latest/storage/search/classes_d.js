@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['objectaccesscontrol',['ObjectAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControl.html',1,'google::cloud::storage::v1']]],
-  ['objectaccesscontrolpatchbuilder',['ObjectAccessControlPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControlPatchBuilder.html',1,'google::cloud::storage::v1']]],
-  ['objectmetadata',['ObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html',1,'google::cloud::storage::v1']]],
-  ['objectmetadatapatchbuilder',['ObjectMetadataPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html',1,'google::cloud::storage::v1']]],
-  ['objectreadstream',['ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html',1,'google::cloud::storage::v1']]],
-  ['objectrewriter',['ObjectRewriter',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectRewriter.html',1,'google::cloud::storage::v1']]],
-  ['objectwritestream',['ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html',1,'google::cloud::storage::v1']]],
-  ['overridedefaultproject',['OverrideDefaultProject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject.html',1,'google::cloud::storage::v1']]]
+  ['objectaccesscontrol_1092',['ObjectAccessControl',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControl.html',1,'google::cloud::storage::v1::ObjectAccessControl'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControl.html',1,'google::cloud::storage::v1::ObjectAccessControl']]],
+  ['objectaccesscontrolpatchbuilder_1093',['ObjectAccessControlPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControlPatchBuilder.html',1,'google::cloud::storage::v1::ObjectAccessControlPatchBuilder'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectAccessControlPatchBuilder.html',1,'google::cloud::storage::v1::ObjectAccessControlPatchBuilder']]],
+  ['objectmetadata_1094',['ObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html',1,'google::cloud::storage::v1::ObjectMetadata'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html',1,'google::cloud::storage::v1::ObjectMetadata']]],
+  ['objectmetadatapatchbuilder_1095',['ObjectMetadataPatchBuilder',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html',1,'google::cloud::storage::v1::ObjectMetadataPatchBuilder'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadataPatchBuilder.html',1,'google::cloud::storage::v1::ObjectMetadataPatchBuilder']]],
+  ['objectreadstream_1096',['ObjectReadStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html',1,'google::cloud::storage::v1::ObjectReadStream'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html',1,'google::cloud::storage::v1::ObjectReadStream']]],
+  ['objectrewriter_1097',['ObjectRewriter',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectRewriter.html',1,'google::cloud::storage::v1::ObjectRewriter'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectRewriter.html',1,'google::cloud::storage::v1::ObjectRewriter']]],
+  ['objectwritestream_1098',['ObjectWriteStream',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html',1,'google::cloud::storage::v1::ObjectWriteStream'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html',1,'google::cloud::storage::v1::ObjectWriteStream']]],
+  ['overridedefaultproject_1099',['OverrideDefaultProject',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject.html',1,'google::cloud::storage::v1::OverrideDefaultProject'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject.html',1,'google::cloud::storage::v1::OverrideDefaultProject']]]
 ];

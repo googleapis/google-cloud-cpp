@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['policydocument',['PolicyDocument',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html',1,'google::cloud::storage::v1']]],
-  ['policydocumentcondition',['PolicyDocumentCondition',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html',1,'google::cloud::storage::v1']]],
-  ['policydocumentresult',['PolicyDocumentResult',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentResult.html',1,'google::cloud::storage::v1']]],
-  ['policydocumentv4',['PolicyDocumentV4',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html',1,'google::cloud::storage::v1']]],
-  ['policydocumentv4result',['PolicyDocumentV4Result',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result.html',1,'google::cloud::storage::v1']]],
-  ['pollingpolicy',['PollingPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html',1,'google::cloud::v1']]],
-  ['predefinedacl',['PredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedAcl.html',1,'google::cloud::storage::v1']]],
-  ['predefineddefaultobjectacl',['PredefinedDefaultObjectAcl',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedDefaultObjectAcl.html',1,'google::cloud::storage::v1']]],
-  ['prefix',['Prefix',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Prefix.html',1,'google::cloud::storage::v1']]],
-  ['projection',['Projection',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Projection.html',1,'google::cloud::storage::v1']]],
-  ['promise',['promise',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise.html',1,'google::cloud::v1']]],
-  ['promise_3c_20void_20_3e',['promise&lt; void &gt;',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html',1,'google::cloud::v1']]]
+  ['policydocument_1100',['PolicyDocument',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html',1,'google::cloud::storage::v1::PolicyDocument'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html',1,'google::cloud::storage::v1::PolicyDocument']]],
+  ['policydocumentcondition_1101',['PolicyDocumentCondition',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html',1,'google::cloud::storage::v1::PolicyDocumentCondition'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html',1,'google::cloud::storage::v1::PolicyDocumentCondition']]],
+  ['policydocumentresult_1102',['PolicyDocumentResult',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentResult.html',1,'google::cloud::storage::v1::PolicyDocumentResult'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentResult.html',1,'google::cloud::storage::v1::PolicyDocumentResult']]],
+  ['policydocumentv4_1103',['PolicyDocumentV4',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html',1,'google::cloud::storage::v1::PolicyDocumentV4'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html',1,'google::cloud::storage::v1::PolicyDocumentV4']]],
+  ['policydocumentv4result_1104',['PolicyDocumentV4Result',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result.html',1,'google::cloud::storage::v1::PolicyDocumentV4Result'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result.html',1,'google::cloud::storage::v1::PolicyDocumentV4Result']]],
+  ['pollingpolicy_1105',['PollingPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html',1,'google::cloud::v1']]],
+  ['predefinedacl_1106',['PredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedAcl.html',1,'google::cloud::storage::v1::PredefinedAcl'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedAcl.html',1,'google::cloud::storage::v1::PredefinedAcl']]],
+  ['predefineddefaultobjectacl_1107',['PredefinedDefaultObjectAcl',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedDefaultObjectAcl.html',1,'google::cloud::storage::v1::PredefinedDefaultObjectAcl'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PredefinedDefaultObjectAcl.html',1,'google::cloud::storage::v1::PredefinedDefaultObjectAcl']]],
+  ['prefix_1108',['Prefix',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Prefix.html',1,'google::cloud::storage::v1::Prefix'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Prefix.html',1,'google::cloud::storage::v1::Prefix']]],
+  ['projection_1109',['Projection',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Projection.html',1,'google::cloud::storage::v1::Projection'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Projection.html',1,'google::cloud::storage::v1::Projection']]],
+  ['promise_1110',['promise',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise.html',1,'google::cloud::v1']]],
+  ['promise_3c_20void_20_3e_1111',['promise&lt; void &gt;',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html',1,'google::cloud::v1']]]
 ];
