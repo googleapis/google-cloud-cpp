@@ -706,8 +706,8 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
       auto message_id = publisher.Publish(
           pubsub::MessageBuilder{}
               .SetData("Hello World! [" + std::to_string(i) + "]")
-              .AddAttribute("origin", "cpp-sample")
-              .AddAttribute("username", "gcp")
+              .SetAttribute("origin", "cpp-sample")
+              .SetAttribute("username", "gcp")
               .Build());
       done.push_back(message_id.then([i](future<StatusOr<std::string>> f) {
         auto id = f.get();
@@ -736,7 +736,7 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
     std::string const value = i % 2 == 0 ? "true" : "false";
     done.push_back(
         publisher.Publish(pubsub::MessageBuilder{}
-                              .AddAttribute("is-even", value)
+                              .SetAttribute("is-even", value)
                               .SetData(prefix + " [" + std::to_string(i) + "]")
                               .Build()));
   }

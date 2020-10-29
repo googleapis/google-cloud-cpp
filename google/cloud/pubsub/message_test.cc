@@ -69,15 +69,30 @@ TEST(Message, SetOrderingKey) {
   EXPECT_EQ(m0, move);
 }
 
-TEST(Message, AddAttributeSimple) {
+TEST(Message, InsertAttributeSimple) {
   auto const m0 = MessageBuilder{}
-                      .AddAttribute("k1", "v1")
-                      .AddAttribute("k2", "v2")
+                      .InsertAttribute("k1", "v1")
+                      .InsertAttribute("k2", "v2")
+                      .InsertAttribute("k2", "v3")
                       .Build();
   EXPECT_TRUE(m0.data().empty());
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(std::make_pair("k1", "v1"),
                                    std::make_pair("k2", "v2")));
+  EXPECT_TRUE(m0.ordering_key().empty());
+  EXPECT_TRUE(m0.message_id().empty());
+}
+
+TEST(Message, SetAttributeSimple) {
+  auto const m0 = MessageBuilder{}
+                      .SetAttribute("k1", "v1")
+                      .SetAttribute("k2", "v2")
+                      .SetAttribute("k2", "v3")
+                      .Build();
+  EXPECT_TRUE(m0.data().empty());
+  EXPECT_THAT(m0.attributes(),
+              UnorderedElementsAre(std::make_pair("k1", "v1"),
+                                   std::make_pair("k2", "v3")));
   EXPECT_TRUE(m0.ordering_key().empty());
   EXPECT_TRUE(m0.message_id().empty());
 }

@@ -165,21 +165,30 @@ class MessageBuilder {
     return std::move(SetOrderingKey(std::move(key)));
   }
 
-  /// Add an attribute to the message.
-  template <typename K, typename V>
-  MessageBuilder& AddAttribute(K&& key, V&& value) & {
+  /// Insert an attribute to the message if it does not have the @p key.
+  MessageBuilder& InsertAttribute(std::string const& key,
+                                  std::string const& value) & {
     using value_type =
         google::protobuf::Map<std::string, std::string>::value_type;
-    proto_.mutable_attributes()->insert(
-        value_type{std::forward<K>(key), std::forward<V>(value)});
+    proto_.mutable_attributes()->insert(value_type{key, value});
     return *this;
   }
 
-  /// Add an attribute to the message.
-  template <typename K, typename V>
-  MessageBuilder&& AddAttribute(K&& key, V&& value) && {
-    return std::move(
-        AddAttribute(std::forward<K>(key), std::forward<V>(value)));
+  /// Insert an attribute to the message if it does not have the @p key.
+  MessageBuilder&& InsertAttribute(std::string const& key,
+                                   std::string const& value) && {
+    return std::move(InsertAttribute(key, value));
+  }
+
+  /// Insert or set an attribute on the message.
+  MessageBuilder& SetAttribute(std::string const& key, std::string value) & {
+    (*proto_.mutable_attributes())[key] = std::move(value);
+    return *this;
+  }
+
+  /// Insert or set an attribute on the message.
+  MessageBuilder&& SetAttribute(std::string const& key, std::string value) && {
+    return std::move(SetAttribute(key, std::move(value)));
   }
 
   /// Create a message with the attributes from the range [@p begin, @p end)
