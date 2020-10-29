@@ -81,11 +81,21 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     cq_.RunAsync(MoveCapture{std::move(pr), corked_status_});
     return f;
   }
-  *pending_.add_messages() = pubsub_internal::ToProto(std::move(p.message));
-  // If this throws we are left in an inconsistent state. This is probably not
-  // the only place that violates the strong exception guarantee, just one that
-  // I (coryan) noticed.
+  auto proto = pubsub_internal::ToProto(std::move(p.message));
   waiters_.push_back(std::move(pr));
+
+  // Use RAII to preserve the strong exception guarantee.
+  struct UndoPush {
+    std::vector<promise<StatusOr<std::string>>>* waiters;
+
+    ~UndoPush() {
+      if (waiters != nullptr) waiters->pop_back();
+    }
+    void reset() { waiters = nullptr; }
+  } undo{&waiters_};
+
+  *pending_.add_messages() = std::move(proto);
+  undo.reset();  // no throws after this point, we can rest easy
   current_bytes_ += bytes;
   MaybeFlush(std::move(lk));
   return f;
