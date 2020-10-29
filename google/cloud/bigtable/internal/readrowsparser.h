@@ -51,7 +51,7 @@ namespace internal {
  */
 class ReadRowsParser {
  public:
-  ReadRowsParser() : row_key_(""), last_seen_row_key_("") {}
+  ReadRowsParser() = default;
 
   virtual ~ReadRowsParser() = default;
 

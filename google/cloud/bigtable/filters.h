@@ -691,7 +691,6 @@ class Filter {
   /// An empty filter, discards all data.
   Filter() = default;
 
- private:
   google::bigtable::v2::RowFilter filter_;
 };
 

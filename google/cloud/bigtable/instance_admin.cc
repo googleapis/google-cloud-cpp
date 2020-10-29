@@ -891,10 +891,10 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
   policy.set_etag(etag);
   auto role_bindings = iam_bindings.bindings();
   for (auto& binding : role_bindings) {
-    auto new_binding = policy.add_bindings();
-    new_binding->set_role(binding.first);
-    for (auto& member : binding.second) {
-      new_binding->add_members(member);
+    auto& new_binding = *policy.add_bindings();
+    new_binding.set_role(binding.first);
+    for (auto const& member : binding.second) {
+      new_binding.add_members(member);
     }
   }
 
@@ -951,10 +951,10 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
   policy.set_etag(etag);
   auto role_bindings = iam_bindings.bindings();
   for (auto& binding : role_bindings) {
-    auto new_binding = policy.add_bindings();
-    new_binding->set_role(binding.first);
-    for (auto& member : binding.second) {
-      new_binding->add_members(member);
+    auto& new_binding = *policy.add_bindings();
+    new_binding.set_role(binding.first);
+    for (auto const& member : binding.second) {
+      new_binding.add_members(member);
     }
   }
 
@@ -1020,7 +1020,7 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
-  for (auto& permission : permissions) {
+  for (auto const& permission : permissions) {
     request.add_permissions(permission);
   }
 
@@ -1052,7 +1052,7 @@ InstanceAdmin::AsyncTestIamPermissions(
   ::google::iam::v1::TestIamPermissionsRequest request;
   auto resource = InstanceName(instance_id);
   request.set_resource(resource);
-  for (auto& permission : permissions) {
+  for (auto const& permission : permissions) {
     request.add_permissions(permission);
   }
 
@@ -1098,7 +1098,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
     // seems like the only portable solution.
     // NOLINTNEXTLINE(readability-static-accessed-through-instance)
     binding.GetReflection()->ListFields(binding, &field_descs);
-    for (auto field_desc : field_descs) {
+    for (auto const* field_desc : field_descs) {
       if (field_desc->name() != "members" && field_desc->name() != "role") {
         std::stringstream os;
         os << "IamBinding field \"" << field_desc->name()

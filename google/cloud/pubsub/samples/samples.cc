@@ -796,7 +796,7 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
     };
     std::vector<future<void>> done;
     for (auto const& datum : data) {
-      auto& da = datum;  // workaround MSVC capture rules
+      auto const& da = datum;  // workaround MSVC lambda capture confusion
       auto handler = [da, publisher](future<StatusOr<std::string>> f) mutable {
         auto const msg = da.ordering_key + "#" + da.data;
         auto id = f.get();

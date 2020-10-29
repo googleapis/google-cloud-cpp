@@ -21,6 +21,6 @@ TEST(CrashHandler, InstallCrashHandler) {
   // "installs" them in the program. But this test calls the function for code
   // coverage and it gives us a convenient place to add more tests if we
   // discover better ways to test this.
-  auto const argv0 = "fake_argv0_but_thats_ok_for_a_test";
-  google::cloud::testing_util::InstallCrashHandler(argv0);
+  auto constexpr kText = "fake_argv0_but_thats_ok_for_a_test";
+  google::cloud::testing_util::InstallCrashHandler(kText);
 }

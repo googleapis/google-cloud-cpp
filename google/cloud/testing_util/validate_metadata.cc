@@ -158,7 +158,7 @@ bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
  */
 StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
     std::string const& method) {
-  auto method_desc =
+  auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
           method);
 

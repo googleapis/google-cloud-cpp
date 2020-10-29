@@ -194,6 +194,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return UploadStreamResumable(source, request);
 }
 
+// NOLINTNEXTLINE(readability-make-member-function-const)
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source, internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
@@ -314,6 +315,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   return Status();
 }
 
+// NOLINTNEXTLINE(readability-make-member-function-const)
 std::string Client::SigningEmail(SigningAccount const& signing_account) {
   if (signing_account.has_value()) {
     return signing_account.value();

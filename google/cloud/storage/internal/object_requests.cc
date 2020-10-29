@@ -181,7 +181,8 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   }
 
   std::string const& content_range_value = loc->second;
-  auto function = __func__;  // capture this function name, not the lambda's
+  // capture this function name, not the lambda's
+  auto const* function = __func__;
   auto raise_error = [&content_range_value, &function]() {
     std::ostringstream os;
     os << static_cast<char const*>(function)

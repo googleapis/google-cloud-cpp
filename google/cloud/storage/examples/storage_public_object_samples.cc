@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
-#include <map>
 
 namespace {
 
@@ -85,12 +84,12 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomObjectName(generator, "public-object-") + ".txt";
   auto client = gcs::Client::CreateDefaultClient().value();
 
-  auto const text = R"""(A bit of text to store in the test object.
+  auto constexpr kText = R"""(A bit of text to store in the test object.
 The actual contents are not interesting.
 )""";
   std::cout << "\nCreating object to run the example (" << object_name << ")"
             << std::endl;
-  auto meta = client.InsertObject(bucket_name, object_name, text).value();
+  auto meta = client.InsertObject(bucket_name, object_name, kText).value();
 
   std::cout << "\nRunning the MakeObjectPublic() example" << std::endl;
   MakeObjectPublic(client, {bucket_name, object_name});

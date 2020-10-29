@@ -23,7 +23,7 @@ namespace examples = ::google::cloud::storage::examples;
 //! [grpc-read-write]
 void GrpcReadWrite(std::string const& bucket_name) {
   namespace gcs = google::cloud::storage;
-  auto const text = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
+  auto constexpr kText = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
 commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
@@ -35,7 +35,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
   //! [grpc-default-client]
 
-  auto object = client->InsertObject(bucket_name, "lorem.txt", text);
+  auto object = client->InsertObject(bucket_name, "lorem.txt", kText);
   if (!object) throw std::runtime_error(object.status().message());
 
   auto input = client->ReadObject(bucket_name, "lorem.txt",

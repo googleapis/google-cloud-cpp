@@ -151,7 +151,6 @@ class GcRule {
  private:
   GcRule() = default;
 
- private:
   google::bigtable::admin::v2::GcRule gc_rule_;
 };
 
@@ -218,7 +217,6 @@ class ColumnFamilyModification {
  private:
   ColumnFamilyModification() = default;
 
- private:
   ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification mod_;
 };
 

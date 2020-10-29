@@ -233,12 +233,12 @@ TEST(FilesystemTest, StatusNotFoundDoesNotThrow) {
 
 TEST(FilesystemTest, StatusAccessDoesNotThrow) {
 #if GTEST_OS_LINUX
-  auto file_name = "/proc/1/fd/0";
+  auto constexpr kFileName = "/proc/1/fd/0";
   file_status fs;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_NO_THROW(fs = status(file_name));
+  EXPECT_NO_THROW(fs = status(kFileName));
 #else
-  fs = status(file_name);
+  fs = status(kFileName);
   SUCCEED();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Do not check the returned file type, in some CI builds the tests run

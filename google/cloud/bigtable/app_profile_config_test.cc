@@ -52,7 +52,7 @@ TEST(AppProfileConfig, SingleClusterRouting) {
           .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());
-  auto& routing = proto.app_profile().single_cluster_routing();
+  auto const& routing = proto.app_profile().single_cluster_routing();
   EXPECT_EQ("the-cluster", routing.cluster_id());
   EXPECT_FALSE(routing.allow_transactional_writes());
 }
@@ -63,7 +63,7 @@ TEST(AppProfileConfig, SingleClusterRoutingWithTransactionalWrites) {
           .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());
-  auto& routing = proto.app_profile().single_cluster_routing();
+  auto const& routing = proto.app_profile().single_cluster_routing();
   EXPECT_EQ("the-cluster", routing.cluster_id());
   EXPECT_TRUE(routing.allow_transactional_writes());
 }

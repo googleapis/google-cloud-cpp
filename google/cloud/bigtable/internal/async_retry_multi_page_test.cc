@@ -59,7 +59,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 
   void Setup(grpc::ClientContext&) const override {}
 
-  int num_calls_from_last_clone_{0};
+  int num_calls_from_last_clone_ = 0;
 };
 
 // Pretend independent backoff policies, but be only one under the hood.
@@ -123,7 +123,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
     for (auto exchange_it = interaction.rbegin();
          exchange_it != interaction.rend(); ++exchange_it) {
       auto const& exchange = *exchange_it;
-      auto cluster_reader = new MockAsyncListClustersReader();
+      auto* cluster_reader = new MockAsyncListClustersReader();
       readers_to_delete_.emplace_back(cluster_reader);
 
       // We expect the token to be the same as returned by last exchange

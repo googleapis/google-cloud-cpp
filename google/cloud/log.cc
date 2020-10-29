@@ -71,9 +71,7 @@ std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
 
 LogSink::LogSink()
     : empty_(true),
-      minimum_severity_(static_cast<int>(Severity::GCP_LS_LOWEST_ENABLED)),
-      next_id_(0),
-      clog_backend_id_(0) {}
+      minimum_severity_(static_cast<int>(Severity::GCP_LS_LOWEST_ENABLED)) {}
 
 LogSink& LogSink::Instance() {
   static auto* const kInstance = [] {

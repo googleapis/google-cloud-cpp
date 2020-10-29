@@ -1001,7 +1001,7 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
   auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
-  for (auto& permission : permissions) {
+  for (auto const& permission : permissions) {
     request.add_permissions(permission);
   }
 
@@ -1032,7 +1032,7 @@ future<StatusOr<std::vector<std::string>>> TableAdmin::AsyncTestIamPermissions(
   ::google::iam::v1::TestIamPermissionsRequest request;
   auto resource = TableName(table_id);
   request.set_resource(resource);
-  for (auto& permission : permissions) {
+  for (auto const& permission : permissions) {
     request.add_permissions(permission);
   }
 

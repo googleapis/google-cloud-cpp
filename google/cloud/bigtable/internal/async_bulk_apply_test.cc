@@ -21,7 +21,6 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -50,7 +49,6 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
         cq_(cq_impl_),
         client_(new testing::MockDataClient) {}
 
- protected:
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;

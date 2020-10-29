@@ -182,7 +182,7 @@ class InstanceAdmin {
   }
 
   std::string AppProfileName(std::string const& instance_id,
-                             std::string const& profile_id) {
+                             std::string const& profile_id) const {
     return InstanceName(instance_id) + "/appProfiles/" + profile_id;
   }
 

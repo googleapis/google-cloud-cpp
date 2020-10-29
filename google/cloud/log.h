@@ -328,8 +328,8 @@ class LogSink {
   std::atomic<bool> empty_;
   std::atomic<int> minimum_severity_;
   std::mutex mutable mu_;
-  long next_id_{0};          // NOLINT(google-runtime-int)
-  long clog_backend_id_{0};  // NOLINT(google-runtime-int)
+  long next_id_ = 0;          // NOLINT(google-runtime-int)
+  long clog_backend_id_ = 0;  // NOLINT(google-runtime-int)
   // NOLINTNEXTLINE(google-runtime-int)
   std::map<long, std::shared_ptr<LogBackend>> backends_;
 };

@@ -48,9 +48,6 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
 
   using UniquePtr = std::unique_ptr<grpc::ClientReaderInterface<Response>>;
 
-  /// Return a `std::unique_ptr< mocked-class >`
-  UniquePtr AsUniqueMocked() { return UniquePtr(this); }
-
   /**
    * Create a lambda that returns a `std::unique_ptr< mocked-class >`.
    *

@@ -20,16 +20,18 @@
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btproto = ::google::bigtable::v2;
-namespace bigtable = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;
-using ::testing::_;
 
 /// Define helper types and functions for this test.
-namespace {
 class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {};
-}  // anonymous namespace
 
 auto create_rules_lambda = [](std::string const& expected_request_string,
                               std::string const& generated_response_string) {
@@ -93,7 +95,7 @@ row {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
@@ -163,7 +165,7 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
@@ -237,7 +239,7 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
 
-  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
@@ -264,7 +266,7 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
   std::string const family1 = "family1";
   std::string const column_id1 = "colid1";
 
-  EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillRepeatedly([](grpc::ClientContext* context,
                          google::bigtable::v2::ReadModifyWriteRowRequest const&,
                          google::bigtable::v2::ReadModifyWriteRowResponse*) {
@@ -280,3 +282,9 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
       bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
                                                  "-value2")));
 }
+
+}  // anonymous namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

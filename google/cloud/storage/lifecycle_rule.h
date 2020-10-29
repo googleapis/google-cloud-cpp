@@ -292,7 +292,6 @@ class LifecycleRule {
    *     LifecycleRule::MaxAge(7), LifecycleRule::IsLive(true));
    * @endcode
    *
-   * @param condition a parameter pack of conditions.
    * @throws std::invalid_argument if the list of parameters is contradictory,
    *     for example, `IsLive(true)` and `IsLive(false)` are in the @p condition
    *     list.

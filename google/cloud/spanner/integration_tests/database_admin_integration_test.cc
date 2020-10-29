@@ -155,7 +155,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
-  auto const create_table_statement = R"""(
+  auto constexpr kCreateTableStatement = R"""(
                              CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
                                 FirstName  STRING(1024),
@@ -165,7 +165,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                             )""";
 
   auto update_future =
-      client_.UpdateDatabase(database_, {create_table_statement});
+      client_.UpdateDatabase(database_, {kCreateTableStatement});
   auto metadata = update_future.get();
   ASSERT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));

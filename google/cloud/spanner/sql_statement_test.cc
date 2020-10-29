@@ -125,11 +125,11 @@ TEST(SqlStatementTest, ToProtoWithParams) {
                                     {"first", Value("Elwood")},
                                     {"destroyed_cars", Value(103)}};
 
-  auto sql =
+  auto constexpr kSql =
       "SELECT * FROM foo WHERE last = @last AND first = @first AND "
       "destroyed_cars >= @destroyed_cars";
-  SqlStatement stmt(sql, params);
-  auto const text = std::string(R"(sql: ")") + sql + R"(")" + R"pb(
+  SqlStatement stmt(kSql, params);
+  auto const text = std::string(R"(sql: ")") + kSql + R"(")" + R"pb(
     params: {
       fields: {
         key: "destroyed_cars",

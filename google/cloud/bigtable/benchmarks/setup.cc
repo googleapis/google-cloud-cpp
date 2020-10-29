@@ -135,7 +135,7 @@ google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
   if (argc == 1) {
     return BenchmarkSetup{setup_data};
   }
-  long seconds = std::stol(shift());  // NOLINT(google-runtime-int)
+  auto const seconds = std::stol(shift());
   if (seconds <= 0) {
     return usage("test-duration-seconds should be > 0");
   }

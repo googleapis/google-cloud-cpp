@@ -19,26 +19,28 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "absl/memory/memory.h"
 
-namespace bt = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
-using ::testing::_;
 using ::testing::Return;
 
 /// Define types and functions used in the tests.
-namespace {
-class TableBulkApplyTest : public bt::testing::TableTestFixture {};
-using bt::testing::MockMutateRowsReader;
-}  // anonymous namespace
+class TableBulkApplyTest
+    : public ::google::cloud::bigtable::testing::TableTestFixture {};
+using google::cloud::bigtable::testing::MockMutateRowsReader;
 
 /// @test Verify that Table::BulkApply() works in the easy case.
-
 TEST_F(TableBulkApplyTest, Simple) {
   auto reader = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*reader, Read(_))
+  EXPECT_CALL(*reader, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -55,12 +57,12 @@ TEST_F(TableBulkApplyTest, Simple) {
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(reader.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
@@ -69,7 +71,7 @@ TEST_F(TableBulkApplyTest, Simple) {
 TEST_F(TableBulkApplyTest, RetryPartialFailure) {
   auto r1 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r1, Read(_))
+  EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         // Simulate a partial (recoverable) failure.
         auto& e0 = *r->add_entries();
@@ -85,7 +87,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 
   auto r2 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r2, Read(_))
+  EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -97,13 +99,13 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(r2.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
@@ -112,7 +114,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   auto r1 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r1, Read(_))
+  EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -129,12 +131,11 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
-      .WillOnce(r1.release()->MakeMockReturner());
+  EXPECT_CALL(*client_, MutateRows).WillOnce(r1.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_FALSE(failures.empty());
 }
 
@@ -146,7 +147,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // which happens to be the case in this test.
   auto r1 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r1, Read(_))
+  EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -161,7 +162,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // Create a second stream returned by the mocks when the client retries.
   auto r2 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r2, Read(_))
+  EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -173,13 +174,13 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(r2.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
@@ -189,17 +190,17 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
   // 3 failures.
-  bt::Table custom_table(
+  Table custom_table(
       client_, "foo_table",
       // Configure the Table to stop at 3 failures.
-      bt::LimitedErrorCountRetryPolicy(2),
+      LimitedErrorCountRetryPolicy(2),
       // Use much shorter backoff than the default to test faster.
-      bt::ExponentialBackoffPolicy(10_us, 40_us));
+      ExponentialBackoffPolicy(10_us, 40_us));
 
   // Setup the mocks to fail more than 3 times.
   auto r1 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r1, Read(_))
+  EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -216,20 +217,20 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
                                      btproto::MutateRowsRequest const&) {
     auto stream = absl::make_unique<MockMutateRowsReader>(
         "google.bigtable.v2.Bigtable.MutateRows");
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Read).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
-    return stream.release()->AsUniqueMocked();
+    return stream;
   };
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(create_cancelled_stream)
       .WillOnce(create_cancelled_stream);
 
-  auto failures = custom_table.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = custom_table.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_FALSE(failures.empty());
   EXPECT_EQ(google::cloud::StatusCode::kAborted,
             failures.front().status().code());
@@ -242,12 +243,12 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   // the client to only retry the idempotent mutations.
   auto r1 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r1, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*r1, Read).WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   auto r2 = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*r2, Read(_))
+  EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
         {
           auto& e = *r->add_entries();
@@ -259,15 +260,13 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(r2.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("is-idempotent",
-                            {bt::SetCell("fam", "col", 0_ms, "qux")}),
-      bt::SingleRowMutation("not-idempotent",
-                            {bt::SetCell("fam", "col", "baz")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("is-idempotent", {SetCell("fam", "col", 0_ms, "qux")}),
+      SingleRowMutation("not-idempotent", {SetCell("fam", "col", "baz")})));
   EXPECT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures.front().original_index());
   EXPECT_FALSE(failures.front().status().ok());
@@ -278,20 +277,26 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 TEST_F(TableBulkApplyTest, FailedRPC) {
   auto reader = absl::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
-  EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*reader, Read).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
       .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
                                     "no such table")));
 
-  EXPECT_CALL(*client_, MutateRows(_, _))
+  EXPECT_CALL(*client_, MutateRows)
       .WillOnce(reader.release()->MakeMockReturner());
 
-  auto failures = table_.BulkApply(bt::BulkMutation(
-      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  auto failures = table_.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_EQ(2UL, failures.size());
   EXPECT_FALSE(failures.front().status().ok());
   EXPECT_FALSE(failures.empty());
   EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition,
             failures.front().status().code());
 }
+
+}  // anonymous namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -276,26 +276,26 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service) {
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
-    auto method = service.method(i);
+    auto const& method = *service.method(i);
     VarsDictionary method_vars;
     method_vars["default_idempotency"] =
-        DefaultIdempotencyFromHttpOperation(*method);
-    method_vars["method_name"] = method->name();
-    method_vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
+        DefaultIdempotencyFromHttpOperation(method);
+    method_vars["method_name"] = method.name();
+    method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
     method_vars["request_type"] =
-        ProtoNameToCppName(method->input_type()->full_name());
+        ProtoNameToCppName(method.input_type()->full_name());
     method_vars["response_type"] =
-        ProtoNameToCppName(method->output_type()->full_name());
-    SetLongrunningOperationMethodVars(*method, method_vars);
-    if (IsPaginated(*method)) {
-      auto pagination_info = DeterminePagination(*method);
+        ProtoNameToCppName(method.output_type()->full_name());
+    SetLongrunningOperationMethodVars(method, method_vars);
+    if (IsPaginated(method)) {
+      auto pagination_info = DeterminePagination(method);
       method_vars["range_output_field_name"] = pagination_info->first;
       method_vars["range_output_type"] =
           ProtoNameToCppName(pagination_info->second);
     }
-    SetMethodSignatureMethodVars(*method, method_vars);
-    SetResourceRoutingMethodVars(*method, method_vars);
-    service_methods_vars[method->full_name()] = method_vars;
+    SetMethodSignatureMethodVars(method, method_vars);
+    SetResourceRoutingMethodVars(method, method_vars);
+    service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
 }

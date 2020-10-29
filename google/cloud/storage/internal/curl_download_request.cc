@@ -245,7 +245,8 @@ void CurlDownloadRequest::SetOptions() {
 void CurlDownloadRequest::DrainSpillBuffer() {
   std::size_t free = buffer_size_ - buffer_offset_;
   auto copy_count = (std::min)(free, spill_offset_);
-  std::memcpy(buffer_ + buffer_offset_, spill_.data(), copy_count);
+  std::copy(spill_.data(), spill_.data() + copy_count,
+            buffer_ + buffer_offset_);
   buffer_offset_ += copy_count;
   std::memmove(spill_.data(), spill_.data() + copy_count,
                spill_.size() - copy_count);
@@ -329,7 +330,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
     // transfer either failed or was successful. Pull all the messages out of
     // the info queue until we get the message about our handle.
     int remaining;
-    while (auto msg = curl_multi_info_read(multi_.get(), &remaining)) {
+    while (auto* msg = curl_multi_info_read(multi_.get(), &remaining)) {
       if (msg->easy_handle != handle_.handle_.get()) {
         // Return an error if this is the wrong handle. This should never
         // happen, if it does we are using the libcurl API incorrectly. But it

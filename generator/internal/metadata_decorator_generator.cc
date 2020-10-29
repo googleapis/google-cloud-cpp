@@ -68,9 +68,9 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, header_, MergeServiceAndMethodVars(*method),
+        method, header_, MergeServiceAndMethodVars(method),
         {MethodPattern({{IsResponseTypeEmpty,
                          // clang-format off
     "  Status $method_name$(\n",
@@ -165,9 +165,9 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // metadata decorator class member methods
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
             {
                 {IsResponseTypeEmpty,

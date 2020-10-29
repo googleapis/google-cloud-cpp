@@ -73,9 +73,9 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, header_, MergeServiceAndMethodVars(*method),
+        method, header_, MergeServiceAndMethodVars(method),
         {MethodPattern(
              {
                  // clang-format off
@@ -159,9 +159,9 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
   // clang-format on
 
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    auto method = service_descriptor_->method(i);
+    auto const& method = *service_descriptor_->method(i);
     PrintMethod(
-        *method, cc_, MergeServiceAndMethodVars(*method),
+        method, cc_, MergeServiceAndMethodVars(method),
         {MethodPattern(
              {
                  // clang-format off

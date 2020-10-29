@@ -144,10 +144,10 @@ TEST_F(ClientTest, DefaultDecorators) {
   Client tested(options);
 
   EXPECT_TRUE(tested.raw_client() != nullptr);
-  auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  auto* retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
   ASSERT_TRUE(retry != nullptr);
 
-  auto curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
+  auto* curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
   ASSERT_TRUE(curl != nullptr);
 }
 
@@ -160,13 +160,13 @@ TEST_F(ClientTest, LoggingDecorators) {
   Client tested(options);
 
   EXPECT_TRUE(tested.raw_client() != nullptr);
-  auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  auto* retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
   ASSERT_TRUE(retry != nullptr);
 
-  auto logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
+  auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
   ASSERT_TRUE(logging != nullptr);
 
-  auto curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
+  auto* curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
   ASSERT_TRUE(curl != nullptr);
 }
 

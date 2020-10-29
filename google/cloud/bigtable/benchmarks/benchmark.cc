@@ -97,9 +97,9 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
   auto table_size = setup_.table_size();
-  long shard_start = 0;  // NOLINT(google-runtime-int)
+  std::int64_t shard_start = 0;
   for (int i = 0; i != kPopulateShardCount; ++i) {
-    long end =  // NOLINT(google-runtime-int)
+    auto end =
         std::min(table_size, shard_start + table_size / kPopulateShardCount);
     tasks.emplace_back(std::async(std::launch::async,
                                   &Benchmark::PopulateTableShard, this,
@@ -134,12 +134,12 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
 
 std::string Benchmark::MakeRandomKey(
     google::cloud::internal::DefaultPRNG& gen) const {
-  // NOLINTNEXTLINE(google-runtime-int)
-  std::uniform_int_distribution<long> prng_user(0, setup_.table_size() - 1);
+  std::uniform_int_distribution<std::int64_t> prng_user(
+      0, setup_.table_size() - 1);
   return MakeKey(prng_user(gen));
 }
 
-std::string Benchmark::MakeKey(long id) const {  // NOLINT(google-runtime-int)
+std::string Benchmark::MakeKey(std::int64_t id) const {
   std::ostringstream os;
   os << "user" << std::setw(key_width_) << std::setfill('0') << id;
   return os.str();
@@ -255,8 +255,7 @@ int Benchmark::read_rows_count() const {
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
-    bigtable::Table& table, long begin,  // NOLINT(google-runtime-int)
-    long end) {                          // NOLINT(google-runtime-int)
+    bigtable::Table& table, std::int64_t begin, std::int64_t end) const {
   auto start = std::chrono::steady_clock::now();
   BenchmarkResult result{};
   result.row_count = 0;
@@ -265,12 +264,11 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
   int bulk_size = 0;
   bigtable::BulkMutation bulk;
 
-  // NOLINTNEXTLINE(google-runtime-int)
-  long progress_period = (end - begin) / kPopulateShardProgressMarks;
+  auto progress_period = (end - begin) / kPopulateShardProgressMarks;
   if (progress_period == 0) {
     progress_period = (end - begin);
   }
-  for (long idx = begin; idx != end; ++idx) {  // NOLINT(google-runtime-int)
+  for (auto idx = begin; idx != end; ++idx) {
     bigtable::SingleRowMutation mutation(MakeKey(idx));
     std::vector<bigtable::Mutation> columns;
     for (int f = 0; f != kNumFields; ++f) {
@@ -291,7 +289,7 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
       bulk = {};
       bulk_size = 0;
     }
-    long count = idx - begin + 1;  // NOLINT(google-runtime-int)
+    auto count = idx - begin + 1;
     if (count % progress_period == 0) {
       std::cout << "." << std::flush;
     }

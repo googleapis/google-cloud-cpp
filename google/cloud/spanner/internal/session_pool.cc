@@ -249,7 +249,7 @@ Status SessionPool::CreateSessions(
     std::vector<CreateCount> const& create_counts,
     WaitForSessionAllocation wait) {
   Status return_status;
-  for (auto& op : create_counts) {
+  for (auto const& op : create_counts) {
     switch (wait) {
       case WaitForSessionAllocation::kWait: {
         Status status =

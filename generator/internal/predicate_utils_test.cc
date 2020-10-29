@@ -100,17 +100,17 @@ TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Bar");
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Empty");
 
-  auto empty_method = service_file.mutable_service(0)->add_method();
+  auto* empty_method = service_file.mutable_service(0)->add_method();
   *empty_method->mutable_name() = "Empty";
   *empty_method->mutable_input_type() = "google.protobuf.Bar";
   *empty_method->mutable_output_type() = "google.protobuf.Empty";
 
-  auto non_empty_method = service_file.mutable_service(0)->add_method();
+  auto* non_empty_method = service_file.mutable_service(0)->add_method();
   *non_empty_method->mutable_name() = "NonEmpty";
   *non_empty_method->mutable_input_type() = "google.protobuf.Bar";
   *non_empty_method->mutable_output_type() = "google.protobuf.Bar";
@@ -128,17 +128,17 @@ TEST(PredicateUtilsTest, IsLongrunningOperation) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.longrunning";
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Bar");
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Operation");
 
-  auto lro_method = service_file.mutable_service(0)->add_method();
+  auto* lro_method = service_file.mutable_service(0)->add_method();
   *lro_method->mutable_name() = "Lro";
   *lro_method->mutable_input_type() = "google.longrunning.Bar";
   *lro_method->mutable_output_type() = "google.longrunning.Operation";
 
-  auto not_lro_method = service_file.mutable_service(0)->add_method();
+  auto* not_lro_method = service_file.mutable_service(0)->add_method();
   *not_lro_method->mutable_name() = "NonLro";
   *not_lro_method->mutable_input_type() = "google.longrunning.Bar";
   *not_lro_method->mutable_output_type() = "google.longrunning.Bar";
@@ -156,29 +156,29 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
 
-  auto non_streaming = service_file.mutable_service(0)->add_method();
+  auto* non_streaming = service_file.mutable_service(0)->add_method();
   *non_streaming->mutable_name() = "NonStreaming";
   *non_streaming->mutable_input_type() = "google.protobuf.Input";
   *non_streaming->mutable_output_type() = "google.protobuf.Output";
 
-  auto client_streaming = service_file.mutable_service(0)->add_method();
+  auto* client_streaming = service_file.mutable_service(0)->add_method();
   *client_streaming->mutable_name() = "ClientStreaming";
   *client_streaming->mutable_input_type() = "google.protobuf.Input";
   *client_streaming->mutable_output_type() = "google.protobuf.Output";
   client_streaming->set_client_streaming(true);
 
-  auto server_streaming = service_file.mutable_service(0)->add_method();
+  auto* server_streaming = service_file.mutable_service(0)->add_method();
   *server_streaming->mutable_name() = "ServerStreaming";
   *server_streaming->mutable_input_type() = "google.protobuf.Input";
   *server_streaming->mutable_output_type() = "google.protobuf.Output";
   server_streaming->set_server_streaming(true);
 
-  auto bidirectional_streaming = service_file.mutable_service(0)->add_method();
+  auto* bidirectional_streaming = service_file.mutable_service(0)->add_method();
   *bidirectional_streaming->mutable_name() = "BidirectionalStreaming";
   *bidirectional_streaming->mutable_input_type() = "google.protobuf.Input";
   *bidirectional_streaming->mutable_output_type() = "google.protobuf.Output";
@@ -326,24 +326,24 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto page_size_field = input_message->add_field();
+  auto* page_size_field = input_message->add_field();
   page_size_field->set_name("page_size");
   page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
   page_size_field->set_number(1);
 
-  auto page_token_field = input_message->add_field();
+  auto* page_token_field = input_message->add_field();
   page_token_field->set_name("page_token");
   page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
   page_token_field->set_number(2);
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
-  auto next_page_token_field = output_message->add_field();
+  auto* next_page_token_field = output_message->add_field();
   next_page_token_field->set_name("next_page_token");
   next_page_token_field->set_type(
       protobuf::FieldDescriptorProto_Type_TYPE_STRING);
@@ -358,7 +358,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
   repeated_message_field->set_type_name("google.protobuf.Bar");
   repeated_message_field->set_number(2);
 
-  auto paginated_method = service_file.mutable_service(0)->add_method();
+  auto* paginated_method = service_file.mutable_service(0)->add_method();
   *paginated_method->mutable_name() = "Paginated";
   *paginated_method->mutable_input_type() = "google.protobuf.Input";
   *paginated_method->mutable_output_type() = "google.protobuf.Output";
@@ -378,16 +378,16 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
 
-  auto no_page_size_method = service_file.mutable_service(0)->add_method();
+  auto* no_page_size_method = service_file.mutable_service(0)->add_method();
   *no_page_size_method->mutable_name() = "NoPageSize";
   *no_page_size_method->mutable_input_type() = "google.protobuf.Input";
   *no_page_size_method->mutable_output_type() = "google.protobuf.Output";
@@ -402,20 +402,20 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto page_size_field = input_message->add_field();
+  auto* page_size_field = input_message->add_field();
   page_size_field->set_name("page_size");
   page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
   page_size_field->set_number(1);
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
 
-  auto no_page_token_method = service_file.mutable_service(0)->add_method();
+  auto* no_page_token_method = service_file.mutable_service(0)->add_method();
   *no_page_token_method->mutable_name() = "NoPageToken";
   *no_page_token_method->mutable_input_type() = "google.protobuf.Input";
   *no_page_token_method->mutable_output_type() = "google.protobuf.Output";
@@ -430,25 +430,25 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto page_size_field = input_message->add_field();
+  auto* page_size_field = input_message->add_field();
   page_size_field->set_name("page_size");
   page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
   page_size_field->set_number(1);
 
-  auto page_token_field = input_message->add_field();
+  auto* page_token_field = input_message->add_field();
   page_token_field->set_name("page_token");
   page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
   page_token_field->set_number(2);
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
 
-  auto no_next_page_token_method =
+  auto* no_next_page_token_method =
       service_file.mutable_service(0)->add_method();
   *no_next_page_token_method->mutable_name() = "NoNextPageToken";
   *no_next_page_token_method->mutable_input_type() = "google.protobuf.Input";
@@ -464,24 +464,24 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto page_size_field = input_message->add_field();
+  auto* page_size_field = input_message->add_field();
   page_size_field->set_name("page_size");
   page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
   page_size_field->set_number(1);
 
-  auto page_token_field = input_message->add_field();
+  auto* page_token_field = input_message->add_field();
   page_token_field->set_name("page_token");
   page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
   page_token_field->set_number(2);
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
-  auto next_page_token_field = output_message->add_field();
+  auto* next_page_token_field = output_message->add_field();
   next_page_token_field->set_name("next_page_token");
   next_page_token_field->set_type(
       protobuf::FieldDescriptorProto_Type_TYPE_STRING);
@@ -495,7 +495,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
       protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
   repeated_int32_field->set_number(2);
 
-  auto no_repeated_message_method =
+  auto* no_repeated_message_method =
       service_file.mutable_service(0)->add_method();
   *no_repeated_message_method->mutable_name() = "NoRepeatedMessage";
   *no_repeated_message_method->mutable_input_type() = "google.protobuf.Input";
@@ -511,26 +511,27 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   *service_file.mutable_package() = "google.protobuf";
-  auto repeated_message = service_file.add_message_type();
+  auto* repeated_message = service_file.add_message_type();
   repeated_message->set_name("Bar");
-  auto repeated_message2 = service_file.add_message_type();
+  auto* repeated_message2 = service_file.add_message_type();
   repeated_message2->set_name("Foo");
 
-  auto input_message = service_file.add_message_type();
+  auto* input_message = service_file.add_message_type();
   input_message->set_name("Input");
-  auto page_size_field = input_message->add_field();
+  auto* page_size_field = input_message->add_field();
   page_size_field->set_name("page_size");
   page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
   page_size_field->set_number(1);
 
-  auto page_token_field = input_message->add_field();
+  FieldDescriptorProto* page_token_field;
+  page_token_field = input_message->add_field();
   page_token_field->set_name("page_token");
   page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
   page_token_field->set_number(2);
 
-  auto output_message = service_file.add_message_type();
+  auto* output_message = service_file.add_message_type();
   output_message->set_name("Output");
-  auto next_page_token_field = output_message->add_field();
+  auto* next_page_token_field = output_message->add_field();
   next_page_token_field->set_name("next_page_token");
   next_page_token_field->set_type(
       protobuf::FieldDescriptorProto_Type_TYPE_STRING);
@@ -556,7 +557,7 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
   repeated_message_field_second->set_type_name("google.protobuf.Bar");
   repeated_message_field_second->set_number(2);
 
-  auto repeated_order_mismatch_method =
+  auto* repeated_order_mismatch_method =
       service_file.mutable_service(0)->add_method();
   *repeated_order_mismatch_method->mutable_name() = "RepeatedOrderMismatch";
   *repeated_order_mismatch_method->mutable_input_type() =

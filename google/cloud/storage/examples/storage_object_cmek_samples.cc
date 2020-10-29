@@ -140,9 +140,9 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const csek_object_name =
       examples::MakeRandomObjectName(generator, "csek-object-") + ".txt";
   auto const csek = gcs::CreateKeyFromGenerator(generator);
-  auto const text = R"""(Some text to read and write)""";
+  auto constexpr kText = R"""(Some text to read and write)""";
   auto meta = client
-                  .InsertObject(bucket_name, csek_object_name, text,
+                  .InsertObject(bucket_name, csek_object_name, kText,
                                 gcs::EncryptionKey(csek))
                   .value();
 

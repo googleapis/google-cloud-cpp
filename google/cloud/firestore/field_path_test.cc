@@ -175,10 +175,10 @@ TEST(FieldPath, Key) {
 TEST(FieldPath, Append) {
   std::vector<std::string> const parts = {"a321", "b456"};
   auto const field_path = firestore::FieldPath(parts);
-  auto const field_path_string = "c789.d";
+  auto constexpr kFieldPathString = "c789.d";
   std::vector<std::string> const parts_2 = {"c789", "d"};
   auto const field_path_class = firestore::FieldPath(parts_2);
-  auto const string = field_path.Append(field_path_string);
+  auto const string = field_path.Append(kFieldPathString);
   auto const klass = field_path.Append(field_path_class);
   ASSERT_EQ(string.ToApiRepr(), "a321.b456.c789.d");
   ASSERT_EQ(klass.ToApiRepr(), string.ToApiRepr());

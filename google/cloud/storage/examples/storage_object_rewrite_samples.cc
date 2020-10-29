@@ -182,11 +182,11 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomObjectName(generator, "old-name-") + ".txt";
   auto const new_object_name =
       examples::MakeRandomObjectName(generator, "new-name-") + ".txt";
-  auto const text = R"""(Some text to insert in the test objects.)""";
+  auto constexpr kText = R"""(Some text to insert in the test objects.)""";
 
   std::cout << "\nCreating an object to run the RenameObject() example"
             << std::endl;
-  (void)client.InsertObject(bucket_name, old_object_name, text).value();
+  (void)client.InsertObject(bucket_name, old_object_name, kText).value();
 
   std::cout << "\nRunning the RenameObject() example" << std::endl;
   RenameObject(client, {bucket_name, old_object_name, new_object_name});
@@ -194,7 +194,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nCleanup" << std::endl;
   (void)client.DeleteObject(bucket_name, new_object_name);
 
-  (void)client.InsertObject(bucket_name, src_object_name, text).value();
+  (void)client.InsertObject(bucket_name, src_object_name, kText).value();
 
   std::cout << "\nRunning the RewriteObject() example" << std::endl;
   RewriteObject(client, {bucket_name, src_object_name, destination_bucket_name,
