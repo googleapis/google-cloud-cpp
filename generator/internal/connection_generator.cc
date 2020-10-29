@@ -403,19 +403,26 @@ Status ConnectionGenerator::GenerateCc() {
     " private:\n");
   // clang-format on
 
-  // TODO(#4038) - use the (implicit) completion queue to run this loop.
-  cc_.Print(service_vars_,  // clang-format off
+  // TODO(#4038) - use the (implicit) completion queue to run this loop, and
+  // once using a completion queue, consider changing to AsyncCancelOperation.
+  cc_.Print(
+      service_vars_,  // clang-format off
     "  template <typename MethodResponse, template<typename> class Extractor,\n"
     "    typename Stub>\n"
     "  future<StatusOr<MethodResponse>>\n"
     "  AwaitLongrunningOperation(google::longrunning::Operation operation) {  // NOLINT\n"
     "    using ResponseExtractor = Extractor<MethodResponse>;\n"
-    "    std::shared_ptr<Stub> cancel_stub(stub_);\n"
-    "    promise<typename ResponseExtractor::ReturnType> pr([cancel_stub, operation]() {\n"
-    "    grpc::ClientContext context;\n"
-    "    google::longrunning::CancelOperationRequest request;\n"
-    "    request.set_name(operation.name());\n"
-    "    cancel_stub->CancelOperation(context, request);\n"
+    "    std::weak_ptr<Stub> cancel_stub(stub_);\n"
+    "    promise<typename ResponseExtractor::ReturnType> pr(\n"
+    "        [cancel_stub, operation]() {\n"
+    "          grpc::ClientContext context;\n"
+    "          context.set_deadline(std::chrono::system_clock::now() +\n"
+    "            std::chrono::seconds(60));\n"
+    "          google::longrunning::CancelOperationRequest request;\n"
+    "          request.set_name(operation.name());\n"
+    "          if (auto ptr = cancel_stub.lock()) {\n"
+    "            ptr->CancelOperation(context, request);\n"
+    "          }\n"
     "    });\n"
     "    auto f = pr.get_future();\n"
     "    std::thread t(\n"
