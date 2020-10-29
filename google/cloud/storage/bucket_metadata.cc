@@ -31,7 +31,6 @@ inline namespace STORAGE_CLIENT_NS {
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   os << "CorsEntry={";
-
   char const* sep = "";
   if (rhs.max_age_seconds.has_value()) {
     os << "max_age_seconds=" << *rhs.max_age_seconds;
