@@ -449,10 +449,15 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("${CMAKE_CURRENT_LIST_DIR}/config.cmake.in"
                "googleapis-config.cmake" @ONLY)
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config-version.cmake.in"
-               "googleapis-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "googleapis-config-version.cmake"
+    VERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    COMPATIBILITY SameMinorVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config-version.cmake"

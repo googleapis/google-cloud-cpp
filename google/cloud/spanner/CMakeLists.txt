@@ -426,9 +426,14 @@ install(
     COMPONENT google_cloud_cpp_spanner_development)
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-               "spanner_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "spanner_client-config-version.cmake"
+    VERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    COMPATIBILITY SameMinorVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"

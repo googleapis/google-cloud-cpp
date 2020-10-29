@@ -396,9 +396,14 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-               "bigtable_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "bigtable_client-config-version.cmake"
+    VERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    COMPATIBILITY SameMinorVersion)
+
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")

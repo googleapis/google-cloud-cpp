@@ -113,9 +113,14 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-               "firestore_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "firestore_client-config-version.cmake"
+    VERSION
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    COMPATIBILITY SameMinorVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config-version.cmake"
