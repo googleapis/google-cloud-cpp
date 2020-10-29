@@ -528,12 +528,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   future<StatusOr<MethodResponse>>
   AwaitLongrunningOperation(google::longrunning::Operation operation) {  // NOLINT
     using ResponseExtractor = Extractor<MethodResponse>;
-    std::shared_ptr<Stub> cancel_stub(stub_);
-    promise<typename ResponseExtractor::ReturnType> pr([cancel_stub, operation]() {
-    grpc::ClientContext context;
-    google::longrunning::CancelOperationRequest request;
-    request.set_name(operation.name());
-    cancel_stub->CancelOperation(context, request);
+    std::weak_ptr<Stub> cancel_stub(stub_);
+    promise<typename ResponseExtractor::ReturnType> pr(
+        [cancel_stub, operation]() {
+          grpc::ClientContext context;
+          context.set_deadline(std::chrono::system_clock::now() +
+            std::chrono::seconds(60));
+          google::longrunning::CancelOperationRequest request;
+          request.set_name(operation.name());
+          if (auto ptr = cancel_stub.lock()) {
+            ptr->CancelOperation(context, request);
+          }
     });
     auto f = pr.get_future();
     std::thread t(

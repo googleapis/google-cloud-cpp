@@ -252,10 +252,6 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
 /// @test Verify that successful case works.
 TEST(GoldenConnectionTest, CreateDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
-  // Suppress a false leak.
-  // TODO(#4038): After we fix the issue #4038, we won't need to use
-  // `AllowLeak()` any more.
-  Mock::AllowLeak(mock.get());
   EXPECT_CALL(*mock, CreateDatabase)
       .WillOnce(
           [](grpc::ClientContext &,
