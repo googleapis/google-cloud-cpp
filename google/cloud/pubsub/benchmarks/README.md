@@ -38,7 +38,7 @@ report is generated periodically (the period is configurable) in CSV form.
 
 In both the publisher and subscriber role the benchmark will not stop until a
 minimum number of samples is reported. Likewise, the benchmark will not stop
-until a minimum running time has elapsed. However, the the benchmark will stop
+until a minimum running time has elapsed. However, the benchmark will stop
 running if the number of collected samples is higher than a maximum **or** the
 total running time is over a maximum. All these parameters are configurable via
 command-line options.

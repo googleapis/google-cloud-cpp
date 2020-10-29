@@ -102,14 +102,13 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   if (config->show_help) return 0;
+  auto const configured_topic = config->topic_id;
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
-  auto const configured_topic = config->topic_id;
-
+  Cleanup cleanup;
   // If there is no pre-defined topic and/or subscription for this test, create
   // them and automatically remove them at the end of the test.
-  std::function<void()> delete_topic = [] {};
   if (config->topic_id.empty()) {
     pubsub::TopicAdminClient topic_admin(pubsub::MakeTopicAdminConnection());
     config->topic_id = google::cloud::pubsub_testing::RandomTopicId(generator);
@@ -119,12 +118,11 @@ int main(int argc, char* argv[]) {
       std::cout << "CreateTopic() failed: " << create.status() << "\n";
       return 1;
     }
-    delete_topic = [topic_admin, topic]() mutable {
+    cleanup.Defer([topic_admin, topic]() mutable {
       (void)topic_admin.DeleteTopic(topic);
-    };
+    });
   }
 
-  std::function<void()> delete_subscription = [] {};
   if (config->subscription_id.empty()) {
     pubsub::SubscriptionAdminClient subscription_admin(
         pubsub::MakeSubscriptionAdminConnection());
@@ -138,9 +136,9 @@ int main(int argc, char* argv[]) {
       std::cout << "CreateSubscription() failed: " << create.status() << "\n";
       return 1;
     }
-    delete_subscription = [subscription_admin, subscription]() mutable {
+    cleanup.Defer([subscription_admin, subscription]() mutable {
       (void)subscription_admin.DeleteSubscription(subscription);
-    };
+    });
   }
 
   std::cout << "# Running Cloud Pub/Sub experiment"
