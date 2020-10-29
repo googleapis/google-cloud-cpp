@@ -329,7 +329,7 @@ void StreamingSubscriptionBatchSource::DrainQueues(
   // best-effort anyway, there is no guarantee that the server will act on any
   // of these.
   auto weak = WeakFromThis();
-  stream->Write(request, grpc::WriteOptions{})
+  stream->Write(request, grpc::WriteOptions{}.set_write_through())
       .then([weak, stream](future<bool> f) {
         if (auto self = weak.lock()) self->OnWrite(f.get());
       });
