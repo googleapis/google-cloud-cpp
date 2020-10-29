@@ -165,6 +165,23 @@ class MessageBuilder {
     return std::move(SetOrderingKey(std::move(key)));
   }
 
+  /// Add an attribute to the message.
+  template <typename K, typename V>
+  MessageBuilder& AddAttribute(K&& key, V&& value) & {
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    proto_.mutable_attributes()->insert(
+        value_type{std::forward<K>(key), std::forward<V>(value)});
+    return *this;
+  }
+
+  /// Add an attribute to the message.
+  template <typename K, typename V>
+  MessageBuilder&& AddAttribute(K&& key, V&& value) && {
+    return std::move(
+        AddAttribute(std::forward<K>(key), std::forward<V>(value)));
+  }
+
   /// Create a message with the attributes from the range [@p begin, @p end)
   template <typename Iterator>
   MessageBuilder& SetAttributes(Iterator begin, Iterator end) & {
