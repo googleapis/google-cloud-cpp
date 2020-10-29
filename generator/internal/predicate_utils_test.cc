@@ -495,8 +495,8 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
       protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
   repeated_int32_field->set_number(2);
 
-  protobuf::MethodDescriptorProto* no_repeated_message_method;
-  no_repeated_message_method = service_file.mutable_service(0)->add_method();
+  auto* no_repeated_message_method =
+      service_file.mutable_service(0)->add_method();
   *no_repeated_message_method->mutable_name() = "NoRepeatedMessage";
   *no_repeated_message_method->mutable_input_type() = "google.protobuf.Input";
   *no_repeated_message_method->mutable_output_type() = "google.protobuf.Output";
