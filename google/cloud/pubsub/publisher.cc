@@ -19,8 +19,6 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-// TODO(#4581) - use the options to setup batching
-// TODO(#4584) - use the ordering key configuration
 Publisher::Publisher(std::shared_ptr<PublisherConnection> connection,
                      PublisherOptions)
     : connection_(std::move(connection)) {}
