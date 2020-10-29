@@ -14,9 +14,14 @@
 # limitations under the License.
 # ~~~
 
+# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
+set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
+find_package(absl CONFIG REQUIRED)
+unset(FPHSA_NAME_MISMATCHED)
+
 function (pubsub_client_define_benchmarks)
     set(pubsub_client_benchmark_programs # cmake-format: sortable
-                                         endurance.cc)
+                                         endurance.cc throughput.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -28,8 +33,12 @@ function (pubsub_client_define_benchmarks)
         google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::pubsub_client pubsub_client_testing
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+            PRIVATE googleapis-c++::pubsub_client
+                    pubsub_client_testing
+                    google_cloud_cpp_testing
+                    absl::str_format
+                    GTest::gmock_main
+                    GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
 
