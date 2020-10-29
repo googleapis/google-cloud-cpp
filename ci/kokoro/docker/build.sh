@@ -142,12 +142,14 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
-  export CC=clang
-  export CXX=clang++
-  export DISTRO=fedora
-  # Holding the TSAN build back because:
+  # We need to use clang-9 for the TSAN build because:
   #   https://github.com/google/sanitizers/issues/1259
-  export DISTRO_VERSION=31
+  # Using Fedora >= 32 will push us to clang-10, and Fedora < 32 is EOL.
+  # Fortunately, Ubuntu:18.04 is a LTS release with clang-9 as an alternative.
+  export CC=clang-9
+  export CXX=clang++-9
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="tsan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
