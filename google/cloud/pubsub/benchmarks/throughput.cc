@@ -89,8 +89,8 @@ class Cleanup {
   std::vector<std::function<void()>> actions_;
 };
 
-void PublisherTask(std::mutex& mu, Config const& config);
-void SubscriberTask(std::mutex& mu, Config const& config);
+void PublisherTask(Config const& config);
+void SubscriberTask(Config const& config);
 
 }  // namespace
 
@@ -176,12 +176,11 @@ int main(int argc, char* argv[]) {
   std::cout << "Timestamp,Op,Iteration,Count,Bytes,ElapsedUs,MBs" << std::endl;
 
   std::vector<std::thread> tasks;
-  std::mutex mu;
   if (config->publisher) {
-    tasks.emplace_back(PublisherTask, std::ref(mu), *config);
+    tasks.emplace_back(PublisherTask, *config);
   }
   if (config->subscriber) {
-    tasks.emplace_back(SubscriberTask, std::ref(mu), *config);
+    tasks.emplace_back(SubscriberTask, *config);
   }
   for (auto& t : tasks) t.join();
 
@@ -189,6 +188,10 @@ int main(int argc, char* argv[]) {
 }
 
 namespace {
+
+using ::google::cloud::testing_util::Timer;
+
+std::mutex cout_mu;
 
 bool Done(Config const& config, std::int64_t samples,
           std::chrono::steady_clock::time_point start) {
@@ -199,16 +202,13 @@ bool Done(Config const& config, std::int64_t samples,
   return samples >= config.minimum_samples;
 }
 
-using ::google::cloud::testing_util::Timer;
-
 std::string Timestamp() {
   return google::cloud::internal::FormatRfc3339(
       std::chrono::system_clock::now());
 }
 
-void PrintResult(std::mutex& mu, Config const& config,
-                 std::string const& operation, int iteration,
-                 std::int64_t count, Timer const& usage) {
+void PrintResult(Config const& config, std::string const& operation,
+                 int iteration, std::int64_t count, Timer const& usage) {
   using std::chrono::duration_cast;
   using std::chrono::microseconds;
   using std::chrono::seconds;
@@ -218,13 +218,13 @@ void PrintResult(std::mutex& mu, Config const& config,
   auto const mbs =
       absl::StrFormat("%.02f", static_cast<double>(bytes) /
                                    static_cast<double>(elapsed_us.count()));
-  std::lock_guard<std::mutex> lk(mu);
+  std::lock_guard<std::mutex> lk(cout_mu);
   std::cout << Timestamp() << ',' << operation << ',' << iteration << ','
             << count << ',' << bytes << ',' << elapsed_us.count() << ',' << mbs
             << std::endl;
 }
 
-void PublisherTask(std::mutex& mu, Config const& config) {
+void PublisherTask(Config const& config) {
   auto publisher_options =
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(config.publisher_max_batch_size)
@@ -303,7 +303,7 @@ void PublisherTask(std::mutex& mu, Config const& config) {
     std::this_thread::sleep_for(config.iteration_duration);
     auto const count = send_count.load() - start_count;
     usage.Stop();
-    PrintResult(mu, config, "Pub", i, count, usage);
+    PrintResult(config, "Pub", i, count, usage);
   }
   shutdown.store(true);
   for (auto& w : workers) w.join();
@@ -311,7 +311,7 @@ void PublisherTask(std::mutex& mu, Config const& config) {
             << ", hwm_count=" << hwm_count << std::endl;
 }
 
-void SubscriberTask(std::mutex& mu, Config const& config) {
+void SubscriberTask(Config const& config) {
   auto subscriber_options =
       pubsub::SubscriberOptions{}
           .set_max_outstanding_messages(
@@ -349,18 +349,18 @@ void SubscriberTask(std::mutex& mu, Config const& config) {
     std::this_thread::sleep_for(config.iteration_duration);
     auto const count = received_count.load() - start_count;
     usage.Stop();
-    PrintResult(mu, config, "Sub", i, count, usage);
+    PrintResult(config, "Sub", i, count, usage);
   }
   for (auto& s : sessions) s.cancel();
   Status last_status;
   std::int64_t last_received_count;
   for (auto& s : sessions) {
     auto status = s.get();
-    std::lock_guard<std::mutex> lk(mu);
-    if (last_status == status && received_count == received_count.load())
-      continue;
+    auto const current = received_count.load();
+    if (last_status == status && received_count == current) continue;
     last_status = std::move(status);
-    last_received_count = received_count.load();
+    last_received_count = current;
+    std::lock_guard<std::mutex> lk(cout_mu);
     std::cout << "# status=" << last_status << ", count=" << last_received_count
               << std::endl;
   }
