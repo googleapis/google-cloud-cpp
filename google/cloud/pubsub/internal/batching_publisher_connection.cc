@@ -91,11 +91,11 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     ~UndoPush() {
       if (waiters != nullptr) waiters->pop_back();
     }
-    void reset() { waiters = nullptr; }
+    void release() { waiters = nullptr; }
   } undo{&waiters_};
 
   *pending_.add_messages() = std::move(proto);
-  undo.reset();  // no throws after this point, we can rest easy
+  undo.release();  // no throws after this point, we can rest easy
   current_bytes_ += bytes;
   MaybeFlush(std::move(lk));
   return f;
