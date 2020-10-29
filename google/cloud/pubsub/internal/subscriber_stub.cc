@@ -161,12 +161,10 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
   // its value here to allow compiling against older versions.
   channel_arguments.SetInt("grpc.channel_id", channel_id);
-  auto channel = grpc::CreateCustomChannel(
-      options.endpoint(), options.credentials(), channel_arguments);
 
-  auto grpc_stub =
-      google::pubsub::v1::Subscriber::NewStub(grpc::CreateCustomChannel(
-          options.endpoint(), options.credentials(), channel_arguments));
+  auto grpc_stub = google::pubsub::v1::Subscriber::NewStub(
+      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
+                                std::move(channel_arguments)));
 
   return std::make_shared<DefaultSubscriberStub>(std::move(grpc_stub));
 }
