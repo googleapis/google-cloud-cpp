@@ -153,25 +153,22 @@ $(function() {
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  std::unique_ptr&lt;pubsub::BackoffPolicy const&gt; backoff_policy_;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  std::mutex mu_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keyword">struct </span>Item {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    promise&lt;StatusOr&lt;std::string&gt;&gt; response;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> message;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  std::vector&lt;Item&gt; pending_;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  std::chrono::system_clock::time_point batch_expiration_;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">bool</span> corked_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  Status corked_status_;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  std::vector&lt;promise&lt;StatusOr&lt;std::string&gt;&gt;&gt; waiters_;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  google::pubsub::v1::PublishRequest pending_;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  std::size_t current_bytes_ = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  std::chrono::system_clock::time_point batch_expiration_;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">bool</span> corked_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  Status corked_status_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">google::cloud::pubsub::v1::PublisherOptions</a></div><div class="ttdoc">Configuration options for a Publisher.</div><div class="ttdef"><b>Definition:</b> <a href="publisher__options_8h_source.html#l00046">publisher_options.h:46</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">google::cloud::pubsub::v1::Message</a></div><div class="ttdoc">The C++ representation for a Cloud Pub/Sub messages.</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00076">message.h:76</a></div></div>
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">google::cloud::pubsub::v1::Topic</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic_8h_source.html#l00036">topic.h:36</a></div></div>
 <div class="ttc" id="apublisher__connection_8h_html"><div class="ttname"><a href="publisher__connection_8h.html">publisher_connection.h</a></div></div>
