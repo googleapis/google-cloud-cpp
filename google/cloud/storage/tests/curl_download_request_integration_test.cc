@@ -60,8 +60,8 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   EXPECT_EQ(200, result->response.status_code)
       << ", status_code=" << result->response.status_code
       << ", payload=" << result->response.payload << ", headers={"
-      << absl::StrJoin(result->response.headers, ", ",
-                       absl::PairFormatter("="));
+      << absl::StrJoin(result->response.headers, ", ", absl::PairFormatter("="))
+      << "}";
 
   EXPECT_EQ(kDownloadedLines, count);
 }
