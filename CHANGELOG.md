@@ -1,5 +1,12 @@
 # Changelog
 
+**FUTURE BREAKING CHANGES:**
+
+* **Storage:** on or about 2021-01-15 we are planning to remove the
+  `bucket_policy_only` attribute from `storage::BucketIamConfiguration` struct.
+  This attribute represents the pre-GA name for "Uniform Bucket Level Access"
+  becoming GA. Applications should use `uniform_bucket_level_access` instead.
+
 ## v1.20.0 - TBD
 
 ### Storage

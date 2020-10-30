@@ -198,9 +198,6 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * Currently this only holds the BucketOnlyPolicy. In the future, we may define
  * additional IAM which would be included in this object.
  *
- * @warning this is a Beta feature of Google Cloud Storage, it is not subject
- *     to the deprecation policy and subject to change without notice.
- *
  * @see Before enabling Uniform Bucket Level Access please review the
  *     [feature documentation][ubla-link], as well as
  *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
@@ -211,6 +208,8 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
+  /// @deprecated this field will be removed on or about 2021-01-15, use
+  ///     `uniform_bucket_level_access`
   absl::optional<BucketPolicyOnly> bucket_policy_only;
   absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
 };
@@ -648,9 +647,6 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   //@{
   /**
    * @name Get and set the IAM configuration.
-   *
-   * @warning this is a Beta feature of Google Cloud Storage, it is not
-   *     subject to the deprecation policy and subject to change without notice.
    *
    * @see Before enabling Uniform Bucket Level Access please review the
    *     [feature documentation][ubla-link], as well as
