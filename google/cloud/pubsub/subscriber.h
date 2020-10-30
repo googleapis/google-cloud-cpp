@@ -42,7 +42,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @snippet samples.cc subscribe
  *
  * @par Performance
- *
  * `Subscriber` objects are relatively cheap to create, copy, and move. However,
  * each `Subscriber` object must be created with a
  * `std::shared_ptr<SubscriberConnection>`, which itself is relatively expensive
@@ -51,14 +50,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * interface for more details.
  *
  * @par Thread Safety
- *
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
  * @par Background Threads
- *
  * This class uses the background threads configured via `ConnectionOptions`.
  * Applications can create their own pool of background threads by (a) creating
  * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
@@ -69,7 +66,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @snippet samples.cc custom-thread-pool-subscriber
  *
  * @par Asynchronous Functions
- *
  * Some of the member functions in this class return a `future<T>` (or
  * `future<StatusOr<T>>`) object.  Readers are probably familiar with
  * [`std::future<T>`][std-future-link]. Our version adds a `.then()` function to
@@ -79,7 +75,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * documentation.
  *
  * @par Error Handling
- *
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
