@@ -260,6 +260,10 @@ void PublisherTask(Config const& config) {
     std::unique_lock<std::mutex> lk(pending_mu);
     if (--pending < lwm) pending_cv.notify_all();
   };
+  auto pending_nothing = [&] {
+    std::unique_lock<std::mutex> lk(pending_mu);
+    pending_cv.wait(lk, [&] { return pending == 0; });
+  };
 
   std::atomic<std::int64_t> send_count{0};
   std::atomic<std::int64_t> error_count{0};
@@ -307,6 +311,8 @@ void PublisherTask(Config const& config) {
   }
   shutdown.store(true);
   for (auto& w : workers) w.join();
+  // Need to wait until all pending callbacks have executed.
+  pending_nothing();
   std::cout << "# Publisher: error_count=" << error_count
             << ", hwm_count=" << hwm_count << std::endl;
 }
