@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['log_2ecc_672',['log.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html',1,'']]],
-  ['log_2eh_673',['log.h',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html',1,'']]]
+  ['log_2ecc_673',['log.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html',1,'']]],
+  ['log_2eh_674',['log.h',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html',1,'']]]
 ];
