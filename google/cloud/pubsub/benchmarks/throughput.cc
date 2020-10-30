@@ -287,9 +287,9 @@ void PublisherTask(Config const& config) {
                        .SetData(data)
                        .Build())
           .then([&](future<StatusOr<std::string>> f) {
-            pending_done();
             ++send_count;
             if (!f.get()) ++error_count;
+            pending_done();
           });
     }
   };
