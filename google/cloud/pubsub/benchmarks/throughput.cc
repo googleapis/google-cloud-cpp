@@ -353,7 +353,7 @@ void SubscriberTask(Config const& config) {
   }
   for (auto& s : sessions) s.cancel();
   Status last_status;
-  std::int64_t last_received_count;
+  std::int64_t last_received_count = 0;
   for (auto& s : sessions) {
     auto status = s.get();
     auto const current = received_count.load();
