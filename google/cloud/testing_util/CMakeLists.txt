@@ -191,10 +191,14 @@ if (BUILD_TESTING)
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
     # Create and install the CMake configuration files.
+    include(CMakePackageConfigHelpers)
     configure_file("config.cmake.in" "google_cloud_cpp_testing-config.cmake"
                    @ONLY)
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-                   "google_cloud_cpp_testing-config-version.cmake" @ONLY)
+    write_basic_package_version_file(
+        "google_cloud_cpp_testing-config-version.cmake"
+        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+        COMPATIBILITY ExactVersion)
+
     install(
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing-config.cmake"

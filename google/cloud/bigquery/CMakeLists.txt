@@ -193,10 +193,13 @@ install(
     COMPONENT google_cloud_cpp_bigquery_development)
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "bigquery_client-config.cmake" @ONLY)
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config-version.cmake.in"
-    "bigquery_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "bigquery_client-config-version.cmake"
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    COMPATIBILITY ExactVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config-version.cmake"
