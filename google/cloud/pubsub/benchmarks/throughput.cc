@@ -228,7 +228,8 @@ void PublisherTask(Config const& config) {
   auto publisher_options =
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(config.publisher_max_batch_size)
-          .set_maximum_batch_bytes(config.publisher_max_batch_bytes);
+          .set_maximum_batch_bytes(
+              static_cast<std::size_t>(config.publisher_max_batch_bytes));
   auto connection_options =
       pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
   if (config.publisher_io_threads) {
