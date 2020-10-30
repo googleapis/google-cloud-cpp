@@ -432,7 +432,7 @@ write_basic_package_version_file(
     "spanner_client-config-version.cmake"
     VERSION
         ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
-    COMPATIBILITY SameMinorVersion)
+    COMPATIBILITY ExactVersion)
 
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
