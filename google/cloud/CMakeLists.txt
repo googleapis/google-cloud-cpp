@@ -328,8 +328,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_common-config-version.cmake"
-    VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
@@ -504,8 +503,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                    "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
     write_basic_package_version_file(
         "google_cloud_cpp_grpc_utils-config-version.cmake"
-        VERSION
-            ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
         COMPATIBILITY ExactVersion)
 
     install(

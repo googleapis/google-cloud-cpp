@@ -117,8 +117,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "firestore_client-config-version.cmake"
-    VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

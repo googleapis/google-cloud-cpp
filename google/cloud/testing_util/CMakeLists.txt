@@ -196,8 +196,7 @@ if (BUILD_TESTING)
                    @ONLY)
     write_basic_package_version_file(
         "google_cloud_cpp_testing-config-version.cmake"
-        VERSION
-            ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
         COMPATIBILITY ExactVersion)
 
     install(
