@@ -357,7 +357,7 @@ void SubscriberTask(Config const& config) {
   for (auto& s : sessions) {
     auto status = s.get();
     auto const current = received_count.load();
-    if (last_status == status && received_count == current) continue;
+    if (last_status == status && last_received_count == current) continue;
     last_status = std::move(status);
     last_received_count = current;
     std::lock_guard<std::mutex> lk(cout_mu);
