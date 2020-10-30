@@ -360,9 +360,9 @@ $(function() {
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                       .SetData(data)</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                       .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder.html#ac0c8dd77ea781ac4e226716b5458920d">Build</a>())</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;          .then([&amp;](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            pending_done();</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            ++send_count;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            <span class="keywordflow">if</span> (!f.get()) ++error_count;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            ++send_count;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            <span class="keywordflow">if</span> (!f.get()) ++error_count;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            pending_done();</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;          });</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    }</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  };</div>
