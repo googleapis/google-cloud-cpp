@@ -33,7 +33,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * on [Cloud Pub/Sub][pubsub-doc-link].
  *
  * @par Performance
- *
  * `SubscriptionAdminClient` objects are relatively cheap to create, copy, and
  * move. However, each `SubscriptionAdminClient` object must be created with a
  * `std::shared_ptr<SubscriptionAdminConnection>`, which itself is relatively
@@ -42,14 +41,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * `SubscriptionAdminConnection` interface for more details.
  *
  * @par Thread Safety
- *
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
  * @par Error Handling
- *
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it

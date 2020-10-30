@@ -40,12 +40,13 @@ cd google-cloud-cpp/google/cloud/pubsub/quickstart
 @endcode
 
 @par Example: Hello World
-
+@parblock
 The following shows the code that you'll run in the
 `google/cloud/pubsub/quickstart/` directory, which should give you a taste of
 the Cloud Pub/Sub C++ client library API.
 
 @include quickstart.cc
+@endparblock
 
 ## API Notes
 
@@ -83,8 +84,6 @@ functions return objects that are not wrapped in a `StatusOr<>` but will
 themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
 asynchronous operations return `future<StatusOr<T>>`.
 
-@par Example
-
 Applications should check if the `StatusOr<T>` contains a value before using
 it, much like how you might check that a pointer is not null before
 dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
@@ -106,6 +105,7 @@ there is no value.
     `StatusOr<T>` that does not contain a value will terminate the program
     instead of throwing.
 
+@par Example
 @snippet samples.cc example-status-or
 
 ## Next Steps

@@ -31,7 +31,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * application callbacks, and requesting more data from the service.
  *
  * @par Callback Concurrency Control
- *
+ * @parblock
  * The subscription configuration determines the upper limit (set
  * `set_concurrency_watermarks()`) how many callbacks are *scheduled* at a time.
  * As long as this limit is not reached the library will continue to schedule
@@ -51,9 +51,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * The default value for the concurrency high watermarks is set to the value
  * returned by `std::thread::hardware_concurrency()` (or 4 if your standard
  * library returns `0` for this parameter).
+ * @endparblock
  *
  * @par Message Flow Control
- *
+ * @parblock
  * The subscription will request more messages from the service as long as
  * both the outstanding message count (see `set_message_count_watermarks()`)
  * and the number of bytes in the outstanding messages (see
@@ -68,6 +69,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * `AckHandler::nack()` function is called on the associated `AckHandler`. Note
  * that if the concurrency control algorithm has not scheduled a callback this
  * can also put back pressure on the flow control algorithm.
+ * @endparblock
  *
  * @par Example: setting the concurrency control parameters
  * @snippet samples.cc subscriber-concurrency
