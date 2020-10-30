@@ -67,7 +67,7 @@ class TopicAdminClient {
   TopicAdminClient() = delete;
 
   /**
-   * Create a new topic in Cloud Pub/Sub.
+   * Creates a new topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, as it succeeds only once, therefore the
@@ -84,7 +84,7 @@ class TopicAdminClient {
   }
 
   /**
-   * Get information about an existing Cloud Pub/Sub topic.
+   * Gets information about an existing Cloud Pub/Sub topic.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -97,7 +97,7 @@ class TopicAdminClient {
   }
 
   /**
-   * Update the configuration of an existing Cloud Pub/Sub topic.
+   * Updates the configuration of an existing Cloud Pub/Sub topic.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -113,7 +113,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the topics for a given project id.
+   * Lists all the topics for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -126,7 +126,7 @@ class TopicAdminClient {
   }
 
   /**
-   * Delete an existing topic in Cloud Pub/Sub.
+   * Deletes an existing topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -166,7 +166,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the subscription names for a given topic.
+   * Lists all the subscription names for a given topic.
    *
    * @note
    * The returned range contains fully qualified subscription names, e.g.,
@@ -184,7 +184,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the subscription names for a given topic.
+   * Lists all the subscription names for a given topic.
    *
    * @note
    * The returned range contains fully qualified snapshot names, e.g.,

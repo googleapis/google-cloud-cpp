@@ -68,7 +68,7 @@ class SubscriptionAdminClient {
   SubscriptionAdminClient() = delete;
 
   /**
-   * Create a new subscription in Cloud Pub/Sub.
+   * Creates a new subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -92,7 +92,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Get the metadata for an existing Cloud Pub/Sub subscription.
+   * Gets the metadata for an existing Cloud Pub/Sub subscription.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -106,7 +106,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Update an existing subscription in Cloud Pub/Sub.
+   * Updates an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -125,7 +125,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * List all the subscriptions for a given project id.
+   * Lists all the subscriptions for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -138,7 +138,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Delete an existing subscription in Cloud Pub/Sub.
+   * Deletes an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -177,7 +177,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Create a new snapshot for a subscription with a server-assigned name.
+   * Creates a new snapshot for a subscription with a server-assigned name.
    *
    * @par Idempotency
    * This is not an idempotent operation, repeated calls would create multiple
@@ -195,7 +195,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Create a new snapshot for a subscription with a given name.
+   * Creates a new snapshot for a subscription with a given name.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -216,7 +216,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Get information about an existing snapshot.
+   * Gets information about an existing snapshot.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -231,7 +231,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Update an existing snapshot.
+   * Updates an existing snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -250,7 +250,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * List all the snapshots for a given project id.
+   * Lists all the snapshots for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -263,7 +263,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Delete a snapshot.
+   * Deletes a snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -279,7 +279,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Seeks a subscription to @p timestamp.
+   * Seeks a subscription to its state at @p timestamp.
    *
    * Messages retained in the subscription that were published before
    * @p timestamp are marked as acknowledged, while messages published after
@@ -300,7 +300,7 @@ class SubscriptionAdminClient {
       std::chrono::system_clock::time_point timestamp);
 
   /**
-   * Seeks a subscription to @p snapshot.
+   * Seeks a subscription to its state at @p snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one

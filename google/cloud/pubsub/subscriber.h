@@ -92,7 +92,7 @@ class Subscriber {
       : connection_(std::move(connection)) {}
 
   /**
-   * Create a new session to receive messages from @p subscription.
+   * Creates a new session to receive messages from @p subscription.
    *
    * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
    *   [`std::function<>`][std-function-link].

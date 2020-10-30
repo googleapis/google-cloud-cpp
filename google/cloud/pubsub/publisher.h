@@ -147,7 +147,7 @@ class Publisher {
   }
 
   /**
-   * Flush any unpublished messages.
+   * Forcibly publishes any batched messages.
    *
    * As applications can configure a `Publisher` to buffer messages, it is
    * sometimes useful to flush them before any of the normal criteria to send
@@ -163,7 +163,7 @@ class Publisher {
   void Flush() { connection_->Flush({}); }
 
   /**
-   * Resume publishing after an error.
+   * Resumes publishing after an error.
    *
    * If the publisher options have message ordering enabled (see
    * `PublisherOptions::message_ordering()`) all messages for a key that
