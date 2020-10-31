@@ -111,6 +111,9 @@ class Subscriber {
    * these functions for details.
    * @endparblock
    *
+   * @par Example
+   * @snippet samples.cc subscribe
+   *
    * @param cb the callable invoked when messages are received. This must be
    *     usable to construct a
    *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
