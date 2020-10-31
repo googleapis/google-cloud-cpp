@@ -32,7 +32,7 @@ messaging service that decouples services that produce events from services
 that process events.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](http://semver.org/).
+[Semantic Versioning](https://semver.org/).
 
 > :warning: This library is under development and subject to breaking
 > changes without notice.
