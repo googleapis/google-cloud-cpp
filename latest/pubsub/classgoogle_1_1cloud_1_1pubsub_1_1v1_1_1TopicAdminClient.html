@@ -115,14 +115,11 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Performs publisher operations in Cloud Pub/Sub. </p>
 <p>Applications use this class to perform operations on <a href="https://cloud.google.com/pubsub/docs">Cloud Pub/Sub</a>.</p>
-<dl class="section user"><dt>Performance</dt><dd></dd></dl>
-<p><code>PublisherClient</code> objects are cheap to create, copy, and move. However, each <code>PublisherClient</code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348" title="Returns a TopicAdminConnection object to work with TopicAdminClient.">MakeTopicAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> interface for more details.</p>
-<dl class="section user"><dt>Thread Safety</dt><dd></dd></dl>
-<p>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</p>
-<dl class="section user"><dt>Error Handling</dt><dd></dd></dl>
-<p>This class uses <code>StatusOr&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code>StatusOr&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code>StatusOr&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Please consult the <a href="#google::cloud::v1::StatusOr"><code>StatusOr&lt;T&gt;</code> documentation</a> for more details. </p>
+<dl class="section user"><dt>Performance</dt><dd><code>PublisherClient</code> objects are cheap to create, copy, and move. However, each <code>PublisherClient</code> object must be created with a <code>std::shared_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a>&gt;</code>, which itself is relatively expensive to create. Therefore, connection instances should be shared when possible. See the <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348" title="Returns a TopicAdminConnection object to work with TopicAdminClient.">MakeTopicAdminConnection()</a></code> function and the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> interface for more details.</dd></dl>
+<dl class="section user"><dt>Thread Safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
+<dl class="section user"><dt>Error Handling</dt><dd>This class uses <code>StatusOr&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code>StatusOr&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code>StatusOr&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Please consult the <a href="#google::cloud::v1::StatusOr"><code>StatusOr&lt;T&gt;</code> documentation</a> for more details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00061">61</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00058">58</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1989584ae9a2aee5302fe3017fdf5b6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1989584ae9a2aee5302fe3017fdf5b6b">&#9670;&nbsp;</a></span>TopicAdminClient() <span class="overload">[1/2]</span></h2>
@@ -230,7 +227,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00085">85</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00082">82</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -282,7 +279,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00143">143</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00140">140</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +329,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00166">166</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00163">163</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -374,7 +371,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00098">98</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00095">95</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -418,7 +415,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00127">127</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00124">124</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -462,7 +459,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00203">203</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00200">200</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -506,7 +503,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00185">185</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00182">182</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -556,23 +553,23 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00114">114</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="topic__admin__client_8h_source.html#l00111">111</a> of file <a class="el" href="topic__admin__client_8h_source.html">topic_admin_client.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ab1e21a861027a9c42693600d3778f2e9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ab1e21a861027a9c42693600d3778f2e9">google::cloud::pubsub::v1::TopicAdminClient::DetachSubscription</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::DetachSubscriptionResponse &gt; DetachSubscription(Subscription subscription)</div><div class="ttdoc">Detaches an existing subscription.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00166">topic_admin_client.h:166</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html">google::cloud::pubsub::v1::TopicAdminClient</a></div><div class="ttdoc">Performs publisher operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00061">topic_admin_client.h:61</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ab1e21a861027a9c42693600d3778f2e9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ab1e21a861027a9c42693600d3778f2e9">google::cloud::pubsub::v1::TopicAdminClient::DetachSubscription</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::DetachSubscriptionResponse &gt; DetachSubscription(Subscription subscription)</div><div class="ttdoc">Detaches an existing subscription.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00163">topic_admin_client.h:163</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html">google::cloud::pubsub::v1::TopicAdminClient</a></div><div class="ttdoc">Performs publisher operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00058">topic_admin_client.h:58</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">google::cloud::pubsub::v1::Topic</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic_8h_source.html#l00036">topic.h:36</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a58527e5f1152895f7ae198a88d61f27f"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a58527e5f1152895f7ae198a88d61f27f">google::cloud::pubsub::v1::TopicAdminClient::DeleteTopic</a></div><div class="ttdeci">Status DeleteTopic(Topic topic)</div><div class="ttdoc">Delete an existing topic in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00143">topic_admin_client.h:143</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a58527e5f1152895f7ae198a88d61f27f"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a58527e5f1152895f7ae198a88d61f27f">google::cloud::pubsub::v1::TopicAdminClient::DeleteTopic</a></div><div class="ttdeci">Status DeleteTopic(Topic topic)</div><div class="ttdoc">Delete an existing topic in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00140">topic_admin_client.h:140</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ac355ab5c8e873cdce38b9f6351dc9c47"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ac355ab5c8e873cdce38b9f6351dc9c47">google::cloud::pubsub::v1::TopicAdminClient::ListTopicSnapshots</a></div><div class="ttdeci">ListTopicSnapshotsRange ListTopicSnapshots(Topic const &amp;topic)</div><div class="ttdoc">List all the subscription names for a given topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00203">topic_admin_client.h:203</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a985ffc12a2710afeae7fefbeaac33054"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a985ffc12a2710afeae7fefbeaac33054">google::cloud::pubsub::v1::TopicAdminClient::UpdateTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; UpdateTopic(TopicBuilder builder)</div><div class="ttdoc">Update the configuration of an existing Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00114">topic_admin_client.h:114</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a029d6dd5d07924c952eb61d4dcce310e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a029d6dd5d07924c952eb61d4dcce310e">google::cloud::pubsub::v1::TopicAdminClient::CreateTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; CreateTopic(TopicBuilder builder)</div><div class="ttdoc">Create a new topic in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00085">topic_admin_client.h:85</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a2cb5dec3df44039276635850884e2e35"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a2cb5dec3df44039276635850884e2e35">google::cloud::pubsub::v1::TopicAdminClient::ListTopics</a></div><div class="ttdeci">ListTopicsRange ListTopics(std::string const &amp;project_id)</div><div class="ttdoc">List all the topics for a given project id.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00127">topic_admin_client.h:127</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ab1a0889398465b88e3a72e8a8cd3c12c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ab1a0889398465b88e3a72e8a8cd3c12c">google::cloud::pubsub::v1::TopicAdminClient::ListTopicSubscriptions</a></div><div class="ttdeci">ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const &amp;topic)</div><div class="ttdoc">List all the subscription names for a given topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00185">topic_admin_client.h:185</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ac355ab5c8e873cdce38b9f6351dc9c47"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ac355ab5c8e873cdce38b9f6351dc9c47">google::cloud::pubsub::v1::TopicAdminClient::ListTopicSnapshots</a></div><div class="ttdeci">ListTopicSnapshotsRange ListTopicSnapshots(Topic const &amp;topic)</div><div class="ttdoc">List all the subscription names for a given topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00200">topic_admin_client.h:200</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a985ffc12a2710afeae7fefbeaac33054"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a985ffc12a2710afeae7fefbeaac33054">google::cloud::pubsub::v1::TopicAdminClient::UpdateTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; UpdateTopic(TopicBuilder builder)</div><div class="ttdoc">Update the configuration of an existing Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00111">topic_admin_client.h:111</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a029d6dd5d07924c952eb61d4dcce310e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a029d6dd5d07924c952eb61d4dcce310e">google::cloud::pubsub::v1::TopicAdminClient::CreateTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; CreateTopic(TopicBuilder builder)</div><div class="ttdoc">Create a new topic in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00082">topic_admin_client.h:82</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a2cb5dec3df44039276635850884e2e35"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a2cb5dec3df44039276635850884e2e35">google::cloud::pubsub::v1::TopicAdminClient::ListTopics</a></div><div class="ttdeci">ListTopicsRange ListTopics(std::string const &amp;project_id)</div><div class="ttdoc">List all the topics for a given project id.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00124">topic_admin_client.h:124</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_ab1a0889398465b88e3a72e8a8cd3c12c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#ab1a0889398465b88e3a72e8a8cd3c12c">google::cloud::pubsub::v1::TopicAdminClient::ListTopicSubscriptions</a></div><div class="ttdeci">ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const &amp;topic)</div><div class="ttdoc">List all the subscription names for a given topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00182">topic_admin_client.h:182</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">google::cloud::pubsub::v1::Subscription</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub subscription.</div><div class="ttdef"><b>Definition:</b> <a href="subscription_8h_source.html#l00036">subscription.h:36</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a52c9e5a7c2858e3008d62c85f5f80c8e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a52c9e5a7c2858e3008d62c85f5f80c8e">google::cloud::pubsub::v1::TopicAdminClient::GetTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; GetTopic(Topic topic)</div><div class="ttdoc">Get information about an existing Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00098">topic_admin_client.h:98</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a52c9e5a7c2858e3008d62c85f5f80c8e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a52c9e5a7c2858e3008d62c85f5f80c8e">google::cloud::pubsub::v1::TopicAdminClient::GetTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; GetTopic(Topic topic)</div><div class="ttdoc">Get information about an existing Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00095">topic_admin_client.h:95</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder_html_ab019d2b5631949bf26767afeeeb5b520"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html#ab019d2b5631949bf26767afeeeb5b520">google::cloud::pubsub::v1::TopicBuilder::add_label</a></div><div class="ttdeci">TopicBuilder &amp; add_label(std::string const &amp;key, std::string const &amp;value) &amp;</div><div class="ttdef"><b>Definition:</b> <a href="topic__builder_8h_source.html#l00041">topic_builder.h:41</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html">google::cloud::pubsub::v1::TopicBuilder</a></div><div class="ttdoc">Builds requests to create or update a Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__builder_8h_source.html#l00031">topic_builder.h:31</a></div></div>
 <!-- start footer part -->
