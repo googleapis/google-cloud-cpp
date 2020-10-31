@@ -52,13 +52,31 @@ class AckHandler {
   AckHandler(AckHandler&&) noexcept = default;
   AckHandler& operator=(AckHandler&&) noexcept = default;
 
-  /// Acknowledges the message associated with this handler.
+  /**
+   * Acknowledges the message associated with this handler.
+   *
+   * @par Idempotency
+   * Note that this is not an idempotent operation, and therefore it is never
+   * retried. Furthermore, the service may still resend a message after a
+   * successful `ack()`. Applications developers are reminded that Cloud Pub/Sub
+   * offers "at least once" semantics and should be prepared to handle duplicate
+   * messages.
+   */
   void ack() && {
     auto impl = std::move(impl_);
     impl->ack();
   }
 
-  /// Rejects the message associated with this handler.
+  /**
+   * Rejects the message associated with this handler.
+   *
+   * @par Idempotency
+   * Note that this is not an idempotent operation, and therefore it is never
+   * retried. Furthermore, the service may still resend a message after a
+   * successful `nack()`. Applications developers are reminded that Cloud
+   * Pub/Sub offers "at least once" semantics and should be prepared to handle
+   * duplicate messages.
+   */
   void nack() && {
     auto impl = std::move(impl_);
     impl->nack();

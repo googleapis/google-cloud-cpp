@@ -72,7 +72,9 @@ class SubscriptionAdminClient {
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kAlreadyExists` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example: Create a Pull Subscription
    * @snippet samples.cc create-subscription
@@ -142,7 +144,9 @@ class SubscriptionAdminClient {
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kNotFound` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example
    * @snippet samples.cc delete-subscription

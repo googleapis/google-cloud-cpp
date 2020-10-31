@@ -115,10 +115,11 @@ class Publisher {
    * documentation for more details.
    *
    * @par Idempotency
-   * This is a non-idempotent operation. As Cloud Pub/Sub has "at least once"
-   * delivery semantics applications are expected to handle duplicate messages
-   * without problems. However, if the application does not want to retry these
-   * requests they can set the retry policy as shown in the example below.
+   * This is a non-idempotent operation, but the client library will
+   * automatically retry RPCs that fail with transient errors. As Cloud Pub/Sub
+   * has "at least once" delivery semantics applications are expected to handle
+   * duplicate messages without problems. The application can disable retries
+   * by changing the retry policy, please see the example below.
    *
    * @par Example
    * @snippet samples.cc publish
@@ -143,6 +144,9 @@ class Publisher {
    * sometimes useful to flush them before any of the normal criteria to send
    * the RPCs is met.
    *
+   * @par Idempotency
+   * See the description in `Publish()`.
+   *
    * @par Example
    * @snippet samples.cc publish-custom-attributes
    *
@@ -159,6 +163,13 @@ class Publisher {
    * `PublisherOptions::message_ordering()`) all messages for a key that
    * experience failure will be rejected until the application calls this
    * function.
+   *
+   * @par Idempotency
+   * This function never initiates a remote RPC, there are no considerations
+   * around retrying it. Note, however, that more than one `Publish()` request
+   * may fail for the same ordering key, the application needs to call this
+   * function after **each** error before it can resume publishing messages
+   * with the same ordering key.
    *
    * @par Example
    * @snippet samples.cc resume-publish

@@ -72,7 +72,8 @@ class TopicAdminClient {
    * @par Idempotency
    * This operation is idempotent, as it succeeds only once, therefore the
    * library retries the call. It might return a status code of
-   * `kAlreadyExists` if successful more than one time.
+   * `kAlreadyExists` as a consequence of retrying a successful (but reported as
+   * failed) request.
    *
    * @par Example
    * @snippet samples.cc create-topic
@@ -130,7 +131,9 @@ class TopicAdminClient {
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kNotFound` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example
    * @snippet samples.cc delete-topic
@@ -146,10 +149,7 @@ class TopicAdminClient {
    *
    * This operation stops the subscription from receiving any further messages,
    * it drops any messages still retained by the subscription, and any
-   * outstanding pull requests will fail with `FAILED_PRECONDITION`.
-   *
-   * @warning this feature is **not GA** and may require registering your
-   *   project in an early access program.
+   * outstanding pull requests will fail with `kFailedPrecondition`.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
