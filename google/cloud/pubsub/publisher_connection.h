@@ -42,22 +42,16 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakePublisherConnection()`.
+ *
+ * @par The *Params nested classes
+ * Applications may define classes derived from `PublisherConnection`, for
+ * example, because they want to mock the class. To avoid breaking all such
+ * derived classes when we change the number or type of the arguments to the
+ * member functions we define light weight structures to pass the arguments.
  */
 class PublisherConnection {
  public:
   virtual ~PublisherConnection() = 0;
-
-  //@{
-  /**
-   * @name The parameter wrapper types.
-   *
-   * Define the arguments for each member function.
-   *
-   * Applications may define classes derived from `PublisherConnection`, for
-   * example, because they want to mock the class. To avoid breaking all such
-   * derived classes when we change the number or type of the arguments to the
-   * member functions we define light weight structures to pass the arguments.
-   */
 
   /// Wrap the arguments for `Publish()`
   struct PublishParams {
@@ -71,7 +65,6 @@ class PublisherConnection {
   struct ResumePublishParams {
     std::string ordering_key;
   };
-  //@}
 
   /// Defines the interface for `Publisher::Publish()`
   virtual future<StatusOr<std::string>> Publish(PublishParams p);
