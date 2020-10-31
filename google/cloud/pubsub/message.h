@@ -148,13 +148,13 @@ class MessageBuilder {
   /// Creates a new message.
   Message Build() && { return Message(std::move(proto_)); }
 
-  /// Sets the message data to @p data
+  /// Sets the message payload to @p data
   MessageBuilder& SetData(std::string data) & {
     proto_.set_data(std::move(data));
     return *this;
   }
 
-  /// Sets the message data to @p data
+  /// Sets the message payload to @p data
   MessageBuilder&& SetData(std::string data) && {
     SetData(std::move(data));
     return std::move(*this);
