@@ -37,17 +37,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *   service.
  *
  * @par Example
- * @code
- * namespace pubsub = ::google::cloud::pubsub;
- *
- * auto topic = pubsub::Topic("my-project", "my-topic");
- * auto publisher = pubsub::Publisher(MakePublisherConnection(topic));
- * auto id = publisher->Publish(
- *     pubsub::MessageBuilder{}.SetData("my-data").Build());
- * id.then([](future<std::string> f) {
- *     std::cout << "published with id = " << f.get() << "\n";
- * });
- * @endcode
+ * @snippet samples.cc publish
  *
  * @par Message Ordering
  * A `Publisher` configured to preserve message ordering will sequence the
