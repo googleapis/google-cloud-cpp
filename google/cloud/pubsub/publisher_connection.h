@@ -77,12 +77,20 @@ class PublisherConnection {
 };
 
 /**
- * Returns a `PublisherConnection` object to work with Cloud Pub/Sub publisher
- * APIs.
+ * Creates a new `PublisherConnection` object to work with `Publisher`.
  *
  * The `PublisherConnection` class is not intended for direct use in
  * applications, it is provided for applications wanting to mock the
  * `PublisherClient` behavior in their tests.
+ *
+ * @par Performance
+ * Creating a new `PublisherConnection` is relatively expensive. This typically
+ * initiate connections to the service, and therefore these objects should be
+ * shared and reused when possible. Note that gRPC reuses existing OS resources
+ * (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * and applications should not rely on it.
  *
  * @see `PublisherConnection`
  *

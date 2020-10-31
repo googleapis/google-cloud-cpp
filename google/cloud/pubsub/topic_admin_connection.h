@@ -82,22 +82,16 @@ using ListTopicSnapshotsRange = google::cloud::internal::PaginationRange<
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeTopicAdminConnection()`.
+ *
+ * @par The *Params nested classes
+ * Applications may define classes derived from `TopicAdminConnection`, for
+ * example, because they want to mock the class. To avoid breaking all such
+ * derived classes when we change the number or type of the arguments to the
+ * member functions we define light weight structures to pass the arguments.
  */
 class TopicAdminConnection {
  public:
   virtual ~TopicAdminConnection() = 0;
-
-  //@{
-  /**
-   * @name The parameter wrapper types.
-   *
-   * Define the arguments for each member function.
-   *
-   * Applications may define classes derived from `TopicAdminConnection`, for
-   * example, because they want to mock the class. To avoid breaking all such
-   * derived classes when we change the number or type of the arguments to the
-   * member functions we define light weight structures to pass the arguments.
-   */
 
   /// Wrap the arguments for `CreateTopic()`
   struct CreateTopicParams {
@@ -138,7 +132,6 @@ class TopicAdminConnection {
   struct ListTopicSnapshotsParams {
     std::string topic_full_name;
   };
-  //@}
 
   /// Defines the interface for `TopicAdminClient::CreateTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(CreateTopicParams);
@@ -168,11 +161,20 @@ class TopicAdminConnection {
 };
 
 /**
- * Returns a `TopicAdminConnection` object to work with `TopicAdminClient`.
+ * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
  *
  * The `TopicAdminConnection` class is provided for applications wanting to mock
  * the `TopicAdminClient` behavior in their tests. It is not intended for direct
  * use.
+ *
+ * @par Performance
+ * Creating a new `TopicAdminConnection` is relatively expensive. This typically
+ * initiate connections to the service, and therefore these objects should be
+ * shared and reused when possible. Note that gRPC reuses existing OS resources
+ * (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * and applications should not rely on it.
  *
  * @see `TopicAdminClient`
  *

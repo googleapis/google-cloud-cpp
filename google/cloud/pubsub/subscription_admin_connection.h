@@ -60,7 +60,8 @@ using ListSnapshotsRange = google::cloud::internal::PaginationRange<
     google::pubsub::v1::ListSnapshotsResponse>;
 
 /**
- * A connection to Cloud Pub/Sub for subscriber operations.
+ * A connection to Cloud Pub/Sub for subscription-related administrative
+ * operations.
  *
  * This interface defines pure-virtual methods for each of the user-facing
  * overload sets in `SubscriberAdminClient`. That is, all of
@@ -72,23 +73,16 @@ using ListSnapshotsRange = google::cloud::internal::PaginationRange<
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeSubscriptionAdminConnection()`.
+ *
+ * @par The *Params nested classes
+ * Applications may define classes derived from `SubscriptionAdminConnection`,
+ * for example, because they want to mock the class. To avoid breaking all such
+ * derived classes when we change the number or type of the arguments to the
+ * member functions we define light weight structures to pass the arguments.
  */
 class SubscriptionAdminConnection {
  public:
   virtual ~SubscriptionAdminConnection() = 0;
-
-  //@{
-  /**
-   * @name The parameter wrapper types.
-   *
-   * Define the arguments for each member function.
-   *
-   * Applications may define classes derived from `SubscriptionAdminConnection`,
-   * for example, because they want to mock the class. To avoid breaking all
-   * such derived classes when we change the number or type of the arguments to
-   * the member functions we define light weight structures to pass the
-   * arguments.
-   */
 
   /// Wrap the arguments for `CreateSubscription()`
   struct CreateSubscriptionParams {
@@ -149,7 +143,6 @@ class SubscriptionAdminConnection {
   struct SeekParams {
     google::pubsub::v1::SeekRequest request;
   };
-  //@}
 
   /// Defines the interface for `SubscriptionAdminClient::CreateSubscription()`
   virtual StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
@@ -200,6 +193,15 @@ class SubscriptionAdminConnection {
  * The `SubscriberConnection` class is not intended for direct use in
  * applications, it is provided for applications wanting to mock the
  * `SubscriberClient` behavior in their tests.
+ *
+ * @par Performance
+ * Creating a new `SubscriptionAdminConnection` is relatively expensive. This
+ * typically initiate connections to the service, and therefore these objects
+ * should be shared and reused when possible. Note that gRPC reuses existing OS
+ * resources (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * and applications should not rely on it.
  *
  * @see `SubscriberConnection`
  *
