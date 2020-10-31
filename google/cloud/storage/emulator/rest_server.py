@@ -14,12 +14,14 @@
 
 import flask
 import httpbin
+import simdjson
 import utils
 import gcs as gcs_type
 from google.protobuf import json_format
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 
 db = None
 
@@ -31,6 +33,26 @@ root.debug = True
 @root.route("/")
 def index():
     return "OK"
+
+
+@root.route("/<path:object_name>", subdomain="<bucket_name>")
+def root_get_object(bucket_name, object_name):
+    return xml_get_object(bucket_name, object_name)
+
+
+@root.route("/<bucket_name>/<path:object_name>", subdomain="")
+def root_get_object_with_bucket(bucket_name, object_name):
+    return xml_get_object(bucket_name, object_name)
+
+
+@root.route("/<path:object_name>", subdomain="<bucket_name>", methods=["PUT"])
+def root_put_object(bucket_name, object_name):
+    return xml_put_object(bucket_name, object_name)
+
+
+@root.route("/<bucket_name>/<path:object_name>", subdomain="", methods=["PUT"])
+def root_put_object_with_bucket(bucket_name, object_name):
+    return xml_put_object(bucket_name, object_name)
 
 
 # === WSGI APP TO HANDLE JSON API === #
@@ -307,14 +329,14 @@ def object_list(bucket_name):
     response = {
         "kind": "storage#objects",
         "nextPageToken": "",
-        "items": [json_format.MessageToDict(blob.metadata) for blob in items],
+        "items": [gcs_type.object.Object.rest(blob) for blob in items],
         "prefixes": prefixes,
     }
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["UPDATE"])
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PUT"])
 def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
@@ -322,9 +344,7 @@ def object_update(bucket_name, object_name):
         flask.request, CommonEnums.Projection.FULL, None
     )
     fields = flask.request.args.get("fields", None)
-    return utils.common.filter_response_rest(
-        json_format.MessageToDict(blob.metadata), projection, fields
-    )
+    return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH"])
@@ -332,18 +352,89 @@ def object_patch(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.NO_ACL, None
+        flask.request, CommonEnums.Projection.FULL, None
     )
     fields = flask.request.args.get("fields", None)
-    return utils.common.filter_response_rest(
-        json_format.MessageToDict(blob.metadata), projection, fields
-    )
+    return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["DELETE"])
 def object_delete(bucket_name, object_name):
     db.delete_object(flask.request, bucket_name, object_name, None)
     return ""
+
+
+# === OBJECT SPECIAL OPERATIONS === #
+
+
+@gcs.route("/b/<bucket_name>/o/<path:object_name>/compose", methods=["POST"])
+def objects_compose(bucket_name, object_name):
+    bucket = db.get_bucket_without_generation(bucket_name, None).metadata
+    payload = simdjson.loads(flask.request.data)
+    source_objects = payload["sourceObjects"]
+    if source_objects is None:
+        utils.error.missing("source component", None)
+    if len(source_objects) > 32:
+        utils.error.invalid(
+            "The number of source components provided (%d > 32)" % len(source_objects),
+            None,
+        )
+    composed_media = b""
+    for source_object in source_objects:
+        source_object_name = source_object.get("name")
+        if source_object_name is None:
+            utils.error.missing("Name of source compose object", None)
+        generation = source_object.get("generation", None)
+        if_generation_match = (
+            source_object.get("objectPreconditions").get("ifGenerationMatch")
+            if source_object.get("objectPreconditions") is not None
+            else None
+        )
+        fake_request = utils.common.FakeRequest(args=dict())
+        if generation is not None:
+            fake_request.args["generation"] = generation
+        if if_generation_match is not None:
+            fake_request.args["ifGenerationMatch"] = if_generation_match
+        source_object = db.get_object(
+            fake_request, bucket_name, source_object_name, False, None
+        )
+        composed_media += source_object.media
+    metadata = {"name": object_name, "bucket": bucket_name}
+    metadata.update(payload.get("destination", {}))
+    composed_object, _ = gcs_type.object.Object.init_dict(
+        flask.request, metadata, composed_media, bucket, True
+    )
+    db.insert_object(flask.request, bucket_name, composed_object, None)
+    return composed_object.rest_metadata()
+
+
+@gcs.route(
+    "/b/<src_bucket_name>/o/<path:src_object_name>/copyTo/b/<dst_bucket_name>/o/<path:dst_object_name>",
+    methods=["POST"],
+)
+def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_name):
+    db.insert_test_bucket(None)
+    dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
+    src_object = db.get_object(
+        flask.request, src_bucket_name, src_object_name, True, None
+    )
+    dst_metadata = resources_pb2.Object()
+    dst_metadata.CopyFrom(src_object.metadata)
+    del dst_metadata.acl[:]
+    dst_metadata.bucket = dst_bucket_name
+    dst_metadata.name = dst_object_name
+    dst_media = b""
+    dst_media += src_object.media
+    dst_object, _ = gcs_type.object.Object.init(
+        flask.request, dst_metadata, dst_media, dst_bucket, True, None
+    )
+    db.insert_object(flask.request, dst_bucket_name, dst_object, None)
+    dst_object.patch(flask.request, None)
+    dst_object.metadata.metageneration = 1
+    dst_object.metadata.updated.FromDatetime(
+        dst_object.metadata.time_created.ToDatetime()
+    )
+    return dst_object.rest_metadata()
 
 
 # === OBJECT ACCESS CONTROL === #
@@ -404,7 +495,7 @@ def object_acl_patch(bucket_name, object_name, entity):
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["DELETE"])
 def object_acl_delete(bucket_name, object_name, entity):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
-    blob.delete_default_object_acl(entity, None)
+    blob.delete_acl(entity, None)
     return ""
 
 
@@ -425,11 +516,11 @@ def object_get(bucket_name, object_name):
         )
         fields = flask.request.args.get("fields", None)
         return utils.common.filter_response_rest(
-            json_format.MessageToDict(blob.metadata), projection, fields
+            blob.rest_metadata(), projection, fields
         )
     if media != "media":
         utils.error.invalid("Alt %s")
-    return blob.media
+    return blob.rest_media(flask.request)
 
 
 # Define the WSGI application to handle bucket requests.
@@ -440,6 +531,7 @@ upload.debug = True
 
 @upload.route("/b/<bucket_name>/o", methods=["POST"])
 def object_insert(bucket_name):
+    db.insert_test_bucket(None)
     bucket = db.get_bucket_without_generation(bucket_name, None).metadata
     upload_type = flask.request.args.get("uploadType")
     if upload_type is None:
@@ -447,16 +539,133 @@ def object_insert(bucket_name):
     elif upload_type not in {"multipart", "media", "resumable"}:
         utils.error.invalid("uploadType %s" % upload_type)
     if upload_type == "resumable":
-        return ""
+        upload = gcs_type.holder.DataHolder.init_resumable_rest(flask.request, bucket)
+        db.insert_upload(upload)
+        response = flask.make_response("")
+        response.headers["Location"] = upload.location
+        return response
     blob, projection = None, ""
     if upload_type == "media":
         blob, projection = gcs_type.object.Object.init_media(flask.request, bucket)
     elif upload_type == "multipart":
         blob, projection = gcs_type.object.Object.init_multipart(flask.request, bucket)
+    db.insert_object(flask.request, bucket.name, blob, None)
     fields = flask.request.args.get("fields", None)
-    return utils.common.filter_response_rest(
-        json_format.MessageToDict(blob.metadata), projection, fields
+    return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
+
+
+@upload.route("/b/<bucket_name>/o", methods=["PUT"])
+def resumable_upload_chunk(bucket_name):
+    request = flask.request
+    upload_id = request.args.get("upload_id")
+    if upload_id is None:
+        utils.error.missing("upload_id in resumable_upload_chunk", None)
+    upload = db.get_upload(upload_id, None)
+    if upload.complete:
+        return gcs_type.object.Object.rest(upload.metadata)
+    upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
+    content_length = int(request.headers.get("content-length", 0))
+    if content_length != len(request.data):
+        utils.error.invalid("content-length header", None)
+    content_range = request.headers.get("content-range")
+    if content_range is not None:
+        items = list(utils.common.content_range_split.match(content_range).groups())
+        if len(items) != 2 or (items[0] == items[1] and items[0] != "*"):
+            utils.error.invalid("content-range header", None)
+        if items[0] == "*":
+            if upload.complete:
+                return gcs_type.object.Object.rest(upload.metadata)
+            if items[1] != "*" and int(items[1]) == len(upload.media):
+                upload.complete = True
+                blob, _ = gcs_type.object.Object.init(
+                    upload.request,
+                    upload.metadata,
+                    upload.media,
+                    upload.bucket,
+                    False,
+                    None,
+                )
+                blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+                    upload.transfer
+                )
+                blob.metadata.metadata["x_testbench_upload"] = "resumable"
+                db.insert_object(upload.request, bucket_name, blob, None)
+                projection = utils.common.extract_projection(
+                    upload.request, CommonEnums.Projection.NO_ACL, None
+                )
+                fields = upload.request.args.get("fields", None)
+                return utils.common.filter_response_rest(
+                    blob.rest_metadata(), projection, fields
+                )
+            return upload.resumable_status_rest()
+        _, chunk_last_byte = [int(v) for v in items[0].split("-")]
+        x_upload_content_length = int(
+            upload.request.headers.get("x-upload-content-length", 0)
+        )
+        total_object_size = (
+            int(items[1]) if items[1] != "*" else x_upload_content_length
+        )
+        if (
+            x_upload_content_length != 0
+            and x_upload_content_length != total_object_size
+        ):
+            utils.error.mismatch(
+                "X-Upload-Content-Length",
+                x_upload_content_length,
+                total_object_size,
+                None,
+                rest_code=400,
+            )
+        upload.media += request.data
+        upload.complete = total_object_size == len(upload.media) or (
+            chunk_last_byte + 1 == total_object_size
+        )
+    else:
+        upload.media += request.data
+        upload.complete = True
+    if upload.complete:
+        blob, _ = gcs_type.object.Object.init(
+            upload.request, upload.metadata, upload.media, upload.bucket, False, None
+        )
+        blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+            upload.transfer
+        )
+        blob.metadata.metadata["x_testbench_upload"] = "resumable"
+        db.insert_object(upload.request, bucket_name, blob, None)
+        projection = utils.common.extract_projection(
+            upload.request, CommonEnums.Projection.NO_ACL, None
+        )
+        fields = upload.request.args.get("fields", None)
+        return utils.common.filter_response_rest(
+            blob.rest_metadata(), projection, fields
+        )
+    else:
+        return upload.resumable_status_rest()
+
+
+@upload.route("/b/<bucket_name>/o", methods=["DELETE"])
+def delete_resumable_upload(bucket_name):
+    upload_id = flask.request.args.get("upload_id")
+    db.delete_upload(upload_id, None)
+    return flask.make_response("", 499, {"content-length": 0})
+
+
+def xml_put_object(bucket_name, object_name):
+    db.insert_test_bucket(None)
+    bucket = db.get_bucket_without_generation(bucket_name, None).metadata
+    blob, fake_request = gcs_type.object.Object.init_xml(
+        flask.request, bucket, object_name
     )
+    db.insert_object(fake_request, bucket_name, blob, None)
+    response = flask.make_response("")
+    response.headers["x-goog-hash"] = fake_request.headers.get("x-goog-hash")
+    return response
+
+
+def xml_get_object(bucket_name, object_name):
+    fake_request = utils.common.FakeRequest.init_xml(flask.request)
+    blob = db.get_object(fake_request, bucket_name, object_name, False, None)
+    return blob.rest_media(fake_request)
 
 
 # === SERVER === #
