@@ -211,6 +211,9 @@ class SubscriptionAdminClient {
    * @param subscription the name of the subscription
    * @param snapshot the name of the snapshot
    * @param builder additional configuration for the snapshot, e.g., labels
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       Subscription const& subscription, Snapshot const& snapshot,
@@ -229,6 +232,9 @@ class SubscriptionAdminClient {
    * @snippet samples.cc get-snapshot
    *
    * @param snapshot the name of the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(Snapshot const& snapshot) {
     return connection_->GetSnapshot({snapshot});
@@ -246,6 +252,9 @@ class SubscriptionAdminClient {
    *
    * @param snapshot the name of the snapshot
    * @param builder the changes applied to the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
       Snapshot const& snapshot, SnapshotBuilder builder) {
@@ -261,6 +270,9 @@ class SubscriptionAdminClient {
    *
    * @par Example
    * @snippet samples.cc list-snapshots
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   ListSnapshotsRange ListSnapshots(std::string const& project_id) {
     return connection_->ListSnapshots({"projects/" + project_id});
@@ -277,6 +289,9 @@ class SubscriptionAdminClient {
    * @snippet samples.cc create-snapshot-with-name
    *
    * @param snapshot the name of the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   Status DeleteSnapshot(Snapshot const& snapshot) {
     return connection_->DeleteSnapshot({snapshot});

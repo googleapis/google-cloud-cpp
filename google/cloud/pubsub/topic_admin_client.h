@@ -196,6 +196,9 @@ class TopicAdminClient {
    *
    * @par Example
    * @snippet samples.cc list-topic-snapshots
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic) {
     return connection_->ListTopicSnapshots({topic.FullName()});
