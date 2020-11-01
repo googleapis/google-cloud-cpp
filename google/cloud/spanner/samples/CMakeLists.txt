@@ -15,9 +15,9 @@
 # ~~~
 
 function (spanner_client_define_samples)
-    set(spanner_client_integration_samples # cmake-format: sortable
+    set(spanner_client_integration_samples # cmake-format: sort
                                            samples.cc)
-    set(spanner_client_unit_samples # cmake-format: sortable
+    set(spanner_client_unit_samples # cmake-format: sort
                                     mock_execute_query.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

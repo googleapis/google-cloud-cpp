@@ -244,7 +244,7 @@ function (spanner_client_define_tests)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(spanner_client_unit_tests
-        # cmake-format: sortable
+        # cmake-format: sort
         backup_test.cc
         bytes_test.cc
         client_options_test.cc
@@ -335,7 +335,7 @@ function (spanner_client_define_benchmarks)
     find_package(benchmark CONFIG REQUIRED)
 
     set(spanner_client_benchmarks
-        # cmake-format: sortable
+        # cmake-format: sort
         bytes_benchmark.cc internal/merge_chunk_benchmark.cc
         numeric_benchmark.cc row_benchmark.cc)
 

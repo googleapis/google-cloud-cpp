@@ -202,7 +202,7 @@ add_subdirectory(testing_util)
 function (google_cloud_cpp_common_define_benchmarks)
     find_package(benchmark CONFIG REQUIRED)
 
-    set(google_cloud_cpp_common_benchmarks # cmake-format: sortable
+    set(google_cloud_cpp_common_benchmarks # cmake-format: sort
     )
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain

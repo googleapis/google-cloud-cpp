@@ -22,7 +22,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(pubsub_client_integration_tests
-        # cmake-format: sortable
+        # cmake-format: sort
         subscriber_integration_test.cc subscription_admin_integration_test.cc
         topic_admin_integration_test.cc)
 

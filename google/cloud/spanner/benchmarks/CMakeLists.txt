@@ -34,7 +34,7 @@ function (spanner_client_define_benchmarks)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(spanner_client_benchmark_programs
-        # cmake-format: sortable
+        # cmake-format: sort
         benchmarks_config_test.cc multiple_rows_cpu_benchmark.cc
         single_row_throughput_benchmark.cc)
 

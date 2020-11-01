@@ -20,7 +20,7 @@ find_package(absl CONFIG REQUIRED)
 unset(FPHSA_NAME_MISMATCHED)
 
 function (pubsub_client_define_benchmarks)
-    set(pubsub_client_benchmark_programs # cmake-format: sortable
+    set(pubsub_client_benchmark_programs # cmake-format: sort
                                          endurance.cc throughput.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
