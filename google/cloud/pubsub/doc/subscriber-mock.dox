@@ -6,7 +6,7 @@ This document describes how to test your own Cloud Pub/Sub application using
 the Cloud Pub/Sub C++ client library, [Google Test][googletest-link] and the
 and [Google Test Mocking Framework][googlemock-link].
 
-### Mocking a Successful `Subscriber::Subscribe()` call
+### Mocking a Successful Subscriber::Subscribe() call
 
 First include the headers for the Cloud Pub/Sub Subscriber Client, the mocking
 class, and the Google Mock framework.

@@ -20,7 +20,9 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION} (Beta)")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing")
+set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing"
+                            "examples")
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_PUBSUB_NS=v1")
 
 include(GoogleCloudCppCommon)

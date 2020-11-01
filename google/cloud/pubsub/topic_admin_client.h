@@ -67,12 +67,13 @@ class TopicAdminClient {
   TopicAdminClient() = delete;
 
   /**
-   * Create a new topic in Cloud Pub/Sub.
+   * Creates a new topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, as it succeeds only once, therefore the
    * library retries the call. It might return a status code of
-   * `kAlreadyExists` if successful more than one time.
+   * `kAlreadyExists` as a consequence of retrying a successful (but reported as
+   * failed) request.
    *
    * @par Example
    * @snippet samples.cc create-topic
@@ -84,7 +85,7 @@ class TopicAdminClient {
   }
 
   /**
-   * Get information about an existing Cloud Pub/Sub topic.
+   * Gets information about an existing Cloud Pub/Sub topic.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -97,7 +98,7 @@ class TopicAdminClient {
   }
 
   /**
-   * Update the configuration of an existing Cloud Pub/Sub topic.
+   * Updates the configuration of an existing Cloud Pub/Sub topic.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -113,7 +114,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the topics for a given project id.
+   * Lists all the topics for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -126,11 +127,13 @@ class TopicAdminClient {
   }
 
   /**
-   * Delete an existing topic in Cloud Pub/Sub.
+   * Deletes an existing topic in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kNotFound` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example
    * @snippet samples.cc delete-topic
@@ -146,10 +149,7 @@ class TopicAdminClient {
    *
    * This operation stops the subscription from receiving any further messages,
    * it drops any messages still retained by the subscription, and any
-   * outstanding pull requests will fail with `FAILED_PRECONDITION`.
-   *
-   * @warning this feature is **not GA** and may require registering your
-   *   project in an early access program.
+   * outstanding pull requests will fail with `kFailedPrecondition`.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -166,7 +166,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the subscription names for a given topic.
+   * Lists all the subscription names for a given topic.
    *
    * @note
    * The returned range contains fully qualified subscription names, e.g.,
@@ -184,7 +184,7 @@ class TopicAdminClient {
   }
 
   /**
-   * List all the subscription names for a given topic.
+   * Lists all the subscription names for a given topic.
    *
    * @note
    * The returned range contains fully qualified snapshot names, e.g.,
@@ -196,6 +196,9 @@ class TopicAdminClient {
    *
    * @par Example
    * @snippet samples.cc list-topic-snapshots
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic) {
     return connection_->ListTopicSnapshots({topic.FullName()});

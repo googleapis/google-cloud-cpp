@@ -68,11 +68,13 @@ class SubscriptionAdminClient {
   SubscriptionAdminClient() = delete;
 
   /**
-   * Create a new subscription in Cloud Pub/Sub.
+   * Creates a new subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kAlreadyExists` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example: Create a Pull Subscription
    * @snippet samples.cc create-subscription
@@ -92,7 +94,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Get the metadata for an existing Cloud Pub/Sub subscription.
+   * Gets the metadata for an existing Cloud Pub/Sub subscription.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -106,7 +108,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Update an existing subscription in Cloud Pub/Sub.
+   * Updates an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -125,7 +127,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * List all the subscriptions for a given project id.
+   * Lists all the subscriptions for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -138,11 +140,13 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Delete an existing subscription in Cloud Pub/Sub.
+   * Deletes an existing subscription in Cloud Pub/Sub.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
-   * or several calls, and therefore it is always retried.
+   * or several calls, and therefore it is always retried. It might return a
+   * status code of `kNotFound` as a consequence of retrying a successful
+   * (but reported as failed) request.
    *
    * @par Example
    * @snippet samples.cc delete-subscription
@@ -177,7 +181,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Create a new snapshot for a subscription with a server-assigned name.
+   * Creates a new snapshot for a subscription with a server-assigned name.
    *
    * @par Idempotency
    * This is not an idempotent operation, repeated calls would create multiple
@@ -195,7 +199,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Create a new snapshot for a subscription with a given name.
+   * Creates a new snapshot for a subscription with a given name.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -207,6 +211,9 @@ class SubscriptionAdminClient {
    * @param subscription the name of the subscription
    * @param snapshot the name of the snapshot
    * @param builder additional configuration for the snapshot, e.g., labels
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       Subscription const& subscription, Snapshot const& snapshot,
@@ -216,7 +223,7 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * Get information about an existing snapshot.
+   * Gets information about an existing snapshot.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
@@ -225,13 +232,16 @@ class SubscriptionAdminClient {
    * @snippet samples.cc get-snapshot
    *
    * @param snapshot the name of the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(Snapshot const& snapshot) {
     return connection_->GetSnapshot({snapshot});
   }
 
   /**
-   * Update an existing snapshot.
+   * Updates an existing snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -242,6 +252,9 @@ class SubscriptionAdminClient {
    *
    * @param snapshot the name of the snapshot
    * @param builder the changes applied to the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
       Snapshot const& snapshot, SnapshotBuilder builder) {
@@ -250,20 +263,23 @@ class SubscriptionAdminClient {
   }
 
   /**
-   * List all the snapshots for a given project id.
+   * Lists all the snapshots for a given project id.
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
    * @snippet samples.cc list-snapshots
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   ListSnapshotsRange ListSnapshots(std::string const& project_id) {
     return connection_->ListSnapshots({"projects/" + project_id});
   }
 
   /**
-   * Delete a snapshot.
+   * Deletes a snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
@@ -273,13 +289,16 @@ class SubscriptionAdminClient {
    * @snippet samples.cc create-snapshot-with-name
    *
    * @param snapshot the name of the snapshot
+   *
+   * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
+   *     description of Cloud Pub/Sub's snapshots.
    */
   Status DeleteSnapshot(Snapshot const& snapshot) {
     return connection_->DeleteSnapshot({snapshot});
   }
 
   /**
-   * Seeks a subscription to @p timestamp.
+   * Seeks a subscription to its state at @p timestamp.
    *
    * Messages retained in the subscription that were published before
    * @p timestamp are marked as acknowledged, while messages published after
@@ -300,7 +319,7 @@ class SubscriptionAdminClient {
       std::chrono::system_clock::time_point timestamp);
 
   /**
-   * Seeks a subscription to @p snapshot.
+   * Seeks a subscription to its state at @p snapshot.
    *
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one

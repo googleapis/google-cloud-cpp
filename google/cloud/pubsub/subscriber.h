@@ -92,18 +92,35 @@ class Subscriber {
       : connection_(std::move(connection)) {}
 
   /**
-   * Create a new session to receive messages from @p subscription.
+   * Creates a new session to receive messages from @p subscription.
    *
    * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
    *   [`std::function<>`][std-function-link].
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * Will make multiple attempts to start a connection to the service, subject
+   * to the retry policies configured in the `SubscriberConnection`. Once a
+   * successful connection is established the library will try to resume the
+   * connection even if the connection fails with a permanent error. Resuming
+   * the connection is subject to the retry policies as described earlier.
+   *
+   * Note that calling `AckHandler::ack()` and/or `AckHandler::nack()` is
+   * handled differently with respect to retrying. Check the documentation of
+   * these functions for details.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc subscribe
    *
    * @param cb the callable invoked when messages are received. This must be
    *     usable to construct a
    *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
    * @return a future that is satisfied when the session will no longer receive
-   *     messages. For example because there was an unrecoverable error trying
+   *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
-   *     terminate the session too.
+   *     terminate the session and satisfy the future.
    *
    * [std-function-link]:
    * https://en.cppreference.com/w/cpp/utility/functional/function

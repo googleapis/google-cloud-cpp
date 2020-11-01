@@ -27,11 +27,23 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * Defines the interface to acknowledge and reject messages.
  *
+ * When applications register a callback to receive Pub/Sub messages the
+ * callback must be able to receive both a `pubsub::Message` and its associated
+ * `pubsub::AckHandler`. Actions on a `pubsub::AckHandler` always affect the
+ * same message received in the callback. Applications cannot create standalone
+ * handlers (except in unit tests via mocks).
+ *
  * This interface allows applications to acknowledge and reject messages in a
  * provided to the Cloud Pub/Sub C++ client library. Note that this class is
  * move-able, to support applications that process messages asynchronously.
  * However, this class is *not* copy-able, because messages can only be
  * acknowledged or rejected exactly once.
+ *
+ * @par Thread Safety
+ * This class is *thread compatible*, only one thread should call non-const
+ * member functions of this class at a time. Note that because the non-const
+ * member functions are `&&` overloads the application can only call `ack()` or
+ * `nack()` exactly once, and only one of them.
  */
 class AckHandler {
  public:
@@ -40,23 +52,42 @@ class AckHandler {
   AckHandler(AckHandler&&) noexcept = default;
   AckHandler& operator=(AckHandler&&) noexcept = default;
 
-  /// Acknowledge the message and return any (unrecoverable) RPC errors
+  /**
+   * Acknowledges the message associated with this handler.
+   *
+   * @par Idempotency
+   * Note that this is not an idempotent operation, and therefore it is never
+   * retried. Furthermore, the service may still resend a message after a
+   * successful `ack()`. Applications developers are reminded that Cloud Pub/Sub
+   * offers "at least once" semantics so they should be prepared to handle
+   * duplicate messages.
+   */
   void ack() && {
     auto impl = std::move(impl_);
     impl->ack();
   }
 
-  /// Reject the message and return any (unrecoverable) RPC errors
+  /**
+   * Rejects the message associated with this handler.
+   *
+   * @par Idempotency
+   * Note that this is not an idempotent operation, and therefore it is never
+   * retried. Furthermore, the service may still resend a message after a
+   * successful `nack()`. Applications developers are reminded that Cloud
+   * Pub/Sub offers "at least once" semantics so they should be prepared to
+   * handle duplicate messages.
+   */
   void nack() && {
     auto impl = std::move(impl_);
     impl->nack();
   }
 
-  /// The Cloud Pub/Sub acknowledge ID, useful for debugging and logging.
+  /// Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and
+  /// logging.
   std::string ack_id() const { return impl_->ack_id(); }
 
-  /// The approximate number of times that Cloud Pub/Sub has attempted to
-  /// deliver the associated message to a subscriber.
+  /// Returns the approximate number of times that Cloud Pub/Sub has attempted
+  /// to deliver the associated message to a subscriber.
   std::int32_t delivery_attempt() const { return impl_->delivery_attempt(); }
 
   /// Allow applications to mock an `AckHandler`.
@@ -74,7 +105,7 @@ class AckHandler {
   };
 
   /**
-   * Application may use this constructor in their mocks.
+   * Applications may use this constructor in their mocks.
    */
   explicit AckHandler(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {}
 

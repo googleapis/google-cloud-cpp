@@ -37,17 +37,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *   service.
  *
  * @par Example
- * @code
- * namespace pubsub = ::google::cloud::pubsub;
- *
- * auto topic = pubsub::Topic("my-project", "my-topic");
- * auto publisher = pubsub::Publisher(MakePublisherConnection(topic));
- * auto id = publisher->Publish(
- *     pubsub::MessageBuilder{}.SetData("my-data").Build());
- * id.then([](future<std::string> f) {
- *     std::cout << "published with id = " << f.get() << "\n";
- * });
- * @endcode
+ * @snippet samples.cc publish
  *
  * @par Message Ordering
  * A `Publisher` configured to preserve message ordering will sequence the
@@ -125,10 +115,11 @@ class Publisher {
    * documentation for more details.
    *
    * @par Idempotency
-   * This is a non-idempotent operation. As Cloud Pub/Sub has "at least once"
-   * delivery semantics applications are expected to handle duplicate messages
-   * without problems. However, if the application does not want to retry these
-   * requests they can set the retry policy as shown in the example below.
+   * This is a non-idempotent operation, but the client library will
+   * automatically retry RPCs that fail with transient errors. As Cloud Pub/Sub
+   * has "at least once" delivery semantics applications are expected to handle
+   * duplicate messages without problems. The application can disable retries
+   * by changing the retry policy, please see the example below.
    *
    * @par Example
    * @snippet samples.cc publish
@@ -147,11 +138,14 @@ class Publisher {
   }
 
   /**
-   * Flush any unpublished messages.
+   * Forcibly publishes any batched messages.
    *
    * As applications can configure a `Publisher` to buffer messages, it is
    * sometimes useful to flush them before any of the normal criteria to send
    * the RPCs is met.
+   *
+   * @par Idempotency
+   * See the description in `Publish()`.
    *
    * @par Example
    * @snippet samples.cc publish-custom-attributes
@@ -163,12 +157,19 @@ class Publisher {
   void Flush() { connection_->Flush({}); }
 
   /**
-   * Resume publishing after an error.
+   * Resumes publishing after an error.
    *
    * If the publisher options have message ordering enabled (see
    * `PublisherOptions::message_ordering()`) all messages for a key that
    * experience failure will be rejected until the application calls this
    * function.
+   *
+   * @par Idempotency
+   * This function never initiates a remote RPC, so there are no considerations
+   * around retrying it. Note, however, that more than one `Publish()` request
+   * may fail for the same ordering key. The application needs to call this
+   * function after **each** error before it can resume publishing messages
+   * with the same ordering key.
    *
    * @par Example
    * @snippet samples.cc resume-publish
