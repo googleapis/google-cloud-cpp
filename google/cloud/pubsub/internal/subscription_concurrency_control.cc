@@ -59,10 +59,9 @@ void SubscriptionConcurrencyControl::Start(pubsub::ApplicationCallback cb) {
   source_->Start([weak](google::pubsub::v1::ReceivedMessage r) {
     if (auto self = weak.lock()) self->OnMessage(std::move(r));
   });
-  if (total_messages() >= message_count_hwm_) return;
-  auto const read_count = message_count_hwm_ - total_messages();
+  if (total_messages() >= max_concurrency_) return;
+  auto const read_count = max_concurrency_ - total_messages();
   messages_requested_ = read_count;
-  if (total_messages() >= message_count_hwm_) overflow_ = true;
   lk.unlock();
   source_->Read(read_count);
 }
@@ -88,8 +87,8 @@ void SubscriptionConcurrencyControl::MessageHandled() {
   if (shutdown_manager_->FinishedOperation("handler")) return;
   std::unique_lock<std::mutex> lk(mu_);
   --message_count_;
-  if (total_messages() <= message_count_lwm_) {
-    auto const read_count = message_count_hwm_ - total_messages();
+  if (total_messages() < max_concurrency_) {
+    auto const read_count = max_concurrency_ - total_messages();
     messages_requested_ += read_count;
     lk.unlock();
     source_->Read(read_count);
@@ -101,7 +100,6 @@ void SubscriptionConcurrencyControl::OnMessage(
   std::unique_lock<std::mutex> lk(mu_);
   if (messages_requested_ > 0) --messages_requested_;
   ++message_count_;
-  if (total_messages() >= message_count_hwm_) overflow_ = true;
   lk.unlock();
 
   struct MoveCapture {

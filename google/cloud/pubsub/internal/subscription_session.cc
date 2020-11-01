@@ -37,8 +37,8 @@ class SubscriptionSessionImpl
     auto queue =
         SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
-        executor, shutdown_manager, std::move(queue), options.concurrency_lwm(),
-        options.concurrency_hwm());
+        executor, shutdown_manager, std::move(queue),
+        options.max_concurrency());
 
     auto self = std::make_shared<SubscriptionSessionImpl>(
         std::move(executor), std::move(shutdown_manager),

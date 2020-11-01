@@ -1227,8 +1227,7 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
-            /*lwm=*/4, /*hwm=*/8),
+        pubsub::SubscriberOptions{}.set_max_concurrency(8),
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
     std::mutex mu;
@@ -1250,8 +1249,8 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     };
 
     // Create a subscription where up to 8 messages are handled concurrently. By
-    // default the library uses `0` and `std::thread::hardwarde_concurrency()`
-    // for the concurrency watermarks.
+    // default the library uses `std::thread::hardware_concurrency()` as the
+    // maximum number of concurrent callbacks.
     auto session = subscriber.Subscribe(std::move(handler));
     {
       std::unique_lock<std::mutex> lk(mu);

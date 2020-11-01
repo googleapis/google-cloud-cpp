@@ -35,11 +35,11 @@ class SubscriptionConcurrencyControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionMessageSource> source,
-      std::size_t message_count_lwm, std::size_t message_count_hwm) {
+      std::size_t max_concurrency) {
     return std::shared_ptr<SubscriptionConcurrencyControl>(
-        new SubscriptionConcurrencyControl(
-            std::move(cq), std::move(shutdown_manager), std::move(source),
-            message_count_lwm, message_count_hwm));
+        new SubscriptionConcurrencyControl(std::move(cq),
+                                           std::move(shutdown_manager),
+                                           std::move(source), max_concurrency));
   }
 
   void Start(pubsub::ApplicationCallback);
@@ -52,12 +52,11 @@ class SubscriptionConcurrencyControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionMessageSource> source,
-      std::size_t message_count_lwm, std::size_t message_count_hwm)
+      std::size_t max_concurrency)
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         source_(std::move(source)),
-        message_count_lwm_((std::min)(message_count_lwm, message_count_hwm)),
-        message_count_hwm_(message_count_hwm) {}
+        max_concurrency_(max_concurrency) {}
 
   void MessageHandled();
   void OnMessage(google::pubsub::v1::ReceivedMessage m);
@@ -69,12 +68,10 @@ class SubscriptionConcurrencyControl
   google::cloud::CompletionQueue cq_;
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionMessageSource> const source_;
-  std::size_t const message_count_lwm_;
-  std::size_t const message_count_hwm_;
+  std::size_t const max_concurrency_;
 
   std::mutex mu_;
   pubsub::ApplicationCallback callback_;
-  bool overflow_ = false;
   std::size_t message_count_ = 0;
   std::size_t messages_requested_ = 0;
 };

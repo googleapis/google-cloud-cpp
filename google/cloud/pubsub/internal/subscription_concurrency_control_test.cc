@@ -104,8 +104,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
   auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, /*message_count_lwm=*/0,
-      /*message_count_hwm=*/1);
+      background.cq(), shutdown, source, /*max_concurrency=*/1);
 
   std::mutex handler_mu;
   std::condition_variable handler_cv;
@@ -161,8 +160,10 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
           message_callback = std::move(cb);
         });
     EXPECT_CALL(*source, Read(4)).WillOnce(push_messages);
-    EXPECT_CALL(*source, Read(2)).WillOnce(push_messages);
-    EXPECT_CALL(*source, Read(2)).WillOnce(push_messages);
+    EXPECT_CALL(*source, Read(1)).WillOnce(push_messages);
+    EXPECT_CALL(*source, Read(1)).WillOnce(push_messages);
+    EXPECT_CALL(*source, Read(1)).WillOnce(push_messages);
+    EXPECT_CALL(*source, Read(1)).WillOnce(push_messages);
     EXPECT_CALL(*source, Read).WillRepeatedly(push_messages);
   }
   {
@@ -177,9 +178,9 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto shutdown = std::make_shared<SessionShutdownManager>();
   // Create the unit under test, configured to run at most 4 events at a time.
-  auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, /*message_count_lwm=*/2,
-      /*message_count_hwm=*/4);
+  auto uut =
+      SubscriptionConcurrencyControl::Create(background.cq(), shutdown, source,
+                                             /*max_concurrency=*/4);
 
   std::mutex handler_mu;
   std::condition_variable handler_cv;
@@ -221,10 +222,10 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
 
-/// @test Verify SubscriptionConcurrencyControl respects the HWM limit.
-TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacksRespectHwmLimit) {
-  auto constexpr kConcurrencyHwm = 8;
-  auto constexpr kConcurrencyLwm = 0;
+/// @test Verify SubscriptionConcurrencyControl respects the concurrency limit.
+TEST_F(SubscriptionConcurrencyControlTest,
+       ParallelCallbacksRespectConcurrencyimit) {
+  auto constexpr kMaxConcurrency = 8;
   auto constexpr kCallbackCount = 200;
 
   auto source =
@@ -249,14 +250,14 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacksRespectHwmLimit) {
   EXPECT_CALL(*source, NackMessage).Times(AtLeast(0));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(
-      2 * kConcurrencyHwm);
+      2 * kMaxConcurrency);
 
   // Create the unit under test, configured to run 1 event at a time, this makes
   // it easier to setup expectations.
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
-  auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, kConcurrencyLwm, kConcurrencyHwm);
+  auto uut = SubscriptionConcurrencyControl::Create(background.cq(), shutdown,
+                                                    source, kMaxConcurrency);
 
   std::mutex handler_mu;
   std::condition_variable handler_cv;
@@ -297,7 +298,7 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacksRespectHwmLimit) {
   {
     std::unique_lock<std::mutex> lk(handler_mu);
     handler_cv.wait(lk, [&] { return total_callbacks >= kCallbackCount; });
-    EXPECT_GE(kConcurrencyHwm, observed_hwm);
+    EXPECT_GE(kMaxConcurrency, observed_hwm);
   }
 
   shutdown->MarkAsShutdown(__func__, Status{});
@@ -352,8 +353,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     auto shutdown = std::make_shared<SessionShutdownManager>();
 
     auto uut = SubscriptionConcurrencyControl::Create(
-        background.cq(), shutdown, source,
-        /*message_count_lwm=*/0, /*message_count_hwm=*/4);
+        background.cq(), shutdown, source, /*max_concurrency=*/4);
     promise<Status> p([shutdown, uut] {
       shutdown->MarkAsShutdown("test-function-", {});
       uut->Shutdown();
@@ -416,8 +416,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
     auto shutdown = std::make_shared<SessionShutdownManager>();
 
     auto uut = SubscriptionConcurrencyControl::Create(
-        background.cq(), shutdown, source,
-        /*message_count_lwm=*/0, /*message_count_hwm=*/4);
+        background.cq(), shutdown, source, /*max_concurrency=*/4);
     promise<Status> p([shutdown, uut] {
       shutdown->MarkAsShutdown("test-function-", {});
       uut->Shutdown();
@@ -454,12 +453,13 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
           message_callback = std::move(cb);
         });
     EXPECT_CALL(*source, Read(10)).WillOnce(push_messages);
-    EXPECT_CALL(*source, AckMessage)
-        .Times(5)
-        .WillRepeatedly([](std::string const&, std::size_t) {
-          return make_ready_future(Status{});
-        });
   }
+  EXPECT_CALL(*source, AckMessage)
+      .Times(5)
+      .WillRepeatedly([](std::string const&, std::size_t) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*source, Read(1)).Times(5);
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
 
@@ -468,8 +468,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
   auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, /*message_count_lwm=*/0,
-      /*message_count_hwm=*/10);
+      background.cq(), shutdown, source, /*max_concurrency=*/10);
 
   std::mutex handler_mu;
   std::condition_variable handler_cv;
