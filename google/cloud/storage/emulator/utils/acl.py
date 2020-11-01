@@ -191,6 +191,7 @@ predefined_bucket_acl_map = {
 def compute_predefined_bucket_acl(bucket_name, predefined_acl, context):
     if context is None:
         predefined_acl = utils.common.to_snake_case(predefined_acl)
+        predefined_acl = predefined_acl.replace("-", "_")
         predefined_acl = predefined_bucket_acl_map.get(predefined_acl)
         if predefined_acl is None:
             return []
@@ -256,6 +257,7 @@ predefined_object_acl_map = {
 def __compute_predefined_object_acl(bucket_name, predefined_acl, acl_factory, context):
     if context is None:
         predefined_acl = utils.common.to_snake_case(predefined_acl)
+        predefined_acl = predefined_acl.replace("-", "_")
         predefined_acl = predefined_object_acl_map.get(predefined_acl)
         if predefined_acl is None:
             return []

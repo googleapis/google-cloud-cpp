@@ -22,6 +22,7 @@ import simdjson
 import random
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
+content_range_split = re.compile(r"bytes (\*|[0-9]+-[0-9]+)\/(\*|[0-9]+)")
 
 # === STR === #
 
@@ -49,7 +50,7 @@ class FakeRequest(types.SimpleNamespace):
         headers = {
             key.lower(): value
             for key, value in request.headers.items()
-            if key.lower().startswith("x-goog-")
+            if key.lower().startswith("x-goog-") or key.lower() == "range"
         }
         args = request.args.to_dict()
         args.update(cls.xml_headers_to_json_args(headers))
@@ -163,7 +164,7 @@ def filter_response_rest(response, projection, fields):
         if fields is not None:
             if maybe_delete:
                 for field in fields:
-                    if simplfied_key.startswith(field):
+                    if field != "" and simplfied_key.startswith(field):
                         maybe_delete = False
                         break
                 if maybe_delete:

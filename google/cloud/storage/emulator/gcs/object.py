@@ -15,6 +15,10 @@
 """Implement a class to simulate GCS object."""
 
 import utils
+import flask
+import re
+import sys
+import time
 import datetime
 import random
 import crc32c
@@ -69,11 +73,12 @@ class Object:
 
     @classmethod
     def init(cls, request, metadata, media, bucket, is_destination, context):
-        if context is not None:
+        if context is None:
             instruction = request.headers.get("x-goog-testbench-instructions")
             if instruction == "inject-upload-data-error":
                 media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
+        metadata.bucket = bucket.name
         metadata.generation = random.getrandbits(63)
         metadata.metageneration = 1
         metadata.id = "%s/o/%s#%d" % (
@@ -225,7 +230,7 @@ class Object:
         else:
             metadata = json_format.ParseDict(
                 self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                resources_pb2.Object(),
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -253,7 +258,7 @@ class Object:
                         else:
                             self.metadata.metadata[key] = value
             data.pop("metadata", None)
-            metadata = json_format.ParseDict(data, resources_pb2.Bucket())
+            metadata = json_format.ParseDict(data, resources_pb2.Object())
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)
@@ -340,3 +345,124 @@ class Object:
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
+
+    # === RESPOSE === #
+
+    @classmethod
+    def rest(cls, metadata):
+        response = json_format.MessageToDict(metadata)
+        response["kind"] = "storage#object"
+        response["crc32c"] = base64.b64encode(
+            struct.pack(">I", response["crc32c"])
+        ).decode("utf-8")
+        return response
+
+    def rest_metadata(self):
+        return self.rest(self.metadata)
+
+    def x_goog_hash_header(self):
+        header = ""
+        if "x_testbench_crc32c" in self.metadata.metadata:
+            header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
+        if "x_testbench_md5" in self.metadata.metadata:
+            if header != "":
+                header += ","
+            header += "md5=" + self.metadata.metadata["x_testbench_md5"]
+        return header if header != "" else None
+
+    def rest_media(self, request):
+        range_header = request.headers.get("range")
+        response_payload = self.media
+        begin = 0
+        end = len(response_payload)
+        if range_header is not None:
+            m = re.match("bytes=([0-9]+)-([0-9]+)", range_header)
+            if m:
+                begin = int(m.group(1))
+                end = int(m.group(2))
+                response_payload = response_payload[begin : end + 1]
+            m = re.match("bytes=([0-9]+)-$", range_header)
+            if m:
+                begin = int(m.group(1))
+                response_payload = response_payload[begin:]
+            m = re.match("bytes=-([0-9]+)$", range_header)
+            if m:
+                last = int(m.group(1))
+                response_payload = response_payload[-last:]
+
+        streamer, length, headers = None, len(response_payload), {}
+        content_range = "bytes %d-%d/%d" % (begin, end - 1, length)
+
+        instructions = request.headers.get("x-goog-testbench-instructions")
+        if instructions == "return-broken-stream":
+            headers["Content-Length"] = length
+
+            def streamer():
+                chunk_size = 64 * 1024
+                for r in range(0, len(response_payload), chunk_size):
+                    if r > 1024 * 1024:
+                        print("\n\n###### EXIT to simulate crash\n")
+                        sys.exit(1)
+                    time.sleep(0.1)
+                    chunk_end = min(r + chunk_size, len(response_payload))
+                    yield response_payload[r:chunk_end]
+
+        elif instructions == "return-corrupted-data":
+            media = utils.common.corrupt_media(response_payload)
+
+            def streamer():
+                yield media
+
+        elif instructions is not None and instructions.startswith(u"stall-always"):
+
+            def streamer():
+                chunk_size = 16 * 1024
+                for r in range(begin, end, chunk_size):
+                    chunk_end = min(r + chunk_size, end)
+                    if r == begin:
+                        time.sleep(10)
+                    yield response_payload[r:chunk_end]
+
+        elif instructions == "stall-at-256KiB" and begin == 0:
+
+            def streamer():
+                chunk_size = 16 * 1024
+                for r in range(begin, end, chunk_size):
+                    chunk_end = min(r + chunk_size, end)
+                    if r == 256 * 1024:
+                        time.sleep(10)
+                    yield response_payload[r:chunk_end]
+
+        elif instructions is not None and instructions.startswith(
+            u"return-503-after-256K"
+        ):
+            if begin == 0:
+
+                def streamer():
+                    chunk_size = 4 * 1024
+                    for r in range(0, len(response_payload), chunk_size):
+                        if r >= 256 * 1024:
+                            print("\n\n###### EXIT to simulate crash\n")
+                            sys.exit(1)
+                        time.sleep(0.01)
+                        chunk_end = min(r + chunk_size, len(response_payload))
+                        yield response_payload[r:chunk_end]
+
+            elif instructions.endswith(u"/retry-1"):
+                print("## Return error for retry 1")
+                return flask.Response("Service Unavailable", status=503)
+            elif instructions.endswith(u"/retry-2"):
+                print("## Return error for retry 2")
+                return flask.Response("Service Unavailable", status=503)
+            else:
+                print("## Return success for %s" % instructions)
+                return flask.Response(response_payload, status=200, headers=headers)
+        else:
+
+            def streamer():
+                yield response_payload
+
+        headers["Content-Range"] = content_range
+        headers["x-goog-hash"] = self.x_goog_hash_header()
+        headers["x-goog-generation"] = self.metadata.generation
+        return flask.Response(streamer(), status=200, headers=headers)

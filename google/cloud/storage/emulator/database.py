@@ -20,14 +20,15 @@ from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 
 class Database:
-    def __init__(self, buckets, objects, live_generations):
+    def __init__(self, buckets, objects, live_generations, uploads):
         self.buckets = buckets
         self.objects = objects
         self.live_generations = live_generations
+        self.uploads = uploads
 
     @classmethod
     def init(cls):
-        return cls({}, {}, {})
+        return cls({}, {}, {}, {})
 
     # === BUCKET === #
 
@@ -63,7 +64,11 @@ class Database:
 
     def delete_bucket(self, request, bucket_name, context):
         bucket = self.get_bucket(request, bucket_name, context)
+        if len(self.objects[bucket.metadata.name]) > 0:
+            utils.error.invalid("Deleting non-empty bucket", context)
         del self.buckets[bucket.metadata.name]
+        del self.objects[bucket.metadata.name]
+        del self.live_generations[bucket.metadata.name]
 
     def insert_test_bucket(self, context):
         bucket_name = os.environ.get(
@@ -146,20 +151,22 @@ class Database:
         match, not_match = utils.generation.extract_precondition(
             request, False, is_source, context
         )
-        utils.generation.check_generation(generation, match, not_match, False, context)
+        utils.generation.check_precondition(
+            generation, match, not_match, False, context
+        )
         blob = bucket.get("%s#%d" % (object_name, generation))
         metageneration = blob.metadata.metageneration if blob is not None else None
         match, not_match = utils.generation.extract_precondition(
             request, True, is_source, context
         )
-        utils.generation.check_generation(
+        utils.generation.check_precondition(
             metageneration, match, not_match, True, context
         )
         return blob, generation
 
     def get_object(self, request, bucket_name, object_name, is_source, context):
         blob, generation = self.check_object_generation(
-            bucket_name, object_name, request, is_source, context
+            request, bucket_name, object_name, is_source, context
         )
         if blob is None:
             if generation == 0:
@@ -172,7 +179,7 @@ class Database:
 
     def insert_object(self, request, bucket_name, blob, context):
         self.check_object_generation(
-            bucket_name, blob.metadata.name, request, False, context
+            request, bucket_name, blob.metadata.name, False, context
         )
         bucket = self.__get_bucket_for_object(bucket_name, context)
         name = blob.metadata.name
@@ -187,3 +194,18 @@ class Database:
         if generation == live_generation:
             del self.live_generations[bucket_name][object_name]
         del self.objects[bucket_name]["%s#%d" % (object_name, generation)]
+
+    # === UPLOAD === #
+
+    def get_upload(self, upload_id, context):
+        upload = self.uploads.get(upload_id)
+        if upload is None:
+            utils.error.notfound("Upload %s does not exist." % upload_id, context)
+        return upload
+
+    def insert_upload(self, upload):
+        self.uploads[upload.upload_id] = upload
+
+    def delete_upload(self, upload_id, context):
+        self.get_upload(upload_id, context)
+        del self.uploads[upload_id]
