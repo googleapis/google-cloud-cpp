@@ -489,13 +489,14 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   wait_message_count(5);
 
   // We only push 5 messages so after this no more messages will show up.
-  // Nevertheless grab the mutex to avoid
+  // Grab the mutex to avoid false positives in TSAN.
   std::unique_lock<std::mutex> lk(handler_mu);
   for (auto& p : messages) {
+    EXPECT_THAT(p.first.message_id(), StartsWith("message:"));
+    auto const suffix = p.first.message_id().substr(sizeof("message:") - 1);
     EXPECT_EQ(42, p.second.delivery_attempt());
-    EXPECT_EQ(p.first.message_id(), "message:" + p.second.ack_id());
-    EXPECT_EQ(p.first.data(), "data:" + p.second.ack_id());
-    EXPECT_EQ(p.first.attributes()["k0"], "l0:" + p.second.ack_id());
+    EXPECT_EQ(p.first.data(), "data:" + suffix);
+    EXPECT_EQ(p.first.attributes()["k0"], "l0:" + suffix);
     std::move(p.second).ack();
   }
 

@@ -40,7 +40,6 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
   void nack() override {
     if (auto s = source_.lock()) s->NackMessage(ack_id_, message_size_);
   }
-  std::string ack_id() const override { return ack_id_; }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
 
  private:
