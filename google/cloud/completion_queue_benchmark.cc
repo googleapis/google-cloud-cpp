@@ -1,0 +1,156 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/default_completion_queue_impl.h"
+#include <benchmark/benchmark.h>
+#include <grpcpp/alarm.h>
+#include <condition_variable>
+#include <deque>
+#include <functional>
+#include <mutex>
+
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace {
+
+// Run on (96 X 2000.15 MHz CPU s)
+// CPU Caches:
+//   L1 Data 32K (x48)
+//   L1 Instruction 32K (x48)
+//   L2 Unified 1024K (x48)
+//   L3 Unified 39424K (x2)
+// Load Average: 3.82, 3.86, 10.47
+// -----------------------------------------------------------------------------
+// Benchmark                                   Time             CPU   Iterations
+// -----------------------------------------------------------------------------
+// BM_Baseline/16/512                      15636 ns        15635 ns        42684
+// BM_Baseline/16/1024                     31056 ns        31054 ns        22962
+// BM_Baseline/16/2048                     61495 ns        61490 ns        10967
+// BM_Baseline_BigO                        30.11 N         30.11 N
+// BM_Baseline_RMS                             1 %             1 %
+// BM_CompletionQueueRunAsync/16/512      941518 ns       159425 ns         3787
+// BM_CompletionQueueRunAsync/16/1024     988488 ns       231439 ns         3044
+// BM_CompletionQueueRunAsync/16/2048    1690328 ns       455215 ns         1456
+// BM_CompletionQueueRunAsync_BigO        900.28 N        227.23 N
+// BM_CompletionQueueRunAsync_RMS             24 %             9 %
+
+auto constexpr kMinThreads = 16;
+auto constexpr kMaxThreads = 16;
+auto constexpr kMinExecutions = 1 << 9;
+auto constexpr kMaxExecutions = 1 << 11;
+
+class AsyncFunction : public internal::AsyncGrpcOperation {
+ public:
+  explicit AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun)
+      : fun_(std::move(fun)) {}
+
+  void Set(grpc::CompletionQueue& cq, void* tag) {
+    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
+  }
+
+  void Cancel() override {}
+
+ private:
+  bool Notify(bool ok) override {
+    auto f = std::move(fun_);
+    if (!ok) return true;  // do not run async operations on shutdown CQs
+    f->exec();
+    return true;
+  }
+
+  std::unique_ptr<internal::RunAsyncBase> fun_;
+  grpc::Alarm alarm_;
+};
+
+class Wait {
+ public:
+  explicit Wait(int count) : count_(count) {}
+
+  void BlockUntilDone() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&] { return count_ == 0; });
+  }
+  void Done() {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (--count_ > 0) return;
+    lk.unlock();
+    cv_.notify_one();
+  }
+
+ private:
+  std::mutex mu_;
+  std::condition_variable cv_;
+  int count_;
+};
+
+void BM_Baseline(benchmark::State& state) {
+  auto runner = [&](std::int64_t n) {
+    Wait wait(static_cast<int>(n));
+    std::deque<std::function<void()>> queue;
+    for (std::int64_t i = 0; i != n; ++i) {
+      queue.emplace_back([&wait] { wait.Done(); });
+    }
+    while (!queue.empty()) {
+      auto f = std::move(queue.front());
+      queue.pop_front();
+      f();
+    }
+    wait.BlockUntilDone();
+    return 0;
+  };
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(runner(state.range(1)));
+  }
+  state.SetComplexityN(state.range(1));
+}
+BENCHMARK(BM_Baseline)
+    ->RangeMultiplier(2)
+    ->Ranges({{kMinThreads, kMaxThreads}, {kMinExecutions, kMaxExecutions}})
+    ->Complexity(benchmark::oN);
+
+void BM_CompletionQueueRunAsync(benchmark::State& state) {
+  CompletionQueue cq;
+  std::vector<std::thread> tasks(state.range(0));
+  std::generate(tasks.begin(), tasks.end(), [&cq] {
+    return std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
+  });
+
+  auto runner = [&](std::int64_t n) {
+    Wait wait(static_cast<int>(n));
+    for (std::int64_t i = 0; i != n; ++i) {
+      cq.RunAsync([&wait] { wait.Done(); });
+    }
+    wait.BlockUntilDone();
+    return 0;
+  };
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(runner(state.range(1)));
+  }
+  state.SetComplexityN(state.range(1));
+  cq.Shutdown();
+  for (auto& t : tasks) t.join();
+}
+BENCHMARK(BM_CompletionQueueRunAsync)
+    ->RangeMultiplier(2)
+    ->Ranges({{kMinThreads, kMaxThreads}, {kMinExecutions, kMaxExecutions}})
+    ->Complexity(benchmark::oN);
+
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

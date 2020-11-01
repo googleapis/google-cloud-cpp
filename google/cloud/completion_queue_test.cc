@@ -21,6 +21,7 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <chrono>
+#include <deque>
 #include <memory>
 #include <thread>
 
@@ -486,6 +487,89 @@ TEST(CompletionQueueTest, RunAsyncThread) {
 
   cq.Shutdown();
   for (auto& t : runners) t.join();
+}
+
+TEST(CompletionQueueTest, RunAsyncParallel) {
+  CompletionQueue cq;
+  auto constexpr kRunners = 16;
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
+
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> waiting;
+  std::size_t actual_max_runners = 0;
+  auto add_promise = [&] {
+    promise<void> p;
+    auto f = p.get_future();
+    std::unique_lock<std::mutex> lk(mu);
+    waiting.push_back(std::move(p));
+    actual_max_runners = (std::max)(actual_max_runners, waiting.size());
+    lk.unlock();
+    cv.notify_one();
+    return f;
+  };
+  auto wait = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !waiting.empty(); });
+    auto f = std::move(waiting.front());
+    waiting.pop_front();
+    return f;
+  };
+
+  // Start an async function and block it... this will help us verify that
+  // different functions get called in different functions. Start with just one:
+  cq.RunAsync([&] { add_promise().get(); });
+  wait().set_value();
+
+  // Verify we never exceed 15 threads running in parallel, because we want to
+  // reserve 1 thread for the I/O loop.
+  for (int i = 0; i != 100; ++i) {
+    auto const n = 4 * kRunners;
+    for (int j = 0; j != n; ++j) cq.RunAsync([&] { add_promise().get(); });
+    for (int j = 0; j != n; ++j) wait().set_value();
+  }
+  EXPECT_GT(kRunners, actual_max_runners);
+
+  cq.Shutdown();
+  for (auto& t : runners) t.join();
+}
+
+TEST(CompletionQueueTest, RunAsyncSingleThread) {
+  CompletionQueue cq;
+  std::thread runner{[](CompletionQueue cq) { cq.Run(); }, cq};
+
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> waiting;
+  std::size_t actual_max_runners = 0;
+  auto add_promise = [&] {
+    promise<void> p;
+    auto f = p.get_future();
+    std::unique_lock<std::mutex> lk(mu);
+    waiting.push_back(std::move(p));
+    actual_max_runners = (std::max)(actual_max_runners, waiting.size());
+    lk.unlock();
+    cv.notify_one();
+    return f;
+  };
+  auto wait = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !waiting.empty(); });
+    auto f = std::move(waiting.front());
+    waiting.pop_front();
+    return f;
+  };
+
+  // Verify we can schedule multiple calls and they eventually all finish.
+  for (int i = 0; i != 32; ++i) {
+    cq.RunAsync([&] { add_promise().get(); });
+    wait().set_value();
+  }
+
+  cq.Shutdown();
+  runner.join();
 }
 
 TEST(CompletionQueueTest, NoRunAsyncAfterShutdown) {
