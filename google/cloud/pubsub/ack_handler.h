@@ -82,10 +82,6 @@ class AckHandler {
     impl->nack();
   }
 
-  /// Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and
-  /// logging.
-  std::string ack_id() const { return impl_->ack_id(); }
-
   /// Returns the approximate number of times that Cloud Pub/Sub has attempted
   /// to deliver the associated message to a subscriber.
   std::int32_t delivery_attempt() const { return impl_->delivery_attempt(); }
@@ -98,8 +94,6 @@ class AckHandler {
     virtual void ack() {}
     /// The implementation for `AckHandler::nack()`
     virtual void nack() {}
-    /// The implementation for `AckHandler::ack_id()`
-    virtual std::string ack_id() const { return {}; }
     /// The implementation for `AckHandler::delivery_attempt()`
     virtual std::int32_t delivery_attempt() const { return 0; }
   };

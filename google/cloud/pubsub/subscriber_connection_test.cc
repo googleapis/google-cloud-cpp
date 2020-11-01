@@ -58,7 +58,6 @@ TEST(SubscriberConnectionTest, Basic) {
   auto handler = [&](Message const& m, AckHandler h) {
     if (received_one.test_and_set()) return;
     EXPECT_THAT(m.message_id(), StartsWith("test-message-id-"));
-    EXPECT_THAT(h.ack_id(), StartsWith("test-ack-id-"));
     ASSERT_NO_FATAL_FAILURE(std::move(h).ack());
     waiter.set_value();
   };
