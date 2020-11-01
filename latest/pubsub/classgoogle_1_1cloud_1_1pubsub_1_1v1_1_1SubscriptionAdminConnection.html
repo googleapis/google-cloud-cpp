@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A connection to Cloud Pub/Sub for subscriber operations.  
+<p>A connection to Cloud Pub/Sub for subscription-related administrative operations.  
  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="subscription__admin__connection_8h_source.html">google/cloud/pubsub/subscription_admin_connection.h</a>&gt;</code></p>
@@ -124,24 +124,20 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6151afa0750939bd473a0a1c3054917e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a6151afa0750939bd473a0a1c3054917e">~SubscriptionAdminConnection</a> ()=0</td></tr>
 <tr class="separator:a6151afa0750939bd473a0a1c3054917e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">The parameter wrapper types.</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>Define the arguments for each member function.</p>
-<p>Applications may define classes derived from <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html" title="A connection to Cloud Pub/Sub for subscriber operations.">SubscriptionAdminConnection</a></code>, for example, because they want to mock the class. To avoid breaking all such derived classes when we change the number or type of the arguments to the member functions we define light weight structures to pass the arguments. </p>
-</div></td></tr>
 <tr class="memitem:ab0b3150d22ebead9f4e432a750d92512"><td class="memItemLeft" align="right" valign="top">virtual StatusOr&lt; google::pubsub::v1::Subscription &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512">CreateSubscription</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSubscriptionParams.html">CreateSubscriptionParams</a>)</td></tr>
-<tr class="memdesc:ab0b3150d22ebead9f4e432a750d92512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#aefcb959bd5167a13a29ef99636eb2afe" title="Create a new subscription in Cloud Pub/Sub.">SubscriptionAdminClient::CreateSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512">More...</a><br /></td></tr>
+<tr class="memdesc:ab0b3150d22ebead9f4e432a750d92512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#aefcb959bd5167a13a29ef99636eb2afe" title="Creates a new subscription in Cloud Pub/Sub.">SubscriptionAdminClient::CreateSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512">More...</a><br /></td></tr>
 <tr class="separator:ab0b3150d22ebead9f4e432a750d92512"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30c496a3fbecaf59ffe296ea2e511f35"><td class="memItemLeft" align="right" valign="top">virtual StatusOr&lt; google::pubsub::v1::Subscription &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a30c496a3fbecaf59ffe296ea2e511f35">GetSubscription</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html">GetSubscriptionParams</a>)</td></tr>
-<tr class="memdesc:a30c496a3fbecaf59ffe296ea2e511f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a1b8cb224816e48d6093b8730b9cfdd57" title="Get the metadata for an existing Cloud Pub/Sub subscription.">SubscriptionAdminClient::GetSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a30c496a3fbecaf59ffe296ea2e511f35">More...</a><br /></td></tr>
+<tr class="memdesc:a30c496a3fbecaf59ffe296ea2e511f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a1b8cb224816e48d6093b8730b9cfdd57" title="Gets the metadata for an existing Cloud Pub/Sub subscription.">SubscriptionAdminClient::GetSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a30c496a3fbecaf59ffe296ea2e511f35">More...</a><br /></td></tr>
 <tr class="separator:a30c496a3fbecaf59ffe296ea2e511f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71ba53201845e0c5f3c015f6c25818c8"><td class="memItemLeft" align="right" valign="top">virtual StatusOr&lt; google::pubsub::v1::Subscription &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a71ba53201845e0c5f3c015f6c25818c8">UpdateSubscription</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1UpdateSubscriptionParams.html">UpdateSubscriptionParams</a>)</td></tr>
-<tr class="memdesc:a71ba53201845e0c5f3c015f6c25818c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ab7a5e19ef1ec23ff6b03973f034cafcb" title="Update an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::UpdateSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a71ba53201845e0c5f3c015f6c25818c8">More...</a><br /></td></tr>
+<tr class="memdesc:a71ba53201845e0c5f3c015f6c25818c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ab7a5e19ef1ec23ff6b03973f034cafcb" title="Updates an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::UpdateSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a71ba53201845e0c5f3c015f6c25818c8">More...</a><br /></td></tr>
 <tr class="separator:a71ba53201845e0c5f3c015f6c25818c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a705529746304a0dfcba305abb27cc6d4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a70fdf25c34703a1e0bb55d6fb44deeba">ListSubscriptionsRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a705529746304a0dfcba305abb27cc6d4">ListSubscriptions</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSubscriptionsParams.html">ListSubscriptionsParams</a>)</td></tr>
-<tr class="memdesc:a705529746304a0dfcba305abb27cc6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ad65645dffce842faaea5caac84fdc09a" title="List all the subscriptions for a given project id.">SubscriptionAdminClient::ListSubscriptions()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a705529746304a0dfcba305abb27cc6d4">More...</a><br /></td></tr>
+<tr class="memdesc:a705529746304a0dfcba305abb27cc6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ad65645dffce842faaea5caac84fdc09a" title="Lists all the subscriptions for a given project id.">SubscriptionAdminClient::ListSubscriptions()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a705529746304a0dfcba305abb27cc6d4">More...</a><br /></td></tr>
 <tr class="separator:a705529746304a0dfcba305abb27cc6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3773345bb04642af8add83741efdd43b"><td class="memItemLeft" align="right" valign="top">virtual Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a3773345bb04642af8add83741efdd43b">DeleteSubscription</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSubscriptionParams.html">DeleteSubscriptionParams</a>)</td></tr>
-<tr class="memdesc:a3773345bb04642af8add83741efdd43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ac09c7746ea979ba1d5692db83af2a953" title="Delete an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::DeleteSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a3773345bb04642af8add83741efdd43b">More...</a><br /></td></tr>
+<tr class="memdesc:a3773345bb04642af8add83741efdd43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ac09c7746ea979ba1d5692db83af2a953" title="Deletes an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::DeleteSubscription()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a3773345bb04642af8add83741efdd43b">More...</a><br /></td></tr>
 <tr class="separator:a3773345bb04642af8add83741efdd43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3db0b218a96c4b65ea8f52bb4f75449"><td class="memItemLeft" align="right" valign="top">virtual Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af3db0b218a96c4b65ea8f52bb4f75449">ModifyPushConfig</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ModifyPushConfigParams.html">ModifyPushConfigParams</a>)</td></tr>
 <tr class="memdesc:af3db0b218a96c4b65ea8f52bb4f75449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code>SubscriptionAdminClient::ModifyPushConfig()</code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af3db0b218a96c4b65ea8f52bb4f75449">More...</a><br /></td></tr>
@@ -156,21 +152,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad19343ada262328b002119f2adc397c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code>SnapshotAdminClient::UpdateSnapshot()</code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ad19343ada262328b002119f2adc397c3">More...</a><br /></td></tr>
 <tr class="separator:ad19343ada262328b002119f2adc397c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b37655d42deabd18f222249444c3358"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa5ae2eeb441e846d6396b6fd8be691ca">ListSnapshotsRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a4b37655d42deabd18f222249444c3358">ListSnapshots</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams.html">ListSnapshotsParams</a>)</td></tr>
-<tr class="memdesc:a4b37655d42deabd18f222249444c3358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8684e958d835d950c44047ef513a0200" title="List all the snapshots for a given project id.">SubscriptionAdminClient::ListSnapshots()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a4b37655d42deabd18f222249444c3358">More...</a><br /></td></tr>
+<tr class="memdesc:a4b37655d42deabd18f222249444c3358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8684e958d835d950c44047ef513a0200" title="Lists all the snapshots for a given project id.">SubscriptionAdminClient::ListSnapshots()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a4b37655d42deabd18f222249444c3358">More...</a><br /></td></tr>
 <tr class="separator:a4b37655d42deabd18f222249444c3358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f12eef9008c1ab6f40fb4173f64085"><td class="memItemLeft" align="right" valign="top">virtual Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af2f12eef9008c1ab6f40fb4173f64085">DeleteSnapshot</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSnapshotParams.html">DeleteSnapshotParams</a>)</td></tr>
 <tr class="memdesc:af2f12eef9008c1ab6f40fb4173f64085"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code>SnapshotAdminClient::DeleteSnapshot()</code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af2f12eef9008c1ab6f40fb4173f64085">More...</a><br /></td></tr>
 <tr class="separator:af2f12eef9008c1ab6f40fb4173f64085"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace6b9f94a1b2debda92043e090212283"><td class="memItemLeft" align="right" valign="top">virtual StatusOr&lt; google::pubsub::v1::SeekResponse &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ace6b9f94a1b2debda92043e090212283">Seek</a> (<a class="el" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1SeekParams.html">SeekParams</a>)</td></tr>
-<tr class="memdesc:ace6b9f94a1b2debda92043e090212283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to timestamp.">SubscriptionAdminClient::Seek()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ace6b9f94a1b2debda92043e090212283">More...</a><br /></td></tr>
+<tr class="memdesc:ace6b9f94a1b2debda92043e090212283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to its state at timestamp.">SubscriptionAdminClient::Seek()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ace6b9f94a1b2debda92043e090212283">More...</a><br /></td></tr>
 <tr class="separator:ace6b9f94a1b2debda92043e090212283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A connection to Cloud Pub/Sub for subscriber operations. </p>
+<div class="textblock"><p>A connection to Cloud Pub/Sub for subscription-related administrative operations. </p>
 <p>This interface defines pure-virtual methods for each of the user-facing overload sets in <code>SubscriberAdminClient</code>. That is, all of <code>SubscriberAdminClient</code>'s <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512" title="Defines the interface for SubscriptionAdminClient::CreateSubscription()">CreateSubscription()</a></code> overloads will forward to the one pure-virtual <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512" title="Defines the interface for SubscriptionAdminClient::CreateSubscription()">CreateSubscription()</a></code> method declared in this interface, and similar for <code>SubscriberClient</code>'s other methods. This allows users to inject custom behavior (e.g., with a Google Mock object) in a <code>SubscriberClient</code> object for use in their own tests.</p>
-<p>To create a concrete instance that connects you to the real Cloud Pub/Sub service, see <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d" title="Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.">MakeSubscriptionAdminConnection()</a></code>. </p>
+<p>To create a concrete instance that connects you to the real Cloud Pub/Sub service, see <code><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d" title="Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.">MakeSubscriptionAdminConnection()</a></code>.</p>
+<dl class="section user"><dt>The *Params nested classes</dt><dd>Applications may define classes derived from <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html" title="A connection to Cloud Pub/Sub for subscription-related administrative operations.">SubscriptionAdminConnection</a></code>, for example, because they want to mock the class. To avoid breaking all such derived classes when we change the number or type of the arguments to the member functions we define lightweight structures to pass the arguments. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8h_source.html#l00076">76</a> of file <a class="el" href="subscription__admin__connection_8h_source.html">subscription_admin_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8h_source.html#l00083">83</a> of file <a class="el" href="subscription__admin__connection_8h_source.html">subscription_admin_connection.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6151afa0750939bd473a0a1c3054917e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6151afa0750939bd473a0a1c3054917e">&#9670;&nbsp;</a></span>~SubscriptionAdminConnection()</h2>
@@ -252,7 +249,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#aefcb959bd5167a13a29ef99636eb2afe" title="Create a new subscription in Cloud Pub/Sub.">SubscriptionAdminClient::CreateSubscription()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#aefcb959bd5167a13a29ef99636eb2afe" title="Creates a new subscription in Cloud Pub/Sub.">SubscriptionAdminClient::CreateSubscription()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00287">287</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -312,7 +309,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ac09c7746ea979ba1d5692db83af2a953" title="Delete an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::DeleteSubscription()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ac09c7746ea979ba1d5692db83af2a953" title="Deletes an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::DeleteSubscription()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00309">309</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -372,7 +369,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a1b8cb224816e48d6093b8730b9cfdd57" title="Get the metadata for an existing Cloud Pub/Sub subscription.">SubscriptionAdminClient::GetSubscription()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a1b8cb224816e48d6093b8730b9cfdd57" title="Gets the metadata for an existing Cloud Pub/Sub subscription.">SubscriptionAdminClient::GetSubscription()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00293">293</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -402,7 +399,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8684e958d835d950c44047ef513a0200" title="List all the snapshots for a given project id.">SubscriptionAdminClient::ListSnapshots()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a8684e958d835d950c44047ef513a0200" title="Lists all the snapshots for a given project id.">SubscriptionAdminClient::ListSnapshots()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00336">336</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -432,7 +429,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ad65645dffce842faaea5caac84fdc09a" title="List all the subscriptions for a given project id.">SubscriptionAdminClient::ListSubscriptions()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ad65645dffce842faaea5caac84fdc09a" title="Lists all the subscriptions for a given project id.">SubscriptionAdminClient::ListSubscriptions()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00303">303</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -492,7 +489,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to timestamp.">SubscriptionAdminClient::Seek()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#a3d99e8957acbc6327c9d28b42f6f890e" title="Seeks a subscription to its state at timestamp.">SubscriptionAdminClient::Seek()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00346">346</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 
@@ -552,7 +549,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ab7a5e19ef1ec23ff6b03973f034cafcb" title="Update an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::UpdateSubscription()</a></code> </p>
+<p>Defines the interface for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#ab7a5e19ef1ec23ff6b03973f034cafcb" title="Updates an existing subscription in Cloud Pub/Sub.">SubscriptionAdminClient::UpdateSubscription()</a></code> </p>
 
 <p class="definition">Definition at line <a class="el" href="subscription__admin__connection_8cc_source.html#l00299">299</a> of file <a class="el" href="subscription__admin__connection_8cc_source.html">subscription_admin_connection.cc</a>.</p>
 

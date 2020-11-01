@@ -71,8 +71,7 @@ $(function() {
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::pubsub Namespace Reference</div>  </div>
 </div><!--header-->
@@ -83,8 +82,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub_1_1examples"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1examples.html">examples</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html">v1</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Pubsub C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,7 +134,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs subscription administrative operations in Cloud Pub/Sub.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html">SubscriptionAdminConnection</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub for subscriber operations.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub for subscription-related administrative operations.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Cloud Pub/Sub subscription configuration.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html#details">More...</a><br /></td></tr>
@@ -204,14 +201,14 @@ Functions</h2></td></tr>
 <tr class="memitem:afcfcc57b55c2e428b42fbbba5e29534f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#afcfcc57b55c2e428b42fbbba5e29534f">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">Message</a> const &amp;rhs)</td></tr>
 <tr class="separator:afcfcc57b55c2e428b42fbbba5e29534f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa422fd1bd6e184b76bee57e2a84c0417"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html">PublisherConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">MakePublisherConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> topic, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> options, <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> connection_options={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:aa422fd1bd6e184b76bee57e2a84c0417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with Cloud Pub/Sub publisher APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">More...</a><br /></td></tr>
+<tr class="memdesc:aa422fd1bd6e184b76bee57e2a84c0417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Publisher.html" title="Publish messages to the Cloud Pub/Sub service.">Publisher</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">More...</a><br /></td></tr>
 <tr class="separator:aa422fd1bd6e184b76bee57e2a84c0417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a138221c23ff76846ac82763b52770939"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a138221c23ff76846ac82763b52770939">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;b)</td></tr>
 <tr class="separator:a138221c23ff76846ac82763b52770939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fd73816c17b900b4269ff7dc1c8eb47"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9fd73816c17b900b4269ff7dc1c8eb47">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;rhs)</td></tr>
 <tr class="separator:a9fd73816c17b900b4269ff7dc1c8eb47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d36a0acd0c273b491563d99b7f370fb"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html">SubscriberConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">MakeSubscriberConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> subscription, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">SubscriberOptions</a> options={}, <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> connection_options={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:a4d36a0acd0c273b491563d99b7f370fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">More...</a><br /></td></tr>
+<tr class="memdesc:a4d36a0acd0c273b491563d99b7f370fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">More...</a><br /></td></tr>
 <tr class="separator:a4d36a0acd0c273b491563d99b7f370fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca6cc6634e2d2a0c50997cfcb6289291"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aca6cc6634e2d2a0c50997cfcb6289291">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> const &amp;b)</td></tr>
 <tr class="separator:aca6cc6634e2d2a0c50997cfcb6289291"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,130 +217,17 @@ Functions</h2></td></tr>
 <tr class="memitem:a06670f1b941887915dbe0671c4fe8f3d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html">SubscriptionAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">MakeSubscriptionAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
 <tr class="memdesc:a06670f1b941887915dbe0671c4fe8f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">More...</a><br /></td></tr>
 <tr class="separator:a06670f1b941887915dbe0671c4fe8f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac88f8c1797b4c2f70e3ff7a2186e733b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#ac88f8c1797b4c2f70e3ff7a2186e733b">ASSERT_TRUE</a> (TextFormat::ParseFromString(<a class="el" href="subscription__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">text</a>, &amp;<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:ac88f8c1797b4c2f70e3ff7a2186e733b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe44ff916293b601f78741b938f4e8e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#afe44ff916293b601f78741b938f4e8e9">EXPECT_THAT</a> (actual, IsProtoEqual(<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:afe44ff916293b601f78741b938f4e8e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81bc04a5651965c4c2200bd29b694fb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a81bc04a5651965c4c2200bd29b694fb4">TEST</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a>, PushConfigClearAttributes)</td></tr>
-<tr class="separator:a81bc04a5651965c4c2200bd29b694fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48ceaa4324c146e6056c171a4b641247"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html#a48ceaa4324c146e6056c171a4b641247">ASSERT_TRUE</a> (TextFormat::ParseFromString(<a class="el" href="subscription__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">text</a>, &amp;<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:a48ceaa4324c146e6056c171a4b641247"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac17cbbefb6baef2ee16bbb3eb1fb669e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html#ac17cbbefb6baef2ee16bbb3eb1fb669e">EXPECT_THAT</a> (actual, IsProtoEqual(<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:ac17cbbefb6baef2ee16bbb3eb1fb669e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92f3f940dd0d9011e3e4cb53d748a781"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html#a92f3f940dd0d9011e3e4cb53d748a781">TEST</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a>, PushConfigSetAuthentication)</td></tr>
-<tr class="separator:a92f3f940dd0d9011e3e4cb53d748a781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a908d89d98d4a649553b1ad8706eb0135"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a908d89d98d4a649553b1ad8706eb0135">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;b)</td></tr>
 <tr class="separator:a908d89d98d4a649553b1ad8706eb0135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19bb4618a6f5b233a84e9df3441625d5"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a19bb4618a6f5b233a84e9df3441625d5">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;rhs)</td></tr>
 <tr class="separator:a19bb4618a6f5b233a84e9df3441625d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html">TopicAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">MakeTopicAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:a7e485b0569d0f7fd44a4cf897e43a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">More...</a><br /></td></tr>
+<tr class="memdesc:a7e485b0569d0f7fd44a4cf897e43a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">More...</a><br /></td></tr>
 <tr class="separator:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a1bc19f95ad8fdd3a49c48389a79ffc6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a1bc19f95ad8fdd3a49c48389a79ffc6e">pb</a></td></tr>
-<tr class="separator:a1bc19f95ad8fdd3a49c48389a79ffc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2faa0d5b74a2d5db0e6ca3f9c9589e1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html#a2faa0d5b74a2d5db0e6ca3f9c9589e1c">pb</a></td></tr>
-<tr class="separator:a2faa0d5b74a2d5db0e6ca3f9c9589e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains all the Cloud Pubsub C++ client types and functions. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a48ceaa4324c146e6056c171a4b641247"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48ceaa4324c146e6056c171a4b641247">&#9670;&nbsp;</a></span>ASSERT_TRUE() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::ASSERT_TRUE </td>
-          <td>(</td>
-          <td class="paramtype">TextFormat::ParseFromString(<a class="el" href="subscription__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">text</a>, &amp;<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>)&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac17cbbefb6baef2ee16bbb3eb1fb669e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17cbbefb6baef2ee16bbb3eb1fb669e">&#9670;&nbsp;</a></span>EXPECT_THAT() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::EXPECT_THAT </td>
-          <td>(</td>
-          <td class="paramtype">actual&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">IsProtoEqual(<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>)&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a92f3f940dd0d9011e3e4cb53d748a781"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92f3f940dd0d9011e3e4cb53d748a781">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::TEST </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PushConfigSetAuthentication&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="subscription__builder__test_8cc_source.html#l00136">136</a> of file <a class="el" href="subscription__builder__test_8cc_source.html">subscription_builder_test.cc</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a2faa0d5b74a2d5db0e6ca3f9c9589e1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2faa0d5b74a2d5db0e6ca3f9c9589e1c">&#9670;&nbsp;</a></span>pb <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::pb</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="subscription__builder__test_8cc_source.html#l00131">131</a> of file <a class="el" href="subscription__builder__test_8cc_source.html">subscription_builder_test.cc</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

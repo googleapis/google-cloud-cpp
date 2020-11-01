@@ -70,8 +70,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::pubsub::v1 Namespace Reference</div>  </div>
 </div><!--header-->
@@ -128,7 +127,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs subscription administrative operations in Cloud Pub/Sub.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html">SubscriptionAdminConnection</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub for subscriber operations.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connection to Cloud Pub/Sub for subscription-related administrative operations.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Cloud Pub/Sub subscription configuration.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html#details">More...</a><br /></td></tr>
@@ -195,14 +194,14 @@ Functions</h2></td></tr>
 <tr class="memitem:afcfcc57b55c2e428b42fbbba5e29534f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#afcfcc57b55c2e428b42fbbba5e29534f">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">Message</a> const &amp;rhs)</td></tr>
 <tr class="separator:afcfcc57b55c2e428b42fbbba5e29534f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa422fd1bd6e184b76bee57e2a84c0417"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html">PublisherConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">MakePublisherConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> topic, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">PublisherOptions</a> options, <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> connection_options={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:aa422fd1bd6e184b76bee57e2a84c0417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with Cloud Pub/Sub publisher APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">More...</a><br /></td></tr>
+<tr class="memdesc:aa422fd1bd6e184b76bee57e2a84c0417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Publisher.html" title="Publish messages to the Cloud Pub/Sub service.">Publisher</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa422fd1bd6e184b76bee57e2a84c0417">More...</a><br /></td></tr>
 <tr class="separator:aa422fd1bd6e184b76bee57e2a84c0417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a138221c23ff76846ac82763b52770939"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a138221c23ff76846ac82763b52770939">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;b)</td></tr>
 <tr class="separator:a138221c23ff76846ac82763b52770939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fd73816c17b900b4269ff7dc1c8eb47"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9fd73816c17b900b4269ff7dc1c8eb47">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html">Snapshot</a> const &amp;rhs)</td></tr>
 <tr class="separator:a9fd73816c17b900b4269ff7dc1c8eb47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d36a0acd0c273b491563d99b7f370fb"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html">SubscriberConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">MakeSubscriberConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> subscription, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">SubscriberOptions</a> options={}, <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> connection_options={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:a4d36a0acd0c273b491563d99b7f370fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">More...</a><br /></td></tr>
+<tr class="memdesc:a4d36a0acd0c273b491563d99b7f370fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">More...</a><br /></td></tr>
 <tr class="separator:a4d36a0acd0c273b491563d99b7f370fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca6cc6634e2d2a0c50997cfcb6289291"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aca6cc6634e2d2a0c50997cfcb6289291">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">Subscription</a> const &amp;b)</td></tr>
 <tr class="separator:aca6cc6634e2d2a0c50997cfcb6289291"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,24 +210,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a06670f1b941887915dbe0671c4fe8f3d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html">SubscriptionAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">MakeSubscriptionAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
 <tr class="memdesc:a06670f1b941887915dbe0671c4fe8f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a> object to work with Cloud Pub/Sub subscriber APIs.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">More...</a><br /></td></tr>
 <tr class="separator:a06670f1b941887915dbe0671c4fe8f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac88f8c1797b4c2f70e3ff7a2186e733b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#ac88f8c1797b4c2f70e3ff7a2186e733b">ASSERT_TRUE</a> (TextFormat::ParseFromString(<a class="el" href="subscription__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">text</a>, &amp;<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:ac88f8c1797b4c2f70e3ff7a2186e733b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe44ff916293b601f78741b938f4e8e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#afe44ff916293b601f78741b938f4e8e9">EXPECT_THAT</a> (actual, IsProtoEqual(<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>))</td></tr>
-<tr class="separator:afe44ff916293b601f78741b938f4e8e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81bc04a5651965c4c2200bd29b694fb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a81bc04a5651965c4c2200bd29b694fb4">TEST</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a>, PushConfigClearAttributes)</td></tr>
-<tr class="separator:a81bc04a5651965c4c2200bd29b694fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a908d89d98d4a649553b1ad8706eb0135"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a908d89d98d4a649553b1ad8706eb0135">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;b)</td></tr>
 <tr class="separator:a908d89d98d4a649553b1ad8706eb0135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19bb4618a6f5b233a84e9df3441625d5"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a19bb4618a6f5b233a84e9df3441625d5">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">Topic</a> const &amp;rhs)</td></tr>
 <tr class="separator:a19bb4618a6f5b233a84e9df3441625d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html">TopicAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">MakeTopicAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:a7e485b0569d0f7fd44a4cf897e43a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">More...</a><br /></td></tr>
+<tr class="memdesc:a7e485b0569d0f7fd44a4cf897e43a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a7e485b0569d0f7fd44a4cf897e43a348">More...</a><br /></td></tr>
 <tr class="separator:a7e485b0569d0f7fd44a4cf897e43a348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a1bc19f95ad8fdd3a49c48389a79ffc6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a1bc19f95ad8fdd3a49c48389a79ffc6e">pb</a></td></tr>
-<tr class="separator:a1bc19f95ad8fdd3a49c48389a79ffc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The inlined, versioned namespace for the Cloud Pubsub C++ client APIs. </p>
@@ -478,52 +466,6 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac88f8c1797b4c2f70e3ff7a2186e733b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac88f8c1797b4c2f70e3ff7a2186e733b">&#9670;&nbsp;</a></span>ASSERT_TRUE()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::v1::ASSERT_TRUE </td>
-          <td>(</td>
-          <td class="paramtype">TextFormat::ParseFromString(<a class="el" href="subscription__builder__test_8cc.html#aeff23f6c395170eb858fd93bc97f0f00">text</a>, &amp;<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>)&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afe44ff916293b601f78741b938f4e8e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe44ff916293b601f78741b938f4e8e9">&#9670;&nbsp;</a></span>EXPECT_THAT()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::v1::EXPECT_THAT </td>
-          <td>(</td>
-          <td class="paramtype">actual&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">IsProtoEqual(<a class="el" href="namespacegoogle.html#aafe475310132afc6c560ab4c941b9467">expected</a>)&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="aa422fd1bd6e184b76bee57e2a84c0417"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa422fd1bd6e184b76bee57e2a84c0417">&#9670;&nbsp;</a></span>MakePublisherConnection()</h2>
 
@@ -568,8 +510,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with Cloud Pub/Sub publisher APIs. </p>
+<p>Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Publisher.html" title="Publish messages to the Cloud Pub/Sub service.">Publisher</a></code>. </p>
 <p>The <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> class is not intended for direct use in applications, it is provided for applications wanting to mock the <code>PublisherClient</code> behavior in their tests.</p>
+<dl class="section user"><dt>Performance</dt><dd>Creating a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code> is relatively expensive. This typically initiate connections to the service, and therefore these objects should be shared and reused when possible. Note that gRPC reuses existing OS resources (sockets) whenever possible, so applications may experience better performance on the second (and subsequent) calls to this function with the same <code>ConnectionOptions</code> parameters. However, this behavior is not guaranteed and applications should not rely on it.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html" title="A connection to the Cloud Pub/Sub service to publish events.">PublisherConnection</a></code></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -630,8 +573,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with Cloud Pub/Sub subscriber APIs. </p>
+<p>Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html" title="Receive messages from the Cloud Pub/Sub service.">Subscriber</a></code>. </p>
 <p>The <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> class is not intended for direct use in applications, it is provided for applications wanting to mock the <code>SubscriberClient</code> behavior in their tests.</p>
+<dl class="section user"><dt>Performance</dt><dd>Creating a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> is relatively expensive. This typically initiate connections to the service, and therefore these objects should be shared and reused when possible. Note that gRPC reuses existing OS resources (sockets) whenever possible, so applications may experience better performance on the second (and subsequent) calls to this function with the same <code>ConnectionOptions</code> parameters. However, this behavior is not guaranteed and applications should not rely on it.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code></dd></dl>
 <dl class="section user"><dt>Changing Retry Parameters Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
@@ -725,6 +669,7 @@ Variables</h2></td></tr>
 
 <p>Returns an <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a> object to work with Cloud Pub/Sub subscriber APIs. </p>
 <p>The <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code> class is not intended for direct use in applications, it is provided for applications wanting to mock the <code>SubscriberClient</code> behavior in their tests.</p>
+<dl class="section user"><dt>Performance</dt><dd>Creating a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html" title="A connection to Cloud Pub/Sub for subscription-related administrative operations.">SubscriptionAdminConnection</a></code> is relatively expensive. This typically initiate connections to the service, and therefore these objects should be shared and reused when possible. Note that gRPC reuses existing OS resources (sockets) whenever possible, so applications may experience better performance on the second (and subsequent) calls to this function with the same <code>ConnectionOptions</code> parameters. However, this behavior is not guaranteed and applications should not rely on it.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html" title="A connection to the Cloud Pub/Sub service to receive events.">SubscriberConnection</a></code></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -771,8 +716,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>. </p>
+<p>Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code>. </p>
 <p>The <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> class is provided for applications wanting to mock the <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code> behavior in their tests. It is not intended for direct use.</p>
+<dl class="section user"><dt>Performance</dt><dd>Creating a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html" title="A connection to Cloud Pub/Sub for topic-related administrative operations.">TopicAdminConnection</a></code> is relatively expensive. This typically initiate connections to the service, and therefore these objects should be shared and reused when possible. Note that gRPC reuses existing OS resources (sockets) whenever possible, so applications may experience better performance on the second (and subsequent) calls to this function with the same <code>ConnectionOptions</code> parameters. However, this behavior is not guaranteed and applications should not rely on it.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html" title="Performs publisher operations in Cloud Pub/Sub.">TopicAdminClient</a></code></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1027,63 +973,16 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a81bc04a5651965c4c2200bd29b694fb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81bc04a5651965c4c2200bd29b694fb4">&#9670;&nbsp;</a></span>TEST()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::v1::TEST </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html">SubscriptionBuilder</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">PushConfigClearAttributes&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="subscription__builder__test_8cc_source.html#l00116">116</a> of file <a class="el" href="subscription__builder__test_8cc_source.html">subscription_builder_test.cc</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a1bc19f95ad8fdd3a49c48389a79ffc6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bc19f95ad8fdd3a49c48389a79ffc6e">&#9670;&nbsp;</a></span>pb</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub::v1::pb</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="subscription__builder__test_8cc_source.html#l00111">111</a> of file <a class="el" href="subscription__builder__test_8cc_source.html">subscription_builder_test.cc</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">google::cloud::pubsub::v1::Message</a></div><div class="ttdoc">The C++ representation for a Cloud Pub/Sub messages.</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00076">message.h:76</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a6833bef0c593e2cfde6e1c9f2d745b94"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">google::cloud::pubsub::v1::ConnectionOptions</a></div><div class="ttdeci">::google::cloud::ConnectionOptions&lt; ConnectionOptionsTraits &gt; ConnectionOptions</div><div class="ttdoc">Configure a connection for Cloud Pub/Sub services.</div><div class="ttdef"><b>Definition:</b> <a href="connection__options_8h_source.html#l00035">connection_options.h:36</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a953aa9b925add24a5704b8a15749fe47"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a953aa9b925add24a5704b8a15749fe47">google::cloud::pubsub::v1::ExponentialBackoffPolicy</a></div><div class="ttdeci">google::cloud::internal::ExponentialBackoffPolicy ExponentialBackoffPolicy</div><div class="ttdoc">A truncated exponential backoff policy with randomized periods.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00030">backoff_policy.h:31</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">google::cloud::pubsub::v1::SubscriberOptions</a></div><div class="ttdoc">Configure how a Subscriber handles incoming messages.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8h_source.html#l00080">subscriber_options.h:80</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a4d36a0acd0c273b491563d99b7f370fb"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">google::cloud::pubsub::v1::MakeSubscriberConnection</a></div><div class="ttdeci">std::shared_ptr&lt; SubscriberConnection &gt; MakeSubscriberConnection(Subscription subscription, SubscriberOptions options, ConnectionOptions connection_options, std::unique_ptr&lt; pubsub::RetryPolicy const &gt; retry_policy, std::unique_ptr&lt; pubsub::BackoffPolicy const &gt; backoff_policy)</div><div class="ttdoc">Returns a SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__connection_8cc_source.html#l00038">subscriber_connection.cc:38</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a4d36a0acd0c273b491563d99b7f370fb"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">google::cloud::pubsub::v1::MakeSubscriberConnection</a></div><div class="ttdeci">std::shared_ptr&lt; SubscriberConnection &gt; MakeSubscriberConnection(Subscription subscription, SubscriberOptions options, ConnectionOptions connection_options, std::unique_ptr&lt; pubsub::RetryPolicy const &gt; retry_policy, std::unique_ptr&lt; pubsub::BackoffPolicy const &gt; backoff_policy)</div><div class="ttdoc">Creates a new SubscriberConnection object to work with Subscriber.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__connection_8cc_source.html#l00038">subscriber_connection.cc:38</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">google::cloud::pubsub::v1::Subscription</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub subscription.</div><div class="ttdef"><b>Definition:</b> <a href="subscription_8h_source.html#l00036">subscription.h:36</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html">google::cloud::pubsub::v1::Subscriber</a></div><div class="ttdoc">Receive messages from the Cloud Pub/Sub service.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber_8h_source.html#l00089">subscriber.h:89</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">google::cloud::pubsub::v1::AckHandler</a></div><div class="ttdoc">Defines the interface to acknowledge and reject messages.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8h_source.html#l00036">ack_handler.h:36</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">google::cloud::pubsub::v1::AckHandler</a></div><div class="ttdoc">Defines the interface to acknowledge and reject messages.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8h_source.html#l00048">ack_handler.h:48</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a838db478485c19cba0f1e0e08ea30332"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a838db478485c19cba0f1e0e08ea30332">google::cloud::pubsub::v1::LimitedTimeRetryPolicy</a></div><div class="ttdeci">google::cloud::internal::LimitedTimeRetryPolicy&lt; pubsub_internal::RetryTraits &gt; LimitedTimeRetryPolicy</div><div class="ttdoc">A retry policy that limits based on time.</div><div class="ttdef"><b>Definition:</b> <a href="retry__policy_8h_source.html#l00049">retry_policy.h:50</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

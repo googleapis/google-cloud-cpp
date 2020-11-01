@@ -96,26 +96,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae999c54604d29ab3219c9cd7921859f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">AckHandler</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae999c54604d29ab3219c9cd7921859f6">operator=</a> (<a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">AckHandler</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="separator:ae999c54604d29ab3219c9cd7921859f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0cba314ccf75c7e6f048d3dfaec995b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b">ack</a> () &amp;&amp;</td></tr>
-<tr class="memdesc:ae0cba314ccf75c7e6f048d3dfaec995b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledge the message and return any (unrecoverable) RPC errors.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b">More...</a><br /></td></tr>
+<tr class="memdesc:ae0cba314ccf75c7e6f048d3dfaec995b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledges the message associated with this handler.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b">More...</a><br /></td></tr>
 <tr class="separator:ae0cba314ccf75c7e6f048d3dfaec995b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af59d345070792526791429611e5a25c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8">nack</a> () &amp;&amp;</td></tr>
-<tr class="memdesc:af59d345070792526791429611e5a25c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reject the message and return any (unrecoverable) RPC errors.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8">More...</a><br /></td></tr>
+<tr class="memdesc:af59d345070792526791429611e5a25c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rejects the message associated with this handler.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8">More...</a><br /></td></tr>
 <tr class="separator:af59d345070792526791429611e5a25c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3881d0675fc9b50d8c6c5de828480d03"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a3881d0675fc9b50d8c6c5de828480d03">ack_id</a> () const</td></tr>
-<tr class="memdesc:a3881d0675fc9b50d8c6c5de828480d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Cloud Pub/Sub acknowledge ID, useful for debugging and logging.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a3881d0675fc9b50d8c6c5de828480d03">More...</a><br /></td></tr>
+<tr class="memdesc:a3881d0675fc9b50d8c6c5de828480d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and logging.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a3881d0675fc9b50d8c6c5de828480d03">More...</a><br /></td></tr>
 <tr class="separator:a3881d0675fc9b50d8c6c5de828480d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5673d48155edb9b0855f0c58b92d3e9"><td class="memItemLeft" align="right" valign="top">std::int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#aa5673d48155edb9b0855f0c58b92d3e9">delivery_attempt</a> () const</td></tr>
-<tr class="memdesc:aa5673d48155edb9b0855f0c58b92d3e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The approximate number of times that Cloud Pub/Sub has attempted to deliver the associated message to a subscriber.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#aa5673d48155edb9b0855f0c58b92d3e9">More...</a><br /></td></tr>
+<tr class="memdesc:aa5673d48155edb9b0855f0c58b92d3e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the approximate number of times that Cloud Pub/Sub has attempted to deliver the associated message to a subscriber.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#aa5673d48155edb9b0855f0c58b92d3e9">More...</a><br /></td></tr>
 <tr class="separator:aa5673d48155edb9b0855f0c58b92d3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c2bac06668b18e87976ea06c4e502e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a0c2bac06668b18e87976ea06c4e502e6">AckHandler</a> (std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html">Impl</a> &gt; impl)</td></tr>
-<tr class="memdesc:a0c2bac06668b18e87976ea06c4e502e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application may use this constructor in their mocks.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a0c2bac06668b18e87976ea06c4e502e6">More...</a><br /></td></tr>
+<tr class="memdesc:a0c2bac06668b18e87976ea06c4e502e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications may use this constructor in their mocks.  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a0c2bac06668b18e87976ea06c4e502e6">More...</a><br /></td></tr>
 <tr class="separator:a0c2bac06668b18e87976ea06c4e502e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines the interface to acknowledge and reject messages. </p>
-<p>This interface allows applications to acknowledge and reject messages in a provided to the Cloud Pub/Sub C++ client library. Note that this class is move-able, to support applications that process messages asynchronously. However, this class is <em>not</em> copy-able, because messages can only be acknowledged or rejected exactly once. </p>
+<p>When applications register a callback to receive Pub/Sub messages the callback must be able to receive both a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html" title="The C++ representation for a Cloud Pub/Sub messages.">pubsub::Message</a></code> and its associated <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html" title="Defines the interface to acknowledge and reject messages.">pubsub::AckHandler</a></code>. Actions on a <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html" title="Defines the interface to acknowledge and reject messages.">pubsub::AckHandler</a></code> always affect the same message received in the callback. Applications cannot create standalone handlers (except in unit tests via mocks).</p>
+<p>This interface allows applications to acknowledge and reject messages in a provided to the Cloud Pub/Sub C++ client library. Note that this class is move-able, to support applications that process messages asynchronously. However, this class is <em>not</em> copy-able, because messages can only be acknowledged or rejected exactly once.</p>
+<dl class="section user"><dt>Thread Safety</dt><dd>This class is <em>thread compatible</em>, only one thread should call non-const member functions of this class at a time. Note that because the non-const member functions are <code>&amp;&amp;</code> overloads the application can only call <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b" title="Acknowledges the message associated with this handler.">ack()</a></code> or <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8" title="Rejects the message associated with this handler.">nack()</a></code> exactly once, and only one of them. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00036">36</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00048">48</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a739a25b0646210d08cf3a541879c5fbc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a739a25b0646210d08cf3a541879c5fbc">&#9670;&nbsp;</a></span>~AckHandler()</h2>
@@ -186,9 +188,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Application may use this constructor in their mocks. </p>
+<p>Applications may use this constructor in their mocks. </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00079">79</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00110">110</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -216,9 +218,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Acknowledge the message and return any (unrecoverable) RPC errors. </p>
+<p>Acknowledges the message associated with this handler. </p>
+<dl class="section user"><dt>Idempotency</dt><dd>Note that this is not an idempotent operation, and therefore it is never retried. Furthermore, the service may still resend a message after a successful <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b" title="Acknowledges the message associated with this handler.">ack()</a></code>. Applications developers are reminded that Cloud Pub/Sub offers "at least once" semantics so they should be prepared to handle duplicate messages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00044">44</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00065">65</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -245,9 +248,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The Cloud Pub/Sub acknowledge ID, useful for debugging and logging. </p>
+<p>Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00056">56</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00087">87</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -274,9 +277,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The approximate number of times that Cloud Pub/Sub has attempted to deliver the associated message to a subscriber. </p>
+<p>Returns the approximate number of times that Cloud Pub/Sub has attempted to deliver the associated message to a subscriber. </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00060">60</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00091">91</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -303,9 +306,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reject the message and return any (unrecoverable) RPC errors. </p>
+<p>Rejects the message associated with this handler. </p>
+<dl class="section user"><dt>Idempotency</dt><dd>Note that this is not an idempotent operation, and therefore it is never retried. Furthermore, the service may still resend a message after a successful <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8" title="Rejects the message associated with this handler.">nack()</a></code>. Applications developers are reminded that Cloud Pub/Sub offers "at least once" semantics so they should be prepared to handle duplicate messages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00050">50</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00080">80</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>

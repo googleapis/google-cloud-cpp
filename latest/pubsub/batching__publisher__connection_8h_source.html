@@ -130,8 +130,8 @@ $(function() {
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      google::cloud::CompletionQueue cq,</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      std::unique_ptr&lt;pubsub::RetryPolicy const&gt; retry_policy,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      std::unique_ptr&lt;pubsub::BackoffPolicy const&gt; backoff_policy)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      : <a class="code" href="subscriber__integration__test_8cc.html#aa49b42c37fcab366899b679351cf3501">topic_</a>(std::move(topic)),</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        topic_full_name_(<a class="code" href="subscriber__integration__test_8cc.html#aa49b42c37fcab366899b679351cf3501">topic_</a>.FullName()),</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      : topic_(std::move(topic)),</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        topic_full_name_(topic_.FullName()),</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        options_(std::move(options)),</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        ordering_key_(std::move(ordering_key)),</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        stub_(std::move(stub)),</div>
@@ -143,7 +143,7 @@ $(function() {
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">void</span> MaybeFlush(std::unique_lock&lt;std::mutex&gt; lk);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordtype">void</span> FlushImpl(std::unique_lock&lt;std::mutex&gt; lk);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">pubsub::Topic</a> <span class="keyword">const</span> <a class="code" href="subscriber__integration__test_8cc.html#aa49b42c37fcab366899b679351cf3501">topic_</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">pubsub::Topic</a> <span class="keyword">const</span> topic_;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  std::string <span class="keyword">const</span> topic_full_name_;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html">pubsub::PublisherOptions</a> <span class="keyword">const</span> options_;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  std::string <span class="keyword">const</span> ordering_key_;</div>
@@ -172,9 +172,8 @@ $(function() {
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html">google::cloud::pubsub::v1::Topic</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic_8h_source.html#l00036">topic.h:36</a></div></div>
 <div class="ttc" id="apublisher__connection_8h_html"><div class="ttname"><a href="publisher__connection_8h.html">publisher_connection.h</a></div></div>
-<div class="ttc" id="asubscriber__integration__test_8cc_html_aa49b42c37fcab366899b679351cf3501"><div class="ttname"><a href="subscriber__integration__test_8cc.html#aa49b42c37fcab366899b679351cf3501">topic_</a></div><div class="ttdeci">Topic topic_</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__integration__test_8cc_source.html#l00097">subscriber_integration_test.cc:97</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html">google::cloud::pubsub::v1::PublisherConnection</a></div><div class="ttdoc">A connection to the Cloud Pub/Sub service to publish events.</div><div class="ttdef"><b>Definition:</b> <a href="publisher__connection_8h_source.html#l00046">publisher_connection.h:46</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection.html">google::cloud::pubsub::v1::PublisherConnection</a></div><div class="ttdoc">A connection to the Cloud Pub/Sub service to publish events.</div><div class="ttdef"><b>Definition:</b> <a href="publisher__connection_8h_source.html#l00052">publisher_connection.h:52</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

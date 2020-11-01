@@ -90,8 +90,8 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a> {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">   23</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">SubscriberOptions</a>&amp; SubscriberOptions::set_max_outstanding_messages(</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::int64_t <a class="code" href="subscription__message__queue__test_8cc.html#a21d557fb1a24b78862f142e9ee2b3324">message_count</a>) {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  max_outstanding_messages_ = (std::max&lt;std::int64_t&gt;)(0, <a class="code" href="subscription__message__queue__test_8cc.html#a21d557fb1a24b78862f142e9ee2b3324">message_count</a>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::int64_t message_count) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  max_outstanding_messages_ = (std::max&lt;std::int64_t&gt;)(0, message_count);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
@@ -117,7 +117,6 @@ $(function() {
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">google::cloud::pubsub::v1::SubscriberOptions</a></div><div class="ttdoc">Configure how a Subscriber handles incoming messages.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8h_source.html#l00080">subscriber_options.h:80</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
-<div class="ttc" id="asubscription__message__queue__test_8cc_html_a21d557fb1a24b78862f142e9ee2b3324"><div class="ttname"><a href="subscription__message__queue__test_8cc.html#a21d557fb1a24b78862f142e9ee2b3324">message_count</a></div><div class="ttdeci">int message_count</div><div class="ttdef"><b>Definition:</b> <a href="subscription__message__queue__test_8cc_source.html#l00103">subscription_message_queue_test.cc:103</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
