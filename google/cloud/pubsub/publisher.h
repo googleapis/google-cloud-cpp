@@ -165,9 +165,9 @@ class Publisher {
    * function.
    *
    * @par Idempotency
-   * This function never initiates a remote RPC, there are no considerations
+   * This function never initiates a remote RPC, so there are no considerations
    * around retrying it. Note, however, that more than one `Publish()` request
-   * may fail for the same ordering key, the application needs to call this
+   * may fail for the same ordering key. The application needs to call this
    * function after **each** error before it can resume publishing messages
    * with the same ordering key.
    *

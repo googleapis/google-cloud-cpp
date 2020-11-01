@@ -59,8 +59,8 @@ class AckHandler {
    * Note that this is not an idempotent operation, and therefore it is never
    * retried. Furthermore, the service may still resend a message after a
    * successful `ack()`. Applications developers are reminded that Cloud Pub/Sub
-   * offers "at least once" semantics and should be prepared to handle duplicate
-   * messages.
+   * offers "at least once" semantics so they should be prepared to handle
+   * duplicate messages.
    */
   void ack() && {
     auto impl = std::move(impl_);
@@ -74,8 +74,8 @@ class AckHandler {
    * Note that this is not an idempotent operation, and therefore it is never
    * retried. Furthermore, the service may still resend a message after a
    * successful `nack()`. Applications developers are reminded that Cloud
-   * Pub/Sub offers "at least once" semantics and should be prepared to handle
-   * duplicate messages.
+   * Pub/Sub offers "at least once" semantics so they should be prepared to
+   * handle duplicate messages.
    */
   void nack() && {
     auto impl = std::move(impl_);

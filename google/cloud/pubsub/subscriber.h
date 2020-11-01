@@ -99,7 +99,7 @@ class Subscriber {
    *
    * @par Idempotency
    * @parblock
-   * This is an idempotent operation, it only reads messages from the service.
+   * This is an idempotent operation; it only reads messages from the service.
    * Will make multiple attempts to start a connection to the service, subject
    * to the retry policies configured in the `SubscriberConnection`. Once a
    * successful connection is established the library will try to resume the

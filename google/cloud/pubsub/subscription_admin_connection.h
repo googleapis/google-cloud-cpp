@@ -78,7 +78,7 @@ using ListSnapshotsRange = google::cloud::internal::PaginationRange<
  * Applications may define classes derived from `SubscriptionAdminConnection`,
  * for example, because they want to mock the class. To avoid breaking all such
  * derived classes when we change the number or type of the arguments to the
- * member functions we define light weight structures to pass the arguments.
+ * member functions we define lightweight structures to pass the arguments.
  */
 class SubscriptionAdminConnection {
  public:

@@ -123,8 +123,6 @@ class Message {
       Message&& m);
   friend std::size_t pubsub_internal::MessageSize(Message const&);
 
-  // Doxygen insists on rendering this friend declaration, so we need at least
-  // a sensible description.
   /// Construct `Message` objects.
   friend class MessageBuilder;
 
