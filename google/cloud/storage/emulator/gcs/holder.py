@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Implement a class as a placeholder for data."""
+"""Implement a holder for resumable upload's data and rewrite's data"""
 
 import types
 from google.protobuf import json_format

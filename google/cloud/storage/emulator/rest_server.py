@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import database
+import logging
 import flask
 import httpbin
 import simdjson
@@ -682,7 +684,16 @@ server = DispatcherMiddleware(
 )
 
 
-def run(port, database):
+def run():
+    global db
+    logging.basicConfig()
+    db = database.Database.init()
+    # grpc_port = int(os.getenv("GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_GRPC_PORT", 8000))
+    # grpc_server.run(grpc_port, db)
+    return server
+
+
+def run_without_gunicorn(port, database):
     global db
     db = database
     serving.run_simple(

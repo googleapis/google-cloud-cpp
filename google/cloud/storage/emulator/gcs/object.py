@@ -442,9 +442,8 @@ class Object:
                     chunk_size = 4 * 1024
                     for r in range(0, len(response_payload), chunk_size):
                         if r >= 256 * 1024:
-                            # print("\n\n###### EXIT to simulate crash\n")
-                            # sys.exit(1)
-                            return flask.Response("Service Unavailable", status=503)
+                            print("\n\n###### EXIT to simulate crash\n")
+                            sys.exit(1)
                         time.sleep(0.01)
                         chunk_end = min(r + chunk_size, len(response_payload))
                         yield response_payload[r:chunk_end]
@@ -455,7 +454,9 @@ class Object:
             elif instructions.endswith(u"/retry-2"):
                 print("## Return error for retry 2")
                 return flask.Response("Service Unavailable", status=503)
-            print("## Return success for %s" % instructions)
+            else:
+                print("## Return success for %s" % instructions)
+                return flask.Response(response_payload, status=200, headers=headers)
         else:
 
             def streamer():

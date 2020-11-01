@@ -64,6 +64,8 @@ class Database:
 
     def delete_bucket(self, request, bucket_name, context):
         bucket = self.get_bucket(request, bucket_name, context)
+        if len(self.objects[bucket.metadata.name]) > 0:
+            utils.error.invalid("Deleting non-empty bucket", context)
         del self.buckets[bucket.metadata.name]
         del self.objects[bucket.metadata.name]
         del self.live_generations[bucket.metadata.name]
