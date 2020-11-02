@@ -224,7 +224,7 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
 
 /// @test Verify SubscriptionConcurrencyControl respects the concurrency limit.
 TEST_F(SubscriptionConcurrencyControlTest,
-       ParallelCallbacksRespectConcurrencyimit) {
+       ParallelCallbacksRespectConcurrencyLimit) {
   auto constexpr kMaxConcurrency = 8;
   auto constexpr kCallbackCount = 200;
 

@@ -25,8 +25,8 @@
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
 
-* Simplify the concurrency control configuration in `pubsub::SubscriberOptions`,
-  applications only need to set the maximum number of messages that will be
+* Simplify the concurrency control configuration in `pubsub::SubscriberOptions`.
+  Applications only need to set the maximum number of messages that will be
   scheduled in parallel.
 
 * Remove `pubsub::AckHandler::ack_id()` accessor. We believe application
