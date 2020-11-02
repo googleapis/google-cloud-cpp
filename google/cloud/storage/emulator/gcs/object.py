@@ -48,10 +48,11 @@ class Object:
         "customer_encryption",
     ]
 
-    def __init__(self, metadata, media, bucket):
+    def __init__(self, metadata, media, bucket, customTime=None):
         self.metadata = metadata
         self.media = media
         self.bucket = bucket
+        self.customTime = customTime
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
@@ -71,8 +72,11 @@ class Object:
         del metadata.acl[:]
         metadata.acl.extend(acls)
 
+    # TODO(#4893): Remove `customTime`
     @classmethod
-    def init(cls, request, metadata, media, bucket, is_destination, context):
+    def init(
+        cls, request, metadata, media, bucket, is_destination, context, customTime=None
+    ):
         if context is None:
             instruction = request.headers.get("x-goog-testbench-instructions")
             if instruction == "inject-upload-data-error":
@@ -133,14 +137,17 @@ class Object:
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
         return (
-            cls(metadata, media, bucket),
+            cls(metadata, media, bucket, customTime),
             utils.common.extract_projection(request, default_projection, context),
         )
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
+        customTime = metadata.pop("customTime", None)
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
-        return cls.init(request, metadata, media, bucket, is_destination, None)
+        return cls.init(
+            request, metadata, media, bucket, is_destination, None, customTime
+        )
 
     @classmethod
     def init_media(cls, request, bucket):
@@ -248,6 +255,8 @@ class Object:
             update_mask = request.update_mask
         else:
             data = simdjson.loads(request.data)
+            if "customTime" in data:
+                self.customTime = data.pop("customTime", None)
             if "metadata" in data:
                 if data["metadata"] is None:
                     self.metadata.metadata.clear()
@@ -332,7 +341,7 @@ class Object:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, False, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
@@ -341,7 +350,7 @@ class Object:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, False, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
@@ -349,16 +358,18 @@ class Object:
     # === RESPOSE === #
 
     @classmethod
-    def rest(cls, metadata):
+    def rest(cls, metadata, customTime):
         response = json_format.MessageToDict(metadata)
         response["kind"] = "storage#object"
         response["crc32c"] = base64.b64encode(
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
+        if customTime is not None:
+            response["customTime"] = customTime
         return response
 
     def rest_metadata(self):
-        return self.rest(self.metadata)
+        return self.rest(self.metadata, self.customTime)
 
     def x_goog_hash_header(self):
         header = ""

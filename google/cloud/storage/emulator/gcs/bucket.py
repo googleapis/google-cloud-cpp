@@ -359,7 +359,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, False, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
@@ -368,7 +368,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, False, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
@@ -419,7 +419,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, True, context)
+        return self.__upsert_default_object_acl(entity, role, False, context)
 
     def patch_default_object_acl(self, request, entity, context):
         role = ""
@@ -428,7 +428,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, True, context)
+        return self.__upsert_default_object_acl(entity, role, False, context)
 
     def delete_default_object_acl(self, entity, context):
         del self.metadata.default_object_acl[

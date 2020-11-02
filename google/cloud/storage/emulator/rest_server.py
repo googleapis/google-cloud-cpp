@@ -327,11 +327,14 @@ def bucket_lock_retention_policy(bucket_name):
 @gcs.route("/b/<bucket_name>/o")
 def object_list(bucket_name):
     db.insert_test_bucket(None)
-    items, prefixes = db.list_object(flask.request, bucket_name, None)
+    items, prefixes, customTimes = db.list_object(flask.request, bucket_name, None)
     response = {
         "kind": "storage#objects",
         "nextPageToken": "",
-        "items": [gcs_type.object.Object.rest(blob) for blob in items],
+        "items": [
+            gcs_type.object.Object.rest(blob, customTime)
+            for blob, customTime in zip(items, customTimes)
+        ],
         "prefixes": prefixes,
     }
     fields = flask.request.args.get("fields", None)
@@ -437,6 +440,63 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
         dst_object.metadata.time_created.ToDatetime()
     )
     return dst_object.rest_metadata()
+
+
+@gcs.route(
+    "/b/<src_bucket_name>/o/<path:src_object_name>/rewriteTo/b/<dst_bucket_name>/o/<path:dst_object_name>",
+    methods=["POST"],
+)
+def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_object_name):
+    db.insert_test_bucket(None)
+    token, rewrite = flask.request.args.get("rewriteToken"), None
+    src_object = None
+    if token is None:
+        rewrite = gcs_type.holder.DataHolder.init_rewrite_rest(
+            flask.request,
+            src_bucket_name,
+            src_object_name,
+            dst_bucket_name,
+            dst_object_name,
+        )
+        db.insert_rewrite(rewrite)
+    else:
+        rewrite = db.get_rewrite(token, None)
+    src_object = db.get_object(
+        rewrite.request, src_bucket_name, src_object_name, True, None
+    )
+    total_bytes_rewritten = len(rewrite.media)
+    total_bytes_rewritten += min(
+        rewrite.max_bytes_rewritten_per_call, len(src_object.media) - len(rewrite.media)
+    )
+    rewrite.media += src_object.media[len(rewrite.media) : total_bytes_rewritten]
+    done, dst_object = total_bytes_rewritten == len(src_object.media), None
+    response = {
+        "kind": "storage#rewriteResponse",
+        "totalBytesRewritten": len(rewrite.media),
+        "objectSize": len(src_object.media),
+        "done": done,
+    }
+    if done:
+        dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
+        dst_metadata = resources_pb2.Object()
+        dst_metadata.CopyFrom(src_object.metadata)
+        dst_metadata.bucket = dst_bucket_name
+        dst_metadata.name = dst_object_name
+        dst_media = rewrite.media
+        dst_object, _ = gcs_type.object.Object.init(
+            flask.request, dst_metadata, dst_media, dst_bucket, True, None
+        )
+        db.insert_object(flask.request, dst_bucket_name, dst_object, None)
+        dst_object.patch(rewrite.request, None)
+        dst_object.metadata.metageneration = 1
+        dst_object.metadata.updated.FromDatetime(
+            dst_object.metadata.time_created.ToDatetime()
+        )
+        resources = dst_object.rest_metadata()
+        response["resource"] = resources
+    else:
+        response["rewriteToken"] = rewrite.token
+    return response
 
 
 # === OBJECT ACCESS CONTROL === #
@@ -564,7 +624,7 @@ def resumable_upload_chunk(bucket_name):
         utils.error.missing("upload_id in resumable_upload_chunk", None)
     upload = db.get_upload(upload_id, None)
     if upload.complete:
-        return gcs_type.object.Object.rest(upload.metadata)
+        return gcs_type.object.Object.rest(upload.metadata, upload.customTime)
     upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
     content_length = int(request.headers.get("content-length", 0))
     if content_length != len(request.data):
@@ -576,7 +636,7 @@ def resumable_upload_chunk(bucket_name):
             utils.error.invalid("content-range header", None)
         if items[0] == "*":
             if upload.complete:
-                return gcs_type.object.Object.rest(upload.metadata)
+                return gcs_type.object.Object.rest(upload.metadata, upload.customTime)
             if items[1] != "*" and int(items[1]) == len(upload.media):
                 upload.complete = True
                 blob, _ = gcs_type.object.Object.init(
@@ -627,7 +687,13 @@ def resumable_upload_chunk(bucket_name):
         upload.complete = True
     if upload.complete:
         blob, _ = gcs_type.object.Object.init(
-            upload.request, upload.metadata, upload.media, upload.bucket, False, None
+            upload.request,
+            upload.metadata,
+            upload.media,
+            upload.bucket,
+            False,
+            None,
+            upload.customTime,
         )
         blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
             upload.transfer
@@ -672,6 +738,12 @@ def xml_get_object(bucket_name, object_name):
 
 # === SERVER === #
 
+# Define the WSGI application to handle HMAC key requests
+(PROJECTS_HANDLER_PATH, projects_app) = gcs_type.project.get_projects_app()
+
+# Define the WSGI application to handle IAM requests
+(IAM_HANDLER_PATH, iam_app) = gcs_type.iam.get_iam_app()
+
 
 server = DispatcherMiddleware(
     root,
@@ -680,6 +752,8 @@ server = DispatcherMiddleware(
         GCS_HANDLER_PATH: gcs,
         DOWNLOAD_HANDLER_PATH: download,
         UPLOAD_HANDLER_PATH: upload,
+        PROJECTS_HANDLER_PATH: projects_app,
+        IAM_HANDLER_PATH: iam_app,
     },
 )
 
