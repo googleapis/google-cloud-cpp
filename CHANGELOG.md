@@ -75,8 +75,8 @@ No user-facing changes.
 **OTHER CHANGES:**
 
 * Unexpected curl errors will now be retried (#5312)
-* docs: add error handling example from client->ReadObject() (#5274)
-* feat(storage): Create an example for Client::DeleteResumableUpload()
+* docs: add error handling example from `client->ReadObject()` (#5274)
+* feat(storage): Create an example for `Client::DeleteResumableUpload()`
 * doc: prefer UBLA references over bucket-policy-only
 
 ### Common Libraries
