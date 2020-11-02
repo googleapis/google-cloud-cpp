@@ -101,17 +101,15 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#afb636925ad1d695e7520f305bf66e0de">   35</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">SubscriberOptions</a>&amp; SubscriberOptions::set_concurrency_watermarks(</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::size_t lwm, std::size_t hwm) {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  concurrency_hwm_ = (std::max&lt;std::size_t&gt;)(1, hwm);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  concurrency_lwm_ = (std::min)(concurrency_hwm_, lwm);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace pubsub</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a63bb8a9762387513df32435d1e2b9235">   35</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">SubscriberOptions</a>&amp; SubscriberOptions::set_max_concurrency(std::size_t v) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  max_concurrency_ = v == 0 ? DefaultMaxConcurrency() : v;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}  <span class="comment">// namespace pubsub</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="asubscriber__options_8h_html"><div class="ttname"><a href="subscriber__options_8h.html">subscriber_options.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>

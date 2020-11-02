@@ -108,11 +108,11 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      google::cloud::CompletionQueue cq,</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      std::shared_ptr&lt;SessionShutdownManager&gt; shutdown_manager,</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      std::shared_ptr&lt;SubscriptionMessageSource&gt; source,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      std::size_t message_count_lwm, std::size_t message_count_hwm) {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      std::size_t max_concurrency) {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> std::shared_ptr&lt;SubscriptionConcurrencyControl&gt;(</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">new</span> SubscriptionConcurrencyControl(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            std::move(cq), std::move(shutdown_manager), std::move(source),</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            message_count_lwm, message_count_hwm));</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">new</span> SubscriptionConcurrencyControl(std::move(cq),</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                           std::move(shutdown_manager),</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                           std::move(source), max_concurrency));</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">void</span> Start(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c">pubsub::ApplicationCallback</a>);</div>
@@ -125,39 +125,36 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      google::cloud::CompletionQueue cq,</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      std::shared_ptr&lt;SessionShutdownManager&gt; shutdown_manager,</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      std::shared_ptr&lt;SubscriptionMessageSource&gt; source,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      std::size_t message_count_lwm, std::size_t message_count_hwm)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      std::size_t max_concurrency)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      : cq_(std::move(cq)),</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        shutdown_manager_(std::move(shutdown_manager)),</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        source_(std::move(source)),</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        message_count_lwm_((std::min)(message_count_lwm, message_count_hwm)),</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        message_count_hwm_(message_count_hwm) {}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> MessageHandled();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">void</span> OnMessage(google::pubsub::v1::ReceivedMessage m);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  std::size_t total_messages()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> message_count_ + messages_requested_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  google::cloud::CompletionQueue cq_;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  std::shared_ptr&lt;SessionShutdownManager&gt; <span class="keyword">const</span> shutdown_manager_;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  std::shared_ptr&lt;SubscriptionMessageSource&gt; <span class="keyword">const</span> source_;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  std::size_t <span class="keyword">const</span> message_count_lwm_;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  std::size_t <span class="keyword">const</span> message_count_hwm_;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  std::mutex mu_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c">pubsub::ApplicationCallback</a> callback_;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">bool</span> overflow_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  std::size_t message_count_ = 0;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  std::size_t messages_requested_ = 0;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_CONCURRENCY_CONTROL_H</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        max_concurrency_(max_concurrency) {}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">void</span> MessageHandled();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> OnMessage(google::pubsub::v1::ReceivedMessage m);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  std::size_t total_messages()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span> message_count_ + messages_requested_;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  google::cloud::CompletionQueue cq_;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  std::shared_ptr&lt;SessionShutdownManager&gt; <span class="keyword">const</span> shutdown_manager_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  std::shared_ptr&lt;SubscriptionMessageSource&gt; <span class="keyword">const</span> source_;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  std::size_t <span class="keyword">const</span> max_concurrency_;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  std::mutex mu_;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3a5898460ba45840c972efd7ee0ca59c">pubsub::ApplicationCallback</a> callback_;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  std::size_t message_count_ = 0;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  std::size_t messages_requested_ = 0;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_CONCURRENCY_CONTROL_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="asession__shutdown__manager_8h_html"><div class="ttname"><a href="session__shutdown__manager_8h.html">session_shutdown_manager.h</a></div></div>
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>

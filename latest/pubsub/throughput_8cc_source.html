@@ -397,232 +397,231 @@ $(function() {
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;          .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">set_max_outstanding_messages</a>(</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;              config.subscriber_max_outstanding_messages)</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;          .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">set_max_outstanding_bytes</a>(config.subscriber_max_outstanding_bytes)</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;          .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#afb636925ad1d695e7520f305bf66e0de">set_concurrency_watermarks</a>(config.subscriber_max_concurrency,</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                                      config.subscriber_max_concurrency);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="keyword">auto</span> connection_options =</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}.set_channel_pool_domain(<span class="stringliteral">&quot;Subscriber&quot;</span>);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keywordflow">if</span> (config.subscriber_io_threads != 0) {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    connection_options.set_background_thread_pool_size(</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        config.subscriber_io_threads);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  }</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html">pubsub::Subscriber</a> subscriber(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">pubsub::MakeSubscriberConnection</a>(</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">pubsub::Subscription</a>(config.project_id, config.subscription_id),</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      std::move(subscriber_options), std::move(connection_options)));</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  std::atomic&lt;std::int64_t&gt; received_count{0};</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <span class="keyword">auto</span> handler = [&amp;received_count](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp;,</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                                   <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    ++received_count;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    std::move(h).ack();</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  };</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  std::vector&lt;future&lt;Status&gt;&gt; sessions;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  std::generate_n(std::back_inserter(sessions), config.subscriber_thread_count,</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                  [&amp;] { return subscriber.Subscribe(handler); });</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> start = std::chrono::steady_clock::now();</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; !Done(config, i, start); ++i) {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keyword">using</span> std::chrono::steady_clock;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    Timer usage;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    usage.Start();</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> start_count = received_count.load();</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    std::this_thread::sleep_for(config.iteration_duration);</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> count = received_count.load() - start_count;</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    usage.Stop();</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    PrintResult(config, <span class="stringliteral">&quot;Sub&quot;</span>, i, count, usage);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  }</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; s : sessions) s.cancel();</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  Status last_status;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  std::int64_t last_received_count = 0;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; s : sessions) {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keyword">auto</span> status = s.get();</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> current = received_count.load();</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordflow">if</span> (last_status == status &amp;&amp; last_received_count == current) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    last_status = std::move(status);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    last_received_count = current;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    std::lock_guard&lt;std::mutex&gt; lk(cout_mu);</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# status=&quot;</span> &lt;&lt; last_status &lt;&lt; <span class="stringliteral">&quot;, count=&quot;</span> &lt;&lt; last_received_count</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;              &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  }</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;}</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160; </div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;using ::google::cloud::internal::GetEnv;</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;using ::google::cloud::testing_util::OptionDescriptor;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;using ::google::cloud::testing_util::ParseBoolean;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;using ::google::cloud::testing_util::ParseDuration;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;using ::google::cloud::testing_util::ParseSize;</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;google::cloud::StatusOr&lt;Config&gt; ParseArgsImpl(std::vector&lt;std::string&gt; args,</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                                              std::string <span class="keyword">const</span>&amp; description) {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  Config options;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  options.project_id = GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keywordtype">bool</span> show_help = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  <span class="keywordtype">bool</span> show_description = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  std::vector&lt;OptionDescriptor&gt; desc{</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      {<span class="stringliteral">&quot;--help&quot;</span>, <span class="stringliteral">&quot;print usage information&quot;</span>,</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;       [&amp;show_help](std::string <span class="keyword">const</span>&amp;) { show_help = <span class="keyword">true</span>; }},</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;      {<span class="stringliteral">&quot;--description&quot;</span>, <span class="stringliteral">&quot;print benchmark description&quot;</span>,</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;       [&amp;show_description](std::string <span class="keyword">const</span>&amp;) { show_description = <span class="keyword">true</span>; }},</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      {<span class="stringliteral">&quot;--project-id&quot;</span>, <span class="stringliteral">&quot;use the given project id for the benchmark&quot;</span>,</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.project_id = val; }},</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      {<span class="stringliteral">&quot;--topic-id&quot;</span>, <span class="stringliteral">&quot;use an existing topic for the benchmark&quot;</span>,</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.topic_id = val; }},</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      {<span class="stringliteral">&quot;--subscription-id&quot;</span>, <span class="stringliteral">&quot;use an existing subscription for the benchmark&quot;</span>,</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.subscription_id = val; }},</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      {<span class="stringliteral">&quot;--payload-size&quot;</span>, <span class="stringliteral">&quot;set the size of the message payload&quot;</span>,</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;         options.payload_size = ParseSize(val);</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;       }},</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      {<span class="stringliteral">&quot;--iteration-duration&quot;</span>,</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;       <span class="stringliteral">&quot;measurement interval, report throughput every X seconds&quot;</span>,</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;         options.iteration_duration = ParseDuration(val);</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;       }},</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      {<span class="stringliteral">&quot;--publisher&quot;</span>, <span class="stringliteral">&quot;run a publisher in this program&quot;</span>,</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;         options.publisher = ParseBoolean(val).value_or(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;       }},</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      {<span class="stringliteral">&quot;--publisher-thread-count&quot;</span>, <span class="stringliteral">&quot;number of publisher tasks&quot;</span>,</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;         options.publisher_thread_count = std::stoi(val);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;       }},</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;      {<span class="stringliteral">&quot;--publisher-io-threads&quot;</span>,</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;       <span class="stringliteral">&quot;number of publisher I/O threads, set to 0 to use the library default&quot;</span>,</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;         options.publisher_io_threads = std::stoi(val);</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;       }},</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      {<span class="stringliteral">&quot;--publisher-max-batch-size&quot;</span>, <span class="stringliteral">&quot;configure batching parameters&quot;</span>,</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;         options.publisher_max_batch_size = std::stoi(val);</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;       }},</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;      {<span class="stringliteral">&quot;--publisher-max-batch-bytes&quot;</span>, <span class="stringliteral">&quot;configure batching parameters&quot;</span>,</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;         options.publisher_max_batch_bytes = ParseSize(val);</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;       }},</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;      {<span class="stringliteral">&quot;--subscriber&quot;</span>, <span class="stringliteral">&quot;run a subscriber in this program&quot;</span>,</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;         options.subscriber = ParseBoolean(val).value_or(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;       }},</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      {<span class="stringliteral">&quot;--subscriber-thread-count&quot;</span>, <span class="stringliteral">&quot;number of subscriber tasks&quot;</span>,</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;         options.subscriber_thread_count = std::stoi(val);</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;       }},</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;      {<span class="stringliteral">&quot;--subscriber-io-threads&quot;</span>,</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;       <span class="stringliteral">&quot;number of subscriber I/O threads, set to 0 to use the library default&quot;</span>,</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;         options.subscriber_io_threads = std::stoi(val);</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;       }},</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-outstanding-messages&quot;</span>,</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;       <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;         options.subscriber_max_outstanding_messages = std::stoi(val);</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;       }},</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-outstanding-bytes&quot;</span>, <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;         options.subscriber_max_outstanding_bytes = ParseSize(val);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;       }},</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-concurrency&quot;</span>, <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;         options.subscriber_max_concurrency = std::stoi(val);</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;       }},</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;      {<span class="stringliteral">&quot;--minimum-samples&quot;</span>, <span class="stringliteral">&quot;minimum number of samples to capture&quot;</span>,</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;         options.minimum_samples = std::stol(val);</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;       }},</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;      {<span class="stringliteral">&quot;--maximum-samples&quot;</span>, <span class="stringliteral">&quot;maximum number of samples to capture&quot;</span>,</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;         options.maximum_samples = std::stol(val);</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;       }},</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;      {<span class="stringliteral">&quot;--minimum-runtime&quot;</span>, <span class="stringliteral">&quot;run for at least this time&quot;</span>,</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;         options.minimum_runtime = ParseDuration(val);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;       }},</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;      {<span class="stringliteral">&quot;--maximum-runtime&quot;</span>, <span class="stringliteral">&quot;run for at most this time&quot;</span>,</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;         options.maximum_runtime = ParseDuration(val);</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;       }},</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;  };</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> usage = BuildUsage(desc, args[0]);</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;  <span class="keyword">auto</span> unparsed = OptionsParse(desc, args);</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;  <span class="keywordflow">if</span> (show_description) {</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    std::cout &lt;&lt; description &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;  }</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160; </div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;  <span class="keywordflow">if</span> (show_help) {</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    std::cout &lt;&lt; usage &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    options.show_help = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keywordflow">return</span> options;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;  }</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;  <span class="keywordflow">if</span> (options.project_id.empty()) {</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;                                 <span class="stringliteral">&quot;missing or empty --project-id option&quot;</span>);</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;  }</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;  <span class="keywordflow">return</span> options;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;}</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160; </div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;google::cloud::StatusOr&lt;Config&gt; SelfTest(std::string <span class="keyword">const</span>&amp; cmd) {</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;  <span class="keyword">auto</span> error = [](std::string m) {</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kUnknown,</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;                                 std::move(m));</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;  };</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; var : {<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>}) {</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> value = GetEnv(var).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    <span class="keywordflow">if</span> (!value.empty()) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    std::ostringstream os;</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;The environment variable &quot;</span> &lt;&lt; var &lt;&lt; <span class="stringliteral">&quot; is not set or empty&quot;</span>;</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    <span class="keywordflow">return</span> error(std::move(os).str());</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;  }</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;  <span class="keyword">auto</span> config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--help&quot;</span>}, kDescription);</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;  <span class="keywordflow">if</span> (!config || !config-&gt;show_help) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--help parsing&quot;</span>);</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--description&quot;</span>, <span class="stringliteral">&quot;--help&quot;</span>}, kDescription);</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;  <span class="keywordflow">if</span> (!config || !config-&gt;show_help) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--description parsing&quot;</span>);</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--project-id=&quot;</span>}, kDescription);</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  <span class="keywordflow">if</span> (config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--project-id validation&quot;</span>);</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--topic-id=test&quot;</span>}, kDescription);</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <span class="keywordflow">if</span> (!config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--topic-id&quot;</span>);</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--subscription-id=test&quot;</span>}, kDescription);</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;  <span class="keywordflow">if</span> (!config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--subscription-id&quot;</span>);</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;  <span class="keywordflow">return</span> ParseArgsImpl(</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      {</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;          cmd,</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;          <span class="stringliteral">&quot;--project-id=&quot;</span> + GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;          <span class="stringliteral">&quot;--publisher=true&quot;</span>,</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;          <span class="stringliteral">&quot;--publisher-thread-count=1&quot;</span>,</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;          <span class="stringliteral">&quot;--publisher-io-threads=1&quot;</span>,</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;          <span class="stringliteral">&quot;--publisher-max-batch-size=2&quot;</span>,</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;          <span class="stringliteral">&quot;--publisher-max-batch-bytes=1KiB&quot;</span>,</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;          <span class="stringliteral">&quot;--subscriber=true&quot;</span>,</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;          <span class="stringliteral">&quot;--subscriber-thread-count=1&quot;</span>,</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;          <span class="stringliteral">&quot;--subscriber-io-threads=1&quot;</span>,</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;          <span class="stringliteral">&quot;--subscriber-max-outstanding-bytes=100MiB&quot;</span>,</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;          <span class="stringliteral">&quot;--subscriber-max-concurrency=1000&quot;</span>,</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;          <span class="stringliteral">&quot;--iteration-duration=1s&quot;</span>,</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;          <span class="stringliteral">&quot;--payload-size=2KiB&quot;</span>,</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;          <span class="stringliteral">&quot;--minimum-samples=1&quot;</span>,</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;          <span class="stringliteral">&quot;--maximum-samples=2&quot;</span>,</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;          <span class="stringliteral">&quot;--minimum-runtime=0s&quot;</span>,</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;          <span class="stringliteral">&quot;--maximum-runtime=2s&quot;</span>,</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      },</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;      kDescription);</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;}</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160; </div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;google::cloud::StatusOr&lt;Config&gt; ParseArgs(std::vector&lt;std::string&gt; args) {</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;  <span class="keywordtype">bool</span> auto_run =</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;      GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>) == <span class="stringliteral">&quot;yes&quot;</span>;</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;  <span class="keywordflow">if</span> (auto_run) <span class="keywordflow">return</span> SelfTest(args[0]);</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;  <span class="keywordflow">return</span> ParseArgsImpl(std::move(args), kDescription);</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;}</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160; </div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;}  <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;          .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a63bb8a9762387513df32435d1e2b9235">set_max_concurrency</a>(config.subscriber_max_concurrency);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keyword">auto</span> connection_options =</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}.set_channel_pool_domain(<span class="stringliteral">&quot;Subscriber&quot;</span>);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordflow">if</span> (config.subscriber_io_threads != 0) {</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    connection_options.set_background_thread_pool_size(</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        config.subscriber_io_threads);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  }</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html">pubsub::Subscriber</a> subscriber(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">pubsub::MakeSubscriberConnection</a>(</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html">pubsub::Subscription</a>(config.project_id, config.subscription_id),</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      std::move(subscriber_options), std::move(connection_options)));</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  std::atomic&lt;std::int64_t&gt; received_count{0};</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keyword">auto</span> handler = [&amp;received_count](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp;,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                                   <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    ++received_count;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    std::move(h).ack();</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  };</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160; </div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  std::vector&lt;future&lt;Status&gt;&gt; sessions;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  std::generate_n(std::back_inserter(sessions), config.subscriber_thread_count,</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                  [&amp;] { return subscriber.Subscribe(handler); });</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> start = std::chrono::steady_clock::now();</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; !Done(config, i, start); ++i) {</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keyword">using</span> std::chrono::steady_clock;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    Timer usage;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    usage.Start();</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> start_count = received_count.load();</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    std::this_thread::sleep_for(config.iteration_duration);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> count = received_count.load() - start_count;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    usage.Stop();</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    PrintResult(config, <span class="stringliteral">&quot;Sub&quot;</span>, i, count, usage);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; s : sessions) s.cancel();</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  Status last_status;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  std::int64_t last_received_count = 0;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; s : sessions) {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keyword">auto</span> status = s.get();</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> current = received_count.load();</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">if</span> (last_status == status &amp;&amp; last_received_count == current) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    last_status = std::move(status);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    last_received_count = current;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    std::lock_guard&lt;std::mutex&gt; lk(cout_mu);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# status=&quot;</span> &lt;&lt; last_status &lt;&lt; <span class="stringliteral">&quot;, count=&quot;</span> &lt;&lt; last_received_count</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;              &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  }</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;using ::google::cloud::internal::GetEnv;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;using ::google::cloud::testing_util::OptionDescriptor;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;using ::google::cloud::testing_util::ParseBoolean;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;using ::google::cloud::testing_util::ParseDuration;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;using ::google::cloud::testing_util::ParseSize;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;google::cloud::StatusOr&lt;Config&gt; ParseArgsImpl(std::vector&lt;std::string&gt; args,</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;                                              std::string <span class="keyword">const</span>&amp; description) {</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;  Config options;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  options.project_id = GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  <span class="keywordtype">bool</span> show_help = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keywordtype">bool</span> show_description = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  std::vector&lt;OptionDescriptor&gt; desc{</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;      {<span class="stringliteral">&quot;--help&quot;</span>, <span class="stringliteral">&quot;print usage information&quot;</span>,</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;       [&amp;show_help](std::string <span class="keyword">const</span>&amp;) { show_help = <span class="keyword">true</span>; }},</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;      {<span class="stringliteral">&quot;--description&quot;</span>, <span class="stringliteral">&quot;print benchmark description&quot;</span>,</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;       [&amp;show_description](std::string <span class="keyword">const</span>&amp;) { show_description = <span class="keyword">true</span>; }},</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      {<span class="stringliteral">&quot;--project-id&quot;</span>, <span class="stringliteral">&quot;use the given project id for the benchmark&quot;</span>,</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.project_id = val; }},</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      {<span class="stringliteral">&quot;--topic-id&quot;</span>, <span class="stringliteral">&quot;use an existing topic for the benchmark&quot;</span>,</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.topic_id = val; }},</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      {<span class="stringliteral">&quot;--subscription-id&quot;</span>, <span class="stringliteral">&quot;use an existing subscription for the benchmark&quot;</span>,</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) { options.subscription_id = val; }},</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      {<span class="stringliteral">&quot;--payload-size&quot;</span>, <span class="stringliteral">&quot;set the size of the message payload&quot;</span>,</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;         options.payload_size = ParseSize(val);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;       }},</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      {<span class="stringliteral">&quot;--iteration-duration&quot;</span>,</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;       <span class="stringliteral">&quot;measurement interval, report throughput every X seconds&quot;</span>,</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;         options.iteration_duration = ParseDuration(val);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;       }},</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;      {<span class="stringliteral">&quot;--publisher&quot;</span>, <span class="stringliteral">&quot;run a publisher in this program&quot;</span>,</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;         options.publisher = ParseBoolean(val).value_or(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;       }},</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      {<span class="stringliteral">&quot;--publisher-thread-count&quot;</span>, <span class="stringliteral">&quot;number of publisher tasks&quot;</span>,</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;         options.publisher_thread_count = std::stoi(val);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;       }},</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;      {<span class="stringliteral">&quot;--publisher-io-threads&quot;</span>,</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;       <span class="stringliteral">&quot;number of publisher I/O threads, set to 0 to use the library default&quot;</span>,</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;         options.publisher_io_threads = std::stoi(val);</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;       }},</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;      {<span class="stringliteral">&quot;--publisher-max-batch-size&quot;</span>, <span class="stringliteral">&quot;configure batching parameters&quot;</span>,</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;         options.publisher_max_batch_size = std::stoi(val);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;       }},</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      {<span class="stringliteral">&quot;--publisher-max-batch-bytes&quot;</span>, <span class="stringliteral">&quot;configure batching parameters&quot;</span>,</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;         options.publisher_max_batch_bytes = ParseSize(val);</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;       }},</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;      {<span class="stringliteral">&quot;--subscriber&quot;</span>, <span class="stringliteral">&quot;run a subscriber in this program&quot;</span>,</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;         options.subscriber = ParseBoolean(val).value_or(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;       }},</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      {<span class="stringliteral">&quot;--subscriber-thread-count&quot;</span>, <span class="stringliteral">&quot;number of subscriber tasks&quot;</span>,</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;         options.subscriber_thread_count = std::stoi(val);</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;       }},</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      {<span class="stringliteral">&quot;--subscriber-io-threads&quot;</span>,</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;       <span class="stringliteral">&quot;number of subscriber I/O threads, set to 0 to use the library default&quot;</span>,</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;         options.subscriber_io_threads = std::stoi(val);</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;       }},</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-outstanding-messages&quot;</span>,</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;       <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;         options.subscriber_max_outstanding_messages = std::stoi(val);</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;       }},</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-outstanding-bytes&quot;</span>, <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;         options.subscriber_max_outstanding_bytes = ParseSize(val);</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;       }},</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;      {<span class="stringliteral">&quot;--subscriber-max-concurrency&quot;</span>, <span class="stringliteral">&quot;configure message flow control&quot;</span>,</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;         options.subscriber_max_concurrency = std::stoi(val);</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;       }},</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;      {<span class="stringliteral">&quot;--minimum-samples&quot;</span>, <span class="stringliteral">&quot;minimum number of samples to capture&quot;</span>,</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;         options.minimum_samples = std::stol(val);</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;       }},</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;      {<span class="stringliteral">&quot;--maximum-samples&quot;</span>, <span class="stringliteral">&quot;maximum number of samples to capture&quot;</span>,</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;         options.maximum_samples = std::stol(val);</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;       }},</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;      {<span class="stringliteral">&quot;--minimum-runtime&quot;</span>, <span class="stringliteral">&quot;run for at least this time&quot;</span>,</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;         options.minimum_runtime = ParseDuration(val);</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;       }},</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;      {<span class="stringliteral">&quot;--maximum-runtime&quot;</span>, <span class="stringliteral">&quot;run for at most this time&quot;</span>,</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;       [&amp;options](std::string <span class="keyword">const</span>&amp; val) {</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;         options.maximum_runtime = ParseDuration(val);</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;       }},</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;  };</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> usage = BuildUsage(desc, args[0]);</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;  <span class="keyword">auto</span> unparsed = OptionsParse(desc, args);</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160; </div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;  <span class="keywordflow">if</span> (show_description) {</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    std::cout &lt;&lt; description &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;  }</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;  <span class="keywordflow">if</span> (show_help) {</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    std::cout &lt;&lt; usage &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    options.show_help = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    <span class="keywordflow">return</span> options;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;  }</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  <span class="keywordflow">if</span> (options.project_id.empty()) {</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;                                 <span class="stringliteral">&quot;missing or empty --project-id option&quot;</span>);</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;  }</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160; </div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;  <span class="keywordflow">return</span> options;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;}</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;google::cloud::StatusOr&lt;Config&gt; SelfTest(std::string <span class="keyword">const</span>&amp; cmd) {</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;  <span class="keyword">auto</span> error = [](std::string m) {</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kUnknown,</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;                                 std::move(m));</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;  };</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; var : {<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>}) {</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> value = GetEnv(var).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="keywordflow">if</span> (!value.empty()) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    std::ostringstream os;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;The environment variable &quot;</span> &lt;&lt; var &lt;&lt; <span class="stringliteral">&quot; is not set or empty&quot;</span>;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <span class="keywordflow">return</span> error(std::move(os).str());</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;  }</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;  <span class="keyword">auto</span> config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--help&quot;</span>}, kDescription);</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;  <span class="keywordflow">if</span> (!config || !config-&gt;show_help) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--help parsing&quot;</span>);</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--description&quot;</span>, <span class="stringliteral">&quot;--help&quot;</span>}, kDescription);</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;  <span class="keywordflow">if</span> (!config || !config-&gt;show_help) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--description parsing&quot;</span>);</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--project-id=&quot;</span>}, kDescription);</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;  <span class="keywordflow">if</span> (config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--project-id validation&quot;</span>);</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--topic-id=test&quot;</span>}, kDescription);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;  <span class="keywordflow">if</span> (!config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--topic-id&quot;</span>);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  config = ParseArgsImpl({cmd, <span class="stringliteral">&quot;--subscription-id=test&quot;</span>}, kDescription);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;  <span class="keywordflow">if</span> (!config) <span class="keywordflow">return</span> error(<span class="stringliteral">&quot;--subscription-id&quot;</span>);</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160; </div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;  <span class="keywordflow">return</span> ParseArgsImpl(</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      {</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;          cmd,</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;          <span class="stringliteral">&quot;--project-id=&quot;</span> + GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>),</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;          <span class="stringliteral">&quot;--publisher=true&quot;</span>,</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;          <span class="stringliteral">&quot;--publisher-thread-count=1&quot;</span>,</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;          <span class="stringliteral">&quot;--publisher-io-threads=1&quot;</span>,</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;          <span class="stringliteral">&quot;--publisher-max-batch-size=2&quot;</span>,</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;          <span class="stringliteral">&quot;--publisher-max-batch-bytes=1KiB&quot;</span>,</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;          <span class="stringliteral">&quot;--subscriber=true&quot;</span>,</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;          <span class="stringliteral">&quot;--subscriber-thread-count=1&quot;</span>,</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;          <span class="stringliteral">&quot;--subscriber-io-threads=1&quot;</span>,</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;          <span class="stringliteral">&quot;--subscriber-max-outstanding-bytes=100MiB&quot;</span>,</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;          <span class="stringliteral">&quot;--subscriber-max-concurrency=1000&quot;</span>,</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;          <span class="stringliteral">&quot;--iteration-duration=1s&quot;</span>,</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;          <span class="stringliteral">&quot;--payload-size=2KiB&quot;</span>,</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;          <span class="stringliteral">&quot;--minimum-samples=1&quot;</span>,</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;          <span class="stringliteral">&quot;--maximum-samples=2&quot;</span>,</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;          <span class="stringliteral">&quot;--minimum-runtime=0s&quot;</span>,</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;          <span class="stringliteral">&quot;--maximum-runtime=2s&quot;</span>,</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;      },</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      kDescription);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;}</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;google::cloud::StatusOr&lt;Config&gt; ParseArgs(std::vector&lt;std::string&gt; args) {</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;  <span class="keywordtype">bool</span> auto_run =</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;      GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES&quot;</span>).value_or(<span class="stringliteral">&quot;&quot;</span>) == <span class="stringliteral">&quot;yes&quot;</span>;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;  <span class="keywordflow">if</span> (auto_run) <span class="keywordflow">return</span> SelfTest(args[0]);</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;  <span class="keywordflow">return</span> ParseArgsImpl(std::move(args), kDescription);</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;}</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;}  <span class="comment">// namespace</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient_html_aefcb959bd5167a13a29ef99636eb2afe"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html#aefcb959bd5167a13a29ef99636eb2afe">google::cloud::pubsub::v1::SubscriptionAdminClient::CreateSubscription</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Subscription &gt; CreateSubscription(Topic const &amp;topic, Subscription const &amp;subscription, SubscriptionBuilder builder={})</div><div class="ttdoc">Creates a new subscription in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__client_8h_source.html#l00089">subscription_admin_client.h:89</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder.html">google::cloud::pubsub::v1::MessageBuilder</a></div><div class="ttdoc">Constructs Message objects.</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00142">message.h:142</a></div></div>
@@ -643,6 +642,7 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions_html_ae94e00760d0500baaf1103560f09ca99"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherOptions.html#ae94e00760d0500baaf1103560f09ca99">google::cloud::pubsub::v1::PublisherOptions::set_maximum_batch_message_count</a></div><div class="ttdeci">PublisherOptions &amp; set_maximum_batch_message_count(std::size_t v)</div><div class="ttdoc">Set the maximum number of messages in a batch.</div><div class="ttdef"><b>Definition:</b> <a href="publisher__options_8h_source.html#l00091">publisher_options.h:91</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">google::cloud::pubsub::v1::SubscriberOptions</a></div><div class="ttdoc">Configure how a Subscriber handles incoming messages.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8h_source.html#l00080">subscriber_options.h:80</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html_a987b45e8ac4cc5c8b62e4b126d3abe5b"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">google::cloud::pubsub::v1::SubscriberOptions::set_max_outstanding_bytes</a></div><div class="ttdeci">SubscriberOptions &amp; set_max_outstanding_bytes(std::int64_t bytes)</div><div class="ttdoc">Set the maximum number of outstanding bytes per streaming pull.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8cc_source.html#l00029">subscriber_options.cc:29</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html_a63bb8a9762387513df32435d1e2b9235"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a63bb8a9762387513df32435d1e2b9235">google::cloud::pubsub::v1::SubscriberOptions::set_max_concurrency</a></div><div class="ttdeci">SubscriberOptions &amp; set_max_concurrency(std::size_t v)</div><div class="ttdoc">Set the maximum callback concurrency.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8cc_source.html#l00035">subscriber_options.cc:35</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html_a3c99d2b94c9925c6674aa787460e87d8"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">google::cloud::pubsub::v1::SubscriberOptions::set_max_outstanding_messages</a></div><div class="ttdeci">SubscriberOptions &amp; set_max_outstanding_messages(std::int64_t message_count)</div><div class="ttdoc">Set the maximum number of outstanding messages per streaming pull.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8cc_source.html#l00023">subscriber_options.cc:23</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html_a029d6dd5d07924c952eb61d4dcce310e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html#a029d6dd5d07924c952eb61d4dcce310e">google::cloud::pubsub::v1::TopicAdminClient::CreateTopic</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Topic &gt; CreateTopic(TopicBuilder builder)</div><div class="ttdoc">Creates a new topic in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00083">topic_admin_client.h:83</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html">google::cloud::pubsub::v1::SubscriptionAdminClient</a></div><div class="ttdoc">Performs subscription administrative operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__client_8h_source.html#l00058">subscription_admin_client.h:58</a></div></div>
@@ -654,7 +654,6 @@ $(function() {
 <div class="ttc" id="atopic__admin__client_8h_html"><div class="ttname"><a href="topic__admin__client_8h.html">topic_admin_client.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">google::cloud::pubsub::v1::AckHandler</a></div><div class="ttdoc">Defines the interface to acknowledge and reject messages.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8h_source.html#l00048">ack_handler.h:48</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder_html_ac0c8dd77ea781ac4e226716b5458920d"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder.html#ac0c8dd77ea781ac4e226716b5458920d">google::cloud::pubsub::v1::MessageBuilder::Build</a></div><div class="ttdeci">Message Build() &amp;&amp;</div><div class="ttdoc">Creates a new message.</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00147">message.h:147</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html_afb636925ad1d695e7520f305bf66e0de"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#afb636925ad1d695e7520f305bf66e0de">google::cloud::pubsub::v1::SubscriberOptions::set_concurrency_watermarks</a></div><div class="ttdeci">SubscriberOptions &amp; set_concurrency_watermarks(std::size_t lwm, std::size_t hwm)</div><div class="ttdoc">Set the high watermark and low watermarks for callback concurrency.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8cc_source.html#l00035">subscriber_options.cc:35</a></div></div>
 <div class="ttc" id="athroughput_8cc_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="throughput_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="throughput_8cc_source.html#l00097">throughput.cc:97</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html">google::cloud::pubsub::v1::TopicBuilder</a></div><div class="ttdoc">Builds requests to create or update a Cloud Pub/Sub topic.</div><div class="ttdef"><b>Definition:</b> <a href="topic__builder_8h_source.html#l00031">topic_builder.h:31</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder_html_a2b428d826d70f46b4078555ab5347b87"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1MessageBuilder.html#a2b428d826d70f46b4078555ab5347b87">google::cloud::pubsub::v1::MessageBuilder::SetAttributes</a></div><div class="ttdeci">MessageBuilder &amp; SetAttributes(Iterator begin, Iterator end) &amp;</div><div class="ttdoc">Sets the attributes in the message to the attributes from the range [begin, end)</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00203">message.h:203</a></div></div>
