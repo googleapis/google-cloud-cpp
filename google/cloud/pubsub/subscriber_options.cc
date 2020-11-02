@@ -32,10 +32,8 @@ SubscriberOptions& SubscriberOptions::set_max_outstanding_bytes(
   return *this;
 }
 
-SubscriberOptions& SubscriberOptions::set_concurrency_watermarks(
-    std::size_t lwm, std::size_t hwm) {
-  concurrency_hwm_ = (std::max<std::size_t>)(1, hwm);
-  concurrency_lwm_ = (std::min)(concurrency_hwm_, lwm);
+SubscriberOptions& SubscriberOptions::set_max_concurrency(std::size_t v) {
+  max_concurrency_ = v == 0 ? DefaultMaxConcurrency() : v;
   return *this;
 }
 

@@ -141,20 +141,17 @@ class SubscriberOptions {
   std::int64_t max_outstanding_bytes() const { return max_outstanding_bytes_; }
 
   /**
-   * Set the high watermark and low watermarks for callback concurrency.
+   * Set the maximum callback concurrency.
    *
    * The Cloud Pub/Sub C++ client library will schedule parallel callbacks as
-   * long as the number of outstanding callbacks is less than the high
-   * watermark. Once the watermark is reached the client will not resume
-   * scheduling callbacks until the number of outstanding callbacks is at or
-   * below the low watermark. Using hysteresis prevents instability.
+   * long as the number of outstanding callbacks is less than this maximum.
    *
    * Note that this controls the number of callbacks *scheduled*, not the number
    * of callbacks actually executing at a time. The application needs to create
    * (or configure) the background threads pool with enough parallelism to
    * execute more than one callback at a time.
    *
-   * Some applications many want to share a thread pool across many
+   * Some applications may want to share a thread pool across many
    * subscriptions, the additional level of control (scheduled vs. running
    * callbacks) allows applications, for example, to ensure that at most `K`
    * threads in the pool are used by any given subscription.
@@ -162,18 +159,12 @@ class SubscriberOptions {
    * @par Example
    * @snippet samples.cc subscriber-concurrency
    *
-   * @note applications that want to have a single outstanding callback can set
-   *     these parameters to `lwm==0` and `hwm==1`.
-   *
-   * @param hwm the high watermark, if this parameter is `0` the high watermark
-   *     is set to `1`, to avoid starvation for the callbacks
-   * @param lwm the low watermark, if this parameter greater than @p hwm then
-   *    the low watermark is set to the same value as the high watermark
+   * @param v the new value, 0 resets to the default
    */
-  SubscriberOptions& set_concurrency_watermarks(std::size_t lwm,
-                                                std::size_t hwm);
-  std::size_t concurrency_lwm() const { return concurrency_lwm_; }
-  std::size_t concurrency_hwm() const { return concurrency_hwm_; }
+  SubscriberOptions& set_max_concurrency(std::size_t v);
+
+  /// Maximum number of callbacks scheduled by the library at a time.
+  std::size_t max_concurrency() const { return max_concurrency_; }
 
   /**
    * Control how often the session polls for automatic shutdowns.
@@ -193,17 +184,16 @@ class SubscriberOptions {
   }
 
  private:
-  static std::size_t DefaultConcurrencyHwm() {
-    auto constexpr kDefaultHwm = 4;
+  static std::size_t DefaultMaxConcurrency() {
+    auto constexpr kDefaultMaxConcurrency = 4;
     auto const n = std::thread::hardware_concurrency();
-    return n == 0 ? kDefaultHwm : n;
+    return n == 0 ? kDefaultMaxConcurrency : n;
   }
 
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
   std::int64_t max_outstanding_messages_ = 1000;
   std::int64_t max_outstanding_bytes_ = 100 * 1024 * 1024L;
-  std::size_t concurrency_lwm_ = 0;
-  std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
+  std::size_t max_concurrency_ = DefaultMaxConcurrency();
   std::chrono::milliseconds shutdown_polling_period_ = std::chrono::seconds(5);
 };
 

@@ -324,8 +324,7 @@ void SubscriberTask(Config const& config) {
           .set_max_outstanding_messages(
               config.subscriber_max_outstanding_messages)
           .set_max_outstanding_bytes(config.subscriber_max_outstanding_bytes)
-          .set_concurrency_watermarks(config.subscriber_max_concurrency,
-                                      config.subscriber_max_concurrency);
+          .set_max_concurrency(config.subscriber_max_concurrency);
   auto connection_options =
       pubsub::ConnectionOptions{}.set_channel_pool_domain("Subscriber");
   if (config.subscriber_io_threads != 0) {
