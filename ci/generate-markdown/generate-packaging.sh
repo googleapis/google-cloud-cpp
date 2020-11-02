@@ -38,7 +38,7 @@ https://github.com/googleapis/google-cloud-cpp/releases for the latest
 release):
 
 ```bash
-VERSION="v.X.Y.Z"
+VERSION="vX.Y.Z"
 mkdir -p $HOME/google-cloud-cpp
 wget -q https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz
 tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1

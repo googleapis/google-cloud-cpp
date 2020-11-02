@@ -17,7 +17,7 @@ https://github.com/googleapis/google-cloud-cpp/releases for the latest
 release):
 
 ```bash
-VERSION="v.X.Y.Z"
+VERSION="vX.Y.Z"
 mkdir -p $HOME/google-cloud-cpp
 wget -q https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz
 tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
@@ -292,7 +292,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -421,7 +421,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -582,7 +582,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -716,7 +716,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -849,7 +849,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -1001,7 +1001,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -1098,7 +1098,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -1257,7 +1257,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -1403,7 +1403,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
@@ -1575,7 +1575,7 @@ sudo ldconfig
 We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
-cd $HOME/project
+cd $HOME/google-cloud-cpp
 cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install

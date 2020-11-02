@@ -63,6 +63,7 @@ sed_args=(
   '-e' 's/ln -sf /sudo ln -sf /g'
   # The Dockerfile can use absolute paths for some directories, in the README
   # or INSTALL instructions we prefer to use $HOME
+  '-e' 's;/home/build/project;$HOME/google-cloud-cpp;'
   '-e' 's;/home/build;$HOME;'
   '-e' 's;/var/tmp/build;$HOME/Downloads;'
   # Remove additional indentation for the sudo commands. The Docker files
