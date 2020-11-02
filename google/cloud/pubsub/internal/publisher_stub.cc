@@ -129,6 +129,11 @@ std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
   // its value here to allow compiling against older versions.
   channel_arguments.SetInt("grpc.channel_id", channel_id);
+  // Pub/Sub RPCs cannot contain more than 10MiB (this is the limit for a
+  // Publish() request), but often *do* contain more than the gRPC default of
+  // 4MiB.
+  channel_arguments.SetMaxSendMessageSize(16 * 1024 * 1024);
+  channel_arguments.SetMaxReceiveMessageSize(16 * 1024 * 1024);
 
   auto grpc_stub = google::pubsub::v1::Publisher::NewStub(
       grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
