@@ -28,9 +28,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class SubscriberLogging : public SubscriberStub {
  public:
   SubscriberLogging(std::shared_ptr<SubscriberStub> child,
-                    TracingOptions tracing_options)
+                    TracingOptions tracing_options, bool trace_streams)
       : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+        tracing_options_(std::move(tracing_options)),
+        trace_streams_(trace_streams) {}
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
@@ -88,6 +89,7 @@ class SubscriberLogging : public SubscriberStub {
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;
+  bool trace_streams_;
 };
 
 class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {

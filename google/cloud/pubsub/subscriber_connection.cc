@@ -108,7 +108,8 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
   if (connection_options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), connection_options.tracing_options());
+        std::move(stub), connection_options.tracing_options(),
+        connection_options.tracing_enabled("rpc-streams"));
   }
   auto default_thread_pool_size = []() -> std::size_t {
     auto constexpr kDefaultThreadPoolSize = 4;

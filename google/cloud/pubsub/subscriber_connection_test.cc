@@ -131,7 +131,8 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
       subscription, {},
       ConnectionOptions{grpc::InsecureChannelCredentials()}
           .DisableBackgroundThreads(cq)
-          .enable_tracing("rpc"),
+          .enable_tracing("rpc")
+          .enable_tracing("rpc-streams"),
       mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
