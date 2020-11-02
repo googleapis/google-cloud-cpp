@@ -16,6 +16,7 @@
 
 #include "google/cloud/status.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
@@ -53,15 +54,42 @@ class ServiceCodeGenerator : public GeneratorInterface {
   virtual Status GenerateHeader() = 0;
   virtual Status GenerateCc() = 0;
 
+  VarsDictionary const& vars() const;
+  std::string vars(std::string const& key) const;
+  std::vector<
+      std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
+  methods() const;
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
+
+  void HeaderLocalIncludes(std::vector<std::string> const& local_includes);
+  void CcLocalIncludes(std::vector<std::string> const& local_includes);
+  void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
+  void CcSystemIncludes(std::vector<std::string> const& system_includes);
+
+  Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
+  void HeaderCloseNamespaces();
+  Status CcOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
+  void CcCloseNamespaces();
+
+  void HeaderPrint(std::string const& text);
+  Status HeaderPrintMethod(google::protobuf::MethodDescriptor const& method,
+                           std::vector<MethodPattern> const& patterns,
+                           char const* file, int line);
+  void CcPrint(std::string const& text);
+  Status CcPrintMethod(google::protobuf::MethodDescriptor const& method,
+                       std::vector<MethodPattern> const& patterns,
+                       char const* file, int line);
+
+ private:
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
                                     std::vector<std::string> local_includes,
                                     FileType file_type = FileType::kHeaderFile);
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
+
   Status OpenNamespaces(Printer& p,
                         NamespaceType ns_type = NamespaceType::kNormal);
   void CloseNamespaces(Printer& p);
@@ -70,6 +98,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   VarsDictionary service_vars_;
   std::map<std::string, VarsDictionary> service_method_vars_;
   std::vector<std::string> namespaces_;
+  std::vector<std::reference_wrapper<google::protobuf::MethodDescriptor const>>
+      methods_;
   Printer header_;
   Printer cc_;
 };

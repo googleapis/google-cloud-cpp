@@ -15,6 +15,7 @@
 #include "generator/internal/service_code_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
@@ -38,7 +39,12 @@ ServiceCodeGenerator::ServiceCodeGenerator(
       service_method_vars_(std::move(service_method_vars)),
       header_(context, service_vars_[header_path_key]),
       cc_(context, service_vars_[cc_path_key]) {
+  assert(service_descriptor != nullptr);
+  assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
+    methods_.emplace_back(*service_descriptor_->method(i));
+  }
 }
 
 ServiceCodeGenerator::ServiceCodeGenerator(
@@ -51,7 +57,30 @@ ServiceCodeGenerator::ServiceCodeGenerator(
       service_vars_(std::move(service_vars)),
       service_method_vars_(std::move(service_method_vars)),
       header_(context, service_vars_[header_path_key]) {
+  assert(service_descriptor != nullptr);
+  assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
+    methods_.emplace_back(*service_descriptor_->method(i));
+  }
+}
+
+VarsDictionary const& ServiceCodeGenerator::vars() const {
+  return service_vars_;
+}
+
+std::string ServiceCodeGenerator::vars(std::string const& key) const {
+  auto iter = service_vars_.find(key);
+  if (iter == service_vars_.end()) {
+    GCP_LOG(FATAL) << key << " not found in service_vars_\n";
+  }
+  return iter->second;
+}
+
+std::vector<
+    std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
+ServiceCodeGenerator::methods() const {
+  return methods_;
 }
 
 VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
@@ -60,6 +89,60 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
   vars.insert(service_method_vars_.at(method.full_name()).begin(),
               service_method_vars_.at(method.full_name()).end());
   return vars;
+}
+
+void ServiceCodeGenerator::HeaderLocalIncludes(
+    std::vector<std::string> const& local_includes) {
+  GenerateLocalIncludes(header_, local_includes);
+}
+
+void ServiceCodeGenerator::CcLocalIncludes(
+    std::vector<std::string> const& local_includes) {
+  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile);
+}
+
+void ServiceCodeGenerator::HeaderSystemIncludes(
+    std::vector<std::string> const& system_includes) {
+  GenerateSystemIncludes(header_, system_includes);
+}
+
+void ServiceCodeGenerator::CcSystemIncludes(
+    std::vector<std::string> const& system_includes) {
+  GenerateSystemIncludes(cc_, system_includes);
+}
+
+Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
+  return OpenNamespaces(header_, ns_type);
+}
+
+void ServiceCodeGenerator::HeaderCloseNamespaces() { CloseNamespaces(header_); }
+
+Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
+  return OpenNamespaces(cc_, ns_type);
+}
+
+void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_); }
+
+void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
+  header_.Print(service_vars_, text);
+}
+
+Status ServiceCodeGenerator::HeaderPrintMethod(
+    google::protobuf::MethodDescriptor const& method,
+    std::vector<MethodPattern> const& patterns, char const* file, int line) {
+  return PrintMethod(method, header_, MergeServiceAndMethodVars(method),
+                     patterns, file, line);
+}
+
+void ServiceCodeGenerator::CcPrint(std::string const& text) {
+  cc_.Print(service_vars_, text);
+}
+
+Status ServiceCodeGenerator::CcPrintMethod(
+    google::protobuf::MethodDescriptor const& method,
+    std::vector<MethodPattern> const& patterns, char const* file, int line) {
+  return PrintMethod(method, cc_, MergeServiceAndMethodVars(method), patterns,
+                     file, line);
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(
